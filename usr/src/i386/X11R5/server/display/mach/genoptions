@@ -1,0 +1,924 @@
+#ident	"@(#)mach:mach/genoptions	1.1"
+
+#!/usr/local/bin/perl -- # -*- perl -*-
+#	@@man
+#	NAME
+#
+#		genoptions : Generate option description file.
+#
+#	SYNOPSIS
+#
+#		genoptions [ option ... ]
+#
+#	DESCRIPTION
+#
+#		This tool generates an option parser in "C" from an option
+#	description file.
+#
+#		Options :
+#
+#	    -o output-file          Generated C file name.
+#       -p unique-prefix        Prefix for all variables etc.
+#       -d debug-option         Internal debug statements.
+#       -t template-file        Template for generated code.
+#       -i option-file          File describing the required 
+#
+#		Without any options and arguments, write a notice.
+#
+#		Option descriptions are written one to a line with all keywords
+#	preceded by an '@' sign.  Recognized keywords are :
+#
+#		@option	<name>			specifies the current option name.
+#		@option-type <type>		specifies the option type.  Accepted types
+#								are "string", "integer", "unique-enumeration",
+#								"multiple-enumeration", "option-file" and
+#								"option-environment".
+#		@valid-range <range>	specifies the valid range the option can take.
+#								For integer types this is specified in the form
+#								<number>..<number> elements.  Other types have
+#								identifiers as elements.  More than one range
+#								can be given on the line separated by white 
+#								space.
+#		@description			Textual description of the option.
+#		@default				Default value for the option.  Integer values
+#								expect a number.  String values expect a
+#								string.  Enumerations expect an identifier
+#								declared in the "@valid-range" specifier.
+#								Prefixing an identifier with a '!' will
+#								negate its value in the case of multiple
+#								enumerations.
+#
+#	RETURNS
+#
+#		1 on encountering an error, 0 otherwise.
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#		${group_root}/lib/option.template : default template file.
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	HISTORY
+#
+#		genoptions 1.0.0 Joseph Koshy : First coding.
+
+#	@@name genoptions 1.0.0 Mon Aug  9 11:49:57 GMT+0530 1993
+#	@@end
+
+# Includes.
+require "getopts.pl";
+
+# Functions.
+
+sub ToolUsage
+{
+	$! = 1;
+	print "usage: genoption [options]\n";
+	print "\twhere options are:\n";
+	print "\t-o output-file\t\tGenerated C file name.\n";
+	print "\t-p unique-prefix\tPrefix for all variables etc.\n";
+	print "\t-d debug-option\t\tInternal debug statements.\n";
+	print "\t-t template-file\tTemplate for generated code.\n";
+	print "\t-i option-file\t\tFile describing the required options.\n";
+	exit 1;
+}
+
+
+# Defaults
+$message_prefix = 'genoptions :';
+
+$output_file_name = q/option.c/;
+$template_file_name = '/export/home/orthanc/x-usl/lib/option.template';
+$option_file_name = q/options.def/;
+$output_prefix = q/option_/;
+$environment_variable_name = q/option/;
+
+# Version
+
+$version = "genoptions 1.0.0";
+
+# Options supported.
+$options_string = q/o:p:d:t:i:/;
+
+&ToolUsage if @ARGV eq 0;
+
+# Parse options.
+&Getopts($options_string);
+
+&ToolUsage if @ARGV ne 0;
+
+# Analyse options.
+
+if (defined $opt_i) { $option_file_name = "$opt_i"; }
+if (defined $opt_o) { $output_file_name = "$opt_o"; }
+if (defined $opt_t) { $template_file_name = "$opt_t"; }
+if (defined $opt_p) { $output_prefix = "$opt_p"; }
+if (defined $opt_d) {			# debug options.
+	$parse_debug = ($opt_d =~ s/p/p/);
+	$main_debug = ($opt_d =~ s/m/m/);
+	$create_debug = ($opt_d =~ s/c/c/);
+}
+
+# List of allowed option types.
+%option_type_list = ('string', 	0,
+					 'numeric',	0,
+					 'unique-enumeration',	0,
+					 'multiple-enumeration', 0,
+					 'option-file',	0,
+					 'option-environment',	0);
+
+$option_types_enumeration_list = "";
+$option_types_enumeration_dump = "";
+
+# The keywords option list : (keyword, action).
+
+%option_keyword_action_list = ('@option', "&parse_option_keyword",
+							   '@option-type', "&parse_option_type",
+							   '@valid-range', "&parse_valid_range",
+							   '@valid-condition', "&parse_valid_condition",
+							   '@default', "&parse_default",
+							   '@description', "&parse_description",
+							   );
+
+# Name to attribute conversions.
+
+%option_name_to_option_type = ();
+%option_name_to_option_valid_condition = ();
+%option_name_to_option_default = ();
+%option_name_to_option_valid_range = ();
+@option_name_list = ();
+%option_name_to_option_enumeration_name = ();
+%option_name_to_option_structure_member = ();
+
+$option_parsing_code = "";
+
+$option_enumeration_list = "";
+$option_enumeration_dump = "";
+$option_structure_member_list = "";
+$option_defines_list = "";
+$option_indices_list = "";
+$option_description_list = "";
+$option_keywords = "";
+$option_defaults_list = "";
+$option_defaults_name_list = "";
+
+#
+# @@ Setup @@
+#
+# Create the necessary C type for option analysis.
+sub setup_option_handling
+{
+	# Set up option array with the correct indices.
+	$tmp_count = 0;
+
+	foreach $tmp (sort(keys(%option_type_list)))
+	{
+		$option_type_list{$tmp} = $tmp_count;
+		$tmp_count ++;
+		($tmptmp = $tmp) =~ s/^/$output_prefix/;
+		$tmptmp =~ tr/a-z\-/A-Z_/;
+		$option_types_enumeration_list .= "\t${tmptmp},\n";
+		$option_types_enumeration_dump .= "\t\"$tmp\",\n";
+	}
+
+	print 
+		"OPTION TYPES\n$option_types_enumeration_dump\n$option_types_enumeration_list\n"
+			if ($create_debug);
+}
+
+#
+# @@ PARSING CODE @@
+#
+# Parsing an option definition.
+
+sub parse_option_keyword
+{
+	# Check the number of arguments.
+	print "PARSE-OPTION-KEYWORD : \"@input_line\".\n" 
+		if ($parse_debug);
+	if (@input_line ne 2)
+	{
+		die "$message_prefix ($option_file_name, $.) wrong number of arguments.\n";
+		undef $current_option_name;
+		return 0;
+	}
+	($current_option_name = $input_line[1]) =~ s/[\"\']//g;
+	unshift(@option_name_list, $current_option_name);
+	undef $current_option_type;
+	1;
+}
+
+# Parse the option type
+
+sub parse_option_type
+{
+	print "PARSE-OPTION-TYPE : \"@input_line\".\n" 
+		if ($parse_debug);
+	if (@input_line ne 2)
+	{
+		die "$message_prefix ($option_file_name, $.) wrong number of arguments.\n";
+	}
+	($current_option_type = $input_line[1]) =~ s/[\"\']//g;
+	if (!defined $option_type_list{$current_option_type})
+	{					 
+		die "$message_prefix ($option_file_name, $.) unknown option type.\n";
+	}
+
+	$option_name_to_option_type{$current_option_name} =
+		$current_option_type;
+
+	if ($current_option_type eq "unique-enumeration")
+	{
+		$option_name_to_option_enumeration_name{$current_option_name} =
+			"${output_prefix}${current_option_name}";
+
+		$option_name_to_option_structure_member{$current_option_name} =
+			"\tenum $option_name_to_option_enumeration_name{$current_option_name} $current_option_name;\n";
+
+	}
+	elsif ($current_option_type eq "multiple-enumeration")
+	{
+		$option_name_to_option_structure_member{$current_option_name} =
+			"\tunsigned int $current_option_name;\n";
+	}
+	elsif ($current_option_type eq "numeric")
+	{
+		$option_name_to_option_structure_member{$current_option_name} = 
+			"\tint $current_option_name;\n";
+	}
+	elsif ($current_option_type eq "string")
+	{
+		$option_name_to_option_structure_member{$current_option_name} =
+			"\tchar *$current_option_name;\n";
+	}
+	1;
+}
+
+sub parse_valid_range
+{
+	print "PARSE-VALID-RANGE : \"@input_line\".\n" 
+		if ($parse_debug);
+
+	if (@input_line < 2)
+	{
+		die "$message_prefix ($option_file_name, $.) wrong number of arguments.\n";
+	}
+	shift(@input_line);
+
+	if ($current_option_type eq "unique-enumeration" )
+	{
+		$sanitized_option_name = $current_option_name;
+		$sanitized_option_name =~ tr/\-/_/;
+		$option_enumeration_list .= 
+			"\nenum ${output_prefix}${sanitized_option_name}\n{\n";
+		$option_enumeration_dump .= 
+			"static const char *const ${output_prefix}${sanitized_option_name}_keywords[] =\n{\n";
+		$option_enumeration_xlate_table = 
+			"static const enum ${output_prefix}${sanitized_option_name} ${output_prefix}${sanitized_option_name}_index_to_value[] =\n{\n";
+
+		foreach $tmp (@input_line)
+		{
+			$tmptmp = "${output_prefix}${sanitized_option_name}_$tmp";
+			$tmptmp =~ tr/a-z\-/A-Z_/;
+			$option_enumeration_list .= "\t$tmptmp,\n";
+			$option_enumeration_xlate_table .= "\t$tmptmp,\n";
+			$option_enumeration_dump .= "\t\"$tmp\",\n";
+		}
+		
+		$option_enumeration_list .=
+			"\t${output_prefix}${sanitized_option_name}_end_enumeration\n};\n";
+		$option_enumeration_dump .=
+			"\t0\n};\n";
+		$option_enumeration_dump .= $option_enumeration_xlate_table;
+		$option_enumeration_dump .=
+			"\t${output_prefix}${sanitized_option_name}_end_enumeration\n};\n";
+	}
+	elsif ($current_option_type eq "multiple-enumeration")
+	{
+		$sanitized_option_name = $current_option_name;
+		$sanitized_option_name =~ tr/\-/_/;
+		$option_enumeration_dump .= 
+			"static const char *const ${output_prefix}${sanitized_option_name}_keywords[] =\n{\n";
+		$option_enumeration_xlate_table = "static const int ${output_prefix}${sanitized_option_name}_index_to_value[] =\n{\n";
+
+		$tmp_count = 1;
+		foreach $tmp (@input_line)
+		{
+			$tmptmp = "${output_prefix}${current_option_name}_$tmp";
+			$tmptmp =~ tr/a-z\-/A-Z_/;
+			$option_defines_list .=
+				"#define\t${tmptmp}\t$tmp_count\n";
+			$option_enumeration_xlate_table .= "\t$tmptmp,\n";
+			$option_enumeration_dump .= "\t\"$tmp\",\n";
+			$tmp_count <<= 1;
+		}
+		$option_defines_list .= "\n\n";
+		$option_enumeration_dump .=
+			"\t0\n};\n";
+		$option_enumeration_dump .= $option_enumeration_xlate_table;
+		$option_enumeration_dump .=
+			"\t-1\n};\n";
+
+		# Save the valid range for later use.
+		$option_name_to_option_valid_range{$current_option_name} = 
+			join(" ", @input_line);
+		
+	}
+	elsif ($current_option_type eq "numeric" )
+	{
+		$option_name_to_option_valid_range{$current_option_name} = 
+			join(" ", @input_line);
+
+	}
+	else
+	{
+		die "$message_prefix invalid use of '@valid-range' ($option_file_name, $.).\n";
+	}
+	1;
+}
+
+sub parse_valid_condition
+{
+	print "PARSE-VALID-CONDITION : \"@input_line\".\n" 
+		if ($parse_debug);
+	if (@input_line < 2)
+	{
+		die "$message_prefix ($option_file_name, $.) wrong number of arguments.\n";
+	}
+	shift(@input_line);
+	@option_name_to_option_valid_condition{$current_option_name} =
+		@input_line;
+}
+
+sub parse_default
+{
+	print "PARSE-DEFAULT : \"@input_line\".\n" if ($parse_debug);
+	if (@input_line < 2)
+	{
+		die "$message_prefix ($option_file_name, $.) wrong number of arguments.\n";
+	}
+	shift(@input_line);
+	@option_name_to_option_default{$current_option_name} =
+		join(" ", @input_line);
+}
+
+sub parse_description
+{
+	print "PARSE-DESCRIPTION : \"@input_line\".\n"
+		if ($parse_debug);
+	if (@input_line < 2)
+	{
+		die "$message_prefix ($option_file_name, $.) missing description.\n";
+	}
+	shift(@input_line);
+	$option_description_list .=
+		"\"$current_option_name\\t@input_line\\n\"" . "@@";	
+}
+
+# Setup option types
+&setup_option_handling;
+
+# Parse option definition file.
+
+open(OPTIONFILE, "<$option_file_name") || 
+	die  "$message_prefix cannot open option description file\
+\"$option_file_name\"\n";
+
+while( <OPTIONFILE> )
+{
+	# read in a line of input and look for interesting keywords.
+
+	chop;
+
+	# handle continued lines
+	while (m/\\$/)
+	{
+		s/\\$//;
+		$_ .= <OPTIONFILE>;
+		chop;
+	}
+	
+	
+	# skip the line if not an option specifier.
+    next if (! m/^\s*(@[\w-]*)\s+.*/);
+
+	if (! defined $option_keyword_action_list{$1})
+	{
+		die
+			"$message_prefix unrecognized keyword : \"$1\" ($option_file_name, $.).\n";
+	}
+	s/^\s*//;
+	@input_line = split(/\s+/);
+	print "input line : \"", join(":", @input_line), "\"\n" if ($main_debug );
+	eval "$option_keyword_action_list{$input_line[0]}" ||
+		die "$message_prefix $@.\n";
+
+}
+
+# close(OPTIONFILE);
+
+# Now analyse the data that we have.
+
+&create_option_keywords_list;
+&create_option_structure;
+#&create_option_enumerations;
+&create_option_parsing_actions;
+&create_option_defaults;
+
+# Write out the option parser.
+&write_option_parser;
+
+#
+# @@ Analysis routines @@
+#
+
+sub create_option_defaults
+{
+	for $tmp (sort(@option_name_list))
+	{
+		$option_type = $option_name_to_option_type{$tmp};
+		$tmp_default = $option_name_to_option_default{$tmp};
+		if ((! defined($tmp_default)) && 
+			($option_type eq "numeric" || $option_type eq "string" ||
+			 $option_type eq "unique-enumeration" || 
+			 $option_type eq "multiple-enumeration"))
+		{
+			$option_defaults_list .= "\t0,\n";
+			$option_defaults_name_list .= 
+				"#define ${output_prefix}${tmp}_DEFAULT 0\n";
+			next;
+		}
+		if ($option_type eq "numeric")
+		{
+			$option_defaults_list .= "\t$tmp_default,\n";
+			# protect the minus signs 
+			$tmp_default =~ s/-/@/;
+			$option_defaults_name_list .= 
+				"#define ${output_prefix}${tmp}_DEFAULT\\\n\t${tmp_default}\n";
+		}
+		elsif ($option_type eq "string")
+		{
+			$option_defaults_list .= "\t$tmp_default,\n";
+			$option_defaults_name_list .= 
+				"#define ${output_prefix}${tmp}_DEFAULT\\\n\t${tmp_default}\n";
+		}
+		elsif ($option_type eq "unique-enumeration")
+		{
+			$tmp_default =~ s/^/${output_prefix}${tmp}_/;
+			$tmp_default =~ tr/a-z\-/A-Z_/;
+			$option_defaults_list .= "\t$tmp_default,\n";
+			$option_defaults_name_list .= 
+				"#define ${output_prefix}${tmp}_DEFAULT\\\n\t${tmp_default}\n";
+		}
+		elsif ($option_type eq "multiple-enumeration")
+		{
+			$tmptmp =  
+				"( ${output_prefix}${tmp}_" . 
+				join(" |${output_prefix}${tmp}_", 
+					 split(/\s+/, $tmp_default)) . " )";			
+			$tmptmp =~ tr/a-z\-/A-Z_/;
+			$option_defaults_list .= "\t$tmptmp,\n";
+			$option_defaults_name_list .= 
+				"#define ${output_prefix}${tmp}_DEFAULT\\\n\t$tmptmp\n"; # 
+		}
+	}
+}
+sub create_option_keywords_list
+{
+	for $tmp (sort(@option_name_list))
+	{
+		$option_indices_list .= 
+			"\t${output_prefix}$option_name_to_option_type{$tmp},\n";
+		$option_keywords .= "\t\"$tmp\",\n";
+	}
+	$option_indices_list =~ tr/a-z\-/A-Z_/;
+}
+
+sub create_option_structure
+{
+	foreach $tmp (sort(@option_name_list))
+	{
+		$option_structure_member_list .=
+			$option_name_to_option_structure_member{$tmp};
+	}
+
+	$option_structure_member_list =~ tr/\-/_/;
+
+	print "OPTION STRUCTURE\n$option_structure_member_list\n"
+		if ($create_debug);
+}
+
+#sub create_option_enumerations
+#{
+#	foreach $tmp (sort(@option_name_list))
+#	{
+#		if ($option_name_to_option_type{$tmp} eq "unique-enumeration")
+#		{
+#			# create the option enumeration types
+#		}
+#		elsif ($option_name_to_option_type{$tmp} eq
+#			   "multiple-enumeration")
+#		{
+#
+#		}
+#	}
+#}
+
+sub create_option_parsing_actions
+{
+	$option_index = 0;
+	foreach $option_name (sort(@option_name_list))
+	{
+		$sanitized_option_name = $option_name;
+		$sanitized_option_name =~ tr/\-/_/;
+		$option_type = $option_name_to_option_type{$option_name};
+		if ($option_type eq "numeric")
+		{
+			$option_parsing_code .= "
+
+case $option_index :	/* $option_name */
+	option_struct_p->$sanitized_option_name = 
+		strtol(option_value_p, &option_check_integer_p, 0);
+	if(option_check_integer_p == option_value_p &&
+		option_struct_p->$sanitized_option_name == 0)
+	{
+		(void) fprintf(stderr, DEFAULT_OPTION_BAD_INTEGER_MESSAGE,
+				\"$option_name\");
+		goto error;
+	}
+			
+#if (defined(__DEBUG__))
+	if (${output_prefix}debug)
+	{
+		(void) fprintf(debug_stream_p, \"\t$option_name = %d\\n\",
+				option_struct_p->$sanitized_option_name);
+	}
+#endif 
+
+";
+			# analyze integer range if necessary.
+			if (defined($option_name_to_option_valid_range{$option_name}))
+			{
+				$option_check_code = "0";
+				for $tmp (split(/\s+/,
+								$option_name_to_option_valid_range{$option_name}))
+				{
+					$tmp =~ s/\s+//g;
+					($low_value, $high_value) = split(/\.\./, $tmp);
+					print "integer range : low-val = \"$low_value\",",
+						" hi-val = \"$high_value\"\n" 
+							if ($main_debug);
+					if ($low_value eq "") { $low_value = "INT_MIN"; }
+					if ($high_value eq "") { $high_value =
+													 "INT_MAX"; }
+					$option_check_code .= 
+						"|| ((option_struct_p->$sanitized_option_name >= $low_value) && (option_struct_p->$sanitized_option_name <= $high_value)) ";
+				}
+				$option_parsing_code .= "
+	/* CONSTANTCONDITION */
+	if (!($option_check_code))
+	{
+		(void) fprintf(stderr, 
+			DEFAULT_OPTION_INTEGER_OPTION_OUT_OF_BOUNDS_MESSAGE,
+			\"$option_name\");
+		goto error;
+	}
+";
+			}
+			# put in tail piece.
+			
+			$option_parsing_code .= "
+	break;
+";
+
+		}
+		elsif ($option_type eq "unique-enumeration")
+		{
+			$option_parsing_code .= "
+case $option_index :	/* $option_name */
+	if ((option_enum_index = 
+		${output_prefix}lookup_name(option_value_p, &(${output_prefix}${sanitized_option_name}_keywords[0])))
+		== -1)
+	{
+		(void) fprintf(stderr, 
+				DEFAULT_OPTION_INCORRECT_ENUMERATION_VALUE_MESSAGE,
+					option_value_p, \"$option_name\");
+		goto error;
+	}
+	option_struct_p->$sanitized_option_name = ${output_prefix}${sanitized_option_name}_index_to_value[option_enum_index];
+
+#if (defined(__DEBUG__))
+	if (${output_prefix}debug)
+	{
+		(void) fprintf(debug_stream_p,
+			\"(${output_prefix}parse) enum $option_name value '%s'\\n\",
+			${output_prefix}${sanitized_option_name}_keywords[option_enum_index]);
+	}
+#endif
+	break;
+";
+
+		}
+		elsif ($option_type eq "multiple-enumeration")
+		{
+
+			$option_parsing_code .= "
+case $option_index :	/* $option_name */
+	while (*option_value_p)
+	{	
+		tmp_p = option_value_p;
+		/* skip till a comma */
+		while((*tmp_p != EOS) && (*tmp_p != ','))
+		{
+			tmp_p ++;
+		}
+		if (*tmp_p)
+		{
+			*tmp_p++ = EOS;
+		}
+
+		if (*option_value_p == '!')
+		{
+			option_value_p ++;
+			option_enum_is_inverted = 1;
+		}
+		else
+		{
+			option_enum_is_inverted = 0;
+		}
+		option_enum_index = 
+			${output_prefix}lookup_name(option_value_p, &(${output_prefix}${sanitized_option_name}_keywords[0]));
+
+		if (option_enum_index == -1)
+		{
+			(void) fprintf(stderr, 
+				DEFAULT_OPTION_INCORRECT_ENUMERATION_VALUE_MESSAGE,
+				option_value_p, \"$option_name\");
+			goto error;
+		}
+		if (option_enum_is_inverted)
+		{
+			option_struct_p->$sanitized_option_name &= 
+				(~${output_prefix}${sanitized_option_name}_index_to_value[option_enum_index]);
+		}
+		else
+		{
+			option_struct_p->$sanitized_option_name |= 
+				(${output_prefix}${sanitized_option_name}_index_to_value[option_enum_index]);
+		}
+
+		option_value_p = tmp_p;
+	}
+
+#if (defined(__DEBUG__))
+	if(${output_prefix}debug)
+	{
+		(void) fprintf(debug_stream_p, \"(${output_prefix}parse) enum $option_name value %d.\\n\",
+			option_struct_p->$sanitized_option_name);
+	}
+#endif
+
+	break;
+";
+
+		}
+		elsif ($option_type eq "string")
+		{
+			$option_parsing_code .= "
+case $option_index :	/* $option_name */
+	option_struct_p->$sanitized_option_name = strdup(option_value_p);
+#if (defined(__DEBUG__))
+	if (${output_prefix}debug)
+	{
+		(void) fprintf(debug_stream_p, \"\t$option_name = \\\"%s\\\"\\n\",
+			option_struct_p->$sanitized_option_name);
+	}
+#endif
+
+	break;
+";
+		}
+		elsif ($option_type eq "option-file")
+		{
+			$option_parsing_code .= "
+case $option_index :	/* $option_name */
+	/*
+	 * look up the file.
+	 */
+	if (stat(option_value_p, &stat_buf) != 0)
+	{
+		/*
+		 * Warn the user of missing files, and continue.
+		 */
+		(void) fprintf(stderr, 
+					DEFAULT_OPTION_CANNOT_STAT_FILE_ARGUMENT_MESSAGE,
+					option_value_p, \"$option_name\");
+		perror(LIBRARY_NAME \": Reason \");
+		break;
+	}
+
+	if (stat_buf.st_size == 0)
+	{
+		/*
+		 * Warn the user of zero length files, and continue.
+		 */
+		(void) fprintf(stderr,
+					DEFAULT_OPTION_ZERO_LENGTH_FILE_ARGUMENT_MESSAGE,
+					option_value_p, \"$option_name\");
+		break;
+	}
+
+	/* read the option file into a buffer */
+	if (!(tmp_p = allocate_and_clear_memory(stat_buf.st_size+1)))
+	{
+		perror(DEFAULT_OPTION_CANNOT_ALLOCATE_MEMORY_MESSAGE);
+		goto error;
+	}
+
+	if( (option_file_p = fopen(option_value_p, \"r\")) == NULL)
+	{
+
+		(void) fprintf(stderr, 
+				DEFAULT_OPTION_CANNOT_OPEN_FILE_ARGUMENT_MESSAGE,
+				option_value_p, \"$option_name\");
+		perror(LIBRARY_NAME \": Reason \");
+		goto error;
+	}
+	if (fread(tmp_p, stat_buf.st_size, 1, option_file_p) != 1)
+	{
+		(void) fprintf(stderr, 
+				DEFAULT_OPTION_CANNOT_READ_FILE_ARGUMENT_MESSAGE,
+				option_value_p, \"$option_name\");
+		perror(LIBRARY_NAME \": Reason \");
+		goto error;
+	}
+
+#if (defined(__DEBUG__))
+	if (${output_prefix}debug)
+	{
+		(void) fprintf(debug_stream_p, \"\\t\\\"%s\\\"\\n\", tmp_p);
+	}
+#endif
+	/*
+	 * Recursively invoke the interpreter.
+	 */
+	if (!${output_prefix}parse(option_struct_p, tmp_p))
+	{
+		(void) fprintf(stderr, 
+				DEFAULT_OPTION_CANNOT_PROCESS_FILE_ARGUMENT_MESSAGE,
+				option_value_p, \"$option_name\");
+		free_memory(tmp_p);
+		goto error;
+	}
+	free_memory(tmp_p);
+	break;
+";
+
+		}
+		elsif ($option_type eq "option-environment")
+		{
+			$option_parsing_code .= "
+case $option_index :	/* $option_name */
+
+	tmp_p = getenv(option_value_p);
+	if (tmp_p)
+	{
+
+#if (defined(__DEBUG__))
+		if (${output_prefix}debug)
+		{
+			(void) fprintf(debug_stream_p, \"\\t\\\"%s\\\"\\n\", tmp_p);
+		}
+#endif
+		if (!${output_prefix}parse(option_struct_p, tmp_p))
+		{
+			(void) fprintf(stderr, 
+					DEFAULT_OPTION_CANNOT_PROCESS_ENVIRONMENT_ARGUMENT_MESSAGE,
+				option_value_p, \"$option_name\");
+			goto error;
+		}
+
+	}
+	break;
+";
+
+		}
+		$option_index ++;
+	}
+}
+
+# Dumping the parser.
+
+sub write_option_parser
+{
+	# Open the output file.
+	open(OUTPUT, ">$output_file_name") || 
+		die "$message_prefix cannot open output file \"$output_file_name\".\n";
+
+	open(TEMPLATE, "<$template_file_name") ||
+		die "$message_prefix cannot open template file \"$template_file_name\".\n";
+	
+	# Modify the option default names
+	$option_defaults_name_list =~
+		tr/a-z-/A-Z_/;
+	$option_defaults_name_list =~
+		tr/@/-/;
+	$option_defaults_name_list =~ s/\#DEFINE/\#define/g;
+
+	# preform substituions on the template.
+	while (<TEMPLATE>)
+	{
+		study;
+		
+		# replace prefixes.
+		s/%PREFIX%/$output_prefix/g;
+
+		# search and replace.
+		if (m/%FILEHEADER%/)
+		{
+			s//$option_file_name/;
+		}
+		elsif (m/%TOOLVERSION%/)
+		{
+			s//$version/;
+		}
+		elsif (m/%ENUMERATIONS%/)
+		{
+			# Write out enumerations
+			# $option_enumeration_list =~ tr/\-/_/;
+			s//$option_enumeration_list/;
+		}
+		elsif (m/%ENUMERATION_DUMP%/)
+		{
+			s//$option_enumeration_dump/;
+		}
+		elsif (m/%DEFINES%/)
+		{
+			# Write out defines
+			s//$option_defines_list/;
+		}
+		elsif (m/%OPTION_STRUCTURE_MEMBER_LIST%/)
+		{
+			# Write out option structure
+			# $option_structure_member_list =~ tr/\-/_/;
+			s//$option_structure_member_list/;
+		}				
+		elsif (m/%OPTION_TYPES_ENUMERATION%/)
+		{
+			s//$option_types_enumeration_list/;
+		}
+		elsif (m/%OPTION_TYPES_DUMP%/)
+		{
+			s//$option_types_enumeration_dump/;
+		}
+		elsif (m/%OPTION_KEYWORDS%/)
+		{
+			s//$option_keywords/;
+		}
+		elsif (m/%DEFAULT%/)
+		{					 
+			s//$option_defaults_list/;
+			
+		}
+		elsif (m/%DEFAULTNAMES%/)
+		{
+			s//$option_defaults_name_list/;
+		}
+		elsif (m/%OPTION_INDICES%/)
+		{
+			s//$option_indices_list/;
+		}
+		elsif (m/%DESCRIPTION%/)
+		{
+			$option_description_list =~ s/\s+/ /g;
+			$option_description_list =~ s/\.\s+/\.  /g;
+			$option_description_list =~ s/@@/\n/g;
+			s/%DESCRIPTION%/$option_description_list/;
+		}
+		elsif (m/%PARSING_CODE%/)
+		{
+			s//$option_parsing_code/;
+		}
+		print OUTPUT;
+	}
+}
+
+# Make perl -w shut up.
+
+if (0)
+{
+	&parse_description;
+	&parse_default;
+	&parse_valid_condition;
+	&parse_valid_range;
+	&parse_option_type;
+	&parse_option_keyword;
+}
+	
+__END__

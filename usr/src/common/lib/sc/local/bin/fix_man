@@ -1,0 +1,58 @@
+#!/bin/sh
+#ident	"@(#)sc:local/bin/fix_man	3.1"
+#
+# C++ Standard Components, Release 3.0.
+#
+# Copyright (c) 1991, 1992 AT&T and UNIX System Laboratories, Inc.
+# Copyright (c) 1988, 1989, 1990 AT&T.  All Rights Reserved.
+#
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T and UNIX System
+# Laboratories, Inc.  The copyright notice above does not evidence
+# any actual or intended publication of such source code.
+
+# Restructure the man directory for use with man(1). Because of multiple
+# intro.3 filenames,  they are renamed to that of the component (eg. G2++.3,
+# Array_alg.3, and Graph_alg.3) except for Path and Time which have
+# a conflict. These become Path_intro.3 and Time_intro.3.
+#
+# Warning: does not make a copy of the current hierarchy!!!!
+#
+
+if [ $0 != aux/fix_man ]
+then
+	echo "You must run this command as 'aux/fix_man'" >&2
+	exit 2
+fi
+
+cd man
+echo
+echo "going to work in `pwd`"
+for x in 1 3 4
+do	
+	echo "renaming man${x}C++ to man$x"
+	mv man${x}C++ man$x
+done
+
+cd man1
+echo
+echo "going to work in `pwd`"
+ln -f CC/* .
+rm -rf CC
+
+cd ../man3
+echo
+echo "going to work in `pwd`"
+for x in Array_alg G2++ Graph_alg
+do
+	echo "renaming $x/intro.3 to $x.3"
+	mv -f $x/intro.3 $x.3
+	ln -f $x/* .
+	rm -rf $x
+done
+for x in Path Time
+do
+	echo "renaming $x/intro.3 ${x}_intro.3"
+	mv -f $x/intro.3 ${x}_intro.3
+	ln -f $x/* .
+	rm -rf $x
+done

@@ -1,0 +1,132 @@
+#ident\t"@(#)dthelp:Admin.Tools/applsharing.hlp 1.13"
+^*version^1
+^*title^Condivisione applicazioni
+^:Condiv_Appl
+^*width^70
+^+DesktopMgr/help.defs
+^?Condividere applicazioni
+^0^Condivisione applicazioni
+^$10
+Condivisione applicazioni
+
+Usare Condivisione delle applicazioni per \d(pubblicizza) ad altri
+sistemi UnixWare su cui si dispone di applicazioni disponibili per
+l'uso.
+
+Con Condivisione applicazioni è possibile fare quanto segue:
+
+\to\t\k(Configurare il sistema per condividere applicazioni^^Configurazione del sistema per la condivisione delle applicazioni)
+\to\t\k(Eliminare applicazioni dalla lista Applicazioni condivise^^Cancellazione di un'applicazione condivisa)
+\to\t\k(Personalizzare lo script della shell di avvio delle applicazioni condivise^^Personalizzazione dello script della shell di avvio delle applicazioni condivise)
+\to\t\k(Modificare i tipi di applicazione^^Modifica dei tipi di applicazione)
+
+^1^Configurazione del sistema per la condivisione delle applicazioni
+^$20
+Configurazione del sistema per la condivisione delle applicazioni
+
+Prima che gli utenti remoti possano accedere alle applicazioni
+condivise, bisogna attivare \d(comunicazione peer-to-peer). Inoltre, il
+proprietario del sistema remoto deve attivare la comunicazione
+peer-to-peer sul sistema remoto (vedi \k(Configurazione di NetWare^NetWare_Setup/NetWare_Setup.hlp^Configurazione NetWare)).
+
+Inoltre, bisogna avere il \k(Permesso di condivisione di Applicazioni^dtadmin/user.hlp^Comprensione dei permessi).
+
+Per configurare Condivisione applicazioni, fare quanto segue:
+
+1.\tAprire la finestra contenente l'applicazione che si desidera \d(pubblicizza)
+  \tagli altri utenti.
+
+  \tNota: Se ci si trova già nella cartella  Admin_Tools folder,
+  \tpassare alla Fase 3.
+
+2.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella finestra \k("Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare).
+  \tAppare la finestra "Cartella: Strumenti_ammin".
+
+3.\tFare doppio clic su Condiv_Applicazioni. Appare la finestra "Condiv_Applicazioni".
+
+4.\t\d(Trascinare e rilasciare^trascinare e rilasciare) il file applicativo o la cartella dal Punto 1
+  \tnella finestra "Condivisione applicazioni - Applicazioni condivise".
+
+5.\tFare clic su Annulla per chiudere la finestra. L'eseguibile
+  \tnel file applicativo o nella cartella è ora disponibile per gli
+  \taltri utenti.
+
+Nota: Questa procedura basta per configurare le applicazioni condivise
+per programmi semplici, come xclock. Tuttavia, la maggior parte delle
+applicazioni richiedono modifiche nello script della shell di avvio.
+Vedere \k(Personalizzazione dello script della shell di avvio delle applicazioni condivise).
+
+^1^Cancellazione di un'applicazione condivisa
+^$30
+Cancellazione di un'applicazione condivisa
+
+Per cancellare (non dichiarare) un'applicazione dall'elenco
+Condivisione delle applicazioni, fare quanto segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella finestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare).
+  \tAppare la finestra "Cartella: Strumenti_ammin".
+
+2.\tFare doppio clic su Condiv_Applicazioni. Appare la finestra "Condiv_Applicazioni".
+
+3.\tFare clic sull'applicazione che si desidera cancellare.
+
+4.\tFare clic su Cancella. Il sistema rimuove l'applicazione
+  \tdall'elenco Condivisione applicazioni.
+
+^1^Personalizzazione dello script della shell di avvio delle applicazioni condivise
+^$40
+Personalizzazione dello script della shell di avvio delle applicazioni condivise
+
+Per personalizzare lo script della shell di avvio delle applicazioni
+condivise, fare quanto segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella finestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare).
+  \tAppare la finestra "Cartella: Strumenti_ammin".
+
+2.\tFare doppio clic su Condiv_Applicazioni. Appare la finestra "Condiv_Applicazioni".
+
+3.\tFare clic sull'applicazione che si desidera modificare.
+
+4.\tFare clic su Modifica. Si apre la finestra "Editor di testi"
+  \tcontenente lo script dell'applicazione.
+
+5.\tFare le modifiche desiderate. Vedi \k(L'Editor di testi^dtedit/edit.hlp^L'Editor di testi) per
+  \tinformazioni su come modificare i testi.
+
+Nota: Le modifice dello script di default che avvia le applicazioni
+condivise è una funzione avanzata. Non usare Modifica default a meno
+che non si abbia una certa esperienza nella programmazioni delle shell
+del sistema UNIX.
+
+^1^Modifica dei tipi di applicazione
+^$50
+Modifica dei tipi di applicazione
+
+Condivisione applicazioni supporta i due tipi di applicazioni che
+seguono:
+
+\to\tApplicazione di testo - Un'applicazione che inizia all'interno di
+\t \t\k(finestra terminale^xterm/term.hlp^Terminale).
+
+\to\tApplicazione X - Un'applicazione che fornisce la propria finestra
+\t \tterminale.
+
+Per passare da un tipo di applicazione ad un altro, fare quanto segue:
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella finestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare).
+  \tAppare la finestra "Cartella: Strumenti_ammin".
+
+2.\tFare doppio clic su Condiv_Applicazioni. Appare la finestra "Condiv_Applicazioni".
+
+3.\tFare clic sull'applicazione desiderata.
+
+4.\tFare clic su Cambia tipo. Se si trattava di un'applicazione X,
+  \tessa diventa un'applicazione di testo. Se si trattava di
+  \tun'applicazione di testo, essa diventa un'applicazione X.
+

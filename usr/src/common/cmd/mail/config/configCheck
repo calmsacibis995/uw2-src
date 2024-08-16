@@ -1,0 +1,221 @@
+#!/usr/gnu/bin/perl --		# -*-Perl-*-
+# (C) Copyright 1993 Univel All Rights Reserved
+# Written for UnixWare by Scott Harrison, Software Engineer Consultant, Univel
+#ident	"@(#)mail:common/cmd/mail/config/configCheck	1.9"
+
+# "secure" in perl terms
+$ENV{"PATH"} = "/usr/lib/mail/surrcmd:/usr/bin:/bin";
+$ENV{"IFS"} = " \t\n";
+
+require "getopts.pl"
+  || die "requires getopts.pl";
+
+#
+# Initialize constants.
+#
+$MAILFLAGSFILE = "/etc/mail/mailflgs" ;
+
+#
+# Read in the mail flags file.
+#
+open(MAILFLAGS, "<$MAILFLAGSFILE") ;
+while(<MAILFLAGS>) {
+    chop;
+    if(/^#/) { next;}
+    if(/^\s*$/) { next;}
+    $flaglist{$_} = 1;
+    }
+close(MAILFLAGS);
+
+#
+#Initialize the flags.
+#
+$flaglist{MHS} = 0;
+$flaglist{SMTR} = 0;
+$flaglist{IP} = 0;
+$flaglist{UUCP} = 0;
+$flaglist{UUCPTCP} = 0;
+$flaglist{DNS} = 0;
+$flaglist{NIS} = 0;
+$flaglist{PATH} = 0;
+$flaglist{CLUSTER} = 0;
+
+#Only Change the LOG flag if the -l option is used.
+$opt_l = $flaglist{LOG};
+$opt_s = $flaglist{STUP};
+do Getopts('l:s:');
+$flaglist{LOG} = $opt_l;
+$flaglist{STUP} = $opt_s;
+
+#
+#Get configuration from mail configuration file.
+#
+if (open(MAILCNFG, "</etc/mail/mailcnfg")) {
+    while (<MAILCNFG>) {
+	# %g is the name of our gateway as known to the Internet world
+	if (/^%g=/i) { $flaglist{MHS} = 1; next;}
+	# SMTR
+	if (/^SMARTERHOST=/i) { $flaglist{SMTR} = 1; next;}
+	if (/^CLUSTER=/i) { $flaglist{CLUSTER} = 1; next;}
+	}
+    close(MAILCNFG);
+    }
+else {
+    $flaglist{MHS} = 0;
+    $flaglist{SMTR} = 0;
+    }
+
+#
+#Get configuration from smf configuration file.
+#
+if (open(SMFCNFG, "</etc/mail/smfcnfg")) {
+    while (<SMFCNFG>) {
+	# MHSINTERVAL
+	if (/^MHSINTERVAL="OFF"/i) { $flaglist{MHS} = 0; next;}
+	}
+    close(SMFCNFG);
+    }
+else {
+    $flaglist{MHS} = 0;
+    }
+#
+#Check if we are set up for DNS
+#
+if(open(RESOLVER, "</etc/resolv.conf")) {
+    close(RESOLVER);
+    $flaglist{DNS} = 1;
+    }
+else {
+    $flaglist{DNS} = 0 ;
+    }
+
+if(open(PS, "ps -e|")) {
+    while (<PS>) {
+	chop ;
+	( $junk, $pid, $cls, $pri, $tty, $time, $comd ) = split ;
+	$_ = $comd;
+	if (/.*named.*/i) { $flaglist{DNS} = 1 ; }
+	if (/.*ypbind.*/i) { $flaglist{NIS} = 1 ; }
+	}
+
+    close(PS);
+    }
+
+#
+#Get configuration from UUCP configuration file.
+#
+open(TCPFILE, ">/etc/mail/UucpTcp.systems");
+
+if( open(SYSFILES, "</etc/uucp/Sysfiles")) {
+    while (<SYSFILES>) {
+	# A line starting with # is an comment.
+	if (/^\s*[\r\n#]/i) { next; }
+	if (/devices=([^\s]*)/) {
+	    @devList = split(/:/, $1);
+	    foreach (@devList) {
+		$pathname = "/etc/uucp/$_" ;
+		if(open(DEVICE, "<$pathname")) {
+		    while (<DEVICE>) {
+			# A line not starting with # is an entry.
+			if (/\s*[^#]/i) {
+			    @devEntry = split(/\s/, $_);
+			    $_ = $devEntry[4];
+			    if( /CS/ ) {
+				$netDev{$devEntry[0]} = 1;
+				}
+			    
+			    if( /TLIS/ ) {
+				$netDev{$devEntry[0]} = 1;
+				}
+			    
+			    if( /TLI/ ) {
+				@tmpList = split(",", $devEntry[0]);
+				$netDev{$tmpList[0]} = 1;
+				}
+			    }
+			}
+
+		    close(DEVICE);
+		    }
+		}
+	    }
+	}
+
+    close(SYSFILES);
+    }
+
+
+if( open(SYSFILES, "</etc/uucp/Sysfiles")) {
+    while (<SYSFILES>) {
+	# A line starting with # is an comment.
+	if (/^\s*[\r\n#]/i) { next; }
+	if (/systems=([^\s]*)/) {
+	    @fileList = split(/:/, $1);
+	    foreach (@fileList) {
+		$pathname = "/etc/uucp/$_" ;
+		if( open(SYSTEM, "<$pathname")) {
+		    while (<SYSTEM>) {
+			# A line not starting with # is an entry.
+			if (/^\s*[^#\r\n]/i) {
+			    @sysEntry = split(/\s/, $_);
+			    $flaglist{UUCP} = 1;
+			    @tmpList = split(",", $sysEntry[2]);
+			    if ( $netDev{$tmpList[0]} )
+				{
+				$flaglist{UUCPTCP} = 1;
+				print TCPFILE "$sysEntry[0]\n";
+				}
+			    }
+			}
+
+		    close(SYSTEM);
+		    }
+
+		if($flaglist{UUCPTCP}) { last; }
+		}
+	    }
+	}
+
+    close(SYSFILES);
+    }
+
+close(TCPFILE);
+
+#
+#Check if IP is up and running
+#
+if(open(INTERFACE, "</etc/confnet.d/inet/interface")) {
+    while(<INTERFACE>) {
+	if(/^#/i) { next;}
+	if(/^lo:/i) { next;}
+	if(/^[^#:]+:/i) {$flaglist{IP} = 1; last;}
+	}
+    close(INTERFACE);
+    }
+else {
+    $flaglist{IP} = 0;
+    }
+
+#
+# Check if the paths file is present
+#
+if(open(PATHS, "</etc/uucp/paths")) {
+    close(PATHS);
+    $flaglist{PATHS} = 1;
+    }
+else {
+    $flaglist{PATHS} = 0 ;
+    }
+
+#
+#Write out the flags file
+#
+open(MAILFLGS, ">$MAILFLAGSFILE");
+foreach $flag (sort keys(%flaglist)) {
+    if ($flaglist{$flag}) {
+        print MAILFLGS "$flag\n" ;
+	}
+    }
+close(MAILFLGS);
+
+exit 0;

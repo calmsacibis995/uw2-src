@@ -1,0 +1,2525 @@
+# This file contains the help messages used by the Command Line interface.
+# Each help message is bracketed by lines starting with ++.
+# The debugger does not depend on the size (number of lines) of any message,
+# but it does depend on the order of the messages.  New messages MUST be
+# added to the end of the file.
+
+# This version is for the version of debug that supports threads
+
+++ !
+NAME
+! - führt einen Shell-Befehl aus.
+
+SYNOPSIS
+! befehl_zeile 
+!!
+
+BESCHREIBUNG
+Führt einen Shell-Befehl aus. Der Rest der Zeile wird an die
+Shell zur Verarbeitung übergeben. Besonders die Umleitung wird
+NICHT vom Debugger, sondern von der Shell ausgeführt. Die
+Variable $SHELL enthält, wenn sie gesetzt ist, die komplette
+Pfadbezeichnung der zu verwendenden Shell. Wenn $SHELL nihct
+angegeben ist, wird /usr/bin/sh verwendet. Der Debugger wartet,
+bis der Befehl ausgeführt ist, übernimmt aber nicht die Kontrolle
+der daraus sich ergebenden Verarbeitungsprozesse.
+
+!! Gibt an, daß der letzte Shell-Befehl erneut ausgeführt werden soll.
+
+SIEHE AUCH
+create, Umleitung
+++
+
+++ alias
+NAME
+alias - Hinzufügen, auflisten oder Entfernen von Alias-Bezeichnungen.
+
+SYNOPSIS
+alias Name Tokens ...
+alias [Name]
+alias -r Name
+
+BESCHREIBUNG
+Die erste Form macht aus 'Name' einen Alias für die Marken. Alle
+Zeichen bis zum Zeilenvorschub oder Kommentar werden als zur
+Definition gehörig angenommen. Bestehende Alias-Bezeichnungen
+oder Debugger-Befehle können als eine neue Alias-Bezeichnung
+umdefiniert werden. Wenn eine Alias-Bezeichnung definiert ist,
+ist die Verwendung dieser Bezeichnung gleichwertig mit der
+Eingabe der Sequenz der Marken, die sie ersetzt.
+Alias-Bezeichnungen können in Form von anderen
+Alias-Bezeichnungen definiert werden, allerdings nicht rekursiv.
+
+Alias-Definitionen können spezifische Identifikatoren $1, $2, ...
+enthalten. Jeder dieser Identifikatoren $n wird in einer
+Alias-Definition durch das n'te Element der Aufrufzeile ersetzt,
+wobei die Argumente beginnend mit 1 numeriert sind. Vor jedem
+Argument muß ein Leerzeichen stehen und dahinter ein Leerzeichen,
+ein 'CR/LF' das Kommentar-Zeichen (#) oder der Anfang eines
+Blocks ({) stehen. Die spezifischen Identifikatoren $1, $2, ...
+werden innerhalb einer Zeichenkette in Anführungszeichen nicht
+ersetzt.
+
+Wenn eine Alias-Definition den spezifischen Identifikator $#
+enthält, wird dieser beim Aufruf der Alias-Definition mit der
+Anzahl der Argumente ersetzt, die derzeit während des aktuellen
+Alias-Aufrufes verwendet werden. Wenn eine Alias-Definition den
+spezifischen Identifikator $* enthält, wird dieser beim Aufruf
+der Alias-Definition mit einer Liste aller Argumente ersetzt, die
+während dem aktuellen Alias-Aufrufes übergeben wurden, wobei die
+einzelnen Argumente durch jeweils ein Leerzeichen getrennt sind.
+
+Ohne Argumente, listet der Befehl 'alias' alle aktuellen
+Alias-Bezeichnungen auf. Mit einem einzelnen Namen, zeigt dieser
+Befehl die entsprechende Alias-Bezeichnung für diesen Namen.
+
+Mit der Option -r entfernt 'alias' alle bestehenden
+Alias-Bezeichnungen für den angegebenen Namen.
+
+BEISPIELE
+alias
+alias i
+alias i step -i
+alias edit list $1@1
+alias print_list while($1) { print *$1; set $1 = $1->next }
+alias b if ($# > 0) { stop $* } else { stop %list_file@%list_line }
+alias -r i
+++
+
+++ stop
+NAME
+stop - Definiert oder zeigt Stop-Ereignisse an.
+
+SYNOPSIS
+stop [-p Prozeßliste] [[-q] [-c Anzahl] Stopp_Ausdr [Befehl]]
+Stop [-p Prozeßliste]
+
+BESCHREIBUNG
+Ein Stop-Ereignis gibt eine Bedingung im Adreßbereich eines
+Programms an, die den Debugger veranlaßt, die Ausführung des
+Programms zu unterbrechen. Ein 'Stopausdruck'
+besteht aus einem oder mehreren Ausdrücken, die mit den
+Operatoren && (und) oder || (oder) verbunden sind. Jeder Ausdruck
+kann:
+
+1) entweder eine Stelle sein
+        Eine bestimmte Stelle im Programmtext - diese Ereignisse sind
+        wie herkömmliche Breakpoints;
+
+2) oder (Ausdruck)
+        Ein Ausdruck in der geläufigen Sprache - diese Art von
+        Stop-Ausdrücken wird wahr, wenn der Ausdruck wahr wird;
+
+3) *lvalue (Wert)
+   Eine Stelle in den Programmdaten, die geändert werden kann -
+   diese Art von Ausdrücken wird wahr, wenn sich der Wert ändert.
+
+Stopausdrucke werden kontinuierlich vom Debugger
+bewertet, wenn der Hauptprozeß oder der Ablaufstrang läuft. Wenn
+der gesamte Ausdruck wahr wird, zeigt der Debugger das Eintreten
+des Ereignisses an und führt den entsprechenden, optionalen
+'Befehl' aus.
+
+Siehe Stopausdruck für nähere Angaben.
+
+Die Option -q gibt an, daß der Debugger das Ereignis nicht angibt.
+
+Die Option -c gibt an, daß das Ereignis die ersten 'Zählung' Male
+nicht auslöst, wenn der Stopausdruck wahr wird.                                                    
+
+Die zweite Form des Stop-Befehls zeigt alle Ereignisse für die
+angegebene Liste von Ablaufsträngen und Prozessen an.
+
+Im Gegensatz zu den meisten anderen Befehlen gelten die Aktionen
+des Stop-Befehls für alle Ablaufstränge oder alle vom aktuellen
+Programm (%program) abgeleiteten Einschritt-Prozesse, wenn die
+Option -p nicht angegeben ist.
+
+BEISPIELE
+stop myfile.c@230
+stop *bar
+stop (x == 5)
+stop foo && (a > 7)
+stop (a == 4) || (b == 7)                                                    
+
+SIEHE AUCH
+%program, %verbose, assoccmd, delete, disable, enable, events,
+Ausdruck, Standort, Prozeßliste, Bereich, Stopausdruck
+++
+
+
+++ break
+NAME
+break - Verlassen der 'While'-Schleife.
+
+SYNOPSIS
+break                                                    
+
+BESCHREIBUNG
+Der Befehl 'break' veranlaßt den Debugger, die innerste
+'While'-Schleife zu verlassen.
+
+BEISPIELE
+while($i < 10) { if (x[$i] == $myvar) break; set $i = $i + 1 }
+
+SIEHE AUCH
+continue, while
+++
+
+
+++ continue
+NAME
+continue - fährt bei der nächsten Wiederholung mit der
+'While'-Schleife fort.
+
+SYNOPSIS
+continue
+
+BESCHREIBUNG
+Der Befehl 'continue' veranlaßt den Debugger, mit der Ausführung
+der nächsten Wiederholung der innersten 'While'-Schleife zu
+beginnen. Die Ausführung beginnt mit der erneuten Bewertung des
+Schleifenausdrucks.
+
+BEISPIELE
+while (i < 20) { step; if (i % 2) continue; p i, x[i] }
+
+SIEHE AUCH
+break, while
+++
+
+
+++ cancel
+NAME
+cancel - hebt anstehende Signale auf.
+
+SYNOPSIS
+cancel [-p Prozeßliste] [Signal ...]
+
+BESCHREIBUNG
+Der Befehl 'cancel' entfernt ein Signal oder eine Liste von
+Signalen aus den anstehenden Signalen für die angegebene Liste
+von Ablaufsträngen und Prozessen und Ablauffolgen (Standard
+%thread or %proc). Diese Signale werden nicht von den angegebenen
+Ablaufsträngen oder Prozessen empfangen, wenn deren Ausführung
+weitergeführt wird. Wenn keine Signale angegeben sind, werden
+alle anstehenden Signale für die angegebenen Ablaufstränge oder
+Prozesse aufgehoben.
+
+BEISPIELE
+cancel
+cancel segv
+cancel -p all sigfpe sigemt
+
+SIEHE AUCH
+kill, Prozeßliste, signal, signames
+++
+
+
+++ create
+NAME
+create - Erstellt und steuert einen oder mehrere neue Prozesse.
+
+SYNOPSIS
+create [-dr] [-f all|none|procs] [-l Start_Ort] [Befehlszeile]
+
+BESCHREIBUNG
+Der Befehl 'create' hat eine Shell-ähnliche Befehlszeile und
+erstellt einen oder mehrere Prozesse. Die Befehlezeile kann
+Umleitungen für Ein- und/oder Ausgaben sowie ein Shell-Pipe
+enthalten. Alle sich daraus ergebenden Prozesse werden an der mit
+'Anfangstandort' angegebenen Stelle angehalten. Wenn keine
+Startposition angegeben ist, oder die angegebene Startposition
+nicht im Adreßbereich eines Programms gefunden werden kann, wird
+der Prozeß an der Funktion 'main' angehalten. Wenn keine
+Funktion 'main' existiert, wird der Prozeß an der im Kopf der
+Objektdatei angegebenen Adresse angehalten. Um einen Prozeß zu
+erstellen und auszuführen, müssen Sie zuerst 'create' und dann
+'run' eingeben. 
+
+Wenn keine 'Befehlszeile' angegeben ist, wird
+vorhergehende 'Befehlszeile' verwendet. Alle Prozesse,
+die durch Aufrufe mit dieser 'Befehlszeile' erstellt
+wurden, werden gelöscht.
+
+Jedem erstellten Prozeß wird ein Identifikator für den
+Debugger-Prozeß zugeteilt. Der Bezug auf diesen Prozeß in
+Befehlen mit der Option -p kann mit diesem Identifikator oder mit
+dessen ID des Systemprozesses erfolgen. Der erste in einer
+Pipeline erstellte Prozeß wird zum aktuellen Prozess (%proc).
+Wenn dieser Prozeß die Schnittstellen der Ablaufstränge benutzt,
+wird der (Einschritt-) Ablaufstrang im neuen Prozeß zum
+aktuellen Ablaufstrang (%thread). Alle anhand eines einzelnen
+ausführbaren Programms erstellten (via fork(2)) Prozesse können
+auch mit dem Namen dieses ausführbaren Programms (Programmname)
+identifiziert werden.
+
+Wenn die Option -r angegeben ist, werden Ein- und Ausgaben des
+Prozesses an ein Pseudo-Terminal umgeleitet. Wenn dieser Prozeß
+Eingaben erfordert, muß der Befehl 'input' verwendet werden. Die
+Option -d gibt an, daß keine Umleitung erfolgt. Wenn keine
+Option angegeben ist, wird die mit %redir angegebene Betriebsart
+verwendet (Standard, keine Umleitung).
+
+Wenn die Option -f mit dem Argument 'none' angegeben ist, wird
+der Debugger nicht die untergeordneten Prozesse jeglicher Prozesse mit
+Verzweigung verfolgen. Wenn die Option -d mit den Argumenten
+'all' oder 'procs' angegeben ist, werden alle untergeordneten Prozesse vom
+Debugger gesteuert (diese Prozesse können von der
+Debugger-Steuerung mit 'release' befreit werden). Wenn -f nicht
+angegeben ist, wird der Debugger entsprechend %follow gesteuert
+(Standard, Verfolgung aller  untergeordneten Prozesse).
+
+Alle von einem Hauptprozeß erstellten Ablaufstränge werden vom
+Debugger verfolgt (können aber mit 'release' aus der Verfolgung
+freigegeben werden). Siehe Beschreibung von %thread_change für
+weitere Informationen über die Steuerung des Debuggers in Bezug
+auf neu erstellte Ablaufstränge.
+
+BEISPIEL
+create
+create -f none myprog 1 2 3
+create myprog 1 2 3 | myfilter1 | myfilter2
+
+SIEHE AUCH
+!, %follow, %program, %redir, grab, input, Prozeßliste, Prozeß,
+Programm, rename, release, %thread, %thread_change
+++
+
+
+++ delete
+NAME
+delete - Löscht Ereignisse
+
+SYNOPSIS
+delete Ereignisnummer ...
+delete -a [-p Prozeßliste] [Ereignistyp]
+
+BESCHREIBUNG
+Die erste Form löscht Ereignisse, die den angegebenen
+Ereignisnummern entsprechen.
+
+Die zweite Form löscht alle Ereignisse des angegebenen
+Ereignistyps (Ereignistyp) (alle Typen, wenn kein Typ angegeben
+ist) in der angegebenen Liste von Ablaufsträngen und Prozessen
+(im aktuellen Ablaufstrang oder Prozeß, wenn keiner angegeben
+ist). Es gibt folgende Ereignistypen ('Ereignistyp'): 'onstop',
+'signal', 'stop' oder 'syscall'.
+
+
+BEISPIELE
+delete 1 3 5
+delete -a -p p1
+delete -a stop
+delete -a syscall
+
+SIEHE AUCH
+change, disable, enable, events, onstop, Prozeßliste,
+signal, stop, syscall
+++
+
+
+++ dis
+NAME
+dis - Disassembliert Maschinenbefehle.
+
+SYNOPSIS
+dis [-p Prozeßliste] [-c Anweisungszahl] [Standort]
+
+BESCHREIBUNG
+Disassembliert 'Anweisungszahl' Befehle in jedem angegebenen
+Ablaufstrang oder Prozeß (Standard %thread oder %proc). Wenn das
+Argument 'Anweisungszahl' nicht angegeben ist, wird als Standard
+%num_lines verwendet. '%num_lines' beginnt bei 10 und kann
+geändert werden.
+
+Wenn das Argument 'Standort' (Stelle) angegeben ist, beginnt das
+Disassemblieren an der angegebenen Stelle in jedem angegebenen
+Ablaufstrang oder Prozeß. Wenn keine Stelle angegeben ist,
+beginnt das Disassemblieren nach der Auslösung eines Ereignisses
+oder nach dem Reset von %frame an der mit %loc angegebenen
+Adresse. Die nachfolgenden Befehle 'dis' fahren bei der Adresse
+fort, die genau unter dem zuletzt mit dem vorhergehenden 'dis'
+angezeigten Befehl steht.
+
+BEISPIELE
+dis
+dis -c 20 main
+dis file.c@10
+
+SIEHE AUCH
+%frame, %loc, %num_lines, dump, Standort, print, Prozeßliste
+++
+
+
+++ disable
+NAME
+disable - Deaktiviert Ereignisse.                                                    
+
+SYNOPSIS
+disable Ereignisnummer ...
+disable -a [-p Prozeßliste] [Ereignistyp]
+
+BESCHREIBUNG
+Die erste Form deaktiviert die Ereignisse, die den angegebenen
+Ereignisnummern entsprechen.
+
+Die zweite Form deaktiviert alle Ereignisse des angegebenen
+Ereignistyps (Ereignistyp) (alle Typen, wenn kein Typ angegeben
+ist) in der angegebenen Liste von Ablaufsträngen und Prozessen
+(im aktuellen Ablaufstrang oder Prozeß, wenn keiner angegeben
+ist). Es gibt folgende Ereignistypen ('Ereignistyp'): 'onstop',
+'signal', 'stop' oder 'syscall'.
+
+Deaktivierte Ereignisse haben keine Auswirkung für die
+betreffenden Ablaufstränge oder Prozesse, werden aber nicht
+gelöscht. Sie können mit 'enable' wieder aktiviert werden.
+
+BEISPIELE
+disable 3 5
+disable -a -p p1.1,p2.3
+disable -a onstop
+disable -a signal
+
+SIEHE AUCH
+change, delete, enable, events, onstop, Prozeßliste, signal,
+stop, syscall
+++
+
+++ dump
+NAME
+dump - Zeigt den Inhalt des Speichers an.
+
+SYNOPSIS
+dump [-p Prozeßliste] [-c Bytezahl] Standort
+
+BESCHREIBUNG
+Der Befehl 'dump' zeigt den Inhalt des Speichers für jeden
+angegebenen Ablaufstrang oder Prozeß an (Standard, %thread oder
+%proc). Er zeigt 'Bytezahl' Byte an, 16 Byte pro Zeile, in
+hexadezimal und in ASCII, beginnend mit der unter 'Standort'
+angegebenen Adresse.
+
+Wenn das Argument 'Bytezahl'  nicht angegeben ist, werden
+'%num_bytes' angezeigt. '%num_bytes' beginnt bei 256 und kann
+geändert werden.
+
+BEISPIELE
+dump -c 16 myptr
+dump %esp
+dump 0x80001248
+
+SIEHE AUCH
+%num_bytes, dis, Standort, print, Prozeßliste
+++
+
+
+++ enable
+NAME
+enable - Aktiviert Ereignisse.
+
+SYNOPSIS
+enable Ereignisnummer ...
+enable -a [-p Prozeßliste] [Ereignistyp]
+
+BESCHREIBUNG
+ Die erste Form aktiviert Ereignisse, die den angegebenen
+ Ereignisnummern entsprechen.
+
+Die zweite Form aktiviert alle Ereignisse des angegebenen
+Ereignistyps (alle Typen, wenn kein Typ angegeben ist) in der
+angegebenen Liste von Ablaufsträngen und Prozessen (im aktuellen
+Ablaufstrang oder Prozeß, wenn keiner angegeben ist). Es gibt
+folgende Ereignistypen ('Ereignistyp'): 'onstop', 'signal', 'stop'
+oder 'syscall'.
+
+Nur deaktivierte Ereignisse können aktiviert werden. Wenn ein
+Ereignis aktiviert ist, wirkt es erneut in dem Ablaufstrang oder
+Prozeß, in dem es definiert ist.
+
+BEISPIELE
+enable 3 5
+enable -a -p p1,p2.3
+enable -a stop
+enable -a signal
+
+SIEHE AUCH
+change, delete, disable, events, onstop, Prozeßliste, signal,
+stop, syscall
+++
+
+
+++ events
+NAME
+events - Listet Ereignise auf.
+
+SYNOPSIS
+events [-p Prozeßliste] [Ereignisnummer ...]                                                    
+
+BESCHREIBUNG
+Ohne Argumente listet der Befehl 'events' alle Stop-Ereignisse,
+signalbezogene Aktionen, Aktionen bei Systemaufrufen und Aktionen
+des Befehls 'onstop' für den aktuellen Ablaufstrang oder Prozeß.
+Wenn die Option -p angegeben ist, werden die Ereignisse in
+Verbindung mit den angegebenen Ablaufsträngen und Prozessen
+angezeigt.
+
+Wenn eine oder mehrere Ereignisnummern angegeben sind, zeigt
+'events' die komplette Liste der angegebenen Ereignisse an. Die
+komplette Liste enthält alle Ablaufstränge und Prozesse, für die
+das Ereignis definiert ist, und den kompletten, dazugehörigen
+Befehlsblock, falls vorhanden.
+
+BEISPIELE
+events
+events -p p1,p2.3
+events 3
+
+SIEHE AUCH
+change, delete, disable, enable, onstop, Prozeßliste, signal,
+stop, syscall
+++
+
+
+++ grab
+NAME
+grab - Übernimmt die Steuerung des Lebensprozeß oder des Kernbildes.
+
+SYNOPSIS
+grab  [-f all|none|procs] [-l Ladedatei] Prozeß_Spezifikationfunktion ...
+grab -c Kerndatei Objektdatei
+
+BESCHREIBUNG
+Die erste Form hat einen oder mehrere 'Prozeß_Spezifikationfunktionen'
+(Prozessidentifikatoren); 'debug' versucht, die Steuerung jedes
+der angegebenen Prozesse zu übernehmen (die Steuerung wird nur
+übergeben, wenn Sie die entsprechende Berechtigung dazu haben).
+Jeder Prozeß kann entweder als '/proc Pfadname' oder als
+Prozeß_ID angegeben werden.
+
+Die Option -l gibt an, daß eine alternative Objektdatei zum Laden
+der Symbole für den Prozess verwendet werden soll; es kann nur
+ein Prozess angegeben werden.                                                    
+
+Wenn die Option -f mit dem Argument 'none' angegeben ist, wird
+der Debugger nicht die untergeordneten Prozesse jeglicher Prozesse mit
+Verzweigung verfolgen. Wenn die Option -d mit den Argumenten
+'all' oder 'procs' angegeben ist, werden alle untergeordneten Prozesse vom
+Debugger gesteuert (diese Prozesse können von der
+Debugger-Steuerung mit 'release' befreit werden). Wenn -f nicht
+angegeben ist, wird der Debugger entsprechend %follow gesteuert
+(Standard, Verfolgung aller  untergeordneten Prozesse).
+
+Alle von einem Hauptprozeß erstellten Ablaufstränge werden vom
+Debugger verfolgt (können aber mit 'release' aus der Verfolgung
+freigegeben werden). Siehe Beschreibung von %thread_change für
+weitere Informationen über die Steuerung des Debuggers in Bezug
+auf neu erstellte Ablaufstränge.
+
+Die zweite Form öffnet eine Kerndatei sowie die entsprechende
+Objektdatei zur Prüfung. Übernommene Kernbilder können mit allen
+für die Prüfung von Lebensprozessen zur Verfügung stehenden
+Befehlen geprüft, aber nicht für die Ausführung geändert werden.
+
+Übernommene Prozesse, wie erstellte, werden mit einem
+Prozeßidentifikator für Debugger versehen und können entweder
+mit diesem Identifikator oder mit deren Prozeß-ID oder mit dem
+Namen des Programms, von dem sie abgeleitet sind, aufgerufen
+werden. Der erste übernommene Prozeß wird zum aktuellen Prozeß
+(%proc). Wenn dieser Prozeß die Schnittstellen der Ablaufstränge
+verwendet, wird der Debugger einen Ablaufstrang aus diesem
+Prozeß wählen und ihn zum aktuellen Ablaufstrang (%thread)
+machen.
+
+BEISPIELE
+grab 123
+grab -f procs /proc/123 3455
+grab -l myobject /proc/3455
+grab -c core.save myobject
+
+SIEHE AUCH
+%follow, %proc, %program, create, Prozeßliste, Prozeß, release,
+rename, %thread, %thread_change
+++
+
+
+++ help
+NAME
+help - Ruft Hilfe auf.
+
+SYNOPSIS
+help [Thema]
+
+BESCHREIBUNG
+Das Argument 'Thema' kann ein beliebiges Alias, ein Befehlsname
+oder ein Hilfethema sein. Wenn 'Thema' nicht angegeben ist, wird
+die Liste der verfügbaren Befehle und Hilfethemen angezeigt.                                                    
+
+BEISPIELE
+help
+help stop
+help b
+help Standort
+++
+
+
+++ if
+NAME
+if - Bedingte Verzweigung.
+
+SYNOPSIS
+if (Ausdruck) Befehl
+if (Ausdruck) Befehl else Befehl
+
+BESCHREIBUNG
+Der Ausdruck 'Ausdruck' wird in der aktuellen Sprache ((%db_lang oder
+%lang) im Kontext des aktuellen Ablaufstranges oder
+Einschritt-Prozesses bewertet. Wenn der Ausdruck wahr ist, wird
+der Teil 'then' ausgeführt. Andernfalls wird der Teil 'else'
+ausgeführt, wenn er vorhanden ist. Das Argument 'Befehl' kann
+entweder ein einfacher Befehl oder ein Block sein.
+
+BEISPIELE
+stop  file.c@myfunc { if (x < 10) run; else print x }
+
+SIEHE AUCH
+%db_lang, %lang, Block, Ausdruck, Bereich, while
+++
+
+
+++ input
+NAME
+input - Sendet die Eingabe an einen Prozess.                                                    
+
+SYNOPSIS
+input [-p Prozeßname|-r Pseudo-tty] [-n] Zeichenkette
+
+BESCHREIBUNG
+Wenn ein Prozeß mit 'create -r' erstellt wurde, werden dessen
+Ein- und Ausgaben gemeinsam mit den E/A jeglicher anderer
+Prozesse, die vom gleichen Programm abgeleitet wurden, an ein
+Pseudo-Terminal umgeleitet. Um Eingaben an einen solchen Prozeß
+zu senden, muß der Befehl 'input' verwendet werden.
+
+'Pseudo-tty' ist der Name des Pseudo-Terminals, an den die
+Eingaben umgeleitet werden sollen. Der Debugger bezeichnet alle
+umgeleiteten Prozeß-Ausgaben mit dem Namen des Pseudo-Terminals.
+Alternativ kann ein Prozeß- oder Programmname angegeben werden.
+Wenn kein Prozeß oder 'Pseudo-tty' angegeben ist, wird der dem
+aktuellen Programm zugeteilte Pseudo-Terminal angenommen.
+
+Die Eingabe 'Zeichenkette' (Zeichenkette) wird an den angegebenen
+Pseudo-Terminal oder den, dem angegebenen Prozeß oder Programm
+zugeteilten Pseudo-Terminal gesendet. An die Zeichenkette wird
+ein 'CR/LF' angefügt, außer wenn die Option -n angegeben ist.
+
+BEISPIELE
+input -r pts1 "Hier steht eine Zeichenkette"
+input -p myprog "Hier steht eine weitere Zeichenkette"
+
+SIEHE AUCH
+%redir, create
+++
+
+
+++ jump
+NAME
+jump - Verändert den Programmzähler des Ablaufstrangs oder des
+Programms.
+
+SYNOPSIS
+jump [-p Prozeßliste] Standort
+
+BESCHREIBUNG
+Ein Ablaufstrang oder ein Prozeß muß erst angehalten werden,
+bevor dieser Befehl erfolgreich dafür verwendet werden kann. Der
+Befehl 'jump' stellt den Programmzähler für die Liste der
+Ablaufstränge und Prozesse (%thread oder %proc) auf die unter
+'Standort' angegebene Adresse. Wenn der Ablaufstrang oder der
+Prozeß die Ausführung beendet, wird er bei dieser Adresse
+beginnen.
+
+Die Stelle ('Standort' kann jegliche beliebige Adresse innerhalb
+des Textes des angegebenen Ablaufstranges oder Prozesses sein;
+dabei ist jedoch sehr vorsichtig vorzugehen. Der Befehl 'jump'
+versucht nicht, den Stapel des Ablaufstranges oder Prozesses
+anzupassen, wenn die Adresse außerhalb der aktuellen Funktion
+liegt. Man muß auch vorsichtig sein, wenn man in einem Code
+springt, der Nebenwirkungen haben kann.
+
+SYNOPSIS
+jump 10
+jump -p p2.1 main+8
+
+SIEHE AUCH
+Standort, Prozeßliste
+++
+
+
+++ kill
+NAME
+kill - Sendet ein Signal an einen Ablaufstrang oder Prozeß.
+
+SYNOPSIS
+kill [-p Prozeßliste] [Signal]
+
+BESCHREIBUNG
+Das angegebene Signal ('signal') wird an den aktuellen
+Ablaufstrang oder Einschritt-Prozeß oder an die Liste von
+Ablaufsträngen und Prozessen, wenn die Option -p angegeben ist,
+gesendet. Im Gegensatz zu den meisten anderen Debugger-Befehlen
+wird das Signal, wenn ein Prozeß-ID in 'Prozeßliste' angegeben ist,
+an den Prozeß als ein Ganzes gesendet und nicht an jeden
+Ablaufstrang in diesem Prozeß.
+
+Signale können mit Nummer oder mit Namen angegeben werden. Ein
+Signalname kann mit oder ohne den Initialen 'SIG' als Präfix
+angegeben werden. Groß- oder Kleinschreibung ist unbedeutend.
+Wenn kein Signal angegeben ist, wird 'SIGKILL' verwendet.
+
+BEISPIELE
+kill -p p1.2,p2.3
+kill sigfpe
+kill -p p3 8
+
+SIEHE AUCH
+cancel, Prozeßliste, signal, signames
+++
+
+
+++ list
+NAME
+list - Zeigt die Ursprungszeilen an.
+
+SYNOPSIS
+list [-p Prozeßliste] [-c Zählung] [Ablaufstrang-ID@][Dateiname@]Funktionname
+list [-p Prozeßliste] [-c Zählung] [Ablaufstrang-ID@][Dateiname@]Zeilennummer
+list [-p Prozeßliste] [-c Zählung] /norm_Ausdruck/
+list [-p Prozeßliste] [-c Zählung] ?norm_Ausdruck?
+list [-p Prozeßliste] [-c Zählung]
+
+BESCHREIBUNG
+Der Befehl 'list' zeigt die Ursprungszeilen für die angegebenen
+Ablaufstränge und Prozesse an oder für den aktuellen Ablaufstrang
+oder Prozeß, wenn 'Prozeßliste' nicht angegeben ist.                                                    
+
+Die ersten vier Formen geben Startpunkt für die Anzeige an. Die
+ersten beiden Formen ermöglichen die Angabe eines Ablaufstranges
+oder Prozesses, einer Datei, einer Funktion und einer
+Zeilennummer. 'Ablaufstrang-ID' kann sich auf einen Ablaufstrang oder
+Einschritt-Prozeß beziehen. Wenn ein Ablaufstrang oder Prozeß
+angegeben ist, wird jegliche, mit der Option -p angegebene
+Prozeßliste überschrieben.
+
+Die dritte Form findet die nächste Zeile, die dem regulären
+Ausdruck 'ed(1)-style' entspricht. Die vierte Form sucht
+rückwärts ausgehend von der aktuellen Zeile. Der abschließende
+Schrägstrich oder das abschließende Fragezeichen können
+weggelassen werden, au0er wenn andere Befehle in dieser Zeile
+folgen. Die letzte Form fährt mit der Anzeige dere Dateie fort,
+und zwar ab der zuletzt angezeigten Zeile, oder ab %file@%line
+nach Auslösung eines Ereignisses oder nach Reset von %frame.
+
+Wenn das Argument 'Zählung' angegeben ist, werden dementsprechend
+viele Zeilen angezeigt, andernfalls werden %num_linies angezeigt.
+%num_lines beginnt bei 10 und kann geändert werden.                                                    
+
+Nachdem ein Zeilenblock angezeigt ist, wird %list_file auf den
+Namen der angezeigten Datei und %list_line auf die Nummer der
+zuletzt angezeigten Ursprungszeile gesetzt.                                                    
+
+BEISPIELE
+list -c 20
+list myfile@1
+list myfunc
+list /x/
+list ?foobar
+list /
+
+SIEHE AUCH
+%file, %frame, %line, %list_file, %list_line, Standort,
+print, Prozeßliste, norm_Ausdruck
+++
+
+++ map
+NAME
+map - Zeigt die virtuelle Adressenverteilung an.
+
+SYNOPSIS
+map [-p Prozeßliste]
+
+BESCHREIBUNG
+Zeigt die virtuelle Adreßverteilung für einen oder mehrere
+Ablaufstränge oder Prozesse an. Ohne Argumente wird die
+Verteilung für den aktuellen Prozeß (%proc) angezeigt. Da alle
+Ablaufstränge innerhalb eines Prozesses den gleichen
+Adreßbereich teilen, wird die virtuelle Adreßverteilung die
+gleiche für alle Ablaufstränge innerhalb eines Prozesses sein.
+
+SIEHE AUCH
+create, grab, Prozeßliste
+++
+
+
+++ symbols
+NAME
+symbols - Zeigt Symbolnamen, Werte und Typen an.                                                    
+
+SYNOPSIS
+symbols [-p Prozeßliste] [-o Objekt] [-n Dateiname] [-dfgltuv] [Muster]
+
+BESCHREIBUNG
+Zeigt die Liste der Variablennamen an, die im aktuellen Rahmen
+(%frame) in den angegebenen Ablaufsträngen oder Prozessen
+(Standard: %thread oder %proc) sichtbar sind. Ohne Optionen (oder
+mit der Option -l) werden die lokalen Namen angezeigt, die in der
+aktuellen Funktion (%func) definiert sind. Mit der Option -f
+werden nur die sichtbaren Namen angezeigt, die lokal für die
+aktuelle Datei (%file) gelten. Wenn ein Dateiname ('Dateiname')
+mit der Option -n angegeben ist, werden anstelle die Dateisymbole
+angezeigt. Mit der Option -g werden nur die sichtbaren, globalen
+Namen angezeigt, die im aktuellen Objekt (ausführbare Datei oder
+geteilte Bibliothek) definiert ist. Wenn die Option -g zusammen
+mit der Option -o verwendet wird, werden die globalen Namen in
+der angegebenen Objektdatei angezeigt. Mit der Option -d werden
+die integrierten Debugger-Variablen angezeigt. Mit der Option -u
+werden die für den Debugger erhaltenen Benutzervariablen
+angezeigt.
+
+Wenn ein Modell 'sh(1)-style' angegeben ist, wird die Anzeige
+weiter eingeschränkt und nur die Namen angezeigt, die diesem
+Modell entsprechen.
+
+Mit der Option -t werden zusätzlich zu den Namen die Symboltypen
+angezeigt. Mit der Option -v werden die Symbolwerte angezeigt.
+Wenn die aktuelle Programmiersprache C++ ist, zeigt der Befehl
+'symbols -v' nicht die statischen Typen an. Diese können durch
+Ausdrucken des Symbols mit dem Befehl 'print' angezeigt werden.
+
+BEISPIELE
+symbols -ftv
+symbols -g -o libc.so.1 exec*
+
+SIEHE AUCH
+%file, %frame, %func, Muster, print, Prozeßliste
+++
+
+
+++ print
+NAME
+print - Druckt den Wert eines Ausdrucks aus.                                                    
+
+SYNOPSIS
+print [-p Prozeßliste] [-f Format] [-v] Ausdruck, ...
+
+BESCHREIBUNG
+Zeigt die Ergebnisse der Bewertung einer Liste von durch Komma
+getrennten Ausdrücken an. Die Ausdrücke werden im Kontext
+mit den angegebenen Ablaufsträngen und Prozessen bewertet
+(Standard: %thread oder %proc). Mit der Option -f muß ein Format
+angegeben werden. Die Ausdrücke können Programmvariablen,
+integrierte Debugger-Variablen (z.B. %line) und
+benutzerdefinierte Variablen ($myvar, $HOME) enthalten. Wenn ein
+Funktionsaufruf bewertet wird, erstellt der Debugger einen
+Stapelrahmen für diese Funktion und führt sie aus.
+Debugger-Ereignisse werden während der Ausführung der Funktion
+deaktiviert. Ausdrücke werden in der aktuellen Programmiersprache
+(%lang oder %db_lang) bewertet. Hinter jedem Ausdruck wird ein
+Leerzeichen gedruckt und die Zeile wird mit einem CR/LF
+abgeschlossen, außer wenn ein Format angegeben ist.
+
+Mit der Option -v werden detailliertere Informationen angezeigt.
+Diese zusätzlichen Informationen enthalten Beispiele für alle vom
+Debugger während der Bewertung des Ausdrucks aufgerufenen
+Funktionen. Dies ist bei C++ nützlich, um zu sehen, wie
+überlastete Funktion gelöst werden. Mit der Option -v werden auch
+Elemente der Compiler-Struktur und -Gliederung angezeigt wie
+Zeiger auf virtuelle Funktionstabellen.
+
+Der Befehl 'set' kann auch zur Bewertung von Sprachausdrücken
+verwendet werden. Aber bei 'set' wird das Ergebnis eines
+Ausdruckes nicht ausgedruckt. Dieser Befehl wird hauptsächlich
+zur Bewertung eines Ausdrucks für Nebenwirkungen wie Zuweisungen
+verwendet.
+
+BEISPIELE
+print %line, %file, %func
+print "a[i] == ", a[i]
+print *ptr->next
+print -f "0x%x\n" main
+print -v myfunc(1, 2, 3)
+
+SIEHE AUCH
+%db_lang, %lang, C++, Ausdruck, Format, Prozeßliste, Bereich, set
+++
+
+++ ps
+NAME
+ps - Prozess-Status.                                                    
+
+SYNOPSIS
+ps [-p Prozeßliste]
+
+BESCHREIBUNG
+Zeigt den Status der gesteuerten Ablaufstränge und Prozesse an.
+Wenn die Option -p nicht angegeben ist, wird der Status aller
+gesteuerten Ablaufstränge und Prozesse angezeigt. Der aktuelle
+Ablaufstrang (%thread), wenn vorhanden, oder der aktuelle Prozeß
+(%proc) wird mit dem Sternzeichen (*) gekennzeichnet.
+
+SIEHE AUCH
+Prozeßliste
+++
+
+++ pwd
+NAME
+pwd - Druckt das aktuelle Arbeitsverzeichnis aus.                                                    
+
+SYNOPSIS
+pwd                                                    
+
+BESCHREIBUNG
+Der Befehl 'pwd' druckt das aktuelle Arbeitsverzeichnis des
+Debuggers aus.
+
+SIEHE AUCH
+cd
+++
+
+++ quit
+NAME
+quit - Verläßt den Debugger.
+
+SYNOPSIS
+quit
+
+BESCHREIBUNG
+Verläßt den Debugger. Alle gesteuerten Prozesse werden gelöscht
+(wenn sie erstellt waren) oder freigegeben und ausgeführt (wenn
+sie übernommen wurden).
+
+SIEHE AUCH
+release
+++
+
+++ release
+NAME
+release - Gibt einen oder mehrere gesteuerte Ablaufstränge oder
+Prozesse frei.
+
+SYNOPSIS
+release [-s] [-p Prozeßliste]
+
+BESCHREIBUNG
+Die angegebenen Ablaufstränge oder Prozesse (Standard: %thread
+oder %proc) werden nicht mehr vom Debugger gesteuert oder
+kontrolliert. Ohne Option wird jeder Ablaufstrang oder Prozeß
+freigegeben und kann ausgeführt werden. Mit der Option -s wird
+jeder im angehaltenen Zustand befindliche Prozeß freigegeben.
+Die Option -s wird für Ablaufstränge ignoriert. Ein Ablaufstrang
+oder Prozeß kann freigegeben werden, selbst wenn er nicht vom
+Debugger übernommen wurde; das heißt, erstellte Prozesse können
+ebenfalls freigegeben werden.
+
+BEISPIELE
+release -p p1
+release -s
+
+SIEHE AUCH
+Prozeßliste, quit
+++
+
+++ run
+NAME
+run - Befiehlt die Ausführung eines Ablaufstrangs oder Prozesses.                                                    
+
+SYNOPSIS
+run [-p Prozeßliste] [-bfr] [-u Standort]
+
+BESCHREIBUNG
+Befiehlt die Ausführung der angegebenen Liste von Ablaufsträngen
+und Prozessen (Standard: %thread oder %proc). Mit der Option -f
+wird der Ablaufstrang oder der Prozeß vom Debugger im
+Vordergrund ausgeführt, d.h. der Debugger wartet, bis die
+Ablaufstränge oder Prozesse anhalten, bevor er die Steuerung an
+den Benutzer übergibt. Mit der Option -b wird die Ausführung im
+Hintergrund bestimmt (kein Warten). Die Steuerung wird sofort an
+den Benutzer übergeben und der Ablaufstrang oder Prozeß wird
+gestartet. Wenn weder -f noch -b angegeben sind wird der Standard
+durch den Wert der Debugger-Variablen %wait bestimmt.
+
+Mit der Option -r wird der Ablaufstrang oder Prozess ausgeführt,
+bis die aktuelle Funktion zurückgibt. Mit der Option -u wird eine
+Stelle angegeben, an der ausgeführt werden soll.                                                    
+
+Ablaufstränge, die derzeit nicht auf einem Kern ausgeführt
+werden, können nicht für die Ausführung befohlen werden (wie z.B.
+Ablaufstränge die mit dem Status 'OFF LWP' im Befehl 'ps'
+angezeigt werden).
+
+BEISPIELE
+run -p all -b
+run -r
+run -u 108
+
+SIEHE AUCH
+%wait, Standort, Prozeßliste, ps, step, Ablaufstrang
+++
+
+++ script
+NAME
+script - Führt ein Befehls-Skript des Debuggers aus.
+
+SYNOPSIS
+script [-q] fname
+
+BESCHREIBUNG
+Liest und führt Debuggerbefehle aus einer Datei aus. Befehle
+werden auf dem Bildschirm angezeigt, bevor sie ausgeführt werden,
+außer wenn die Option -q angegeben ist. Skripts können
+verschachtelt werden. ++
+
+++ set
+NAME
+set - Eine Debugger- oder Programmvariable ändern.
+
+SYNOPSIS
+set [-p Prozeßliste] [-v] debug_or_user_var [=] Ausdruck [,Ausdruck...]
+set [-p Prozeßliste] [-v] Sprachenausdruck
+
+BESCHREIBUNG
+Der Befehl 'set' hat zwei Formen. Die erste Form wird für die
+Zuweisung eines neuen W für eine integrierte oder erhaltene
+Debugger-Variable verwendet (z.B. %lang oder $foo). Die normalen
+Werte von 'Ausdruck' hängen von der Variablen ab. Einige, wie %lang,
+nehmen eine speziell definierte Reihe von Namen an. Andere können
+jeglichen Debugger- oder Sprachausdruck übernehmen, der in einen
+Zeichenkettenwert umgewandelt werden kann. Im Falle einer (durch
+Komma getrennten) Liste von Zeichenketten und Benutzervariablen
+werden die Zeichenkettenwerte dieser Ausdrücke zusammengezogen.
+Siehe 'Hilfe' über jede Debugger-Variable für die spezifischen,
+Normalwerte.
+
+In der zweiten Form kann der Befehl 'set' zur Bewertung
+beliebiger Sprachausdrücke verwendet werden, obwohl die typische
+Verwendung die Bewertung eines Zuweisungsausdrucks ist. Wenn mehr
+als ein Ablaufstrang oder Prozeß angegeben ist, wird der Befehl
+der Reihe nach im Kontext jedes Ablaufstranges oder
+Prozesses bewertet.
+
+Mit der Option -v werden Beispiele aller vom Debugger während der
+Bewertung des Ausdrucks aufgerufenen Befehl angezeigt. Dies ist
+bei C++ nützlich, um zu sehen, wie überlastete Funktion gelöst
+werden.
+
+BEISPIELE
+set %global_path = %global_path, ":src/new/mydir"
+set -p all %path = "mydir"
+set %frame 2
+set %eax = 0x3421
+set x = 3
+set -v myfunc(a, b)
+
+SIEHE AUCH
+%db_lang, %lang, C++, Ausdruck, Prozeßliste, Bereich, Benutzervariablen
+++
+
+
+++ signal
+NAME
+signal - Definiert oder listet Signalaktionen für einen
+Ablaufstrang oder Prozeß.
+
+SYNOPSIS
+signal [-p Prozeßliste] [-iq] [Signal ... [Befehl]]
+
+BESCHREIBUNG
+Wenn ein Signal an einen Ablaufstrang oder Prozeß gesendet wird, 
+fängt der Debugger das Signal ab und zeigt dessen Auftreten an. 
+Dann kann das Signal mit dem Befehl 'cancel' aufgehoben werden oder 
+der Prozeß kann weiterlaufen und das Signal empfangen. Wenn die 
+Option -i mit einem oder mehreren Signalnamen oder -nummern 
+angegeben wird (siehe 'kill'), bedeutet dies, daß der Debugger diese 
+Signale ignorieren wird (nicht für die unter 'Prozeßliste' angegebene 
+Liste von Ablaufsträngen oder Prozessen abfangen wird). Ein 
+Signalname kann mit oder ohne den Initialen 'SIG' als Präfix 
+angegeben werden. Groß- oder Kleinschreibung ist unbedeutend. 
+Wenn das Signal ohne die Option -i angegeben ist, wird die 
+Standard-Aktion für dieses Signal wiederhergestellt.
+
+Wenn ein Befehl mit einem Satz von Signalen angegeben wird,
+erstellt der Debugger ein Ereignis für diesen Satz. Dieses
+Ereignis kann gelöscht, deaktiviert oder aktiviert werden und
+kann ein Ereignis der Befehle 'stop', 'onstop' und 'syscall'
+sein. Dem gleichen Signal können mehrere Ereignisse zugewiesen
+werden. Wenn alle Ereignisse für ein gegebenen Signal gelöscht
+werden, wird die Standard-Aktion des Debuggers für dieses Signal
+jedoch nicht entfernt. Mit der Option -q wird das Signalereignis
+nicht angekündigt.
+
+Ohne Argumente werden die Signalaktionen für die unter 'Prozeßliste'
+angegebenen Prozesse angezeigt.
+
+Im Gegensatz zu den meisten anderen Befehlen gelten die Aktionen
+des Stop-Befehls für alle Ablaufstränge oder alle vom aktuellen
+Programm (%program) abgeleiteten Einschritt-Prozesse, wenn die
+Option -p nicht angegeben ist.
+
+BEISPIELE
+signal -i fpe emt
+signal SIGFPE
+signal 8 { if (x == 0) cancel 8; run }
+
+SIEHE AUCH
+assoccmd, cancel, delete, disable, enable, kill, Prozeßliste, signames
+++
+
+++ step
+NAME
+step - Führt einen Prozess im Einzelschritt aus.                                                    
+
+SYNOPSIS
+step [-p Prozeßliste] [-ibfoq] [-c Zählung]
+
+BESCHREIBUNG
+Die Liste der Ablaufstränge und Prozesse (Standard %thread oder
+%proc) wird 'Zählung' Mal angehalten (Standard 1). Ein 'Zählung' von
+0 bedeutet, daß schrittweise wiederholt wird bis von einem
+Ereignis unterbrochen oder angehalten wird.                                                    
+
+Mit der Option -i, Befehlsschritt; andernfallsAnweisungsschritt.
+Mit der Option -o, Übergehen von Funktionsaufrufen (behandelt
+eine Subroutine als einen einzigen Befehl); andernfalls
+schrittweises Durchgehen von Funktionsaufrufen.
+
+Mit der Option -f wird der Ablaufstrang oder der Prozeß vom
+Debugger im Vordergrund ausgeführt, d.h. der Debugger wartet, bis
+die Ablaufstränge oder Prozesse anhalten, bevor er die Steuerung
+an den Benutzer übergibt. Mit der Option -b wird die Ausführung
+im Hintergrund bestimmt (kein Warten). Die Steuerung wird sofort
+an den Benutzer übergeben und der Ablaufstrang oder Prozeß wird
+gestartet. Wenn weder -f noch -b angegeben sind wird der Standard
+durch den Wert der Debugger-Variablen %wait bestimmt.
+
+Mit der Option -q zeigt der Debugger beim schrittweisen
+Durchgehen nicht das Prozeß-ID des Prozesses an und druckt auch
+nicht die nächste Ursprungszeile.
+
+Ablaufstränge, die derzeit nicht auf einem Kern ausgeführt
+werden, können nicht für die Ausführung befohlen werden (wie z.B.
+Ablaufstränge die mit dem Status 'OFF LWP' im Befehl 'ps'
+angezeigt werden).
+
+BEISPIELE
+step -io
+step -b
+step -p all -c 10
+
+SIEHE AUCH
+%verbose, %wait, Prozeß, Prozeßliste, ps, run, Ablaufstrang
+++
+
+
+++ halt
+NAME
+halt - Unterbricht einen Ablaufstrang oder Prozeß, der derzeit
+im Hintergrund läuft.
+
+SYNOPSIS
+halt [-p Prozeßliste]
+
+BESCHREIBUNG
+Der Debugger leitet jeden genannten Ablaufstrang oder
+Einschritt-Prozeß (Standard, %thread or %proc) so, daß er sofort
+die Ausführung unterbricht. Der Antrag kann aufgrund der
+Systemträgheit und der Zeitplanänderungen eventuell nicht sofort
+wirken.
+
+Das Argument 'halt' ist für Ablaufstränge und Prozesse, die im
+Vordergrund ausgeführt werden, nicht nützlich, da der Debugger
+die Steuerung erst an den Benutzer übergibt, wenn diese
+Ablaufstränge oder Prozesse anhalten. Um einen im Vordergrund
+ausgeführten Ablaufstrang oder Prozeß anzuhalten, müssen Sie die
+Unterbrechungstaste drücken (normalerweise die Taste 'Entf').
+
+SIEHE AUCH
+%wait, Prozeßliste, run, step
+++
+
+++ syscall
+NAME
+syscall - Definiert die Verfolgung von Systemaufrufen.
+
+SYNOPSIS
+syscall [-p Prozeßliste] [[-eqx] [-c Zählung] Aufruf ... [Befehl]]                                                    
+
+BESCHREIBUNG
+Dieser Befehl definiert Aktionen, die zu unternehmen sind, wenn
+ein Ablaufstrang oder ein Prozeß einen Systemaufruf beginnt oder
+abschließt. Ohne Argumente werden die aktuellen Aktionen für
+Systemaufrufe für den genannten Ablaufstrang oder Prozeß
+angezeigt.
+
+Wenn ein oder mehrere Systemaufrufnamen oder -nummern angegeben
+sind, unterbricht der Debugger den Ablaufstrang oder Prozeß am
+Eingang (-e, Standard) und/oder am Ausgang (-x) dieser
+Systemaufrufe. Das Systemaufrufereignis wird angekündigt und
+jeder dazugehörige Befehl ausgeführt.
+
+Die Option -q bedeutet ein Unterdrücken der Anzeige - Das
+Ereignis wird nicht angekündigt. Die Option -c gibt an, daß das
+Ereignis 'Zählung' Mal auslösen wird, bevor der Debugger den
+Ablaufstrang oder Prozeß unterbricht. Der Ablaufstrang oder
+Prozeß wird nach jedem darauffolgenden Auftreten unterbrochen.
+
+Verwenden Sie 'help sysnames', um eine Liste der gültigen
+Systemaufrufnamen anzuzeigen. Groß- oder Kleinschreibung ist
+unbedeutend.                                                    
+
+Im Gegensatz zu den meisten anderen Befehlen gelten die Aktionen
+des Befehls für alle Ablaufstränge oder alle vom aktuellen
+Programm (%program) abgeleiteten Einschritt-Prozesse, wenn die
+Option -p nicht angegeben ist.
+
+BEISPIELE
+syscall -c 10 write { if (fd == 5) run }
+syscall -qx read
+
+SIEHE AUCH
+%program, assoccmd, delete, disable, enable, events, Prozeßliste
+++
+
+
+++ regs
+NAME
+regs - Zeigt den Inhalt der Prozessorregister an.
+
+SYNOPSIS
+regs [-p Prozeßliste]
+
+BESCHREIBUNG
+Zeigt den Inhalt der Prozessorregister für die angegebenen
+Ablaufstränge und Prozesse (Standard, %thread or %proc) in
+hexadezimal an.                                                    
+
+SIEHE AUCH
+dis, dump, Prozeßliste
+++
+
+
+++ stack
+NAME
+stack - Zeigt die Rückverfolgung eines Funktionsaufrufes an.
+
+SYNOPSIS
+stack [-p Prozeßliste] [-f Rahmen] [-c Zählung] [-a Adresse ] [ -s stack ]
+
+BESCHREIBUNG
+Zeigt die aktiven Funktionen für die Liste von Ablaufsträngen und
+Prozessen (Standard, %thread or %proc) an. Die Funktionen werden
+mit ihren Namen, Argumentnamen und Werten sowie der aktiven
+Zeilennummer oder Adresse innerhalb der Funktion angezeigt.
+Funktionsnamen, Argumentnamen und Zeilenummern können nicht
+verfügbar sein, wenn nicht ausreichend Symbolinformation
+vorliegt.
+
+'Zählung' gibt die Anzahl der anzuzeigenden Rahmen an. Wenn dieses
+Argument nicht angegeben ist, wird der gesamte Stapel angezeigt.
+Die Option -f gibt die Nummer des Rahmens an, mit dem die Anzeige
+beginnen soll. Rahmen sind von 0 ab (Boden des Stapels,
+Anfangsrahmen) numeriert.
+
+Die Optionen -a und -s ermöglichen die Angabe einer Startadresse
+(Programmzähler) und/oder eines Startwertes für den Stapelzeiger.
+Dies ist manchmal nützlich, wenn man eine Stapelverfolgung für
+einen Prozeß durchführen will, der an eine unerlaubte Adresse
+gesprungen ist, oder dessen Stapelzeiger nicht mehr stimmt. 
+Beide Optionen erwarten eine hexadezimale Adresse.
+
+BEISPIELE
+stack -p p2
+stack -f 2 -c 3
+stack -a 0x80494958 -s 0xbfff8004
+
+SIEHE AUCH
+Prozeßliste
+++
+
+++ while
+NAME
+while - Bedingte Schleife.
+
+SYNOPSIS
+while (Ausdruck) Befehl
+
+BESCHREIBUNG
+Der Ausdruck 'Ausdruck' wird in der aktuellen Programmiersprache 
+(%lang oder %db_lang) im Kontext des aktuellen Ablaufstranges oder 
+Einschritt-Prozesses bewertet. Wenn der Ausdruck wahr ist, wird der 
+Befehl 'Befehl' ausgeführt. Dann wird die Sequenz wiederholt. 'Befehl' 
+kann ein einzelner Befehl oder ein Block sein.
+
+BEISPIELE
+while ($foo < 10) { print $foo, a[$foo]; set $foo = $foo + 1 }
+
+SIEHE AUCH
+%db_lang, %lang, Block, break, continue, Ausdruck, if, Bereich
+++
+
+
+++ cd
+NAME
+cd - Wechselt das aktuelle Arbeitsverzeichnis.
+
+SYNOPSIS
+cd [Phadname]
+
+BESCHREIBUNG
+Der Befehl 'cd' wechselt das aktuelle Arbeitsverzeichnis des
+Debuggers auf das unter 'Phadname' angegebene Verzeichnis. Wenn
+kein Pfadname angegeben ist, verwendet 'cd' das in der
+Umgebungsvariablen HOME angegebene Verzeichnis.
+
+SIEHE AUCH
+pwd
+++
+
+++ change
+NAME
+change - Änderung eines bestehenden Ereignisses.                                                    
+
+SYNOPSIS
+change Ereignisnummer [-p Prozeßliste] [-evqx] [-c Zählung]
+        [Stopausdruck|Aufruf...|Signal...] [{Befehle}]
+
+BESCHREIBUNG
+Ereignisnummer muß als erstes stehen und gibt die Ereignisnummer
+eines bestehenden, gültigen Ereignisses an. Die anderen Optionen
+ermöglichen die Änderung der verschiedenen Attribute dieses
+Ereignisses:
+1) Die Liste der Ablaufstränge und Prozesse, für die
+   es gilt (-p). 
+2) die Anzeige (-q unterdrückt die Ankündigung eines Ereignisses,
+   -v gibt alle Informationen an), 
+3) Für Systemaufrufe für das Auftreten des Ereignisses am Anfang 
+   oder am Ende oder zu beiden Zeitpunkten (-ex), 
+4) Für Stopp- und Systemaufrufereignisse die Anzahl des Auftretens
+   des Ereignisses, bevor es angekündigt wird (-c), 
+5) Die zugehörigen Befehle (müssen in geschweiften Klammern {} stehen), 
+6) und der Ausdruck, die Systemaufrufliste oder die Signalliste in
+   Verbindung mit einem Ereignis.
+
+BEISPIELE
+change 3 -q
+change 5 -p p2 -c 10
+change 7 { print "x == ", x }
+change 9 -x write
+
+SIEHE AUCH
+assoccmd, delete, disable, enable, events, onstop,
+Prozeßliste, signal, stop, syscall
+++
+
+++ export
+NAME
+export - Fügt der Umgebung ein Paar Name-Wert hinzu.                                                    
+
+SYNOPSIS
+export $username
+
+BESCHREIBUNG
+Exportiert eine für den Debugger erhaltene, benutzerdefinierte
+Variable für die Umgebung. 'username' (und dessen aktueller Wert)
+wird ein Teil der Umgebung, der von den mit Debugger erstellten
+Prozessen empfangen wird. Wenn der Wert von $username sich ändert,
+muß er erneut exportiert werden, damit der neue Wert Teil der Umgebung 
+werden kann. 'username' wird ohne das Präfix '$' exportiert.
+
+SIEHE AUCH
+Benutzervariablen
+++
+
+++ fc
+NAME
+fc - Findet, bearbeitet und führt Befehle erneut aus.
+
+SYNOPSIS
+fc [-e ename] [-nlr] [first [last]]
+fc -e - [old=new] [Befehl]
+
+BESCHREIBUNG
+'fc' ermöglicht das Bearbeiten und Abrufen von Befehlen 'ksh(1)
+style'. In der ersten Form wird eine Reihe von Befehlen von
+'first' bis 'last' aus den zuletzt eingegebenen Befehlen HISTSIZE
+gewählt. Die Argumente 'first' und 'last' können als Zahlen oder
+als Zeichenketten angegeben werden. Eine Zeichenkette wird
+verwendet, um den letzten Befehl, der mit dieser Zeichenkette
+beginnt, zu finden. Eine negative Zahl wird als Offset für die
+aktuelle Befehlszahl verwendet.
+
+Wenn die Option -l angegeben ist, werden die Befehle auf dem
+Standard-Ausgabegerät aufgelistet. Andernfalls wird der
+Programmeditor 'ename' für eine temporäre Datei aufgerufen, die
+die Befehle enthält. Wenn 'ename' nicht angegeben ist, wird der
+Wert der Umgebunsgvariablen FCEDIT (default /usr/bin/ed)
+verwendet. Wenn die Bearbeitung beendet ist, werden die
+bearbeiteten Befehle ausgeführt.
+
+Wenn 'first' nicht angegeben ist, wird als Standard der
+vorhergehende Befehl für die Bearbeitung und -16 für die Liste
+genommen. Die Option -r kehrt die Reihenfolge der Befehle um; die
+Option -n unterdrückt Befehlsnummern beim Auflisten.
+
+In der zweiten Form wird der Befehl 'Befehl' nach dem Austausch
+'old=new' erneut ausgeführt. Wenn 'Befehl' nicht angegeben ist,
+wird als Standard der vorhergehende Befehl verwendet.
+
+SIEHE AUCH
+%mode
+++
+
+++ logoff
+NAME
+logoff - Stoppt die Protokollierung von Sitzungen.
+
+SYNOPSIS
+logoff
+
+BESCHREIBUNG
+Schaltet die Protokollierung von Sitzungen ab.
+
+SIEHE AUCH
+logon
+++
+
+
+++ logon
+NAME
+logon - Startet Protokollierung von Sitzungen.
+
+SYNOPSIS
+logon [Protokolldatei]
+
+BESCHREIBUNG
+Startet Protokollierung von Sitzungen. Alle Debugger-Ausgaben werden an
+'Protokolldatei' gesendet. Jede Ausgabezeile beginnt mit dem Zeichen #
+(Kommentar). Debugger-Befehle werden ebenfalls an 'Protokolldatei'
+gesendet, aber ohne vorstehendes #. Wenn keine 'Protokolldatei'
+angegeben ist, wird die zuletzt in der aktuellen Debug-Sitzung
+verwendete 'Protokolldatei' angenommen. Neue Befehle und Ausgaben
+werden an dieser Datei angehängt. Die vom Debugger erstellten
+Protokolldateien können als Debuggers-Befehlsskripts verwendet werden.
+
+SIEHE AUCH
+logoff, script
+++
+
+
+++ onstop
+NAME
+onstop - Definiert die auszuführende Aktion, wenn der
+Ablaufstrang oder Prozeß anhält.
+
+SYNOPSIS
+onstop [-p Prozeßliste] [Befehl]
+
+BESCHREIBUNG
+Ohne Argument 'Befehl' werden die aktuellen Aktionen des Befehls
+'onstop' für die Liste der in 'Prozeßliste' angegebenen
+Ablaufstränge und Prozesse angezeigt.
+
+'Befehl' kann ein einzelner Befehl oder ein Befehlsblock sein.
+Wenn ein Befehl oder ein Befehlsblock angegeben ist, werden
+jedesmal, wenn eiin angegebener Ablaufstrang oder Prozeß anhält,
+die Befehle ausgeführt (im Kontext mit diesem Ablaufstrang
+oder Prozeß). Das Anhalten enthält einzelne Schritte sowie das
+Anhalten für en anderes Debugger-Ereignis (signal, syscall,
+stop).
+
+Im Gegensatz zu den meisten anderen Befehlen gelten die Aktionen
+dieses Befehls für alle Ablaufstränge oder alle vom aktuellen
+Programm (%program) abgeleiteten Einschritt-Prozesse, wenn die
+Option -p nicht angegeben ist.
+
+BEISPIELE
+onstop -p p2
+onstop { print i, x[i] }
+
+SIEHE AUCH
+%program, delete, disable, enable, events, signal,
+stop, syscall
+++
+
+++ rename
+NAME
+rename - Ändert den Namen, unter dem ein Programm bekannt ist.
+
+SYNOPSIS
+rename Programmname Name
+
+BESCHREIBUNG
+Wenn ein Prozeß übernommen oder erstellt wird, kann der Name des
+ausführbaren Programms, von dem der Prozeß abgeleitet wurde, für 
+den Bezug auf alle von diesem ausführbaren Programm abgeleiteten
+Ablaufstränge und Prozesse in jedem Argument 'Prozeßliste' verwendet 
+werden. Umbenennen gibt einen neuen Namen für die Verwendung mit 
+diesem Programm an.
+
+SIEHE AUCH
+create, grab, Prozeßliste
+++
+
+++ %file
+NAME
+%file - Die aktuelle Ursprungsdatei.
+
+BESCHREIBUNG
+'%file' wird auf den Namen der Ursprungsdatei in Verbindung mit dem
+aktuellen Rahmen, falls bekannt, definiert, sobald ein
+Ablaufstrang oder Prozeß anhält oder '%frame' geändert wird.
+Jeder Ablaufstrang oder Einschritt-Prozeß hat seine eigene
+%file. Der erste Befehl 'list' nach der Definition von %frame
+zeigt die Quelle von %file an, wenn kein Dateiname angegeben ist.
+Sie können %file nicht explizit ändern.
+
+SIEHE AUCH
+%frame, %line, %list_file, %list_line, list
+++
+
+++ %follow
+NAME
+%follow - Soll der Debugger untergeordnete Prozesse verfolgen?
+
+BESCHREIBUNG
+Der Debugger steuert Prozesse für den Benutzer, die entweder vom
+Debugger als Ergebnis eines Befehls 'create' erstellt wurden,
+oder während einer Ausführung als ein Ergebnis des Befehls 'grab'
+übernommen wurden. Wenn '%follow' entweder auf 'all' oder 'procs'
+gesetzt wird, übernimmt der Debugger auch die Steuerung der
+untergeordneten Prozesse aller gesteuerten Prozesse mit Verzweigung. Wenn
+'%follow' auf 'none' gesetzt ist, werden keine untergeordneten Prozesse
+gesteuert. Die mit %follow gesetzte, globale Betriebsart kann
+durch einen individuellen Befehl 'create' oder 'grab'
+überschrieben werden. Alle gesteuerten Prozesse können mit dem
+Befehl 'release' aus der Steuerung freigegeben werden.
+
+Der Standardwert für %follow ist 'all'.
+
+Alle von einem Hauptprozeß erstellten Ablaufstränge werden vom
+Debugger verfolgt (können aber mit 'release' aus der Verfolgung
+freigegeben werden). Siehe Beschreibung von %thread_change für
+weitere Informationen über die Steuerung des Debuggers in Bezug
+auf neu erstellte Ablaufstränge.
+
+SIEHE AUCH
+create, grab, Prozeß, release, set, %thread_change
+++
+
+++ %frame
+NAME
+%frame - Die aktuelle Rahmennummer im Aufrufstapel.
+
+SYNOPSIS
+Das Standard-Ziel für Ursprungslisten, Symboldurchsicht,
+Disassemblierung und Bewertung von Ausdrücken. '%frame' ist auf
+die Zahl des obersten Rahmens (Numerierung ab 0 für den
+Anfangsrahmen) definiert, wenn ein Ablaufstrang oder ein
+Einschritt-Prozeß anhält. Jeder Ablaufstrang oder
+Einschritt-Prozeß hat seinen eigenen %frame. Sie müssen %frame
+explizit mit dem Befehl 'set' definieren. Die Definition von
+%frame wird auch die damit verbundenen Variablen %db_lang, %file,
+%func, %line, %list_file, %list_line und %loc zurücksetzen, um
+einen Überblick über den aktuellen Kontext zu erhalten.
+
+SIEHE AUCH
+%db_lang, %file, %func, %line, %loc
+++
+
+
+++ %func
+NAME
+%func - Die aktuelle Funktion.
+
+BESCHREIBUNG
+'%func' wird auf den Namen der entsprechenden Funktion des
+aktuellen Rahmens (%frame) gesetzt, sobald ein Ablaufstrang oder
+Einschritt-Prozeß anhält oder '%frame' geändert wird. Jeder
+Ablaufstrang oder Einschritt-Prozeß hat sein eigenes Argument
+'%func'. Sie können %func explizit mit dem Befehl 'set'
+definieren. aber nur für eine Funktion mit einem im Stapel aktiven
+Rahmen; %frame (und die dazugehörigen Variablen %db_lang, %file,
+%func, %line, %list_file, %list_line und %loc) werden ebenfalls
+aktualisiert, um den neuen Kontext wiederzugeben.
+
+SIEHE AUCH
+%frame
+++
+
+
+++ %lang
+NAME
+%lang - Die aktuelle Programmiersprache.
+
+BESCHREIBUNG
+Die aktuelle Programmiersprache. Wenn dieses Argument angegeben
+ist, wird der Wert von %db_lang überschrieben. Gültige
+Zeichenketten für die Zuweisung von %lang sind: 
+       C      ANSI C 
+       C++    C++ Version 2 oder 3
+Wenn %lang gesetzt ist oder mit einer leeren
+Zeichenkette ('') definiert ist, verwendet der Debugger %db_lang
+als aktuelle Sprache. Befehle, die %lang in der Bewertung von
+Ausdrücken verwenden, enthalten if, print, set, stop, whatis,
+while
+
+SIEHE AUCH
+%db_lang, C++, Ausdruck
+++
+
+++ %loc
+NAME
+%loc - Die aktuelle Stelle.  
+
+BESCHREIBUNG
+Der aktuelle Ausführungspunkt, %loc, wird für den aktuellen
+Rahmen auf den Inhalt des Programmzählers gesetzt, sobald ein
+Ablaufstrang oder Einschritt-Prozeß anhält oder %frame geändert
+wird. Jeder Ablaufstrang oder Einschritt-Prozeß hat sein eigenes
+Argument '%loc'. Sie können %loc nicht explizit ändern. Der erste
+Befehl 'dis', nachdem der Rahmen (%frame) definiert ist, wird
+Befehle ab der Adresse %loc disassemblieren, wenn keine Stelle
+explizit angegeben wurde.
+
+SIEHE AUCH
+%frame, dis
+++
+
+++ %list_file
+NAME
+%list_file - Der Name der zuletzt aufgelisteten Datei.                                                    
+
+BESCHREIBUNG
+Der Befehl 'list_file' speichert Spuren der zuletzt mit dem
+Befehl 'list' angezeigten Datei. %list_file ändert sich, sobald
+der Befehl 'list' ausgeführt wird, und wird auf den Namen der
+Datei zurückgesetzt, die die aktuelle Stelle (%loc) im aktuellen
+Rahmen (%frame) enthält, sobald ein Ablaufstrang oder
+Einschritt-Prozeß anhält oder %frame geändert wird. Jeder
+Ablaufstrang oder Einschritt-Prozeß hat sein eigenes Argument
+'%list_file'.
+
+SIEHE AUCH
+%file, %frame, %line, %list_line, list
+++
+
+++ %list_line
+NAME
+%list_line - Die zuletzt aufgelistete Zeilennummer.
+
+BESCHREIBUNG
+Der Befehl 'list_line' speichert Spuren der zuletzt mit dem
+Befehl 'line' angezeigten Datei. %list_line ändert sich, sobald
+der Befehl 'list' ausgeführt wird, und wird auf die Zeilennummer
+zurückgesetzt, die die aktuelle Stelle (%loc) im aktuellen Rahmen
+(%frame) enthält, sobald ein Ablaufstrang oder Einschritt-Prozeß
+anhält oder %frame geändert wird. Jeder Ablaufstrang oder
+Einschritt-Prozeß hat sein eigenes Argument '%list_line'.
+
+SIEHE AUCH
+%file, %frame, %line, %list_file, list
+++
+
+++ %line
+NAME
+%line - Die aktuelle Zeilennummer.
+
+BESCHREIBUNG
+'%line ist auf die Zeilennummer gesetzt, die die aktuelle Stelle
+(%loc) im aktuellen Rahmen (%frame) enthält, sobald ein
+Ablaufstrang oder Einschritt-Prozeß anhält oder %frame geändert
+wird. Der erste Befehl 'list' nach Definition von %frame zeigt
+den Ursprungsstart ab Zeile %line an, wenn keine Stelle angegeben
+ist. Sie können %line nicht explizit definieren.
+
+SIEHE AUCH
+%frame, %file, %list_file, %list_line, list
+++
+
+++ %mode
+NAME
+%mode - Die aktuelle Zeilenbearbeitungsart.                                                    
+
+BESCHREIBUNG
+Debug unterstützt die Aufzeichnung und die Bearbeitung von
+Befehlen 'ksh(1) style'. '%mode ist die für die Bearbeitung der
+Befehlszeile verwendete Bearbeitungsart. %mode wird beim Starten
+auf den Wert der Umgebungsvariablen VISUAL gesetzt, oder, wenn
+sie nicht existiert, auf den Wert der Umgebungsvariablen EDITOR.
+Sie kann jederzeit mit dem Befehl 'set' zurückgesetzt werden.
+Gültige Werte sind 'vi' und 'emacs'. Das Setzen von %mode auf
+einen anderen Wert bricht die Befehlsbearbeitung ab.
+
+SIEHE AUCH
+fc
+++
+
+++ %path
+NAME
+%path - Der lokale Suchpfad für Ursprungsdateien.
+
+BESCHREIBUNG
+Jedes Programm hat sein eigenes Argument %path. Der Wert von
+%path muß eine durch Komma getrennte Liste von Verzeichnisnamen
+sein. Wenn der Debugger versucht, die Ursprungszeilen einer Datei
+anzuzeigen, wird er die in %path angegebenen Verzeichnisse nach
+einer Datei dieses Namens durchsuchen. Nach der Suche im lokalen
+Pfad wird das angegebene Programm angezeigt und der Debugger
+sucht seine globale Pfadliste (%global_path).
+
+SIEHE AUCH
+%global_path
+++
+
+++ %proc
+NAME
+%proc - Der aktuelle Prozeß.
+
+BESCHREIBUNG
+Diese Variable enthält den Prozeßnamen des aktuellen Prozesses.
+er kann explizit mit dem Befehl 'set' oder implizit mit 'create',
+'grab' oder 'release' bestimmt werden. Die Definition von %proc
+bestimmt auch implizit %program, %thread und %frame.
+
+SIEHE AUCH
+%frame, %program, %thread, Prozeßliste
+++
+
+++ %program
+NAME
+%program - Das aktuelle Programm.
+
+BESCHREIBUNG
+Diese Variable enthält den Programmnamen des Programms, das den
+aktuellen Prozeß (%proc) enthält. Sie können es explizit mit dem
+Befehl 'set' oder implizit mit 'create', 'grab' oder 'release'
+definieren. Programme werden von der ausführbaren Datei benannt,
+von der sie abgeleitet wurden und können mit dem Befehl 'rename'
+umbenannt werden. Die Definition von %program bestimmt auch
+implizit %proc, %thread und %frame.
+
+SIEHE AUCH
+%frame, %proc, %thread, Prozeßliste
+++
+
+++ %prompt
+NAME
+%prompt - Das Bereitschaftszeichen des Debuggers.
+
+BESCHREIBUNG
+Das Bereitschaftszeichen des Debuggers fordert den Benutzer zur
+Eingabe auf, indem der Wert des Bereitschaftszeichens (%prompt)
+ausgedruckt wird. Der Standard-Wert ist 'debug>'. Sie können das
+%prompt mit dem Befehl 'set' ändern. ++
+
+++ %thisevent
+NAME
+%thisevent - Die Nummer des derzeit behandelten Ereignisses.
+
+BESCHREIBUNG
+Innerhalb eines zugehörigen Befehls enthält %thisevent die
+Ereignisnummer des Ereignisses, zu dem die Befehle gehören. Den
+Wert von %thisevent können Sie nicht explizit ändern.                                                    
+
+SIEHE AUCH
+%lastevent, assoccmd
+++
+
+
+++ %lastevent
+NAME
+%lastevent - Die Nummer des zuletzt erstellten Ereignisses.
+
+BESCHREIBUNG
+Nach einem Befehl, der eine Ereignissnummer zuteilt (stop,
+signal, syscall, oder onstop), enthält %thisevent die gerade
+zugeteilte Ereignisnummer. Den Wert von %lastevent können Sie
+nicht explizit ändern.
+
+SIEHE AUCH
+%thisevent
+++
+
+
+++ assoccmd
+NAME
+assoccmd - Ein Debugger-Befehl oder Befehlsblock.                                                    
+
+BESCHREIBUNG
+Verschiedene Befehle verwenden einen optional zugeteilten Befehl
+oder einen Befehlsblock. Dieser muß als letzter in der
+Argumentliste erscheinen und kann Befehle mit eigenen,
+zugeteilten Befehlen enthlaten, d.h. zugeteilte Befehle können
+verschachtelt sein. Die Befehle werden ausgeführt, sobald das
+betreffende Ereignis (stop, signal, usw.) auftritt. Innerhalb
+eines zugeteilten Befehls enthält %thisevent die Ereignisnummer
+des zu behandelnden Ereignisses. Der Ablaufstrang oder Prozeß,
+der dieses Ereignis angetroffen hat, wird vorübergehend als
+aktuell deklariert, während die Befehle ausgeführt werden.
+
+SIEHE AUCH
+%thisevent, Block, onstop, signal, stop, syscall
+++
+
+++ Block
+NAME
+Block - Eine Liste von Befehlen.
+
+BESCHREIBUNG
+Ein Befehl oder eine Liste mit durch Strichpunkt getrennten Befehlen in
+geschweiften Klammern. Blöcke können als zugeteilte Befehle
+verwendet werden oder unabhängig von anderen Befehlen erscheinen.
+Blöcke können für die Zusammenfassung von Befehlen zur Umleitung
+deren Ausgabe mit einer einzigen Umleitung verwendet werden.
+
+BEISPIELE
+{ if (i) print *ptr; else print *mptr } > myfile
+
+SIEHE AUCH
+assoccmd, Umleitung
+++
+
+++ Format
+NAME
+Format - Die Form der Ausgabe für den Befehl 'print'.
+
+BESCHREIBUNG
+Das Format ist eine Zeichenkette ähnlich wie die Zeichenketten
+für den C-Befehl 'printf'. Jede Spezifikation eines Formates kann
+wie folgt angegeben werden:
+        %[flags][width][.[precision]][conversion_character]format_character
+ Alle Felder haben die gleiche Bedeutung wie beimn Befehl
+'printf'. Breite und Präzision sind auf 1024 begrenzt. Die
+Positionsparameter von printf und das Formatzeichen von 'printf'
+'n' werden nicht akzeptiert. Jede Formatangabe entspricht einem
+der im Befehl 'print' angegebenen Ausdrücke in der Reihenfolge,
+in der sie stehen. Zeichen, die nicht zum Format gehören werden
+wie angegeben ausgedruckt. Formatzeichen haben folgende
+Bedeutungen (Elemente, die mit einem Sternchen (*) versehen sind
+können nicht auf allen Systemen zur Verfügung stehen):
+        a*,A*   Gleitpunkt in hexadezimal mit dezimalem Exponent (als
+                Zweierpotenz)
+        b*,B*   Binäre Ganzzahl ohne Vorzeichen 
+        C*      Breites Zeichen c Zeichen ohne Vorzeichen
+        d,i     Dezimale Ganzzahl mit Vorzeichen
+        e,E     Gleitpunkt in 'style [-]d.ddde+/-dd'
+        f       Gleitpunkt in 'style [-]ddd.dddd'
+        g,G     Gleitpunkt in einem der obigen Formate
+        o       Oktalzahl ohne Vorzeichen
+        p       ungültig * (gemeiner Zeiger; hexadezimale Adresse)
+        S*      Breite Zeichenkette
+        s       Zeichenkette
+        u       Dezimale Ganzzahl ohne Vorzeichen
+        x,X     Hexadezimale Ganzzahl ohne Vorzeichen
+        z       Standard-Format des Debuggers für
+                den Ausdruck
+        %       %
+
+SIEHE AUCH
+print
+++
+
+++ Standort
+NAME
+Standort - Eine Adresse in einem Ablaufstrang oder Prozeß.
+
+BRSCHREIBUNG
+Die Syntax für einen Stellenindikator lautet Adresse[+-Konstante]
+        [Ablaufstrang-ID@][Dateiname@]line
+        [Ablaufstrang-ID@][Dateiname@]Funktion[+-Konstante]
+wobei 'Adresse' eine oktale oder hexadezimale Programmadresse und 
+'Konstante' eine dezimale Ganzzahl ist. 'Ablaufstrang-ID' kann sich 
+auf einen Ablaufstrang oder Einschritt-Prozeß beziehen.
+
+BEISPIELE
+17              eine Zeilennummer in der aktuellen Datei (%file)
+foo.c@17        eine Zeilennummer in einer anderen Datei
+0x80801234      eine Adresse
+main            ein Funktionsname oder ein Etikett
+main+3          drei Byte nach dem Etikett
+p1.2@main       ein Funktionsname in einem angegebenen Ablaufstrang
+%loc            die aktuelle Stelle
+%line           die aktuelle Datei- und Zeilennummer
+%r0             ein Register
+%r0+80          ein Register plus Offset
+%pc-4           ein Register minus Offset
+$myvar          eine benutzerdefiniert Variable
+
+SIEHE AUCH
+%file, %line, %loc, Bereich, Benutzervariablen
+++
+
+++ Prozeßliste
+NAME
+Prozeßliste - Liste mit Prozeßnamen.
+
+BESCHREIBUNG
+Eine durch Komma getrennte Liste von 'Prozeßnamen'. Die meisten
+Befehle akzeptieren eine 'Prozeßliste' mit der Option -p. Eine
+Prozeßliste darf keine Leerzeichen enthalten.
+
+Ein Prozeßname kann aus folgenden Elementen bestehen:
+1)  dem Schlüsselwort 'all', zur Bezeichnung aller gesteuerten
+    Ablaufstränge und Prozesse,
+2)  ein vom Anwender angegebenen oder vom Debugger erstellten
+    Programmnamen, der alle von diesem Programm abgeleitete
+    Ablaufstränge und Prozesse bezeichnet,
+3)  eine vom Debugger erstellte Prozeß-ID in der Form pn (z.B.
+    p1, p2), das entweder den Prozeß selbst (bei einem
+    Einschritt-Prozeß), oder alle Ablaufstränge im Prozeß
+    bezeichnet,
+4)  eine vom Debugger erstellte Ablaufstrang-ID in der Form pn.n
+    (z.B. p2.3, p3.1),
+5)  die Debugger-Variable %program, die alle vom aktuellen
+    Programm abgeleiteten Ablaufstränge und Prozesse bezeichnet,
+6)  die Debugger-Variable %proc, die den aktuellen Prozeß
+    bezeichnet, wenn es ein Einschritt-Prozeß ist, oder alle vom
+    aktuellen Prozeß abgeleitete Ablaufstränge,
+7)  die Debugger-Variable %thread, die den aktuellen Ablaufstrang
+    bezeichnet,
+8)  eine dezimale Ganzzahl, die der Systemprozess-ID eines
+    gesteuerten Prozesses und allen davon abgeleiteten
+    Ablaufsträngen entspricht,
+9)  jegliche benutzerdefiniert variable (z.B. $foo), die einen
+    Ganzzahlwert enthält, und als Systemprozeß-ID ausgelegt
+    wird,
+10) jegliche benutzerdefiniert variable, die einen
+    Zeichenkettenwert enthält, der als eine der o.a. Formen oder
+    als eine Liste ausgelegt werden kann.
+
+SIEHE AUCH
+%proc, %program, %thread, Prozeßliste, rename, Benutzervariablen
+++
+
+++ Umleitung
+NAME
+Umleitung - Änderung des Ziels für die Debugger-Ausgabe.                                                    
+
+BESCHREIBUNG
+Hinter jedem Befehl oder jedem Block kann das Zeichen '>' und ein
+Dateiname oder ein '|' und eine Befehlszeile der UNIX (r)-Shell
+stehen. Dies veranlaßt die Umleitung der Ausgabe des Befehls in
+die Datei oder die Umleitung in den Shell-Befehl. Sie können auch
+'>> Dateiname' verwenden, wobei die Ausgabe an die Datei
+angehängt wird und nicht den aktuellen Inhalt der Datei
+überschreibt.
+
+BEISPIELE
+stack > save.stack
+symbols -gtv | grep int | pg
+
+SIEHE AUCH
+Block
+++
+
+++ Muster
+NAME
+Muster - ein reulärer Ausdruck 'sh(1) style'.                                                    
+
+BESCHREIBUNG
+Ein Modell zur Filterung der Ausgabe des Befehls 'symbols'.
+        *       Steht für jede Zeichenkette, einschließlich
+                Nullkette 
+        ?       Steht für ein einzelnen Zeichen
+        [...]   Steht für jedes der in Klammern stehenden Zeichen, 
+                Bereiche
+                        sind zulässig, und ! als erstes Zeichen
+                        gibt eine Negation an
+
+SIEHE AUCH
+symbols
+++
+
+++ norm_Ausdruck
+NAME
+norm_Ausdruck - ein regulärer Ausdruck 'ed(1) style'.
+
+BESCHREIBUNG
+Ein regulärer Ausdruck, der zur Suche eines Modells in einer Ursprungsdatei mit dem Befehl 'list' verwendet wird.
+        .       Steht für ein beliebiges Zeichen außer CR/LF
+        [...]   Steht für jedes der Zeichen in Klammer,
+                Bereiche sind zulässig, und ^ bedeutet eine Negation
+        *       bedeutet Null oder mehr der vorhergehenden RE
+        ^       Steht für eine Nullkette am Anfang einer Zeile
+        $       Steht für eine Nullkette am Ende einer Zeile
+        \{m\}   Gibt genau m Auftreten des vorhergehenden RE an
+        \{m,\}  Gibt mindestens m Auftreten des vorhergehenden RE an
+        \{m,n\} Bedeutet n zu n, inklusive, Auftreten
+        \(...\) Steht für das gleiche wie ... 
+        \digit  Steht für die n'te RE in Klammer im gleichen Ausdruck
+        \<      Steht für eine Nullkette am Anfang eines Wortes
+        \>      Steht für eine Nullkette am Ende eines Wortes
+
+SIEHE AUCH
+list
+++
+
+++ Benutzervariablen
+NAME
+Benutzervariablen - benutzerdefinierte oder für den Debugger erhaltene
+Variablen.
+
+BESCHREIBUNG
+Namen, die mit einem Dollarzeichen ($) beginnen sind für den
+Debugger-Benutzer reserviert. Beim Starten importiert der
+Debugger die Shell-Umgebung als einen Ausgangssatz von
+benutzerdefinierten Variablen. Sie können mit dem Befehl 'set'
+eine neue Variable erstellen. Benutzerdefinierte Variablen sind
+Zeichenketten und werden, wo erforderlich, mit
+'strtol(3)' in einen Zahlenwert umgewandelt.
+
+SIEHE AUCH
+export, set
+++
+
+++ %db_lang
+NAME
+%db_lang - Die interne Notierung des Debuggers für die aktuelle
+Sprache.
+
+BESCHREIBUNG
+'db_lang' ist die Sprache des aktuellen Ablaufstranges oder
+Prozesses und wird vom Debugger zur Bewertung von
+Sprachausdrücken verwendet. Es wird vom Debugger basierend auf
+den in der Objektdatei enthaltenen Informationen definiert und
+kann nicht direkt vom Benutzer zurückgesetzt werden.. Wenn der
+Debugger nicht die Sprache des aktuellen Ablaufstrangs oder
+Prozesses bestimmen kann, wird der Standardwert ovn %db_lang, C,
+angenommen. Ein explizites Definieren von %lang überschreibt die
+Sprache des aktuellen Ablaufstranges oder Prozesses. Befehle, die
+%db_lang zur Bewertung von Ausdrücken verwenden, umfassen if,
+print, set, stop, whatis, und while
+
+SIEHE AUCH
+%lang, C++, Ausdruck
+++
+
+++ %global_path
+NAME
+%global_path - Der globale Suchpfad des Debuggers.
+
+BESCHREIBUNG
+Der Wert von %global_path muß eine durch Komma getrennte Liste
+von Verzeichnisnamen sein. Wenn der Debugger versucht, die
+Ursprungszeilen einer Datei anzuzeigen, wird er die im lokalen %path
+angegebenen Verzeichnisse nach einer Datei dieses Namens
+durchsuchen. Nach der Suche im lokalen Pfad wird das angegebene
+Programm angezeigt und der Debugger sucht seine globale Pfadliste
+(%global_path). '%global_path' kann auch von der Befehlszeile des
+Debugger aus mit der Option -s gesetzt werden.
+
+SIEHE AUCH
+%path
+++
+
+++ %num_bytes
+NAME
+%num_bytes - Standard-Anzahl der auszugebenden Byte.
+
+BESCHREIBUNG
+Wenn der Befehl 'dump' ohne die Option -c angegeben wird, werden
+%num_bytes angezeigt. Der Ausgangswert von %num_bytes beträgt 256
+und kann mit dem Befehl 'set' geändert werden.
+
+SIEHE AUCH
+dump
+++
+
+++ %num_lines
+NAME
+%num_lines -- Anzahl anzuzeigender Zeilen
+
+BESCHREIBUNG
+Wenn der Befehl 'dis' oder 'list' ohne die Option -c angegeben
+wird, werden jeweils %num_lines Zeilen angezeigt. Der
+Ausgangswert von %num_lines beträgt 10 und kann mit dem Befehl
+'set' geändert werden.
+
+SIEHE AUCH
+dis, list
+++
+
+++ %result
+NAME
+%result - Ausführungs-Status der Debugger-Befehle.
+
+BESCHREIBUNG
+Nach der Ausführung jedes Debugger-Befehls, wird dessen Status in
+der Variablen %result gespeichert. 0 bedeutet erfolgreiche
+Ausführung. Ungleich Null bedeutet einen Ausführungsfehler. ++
+
+++ %verbose
+NAME
+%verbose - Detail der Informationen für Debugger-Ereignisse.
+
+BESCHREIBUNG
+Wenn ein vom Debugger gesteuerter Ablaufstrang oder Prozeß
+anhält, druckt der Debugger normalerweise eine Meldung aus, um
+den Grund für das Anhalten, die Ablaufstrang- oder Prozeß-ID und
+die nächste Ursprungszeile, wenn vorhanden, oder die nächste Zeile
+des disassemblierten Textes anzugeben.'%verbose' kann zur
+Steuerung dieser Ausgabe verwendet werden. Gültige Werte sind:
+        quiet es erfolgt keine Ausgabe, wenn ein Ablaufstrang
+        oder Prozeß anhält source es wird nur die nächste Zeile
+        mit Ursprungstext oder mit disassembliertem Text angezeigt
+        events wenn ein Ereignis das Anhalten ausgelöst hat, wird
+        auch dieses Ereignis angezeigt (dies betrifft nicht die
+                angeforderten Stopps (Stopps oder Einzelschritt))
+        reason Grund für das Anhalten, einschließlich Ereignisse
+        und angeforderte Stopps all höchste Detailstufe (derzeit
+        gleich mit 'reason')
+
+Die Standard-Betriebsart ist 'all'.
+Die Betriebsart 'quiet' kann auch als Option -q bei bestimmten
+Debugger-Befehlen angegeben werden. Diese individuellen Optionen
+-q überschreiben die Betriebsart %verbose.
+
+SIEHE AUCH
+change, signal, step, stop, syscall, %thread_change
+++
+
+++ %wait
+NAME
+%wait - Synchrone oder asynchrone Befehlsausführung.
+
+BESCHREIBUNG
+Wenn der Debugger einen Ablaufstrang oder Einschritt-Prozeß
+startet, wartet er normalerweise, bis der Ablaufstrang oder
+Prozeß anhält, bevor er die Steuerung en den Benutzer übergibt.
+Wenn %wait auf 'background', 0 oder 'no' gesetzt wird, geht der
+Debugger in die asynchrone Betriebsart über. In dieser
+Betriebsart übergeben Befehle, die einen Ablaufstrang oder
+Prozeß starten, die Steuerung sofort an den Benutzer, ohne auf
+das Anhalten des Ablaufstrangs oder Prozesses zu warten. Wenn
+%wait auf 'foreground', 1 oder 'yes' gesetzt wird, geht der
+Debugger wieder in die Standard-Betriebsart zurück. Die globale
+Variable %wait kann mit dem Optionen -f oder -b der Befehle 'run'
+und 'step' überschrieben werden.
+
+SIEHE AUCH
+run, step
+++
+
+++ Stopausdruck
+NAME
+Stopausdruck - Prozeß Adresse Leertaste Ereignis Ausdrücke
+
+BESCHREIBUNG
+'Stopausdrucke' sind besondere Ausdrücke, die vom
+Stopp-Befehl akzeptiert werden. Ein Stopausdruck
+besteht aus einem oder mehreren Stopp-Ereignissen, die mit dem
+Zeichen '&&' (und) oder '||' (oder) zusammengeführt wurden. Diese
+Operatoren sind linkszuordnend, aber der Debugger kann nicht die
+Reihenfolge gewährleisten, in der die Operatoren bewertet werden.
+Jedes Stopp-Ereignis kann sein: 
+        Standort 
+        ( Ausdruck ) 
+        *lvalue
+
+Jeder Typ eines Stopp-Ereignisses hat eine bestimmte Aktion,
+wodurch das Ereignis vom Debugger bemerkt wird. Wenn eine
+derartige Aktion auftritt, wird der gesamte Stopp-Ausdruck auf
+'wahr' bewertet. Wenn er wahr ist, löst das Ereignis normal aus
+(der Debugger informiert den Benutzer über das Ereignis und führt
+jeden dazugehörigen Befehl aus).
+
+Eine Stelle ('Standort') ist eine Adresse im Text des Prozesses,
+an der der Debugger einen Breakpoint setzen kann. Wenn ein
+Ablaufstrang oder Prozeß die angegebene Stelle erreicht, bemerkt
+der Debugger das Ereignis. Für Stoppereignisse, die sich auf
+Funktionsnamen beziehen, ist der Ausdruck wahr, solange diese
+Funktion aktiv ist. Für Stoppereignisse, die für eine besondere
+Adresse oder Zeilennummer gelten, ist der Ausdruck nur wahr, wenn
+sich der Ablaufstrang oder Prozeß an dieser Adresse oder Zeile
+befindet. Geben Sie 'help Standort' ein, um die komplette Syntax
+dieses Befehls einzusehen. Wenn die aktuelle Sprache C++ ist,
+können Stoppereignisse auch die spezifischen Funktionen von C++
+verwenden. Geben 'help C++' für nähere Einzelheiten ein.
+
+'Ausdruck' kann jeder beliebige, gültige Ausdruck in der aktuellen
+Sprache (%lang oder %db_lang) sein. Der Debugger bemerkt das
+Stopp-Ereignis, wenn ein beliebiger Identifikator im Ausdruck den
+Wert ändert. Dann wird der gesamte Ausdruck erneut im
+Kontext der aktuellen Sprache bewertet.
+
+'lvalue' kann jeder beliebige Ausdruck in der aktuellen Sprache
+sein, der auf der linken Seite einer Zuweisung in dieser Sprache
+gültig wäre. Der Debugger bemerkt dieses Ereignis, wenn sich der
+Inhalt der Variablen 'Standort' ändert. Die Änderung an sich
+macht diese Art von Stoppereignis wahr.
+
+Es können noch umfangreichere Stoppausdrücke durch Kombinieren mit
+Stoppereignissen erstellt werden, indem man den Operator && (und)
+verwendet. Um zum Beispiel in der Funktion a nur anzuhalten, wenn
+die Funktion b auch aktiv ist, geben Sie 'stop a &&b' ein. Um
+anzuhalten, wenn der Wert eines Ausdruckes x innerhalb einer
+Funktion y wahr wird, geben Sie 'stop y && (x)' ein.
+
+BEISPIELE
+stop myfile.c@230
+stop *bar
+stop (x == 5)
+stop foo && (a > 7)
+stop (a == 4) || (b == 7)                                                    
+
+SIEHE AUCH
+%db_lang, %lang, C++, Ausdruck, Standort, Bereich, stop
+++
+
+++ %redir
+NAME
+%redir - Sollen die E/A des Prozesses umgeleitet werden?
+
+BESCHREIBUNG
+%redir' steuert das Verhalten des Befehls 'create'. Als
+Standard werden die E/A des Prozesses bei 'create' nicht
+umgeleitet, außer wenn die Option -r angegeben ist. Wenn %redir
+auf 1 oder 'yes' gesetzt ist, wird 'create' die E/A des
+Prozesses umleiten, außer wenn die Option -n angegeben ist. Das
+Standard-Verhalten kann durch Setzen von %redir auf 0 oder 'no'
+wiederhergestellt werden.
+
+SIEHE AUCH
+create, grab, input
+++
+
+
+++ Ausdruck
+NAME
+Ausdruck - Debugger-Ausdruck
+
+BESCHREIBUNG
+Debugger-Ausdrücke haben die gleiche Syntax wie die aktuelle
+Sprache (%lang oder %db_lang). Der Debugger akzeptiert Ausdrücke,
+die jegliche Kombination von Programmvariablen oder Funktionen,
+qualifizierten Namen, integrierten Debugger-Variablen und
+benutzerdefinierten Variablen enthalten. Ein qualifizierter Name
+gibt einen Programmidentifikator an, der im aktuellen
+Kontext nicht sichtbar sein kann. Die Syntax lautet:
+       [[Ablaufstrang-ID]@][[Quelledatei]@][[Funktion]@][[Zeilennummer]@]Identifikator
+    oder [[Ablaufstrang-ID]@]Rahmennummer@Identifikator oder
+       [[Ablaufstrang-ID]@]Objektname@[Quelledatei@]Identifikator
+
+Der qualifizierte Name wird von links nach rechts bewertet und
+kann durch VErwendung von '@' verdeutlicht werden. 'Rahmennummer'
+und 'Funktion' müssen sich auf Funktionen beziehen, die derzeit
+aktiv sind. 'Ablaufstrang-ID' kann sich auf einen Ablaufstrang oder
+Einschritt-Prozeß beziehen. 'Objektname' bezieht sich auf jedes
+Objekt (ausführbare Datei oder geteilte Bibliothek), das im
+Prozeß enthalten ist.
+
+Wenn die aktuelle Sprache C ist, unterstützt 'debug' die
+Bewertung aller legalen ANSI C Ausdrücke, außer denen, die eine
+Makro-Erweiterung oder Struktur, Verbindung oder Aufzählung
+erfordern. Ein Beispiel für eine Typendeklaration in einem
+Ausdruck lautet: 
+        ((struct { int i; char c; } *)p)->c = 'a';
+
+Wenn die aktuelle Sprache C++ ist, akzeptiert 'debug' einen
+Nebensatz von C++-Ausdrücken. Sie C++ für nähere Einzelheiten.
+
+Ausdrücke, die mit einem Bindestrich (-) beginnen oder
+Zeichenfolgen mit besonderer Bedeutung für den Debugger
+enthalten, müssen in runden, eckigen oder geschweiften Klammern
+eingeschlossen werden. Spezielle Zeichenfolgen sind: >, >>, |,
+||, &&, #, Komma, Strichpunkt, LF.
+
+SIEHE AUCH
+%db_lang, %lang, C++, if, print, Bereich, set, stop, Stopausdruck,
+Benutzervariablen, while
+++
+
+++ Bereich
+NAME
+Bereich - Die Sichtbarkeit eines Programmidentifikators
+
+BESCHREIBUNG
+Debugger-Befehle, die Stellen oder Ausdrücke akzeptieren können
+sich auf Identifikatoren in gesteuerten Programmen beziehen:
+Funktionen, Parameter, Variablen, Etiketten, Typen, Struktur und
+Verbindungen sowie Mitgliedsnamen und Aufzählungen. Stellen
+können sich auch auf Ursprungszeilennummern beziehen. Ob ein Name für
+den Debugger jederzeit sichtbar ist, hängt vom Status des
+Programms zu diesem Zeitpunkt ab (Kontext) und von der Menge
+der Debug-Informationen, die das Programm an den Debugger
+liefert.
+
+Ursprungszeilennummern, Namen von lokalen Variablen für eine
+spezifische Funktion, Parameternamen, Typennamen, Struktur und
+Verbindung sowie Mitgliedsnamen und Aufzählungen sind nur
+verfügbar, wenn die Datei, in der sie sich befinden, mit der
+Option -g kompiliert wurde. Namen von globalen und
+dateistatischen Funktionen und Variablen sind verfügbar, wenn die
+Datei, die sie definiert, mit der Option -g kompiliert wurde oder
+die Symboltabelle des Programms nicht abgelegt wurde.
+
+Ursprungszeilennummern und dateistatische Funktionen und Variablen
+sind nur sichtbar, wenn der aktuelle Kontext sich in dieser
+Datei befindet, d.h., wenn das Programm irgendwo in dem von
+dieser Datei erstellten Code angehalten ist. Funktionsparameter
+sind nur sichtbar, wenn der aktuelle Kontext sich in dieser
+Funktion befindet. Lokale Variablen sind nur sichtbar, wenn der
+aktuelle Kontext sich innerhalb deren Definitionsblock
+befindet.
+
+Identifikatoren, die nicht im aktuellen Kontext sichtbar
+sind, können oft noch in Stellen oder Ausdrücken erfaßt werden,
+wenn man deren qualifizierten Namen verwendet. Siehe 'Ausdruck' und
+'Standort' für die komplette Syntax.                                                    
+
+Symbole, die in geteilten Bibliotheken definiert sind, sind nicht
+sichtbar, bis diese Bibliotheken vom dynamischen Linker geladen
+werden. Symbole von geteilten Bibliotheken, die mit Aufrufen
+dlopen(3X) geladen wurden, sind nur nach dem Aufruf dlopen
+verfügbar.
+
+SIEHE AUCH
+%frame, %func, %line, Ausdruck, Standort
+++
+
+++ whatis
+NAME
+whatis - Zeigt den Typ eines Ausdrucks an.
+
+SYNOPSIS
+whatis [-p Prozeßliste] Ausdruck
+
+BESCHREIBUNG
+'whatis' zeigt den Typ des Ausdrucks im aktuellen Kontext
+(%frame) an. Wenn 'Prozeßliste' angegeben ist, wird der Typ des
+Ausdrucks im Kontext jedes Ablaufstranges oder Prozesses in
+der Liste bewertet.'Ausdruck' kann jeglicher Ausdruck in der
+aktuellen Sprache sein.
+
+Wenn eine Variable ein Struktur- oder Klassentyp ist, zeigt
+'whatis Variable' den Namen der Struktur oder Klasse an. 'whatis
+structure_tag_name' oder 'whatis type_name' zeigt ale bekannten
+Informationen über diesen Typ an, einschließlich der
+Strukturelemente oder Aufzählungen.
+
+Wenn ein Zeiger für ein Basisklassenobjekt mit virtuellen Funktionen
+gegeben ist, und wenn die Fehlerbehebungsfunktion feststellen
+kann, daß der Objekttyp von der Basisklasse abgeleitet ist,
+wird whatis sowohl die Basisklasse als auch die abgeleitete
+Klasse anzeigen.                                                    
+
+BEISPIELE
+whatis i
+whatis main
+whatis (i + 1) * 2.0
+whatis struct foobar
+
+SIEHE AUCH
+%db_lang, C++, Ausdruck
+++
+
+++ Programm
+NAME
+Programm - ein ausführbares Objekt.
+
+BESCHREIBUNG
+Ein Programm ist ein ausführbares Objekt in allen durch
+die Fehlerbehebungsfunktion verständlichen Objektdateiformaten
+und in allen der gemeinsam benutzten Bibliotheken, die das
+ausführbare Objekt beim Startzeit laden wird.  Die ausführbare
+Abbildung eines Programms ist ein Prozeß. Da ein Prozeß
+möglicherweise eine Verzweigung durchführt, werden viele Prozesse
+u. U. von einem einzigen Programm abgeleitet. Alle Prozesse
+enthalten möglicherweise mehrere Steuerungsablaufstränge. Wenn
+auf ein Programm durch den Programmnamen verwiesen wird oder wenn
+auf das aktuelle Programm (%Programm) in einer Liste über
+Fehlerbehebungsprozesse verwiesen wird, werden alle von dem
+aktuellen Abruf des Programms abgeleiteten Prozesse und
+Ablaufstränge eingeschlossen.
+
+SIEHE AUCH
+%proc, %program, %thread, Prozeß, Prozeßliste, Ablaufstrang
+++
+
+++ Prozeß
+NAME
+Prozeß - die ausführbare Abbildung eines Programms.
+
+BESCHREIBUNG
+Ein Prozeß ist die ausführbare Abbildung eines Programm und enthält
+einen oder mehrere Steuerungsablaufstränge.  Alle Ablaufstränge
+innerhalb eines Prozesses teilen den allgemeinen Prozeßadreßraum,
+Prozeß- und übergeordnete Prozeßbezeichner, Privilegien, Stamm-
+und Arbeitsverzeichnisse, Datei-Deskriptors, Datei- und Datensatzsperren,
+Ressourcenbegrenzungen und den Signalbehandlungskontext (außer Signalmaske
+und Signalstapel) Wenn auf einen Prozeß durch den Fehlerbehebungsbezeichner,
+Systembezeichner oder durch Verwendung der Variable %proc in einer
+Liste über Fehlerbehebungsprozesse verwiesen wird, werden alle
+Steuerungsablaufstränge innerhalb des Prozesses eingeschossen. Ist der 
+Prozeß kein Mehrfach-Ablaufstrangprozeß, dann ist der Prozeß ein 
+Einzelobjekt-Ablaufstrangprozeß.
+
+SIEHE AUCH
+%follow, %proc, %program, %thread, Prozeßliste, Programm, Ablaufstrang
+++
+
+++ Ablaufstrang
+NAME
+Ablaufstrang - Ein einziger Steuerungsablaufstrang.
+
+BESCHREIBUNG
+Ein Ablaufstrang ist ein Einzelausführungskontext innerhald eines Prozesses.
+Jeder Ablaufstrang hat seinen eigenen Satz von Registern, Signalmasken
+und Signalstapeln.  Ein "Ablaufstrang" im Kontext der Fehlerbehebungsfunktion
+bezieht sich auf von den Schnittstellen in <thread.h> implementierte 
+Einheiten auf Benutzerebene.  Diese Ablaufstränge unterscheiden sich
+von (und werden gebaut auf) dem vom Kern unterstützten Light-Weight
+Prozeß (LWP). 
+
+Zu einem gegebenen Zeitpunkt kann ein Ablaufstrang entweder auf
+einem LWP laufen oder inaktiv sein. Ein inaktiver Ablaufstrang
+kann vom Testhilfeprogramm nicht gestartet werden, doch kann sein
+Status überprüft und geändert werden.
+
+SIEHE AUCH
+%proc, %program, %thread, Prozeß, Prozeßliste, Programm,
+ps, run, step
+++
+
+++ %thread
+NAME
+%thread - der aktuelle Ablaufstrang.
+
+BESCHREIBUNG
+Diese Variable enthält den Ablaufstrangnamen des aktuellen Ablaufstrangs.
+Sie kann explizit über den "set" Befehl oder implizit über die Befehle
+"create", "grab" oder "release" eingestellt werden.
+Durch Einstellen von %thread werden %proc, %program und %frame implizit
+eingestellt. Wenn der aktuelle Prozeß (%proc) ein Einzelablaufstrangprozeß ist, 
+enthält %thread eine leere Zeichenkette.
+
+SIEHE AUCH
+%frame, %proc, %program, Prozeß, Prozeßliste, Programm, Ablaufstrang
+++
+
+++ %thread_change
+NAME
+%thread_change - Steuerung der Funktion bei Änderung des Zustands.
+
+BESCHREIBUNG
+Der Zustand eines Ablaufstrangs kann sich während
+seiner Lebensdauer mehrmals ändern: er wird erstellt und ist vorhanden;
+er kann unterbrochen oder fortgesetzt werden; ein Multiplex-Ablaufstrang
+gibt möglicherweise seinen LWP auf oder wird von einem LWP aufgenommen.
+%thread_change regelt die Fehlerbehebungsfunktion, wenn
+sich der Zustand ändert. Die gültigen Werte sind:
+     ignorieren  Die Fehlerbehebungsfunktion druckt keine Nachricht,
+                 die die Änderung ankündigt. Der betreffende Ablaufstrang wird nicht gestoppt.
+                 Ein neu erstellter oder fortgesetzter oder ein von einem
+                 LWP aufgenommener Ablaufstrang wird laufend eingestellt
+                 wenn möglich.
+     ankündigen  Die Fehlerbehebungsfunktion druckt eine Nachricht, die die
+                 Änderung des Zustands ankündigt. Der betreffende Ablauftrang wird nicht gestoppt.
+                 Ein neu erstellter oder fortgesetzter oder ein von einem
+                 LWP aufgenommener Ablaufstrang wird laufend eingestellt
+                 wenn möglich.
+     stoppen     Die Fehlerbehebungsfunktion druckt eine Nachricht, die die
+                 Änderung des Zustands ankündigt und den betreffenden Ablaufstrang stoppt
+                 wenn möglich.  Ein fortgesetzter oder ein von einem LWP
+                 aufgenommener Ablaufstrang wird gestoppt (oder im Off
+                 LWP-Zustand).  Zur Erstellung eines Ablaufstrangs wird der 
+                 Anlaufstrang, der den neuen Ablaufstrang erstellt, gestoppt
+                 wenn die im thr_create(3T) Aufruf angegebene Funktion erreicht
+                 wird.
+
+Der Standardwert für %thread_change ist "stoppen".
+
+SIEHE AUCH
+Prozeß, Programm, Ablaufstrang
+++
+
+++ C++
+NAME
+C++ - C++-specific behavior
+
+BESCHREIBUNG
+Die Fehlerbehebungsfunktion erkennt die Objektdateien, die mit dem
+C++ Compilation System 2.0 oder C++ Translator, cfront (Version 2.1 oder 3.0)
+kompiliert wurden. Die aktuelle Sprache (%db_lang) wird auf C++ eingestellt.  
+Namen werden als C++ Quelle und nicht wie in Objektdatei angezeigt. 
+
+
+Ist C++ die aktuelle Sprache, akzeptiert das Testhilfeprogramm
+eine Untermenge von C++ Ausdrücken, darunter folgende:
+
+    o  alle Ausdrücke, die akzeptiert werden, wenn C die aktuelle
+       Sprache ist
+    o  Aufrufe von Mitgliederfunktionen einschließlich
+       virtueller und statischer Mitgliederfunktionen
+    o  Aufrufe von übergeladenen Funktionen
+    o  Ausdrücke, bei denen Typennamen als Typendefinitionen
+       (typedefs) verwendet werden
+    o  Ausdrücke mit übergeladenen Operatorenfunktionen
+    o  Ausdrücke, die auf Klassenmitglieder mit einem
+       impliziten "this"-Zeiger zugreifen, wenn der Prozeß oder
+       Ablaufstrang in einer Funktion gestoppt wurde, die
+       Klassenmitglied ist
+
+Die print- und set-Befehle haben eine Verbose-Option (-v), die weitere
+Informationen einschließlich der von der Fehlerbehebungsfunktion während der
+Auswertung des Ausdrucks aufgerufenen Funktionsprototypen aller Funktionen druckt.
+Mit dieser Option erhalten Sie Informationen über Ausdrücke während
+überlasteter Funktionen oder Operationen. Die print -v Option zeigt außerdem
+Compiler-erstellte Struktur und Klassenmitglieder (Beispiel: Zeiger und
+virtuelle Funktionstabellen).
+
+Wenn ein Zeiger für ein Basisklassenobjekt mit virtuellen Funktionen
+gegeben ist, und wenn die Fehlerbehebungsfunktion feststellen
+kann, daß der Objekttyp von der Basisklasse abgeleitet ist,
+wird whatis sowohl die Basisklasse als auch die abgeleitete
+Klasse anzeigen. Der print Befehl wird auch das Objekt im Hinblick
+auf den abgeleiteten Typ anzeigen.
+
+Beim Drucken vom Inhalt einer Struktur oder Klasse wird der Print
+Befehl statische Klassenmitglieder mit der Bemerkung, daß sie
+statisch sind, anzeigen. Beachten Sie, daß symbols -v keine
+statischen Mitglieder anzeigt. Bemerken Sie auch, daß die vom
+Compiler erstellten Mitglieder nur mit print -v angezeigt werden.
+
+Anhaltepunkte (Stopp-Ereignisse) sind möglicherweise eingestellt auf:
+
+     o  Klassenmitgliederfunktionen einschließlich Konstruktoren und Destruktoren
+        und Konvertierungsfunktionen
+     o  übergeladene Operatorenfunktionen und
+     o  übergeladene Funktionen, die den kompletten Prototyp verwenden oder 
+     o  übergeladene Funktionen ohne Prototypeninformationen 
+        In diesem Fall zeigt das Testhilfeprogramm eine Liste der Funktionen an  
+        und fordert Sie auf, eine oder alle Möglichkeiten zu wählen.
+
+Ein Stopp-Ereignis wird möglicherweise auch auf einer bestimmten
+Funktionskombination von Objekten und Mitgliedern mit der Syntax
+"stop Zeiger->Funktion" oder"stop Objekt.Funktion" erstellt.
+ debug stoppt den Prozeß oder Ablaufstrang bei der Eingabe
+der Funktion nur, wenn "dieser" Zeiger mit dem
+angegebenen Objekt übereinstimmt. Wenn die Funktion eine
+virtuelle Funktion ist, wird debug den Anhaltepunkt auf der
+entsprechenden Übersteuerungsfunktion einstellen.
+
+BEISPIELE
+print *this
+print -v ptr->overloaded_f(1, 2)
+whatis ptr_to_base
+stop C::f(int)
+stop C::C
+stop C::~C
+stop C::operator int()
+stop C::operator+
+stop ptr->f(char *)
+
+SIEHE AUCH
+%db_lang, Ausdruck, print, set, stop, whatis
+++

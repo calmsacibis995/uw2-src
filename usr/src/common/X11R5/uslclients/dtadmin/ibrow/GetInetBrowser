@@ -1,0 +1,143 @@
+#!/bin/sh
+#ident	"@(#)ibrow:GetInetBrowser	1.11"
+
+#
+#	This script gives instructions for retrieving an
+#	Internet/WWW browser via anonymous ftp and installing
+#	it on the local machine.
+#
+
+XWINHOME=${XWINHOME:-/usr/X}
+IBROW_APP=${IBROW_APP:-$XWINHOME/desktop/ibrow}
+. ${IBROW_APP}/ibrow.msgs
+
+
+#
+#	check that wksh has been installed before trying to run
+#
+WKSH=${XWINHOME}/bin/wksh
+if [ $# -ne 1 -o "$1" != "_wksh_is_installed_" ]
+then
+	if [ -x ${WKSH} ]
+	then
+		# ok, we have wksh installed.  now figure out where this
+		# file is, so we can run wksh on it.
+		case $0 in
+		/* | ./* | ../* )
+			# they used explicit path name
+			ibrow_path=$0
+			;;
+		* )
+			# use "type" to find out where we are
+			ibrow_path=`type GetInetBrowser 2>&1 | 
+				sed -n -e 's%GetInetBrowser is %%p'`
+			if [ -z "$ibrow_path" ]
+			then
+				# hmm.  that failed. use the default.
+				ibrow_path="/usr/X/bin/GetInetBrowser"
+			fi
+			;;
+		esac
+		exec ${WKSH} -motif $ibrow_path _wksh_is_installed_
+	else
+		$GETTXT $NEED_wksh
+		exit 1
+	fi
+fi
+
+export OPTIONS
+OPTIONS=-f
+
+libload ${IBROW_APP}/libibrow.so
+
+#	where to find the browser files
+REMOTE_HOST=ftp.summit.novell.com
+REMOTE_DIR=/WWW
+TAR_FILE=pkg.Browser.tar.Z
+
+#	for resizing text windows, which come up rather small by default
+MULT_WIDTH=6
+MULT_HEIGHT=3
+
+do_instruct() {
+	cps COPYPOP copypop topLevelShell $TOPLEVEL
+	sv $COPYPOP title:"$($GETTXT $TITLE_ibrow)"
+
+	#	figure out our domain name
+	if [ -x /usr/sbin/nslookup ]
+	then
+		DNAME="`echo set all | /usr/sbin/nslookup 2>/dev/null |
+			grep domain= | sed -e 's%.*domain=%%'`"
+	fi
+	if [ -z "${DNAME}" -a -f /etc/resolv.conf ]
+	then
+		DNAME="`grep '^domain' /etc/resolv.conf |
+			sed -e 's%domain[ 	][ 	]*%%'`"
+	fi
+	DNAME="`uname -n`"."${DNAME}"
+	MAILADDR="${LOGNAME}@${DNAME}"
+
+	cmw WINDOW window scrolledWindow $COPYPOP scrollingPolicy:AUTOMATIC
+	cmw LABEL label label $WINDOW
+	str1="$($GETTXT $INFO_instruct1)"
+	str2=`pfmt -s nostd "$($GETTXT $INFO_instruct2)" ${REMOTE_HOST} ${MAILADDR} 2>&1`
+	str3=`pfmt -s nostd "$($GETTXT $INFO_instruct3)" ${REMOTE_DIR} ${TAR_FILE} ${TAR_FILE} 2>&1`
+	str4=`pfmt -s nostd "$($GETTXT $INFO_instruct4)" ${HOME} 2>&1`
+	str5="$($GETTXT $INFO_instruct5)"
+	sv $LABEL labelString:"${str1}${str2}${str3}${str4}${str5}" \
+		alignment:alignment_beginning 
+
+	# the default window is too small -- force it larger
+	gv $WINDOW width:W
+	W=`expr $W \* $MULT_WIDTH`
+	sv $WINDOW width:$W
+
+	gv $WINDOW height:H
+	H=`expr $H \* $MULT_HEIGHT`
+	sv $WINDOW height:$H
+
+	mc $LABEL
+	mc $WINDOW
+	pu $COPYPOP
+}
+
+
+#
+#	display help msg
+#
+do_help() {
+	call handle_to_widget "GetInetBrowser" $ROW
+	call ibrow_help $RET
+}
+
+do_exit() {
+	exit 0
+}
+
+#
+# main starts here
+#
+ai TOPLEVEL ibrow Ibrow "$@"
+sv $TOPLEVEL title:"$($GETTXT $TITLE_ibrow)"
+
+str1="$($GETTXT $INFO_intro1)"
+str2=`pfmt -s nostd "$($GETTXT $INFO_intro2)" $REMOTE_HOST 2>&1`
+
+cmw FORM form form $TOPLEVEL
+
+cmw LABEL label label $FORM  \
+	labelString:"$str1
+$str2"  \
+	alignment:alignment_beginning \
+	$(spanwidth)
+
+addrows $FORM ROW
+sv $ROW $(under $LABEL)
+
+addbuttons -w $ROW \
+	INSTRUCT "$($GETTXT $PADBUTTON_Instruct)" do_instruct \
+	EXIT "$($GETTXT $PADBUTTON_Exit)" do_exit \
+	HELP "$($GETTXT $PADBUTTON_Help)" do_help
+
+rw $TOPLEVEL
+ml

@@ -1,0 +1,73 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/devices/display/Form.display	1.1.7.3"
+#ident  "$Header: Form.display 2.0 91/07/12 $"
+
+################################################################################
+#	Module Name: Form.display
+################################################################################
+form="Display Device Information"
+
+framemsg=`readfile $INTFBASE/form.msg`
+
+
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+done=`message -f -w "Displaying information about $F2 in progress.";
+      set -l CMD=CLOSE;
+      set -l DFILE=/tmp/${VPID}.df;
+      devattr $F2 displaycmd | set -l DISP_CMD;
+      if [ $RET -eq 0 ];
+      then
+                shell "$DISP_CMD > $DFILE 2> /dev/null";
+                if [ $RET -eq 0 ];
+                then
+                        set -l CMD="OPEN TEXT $OBJ_DIR/Text.display";
+                else
+                        set -l CMD="OPEN TEXT $OBJ_DIR/Text.disperr $F2";
+                fi;
+      else message -w "no display cmd for this device";
+      fi`$CMD
+
+name=Device group:
+lininfo=devgrp
+nrow=1
+ncol=3
+frow=1
+fcol=17
+rows=1
+columns=18
+show=`/usr/sadm/sysadm/bin/showgrp $ARG1;
+	if [ $RET -eq 0 ];
+	then
+	  echo true;
+	else
+	  echo false;
+	fi`
+
+rmenu={ `/usr/bin/getdgrp type=$ARG1 display:* | /usr/bin/sort` }
+valid=`/usr/bin/getdgrp type=$ARG1 display:* $F1 | /usr/bin/grep $F1 > /dev/null;
+	if [ "$RET" -eq 0 ];
+	then
+	  echo true;
+	else
+	  echo false;
+	fi`
+
+invalidmsg=const "ERROR: Invalid device group entered."
+
+name=Device:
+lininfo=devdr
+nrow=2
+ncol=3
+frow=2
+fcol=11
+rows=1
+columns=18
+
+rmenu=OPEN MENU $OBJ_DIR/../Menu.drive $F1 $ARG1
+valid=`/usr/sadm/sysadm/bin/valdrive $F1 $ARG1 $F2`
+
+invalidmsg=const "ERROR: Invalid device entered."
+
+name=RESET
+button=8
+action=RESET

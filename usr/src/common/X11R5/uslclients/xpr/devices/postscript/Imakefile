@@ -1,0 +1,33 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)xpr:devices/postscript/Imakefile	1.5"
+
+         INCLUDES = -I../.. $(STD_INCLUDES)
+
+              LIB = libps.a
+
+SRCS	= \
+		dump_image.c \
+		map.c \
+		output.c \
+		prologue.c 
+
+OBJS = \
+		dump_image.o \
+		map.o \
+		output.o \
+		prologue.o
+
+install:: $(OBJS)
+
+NormalLibraryObjectRule()
+
+NormalLibraryTarget(ps,$(OBJS))
+
+DependTarget()

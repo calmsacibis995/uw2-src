@@ -1,0 +1,49 @@
+#ident	"@(#)dthelp:dtaudit/README	1.2"
+
+This directory contains software tools to audit help files intended for
+use with the graphical interface in SVR4.2 and later releases.
+
+The tools checks for the following:
+	- links to nonexistent sections.
+
+To audit an entire "help" directory hierarchy, use the "dtaudit" shell
+script.  You may specify the root of the help hierarchy as an argument
+to dtaudit; it defaults to "/usr/X/lib/locale/C/help".  You may also
+specify the name of the output file which will contain the result of
+the audit; the default output file is "dtaudit.out".
+
+dtaudit will create a file called "hlp.files" which will be passed to
+another tool (Match) as input.
+
+	Usage: dtaudit [-d <directory>] [-o <output_file>]
+
+The tool "Match" invokes Refs and Tags to verify that every reference
+(a hypertext link) points to an existent section.  This is done for every
+file in the input file.
+
+	Usage: Match input_file
+
+where input_file can be a basename or a full path name.
+
+Each line that is checked will be written to the standard output.  All
+errors and warings that are detected are flagged by appending the string
+"- ERROR -" or "-WARNING-" to the line, respectively.
+
+Note that you may invoke Match without using dtaudit.  To audit a selected
+set of help files, create a list of the files to be audited (as a set) in
+a file and execute Match with that file as its input.
+
+Examples:
+
+		"Match infile | grep ERROR > outfile"
+
+		"Match infile | grep WARNING > outfile"
+
+To build this software type "make".  This will create the three
+executables: Match, Tags, Refs.  Note that the path where these
+executables reside should be included in your PATH environment
+variable.  (Ex: PATH=$PATH:/home/user/dtaudit export PATH)
+
+Note that duplicate sections are currently not being detected.  This will
+be done as an enhancement in the near future.
+

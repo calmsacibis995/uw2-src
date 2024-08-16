@@ -1,0 +1,77 @@
+#ident	"@(#)olpkg.oam:dtnetadm/prototype	1.13"
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+i pkginfo
+i postinstall
+
+!PKGINST=dtnetadm
+!default 0755 bin bin
+
+d enduser /usr ? ? ?
+d enduser /usr/X
+d enduser /usr/X/desktop
+d enduser /usr/X/desktop/Admin_Tools
+d enduser /usr/X/desktop/Admin_Tools/Networking
+d enduser /usr/X/desktop/PackageMgr
+d enduser /usr/X/lib
+d enduser /usr/X/lib/classdb 0775 bin dtadmin
+d enduser /usr/X/lib/bitmaps
+d enduser /usr/X/lib/pixmaps
+d enduser /usr/X/lib/locale
+d enduser /usr/X/lib/locale/C
+d enduser /usr/X/lib/locale/C/help
+d enduser /usr/X/lib/locale/C/help/dtadmin
+d enduser /usr/X/bin
+d enduser /usr/X/lib/pixmaps
+
+###############################
+##     Graphical admin objects
+
+!default 0755 root sys
+
+f enduser /usr/X/bin/InternetMgr
+s enduser /usr/X/desktop/Admin_Tools/Networking/Internet_Setup=/usr/X/bin/InternetMgr
+f enduser /usr/X/desktop/PackageMgr/inet
+v enduser /usr/X/lib/classdb/inet.cdb 0664 bin dtadmin
+f enduser /usr/X/lib/bitmaps/tcpadmm.mask 0644 bin bin
+f enduser /usr/X/lib/pixmaps/tcpadm.icon 0644 bin bin
+f enduser /usr/X/lib/locale/C/help/dtadmin/inet.hlp 0644 bin bin
+
+###############################
+##     Graphical admin objects
+
+!default 0755 root sys
+
+f enduser /usr/X/bin/File_Sharing
+s enduser /usr/X/desktop/Admin_Tools/Networking/File_Sharing=/usr/X/bin/File_Sharing
+f enduser /usr/X/desktop/PackageMgr/nfs
+v enduser /usr/X/lib/classdb/nfs.cdb 0664 bin dtadmin
+f enduser /usr/X/lib/pixmaps/nfs.icon 0644 bin bin
+f enduser /usr/X/lib/pixmaps/nfsLocal 0644 bin bin
+f enduser /usr/X/lib/pixmaps/nfsMounted 0644 bin bin
+f enduser /usr/X/lib/pixmaps/nfsRemote 0644 bin bin
+f enduser /usr/X/lib/pixmaps/nfsShared 0644 bin bin
+
+# create in postinstall
+#f none	/etc/dfs/dtvfstab  0644	root  root
+
+#Install ibrow files
+
+f enduser /usr/X/bin/InstallBrowser                        0755 bin bin
+s enduser /usr/X/desktop/Admin_Tools/Networking/Install_Browser=/usr/X/bin/InstallBrowser
+d enduser /usr/X/desktop/ibrow                             0755 bin bin
+f enduser /usr/X/desktop/ibrow/ibrow.msgs			0644 bin bin
+f enduser /usr/X/desktop/ibrow/libibrow.so.1		0644 bin bin
+s enduser /usr/X/desktop/ibrow/libibrow.so=/usr/X/desktop/ibrow/libibrow.so.1
+f enduser /usr/X/desktop/PackageMgr/ibrow			0644 bin bin
+f enduser /usr/X/lib/bitmaps/ibrow.32			0644 bin bin
+v enduser /usr/X/lib/classdb/ibrow.cdb			0644 bin bin
+f enduser /usr/X/lib/pixmaps/ibrow.32			0644 bin bin

@@ -1,0 +1,580 @@
+#ident	"@(#)set:i386/set/as/prototype	1.99"
+# SIP packaging files
+
+i pkginfo
+i postinstall
+i response
+i set.1
+i set.2
+i set.3
+i set.4
+i set.5
+i setinfo
+i setsize
+
+!SETSRCLOC=../../set
+i preinstall=$SETSRCLOC/pe/preinstall
+i request=$SETSRCLOC/pe/request
+i copyright=$SETSRCLOC/pe/copyright
+i set.6=$SETSRCLOC/pe/set.6
+i set.7=$SETSRCLOC/pe/set.7
+i set.8=$SETSRCLOC/pe/set.8
+i set.9=$SETSRCLOC/pe/set.9
+
+!PKGSRCLOC=../../pkg
+!CMDSRCLOC=../../cmd
+!PKGDESCLOC=../../pkg-desc/locale/C
+!XPKGSRCLOC=../../X11R5/olpkg.oam
+
+i d.acl=$PKGDESCLOC/d.acl
+i d.acp=$PKGDESCLOC/d.acp
+#i d.ASdocs=$PKGDESCLOC/d.ASdocs
+i d.atm=$PKGDESCLOC/d.atm
+i d.audit=$PKGDESCLOC/d.audit
+i d.base=$PKGDESCLOC/d.base
+i d.bkrs=$PKGDESCLOC/d.bkrs
+i d.bsdcompat=$PKGDESCLOC/d.bsdcompat
+i d.cmds=$PKGDESCLOC/d.cmds
+i d.desktop=$PKGDESCLOC/d.desktop
+i d.dfs=$PKGDESCLOC/d.dfs
+#i d.display=$PKGDESCLOC/d.display
+i d.dtclients=$PKGDESCLOC/d.dtclients
+i d.dtxt=$PKGDESCLOC/d.dtxt
+i d.dtxtfonts=$PKGDESCLOC/d.dtxtfonts
+#i d.dynatext=$PKGDESCLOC/d.dynatext
+#i d.ls=$PKGDESCLOC/d.ls
+i d.inet=$PKGDESCLOC/d.inet
+#i d.server=$PKGDESCLOC/d.server
+i d.lp=$PKGDESCLOC/d.lp
+i d.mele=$PKGDESCLOC/d.mele
+#i d.merge=$PKGDESCLOC/d.merge
+#i d.netmgt=$PKGDESCLOC/d.netmgt
+i d.nfs=$PKGDESCLOC/d.nfs
+#i d.nics=$PKGDESCLOC/d.nics
+#i d.nis=$PKGDESCLOC/d.nis
+i d.nsu=$PKGDESCLOC/d.nsu
+#i d.nuc=$PKGDESCLOC/d.nuc
+#i d.nwnet=$PKGDESCLOC/d.nwnet
+#i d.nwsup=$PKGDESCLOC/d.nwsup
+i d.oam=$PKGDESCLOC/d.oam
+#i d.osmp=$PKGDESCLOC/d.osmp
+#i d.platform=$PKGDESCLOC/d.platform
+i d.terminf=$PKGDESCLOC/d.terminf
+
+i acl/copyright=$PKGSRCLOC/acp/copyright
+i acl/pkginfo=$PKGSRCLOC/acl/pkginfo
+i acl/depend=$PKGSRCLOC/acl/depend
+
+i acp/copyright=$PKGSRCLOC/acp/copyright
+i acp/depend=$PKGSRCLOC/acp/depend 
+i acp/menu.acp.1=$PKGSRCLOC/acp/menu.acp.1 
+i acp/menu.acp=$PKGSRCLOC/acp/menu.acp 
+i acp/pkginfo=$PKGSRCLOC/acp/pkginfo
+i acp/request=$PKGSRCLOC/acp/request 
+i acp/response=$PKGSRCLOC/acp/response 
+
+i ASdocs/pkginfo=$PKGBINLOC/ASdocs/pkginfo
+i ASdocs/copyright=$PKGBINLOC/ASdocs/install/copyright
+i ASdocs/depend=$PKGBINLOC/ASdocs/install/depend
+i ASdocs/request=$PKGBINLOC/ASdocs/install/request
+i ASdocs/menu.ASdocs=$PKGBINLOC/ASdocs/install/ASdocs/menu.ASdocs
+i ASdocs/menu.ASdocs2=$PKGBINLOC/ASdocs/install/ASdocs/menu.ASdocs2
+i ASdocs/menu.ASdocs3=$PKGBINLOC/ASdocs/install/ASdocs/menu.ASdocs3
+i ASdocs/response=$PKGBINLOC/ASdocs/install/response
+
+#fri frASdocs/pkginfo=$PKGBINLOC/frASdocs/pkginfo
+#fri frASdocs/copyright=$PKGBINLOC/frASdocs/install/copyright
+#fri frASdocs/depend=$PKGBINLOC/frASdocs/install/depend
+#fri frASdocs/request=$PKGBINLOC/frASdocs/install/request
+#fri frASdocs/menu.ASdocs=$PKGBINLOC/frASdocs/install/frASdocs/menu.ASdocs
+#fri frASdocs/menu.ASdocs2=$PKGBINLOC/frASdocs/install/frASdocs/menu.ASdocs2
+#fri frASdocs/menu.ASdocs3=$PKGBINLOC/frASdocs/install/frASdocs/menu.ASdocs3
+#fri frASdocs/response=$PKGBINLOC/frASdocs/install/response
+ 
+#iti itASdocs/pkginfo=$PKGBINLOC/itASdocs/pkginfo
+#iti itASdocs/copyright=$PKGBINLOC/itASdocs/install/copyright
+#iti itASdocs/depend=$PKGBINLOC/itASdocs/install/depend
+#iti itASdocs/request=$PKGBINLOC/itASdocs/install/request
+#iti itASdocs/menu.ASdocs=$PKGBINLOC/itASdocs/install/itASdocs/menu.ASdocs
+#iti itASdocs/menu.ASdocs2=$PKGBINLOC/itASdocs/install/itASdocs/menu.ASdocs2
+#iti itASdocs/menu.ASdocs3=$PKGBINLOC/itASdocs/install/itASdocs/menu.ASdocs3
+#iti itASdocs/response=$PKGBINLOC/itASdocs/install/response
+ 
+#dei deASdocs/pkginfo=$PKGBINLOC/deASdocs/pkginfo
+#dei deASdocs/copyright=$PKGBINLOC/deASdocs/install/copyright
+#dei deASdocs/depend=$PKGBINLOC/deASdocs/install/depend
+#dei deASdocs/request=$PKGBINLOC/deASdocs/install/request
+#dei deASdocs/menu.ASdocs=$PKGBINLOC/deASdocs/install/deASdocs/menu.ASdocs
+#dei deASdocs/menu.ASdocs2=$PKGBINLOC/deASdocs/install/deASdocs/menu.ASdocs2
+#dei deASdocs/menu.ASdocs3=$PKGBINLOC/deASdocs/install/deASdocs/menu.ASdocs3
+#dei deASdocs/response=$PKGBINLOC/deASdocs/install/response
+
+#esi esASdocs/pkginfo=$PKGBINLOC/esASdocs/pkginfo
+#esi esASdocs/copyright=$PKGBINLOC/esASdocs/install/copyright
+#esi esASdocs/depend=$PKGBINLOC/esASdocs/install/depend
+#esi esASdocs/request=$PKGBINLOC/esASdocs/install/request
+#esi esASdocs/menu.ASdocs=$PKGBINLOC/esASdocs/install/esASdocs/menu.ASdocs
+#esi esASdocs/menu.ASdocs2=$PKGBINLOC/esASdocs/install/esASdocs/menu.ASdocs2
+#esi esASdocs/menu.ASdocs3=$PKGBINLOC/esASdocs/install/esASdocs/menu.ASdocs3
+#esi esASdocs/response=$PKGBINLOC/esASdocs/install/response
+ 
+#jai jaASdocs/pkginfo=$PKGBINLOC/jaASdocs/pkginfo
+#jai jaASdocs/copyright=$PKGBINLOC/jaASdocs/install/copyright
+#jai jaASdocs/depend=$PKGBINLOC/jaASdocs/install/depend
+#jai jaASdocs/request=$PKGBINLOC/jaASdocs/install/request
+#jai jaASdocs/menu.ASdocs=$PKGBINLOC/jaASdocs/install/jaASdocs/menu.jaASdocs
+#jai jaASdocs/menu.ASdocs2=$PKGBINLOC/jaASdocs/install/jaASdocs/menu.jaASdocs2
+#jai jaASdocs/menu.ASdocs3=$PKGBINLOC/jaASdocs/install/jaASdocs/menu.jaASdocs3
+#jai jaASdocs/response=$PKGBINLOC/jaASdocs/install/response
+
+i manpages/pkginfo=$PKGBINLOC/manpages/pkginfo
+i manpages/copyright=$PKGBINLOC/manpages/install/copyright
+i manpages/depend=$PKGBINLOC/manpages/install/depend
+
+i atm/copyright=$XPKGSRCLOC/atm/copyright 
+i atm/depend=$XPKGSRCLOC/atm/depend 
+i atm/pkginfo=$XPKGSRCLOC/atm/pkginfo 
+
+i audit/copyright=$PKGSRCLOC/acp/copyright
+i audit/pkginfo=$PKGSRCLOC/audit/pkginfo
+i audit/depend=$PKGSRCLOC/audit/depend
+
+i base/chknode.1=$PKGSRCLOC/base/ifiles/chknode.1
+i base/copyright=$PKGSRCLOC/base/ifiles/copyright
+i base/pkginfo=$PKGSRCLOC/base/ifiles/pkginfo
+i base/request=$PKGSRCLOC/base/ifiles/request 
+i base/warn.noboot=$PKGSRCLOC/base/ifiles/warn.noboot
+
+i bkrs/copyright=$PKGSRCLOC/acp/copyright
+i bkrs/depend=$PKGSRCLOC/bkrs/depend
+i bkrs/pkginfo=$PKGSRCLOC/bkrs/pkginfo
+i bkrs/request=$PKGSRCLOC/bkrs/request
+
+i bsdcompat/copyright=$PKGSRCLOC/acp/copyright
+i bsdcompat/depend=$PKGSRCLOC/bsdcompat/depend
+i bsdcompat/pkginfo=$PKGSRCLOC/bsdcompat/pkginfo
+
+i ccs/copyright=$PKGSRCLOC/ccs/copyright
+i ccs/pkginfo=$PKGSRCLOC/ccs/pkginfo
+
+i cmds/copyright=$PKGSRCLOC/lp/copyright
+i cmds/depend=$PKGSRCLOC/cmds/depend
+i cmds/pkginfo=$PKGSRCLOC/cmds/pkginfo
+i cmds/request=$PKGSRCLOC/cmds/request
+
+i desktop/copyright=$XPKGSRCLOC/desktop/copyright 
+i desktop/depend=$XPKGSRCLOC/desktop/depend 
+i desktop/pkginfo=$XPKGSRCLOC/desktop/pkginfo 
+i desktop/request=$XPKGSRCLOC/desktop/request 
+i desktop/response=$XPKGSRCLOC/desktop/response 
+
+i dfs/copyright=$PKGSRCLOC/acp/copyright
+i dfs/pkginfo=$PKGSRCLOC/dfs/pkginfo
+i dfs/depend=$PKGSRCLOC/dfs/depend
+i dfs/request=$PKGSRCLOC/dfs/request
+
+i dtclients/copyright=$XPKGSRCLOC/dtclients/copyright
+i dtclients/depend=$XPKGSRCLOC/dtclients/depend
+i dtclients/pkginfo=$XPKGSRCLOC/dtclients/pkginfo
+
+i dtxt/copyright=$XPKGSRCLOC/dtxt/copyright 
+i dtxt/depend=$XPKGSRCLOC/dtxt/depend 
+i dtxt/pkginfo=$XPKGSRCLOC/dtxt/pkginfo 
+i dtxt/request=$XPKGSRCLOC/dtxt/request 
+
+i dtxtfonts/copyright=$XPKGSRCLOC/dtxtfonts/copyright
+i dtxtfonts/depend=$XPKGSRCLOC/dtxtfonts/depend
+i dtxtfonts/pkginfo=$XPKGSRCLOC/dtxtfonts/pkginfo
+
+i dynatext/copyright=$PKGBINLOC/dynatext/install/copyright
+i dynatext/pkginfo=$PKGBINLOC/dynatext/pkginfo
+i dynatext/depend=$PKGBINLOC/dynatext/install/depend
+i dynatext/request=$PKGBINLOC/dynatext/install/request
+i dynatext/menu.dynatext=$PKGBINLOC/dynatext/install/dynatext/menu.dynatext
+i dynatext/menu.icon=$PKGBINLOC/dynatext/install/dynatext/menu.icon
+i dynatext/response=$PKGBINLOC/dynatext/install/response
+
+i ls/pkginfo=$PKGSRCLOC/ls/pkginfo
+i ls/request=$PKGSRCLOC/ls/request
+i ls/depend=$PKGSRCLOC/ls/depend
+i ls/copyright=$PKGSRCLOC/ls/copyright
+i ls/C/menu.ls1=$PKGSRCLOC/ls/ls/C/menu.ls1
+i ls/C/menu.ls2=$PKGSRCLOC/ls/ls/C/menu.ls2
+i ls/C/menu.ls00=$PKGSRCLOC/ls/ls/C/menu.ls00
+i ls/C/menu.ls01=$PKGSRCLOC/ls/ls/C/menu.ls01
+i ls/C/menu.ls02=$PKGSRCLOC/ls/ls/C/menu.ls02
+i ls/C/menu.ls04=$PKGSRCLOC/ls/ls/C/menu.ls04
+
+#mei mele/copyright=$PKGSRCLOC/mele/copyright
+#mei mele/pkginfo=$PKGSRCLOC/mele/pkginfo
+#mei mele/depend=$PKGSRCLOC/mele/depend
+
+#fri frle/copyright=$PKGSRCLOC/frle/copyright
+#fri frle/pkginfo=$PKGSRCLOC/frle/pkginfo
+#fri frle/depend=$PKGSRCLOC/frle/depend
+
+#iti itle/copyright=$PKGSRCLOC/itle/copyright
+#iti itle/pkginfo=$PKGSRCLOC/itle/pkginfo
+#iti itle/depend=$PKGSRCLOC/itle/depend
+
+#dei dele/copyright=$PKGSRCLOC/dele/copyright
+#dei dele/pkginfo=$PKGSRCLOC/dele/pkginfo
+#dei dele/depend=$PKGSRCLOC/dele/depend
+
+#esi esle/copyright=$PKGSRCLOC/esle/copyright
+#esi esle/pkginfo=$PKGSRCLOC/esle/pkginfo
+#esi esle/depend=$PKGSRCLOC/esle/depend
+
+#jai jale/copyright=$PKGSRCLOC/jale/copyright
+#jai jale/pkginfo=$PKGSRCLOC/jale/pkginfo
+#jai jale/depend=$PKGSRCLOC/jale/depend
+
+#jai jadicopft/copyright=$PKGSRCLOC/jadicopft/copyright
+#jai jadicopft/pkginfo=$PKGSRCLOC/jadicopft/pkginfo
+#jai jadicopft/depend=$PKGSRCLOC/jadicopft/depend
+
+#i inet/menu.inet=$PKGSRCLOC/inet/menu.inet
+i inet/request=$PKGSRCLOC/inet/request
+i inet/depend=$PKGSRCLOC/inet/depend
+i inet/copyright=$PKGSRCLOC/lp/copyright
+i inet/pkginfo=$PKGSRCLOC/inet/pkginfo
+#i inet/response=$PKGSRCLOC/inet/response
+
+i server/copyright=$PKGSRCLOC/lp/copyright
+i server/pkginfo=$PKGSRCLOC/server/pkginfo
+i server/depend=$PKGSRCLOC/server/depend
+
+i lp/copyright=$PKGSRCLOC/lp/copyright 
+i lp/depend=$PKGSRCLOC/lp/depend 
+i lp/pkginfo=$PKGSRCLOC/lp/pkginfo 
+i lp/request=$PKGSRCLOC/lp/request 
+i lp/response=$PKGSRCLOC/lp/response 
+
+i netmgt/copyright=$PKGSRCLOC/lp/copyright
+i netmgt/depend=$PKGSRCLOC/netmgt/depend
+i netmgt/pkginfo=$PKGSRCLOC/netmgt/pkginfo
+i netmgt/request=$PKGSRCLOC/netmgt/request
+
+i nfs/depend=$PKGSRCLOC/nfs/depend
+i nfs/request=$PKGSRCLOC/nfs/request
+i nfs/copyright=$PKGSRCLOC/acp/copyright
+i nfs/pkginfo=$PKGSRCLOC/nfs/pkginfo
+
+# begin NICS Packaging Installation files
+#
+i nics/depend=$PKGSRCLOC/nics/depend
+i nics/copyright=$PKGSRCLOC/lp/copyright
+i nics/pkginfo=$PKGSRCLOC/nics/pkginfo
+i nics/postinstall=$PKGSRCLOC/nics/postinstall
+i nics/postremove=$PKGSRCLOC/nics/postremove
+i nics/preinstall=$PKGSRCLOC/nics/preinstall
+i nics/preremove=$PKGSRCLOC/nics/preremove
+i nics/request=$PKGSRCLOC/nics/request
+#
+#
+# Winxksh files
+#
+i nics/nic_strings=$PKGSRCLOC/nics/nic_strings
+i nics/nic_sttyrc=$PKGSRCLOC/nics/nic_sttyrc
+#
+# findvt - request and postinstall scripts use this command to find a free VT
+i bin/findvt=$CMDSRCLOC/cmd-nics/tools/findvt
+#
+# Help files
+#
+i nics/help/cable_type.hcf=$CMDSRCLOC/cmd-nics/help/cable_type.hcf
+i nics/help/phys_mem_type.hcf=$CMDSRCLOC/cmd-nics/help/phys_mem_type.hcf
+i nics/help/io_addr.hcf=$CMDSRCLOC/cmd-nics/help/io_addr.hcf
+i nics/help/irq_value.hcf=$CMDSRCLOC/cmd-nics/help/irq_value.hcf
+i nics/help/dma_value.hcf=$CMDSRCLOC/cmd-nics/help/dma_value.hcf
+i nics/help/mem_addr.hcf=$CMDSRCLOC/cmd-nics/help/mem_addr.hcf
+i nics/help/nic_select.hcf=$CMDSRCLOC/cmd-nics/help/nic_select.hcf
+i nics/help/slot_number.hcf=$CMDSRCLOC/cmd-nics/help/slot_number.hcf
+i nics/help/tx_buf_num.hcf=$CMDSRCLOC/cmd-nics/help/tx_buf_num.hcf
+i nics/help/rx_buf_num.hcf=$CMDSRCLOC/cmd-nics/help/rx_buf_num.hcf
+#
+#
+# Netflex script files
+#
+i nics/scripts/nflxe_post=$PKGSRCLOC/nics/scripts/nflxe_post
+i nics/scripts/nflxt_post=$PKGSRCLOC/nics/scripts/nflxt_post
+i nics/scripts/SMC8003i.upg=$PKGSRCLOC/nics/scripts/SMC8003i.upg
+i nics/scripts/SMC8013i.upg=$PKGSRCLOC/nics/scripts/SMC8013i.upg
+i nics/scripts/TCM509.upg=$PKGSRCLOC/nics/scripts/TCM509.upg
+i nics/scripts/TCM509_E.upg=$PKGSRCLOC/nics/scripts/TCM509_E.upg
+i nics/scripts/TCM579.upg=$PKGSRCLOC/nics/scripts/TCM579.upg
+i nics/scripts/nflxe.upg=$PKGSRCLOC/nics/scripts/nflxe.upg
+i nics/scripts/nflxe_d.upg=$PKGSRCLOC/nics/scripts/nflxe_d.upg
+i nics/scripts/nflxt.upg=$PKGSRCLOC/nics/scripts/nflxt.upg
+
+#
+# supported_nics/help files - these files contain the list of all supported
+#                             NICS that do not show up on the selection screen
+#
+i nics/supported_nics/help/Ansel_NH2100.hcf=$CMDSRCLOC/cmd-nics/supported_nics/Ansel_NH2100.hcf
+i nics/supported_nics/help/CompexEnet16.hcf=$CMDSRCLOC/cmd-nics/supported_nics/CompexEnet16.hcf
+i nics/supported_nics/help/CompexEnet16M.hcf=$CMDSRCLOC/cmd-nics/supported_nics/CompexEnet16M.hcf
+i nics/supported_nics/help/DEC203.hcf=$CMDSRCLOC/cmd-nics/supported_nics/DEC203.hcf
+i nics/supported_nics/help/IBM164.hcf=$CMDSRCLOC/cmd-nics/supported_nics/IBM164.hcf
+i nics/supported_nics/help/IBM164A.hcf=$CMDSRCLOC/cmd-nics/supported_nics/IBM164A.hcf
+i nics/supported_nics/help/IBM_AUTOLST_32.hcf=$CMDSRCLOC/cmd-nics/supported_nics/IBM_AUTOLST_32.hcf
+i nics/supported_nics/help/IBM_EST_32.hcf=$CMDSRCLOC/cmd-nics/supported_nics/IBM_EST_32.hcf
+i nics/supported_nics/help/IBM_LST_16.hcf=$CMDSRCLOC/cmd-nics/supported_nics/IBM_LST_16.hcf
+i nics/supported_nics/help/IBM_LST_32.hcf=$CMDSRCLOC/cmd-nics/supported_nics/IBM_LST_32.hcf
+i nics/supported_nics/help/INT32.hcf=$CMDSRCLOC/cmd-nics/supported_nics/INT32.hcf
+i nics/supported_nics/help/MD_NE1000BA.hcf=$CMDSRCLOC/cmd-nics/supported_nics/MD_NE1000BA.hcf
+i nics/supported_nics/help/MD_NE1500TD.hcf=$CMDSRCLOC/cmd-nics/supported_nics/MD_NE1500TD.hcf
+i nics/supported_nics/help/MD_NE2000A.hcf=$CMDSRCLOC/cmd-nics/supported_nics/MD_NE2000A.hcf
+i nics/supported_nics/help/MD_NE2100H.hcf=$CMDSRCLOC/cmd-nics/supported_nics/MD_NE2100H.hcf
+i nics/supported_nics/help/MD_NE3200H.hcf=$CMDSRCLOC/cmd-nics/supported_nics/MD_NE3200H.hcf
+i nics/supported_nics/help/MD_NTR2000G.hcf=$CMDSRCLOC/cmd-nics/supported_nics/MD_NTR2000G.hcf
+i nics/supported_nics/help/NE1000.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NE1000.hcf
+i nics/supported_nics/help/NE1500T.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NE1500T.hcf
+i nics/supported_nics/help/NE2.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NE2.hcf
+i nics/supported_nics/help/NE2000.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NE2000.hcf
+i nics/supported_nics/help/NE2000Plus.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NE2000Plus.hcf
+i nics/supported_nics/help/NE2100.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NE2100.hcf
+i nics/supported_nics/help/NE2_32.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NE2_32.hcf
+i nics/supported_nics/help/NE3200.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NE3200.hcf
+i nics/supported_nics/help/NS_NE200016AT.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NS_NE200016AT.hcf
+i nics/supported_nics/help/NS_NE2000Plus.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NS_NE2000Plus.hcf
+i nics/supported_nics/help/NTR2000.hcf=$CMDSRCLOC/cmd-nics/supported_nics/NTR2000.hcf
+i nics/supported_nics/help/OC_2121.hcf=$CMDSRCLOC/cmd-nics/supported_nics/OC_2121.hcf
+i nics/supported_nics/help/OC_2122.hcf=$CMDSRCLOC/cmd-nics/supported_nics/OC_2122.hcf
+i nics/supported_nics/help/OC_2123.hcf=$CMDSRCLOC/cmd-nics/supported_nics/OC_2123.hcf
+i nics/supported_nics/help/Oliv_9180.hcf=$CMDSRCLOC/cmd-nics/supported_nics/Oliv_9180.hcf
+i nics/supported_nics/help/Oliv_9181S.hcf=$CMDSRCLOC/cmd-nics/supported_nics/Oliv_9181S.hcf
+i nics/supported_nics/help/Oliv_9195.hcf=$CMDSRCLOC/cmd-nics/supported_nics/Oliv_9195.hcf
+i nics/supported_nics/help/RACAL_ES3200.hcf=$CMDSRCLOC/cmd-nics/supported_nics/RACAL_ES3200.hcf
+i nics/supported_nics/help/RACAL_ES3210TP.hcf=$CMDSRCLOC/cmd-nics/supported_nics/RACAL_ES3210TP.hcf
+i nics/supported_nics/help/RACAL_NI6510.hcf=$CMDSRCLOC/cmd-nics/supported_nics/RACAL_NI6510.hcf
+i nics/supported_nics/help/RACAL_NI9210.hcf=$CMDSRCLOC/cmd-nics/supported_nics/RACAL_NI9210.hcf
+i nics/supported_nics/help/SMC_8003_I.hcf=$CMDSRCLOC/cmd-nics/supported_nics/SMC_8003_I.hcf
+i nics/supported_nics/help/SMC_8003_M.hcf=$CMDSRCLOC/cmd-nics/supported_nics/SMC_8003_M.hcf
+i nics/supported_nics/help/SMC_8013_I.hcf=$CMDSRCLOC/cmd-nics/supported_nics/SMC_8013_I.hcf
+i nics/supported_nics/help/SMC_8013_M.hcf=$CMDSRCLOC/cmd-nics/supported_nics/SMC_8013_M.hcf
+i nics/supported_nics/help/SMC_8100.hcf=$CMDSRCLOC/cmd-nics/supported_nics/SMC_8100.hcf
+i nics/supported_nics/help/SMC_8100_A.hcf=$CMDSRCLOC/cmd-nics/supported_nics/SMC_8100_A.hcf
+i nics/supported_nics/help/SMC_8216.hcf=$CMDSRCLOC/cmd-nics/supported_nics/SMC_8216.hcf
+i nics/supported_nics/help/SMC_8232.hcf=$CMDSRCLOC/cmd-nics/supported_nics/SMC_8232.hcf
+i nics/supported_nics/help/SMC_9000.hcf=$CMDSRCLOC/cmd-nics/supported_nics/SMC_9000.hcf
+i nics/supported_nics/help/TC4045.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TC4045.hcf
+i nics/supported_nics/help/TCM503.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TCM503.hcf
+i nics/supported_nics/help/TCM509.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TCM509.hcf
+i nics/supported_nics/help/TCM509_E.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TCM509_E.hcf
+i nics/supported_nics/help/TCM523.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TCM523.hcf
+i nics/supported_nics/help/TCM529.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TCM529.hcf
+i nics/supported_nics/help/TCM579.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TCM579.hcf
+i nics/supported_nics/help/TCM619B.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TCM619B.hcf
+i nics/supported_nics/help/TCM629.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TCM629.hcf
+i nics/supported_nics/help/TCM679.hcf=$CMDSRCLOC/cmd-nics/supported_nics/TCM679.hcf
+i nics/supported_nics/help/co596.hcf=$CMDSRCLOC/cmd-nics/supported_nics/co596.hcf
+i nics/supported_nics/help/ee16.hcf=$CMDSRCLOC/cmd-nics/supported_nics/ee16.hcf
+i nics/supported_nics/help/ee16mca.hcf=$CMDSRCLOC/cmd-nics/supported_nics/ee16mca.hcf
+i nics/supported_nics/help/el16.hcf=$CMDSRCLOC/cmd-nics/supported_nics/el16.hcf
+i nics/supported_nics/help/en596.hcf=$CMDSRCLOC/cmd-nics/supported_nics/en596.hcf
+i nics/supported_nics/help/en596e.hcf=$CMDSRCLOC/cmd-nics/supported_nics/en596e.hcf
+i nics/supported_nics/help/flash32.hcf=$CMDSRCLOC/cmd-nics/supported_nics/flash32.hcf
+i nics/supported_nics/help/nflxe.hcf=$CMDSRCLOC/cmd-nics/supported_nics/nflxe.hcf
+i nics/supported_nics/help/nflxe_d.hcf=$CMDSRCLOC/cmd-nics/supported_nics/nflxe_d.hcf
+i nics/supported_nics/help/nflxt.hcf=$CMDSRCLOC/cmd-nics/supported_nics/nflxt.hcf
+i nics/supported_nics/help/pnt.hcf=$CMDSRCLOC/cmd-nics/supported_nics/pnt.hcf
+i nics/supported_nics/help/pnt_32.hcf=$CMDSRCLOC/cmd-nics/supported_nics/pnt_32.hcf
+i nics/supported_nics/help/pnt_ISA.hcf=$CMDSRCLOC/cmd-nics/supported_nics/pnt_ISA.hcf
+i nics/supported_nics/help/pnt_PCI.hcf=$CMDSRCLOC/cmd-nics/supported_nics/pnt_PCI.hcf
+i nics/supported_nics/help/pnt_PNP.hcf=$CMDSRCLOC/cmd-nics/supported_nics/pnt_PNP.hcf
+#
+# Configuration files
+#
+i nics/config/Ansel_NH2100=$PKGSRCLOC/nics/config/Ansel_NH2100
+i nics/config/CNET2000T=$PKGSRCLOC/nics/config/CNET2000T
+i nics/config/CNET2000T_2=$PKGSRCLOC/nics/config/CNET2000T_2
+i nics/config/CompexEnet16=$PKGSRCLOC/nics/config/CompexEnet16
+i nics/config/CompexEnet16M=$PKGSRCLOC/nics/config/CompexEnet16M
+i nics/config/DEC203=$PKGSRCLOC/nics/config/DEC203
+i nics/config/IBM164=$PKGSRCLOC/nics/config/IBM164
+i nics/config/IBM164A=$PKGSRCLOC/nics/config/IBM164A
+i nics/config/IBM_AUTOLST_32=$PKGSRCLOC/nics/config/IBM_AUTOLST_32
+i nics/config/IBM_EST_32=$PKGSRCLOC/nics/config/IBM_EST_32
+i nics/config/IBM_LST_16=$PKGSRCLOC/nics/config/IBM_LST_16
+i nics/config/IBM_LST_32=$PKGSRCLOC/nics/config/IBM_LST_32
+i nics/config/INT32=$PKGSRCLOC/nics/config/INT32
+i nics/config/MD_NE1000BA=$PKGSRCLOC/nics/config/MD_NE1000BA
+i nics/config/MD_NE1500TD=$PKGSRCLOC/nics/config/MD_NE1500TD
+i nics/config/MD_NE2000A=$PKGSRCLOC/nics/config/MD_NE2000A
+i nics/config/MD_NE2100H=$PKGSRCLOC/nics/config/MD_NE2100H
+i nics/config/MD_NE3200H=$PKGSRCLOC/nics/config/MD_NE3200H
+i nics/config/MD_NTR2000G=$PKGSRCLOC/nics/config/MD_NTR2000G
+i nics/config/NE1000=$PKGSRCLOC/nics/config/NE1000
+i nics/config/NE1500T=$PKGSRCLOC/nics/config/NE1500T
+i nics/config/NE2=$PKGSRCLOC/nics/config/NE2
+i nics/config/NE2000=$PKGSRCLOC/nics/config/NE2000
+i nics/config/NE2000Plus=$PKGSRCLOC/nics/config/NE2000Plus
+i nics/config/NE2100=$PKGSRCLOC/nics/config/NE2100
+i nics/config/NE2_32=$PKGSRCLOC/nics/config/NE2_32
+i nics/config/NE3200=$PKGSRCLOC/nics/config/NE3200
+i nics/config/NS_NE200016AT=$PKGSRCLOC/nics/config/NS_NE200016AT
+i nics/config/NS_NE2000Plus=$PKGSRCLOC/nics/config/NS_NE2000Plus
+i nics/config/NTR2000=$PKGSRCLOC/nics/config/NTR2000
+i nics/config/OCTOK_EISA=$PKGSRCLOC/nics/config/OCTOK_EISA
+i nics/config/OCTOK_ISA=$PKGSRCLOC/nics/config/OCTOK_ISA
+i nics/config/OCTOK_MCA=$PKGSRCLOC/nics/config/OCTOK_MCA
+i nics/config/OC_2121=$PKGSRCLOC/nics/config/OC_2121
+i nics/config/OC_2122=$PKGSRCLOC/nics/config/OC_2122
+i nics/config/OC_2123=$PKGSRCLOC/nics/config/OC_2123
+i nics/config/Oliv_9180=$PKGSRCLOC/nics/config/Oliv_9180
+i nics/config/Oliv_9181S=$PKGSRCLOC/nics/config/Oliv_9181S
+i nics/config/Oliv_9195=$PKGSRCLOC/nics/config/Oliv_9195
+i nics/config/RACAL_ES3200=$PKGSRCLOC/nics/config/RACAL_ES3200
+i nics/config/RACAL_ES3210TP=$PKGSRCLOC/nics/config/RACAL_ES3210TP
+i nics/config/RACAL_NI6510=$PKGSRCLOC/nics/config/RACAL_NI6510
+i nics/config/RACAL_NI9210=$PKGSRCLOC/nics/config/RACAL_NI9210
+i nics/config/SMC_8003_I=$PKGSRCLOC/nics/config/SMC_8003_I
+i nics/config/SMC_8003_M=$PKGSRCLOC/nics/config/SMC_8003_M
+i nics/config/SMC_8013_I=$PKGSRCLOC/nics/config/SMC_8013_I
+i nics/config/SMC_8013_M=$PKGSRCLOC/nics/config/SMC_8013_M
+i nics/config/SMC_8100=$PKGSRCLOC/nics/config/SMC_8100
+i nics/config/SMC_8100_A=$PKGSRCLOC/nics/config/SMC_8100_A
+i nics/config/SMC_8216=$PKGSRCLOC/nics/config/SMC_8216
+i nics/config/SMC_8232=$PKGSRCLOC/nics/config/SMC_8232
+i nics/config/SMC_8332=$PKGSRCLOC/nics/config/SMC_8332
+i nics/config/SMC_9000=$PKGSRCLOC/nics/config/SMC_9000
+i nics/config/TC4045=$PKGSRCLOC/nics/config/TC4045
+i nics/config/TC4046=$PKGSRCLOC/nics/config/TC4046
+i nics/config/TCM503=$PKGSRCLOC/nics/config/TCM503
+i nics/config/TCM509=$PKGSRCLOC/nics/config/TCM509
+i nics/config/TCM509_E=$PKGSRCLOC/nics/config/TCM509_E
+i nics/config/TCM523=$PKGSRCLOC/nics/config/TCM523
+i nics/config/TCM529=$PKGSRCLOC/nics/config/TCM529
+i nics/config/TCM579=$PKGSRCLOC/nics/config/TCM579
+i nics/config/TCM619B=$PKGSRCLOC/nics/config/TCM619B
+i nics/config/TCM629=$PKGSRCLOC/nics/config/TCM629
+i nics/config/TCM679=$PKGSRCLOC/nics/config/TCM679
+i nics/config/TOKENBM=$PKGSRCLOC/nics/config/TOKENBM
+i nics/config/co596=$PKGSRCLOC/nics/config/co596
+i nics/config/ee16=$PKGSRCLOC/nics/config/ee16
+i nics/config/ee16mca=$PKGSRCLOC/nics/config/ee16mca
+i nics/config/el16=$PKGSRCLOC/nics/config/el16
+i nics/config/en596=$PKGSRCLOC/nics/config/en596
+i nics/config/en596e=$PKGSRCLOC/nics/config/en596e
+i nics/config/flash32=$PKGSRCLOC/nics/config/flash32
+i nics/config/nflxe=$PKGSRCLOC/nics/config/nflxe
+i nics/config/nflxe_d=$PKGSRCLOC/nics/config/nflxe_d
+i nics/config/nflxt=$PKGSRCLOC/nics/config/nflxt
+i nics/config/pnt=$PKGSRCLOC/nics/config/pnt
+i nics/config/pnt_32=$PKGSRCLOC/nics/config/pnt_32
+i nics/config/pnt_ISA=$PKGSRCLOC/nics/config/pnt_ISA
+i nics/config/pnt_PCI=$PKGSRCLOC/nics/config/pnt_PCI
+i nics/config/pnt_PNP=$PKGSRCLOC/nics/config/pnt_PNP
+
+# End NICS Packaging Installation files
+
+i nis/copyright=$PKGSRCLOC/acp/copyright
+i nis/pkginfo=$PKGSRCLOC/nis/pkginfo
+i nis/depend=$PKGSRCLOC/nis/depend
+i nis/request=$PKGSRCLOC/nis/request
+i nis/menu.1=$PKGSRCLOC/nis/nis/menu.1
+i nis/menu.2=$PKGSRCLOC/nis/nis/menu.2
+i nis/menu.2.1=$PKGSRCLOC/nis/nis/menu.2.1
+i nis/menu.2.1.1=$PKGSRCLOC/nis/nis/menu.2.1.1
+i nis/menu.3=$PKGSRCLOC/nis/nis/menu.3
+i nis/menu.4=$PKGSRCLOC/nis/nis/menu.4
+i nis/menu.5=$PKGSRCLOC/nis/nis/menu.5
+i nis/menu.hosts=$PKGSRCLOC/nis/nis/menu.hosts
+i nis/menu.wk=$PKGSRCLOC/nis/nis/menu.wk
+i nis/menu.err=$PKGSRCLOC/nis/nis/menu.err
+i nis/menu.ck=$PKGSRCLOC/nis/nis/menu.ck
+i nis/menu.ol=$PKGSRCLOC/nis/nis/menu.ol
+
+i nsu/copyright=$PKGSRCLOC/lp/copyright
+i nsu/depend=$PKGSRCLOC/nsu/depend 
+i nsu/menu.nsu.1=$PKGSRCLOC/nsu/menu.nsu.1 
+i nsu/menu.nsu=$PKGSRCLOC/nsu/menu.nsu 
+i nsu/pkginfo=$PKGSRCLOC/nsu/pkginfo
+i nsu/request=$PKGSRCLOC/nsu/request 
+i nsu/response=$PKGSRCLOC/nsu/response 
+
+i nwnet/copyright=$PKGSRCLOC/nwnet/copyright
+i nwnet/depend=$PKGSRCLOC/nwnet/depend
+i nwnet/pkginfo=$PKGSRCLOC/nwnet/pkginfo
+i nwnet/request=$PKGSRCLOC/nwnet/request
+
+i nwsup/copyright=$PKGSRCLOC/lp/copyright
+i nwsup/depend=$PKGSRCLOC/nwsup/depend
+i nwsup/pkginfo=$PKGSRCLOC/nwsup/pkginfo
+i nwsup/prototype=$PKGSRCLOC/nwsup/prototype
+i nwsup/rem.files=$PKGSRCLOC/nwsup/rem.files
+i nwsup/request=$PKGSRCLOC/nwsup/request
+
+i oam/copyright=$PKGSRCLOC/lp/copyright
+i oam/depend=$PKGSRCLOC/oam/depend
+i oam/menu.oam=$PKGSRCLOC/oam/menu.oam
+i oam/menu.remove=$PKGSRCLOC/oam/menu.remove
+i oam/pkginfo=$PKGSRCLOC/oam/pkginfo
+i oam/request=$PKGSRCLOC/oam/request
+i oam/response=$PKGSRCLOC/oam/response
+
+i rpc/depend=$PKGSRCLOC/rpc/depend
+i rpc/copyright=$PKGSRCLOC/acp/copyright
+i rpc/pkginfo=$PKGSRCLOC/rpc/pkginfo
+
+i display/copyright=$XPKGSRCLOC/display/copyright 
+i display/depend=$XPKGSRCLOC/display/depend 
+i display/pkginfo=$XPKGSRCLOC/display/pkginfo 
+
+i terminf/copyright=$PKGSRCLOC/acp/copyright
+i terminf/depend=$PKGSRCLOC/terminf/depend
+i terminf/pkginfo=$PKGSRCLOC/terminf/pkginfo
+
+i merge/copyright=$PKGBINLOC/merge/install/copyright
+i merge/pkginfo=$PKGBINLOC/merge/pkginfo
+i merge/request=$PKGBINLOC/merge/install/request
+
+#fri frmerge/copyright=$PKGBINLOC/frmerge/install/copyright
+#fri frmerge/pkginfo=$PKGBINLOC/frmerge/pkginfo
+#fri frmerge/request=$PKGBINLOC/frmerge/install/request
+ 
+#iti itmerge/copyright=$PKGBINLOC/itmerge/install/copyright
+#iti itmerge/pkginfo=$PKGBINLOC/itmerge/pkginfo
+#iti itmerge/request=$PKGBINLOC/itmerge/install/request
+ 
+#dei demerge/copyright=$PKGBINLOC/demerge/install/copyright
+#dei demerge/pkginfo=$PKGBINLOC/demerge/pkginfo
+#dei demerge/request=$PKGBINLOC/demerge/install/request
+ 
+#esi esmerge/copyright=$PKGBINLOC/esmerge/install/copyright
+#esi esmerge/pkginfo=$PKGBINLOC/esmerge/pkginfo
+#esi esmerge/request=$PKGBINLOC/esmerge/install/request
+ 
+#jai jamerge/copyright=$PKGBINLOC/jamerge/install/copyright
+#jai jamerge/pkginfo=$PKGBINLOC/jamerge/pkginfo
+#jai jamerge/request=$PKGBINLOC/jamerge/install/request
+ 
+i osmp/copyright=$PKGSRCLOC/lp/copyright
+i osmp/depend=$PKGSRCLOC/osmp/ifiles/depend
+i osmp/pkginfo=$PKGSRCLOC/osmp/pkginfo
+i osmp/request=$PKGSRCLOC/osmp/ifiles/request
+i osmp/osmp.req.sh=$PKGSRCLOC/osmp/ifiles/osmp.req.sh
+i osmp/osmp.post.sh=$PKGSRCLOC/osmp/ifiles/osmp.post.sh
+i osmp/osmp_wininit=$PKGSRCLOC/osmp/ifiles/osmp_wininit
+i osmp/osmp_winexit=$PKGSRCLOC/osmp/ifiles/osmp_winexit
+i osmp/txtstrings=$PKGSRCLOC/osmp/ifiles/txtstrings
+
+i nuc/copyright=$PKGSRCLOC/lp/copyright
+i nuc/depend=$PKGSRCLOC/nuc/depend
+i nuc/pkginfo=$PKGSRCLOC/nuc/pkginfo
+i nuc/preinstall=$PKGSRCLOC/nuc/preinstall
+i nuc/preremove=$PKGSRCLOC/nuc/preremove
+i nuc/postinstall=$PKGSRCLOC/nuc/postinstall
+i nuc/postremove=$PKGSRCLOC/nuc/postremove
+i nuc/rem.files=$PKGSRCLOC/nuc/rem.files
+i nuc/request=$PKGSRCLOC/nuc/request
+
+i platform/copyright=$PKGSRCLOC/lp/copyright
+i platform/depend=$PKGSRCLOC/platform/depend
+i platform/pkginfo=$PKGSRCLOC/platform/pkginfo
+i platform/request=$PKGSRCLOC/platform/request
+i platform/menu.platform=$PKGSRCLOC/platform/menu.platform
+i platform/menu.compaq=$PKGSRCLOC/platform/menu.compaq
+i platform/menu.compaq.1=$PKGSRCLOC/platform/menu.compaq.1
+

@@ -1,0 +1,500 @@
+#ident	"@(#)pdi.cmds:disksetup.str	1.13"
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+Cannot get ELF program header: %s\n
+Cannot find loadable ELF segment\n
+Cannot all allocate boot buffer\n
+Invalid boot, empty segment\n
+Cannot read boot file header.\n
+Error reading COFF boot file header.\n
+ELF access library out of date\n
+ELF_begin failure: %s\n
+Invalid Boot file, not ELF or COFF executable \n
+Cannot malloc boot buffer\n
+Seeking/reading section header %d 
+Seeking section %d 
+Error writing boot to disk!
+Successful completion is\nrequired to allow boot from hard disk!\n
+Error reading COFF boot block number %ld \n
+Error reading boot program\n
+Not super user\n
+SCSI special device file open failed\n
+Script file open failed\n
+Could not find sub-utility name in script file.\n
+Could not find sub-utility.\n
+Usage: %s [-t] [-i] /dev/rdsk/c?t?d?s0\n
+\nInvalid response - please answer with y or n.
+Disksetup unable to read partition table from %s: %s\n
+No active UNIX System partition in partition table!\n
+No slots available in vtoc for DOS partition \"%d\" on drive %s\n
+Unable to open specified boot routine.\n
+Unable to open defaults file.\n
+stat of %s failed\n
+device %s is not character special\n
+Disksetup unable to open %s
+V_GETPARMS failed on %s
+Usage: disksetup -BI[s] -b bootfile [-d configfile] raw-device (install boot disk)\n
+       disksetup -I [-d configfile] raw-device (install additional disk(s))\n
+       disksetup -b bootfile raw-device (write boot code to disk)\n
+Cannot create/mount the %s filesystem.
+Please contact\nyour service representative for further assistance.\n
+Surface analysis of your disk is recommended\nbut not required.\n\n
+Do you wish to skip surface analysis? (y/n) 
+\nChecking for bad sectors in the UNIX System partition...\n\n
+writevtoc -- cannot allocate buffer\n
+Error writing pdinfo and VTOC.\n
+Error writing alternates table to the disk!\n
+Cannot retrieve size of memory, 4MB will be assumed\n
+defaults file line %d is invalid and will be skipped.\n
+%s entry has a bad block size '%d', for %s file system, must be a multiple of 512\n
+Entry ignored\n
+The following slice sizes are the recommended configuration for your disk.\n
+A %s filesystem of %ld cylinders (%.1f MB)\n
+A %s slice of %ld cylinders (%.1f MB)\n
+\nBased on the default size recommendations, disk space was not available\nfor the following slices:\n
+The Required %s filesystem was not allocated space.\n
+This slice is required for successful installation.\n\n
+The %s filesystem.\n
+The required %s slice was not allocated space.\n
+The %s slice.\n
+\nThe default layout will not allow all required slices to be created.\n
+You will be required to designate the sizes of slices to create a\nvalid layout for the slices you requested.\n\n
+\nIs this configuration acceptable? (y/n) 
+\nYou have specified the following disk configuration:\n
+A %s filesystem with %d cylinders (%.1f MB)\n
+A %s slice with %d cylinders (%.1f MB)\n
+Required slice %s was not allocated space.\n
+A required slice was not allocated space.
+You must reallocate the disk space\nsuch that all required slices are created.\n\n
+\nIs this allocation acceptable to you (y/n)? 
+\nYou have rejected the disk configuration.  
+Do you want\nto redefine the slices to be created? (y/n)? 
+\nEnter the filesystem type for this slice\n(%s), or press <ENTER> to use the default (%s): 
+Invalid response - please answer with %s\n
+\nEnter the filesystem type for this slice (%s),\ntype 'na' if no filesystem is needed, or press\n<ENTER> to use the default (%s): 
+\nInvalid response - please answer with (%s or na.\n\n
+You will now be queried on the setup of your disk.
+After you\nhave determined which slices will be created, you will be \nqueried to designate the sizes of the various slices.\n\n
+A root filesystem is required and will be created.\n
+no valid boot file system type found, default is bfs\n
+check /etc/default/bfs\n
+\nDo you wish to have separate root and usr filesystems (y/n)? 
+\nDo you want to allocate a crash/dump area on your disk (y/n)? 
+\nDo you want to create a home filesystem (y/n)? 
+\nDo you want to create a var filesystem (y/n)? 
+\nDo you want to create a home2 filesystem (y/n)? 
+%s is not a directory file.\n
+%s directory is already mounted on.\n
+%s directory has already been used.\n
+After you\nhave determined which slices will be created, you will be \nqueried to designate the sizes of the various slices.\n
+\nHow many slices/filesystems do you want created on the disk (1 - %d)? 
+Illegal value: %d; try again. \n
+\nPlease enter the absolute pathname (e.g., /home3) for \nslice/filesystem %d (1 - 32 chars)? 
+Illegal value: %s \n
+Value must begin with '/' and contain 32 characters or less.\n
+\nShould %s be automatically mounted during a reboot?\n
+Type \"no\" to override auto-mount or press <ENTER> to enable the option: 
+\nYou will now specify the size in cylinders of each slice.\n
+(One megabyte of disk space is approximately %d cylinders.)\n
+\nThe recommended minimum size for the %s slice is %d cylinders (%d MB).\n
+How many cylinders would you like for %s (%d - %d)?\n
+Press <ENTER> for %d cylinders: 
+Slice %s must be at least %d cylinders; please enter again\n
+Slice %s must be no more than %d cylinders; please enter again\n
+\nNotice: The selections you have made will leave %d cylinders unused.\n
+Allocated approximately %d inodes for this file system\n
+Specify a new value or press <ENTER> to use the default: 
+One inode is allocated for each %d bytes of file system\nspace.
+ Specify a value in units of bytes or press <ENTER>\nto use the default value: 
+Allocated approximately %d inodes for this file system.
+ Specify a\nnew value or press <ENTER> to use the default: 
+Invalid mkfs type specified for slice %s, file system type %s\n
+entry ignored\n
+Running cmd: %s\n
+unable to create filesystem on %s.\n
+\nFilesystems will now be created on the needed slices\n
+echo Creating the %s filesystem on %s \n
+unable to label slice %s %s %s\n
+cannot mount root\n
+Cannot create /mnt/etc.\n
+Cannot create /etc/vfstab.\n
+cannot write /etc/vfstab entry.\n
+cannot open /etc/vfstab.\n
+could not create %s mount point.\n
+%s is not a valid mount point\n
+unable to mount %s.\n
+FSTYP identifier invalid or not specified in %s%s\n
+Too many fs types specified in %s%s\n
+BOOT_FSTYP identifier not specified in %s%s\n
+failed to open %s%s\n
+BLKSIZE identifer not specified in %s%s\n
+bad block size identfier specified in %s%s\n
+file system type ignored\n
+MKFSTYP identifier not found in %s%s\n
+open for fs default file failed %s%s\n
+\nSpecify the block size from the the following list\n(%s), or press <ENTER> to use the first one: 
+\nInvalid response:  block size specified was '%s'\n
+Unable to malloc alternate partition table.\n
+Unable to malloc incore alternate partition map.\n
+Unable to malloc alternate partition map.\n
+Alternate partition information table is bad.\n
+Alternate partition map is bad.\n
+Alternate partition entry table is bad.\n
+First sector of alternate partition is bad.\n
+Unable to allocate alternate map on disk: %s
+Unable to read alternate sector partition: %s
+Unable to read alternate sector partition map: %s
+Unable to malloc alternate sector entry table.\n
+Unable to read alternate sector entry table: %s
+Unable to write alternate sector partition: 
+Unable to write alternate sector partition map: 
+Unable to write alternate sector entry table: %s
+Ignoring bad sector %ld which is in first track of the drive.\n
+Ignoring bad sector %ld which is past the end of the drive.\n
+Unable to allocate alternate entry table on disk: %s
+Unable to allocate alternates for bad starting sector %ld.\n
+Bad sector %ld is an assigned alternate sector.\n
+\nALTERNATE SECTOR/TRACK MAPPING TABLE:\n
+\nBad Sector Start\tAlternate Sector Start\t\tCount\n
+\t%ld\t     ->\t\t%ld\t\t\t   %ld\n
+\n      %ld alternate sector(s) left for allocation.\n
+Unable to read alternate table: %s
+invalid alternates table found.\n
+No alternates partition in VTOC \n
+Bad sectors will not be marked!\n
+Bad sector %ld is an assigned alternate!\n
+Insufficient alternates available for bad sector %ld!\n
+Unable to write alternate table: %s
+Unable to read fdisk table: %s
+Request Sense
+SCB sent to Host Adapter
+CDB sent to Host Adapter
+Request Sense ioctl failed\n
+Request Sense SDI_SEND failed (0x%X)\n
+Data received from Host Adapter
+send_scb: op(VERIFY) badsec match= 0x%x return SC_IDERR\n
+send_scb: op(SS_REASGN) addr= 0x%x \n
+send_scb: badsec reassign match= 0x%x return SC_NODFCT\n
+Data sent to Host Adapter
+Send SCB Ioctl failed\n
+Status: 0x%X\n
+Good Status?\n
+send_scb(): Sense Key (0x%X)\n
+send_scb(): Sense Code (0x%X)\n
+Vendor Unique (0x%X)\n
+Reserved (0x%X)\n
+No Index/Sector Signal\n
+No Seek Complete\n
+Write Fault\n
+Drive Not Ready\n
+Drive Not Selected\n
+No Track Zero found\n
+Multiple Drives Selected\n
+Logical Unit Communication Failure\n
+Track Following error\n
+Seek Positioning error\n
+Defect List error\n
+Paramater Overrun\n
+Synchronous Transfer error\n
+Primary Defect List not found\n
+Invalid Command Operation Code\n
+Illegal Logical Block Address.\nAddress greater than the LBA returned by the READ CAPACITY data with PMI not set.\n
+Illegal function for device type\n
+Illegal Field in CDB\n
+Invalid LUN\n
+Invalid field in Parameter List\n
+Write Protected\n
+Mode Select Parameters changed.\n
+Incompatible Cartridge\n
+Medium Format Corrupted\n
+RAM Failure\n
+Data Path Diagnostic Failure\n
+Power On Diagnostic Failure\n
+Message Reject Error\n
+Internal Controller Error\n
+Select/Reselect Failed\n
+Unsuccessful Soft Reset\n
+SCSI Interface Parity Error\n
+Initiator Detected Error\n
+Inappropriate/Illegal Message\n
+Unknown sense code (0x%X)\n
+Unknown device type (0x%X)\n
+Controller busy\n
+LUN Reserved\n
+Unknown status (0x%X)\n
+This block is not allocated\n
+Linked command done without flag\n
+Linked command done with flag\n
+Job was flushed\n
+Command was aborted\n
+Reset was detected on the bus\n
+Reset was caused by this unit\n
+Virtual to Physical failed\n
+Job timed out\n
+Addressed device not present\n
+Host Adapter error\n
+Memory fault\n
+SCSI bus error\n
+SCB error\n
+Device is out of service\n
+The SCSI bus select failed\n
+Parameter mismatch\n
+Job in progress\n
+Job not in use\n
+More than one immediate request\n
+SFB error\n
+Unknown completion code (0x%X)\n
+Begin Format
+ (No more than %d minutes)\n
+format(): Can not fork timer display process\n
+\015Elapsed time: %.2d:%.2d:%.2d
+Format
+format(): Unknown error (0x%X)\n
+Mode Select
+mdselect(): Unknown error (0x%X)\n
+Mode Sense
+mdsense(): Unknown error (0x%X)\n
+No-op wr-chk sec=0x%x\n
+Write
+Mapping Bad Block 0x%X (0x%X)\n
+scsi_write(): Unknown error (0x%X)\n
+Read
+scsi_read(): Unknown error (0x%X)\n
+Begin Verify (No more than %d minutes)\n
+scsi_verify(): Can not fork timer display process\n
+Verify
+Bad block 0x%X (0x%X)\n
+scsi_verify(): Unknown error (0x%X)\n
+Could not kill timer display\n
+Read Defect Data
+readdefects(): Unknown error (0x%X)\n
+Read Capacity
+readcap(): Unknown error (0x%X)\n
+Reassign Blocks
+reassign(): Unknown error (0x%X)\n
+Inquiry
+inquiry(): Unknown error (0x%X)\n
+Insufficient INQUIRY Data\n
+%s open failed\n
+Unknown token in %s\n
+Cannot read number of defects in %s\n
+Defect list is incomplete in %s\n
+DLF: (0x%X)\n
+Defect List Length: %d Defective Logical Blocks\n
+Unknown Defect List Format (%d)\n
+Logical Block Number\n
+%.8X 
+      %.8X\n
+Cylinder Track Bytes from Offset\n
+ %.6X   %.2X       %.8X\n
+Cylinder Track  Sector\n
+ %.6X   %.2X   %.8X\n
+Opening %s\n
+B_GETDEV ioctl failed\n
+Creating %s\n
+%s mknod failed\n
+scsi_nodfct: bad sector chain list broken.\n
+invalid format of the target controller index file : %s\n
+Stat failed for %s\n
+Device ID: %s\n
+token = %s\n
+TC entry not found in %s.\n
+scriptfile     = %s\n
+%s does not exist\n
+Could not open %s\n
+UNKNOWN 0x%X : 
+Ioctl V_REMOUNT %s\n
+%s V_REMOUNT failed\n
+Closing %s\n
+Cannot determine run state\n
+Not in single user state\n
+%s cannot extract Block Device name from Raw Device name\n
+%s stat failed\n
+%s contains a mounted file system\n
+Cannot open Device file: %s\n
+V_RDABS failed:
+\tAttempt to locate UNIX partition has failed;\n\thowever, will still map the Bad Block.\n
+The magic word in the fdisk table is not sane.\n
+UNIX partition found on the disk;\n
+\tstarting UNIX File System check for the Bad Block\n
+\tInvalid PDINFO/VTOC for the UNIX partition;\n\thowever, will still map the Bad Block.\n
+Disk does not have a UNIX system partition.\n
+Script file missing DISK token\n
+Format %s:\n
+Format and Verify %s:\n
+Verify %s:\n
+Format and Verify (verify UNIX partition only) %s:\n
+Verify (UNIX partition only) %s:\n
+Script file missing READCAP Token\n
+Script file has insufficient data for Disk Information\n
+Script file has insufficient data for Format disk size\n
+Format: Unknown disk size\n
+Script file has incomplete Format CDB\n
+Script file has incomplete Format Defect List Header\n
+Script file has insufficient data for Format with Defects disk size\n
+Format with Defects: Unknown disk size\n
+Script file has incomplete Format with Defects CDB\n
+Script file has incomplete Format with Defects Defect List Header\n
+Script file has incomplete Mode Select CDB\n
+Script file has insufficient Mode Select Data\n
+Script file has incomplete Mode Sense CDB\n
+format_disk: mdsense sense key %x\n
+Mode Sense, Format Device Page(PC 3), not supported on this drive.\n\t\tSurface analysis will be done one sector at a time.\n\n
+Again, do you wish to skip surface analysis? (y/n) 
+Mode Sense, Rigid Disk Geometry Page(PC 4), not supported on this drive.\n\t\tSurface analysis will be done one sector at a time.\n\n
+Unknown Page Code Specified (0x%X)\n
+Script file has incomplete Read Capacity CDB\n
+Script file has incomplete Verify CDB\n
+Verify: Unknown disk size\n
+does not support version %d of VTOC\n
+CRITICAL PROBLEM: Bad Block is in the BOOT sector\n
+CRITICAL PROBLEM: Bad Block is in the VTOC sector\n
+malloc of \"Super Block buffer\" failed\n
+CRITICAL PROBLEM: Bad Block is in the SWAP partition %d\n
+CRITICAL PROBLEM: Bad Block in UNIX partition %d.\n
+\tIt is block %d in the partition.\n
+\tIf the partition %d contained a file system,\n\tthat file system's superblock was lost!\n
+\tCannot read potential superblock sector of partition.\n
+If a file system exists on partition %d, run Fsck on the file system\n
+File system has a bad MAGIC number\n
+Mapping Bad Block 0x%X\n
+Restoring defects from the restore file: \"%s\"\n
+Scsihdefix %s:\n
+(DEL if wrong)\n
+hdefix_disk: mdsense sense key %x\n
+Script file has incomplete Read Defect List CDB\n
+Unable to create save file: \"%s\"\n
+Save unsuccessful\n
+Save successful\n
+Bad blocks for Device %s : \n
+Number of columns incorrect in file.\n
+stat of '%s' failed\n
+malloc for %s failed\n
+open of '%s' failed\n
+read of '%s' failed\n
+size of '%s' is not correct\n
+Cannot open disk partition '%s'!\n
+system call error is: %s\n
+V_PDREAD ioctl to %s failed:\n
+Bad return value from V_PDREAD ioctl to %s:\n
+PD sector on '%s' is insane!\n
+VTOC on '%s' is insane!\n
+Calloc for EDT structure failed\n
+Cannot open %s.\n
+Cannot open '%s'! Will try /dev/rdsk/c0t0d0s0.\n
+Cannot open sdi device: %s\n
+Unable to determine the number of HA boards.\n
+\nDo you want to create a volume management private area (y/n)? 
+\nDo you want to create a volume management public area (y/n)? 
+calloc for major number structure failed\n
+ioctl(SI86SDIDEV) failed.\n
+ioctl(B_HA_CNT) failed\n
+ioctl(B_REDT) failed\n
+mknod failed for '%s'! Will try /dev/rdsk/c0t0d0s0.\n
+mknod failed for sdi temp device\n
+number of block major numbers does not equal number of character major numbers\n
+The size of boot code is too large\n
+%s entry has an invalid size specifier character '%c'\n
+(One cylinder is approximately %d megabytes of disk space.)\n
+stat failed for %s\n
+Format of the target controller index file: %s\n
+TC entry not found in %s for \"%s\".\n
+template file %s does not exist.\n
+Could not open %s.\n
+minor number out of range for %s\n
+bad token in template file: \"%s\"\n
+mknod failed for %s.\n
+%s\n
+\nDevice files have been created for a new %s device:\n
+Host Adapter (HA)          = %d\n
+SCSI Bus (BUS)             = %d\n
+Target Controller (TC) ID  = %d\n
+Logical Unit (LU) ID       = %d\n
+Usage: %s [-f] [-i] [-d file].\n
+This command is designed to run during the boot sequence.\nUse the -f option to force its execution.\n
+index file %s does not exist.\n
+Unable to read equipped device table.\n
+Too many drivers to start. Only %d drivers supported.\n
+Too many drivers. Only %d drivers supported.\n
+Unable to clear device table %s, %s failure.\n
+Unable to clear device group table %s, getdgrp failure.\n
+Unable to retrieve alias, device group and attribute list\n\tfrom template file specified by tc_inquiry string %s.\nNo device entry added to device table %s\n\tfor character device %s.\n
+FSATTR or DPATTR tokens not defined in template file\n\treferenced by %s inquiry string.\nNo partition entries added to device table for %s.\n
+Unable to get current list of devices of type %s.\nUsing %s0 as alias.\n
+Cannot expand variable %s.\n
+No device entries will be added to device table %s for disk partitions.\n\tUnable to open /etc/vfstab.\n
+No device entries will be added to device table %s for disk partitions.\n\tOut of memory for /etc/vfstab.\n
+No device entries will be added to device table %s for disk partitions.\n\tOut of memory.\n
+Is this device to be used as a boot device?
+If this is an unformatted or unpartitioned disk, prepare it with /sbin/diskadd.\nOtherwise, edit "/etc/vfstab" to make file systems automatically mountable.\n
+usage: %s [-S] [-R root] [inputfile]\n
+You do not have sufficient privilege to use a required program -- %s.\n
+Cannot access a required program -- %s\n
+Insufficient memory\n
+Invalid field %d in line %u of input\n
+Unrecognized adapter type %s in line %u of input\n
+Unrecognized configuration flag %c in line %u of input\n
+Unrecognized interrupt sharing code %u in line %u of input\n
+Starting I/O address %x exceeds ending I/O address %x in line %u of input\n
+Starting memory address %x exceeds ending memory address %x in line %u of input\n
+Cannot read Master entry for module %s.\n
+No Master entry for module %s.\n
+Problem closing pipe to %s.\n
+Cannot open file %s for reading.\n
+Problem closing file %s\n
+Error occurred while reading %s file for module %s.\n
+Error %d trying to %s %s file.\n
+Cannot open file %s for input.\n
+Cannot open file %s for output.\n
+Error occured while reading T%s file for module %s.\n
+Error occured while writing %s file for module %s.\n
+No device type value found in %s file for module %s.\n
+Problem writing to file %s.\n
+Cannot create temporary directory %s.\n
+Cannot open file %s for writing.\n
+Cannot open file %s for append.\n
+Error %d trying to exec %s.\n
+Problem reading from file %s.
+Cannot fork shell to execute %s.\n
+Unable to update configuration for %s.\n
+RMdelvals() %s failed\n
+RMputvals() %s failed\n
+A value for \"%s\" is required in the %s file for module %s.\n
+You do not have sufficient privilege to use this command.\n
+The program %s is not accessible and must be.\n
+Could not process directory %s\n
+Cannot read System entry for module %s.\n
+No System entry for module %s.\n
+No device name found in %s.\n
+No entry for %s number %d found in current configuration.\n
+Too many -f options specified, try again with no more than %d.\n
+usage: %s [-aS] [-f device] [-R root] [outputfile]\n
+No PDI devices found on system.\n
+Unable to read system Equipped Device Table.\n
+A device driver for %s was not found on this system.\n
+%d:%d,%d,%d: %-8s: %s\n
+  %d,%d,%d: %-8s: %s\n
+DISK 
+TAPE 
+PRINTER
+HBA  
+WORM 
+CDROM
+SCANNER
+OPTICAL
+CHANGER
+COMMUNICATION
+ioctl(B_MAP_CNT) failed\n
+Unable to determine the number of HBA map entries.\n
+Calloc for HBA map failed\n
+ioctl(B_GET_MAP) failed\n
+Unable to get device information for %s\n
+%s() failed, errno=%s\n
+There are now %d cylinders available on your disk.\n
+The filesystem type you have chosen is limited to %d cylinders.\n

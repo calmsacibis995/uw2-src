@@ -1,0 +1,12 @@
+#ident	"@(#)oampkg:common/cmd/oampkg/oampkg.dfl	1.2"
+
+# The LPM variable should be set to "YES" only if we are installing files
+# on a system that might run with the Least Privilege Module (LPM).
+# See the file lib/libpkg/privent.c for reference.
+# 
+# If this file (/etc/default/oampkg) does not exist on an installed system,
+# that has the same effect as setting LPM to "NO".  Therefore, an easy way to
+# get the "LPM=NO" behavior is not to package this file.  If this file is to
+# be packaged, it must be on the boot media and in the base package.
+# 
+LPM=YES

@@ -1,0 +1,11 @@
+#ident	"@(#)pkg.oam:i386/pkg/oam/preinstall	1.3"
+
+############## Begin UPGRADE AND OVERLAY ######################
+SCRIPTS=/usr/sbin/pkginst
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = YES ] && set -x
+
+${SCRIPTS}/pkgsavfiles ${PKGINST}
+############### End UPGRADE AND OVERLAY #######################
+
+exit 0

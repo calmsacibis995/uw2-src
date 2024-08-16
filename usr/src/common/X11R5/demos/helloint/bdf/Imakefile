@@ -1,0 +1,26 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)mdemos:helloint/bdf/Imakefile	1.1"
+
+OBJS = FontObj(heb8x13) FontObj(k14-1) FontObj(7x14rk)
+
+FONTINSTDIR = $(FONTDIR)/misc
+
+MakeFonts()
+
+FontTarget(heb8x13) 
+FontTarget(k14-1) 
+FontTarget(7x14rk)
+
+InstallFonts($(FONTINSTDIR))
+
+install::
+	$(MKFONTDIRSRC)/mkfontdir $(FONTINSTDIR)
+
+depend::

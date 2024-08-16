@@ -1,0 +1,49 @@
+#ident	"@(#)cpq.cmds:snmp/smux/smuxmgr.etc	1.4"
+umask 022
+#
+# cpqsmuxd start/stop script
+#
+
+MGRDIR=/usr/bin/compaq/smux
+
+PATH=/etc:/bin:/usr/bin:/usr/sbin:${MGRDIR}
+
+LOGFILE=/var/spool/compaq/agenterrs.log
+
+if [ ! -d /var/spool/compaq ]
+then
+	mkdir -p /var/spool/compaq
+fi
+
+case "$1" in
+'start')
+	ps -e | grep cpqsmuxd > /dev/null 2>&1
+	if [ $? -eq 0 ]
+	then
+		exit 0
+	fi
+	ps -e | grep in.snmpd  > /dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		exit 1
+	fi
+	cd ${MGRDIR}
+	if [ ! -f cpqsmuxd.defs ] || [ ! -f registry.mib ] || [ ! -f config ] 
+	then
+		exit 1
+	fi
+	cpqsmuxd > ${LOGFILE} 2>&1 &
+	;;
+
+'stop')
+	kill `/usr/bin/ps -e | /usr/bin/sed -n \
+		-e'/ cpqsmuxd$/s/[^0-9 \t].*//p'` 2>/dev/null
+	;;
+
+*)
+	echo "Usage: $0 [ start | stop ]"
+	exit 1
+	;;
+esac
+
+exit 0

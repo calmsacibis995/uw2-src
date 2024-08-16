@@ -1,0 +1,1160 @@
+#ident\t"@(#)dthelp:Admin.Tools/inet.hlp        1.27"
+^*version^1
+^*title^Internet-Setup
+^:Internet-Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Internet-Setup
+^0^Internet-Setup
+^$10
+Internet-Setup
+
+Verwenden Sie Internet-Setup, um Ihr System für die Kommunikation mit
+anderen Systemen über TCP/IP-Netzwerke zu konfigurieren.
+
+Hinweis: UUCP, DNS, NIS und Leitweg-Setup stehen nur Benutzern zur
+Verfügung, die die \k(Berechtigung zum Ändern des Internet-Setup^dtadmin/user.hlp^Mit Berechtigungen umgehen können) haben.
+
+Internet-Setup bietet Ihnen folgende Möglichkeiten:
+
+\to\t\k(Der Systemliste ein neues System hinzufügen^^Der Systemliste neues System hinzufügen)
+\to\t\k(Ihre Systemnetmask und Broadcastadresse ändern^^Routing einrichten)
+\to\t\k(Ihr System für TCP/IP-Netzwerkbetrieb konfigurieren^^Ihr System für TCP/IP-Netzwerkbetrieb konfigurieren)
+\to\t\k(Ihr System für die Verwendung eines Standardrouters konfigurieren^^Routing einrichten)
+\to\t\k(Einträge aus der Domainliste in die Systemliste kopieren^^Domainauflistung)
+\to\t\k(Symbol für ein fernes System in einen Ordner kopieren^^Symbol für ein fernes System in einen Ordner kopieren)
+\to\t\k(Systeme aus der Systemliste löschen^^System von der Systemliste löschen)
+\to\t\k(Domainliste anzeigen^^Domainauflistung)
+
+
+\to\t\k(Systemliste anzeigen^^Systemliste)
+\to\t\k(Einen bestimmten Systemeintrag suchen^^Nach einem System suchen)
+\to\t\k(Zugriff ferner Benutzer auf das lokale System einrichten^^Lokalen Systemzugriff für ferne Benutzer einrichten)
+\to\t\k{Zugriff auf einen DNS-Server (DNS = Domain Network Service) einrichten^^Auf DNS zugreifen}
+\to\t\k{Zugriff auf Ihren NIS-Server (NIS = Network Information Service) einrichten^^Auf NIS zugreifen}
+\to\t\k(Ihr System für die Übertragung von UUCP-Dateien einrichten^^UUCP-Transfer einrichten)
+\to\t\k(Systemeigenschaften anzeigen^^Systemeigenschaften anzeigen)
+
+
+Siehe auch:
+\s(TCP/IP einrichten und konfigurieren^dhelp "pe.de" ownerhb "TCP/IP einrichten und konfigurieren" "" || helpLinkErr)
+\s(Einführung in TCP/IP-Setup^dhelp as netag "Setting Up TCP/IP" "Introduction to TCP/IP Setup" || helpLinkErr)
+
+^1^Ihr System für TCP/IP-Netzwerkbetrieb konfigurieren
+^$20
+Ihr System für TCP/IP-Netzwerkbetrieb konfigurieren
+
+Wenn Sie bei der Installation keine Netzwerkadresse für den
+TCP/IP-Netzwerkbetrieb (TCP/IP = Transmission Control
+Protocol/Internet Protocol) eingegeben haben, zeigt das System
+automatisch das Fenster "Internet-Setup: Lokales System konfigurieren"
+an, wenn Sie zum ersten Mal auf Internet_Setup doppelklicken.
+
+Um Ihr System für den TCP/IP-Netzwerkbetrieb zu konfigurieren, gehen
+Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster
+  \t"Internet-Setup: Lokales System konfigurieren" erscheint mit
+  \tfolgenden Feldern:
+
+  \to\tSystemname - Zeigt den Namen Ihres Systems an.
+
+  \to\tNetzwerkadresse - Geben Sie die Adresse Ihres System ein. Wenn 
+  \t \tSie die Netzwerkadresse Ihres Systems nicht kennen, wenden Sie
+  \t \tsich an Ihren Systemverwalter, der für die Adressenzuweisung
+  \t \tzuständig ist.
+
+  \tFüllen Sie die nächsten drei Felder nur aus, wenn Ihre Firma
+  \tZugriff auf einen \k(DNS-Server^^Auf DNS zugreifen) hat.
+
+  \to\tDomainname: - Geben Sie den Namen der Domain Ihrer Firma tein.
+  \t \tDer Domainname muß als Zusatz .com, .edu, .gov usw. verwenden,
+  \t \tz. B. site1.companyA.com.
+
+   \to\tDNS-Server: - Geben Sie den Namen des primären
+   \t \tDomainnamenservers Ihrer Firma ein.
+
+  \to\tNetzwerkadresse - Geben Sie die Adresse für den DNS-Server ein.
+
+4.\tKlicken Sie OK an, um Ihre Änderungen zu speichern.
+
+  \tHinweis: Sie können Zurücksetzen anklicken, um noch nicht
+  \tbestätigte Änderungen rückgängig zu machen, oder Sie können
+  \tAbbrechen anklicken, um das Fenster zu verlassen, ohne
+  \tÄnderungen zu speichern.
+
+Siehe auch:
+\s(TCP/IP installieren^dhelp as netag "Setting Up TCP/IP" "Installing TCP/IP" || helpLinkErr)
+\s(TCP/IP in der Befehlszeile konfigurieren^dhelp "pe.de" ownerhb "TCP/IP einrichten und konfigurieren" "TCP/IP konfigurieren" || helpLinkErr)
+
+^1^Lokalen Systemzugriff für ferne Benutzer einrichten
+^$30
+Lokalen Systemzugriff für ferne Benutzer einrichten
+
+Sie können Ihr System so einrichten, daß Benutzer auf anderen Systemen
+(und Sie selbst) sich bei Ihrem lokalen System anmelden und Dateien in
+das System oder aus dem System kopieren können (z. B. unter Verwendung
+der Befehle rlogin und rcp).
+
+Um den Zugriff auf das lokale System für ferne Benutzer einzurichten,
+gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster "Internet-Setup"
+  \terscheint.
+
+  \tHinweis: Wenn Sie Ihr System für den Zugriff auf einen \k(DNS-Server^^Auf DNS zugreifen)
+  \t\t(DNS) konfiguriert haben, zeigt das System standardmäßig die
+  \t\k(Domainliste^^Domainauflistung) an.
+
+  \tWenn Sie Ihr System nicht für den Zugriff auf DNS konfiguriert
+  \thaben, zeigt das System die \k(Systemliste^^Systemliste) an. Lokalisieren Sie
+  \tdas System, von dem aus sich Benutzer anmelden werden, und
+  \tklicken Sie es an.
+
+4.\tKlicken Sie Aktionen=>Ferner Benutzerzugriff an. Das Fenster
+  \t\t"Internet-Setup: Ferner Benutzerzugriff" erscheint mit folgenden
+  \t\tOptionen:
+
+  \to\tSystemname: - Dieses Textfeld enthält den Namen des Systems, das
+  \t \tzur Zeit im Hauptfenster "Internet-Setup" ausgewählt ist. Wenn
+  \t \tSie einen fernen Zugriff für ein anderes System konfigurieren
+  \t \tmöchten, können Sie den Systemnamen ändern, indem Sie den
+  \t \taktuellen Namen überschreiben und die Tabulatortaste drücken.
+
+  \to\tPaßwortbeschränkung entfernen: Standardmäßig ist dieses Feld
+  \t \tauf "Zugriff auf Ihr persönliches Konto" eingestellt. Mit
+  \t \tdieser Einstellung richten Sie den Zugriff ferner Benutzer nur
+  \t \tfür Ihre eigene Anmeldung ein.
+
+  \t \tWenn Sie die \k(Berechtigung zum Ändern des Internet-Setup^dtadmin/user.hlp^Mit Berechtigungen umgehen können) 
+  \t \thaben, haben Sie auch die Möglichkeit, Paßworteinschränkungen für
+  \t \tbeliebige lokale Benutzer (/etc/hosts.equiv) zu entfernen, indem Sie  
+  \t \t"Ferne Benutzer mit lokalen Konten" anklicken.
+
+  \t \tFerne Benutzer auf einem gegebenen System, die ein Benutzerkonto
+  \t \t\t \tauf Ihrem System haben, können sich dann ohne Paßworteingabe
+  \t \tbei \t \tIhrem System anmelden.
+
+  \to\tBenutzer auf <Systemname>, die frei auf Ihr Konto/ihre Konten
+  \t \tzugreifen können:
+  \t \t-\tKlicken Sie eine der folgenden Möglichkeiten an:
+
+  \t \t-\tNiemand - Wenn Sie nicht möchten, daß jemand auf Ihr Konto
+  \t \t \toder sein oder ihr Konto ohne Paßwort zugreifen kann. Dies ist
+  \t \t \tdie Standardvorgabe.
+
+  \t \t-\tSelbst - Wenn Sie sich unter Verwendung derselben Anmelde-ID
+  \t \tbei diesem System vom fernen System anmelden möchten (die
+  \t \tPaßworteingabe wird von Ihnen nicht verlangt).
+
+  \t \t-\tAlle Benutzer - Wenn Sie möchten, daß sich alle Benutzer auf
+  \t \tdem fernen System ohne Paßworteingabe bei Ihrem System anmelden
+  \t \tkönnen. Der Benutzer muß über ein Konto auf Ihrem System
+  \t \tverfügen. Diese Option ist nur verfügbar, wenn Sie bei
+  \t \t"Paßwortbeschränkung entfernen" "Ferne Benutzer mit lokalen
+  \t \tKonten" gewählt haben.
+
+  \t \t-\tBestimmte Benutzer - Wenn Sie möchten, daß bestimmte Benutzer
+  \t \t \tohne Paßworteingabe auf ihr Konto oder Ihr Konto zugreifen
+  \t \t \tkönnen.
+
+  \t \t \tWenn Sie Bestimmte Benutzer wählen, wird das Fenster
+  \t \t \terweitert, um zusätzliche Felder für hinzugefügte Benutzer
+  \t \t \taufnehmen zu können (weitere Informationen finden Sie unter
+  \t \t \t\k(Spezielle Benutzer auswählen)).
+
+5.\tKlicken Sie OK an, um die Änderungen zu speichern und das Fenster
+  \tzu verlassen, oder klicken Sie Anwenden an, um die Änderungen zu
+  \tspeichern, ohne das Fenster zu verlassen.
+
+Siehe auch:
+\s(Dateien in /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr)
+
+^2^Domainauflistung
+^$40
+Domainauflistung
+
+Um die Domainliste anzuzeigen, klicken Sie Anzeigen=>Domainliste an.
+
+Standardmäßig zeigt die Domainliste die Systeme in Ihrer lokalen
+Domain an.
+
+Um andere Domain (und UnterDomain) anzuzeigen und auszuwählen, gehen
+Sie wie folgt vor:
+
+1.\tGeben Sie den Namen der gewünschten Domain in das Textfeld
+  \tDomainname ein (das heißt den Namen der Domäne, in der das
+  \tSystem, nach dem Sie suchen, residiert.
+
+2.\tKlicken Sie Liste aktualisieren an.
+
+   \tWenn unter der angegebenen Domain Unterdomain vorhanden sind,
+   \terscheinen sie an der Spitze der Domainliste.
+
+3.\tDoppelklicken Sie auf den UnterDomaineintrag, um den Inhalt
+  \teiner Unterdomain anzuzeigen.  Rechts erscheint eine neue Liste,
+  \tdie den Inhalt der Unterdomain zeigt.
+
+  \tSie können auf weitere Unterdomain doppelklicken, um deren
+  \tUnterdomain aufzurufen usw., bis es keine weiteren UnterDomain
+  \tmehr gibt. Im Fenster können jedoch immer nur drei Ebenen von
+  \tDomain gleichzeitig angezeigt werden. Wenn mehr als drei Ebenen
+  \tvorhanden sind, können Sie sich mit der
+  \tPfeil-nach-rechts/links-Taste im Zentrum Ihres Bildschirms
+  \tvorwärts und rückwärts durch die Listen bewegen.
+
+4.\tDurchsuchen Sie die Listen, bis Sie das gewünschte System
+  \tfinden, und klicken Sie den Eintrag dieses Systems an.
+
+Um ein System aus der Domainliste in der Datei /etc/hosts
+hinzuzufügen, klicken Sie System=>In Systemliste kopieren an.
+
+Siehe auch:
+\k(Systemliste)
+
+^2^Systemliste
+^$50
+Systemliste
+
+Die Systemliste zeigt den Inhalt Ihrer Datei /etc/hosts an.
+
+Um die Systemliste anzuzeigen, klicken Sie Anzeigen=>Systemliste an.
+
+Hinweis: Wenn /etc/hosts nur einen Eintrag für Ihr System und nicht
+für andere Systeme enthält, ist diese Ansicht nicht verfügbar.
+
+Klicken Sie das gewünschte System und anschließend OK an.
+
+Hinweis: Wenn auf Ihrem System \k(DNS^^Auf DNS zugreifen) konfiguriert ist, können Sie zur
+Anzeige der \k(Domainauflistung) wechseln, indem Sie
+Anzeigen=>Domainliste anklicken.
+
+Siehe auch:
+\k(Der Systemliste neues System hinzufügen)
+\k(System von der Systemliste löschen)
+\k(Systemeigenschaften anzeigen)
+
+^2^Spezielle Benutzer auswählen
+^$60
+Spezielle Benutzer auswählen
+
+Wählen Sie eine der folgenden Möglichkeiten:
+
+\to\t\k(Spezifische Benutzer zur Liste Zugelassene Benutzer hinzufügen^^Bestimmte Benutzer hinzufügen)
+\to\t\k(Einträge der Liste Zugelassene Benuter ändern^^Bestimmte Benutzer ändern)
+\to\t\k(Benutzer aus der Liste Zugelassene Benuter löschen^^Bestimmte Benutzer löschen)
+
+
+^3^Bestimmte Benutzer hinzufügen
+^$70
+Bestimmte Benutzer hinzufügen
+
+Um spezifische Benutzer in der Liste der Benutzer hinzuzufügen, die
+auf Ihr System zugreifen können, gehen Sie wie folgt vor:
+
+1.\tGeben Sie die gewünschte Anmelde-ID in das Textfeld Anmelde-ID
+  \tein.
+
+2.\tKlicken Sie Hinzufügen an. Die Anmelde-ID wird in das Feld
+  \tZugelassene Benutzer übertragen.
+
+3.\tWiederholen Sie Schritt 1 und 2 für jeden Benutzer, den Sie in der
+  \tListe hinzufügen möchten. Wenn die Liste vollständig ist, klicken
+  \tSie OK an, um die Anmelde-IDs zu speichern und das Fenster zu
+  \tverlassen, oder Sie klicken OK an, um die Anmelde-IDs zu
+  \tspeichern, ohne das Fenster zu verlassen.
+
+Hinweis: Bei der Einrichtung des Zugriffs auf Ihr persönliches Konto
+sollten Sie vorsichtig sein, wenn Sie Benutzer in der Liste
+hinzufügen. Vergessen Sie nicht, daß alle in dieser Liste aufgeführten
+Benutzer sich ohne Paßworteingabe bei Ihrem Konto anmelden und auf
+Ihre Dateien zugreifen können.
+
+^3^Bestimmte Benutzer ändern
+^$80
+Bestimmte Benutzer ändern
+
+Um Einträge in der Liste Zugelassene Benutzer zu ändern, gehen Sie wie
+folgt vor:
+
+1.\tKlicken Sie in der Liste Zugelassene Benutzer die gewünschte
+  \tAnmelde-ID an.
+
+2.\tNehmen Sie die gewünschten Änderungen an der Anmelde-ID vor.
+
+3.\tKlicken Sie Ändern an.
+
+4.\tKlicken Sie OK an, um die Änderungen zu speichern und das Fenster
+  \tzu verlassen, oder klicken Sie Anwenden an, um die Änderungen zu
+  \tspeichern, ohne das Fenster zu verlassen.
+
+^3^Bestimmte Benutzer löschen
+^$90
+Bestimmte Benutzer löschen
+
+Um einen Benutzer aus der Liste Zugelassene Benutzer zu löschen, gehen
+Sie wie folgt vor:
+
+1.\tKlicken Sie in der Liste Zugelassene Benutzer die gewünschte
+  \tAnmelde-ID an.
+
+2.\tKlicken Sie Löschen an, um die Anmelde-ID zu entfernen.
+
+3.\tKlicken Sie OK an, um die Änderungen zu speichern und das Fenster
+  \tzu verlassen, oder klicken Sie Anwenden an, um die Änderungen zu
+  \tspeichern, ohne das Fenster zu verlassen.
+
+^2^Fenster Internet-Setup: Lokalen Zugriff einrichten
+^$100
+Fenster Internet-Setup: Lokalen Zugriff einrichten
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tSystemname: - Dieses Textfeld enthält den Namen des Systems, das
+  \t \tzur Zeit im Hauptfenster "Internet-Setup" ausgewählt ist. Wenn
+  \t \tSie einen fernen Zugriff für ein anderes System konfigurieren
+  \t \tmöchten, können Sie den Systemnamen ändern, indem Sie den
+  \t \taktuellen Namen überschreiben und die Tabulatortaste drücken.
+
+  \to\tPaßwortbeschränkung entfernen: Standardmäßig ist dieses Feld
+  \t \tauf "Zugriff auf Ihr persönliches Konto" eingestellt. Mit
+  \t \tdieser Einstellung richten Sie den Zugriff ferner Benutzer nur
+  \t \tfür Ihre eigene Anmeldung ein.
+
+  \t \tWenn Sie die \k(Berechtigung zum Ändern des Internet-Setup^dtadmin/user.hlp^Mit Berechtigungen umgehen können) 
+  \t \thaben, haben Sie auch die Möglichkeit, Paßworteinschränkungen für
+  \t \tbeliebige lokale Benutzer (/etc/hosts.equiv) zu entfernen, indem Sie  
+  \t \t"Ferne Benutzer mit lokalen Konten" anklicken.
+
+  \t \tFerne Benutzer auf einem gegebenen System, die ein Benutzerkonto
+  \t \t\t \tauf Ihrem System haben, können sich dann ohne Paßworteingabe
+  \t \tbei \t \tIhrem System anmelden.
+
+  \to\tBenutzer auf <Systemname>, die frei auf Ihr Konto/ihre Konten
+  \t \tzugreifen können:
+  \t \t-\tKlicken Sie eine der folgenden Möglichkeiten an:
+
+  \t \t-\tNiemand - Wenn Sie nicht möchten, daß jemand auf Ihr Konto
+  \t \t \toder sein oder ihr Konto ohne Paßwort zugreifen kann. Dies ist
+  \t \t \tdie Standardvorgabe.
+
+  \t \t-\tSelbst - Wenn Sie sich unter Verwendung derselben Anmelde-ID
+  \t \tbei diesem System vom fernen System anmelden möchten (die
+  \t \tPaßworteingabe wird von Ihnen nicht verlangt).
+
+  \t \t-\tAlle Benutzer - Wenn Sie möchten, daß sich alle Benutzer auf
+  \t \tdem fernen System ohne Paßworteingabe bei Ihrem System anmelden
+  \t \tkönnen. Der Benutzer muß über ein Konto auf Ihrem System
+  \t \tverfügen. Diese Option ist nur verfügbar, wenn Sie bei
+  \t \t"Paßwortbeschränkung entfernen" "Ferne Benutzer mit lokalen
+  \t \tKonten" gewählt haben.
+
+  \t \t-\tBestimmte Benutzer - Wenn Sie möchten, daß bestimmte Benutzer
+  \t \t \tohne Paßworteingabe auf ihr Konto oder Ihr Konto zugreifen
+  \t \t \tkönnen.
+
+  \t \t \tWenn Sie Bestimmte Benutzer wählen, wird das Fenster
+  \t \t \terweitert, um zusätzliche Felder für hinzugefügte Benutzer
+  \t \t \taufnehmen zu können (weitere Informationen finden Sie unter
+  \t \t \t\k(Spezielle Benutzer auswählen)).
+
+2.\tKlicken Sie OK an, um die Änderungen zu speichern und das Fenster
+  \tzu verlassen, oder klicken Sie Anwenden an, um die Änderungen zu
+  \tspeichern, ohne das Fenster zu verlassen.
+
+Siehe auch:
+\k(Lokalen Systemzugriff für ferne Benutzer einrichten)
+
+^1^Der Systemliste neues System hinzufügen
+^$110
+Der Systemliste neues System hinzufügen
+
+Um der \k(Systemliste) ein neues System hinzuzufügen, gehen Sie wie
+folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster
+  \t"Internet-Setup" erscheint. Hinweis: Vergewissern Sie sich, daß
+  \tdie \k(Anzeige Systemliste^^Systemliste) aktiv ist.
+
+4.\tWählen Sie eine Listenposition, indem Sie ein System anklicken.
+  \tDas neue System wird in der Zeile über diesem Eintrag
+  \thinzugefügt.
+
+5.\tKlicken Sie System=>Neu an. Das Fenster "Internet-Setup: Neues
+  \tSystem hinzufügen" erscheint mit folgenden Feldern:
+
+  \to\tSystemname: - Geben Sie den Namen des Systems ein, mit dem Sie
+  \t \tkommunizieren möchten.
+
+  \to\tNetzwerkadresse - Geben Sie die Netzwerkadresse ein. Wenn Ihr
+  \t \tSystem für \k(DNS-Zugriff^^Auf DNS zugreifen) konfiguriert ist, können Sie Adresse
+  \t \tsuchen anklicken, damit das System die Adresse für Sie sucht.
+
+  \t \tHinweis: Wenn das System nicht zur gleichen Domain gehört wie
+  \t \tIhr System, müssen Sie den Domainnamen im oben genannten Feld
+  \t \tSystemname eintragen.
+
+  \to\tKommentar - Geben Sie Kommentare ein, die Ihnen hilfreich
+  \t \terscheinen, z. B. die Nr. des Raums, in dem sich der Computer
+  \t \tbefindet, der Name des Systemeigentümers usw.
+
+6.\tKlicken Sie OK an, um die Änderungen zu speichern und das Fenster
+  \tzu verlassen, oder klicken Sie Anwenden an, um die Änderungen zu
+  \tspeichern, ohne das Fenster zu verlassen.
+
+  \tHinweis: Sie können Zurücksetzen anklicken, um noch nicht
+  \tbestätigte Änderungen rückgängig zu machen, oder Sie können
+  \tAbbrechen anklicken, um das Fenster zu verlassen, ohne
+  \tÄnderungen vorzunehmen.
+
+^2^Fenster Internet-Setup: Neues System hinzufügen
+^$120
+Fenster Internet-Setup: Neues System hinzufügen
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tSystemname: - Geben Sie den Namen des Systems ein, mit dem Sie  \t
+  \t \t\tkommunizieren möchten.
+
+  \to\tNetzwerkadresse - Geben Sie die Netzwerkadresse ein. Wenn Ihr
+  \t \tSystem für \k(DNS-Zugriff^^Auf DNS zugreifen) konfiguriert ist, können Sie Adresse
+  \t \tsuchen anklicken, damit das System die Adresse für Sie sucht.
+
+  \t \tHinweis: Wenn das System nicht zu gleichen Domain gehört wie Ihr
+  \t \tSystem, müssen Sie den Domainnamen im oben genannten Feld
+  \t \tSystemname eintragen.
+
+  \to\tKommentar - Geben Sie Kommentare ein, die Ihnen hilfreich
+  \t \terscheinen, z. B. die Nr. des Raums, in dem sich der Computer
+  \t \tbefindet, der Name des Systemeigentümers usw.
+
+2.\tKlicken Sie OK an, um die Änderungen zu speichern und das Fenster
+  \tzu verlassen, oder klicken Sie Anwenden an, um die Änderungen zu
+  \tspeichern, ohne das Fenster zu verlassen.
+
+Siehe auch:
+\k(Der Systemliste neues System hinzufügen)
+
+^1^System von der Systemliste löschen
+^$130
+System von der Systemliste löschen
+
+Um ein System aus der \k(Systemliste) zu löschen, gehen Sie wie
+folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster
+  \t"Internet-Setup" erscheint. Hinweis: Vergewissern Sie sich, daß
+  \tdie \k(Anzeige Systemliste^^Systemliste) aktiv ist.
+
+4.\tKlicken Sie den Systemeintrag an, den Sie löschen möchten.
+
+5.\tKlicken Sie System=>Löschen an. Der Systemeintrag wird  \taus der
+  \tSystemliste entfernt.
+
+^1^UUCP-Transfer einrichten
+^$140
+UUCP-Transfer einrichten
+
+Wenn Sie die \k(Berechtigung zum Ändern des Internet-Setup^dtadmin/user.hlp^Mit Berechtigungen umgehen können) haben, können
+Sie Ihr System so konfigurieren, daß es mit Hilfe von UNIX UUCP
+(UNIX-to-UNIX Copy) über TCP/IP-Netzwerke Post sendet und empfängt
+sowie Dateien überträgt und empfängt.
+
+Hinweis: Der Eigentümer oder Verwalter des fernen Systems muß sein
+eigenes System ebenfalls für UUCP-Übertragungen einrichten.
+
+Um UUCP-Übertragungen (UNIX-to-UNIX copy) von einem fernen System zu
+gestatten, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster "Internet-Setup"
+  \terscheint.
+
+4.\tKlicken Sie das System, für das Sie den UUCP-Zugriff konfigurieren
+  \tmöchten, (entweder in der \k(Domainauflistung) oder der
+  \t\k(Systemliste)) an.
+
+5.\tKlicken Sie Aktionen=>Setup der UUCP-Übertragung an. Das Fenster
+  \t"Internet-Setup: Setup der UUCP-Übertragung" erscheint mit
+  \tfolgenden Optionen:
+
+  \to\tSystemname: - Standardmäßig zeigt dieses Textfeld den Namen des
+  \t \tSystems an, das aktuell im Hauptfenster "Internet-Setup"
+  \t \tausgewählt ist. Sie können diesen Namen ändern, indem Sie ihn im
+  \t \tTextfeld überschreiben und die Tabulatortaste drücken.
+
+  \to\tNetzwerkadresse: - Standardmäßig enthält dieses Feld die Adresse
+  \t \tdes aktuell ausgewählten Systems. Wenn Sie den Eintrag im
+  \t \tTextfeld Systemname geändert haben, sind diese Felder leer.
+
+  \t \tWenn Sie \k(DNS-Zugriff^^Auf DNS zugreifen) haben, können Sie Adresse suchen
+  \t \tanklicken, damit das System die Netzwerkadresse sucht und die
+  \t \tentsprechenden Felder ausfüllt. Wenn Sie keinen DNS-Zugriff
+  \t \thaben, müssen Sie die Adresse bei Ihrem Netzwerkverwalter
+  \t \terfragen und eintragen.
+
+  \to\tAktueller Status: Annehmen/Zurückweisen von - Gibt an, ob die
+  \t \tUUCP-Dateiübertragung für das angegebene System aktuell möglich
+  \t \tist oder nicht.
+
+6.\tKlicken Sie Annehmen an. Das System wird in der Datei
+  \t/etc/uucp/Systems.tcp hinzugefügt.
+
+  \tHinweis: Sie können ein System aus der Datei /etc/uucp/Systems.tcp
+  \tentfernen, indem Sie Zurückweisen anklicken.
+
+^2^Fenster Internet-Setup: UUCP-Transfer-Setup
+^$150
+Fenster Internet-Setup: UUCP-Transfer-Setup
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tSystemname: - Standardmäßig zeigt dieses Textfeld den Namen des
+  \t \tSystems an, das aktuell im Hauptfenster "Internet-Setup"
+  \t \tausgewählt ist. Sie können diesen Namen ändern, indem Sie ihn im
+  \t \tTextfeld überschreiben und die Tabulatortaste drücken.
+
+  \to\tNetzwerkadresse: - Standardmäßig enthält dieses Feld die Adresse
+  \t \tdes aktuell ausgewählten Systems. Wenn Sie den Eintrag im
+  \t \tTextfeld Systemname geändert haben, sind diese Felder leer.
+
+  \t \tWenn Sie \k(DNS-Zugriff^^Auf DNS zugreifen) haben, können Sie Adresse suchen anklicken,
+  \t \tdamit das System die Netzwerkadresse sucht und die
+  \t \tentsprechenden Felder ausfüllt. Wenn Sie keinen DNS-Zugriff
+  \t \thaben, müssen Sie die Adresse bei Ihrem Netzwerkverwalter
+  \t \terfragen und eintragen.
+
+  \to\tAktueller Status: Annehmen/Zurückweisen von - Gibt an, ob die
+  \t \tUUCP-Dateiübertragung für das angegebene System aktuell möglich
+  \t \tist oder nicht.
+
+2.\tKlicken Sie Annehmen an. Das System wird in der Datei
+  \t/etc/uucp/Systems.tcp hinzugefügt.
+
+Siehe auch:
+\k(UUCP-Transfer einrichten)
+
+
+^1^Auf DNS zugreifen
+^$160
+Auf DNS zugreifen
+
+Sie müssen nicht für jedes System, auf das Sie zugreifen möchten,
+Einträge in die Datei /etc/hosts einfügen. Wenn Ihre Firma auf einen
+DNS-Server zugreifen kann, kann Ihr System Informationen über diese
+Systeme auf dem Server gewinnen.
+
+Wenn Sie über die \k(Berechtigung zum Ändern des Internet-Setup^dtadmin/user.hlp^Mit Berechtigungen umgehen können) verfügen,
+richten Sie den Zugriff auf einen DNS-Server wie folgt ein:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster "Internet-Setup"
+  \terscheint.
+
+4.\tKlicken Sie Aktionen=>DNS-Zugriff an. Das Fenster "Internet-Setup:
+  \tDNS-Zugriff" erscheint mit folgenden Feldern:
+
+  \to\tDomainname: - Geben Sie den Namen der Domain Ihrer Firma ein.
+  \t \tDer Domainname muß als Zusatz .com, .edu, .gov usw. verwenden,
+  \t \tz. B. site1.companyA.com.
+
+  \to\tNamens-Server: -  Geben Sie den Namen des primären
+  \t \tDomainnamenservers Ihrer Firma ein.
+
+  \to\tNetzwerkadresse: - Geben Sie die Adresse des im Feld
+  \t \tNamens-Server angegebenen Servers ein.
+
+  \to\tServer - Verwenden Sie die Bildlaufleiste, um sich in der Liste
+  \t \tder vorhandenen DNS-Server (definiert in der Datei
+  \t \t/etc/resolv.conf) nach oben und unten zu bewegen.
+
+  \t \tKlicken Sie eine der folgenden Optionen an:
+
+  \t \t-\tHinzufügen - Um die aktuellen Einträge der Felder
+  \t \tNamens-Server und Netzwerkadresse in die Abrolliste einzufügen.
+
+  \t \t-\tÄndern - Um den ausgewählten Eintrag durch die aktuellen
+  \t \tEinträge der Felder Namens-Server und Netzwerkadresse zu
+  \t \tersetzen.
+
+  \t \t-\tLöschen - Um den ausgewählten Eintrag aus der Abrolliste zu
+  \t \tentfernen.
+
+5.\tKlicken Sie OK an, um die Änderungen zu speichern.
+
+  \tHinweis: Sie können Zurücksetzen anklicken, um noch nicht
+  \t\tbestätigte Änderungen rückgängig zu machen, oder Sie können
+  \t\tAbbrechen anklicken, um das Fenster zu verlassen, ohne
+  \tÄnderungen \tzu speichern.
+
+Siehe auch:
+\s(Einführung in die DNS-Verwaltung^dhelp as netag "Using Domain Name Service with TCP/IP" "" || helpLinkErr)
+
+^2^Fenster Internet-setup: DNS-Zugriff
+^$170
+Fenster Internet-setup: DNS-Zugriff
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tDomainname: - Geben Sie den Namen der Domain Ihrer Firma ein.
+  \t \tDer Domainname muß als Zusatz .com, .edu, .gov usw. verwenden,
+  \t \tz. B. site1.companyA.com.
+
+  \to\tNamens-Server: -  Geben Sie den Namen des primären
+  \t \tDomainnamenservers Ihrer Firma ein.
+
+  \to\tNetzwerkadresse: - Geben Sie die Adresse des im Feld
+  \t \tNamens-Server angegebenen Servers ein.
+
+  \to\tServer - Verwenden Sie die Bildlaufleiste, um sich in der Liste
+  \t \tder vorhandenen DNS-Server (definiert in der Datei
+  \t \t/etc/resolv.conf) nach oben und unten zu bewegen.
+
+  \t \tKlicken Sie eine der folgenden Optionen an:
+
+  \t \t-\tHinzufügen - Um die aktuellen Einträge der Felder
+  \t \tNamens-Server und Netzwerkadresse in die Abrolliste einzufügen.
+
+  \t \t-\tÄndern - Um den ausgewählten Eintrag durch die aktuellen
+  \t \tEinträge der Felder Namens-Server und Netzwerkadresse zu
+  \t \tersetzen.
+
+  \t \t-\tLöschen - Um den ausgewählten Eintrag aus der Abrolliste zu
+  \t \tentfernen.
+
+2.\tKlicken Sie OK an, um die Änderungen zu speichern.
+
+Siehe auch:
+\k(Auf DNS zugreifen)
+
+^1^Auf NIS zugreifen
+^$180
+Auf NIS zugreifen
+
+Hinweis: Die Konfiguration Ihres System für den Zugriff auf einen
+NIS-Server aktiviert NIS nicht automatisch für spezifische Dienste wie
+Benutzer- oder Host-Management.
+
+Wenn Sie über die \k(Berechtigung Benutzerinfo. via NIS verwalten^dtadmin/user.hlp^Mit Berechtigungen umgehen können) haben,
+können Sie Ihr System wie folgt für die Verwendung eines NIS-Server
+konfigurieren:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster "Internet-Setup"
+  \terscheint.
+
+4.\tKlicken Sie Aktionen=>NIS-Zugriff an. Das Fenster
+  \t\t"Internet-Setup: NIS-Zugriff" erscheint mit folgenden Feldern:
+
+  \to\tNIS Domainname: - Geben Sie den Namen der Domain Ihrer Firma
+  \t \tein.
+
+  \t \tHinweis: Dieser Name muß nicht unbedingt mit dem Namen Ihrer
+  \t \t\k(DNS-Domäne^^Auf DNS zugreifen) übereinstimmen.
+
+  \to\tNIS-Server: Geben Sie den Namen des NIS-Server Ihrer Firma ein.
+
+  \to\tNIS-Server -Verwenden Sie die Bildlaufleiste, um sich in der
+  \t \tListe der vorhandenen Server nach oben und unten zu bewegen.
+
+  \t \tDiese Liste bietet Ihnen folgende Möglichkeiten:
+
+  \t \t-\tKlicken Sie Hinzufügen an, um den aktuellen Eintrag des
+  \t \t \tTextfelds NIS-Server in die Abrolliste zu übertragen.
+
+  \t \t-\tKlicken Sie "Ändern an, um den in der Abrolliste ausgewählten
+  \t \t \tEintrag durch den aktuellen Inhalt des Felds NIS-Server
+  \t \t \tzu ersetzen.
+
+  \t \t-\tKlicken Sie Löschen an, um den ausgewählten Eintrag aus der
+  \t \tAbrolliste zu entfernen.
+
+5.\tKlicken Sie OK an, um die Änderungen zu speichern.
+
+  \tSie können Zurücksetzen anklicken, um noch nicht bestätigte
+  \tÄnderungen rückgängig zu machen, oder Sie können Abbrechen
+  \tanklicken, um das Fenster zu verlassen, ohne Änderungen zu
+  \tspeichern.
+
+Siehe auch:
+\s(Einführung in NIS-Setup^dhelp as netag "Setting Up NIS" "" || helpLinkErr)
+\s(Über die Verwaltung von NIS^dhelp as netag "Introduction to NIS Administration" "" || helpLinkErr)
+
+^2^Fenster Internet-Setup: NIS-Zugriff
+^$190
+Fenster Internet-Setup: NIS-Zugriff
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tNIS Domainname: - Geben Sie den Namen der Domain Ihrer Firma
+  \t \tein.
+
+  \t \tHinweis: Dieser Name muß nicht unbedingt mit dem Namen Ihrer
+  \t \t\k(DNS-Domäne^^Auf DNS zugreifen) übereinstimmen.
+
+  \to\tNIS-Server: Geben Sie den Namen des NIS-Server Ihrer Firma ein.
+
+  \to\tNIS-Server -Verwenden Sie die Bildlaufleiste, um sich in der
+  \t \tListe der vorhandenen Server nach oben und unten zu bewegen.
+
+  \t \tDiese Liste bietet Ihnen folgende Möglichkeiten:
+
+  \t \t-\tKlicken Sie Hinzufügen an, um den aktuellen Eintrag des
+  \t \t \tTextfelds NIS-Server in die Abrolliste zu übertragen.
+
+  \t \t-\tKlicken Sie "Ändern an, um den in der Abrolliste ausgewählten
+  \t \t \tEintrag durch den aktuellen Inhalt des Felds NIS-Server
+  \t \t \tzu ersetzen.
+
+  \t \t-\tKlicken Sie Löschen an, um den ausgewählten Eintrag aus der
+  \t \tAbrolliste zu entfernen.
+
+2.\tKlicken Sie OK an, um die Änderungen zu speichern.
+
+Siehe auch:
+\k(Auf NIS zugreifen)
+
+^1^Routing einrichten
+^$200
+Routing einrichten
+
+Wenn Sie Ihr System für den Netzwerkbetrieb konfiguriert haben, können
+Sie mit anderen Systemen Ihres lokalen Netzwerks Kontakt aufnehmen.
+Wenn Sie auf Systeme außerhalb Ihres lokalen Netzwerks zugreifen
+möchten, müssen Sie jedoch möglicherweise \d(Netmask) und
+\d(Broadcastadresse) auf Ihrem Systems konfigurieren und einen Router
+angeben, über den Sie Systeme außerhalb Ihres lokalen Netzwerks
+erreichen können.
+
+Um Ihr System für den Zugriff auf ein \d(Router) innerhalb des
+lokalen Netzwerks zu konfigurieren oder um die Broadcastadresse und Netmask
+Ihres Systems zu ändern, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster "Internet-Setup"
+  \terscheint.
+
+4.\tKlicken Sie Aktionen=>Routing-Setup ab. Das Fenster  
+\t"Internet-Setup: Leitweg-Setup" erscheint mit folgenden Feldern:
+
+  \tFür die Subnetmask:
+
+  \to\tSubnetztyp: - Klicken Sie die entsprechende Klasse an (wenden
+  \t \tSie sich an Ihren Netzwerkverwalter, wenn Sie nicht wissen, zu
+  \t \twelcher Klasse Ihr Netzwerk gehört). Wenn Ihr Netzwerk nicht als
+  \t \tNetzwerk der Standardklasse konfiguriert ist, wählen Sie
+  \t \tSonstige.  Das Textfeld Maske erscheint; geben Sie die
+  \t \tNetmaskn-ID im Hexadezimalformat ein (z. B. FFFF0000).
+
+  \to\tNetzwerk-ID: - Gibt an, welcher Teil der Adresse des lokalen
+  \t \tSystems als Netzwerkidentifikation betrachtet wird (auf der
+  \t \tGrundlage des aktuell ausgewählten Subnetztyps).
+
+  \t \tHinweis: Dieses Feld erscheint nur, wenn Sie bei Subnetztyp die
+  \t \tKlasse A, B oder C wählen.
+
+  \to\tSystem-ID: - Gibt an, welcher Teil der Adresse des lokalen
+  \t \tSystems als Systemidentifikation betrachtet wird (auf der
+  \t \tGrundlage des aktuell ausgewählten Subnetztyps).
+
+  \t \tHinweis: Dieses Feld erscheint nur, wenn Sie bei Subnetztyp die
+  \t \tKlasse A, B oder C wählen.
+
+  \tFür Netzwerk-Routing:
+
+  \to\tStandardrouter: - Geben Sie den Namen des Systems ein, das in
+  \t \tIhrem lokalen Netzwerk als \d(Router) verwendet wird.
+  \t \tDieser Router sollte "einen Sprung" von Ihrem System entfernt
+  \t \tsein, d. h. er sollte direkt mit dem lokalen Netzwerk verbunden
+  \t \tsein.
+
+  \to\tNetzwerkadresse: - Geben Sie die Adresse des Standardrouters
+  \t \tein. Wenn Ihr System für \k(DNS-Zugriff^^Auf DNS zugreifen) konfiguriert ist, können
+  \t \tSie Adresse suchen anklicken, damit das System nach der Adresse
+  \t \tdes Routers sucht.
+
+  \to\tRouting-Tabellen mit Hilfe gesendeter Info aktualisieren: -
+  \t \tKlicken Sie dieses Kontrollkästchen an, wenn Sie das Programm
+  \t \trouted (d. h. den Route-Dämon) ausführen möchten.
+
+  \t \tWeitere Informationen über routed (1M) finden Sie in der
+  \t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \t \tHinweis: routed überwacht die Sendung von Informationen mit
+  \t \tAngaben, wie auf Systeme außerhalb Ihres lokalen Netzwerks
+  \t \tzugegriffen wird.
+
+5.\tKlicken Sie OK an, um die Änderungen zu speichern.
+
+  \tHinweis: Sie können Zurücksetzen anklicken, um noch nicht
+  \tbestätigte Änderungen rückgängig zu machen, oder Sie können
+  \tAbbrechen anklicken, um das Fenster zu verlassen, ohne Änderungen
+  \tvorzunehmen
+
+Siehe auch:
+\s(Routing einrichten^dhelp as netag "Setting Up TCP/IP" "Setting Up Routing" || helpLinkErr)
+\s(Gerouteten Dämon verwenden^dhelp as netag "Setting Up Routers and Subnetworks" "Using the routed Daemon" || helpLinkErr)
+
+^2^Fenster Internet-Setup: Routing-Setup
+^$210
+Fenster Internet-Setup: Routing-Setup
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \tFür die Subnetmask:
+
+  \to\tSubnetztyp: - Klicken Sie die entsprechende Klasse an (wenden
+  \t \tSie sich an Ihren Netzwerkverwalter, wenn Sie nicht wissen, zu
+  \t \twelcher Klasse Ihr Netzwerk gehört). Wenn Ihr Netzwerk nicht als
+  \t \tNetzwerk der Standardklasse konfiguriert ist, wählen Sie
+  \t \tSonstige.  Das Textfeld Maske erscheint; geben Sie die
+  \t \tNetmask-ID im Hexadezimalformat ein (z. B. FFFF0000).
+
+  \to\tNetzwerk-ID: - Gibt an, welcher Teil der Adresse des lokalen
+  \t \tSystems als Netzwerkidentifikation betrachtet wird (auf der
+  \t \tGrundlage des aktuell ausgewählten Subnetztyps).
+
+  \t \tHinweis: Dieses Feld erscheint nur, wenn Sie bei Subnetztyp die
+  \t \tKlasse A, B oder C wählen.
+
+  \to\tSystem-ID: - Gibt an, welcher Teil der Adresse des lokalen
+  \t \tSystems als Systemidentifikation betrachtet wird (auf der
+  \t \tGrundlage des aktuell ausgewählten Subnetztyps).
+
+  \t \tHinweis: Dieses Feld erscheint nur, wenn Sie bei Subnetztyp die
+  \t \tKlasse A, B oder C wählen.
+
+  \tFür Netzwerk-Routing:
+
+  \to\tStandardrouter: - Geben Sie den Namen des Systems ein, das in
+  \t \tIhrem lokalen Netzwerk als \d(Router) verwendet wird.
+  \t \tDieser Router sollte "einen Sprung" von Ihrem System entfernt
+  \t \tsein, d. h. er sollte direkt mit dem lokalen Netzwerk verbunden
+  \t \tsein.
+
+  \to\tNetzwerkadresse: - Geben Sie die Adresse des Standardrouters
+  \t \tein. Wenn Ihr System für \k(DNS-Zugriff^^Auf DNS zugreifen) konfiguriert ist, können
+  \t \tSie Adresse suchen anklicken, damit das System nach der Adresse
+  \t \tdes Routers sucht.
+
+  \to\tRouting-Tabellen mit Hilfe gesendeter Info aktualisieren: -
+  \t \tKlicken Sie dieses Kontrollkästchen an, wenn Sie das Programm
+  \t \trouted (d. h. den Route-Dämon) ausführen möchten.
+
+  \t \tWeitere Informationen über routed (1M) finden Sie in der
+  \t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \t \tHinweis: routed überwacht die Sendung von Informationen mit
+  \t \tAngaben, wie auf Systeme außerhalb Ihres lokalen Netzwerks
+  \t \tzugegriffen wird.
+
+2.\tKlicken Sie OK an, um die Änderungen zu speichern.
+
+
+Siehe auch:
+\k(Routing einrichten)
+
+^2^Fenster Internet-Setup: Neues System hinzufügen
+^$215
+Fenster Internet-Setup: Neues System hinzufügen
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tSystemname: - Geben Sie den Namen des Systems ein, mit dem Sie  \t
+  \t \t\tkommunizieren möchten.
+
+  \to\tNetzwerkadresse - Geben Sie die Netzwerkadresse ein. Wenn Ihr
+  \t \tSystem für \k(DNS-Zugriff^^Auf DNS zugreifen) konfiguriert ist, können Sie Adresse
+  \t \tsuchen anklicken, damit das System die Adresse für Sie sucht.
+
+  \t \tHinweis: Wenn das System nicht zur gleichen Domain gehört wie
+  \t \tIhr System, müssen Sie den Domainnamen im oben genannten Feld
+  \t \tSystemname eintragen.
+
+  \to\tKommentar - Geben Sie Kommentare ein, die Ihnen hilfreich
+  \t \terscheinen, z. B. die Nr. des Raums, in dem sich der Computer
+  \t \tbefindet, der Name des Systemeigentümers usw.
+
+2.\tKlicken Sie OK an, um die Änderungen zu speichern und das Fenster
+  \tzu verlassen, oder klicken Sie Anwenden an, um die Änderungen zu
+  \tspeichern, ohne das Fenster zu verlassen.
+
+Siehe auch:
+\k(Der Systemliste neues System hinzufügen)
+
+^1^Symbol für ein fernes System in einen Ordner kopieren
+^$220
+Symbol für ein fernes System in einen Ordner kopieren
+
+Für jedes ferne System, das in Ihrer \k(Domainauflistung) oder
+\k(Systemliste)enthalten ist, können Sie ein Symbol erstellen.
+Doppelklicken Sie auf das Symbol, wenn Sie sich bei diesem fernen
+System anmelden oder Dateien auf das ferne System übertragen möchten.
+
+Um ein Symbol für ein fernes System zu erstellen, gehen Sie wie folgt
+vor:
+
+1.\tKlicken Sie das gewünschte System in der Domain- oder der
+  \tSystemliste an.
+
+2.\tÖffnen Sie den Ordner, in den Sie das Symbol des fernen System
+  \tkopieren möchten.
+
+3.\tVerschieben Sie das Symbol des fernen System mit der Methode
+  \t\d(ziehen und ablegen^ziehen-und-ablegen) in den in Schritt 2 
+ \tgeöffneten Ordner.
+
+Hinweis: Sie können auch die Menüoption In Ordner kopieren verwenden,
+um ein Symbol für ein fernes System zu erstellen (siehe
+\k(Fenster Internet-Setup: In Ordner kopieren)).
+
+Siehe auch:
+\k(Ferne Anmeldung^Remote_Access/Remote_Access.hlp^Ferne Anmeldung:)
+
+^2^Fenster Internet-Setup: In Ordner kopieren
+^$230
+Fenster Internet-Setup: In Ordner kopieren
+
+In diesem Fenster können Sie einen Eintrag für ein fernes System in
+den gewünschten Ordner kopieren. Im Ordner erscheint dann ein Symbol,
+das das ferne System darstellt.
+
+Gehen Sie wie folgt vor:
+
+1.\tKlicken Sie in der Ordnerliste Ordnernamen oder den  
+ \tübergeordneten Ordner an, bis Sie den gewünschten Ordner lokalisiert haben.
+
+2.\tGeben Sie in das Feld Als einen Namen für das Symbol ein.   
+ \tStandardmäßig erhält das Symbol den Namen des Systems.
+
+3.\tKlicken Sie Kopieren an. Im Ordner erscheint ein Symbol, das
+  \tdas ferne System dargestellt. Sie haben jetzt folgende
+  \tMöglichkeiten:
+
+  \to\t\d(Doppelklicken^doppelklicken)) Sie auf das Symbol des fernen
+  \t \tSystems, wenn Sie sich bei diesem System anmelden möchten.
+
+  \to\tVerschieben Sie Dateien mit der Methode \d(ziehen und ablegen^ziehen-und-ablegen)
+ \t \tauf das Symbol des fernen Systems, wenn Sie sie auf das ferne System
+  \t \tübertragen möchten.
+
+^1^Systemeigenschaften anzeigen
+^$240
+Systemeigenschaften anzeigen
+
+Um die Eigenschaften eines Systemeintrags anzuzeigen, gehen Sie wie
+folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster "Internet-Setup"
+  \terscheint.
+
+4.\tKlicken Sie das gewünschte System in der \k(Domainauflistung) oder
+  \tder \k(Systemliste) an.
+
+5.\tKlicken Sie auf System=>Eigenschaften. Das
+  \t\k(Fenster "Internet-Setup: Eigenschaften"^^Fenster Internet-Setup: Eigenschaften) erscheint.
+
+    Hinweis: Wenn Sie sich in der Anzeige für die Domainliste befinden, 
+ \tkönnen Sie keine Systemeigenschaften ändern. Sie können  
+ \tÄnderungen in der Anzeige Systemliste vornehmen, die dann in die  
+ \tDatei  /etc/hosts übertragen werden.
+
+Siehe auch:
+\s(Dateien in /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^2^Fenster Internet-Setup: Eigenschaften
+^$250
+Fenster Internet-Setup: Eigenschaften
+
+Wenn Sie sich in der Anzeige für die \k(Domainauflistung) befinden, zeigt
+dieses Fenster den Systemnamen und die entsprechende Netzwerkadresse
+an.
+
+Wenn Sie sich in der Anzeige für die \k(Systemliste) befinden,
+können Sie die Eigenschaften wie folgt ändern:
+
+1.\tGeben Sie den gewünschten Systemnamen ein.
+
+2.\tGeben Sie die Systemadresse ein. Wenn Sie \k(DNS-Zugriff^^Auf DNS zugreifen) haben,
+  \tkönnen Sie Adresse suchen anklicken, damit Internet-Setup die
+  \tAdresse heraussucht.
+
+3.\tGeben Sie, falls erwünscht, Kommentare ein.
+
+4.\tKlicken Sie OK an, um die Änderungen zu speichern und das
+  \tFenster zu verlassen, oder klicken Sie Anwenden an, um die
+  \tÄnderungen zu speichern, ohne das Fenster zu verlassen. Das System
+  \tspeichert die Änderungen in der Datei /etc/hosts.
+
+  \tHinweis: Sie können Zurücksetzen anklicken, um noch nicht
+  \tangewendete Änderungen rückgängig zu machen, oder Sie können
+  \tAbbrechen anklicken, um das Fenster zu verlassen, ohne
+  \tÄnderungen zu speichern.
+
+Siehe auch:
+\s(Dateien in /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^1^Nach einem System suchen
+^$260
+Nach einem System suchen
+
+Gehen Sie bei der Suche nach einem System wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Internet_Setup. Das Fenster "Internet-Setup"
+  \terscheint.
+
+4.\tKlicken Sie eines der folgenden Objekte an:
+
+  \to\tSuchen=>Suchen - Ruft das Fenster "Internet-Setup: Suchen" auf.
+  \t \tGeben Sie den Namen des gesuchten Systems ein, und klicken Sie
+  \t \tSuchen an. Das System lokalisiert das System in der \k(Domainauflistung)
+  \t \toder der \k(Systemliste) (entsprechend der aktuell ausgewählten
+  \t \tAnzeige) und hebt es hervor.
+
+  \to\tSuchen=>Erster - Lokalisiert den ersten Systemeintrag in der
+  \t \tListe und hebt ihn hervor.
+
+  \to\tSuchen=>Letzter - Lokalisiert den letzten Systemeintrag in der
+  \t \tListe und hebt ihn hervor.
+
+Siehe auch:
+\k(Fenster Internet-Setup: Suchen)
+
+^2^Fenster Internet-Setup: Suchen
+^$270
+Fenster Internet-Setup: Suchen
+
+Geben Sie den Namen des gesuchten Systems ein, und klicken Sie Suchen
+an.
+
+Hinweis: Wenn Sie den Systemnamen nicht genau kennen oder nicht
+vollständig eingeben möchten, können Sie die ersten Zeichen eingeben
+und Suchen anklicken, damit das System die Suche für Sie ausführt.
+
+Beispiel: Angenommen Ihre Firma verfügt über Systeme mit den Namen
+site1, site2, site3 usw. Wenn Sie "site2" suchen, können Sie im Feld
+Systemname "site" eingeben und Suchen anklicken. Das System
+lokalisiert den ersten Eintrag mit "site", in diesem Fall "site1".
+Klicken Sie erneut Suchen an, und das System lokalisiert "site2".
+

@@ -1,0 +1,2679 @@
+#ident	"@(#)pkg.nics:request	1.120"
+
+if [ "$RANDOM" = "$RANDOM" ]
+then
+	exec /usr/bin/xksh $0 $*
+fi
+
+exec 2>/tmp/request.err
+
+# If DEBUG is set to anything (except NULL), it is in debug mode
+DEBUG=
+
+[ -n "$DEBUG" ] && set -x
+
+# Clean up any files that may be exist from previous installation attempts
+(
+  cd /tmp
+  rm -f nics.ether nics.token no.nics.picked nic.generic nic.parameter \
+	nics.silent nic.dep nics.idtune nics.exit nics.reboot nics.used.list
+)
+
+###########################################################################
+
+#
+# Since the number of supported NICs has grown too high to fit on the
+# screen, we must now page through the list.  Therefore, we set the
+# LINES_PER_PAGE variable.
+#
+LINES_PER_PAGE=16
+
+function set_vars
+{
+[ -n "$DEBUG" ] && set -x
+
+	######################################################################
+	#
+	# There are three scenarious in which this script will run:
+	#
+	# $HOW_INSTALL=
+	#
+	# (a) ON_BFLOP:		it is called from foundation set installation
+	#			on the boot floppies. 
+	#
+	# (b) POSTREBOOT:	it is called upon reboot from set installation
+	#			on the boot floppies.
+	#
+	# (c)NORMAL:		it is called from pkgadd'ing the individual
+	#			package or from the network set installation.
+	
+	TTY=/dev/tty
+	HOW_INSTALL=NORMAL
+	# We are in foundation set installation on the boot floppies if:
+	# the script /etc/inst/scripts/postreboot.sh exists 
+	[ -f /etc/inst/scripts/postreboot.sh ] && {
+		HOW_INSTALL=ON_BFLOP
+		TTY=/dev/tty
+	}
+	
+	
+	# We are rebooting after fnd set installation if the script
+	# /etc/rc2.d/S02POSTINST exists
+	[ -f /etc/rc2.d/S02POSTINST ] && {
+		HOW_INSTALL=POSTREBOOT
+		TTY=/dev/console
+	}
+	
+	SCRIPTS=/usr/sbin/pkginst
+	# . ${SCRIPTS}/updebug 
+
+	PACKDIR=/etc/conf/pack.d
+	IDTUNE=/etc/conf/bin/idtune
+	CONFBIN=/etc/conf/bin
+	SILENT_INSTALL=${SILENT_INSTALL:-false}
+	NETINST=false
+
+	echo "HOW_INSTALL=${HOW_INSTALL}" > ${POST_FILE}
+
+	#
+	# If installing from 'as' set installation, REQDIR is set incorrectly
+	# for this package to work.  However, the same environment occurs if
+	# nics has already been installed.  Therefore, if $REQDIR/$PKGINST
+	# exists, set REQDIR to it.
+	#
+	[ "${SETINST}" = "as" -o "${SETINST}" = "pe" -o \
+	 "${SETINST}" = "updset201" ] && [ "${HOW_INSTALL}" != "ON_BFLOP" ] && {
+		[ -d "${REQDIR}/${PKGINST}" ] && REQDIR=${REQDIR}/${PKGINST}
+	}
+}
+
+function check_term
+{
+[ -n "$DEBUG" ] && set -x
+
+	# check for TERM
+	[ -n "$TERM" ] || {
+		. ${REQDIR}/nic_strings
+		echo $TERM_NOT_SET
+		exit 1
+	}
+}
+
+function set_locale
+{
+[ -n "$DEBUG" ] && set -x
+
+	# There is a heirarchial list of LOCALE variables to check.  If none are
+	# set, coming in to this request script, then default to the C-locale.
+	LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-C}}}
+
+	MENUDIR=/etc/inst/locale/${LOCALE}/menus/nics
+	C_MENUDIR=/etc/inst/locale/C/menus/nics
+	[ -d "${C_MENUDIR}" ] || mkdir -p ${C_MENUDIR}
+
+	[ ! -d ${MENUDIR} ] && MENUDIR=${C_MENUDIR}
+
+	cp ${REQDIR}/nic_strings ${C_MENUDIR}
+	cp ${REQDIR}/nic_sttyrc ${C_MENUDIR}
+
+	# If $LOCALE is not set properly, default to locale C
+	#
+	if [ -s /etc/dcu.d/locale/${LOCALE}/txtstrings ]
+	then
+		DCUTXT=/etc/dcu.d/locale/${LOCALE}/txtstrings
+	else
+		DCUTXT=/etc/dcu.d/locale/C/txtstrings
+	fi
+
+	if [ -s /etc/dcu.d/locale/${LOCALE}/help/helpwin ]
+	then
+		DCUHELP=/etc/dcu.d/locale/${LOCALE}/help/helpwin
+	else
+		DCUHELP=/etc/dcu.d/locale/C/help/helpwin
+	fi
+}
+
+function rm_old_pkgs
+{
+[ -n "$DEBUG" ] && set -x
+
+	# remove old network hardware packages if not on postreboot script
+	[ "${HOW_INSTALL}" != "POSTREBOOT" ] && {
+		rm -rf /var/sadm/pkg/eth /var/sadm/pkg/tok
+	}
+}
+
+function get_bustype
+{
+[ -n "$DEBUG" ] && set -x
+
+	BUSTYPE=`/etc/conf/bin/idkname -a`
+	# Since EISA can handle both ISA and EISA cards, set 2 different
+	# BUSTYPES. For EISA, one will be ISA and the other will be EISA.
+	#  For ISA and MCA, they'll both be the same.  Then we check if the
+	# bustype of the card, which is set in the card's config file, is
+	# equal to either $BUSTYPE1 or $BUSTYPE2.
+
+	case "$BUSTYPE" in
+
+	ISA)	BUSTYPE1="ISA"
+		BUSTYPE2="ISA"
+		;;
+	EISA)	BUSTYPE1="ISA"
+		BUSTYPE2="EISA"
+		;;
+	MCA)	BUSTYPE1="MCA"
+		BUSTYPE2="MCA"
+		;;
+	esac
+}
+
+function copy_files_and_exit
+{
+[ -n "$DEBUG" ] && set -x
+
+	for i in help config scripts supported_nics/help
+	do
+		[ -d "${C_MENUDIR}/$i" ] || mkdir -p ${C_MENUDIR}/$i
+
+		[ -d ${REQDIR}/$i ] && ( cd ${REQDIR}/$i; cp * ${C_MENUDIR}/$i )
+	done
+
+	get_classes all
+	echo "CLASSES=\"$CLASSES\"" >> ${POST_FILE}
+	echo SILENT_INSTALL=\"$SILENT_INSTALL\" >> ${POST_FILE}
+	cp ${REQDIR}/nic_strings ${C_MENUDIR}
+	cp ${REQDIR}/nic_sttyrc ${C_MENUDIR}
+
+	exit 0
+}
+
+function vt_switch
+{
+[ -n "$DEBUG" ] && set -x
+
+	# We cannot run the winxksh screens on the console since there may
+	# be NOTICE messages printed out there which screw up the screens.
+	# Therefore, run the scripts on a new & unused VT.
+
+	[ "${HOW_INSTALL}" != "POSTREBOOT" ] && {
+
+		NICS_TTY=`tty`
+
+		[ "$NICS_TTY" = /dev/console -o "$NICS_TTY" = /dev/syscon ] && {
+			chmod +x ${REQDIR}/bin/findvt
+			[ -z "$NEWVT" ] && NEWVT=/dev/console
+			NEWVT=`${REQDIR}/bin/findvt`
+			echo $NEWVT > /tmp/nics.vt.info
+
+			exec 3<&0	# save current stdin
+			exec 4>&1	# save current stdout
+
+			exec 0< $NEWVT	# Redirect stdin  from $NEWVT
+			exec 1> $NEWVT	# Redirect stdout to   $NEWVT
+		}
+	}
+}
+
+function print_wait_display
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Print out display telling user to please wait
+	footer "$PLEASE_WAIT"
+	display "$STARTUP_DISPLAY"
+	STARTUP_ID=$CURWIN
+	input_handler
+}
+
+function copy_files
+{
+[ -n "$DEBUG" ] && set -x
+
+	echo SILENT_INSTALL=\"$SILENT_INSTALL\" >> ${POST_FILE}
+
+	for i in help config scripts supported_nics/help
+	do
+		[ -d ${REQDIR}/$i ] && {
+			[ -d "${C_MENUDIR}/$i" ] || mkdir -p ${C_MENUDIR}/$i
+			( cd ${REQDIR}/$i ; cp * ${C_MENUDIR}/$i )
+		}
+	done
+
+	# Remove all network drivers that might be currently installed
+}
+
+function get_netinst_params
+{
+[ -n "$DEBUG" ] && set -x
+
+	# This flag will be set to 'true' in the ii.parms file
+	# if the nics package already processed this file.
+	NICS_ALREADY_USED=false
+
+	# There are many variables being set in the network install
+	# configuration file.  We don't want any of these to interfere
+	# with our scripts.  Therefore, set them in a sub-shell,
+	# echo the ones we need out to a temp file, and set them in
+	# the current shell.  Then remove the temp file.
+	( . /var/sadm/dist/ii.parms
+	  $NICS_ALREADY_USED || {
+	  	  echo NETINST=true
+	  	  echo NETINST2=true
+	  	  echo NI_IRQ=\"$IRQ\"
+	  	  echo NI_IO=\"$IO\"
+	  	  echo NI_RAM=\"$RAM\"
+	  	  echo NI_DMA=\"$II_DMA\"
+	  	  echo NI_CABLE=\"$CABLE\"
+	  	  echo NI_CUSTOM=\"$CUSTOM_NUM\"
+	  	  echo II_CUSTOM[1]=\"${II_CUSTOM[1]}\"
+	  	  echo II_CUSTOM[2]=\"${II_CUSTOM[2]}\"
+	  	  echo II_CUSTOM[3]=\"${II_CUSTOM[3]}\"
+	  	  echo II_CUSTOM[4]=\"${II_CUSTOM[4]}\"
+	  	  echo II_CUSTOM[5]=\"${II_CUSTOM[5]}\"
+	  	  echo NICS_NAME=\"$NICS_NAME\"
+	  	  echo "NICS_ALREADY_USED=true	# Flag from NICS package" >> /var/sadm/dist/ii.parms
+		  . ${MENUDIR}/config/${CONFIG_FILE}
+		  echo NI_DRIVER_NAME=\"$DRIVER_NAME\"
+	  }
+	) > /tmp/$$.NI_vars
+
+	. /tmp/$$.NI_vars
+	rm -f /tmp/$$.NI_vars
+
+}
+
+function create_upgrade_map_file
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Save old driver mapping file for Inet Upgrade/Overlay installation
+	[ -d /etc/inst/nics ] || mkdir /etc/inst/nics
+	cat <<-!EOF! > /etc/inst/nics/nics.map
+	ee16       ee16
+	ie6        TCM503
+	el16       TCM507
+	el3        TCM5X9
+	3c523      TCM523
+	el2mca     TCM523
+	wd         SMC8K
+	SMC8000    SMC8K
+	ne1000     NE1000
+	ne2100     NE2100
+	ne2000     NE2000
+	ne2_32     NE2
+	am1500     NE1500T
+	am1500t    NE1500T
+	ne1500t    NE1500T
+	ntr2000    NTR2000
+	token      IBM164
+	eltoken    IBM164
+	nflxe      nflxe
+	nflxt      nflxt
+	pnt        pnt
+	en596      en596
+	ne1k       NE1000
+	ne2k       NE2000
+	ne2        NE2
+	ne3200     NE3200
+	!EOF!
+}
+
+function do_up_and_over
+{
+[ -n "$DEBUG" ] && set -x
+
+	export PKGINSTALL_TYPE=NEWINSTALL
+	$SCRIPTS/chkpkgrel
+	case $? in
+		0)	PKGINSTALL_TYPE=NEWINSTALL
+			;;
+		2)	PKGINSTALL_TYPE=OVERLAY
+			upg_nic_cnt=1
+			do_overlay
+			;;
+		4)	PKGINSTALL_TYPE=UPGRADE
+			upg_nic_cnt=1
+			do_upgrade
+			;;
+		*)	# Do nothing
+			;;
+	esac
+	echo PKGINSTALL_TYPE=\"$PKGINSTALL_TYPE\" >> ${POST_FILE}
+}
+
+function do_silent
+{
+[ -n "$DEBUG" ] && set -x
+
+	# check if we should do silent-installation
+	$SILENT_INSTALL && {
+		if [ -s /tmp/unixware.dat ]
+		then
+			. /tmp/unixware.dat
+			silent_install || SILENT_INSTALL=false
+		else
+			SILENT_INSTALL=false
+		fi
+	}
+}
+
+function vt_restore
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Restore stdin/stdout FDs
+	[ "$NICS_TTY" = /dev/console -o "$NICS_TTY" = /dev/syscon ] && {
+		exec 0<&3	# restore old stdin
+		exec 1>&4	# restore old stdout
+
+		exec 3<&-	# close fd 3
+		exec 4>&-	# close fd 4
+	}
+}
+
+function write_post_file
+{
+[ -n "$DEBUG" ] && set -x
+
+	{	echo CLASSES=\"$CLASSES\"
+		echo ALL_SCRIPTS=\"$ALL_SCRIPTS\"
+		echo SILENT_INSTALL=\"$SILENT_INSTALL\"
+	} >> ${POST_FILE}
+}
+
+function goodbye
+{
+[ -n "$DEBUG" ] && set -x
+
+	setstty
+	call endwin
+	mysetcolor -n
+	myclear
+	exit 0
+}
+
+#
+# nic_exit - this routine simply closes the Window ID passed in and exits.
+#
+function nic_exit
+{
+[ -n "$DEBUG" ] && set -x
+
+	wclose $1
+	return 0
+}
+
+#
+# Each Network Interface Card supported has a configuration file in the
+# config directory.  This file has a NAME= field so that the list of all
+# NICs can be made dynamically which we do here.
+#
+# Also, we initialize the nic_cnt array to 0 (this array contains how many
+# of each card is installed).  Finally, we know that $i is equal to the
+# number of NICs supported.
+#
+function nic_initialize
+{
+[ -n "$DEBUG" ] && set -x
+	
+	#
+	# Description of all necessary arrays
+	#
+
+	# nic_cnt = how many of each NIC have been selected
+
+	# nic_name = names of all supported NICs
+
+	# nic_filename = the config/<file name> that corresponds with each NIC
+
+	# nic_drivername = the driver name that corresponds with each NIC
+
+	#
+	# All of the arrays below are on a one-to-one basis (i.e., subscript
+	# 'n' of each of them refer to the same board instance).  These all
+	# are initialized by reading the CUSTOM array settings (if they exist)
+	# in the config/* files.
+	#
+	# param = a customized parameter pertaining to given board instance
+
+	# PARAM_LIST = list of all customized parameter choices.  This list
+	#	       is what needs to be passed to the Driver.  There is
+	#	       one-to-one mapping with the param_list_desc array.
+
+	# param_list_desc = list of all customized parameter choices.  This
+	#		    list is displayed when F2 is pressed.
+
+	# display = the display string to prompt the user with when
+	# 	    configuring the parameter
+
+	# helpfile = filename of help file pertaining to given board instance
+	#	     This help file is displayed when F1 is pressed.
+
+	# title = title of the choices window that is displayed when F2 is
+	#	  pressed.
+
+	# name = name of the parameter to be passed into Resource Manager
+	#	 for the Driver to read.
+
+	# upgrade = in case this is an upgrade installation, save all
+	# 	    previous configured NICS in the upgrade array
+	
+	# set up default classes value for the generic files that get
+	# installed no matter which boards are selected
+	CLASSES=none
+
+	# if a network install was done, this flag is set to 'true' once
+	# the board is found - so initialize it to 'false'.
+	FOUND_NETINST_NIC=false
+
+	for fname in `ls ${MENUDIR}/config`
+	do
+		( . ${MENUDIR}/config/$fname
+		  [ "$BUS" = "$BUSTYPE1" -o "$BUS" = "$BUSTYPE2" ] && {
+			# Unless otherwise specified in the config file,
+			# the number of ports allowed is 8.
+			NUM_PORTS=${NUM_PORTS:-1}
+			echo $NAME $fname $DRIVER_NAME $NUM_PORTS $IDTUNE_NUM
+		  }
+		)
+	done > /tmp/$$.netpkg
+	sort -u -o /tmp/$$.netpkg /tmp/$$.netpkg
+
+	i=1
+	while read f1 f2 f3 f4 idtune_num
+	do
+		if [ -n "$idtune_num" ]
+		then	nic_idtune_card[$i]=true
+		else	nic_idtune_card[$i]=false
+		fi
+		let i+=1
+	done < /tmp/$$.netpkg
+
+
+	i=1
+	if $NETINST
+	then
+		while read nic_name[$i] nic_filename[$i] nic_drivername[$i] num_ports[$i] junk
+		do
+			if [ "$NICS_NAME" = "${nic_name[$i]}" ]
+			then
+				nic_cnt[$i]=1
+			else
+				nic_cnt[$i]=0
+			fi
+
+			let i+=1
+
+		done < /tmp/$$.netpkg
+	else
+		while read nic_name[$i] nic_filename[$i] nic_drivername[$i] num_ports[$i] junk
+		do
+			nic_cnt[$i]=0
+
+			let i+=1
+
+		done < /tmp/$$.netpkg
+	fi
+
+	# check if upgrade or overlay installation,
+	upg_nic_cnt=${upg_nic_cnt:-0}
+	(( upg_nic_cnt )) && {
+		i=1
+		integer tempo=$upg_nic_cnt upg_loc_cntr1=1
+		while read nic_name[$i] nic_filename[$i] nic_drivername[$i] num_ports[$i] junk
+		do
+			$NETINST2 && [[ "$NI_DRIVER_NAME" = "${nic_drivername[$i]}" ]] && {
+				# decrement the number of upgrade cards
+				# that are left to process and continue
+				let tempo-=1
+
+				# increment global and local pointers
+				let upg_loc_cntr1+=1
+				NETINST2=false
+			}
+			upg_loc_cntr1=1
+			while (( upg_loc_cntr1 <= upg_nic_cnt && tempo > 0 ))
+			do
+				[[ -z "${a[$upg_loc_cntr1]}" ]] && {
+				  set ${upgrade[$upg_loc_cntr1]}
+				  tmp_nic_name=$1
+				  if [[ "$tmp_nic_name" = "${nic_name[$i]}" ]]
+				  then
+					  # increment counter for that card
+					  let nic_cnt[$i]+=1
+
+					  # decrement the number of upgrade
+					  # cards are left to process
+					  let tempo-=1
+
+					  # set flag so we don't process this
+					  # entry any more
+					  a[$upg_loc_cntr1]=flag
+				  fi
+				}
+				let upg_loc_cntr1+=1
+			done
+			let i+=1
+		done < /tmp/$$.netpkg
+		unset a
+	}
+	let i-=1
+	NUMBER_OF_SUPPORTED_NICS=$i
+
+	rm -f /tmp/$$.netpkg
+}
+
+#
+# do_param - supply the customized parameter choices
+#
+function do_param
+{
+[ -n "$DEBUG" ] && set -x
+
+	param_cnt=$1
+	CHOOSE_TITLE="${title[$param_cnt]}"
+	choose -f "" ${param_list_desc[$param_cnt]}
+}
+
+#
+# do_int - supply the irq choices
+#
+function do_int
+{
+[ -n "$DEBUG" ] && set -x
+
+	CHOOSE_TITLE="$CHOOSE_INT_TITLE"
+	choose -f "" $INT_LIST
+}
+
+#
+# do_port - supply the I/O Port choices
+#
+function do_port
+{
+[ -n "$DEBUG" ] && set -x
+
+	CHOOSE_TITLE="$CHOOSE_PORT_TITLE"
+	choose -f "" $PORT_LIST
+}
+
+#
+# do_mem - supply the RAM memory address choices
+#
+function do_mem
+{
+[ -n "$DEBUG" ] && set -x
+
+	CHOOSE_TITLE="$CHOOSE_MEM_TITLE"
+	choose -f "" $MEM_LIST
+}
+
+#
+# do_cab - supply the cable type choices
+#
+function do_cab
+{
+[ -n "$DEBUG" ] && set -x
+
+	CHOOSE_TITLE="$CHOOSE_CAB_TITLE"
+	choose -f "" $CABLE_LIST
+}
+
+#
+# do_dma - supply the cable type choices
+#
+function do_dma
+{
+[ -n "$DEBUG" ] && set -x
+
+	CHOOSE_TITLE="$CHOOSE_DMA_TITLE"
+	choose -f "" $DMA_LIST
+}
+
+#
+# configure_nic - configure the NIC
+#
+function configure_nic
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Start the line count for the configuration screen at 2
+	integer line_cnt=2
+
+	# Override current value for LANGDEP_SCRIPTS so that help
+	# files are found in the correct place.
+	typeset LANGDEP_SCRIPTS=/etc/inst/locale/$LOCALE/menus/nics
+	typeset ONLY_PAGE_FOOTER="$HELP_PAGE_FOOTER"
+
+	pos=$1
+	card_name=${nic_name[$pos]}
+	card_filename=${nic_filename[$pos]}
+	num_of_selected_nics=$2
+	more=N
+	dummy=
+	let string_len="${#card_name} + 25"
+
+	get_config ${card_filename}
+
+	eth_config_wid=$WID
+	open_form -exit check_all -fg $COMBO2_FG -bg $COMBO2_BG
+	MY_FORM_ID=$FID
+	integer INPUT_WIDTH=0
+	integer PROMPT_WIDTH=0
+
+	[ -n "$INT_LIST" ] && (( ${#IRQ_VALUE} > PROMPT_WIDTH )) &&
+		(( PROMPT_WIDTH = ${#IRQ_VALUE} ))
+	[ -n "$PORT_LIST" ] && (( ${#IO_ADDR} > PROMPT_WIDTH )) &&
+		(( PROMPT_WIDTH = ${#IO_ADDR} ))
+	[ -n "$MEM_LIST" ] && (( ${#MEM_ADDR} > PROMPT_WIDTH )) &&
+		(( PROMPT_WIDTH = ${#MEM_ADDR} ))
+	[ -n "$DMA_LIST" ] && (( ${#DMA_CHAN} > PROMPT_WIDTH )) &&
+		(( PROMPT_WIDTH = ${#DMA_CHAN} ))
+
+	if [ -n "$CUSTOM_NUM" ]
+	then
+		tmp=1
+		while [ "$tmp" -le "$CUSTOM_NUM" ]
+		do
+			(( ${#display[$tmp]} > PROMPT_WIDTH )) &&
+				(( PROMPT_WIDTH = ${#display[$tmp]} ))
+			(( 15 > INPUT_WIDTH )) &&
+				(( INPUT_WIDTH = 15 ))
+			let tmp+=1
+		done
+	fi
+	(( INPUT_LOC = PROMPT_WIDTH + 2 ))
+
+	[ -n "$INT_LIST" ] && { let line_cnt+=1;
+		add_field INT -ix ${INPUT_LOC} -ilen 2 -choice do_int -px 1 \
+		-help "helpwin irq_value" \
+		-entry "msgnoerr ${CFG_HRDWR_MSG}; footer \"${CFG_HRDWR_FOOTER}\""\
+		-p "$IRQ_VALUE" -pbg ${CYAN} -pfg ${BLACK} -ibg ${BLUE} \
+		-ifg ${WHITE} -exit 'check_int 1'
+		(( 2 > INPUT_WIDTH )) &&
+			(( INPUT_WIDTH = 2 ))
+
+	}
+
+	[ -n "$PORT_LIST" ] && { let line_cnt+=1;
+		add_field PORT -ix ${INPUT_LOC} -ilen $port_len -choice do_port \
+		-help "helpwin io_addr" \
+		-entry "msgnoerr ${CFG_HRDWR_MSG}; footer \"${CFG_HRDWR_FOOTER}\"" \
+		-p "$IO_ADDR" -pbg ${CYAN} -pfg ${BLACK} -ibg ${BLUE} \
+		-ifg ${WHITE} -exit 'check_port 1'
+		(( $port_len > INPUT_WIDTH )) &&
+			(( INPUT_WIDTH = $port_len ))
+	}
+		
+
+	[ -n "$MEM_LIST" ] && { let line_cnt+=1;
+		add_field MEM -ix ${INPUT_LOC} -ilen $mem_len -choice do_mem \
+		-help "helpwin mem_addr" \
+		-entry "msgnoerr ${CFG_HRDWR_MSG}; footer \"${CFG_HRDWR_FOOTER}\"" \
+		-p "$MEM_ADDR" -pbg ${CYAN} -pfg ${BLACK} -ibg ${BLUE} \
+		-ifg ${WHITE} -exit 'check_mem 1'
+		(( $mem_len > INPUT_WIDTH )) &&
+			(( INPUT_WIDTH = $mem_len ))
+	}
+
+
+	[ -n "$DMA_LIST" ] && { let line_cnt+=1;
+		add_field DMA -ix ${INPUT_LOC} -ilen 3 -choice do_dma \
+		-help "helpwin dma_value" \
+		-entry "msgnoerr ${CFG_HRDWR_MSG}; footer \"${CFG_HRDWR_FOOTER}\"" \
+		-p "$DMA_CHAN" -pbg ${CYAN} -pfg ${BLACK} -ibg ${BLUE} \
+		-ifg ${WHITE} -exit 'check_dma 1'
+		(( 3 > INPUT_WIDTH )) &&
+			(( INPUT_WIDTH = 3 ))
+	}
+
+	#
+	# add fields for customized key-words
+	#
+	if [ -n "$CUSTOM_NUM" ]
+	then
+		tmp=1
+		while [ "$tmp" -le "$CUSTOM_NUM" ]
+		do
+		      temp_help=`basename ${helpfile[$tmp]}`
+		      let line_cnt+=1;
+		      add_field param[$tmp] -ix ${INPUT_LOC} -ilen 15 \
+			-pbg ${CYAN} -pfg ${BLACK} \
+			-help "helpwin $temp_help" \
+			-choice "do_param $tmp" -p "${display[$tmp]}" -entry \
+			"msgnoerr ${CFG_HRDWR_MSG};footer \"${CFG_HRDWR_FOOTER}\"" \
+			-exit "check_custom $tmp" -ibg ${BLUE} -ifg ${WHITE}
+			let tmp+=1
+		done
+	fi
+
+	[ -n "${DISPLAY_WID}" ] && wclose "${DISPLAY_WID}"
+
+	NEW_CONFIG_PROMPT=`printf "$CONFIG_PROMPT" "$num_of_selected_nics"`
+	wputstr 1 "$nl"
+	wputstr 1 "${NEW_CONFIG_PROMPT}     ${card_name}"
+
+	# Check if there is any configuration info to prompt the user for.
+	if [ "$line_cnt" -gt "2" ]
+	then
+		(( Line_LENGTH = PROMPT_WIDTH+INPUT_WIDTH ))
+		let CONFIG_TITLE_LENGTH=${#CONFIG_TITLE}
+		(( CONFIG_TITLE_LENGTH > Line_LENGTH )) &&
+			(( Line_LENGTH = CONFIG_TITLE_LENGTH ))
+		(( Line_LENGTH+=6 ))
+		CFG_WIN_WIDTH=`max 50 ${Line_LENGTH}`
+		place_window ${CFG_WIN_WIDTH} ${line_cnt} -title \
+			"$CONFIG_TITLE" -bg ${CYAN} -fg ${BLACK}
+		_configure_nic_WID=${CURWIN}
+		set_hotkey 8 cfg_exit
+		run_form $MY_FORM_ID
+		input_handler
+	fi
+	return
+}	# configure_nic
+
+#
+# check all configuration parameters
+#
+function check_all
+{
+[ -n "$DEBUG" ] && set -x
+
+	retval=0
+	[ -n "$INT_LIST"  ] && {
+		check_int 0
+		(( $? != 0 )) && retval=1
+	}
+	[ -n "$PORT_LIST" ] && {
+		check_port 0
+		(( $? != 0 )) && retval=1
+	}
+	[ -n "$MEM_LIST"  ] && {
+		check_mem 0
+		(( $? != 0 )) && retval=1
+	}
+	if [ -n "$CUSTOM_NUM" ]
+	then
+		cust_ck=1
+		while [ "$cust_ck" -le "$CUSTOM_NUM" ]
+		do
+			check_custom $cust_ck 0
+			(( $? != 0 )) && retval=1
+			let cust_ck+=1
+		done
+	fi
+	(( "$retval" == "0" )) && return 0
+	msgnoerr "$FILL_ALL_FIELDS_MSG"
+	return $retval
+}
+
+#
+# check that user's selection is acceptable
+#
+function check_int
+{
+[ -n "$DEBUG" ] && set -x
+
+	for i in $INT_LIST
+	do
+		if [ "$i" = "$INT" ]
+		then
+			return 0
+		fi
+	done
+	# if a '0' was passed in, then don't print a message
+	(( "$1" != "0" )) && msgnoerr "$INVALID_CHOICE_MSG"
+	return 1
+}
+
+#
+# check that user's selection is acceptable
+#
+function check_port
+{
+[ -n "$DEBUG" ] && set -x
+
+	for i in $PORT_LIST
+	do
+		if [ "$i" = "$PORT" ]
+		then
+			return 0
+		fi
+	done
+	# if a '0' was passed in, then don't print a message
+	(( "$1" != "0" )) && msgnoerr "$INVALID_CHOICE_MSG"
+	return 1
+}
+
+#
+# check that user's selection is acceptable
+#
+function check_mem
+{
+[ -n "$DEBUG" ] && set -x
+
+	for i in $MEM_LIST
+	do
+		if [ "$i" = "$MEM" ]
+		then
+			return 0
+		fi
+	done
+	# if a '0' was passed in, then don't print a message
+	(( "$1" != "0" )) && msgnoerr "$INVALID_CHOICE_MSG"
+	return 1
+}
+
+#
+# check that user's selection is acceptable
+#
+function check_dma
+{
+[ -n "$DEBUG" ] && set -x
+
+	for i in $DMA_LIST
+	do
+		if [ "$i" = "$DMA" ]
+		then
+			return 0
+		fi
+	done
+	# if a '0' was passed in, then don't print a message
+	(( "$1" != "0" )) && msgnoerr "$INVALID_CHOICE_MSG"
+	return 1
+}
+
+#
+# check that user's selection is acceptable
+#
+function check_custom
+{
+[ -n "$DEBUG" ] && set -x
+
+	loc=$1
+	for i in ${param_list_desc[$loc]}
+	do
+		if [ "$i" = "${param[$loc]}" ]
+		then
+			return 0
+		fi
+	done
+	# if a '0' was passed in, then don't print a message
+	(( "$1" != "0" )) && msgnoerr "$INVALID_CHOICE_MSG"
+	return 1
+}
+
+#
+# provide screen for user to pick which (and how many) nic(s) installed
+#
+function selection_screen
+{
+[ -n "$DEBUG" ] && set -x
+
+	make_selection_screen=$1
+
+	integer TABLE_CUR_ROW=1
+
+	# if a 'true' was passed in, that means that the selection window
+	# has NOT already been created and so we must do so now.
+	if "${make_selection_screen}"
+	then
+		open_form -exit "process_nics;nic_exit" -fg $COMBO2_FG \
+			-bg $COMBO2_BG
+		typeset SEL_SCREEN_FID=${FID}
+
+		# Initialize needed variables:
+		# 	i is our counter through the outer loop
+		#	line is the 'y-coordinate' passed into add_field
+		cntr=1
+		integer line=1
+		typeset ONLY_PAGE_FOOTER LANGDEP_SCRIPTS
+		while [ "$cntr" -le "${NUMBER_OF_SUPPORTED_NICS}" ]
+		do
+			add_field nic_cnt[${cntr}] -ix 2 -iy $line -ilen 1 \
+				-help "helpwin nic_select" \
+				-px 5 -py $line -p "${nic_name[$cntr]}" \
+				-ibg ${BLUE} -ifg ${WHITE} \
+				-pbg ${CYAN} -pfg ${BLACK} \
+				-entry "msgnoerr '' '' ; \
+					footer \"$NIC_SELECTION_FOOTER\" ; \
+					NICS_FIELD_LINE=$cntr \
+					ONLY_PAGE_FOOTER=\"$HELP_PAGE_FOOTER\" \
+					LANGDEP_SCRIPTS=/etc/inst/locale/$LOCALE/menus/nics" \
+				-exit "numrange \${nic_cnt[${cntr}]} 0 8"
+			let cntr+=1
+			let line+=1
+			if [ "$line" -eq "$LINES_PER_PAGE" ]
+			then
+				line=2
+				next_page
+			fi
+		done
+	fi
+	[ -n "$STARTUP_ID" ] && wclose $STARTUP_ID
+	(( cntr < LINES_PER_PAGE )) && LINES_PER_PAGE=$cntr
+	let SEL_TITLE_LENGTH="${#NIC_SELECTION_TITLE} + 6"
+	SEL_WIN_WIDTH=`max 50 ${SEL_TITLE_LENGTH}`
+	SEL_WIN_WIDTH=$(max $((${#Continued_String}+4)) $SEL_WIN_WIDTH)
+	place_window ${SEL_WIN_WIDTH} ${LINES_PER_PAGE}+1 -title \
+			"$NIC_SELECTION_TITLE" -bg ${CYAN} -fg ${BLACK}
+	selection_screen_wid=${CURWIN}
+	set_hotkey 6 supported_nics
+
+	run_form $SEL_SCREEN_FID
+	input_handler
+}
+
+function supported_nics
+{
+[ -n "$DEBUG" ] && set -x
+
+	typeset LANGDEP_SCRIPTS ONLY_PAGE_FOOTER
+	LANGDEP_SCRIPTS=/etc/inst/locale/$LOCALE/menus/nics/supported_nics
+	ONLY_PAGE_FOOTER="$EXT_LIST_PAGE_FOOTER"
+	helpwin ${nic_filename[$NICS_FIELD_LINE]}
+	input_handler
+}
+
+#
+# max - returns the greater of two numbers
+#
+function max
+{
+[ -n "$DEBUG" ] && set -x
+
+	arg1=${1:-0}
+	arg2=${2:-0}
+	(( arg1 > arg2 )) && echo $arg1 || echo $arg2
+}
+
+#
+# Display this screen if too many specialized NICs are
+# selected.  The user must go back to the selection screen.
+#
+function too_many_idtune_nics_selected
+{
+[ -n "$DEBUG" ] && set -x
+
+	CHOOSE_TITLE="$TOO_MANY_IDTUNE_NICS_TITLE"
+
+	display -w "$TOO_MANY_IDTUNE_NICS_MSG" -bg $ERROR_BG -fg $ERROR_FG
+	too_many_nics_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	return
+}
+
+
+#
+# Display this screen if too many NICs are selected.
+# The user must go back to the selection screen.
+#
+function too_many_nics_selected
+{
+[ -n "$DEBUG" ] && set -x
+
+	CHOOSE_TITLE="$TOO_MANY_NICS_TITLE"
+
+	display -w "$TOO_MANY_NICS_MSG" -bg $ERROR_BG -fg $ERROR_FG
+	too_many_nics_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	return
+}
+
+#
+# Display this screen if no NICs are selected.  The user has
+# the choice of going back to the selection screen or exiting.
+#
+function no_nics_selected
+{
+[ -n "$DEBUG" ] && set -x
+
+	CHOOSE_TITLE="$NO_NICS_TITLE"
+
+	display "$NO_NICS_MSG" -bg $MAGENTA -fg $WHITE
+	no_nics_wid=$CURWIN
+
+	choose -f -e -exit 'no_nics_choice' -winparms \
+		"-below 0 -fg $COMBO2_FG -bg $COMBO2_BG" \
+		"$RETURN" "$RETURN" "$CANCEL_NIC" "$CORE_STACK"
+	no_nics_2_wid=$CURWIN
+	return
+}
+
+#
+# This reads the choices of the no_nics_selected screen.  We either
+# return to selection screen or exit.
+#
+function no_nics_choice
+{
+[ -n "$DEBUG" ] && set -x
+
+	wclose ${no_nics_wid}
+	wclose ${no_nics_2_wid}
+	msgnoerr
+	footer "$PLEASE_WAIT"
+	case "$CHOICE" in
+	"$RETURN")	# selection_screen false
+			place_window ${SEL_WIN_WIDTH} ${LINES_PER_PAGE}+1 \
+			  -title "$NIC_SELECTION_TITLE" -bg ${CYAN} -fg ${BLACK}
+			set_hotkey 6 supported_nics
+			run_form $SEL_SCREEN_FID
+			input_handler
+			;;
+	"$CORE_STACK")	echo "no nics selected" > /tmp/no.nics.picked
+			echo "CLASSES=\"$CLASSES\"" >> ${POST_FILE}
+			echo "INSTALL_CORE_STACK=true" >> ${POST_FILE}
+			setstty
+			call endwin
+			mysetcolor -n
+			myclear
+			exit 0
+			;;
+	"$CANCEL_NIC")	CLASSES=""
+			echo "no nics selected" > /tmp/no.nics.picked
+			echo "CLASSES=\"$CLASSES\"" >> ${POST_FILE}
+			for subdir in help config scripts supported_nics/help
+			do
+				rm -rf ${C_MENUDIR}/$subdir
+			done
+			setstty
+			call endwin
+			mysetcolor -n
+			myclear
+			exit 3
+			;;
+	"$SHUTDOWN")	CLASSES=""
+			echo "CLASSES=" >> ${POST_FILE}
+			touch /tmp/nics.exit
+			setstty
+			call endwin
+			mysetcolor -n
+			myclear
+			exit 0
+			;;
+	esac
+}
+
+#
+# This routine looks at which NICs were selected.  If none were, then it
+# calls 'no_nics_selected'.  Otherwise, it saves them in the 'selected_nics'
+# variable which gets passed to 'configure_nic'.
+#
+function process_nics
+{
+[ -n "$DEBUG" ] && set -x
+
+	wclose ${selection_screen_wid}
+	integer tot_count=1 total=0 total_cards_selected=0 nic_idtune_total=0
+	typeset FORM_MSG selected_nics="" selected_nics_cnt
+	while [ "${tot_count}" -le "${NUMBER_OF_SUPPORTED_NICS}" ]
+	do
+		# check that AT MOST '1' specialized idtune network card
+		# was installed.  If nic_idtune_card is true, simply add
+		# the value of the cards selected to nic_idtune_total
+
+		${nic_idtune_card[$tot_count]} && {
+			let nic_idtune_total=$nic_idtune_total+${nic_cnt[$tot_count]}
+		}
+
+		#
+		# if nic was selected, save it in selected_nics variable.
+		# we account for how many of each card was selected
+		#	        i = how many of each card was selected
+		#	tot_count = element number (within the array) of
+		#		    each card selected
+		#	    total = total number of cards selected
+		#
+		i=${nic_cnt[$tot_count]}
+		while [ "$i" -gt "0" ]
+		do
+			selected_nics="${selected_nics} $tot_count"
+			let i-=1;
+			let total_cards_selected+=1;
+		done
+		let tot_count+=1
+	done
+
+	(( nic_idtune_total > 1 )) && {
+		too_many_idtune_nics_selected
+		input_handler
+		CHOICES="$RETURN" cfg_exit_choices
+		unset CFG_EXIT_FLAG
+		place_window ${SEL_WIN_WIDTH} ${LINES_PER_PAGE}+1 -title \
+			"$NIC_SELECTION_TITLE" -bg ${CYAN} -fg ${BLACK}
+		set_hotkey 6 supported_nics
+		run_form $SEL_SCREEN_FID
+		input_handler
+		return
+	}
+
+	if [ "${selected_nics}" = "" ]
+	then
+		#
+		# display no nics selected screen
+		#
+		no_nics_selected
+		input_handler
+	fi
+
+	check_how_many_idtune_nics_installed
+
+	check_how_many_total_nics_installed && retval=0 || retval=-1
+
+	if (( retval == -1 ))
+	then
+		too_many_nics_selected
+		input_handler
+		CHOICE="$RETURN" cfg_exit_choices
+		unset CFG_EXIT_FLAG
+		# selection_screen false
+		place_window ${SEL_WIN_WIDTH} ${LINES_PER_PAGE}+1 \
+			-title "$NIC_SELECTION_TITLE" -bg ${CYAN} -fg ${BLACK}
+		set_hotkey 6 supported_nics
+		run_form $SEL_SCREEN_FID
+		input_handler
+		return
+	fi
+
+	# display configuration screen for each NIC chosen
+	selected_nics_cnt=1
+	for cards in ${selected_nics}
+	do
+		# Display the configuration screen
+		configure_nic $cards $selected_nics_cnt
+
+		# Clear out msg line in case something was put there
+		msgnoerr "" ""
+
+		# CFG_EXIT_FLAG gets set if user elected to break out of
+		# the configuration screen.
+		[ -n "$CFG_EXIT_FLAG" ] && break
+		write_params ${cards}
+
+		$FOUND_NETINST_NIC && {
+			unset NI_IO NETINST NI_RAM NI_IRQ NI_DMA NI_CUSTOM
+			FOUND_NETINST_NIC=false
+		}
+		let selected_nics_cnt+=1
+	done
+	case "$CFG_EXIT_FLAG" in
+	1)	# Go back to Selection Screen
+		unset CFG_EXIT_FLAG
+		# selection_screen false
+		place_window ${SEL_WIN_WIDTH} ${LINES_PER_PAGE}+1 -title \
+			"$NIC_SELECTION_TITLE" -bg ${CYAN} -fg ${BLACK}
+		set_hotkey 6 supported_nics
+		run_form $SEL_SCREEN_FID
+		input_handler
+		;;
+	2)	# Cancel the installation and exit
+		rm -rf ${C_MENUDIR}
+		setstty
+		call endwin
+		mysetcolor -n
+		myclear
+		exit 3
+		;;
+	esac
+}
+
+# Check that the number of NICS selected does not exceed the limit
+# for any particular NIC
+function check_how_many_total_nics_installed
+{
+[ -n "$DEBUG" ] && set -x
+
+	integer num_cnt tot_cnt
+
+	# Initialize the driver variable for each card selected total to 0
+	for card in ${selected_nics}
+	do
+		integer ${nic_drivername[$card]}
+		let ${nic_drivername[$card]}=0
+	done
+
+
+	# First, go through the list of selected NICS and increment
+	# the Driver variable by the num_ports per board variable
+	for card in ${selected_nics}
+	do
+		num_cnt=$( eval echo \$${nic_drivername[$card]} )
+		let ${nic_drivername[$card]}="$num_cnt + ${num_ports[$card]}"
+	done
+
+	# Now, go through the list of selected NICS to see if any
+	# driver has more than 8 total 
+	for card in ${selected_nics}
+	do
+		tot_cnt=$( eval echo \$${nic_drivername[$card]} )
+		if (( tot_cnt > 8 ))
+		then
+			return 1
+		fi
+	done
+	return 0
+}
+
+# Check that only '1' of the specilialized idtune NICS are installed
+# in the machine.
+function check_how_many_idtune_nics_installed
+{
+[ -n "$DEBUG" ] && set -x
+
+	integer jj
+	T_M_B_I_FLAG=false
+	rm -f /tmp/nics.TMBI
+	for card in ${selected_nics}
+	do
+		( .  ${MENUDIR}/config/${nic_filename[$card]}
+		  [[ -n "$IDTUNE_NUM" ]] && [[ -n "$BOARD_IDS" ]] && {
+			for bid in $BOARD_IDS
+			do
+				jj=`resmgr -p BRDID | grep -c $bid`
+				(( jj > 1 )) && {
+					touch /tmp/nics.TMBI
+				}
+			done
+		  }
+		)
+	done
+	[ -f /tmp/nics.TMBI ] && {
+		[ "$HOW_INSTALL" = "POSTREBOOT" ] && {
+			footer ""
+			msgnoerr "" ""
+			display "$TOO_MANY_BOARDS_INSTALLED"
+			T_M_B_I_WID=$CURWIN
+
+			CHOOSE_TITLE="$NO_NICS_TITLE"
+			choose -f -e -exit 'no_nics_choice' -winparms \
+				"-below 0 -fg $COMBO2_FG -bg $COMBO2_BG" \
+				"$CANCEL_NIC" "$CANCEL_NIC" "$SHUTDOWN"
+			input_handler
+		}
+		[ "$HOW_INSTALL" = NORMAL ] && {
+			footer "$PRESS_ANY_KEY_TO_EXIT_FOOTER"
+			msgnoerr "" ""
+			display -w "$TOO_MANY_BOARDS_INSTALLED"
+			input_handler
+			T_M_B_I_WID=$CURWIN
+			echo "$TOO_MANY_BOARDS_INSTALLED" >> /var/sadm/install/logs/nics.log
+			CHOICE="$CANCEL_NIC" no_nics_choice
+		}
+	}
+	return
+}
+
+#
+# We must now store chosen values of all the parameters for when
+# the postinstall script is run
+#
+function write_params
+{
+[ -n "$DEBUG" ] && set -x
+
+	flag=false
+	card_name=${nic_name[$1]}
+
+	# This is done in case there are some custom scripts
+	# that must be run before the postinstall is done.
+	ALL_SCRIPTS="$ALL_SCRIPTS $POST_SCRIPT"
+
+	#
+	# If INT is not set, set it to '0'.  If it is, store it's value
+	# so we know it is already in use.
+	#
+	case "$INT" in
+	2)	INT=9
+		PICKED_INTs="$PICKED_INTs 2 9"
+		;;
+	9)	PICKED_INTs="$PICKED_INTs 2 9"
+		;;
+	"")	INT=0
+		;;
+	*)	PICKED_INTs="$PICKED_INTs $INT"
+		;;
+	esac
+
+	# If MEM is set, separate the start and end values and store them
+	# so we know they are already in use.  If not set, set the start and
+	# end values to '0'.
+	if [ -n "$MEM" ]
+	then
+		OIFS=$IFS
+		IFS="-"
+		echo "$MEM" | read S_MEM E_MEM
+		IFS=$OIFS
+		PICKED_S_MEMs="$PICKED_S_MEMs $S_MEM"
+		PICKED_E_MEMs="$PICKED_E_MEMs $E_MEM"
+	else
+		S_MEM=0
+		E_MEM=0
+	fi
+
+	# If PORT is set, separate the start and end values and store them
+	# so we know they are already in use.  If not set, set the start and
+	# end values to '0'.
+	if [ -n "$PORT" ]
+	then
+		OIFS=$IFS
+		IFS="-"
+		echo "$PORT" | read S_PORT E_PORT
+		IFS=$OIFS
+		PICKED_S_PORTs="$PICKED_S_PORTs $S_PORT"
+		PICKED_E_PORTs="$PICKED_E_PORTs $E_PORT"
+	else
+		S_PORT=0
+		E_PORT=0
+	fi
+
+	# If DMA is not set, set it to '-1'.  If it is, store it's value
+	# so we know it is already in use.
+	[ -z "$DMA" ] && DMA=-1 || PICKED_DMAs="$PICKED_DMAs $DMA"
+
+	# If this is an MCA or an autoconfigurable EISA card, then
+	# set parameters to non-specific values.  The res mgr database
+	# will take care of proper configuration.
+	[ "$BUS" = "MCA" -o "$BUS" = "EISA" -a "$AUTOCONF" != "false" ] && {
+		INT=0
+		S_PORT=0
+		E_PORT=0
+		S_MEM=0
+		E_MEM=0
+		DMA=-1
+	}
+
+	echo "$card_name $DRIVER_NAME $UNIT $INT $S_PORT $E_PORT $S_MEM $E_MEM $DMA" >> /tmp/nic.generic
+	unset INT PORT S_PORT E_PORT MEM S_MEM E_MEM DMA UNIT BUS \
+	      AUTOCONF INT_LIST PORT_LIST MEM_LIST DMA_LIST
+
+	# If there are no custom parameters (CUSTOM_NUM=0), put a blank
+	# line in the parameter file and exit.  Otherwise process them.
+	# 
+	(( CUSTOM_NUM )) || {
+
+		echo >> /tmp/nic.parameter
+		return
+	}
+
+	#
+	# Okay, now the customized keywords must be processed.  These are
+	# stored in a file called /tmp/nic.parameter to be further used by
+	# the postinstall script.
+	#
+	# The tricky part here the list of choices displayed to the user
+	# is different than the arguments that get passed to the Driver.
+	# Therefore, we keep 2 lists; one for the user, one for the driver.
+	# The user list is the 'param_list_desc' array; the driver list is
+	# the param_list array.  These lists have a one-to-one mapping.  If
+	# the user picks the first choice in the param_list_desc, then we
+	# pass the first choice in the param_list to the driver.
+	#
+	# For example, certain drivers need to have the string 'DIX' passed
+	# in if the network card being used is 'AUI' (thick-net) or TP
+	# (twisted-pair).  However, if 'BNC' (thin-net) is selected, no
+	# string needs to be passed in.  This is how it gets handled:
+	#
+	#		param_list_desc[x]='AUI BNC TP"
+	#		param_list[x]='DIX "" DIX'
+	#
+	# The following loop simply goes through the param_list_desc[x] list	
+	# until it finds the choice that was selected (all the time keeping
+	# a counter).  Then it uses the counter to find the corresponding
+	# choice in the param_list[x] list.
+	#
+	# What makes this even more confusing is that there may be more than
+	# one customized parameter that the Driver needs.  Therefore, we
+	# must also keep a parameter counter (param_cnt) that we compare
+	# with CUSTOM_NUM (which is the number of parameters that the Driver
+	# needs - this is set in the config file for that driver).
+
+	# initialize parameter string to be written out to /tmp/nic.parameter
+	PARAM_STRING="$card_name $DRIVER_NAME"
+
+	# initialize parameter counter
+	param_cnt=1
+
+	# start outer loop
+	while [ "$param_cnt" -le "$CUSTOM_NUM" ]
+	do
+		# initialize local counter for the first list
+		loc_cnt1=1
+
+		# go through all the choices in the first list
+		for loc_param in ${param_list_desc[$param_cnt]}
+		do
+			# compare it to the one that was selected
+			if [ "$loc_param" = "${param[$param_cnt]}" ]
+			then
+				# we have a match so break out
+				break
+			fi
+			# no match - increment counter and repeat
+			let loc_cnt1+=1
+		done
+
+		# initialize local counter for the second list
+		loc_cnt2=1
+
+		# go through all the choices in the second list
+		for loc_param in ${param_list[$param_cnt]}
+		do
+			# compare the two counters
+			if [ "$loc_cnt1" != "$loc_cnt2" ]
+			then
+				# not equal - increment counter and repeat
+				let loc_cnt2+=1
+			else
+				# we have a match - add it to the parameter
+				# string and break out of loop
+				PARAM_STRING="$PARAM_STRING $loc_param ${param_name[$param_cnt]}"
+				break
+			fi
+		done
+
+		# Increment parameter counter and repeat (if necessary)
+		let param_cnt+=1
+	done
+
+	# Once done constructing the parameter string for the given board
+	# instance, we can now save it in /tmp/nic.parameter to be used
+	# later by the postinstall script.
+	echo $PARAM_STRING >> /tmp/nic.parameter
+	unset CUSTOM_NUM PARAM_STRING CUSTOM param param_list param_list_desc \
+		param_name title helpfile display
+}	# write_params
+
+#
+# find_board_id = check if board id can be found in the resource manager.
+#		  
+#
+function find_board_id
+{
+[ -n "$DEBUG" ] && set -x
+
+	integer bid
+	[ -n "$BOARD_IDS" ] && {
+		for bid in `resmgr -p BRDID`
+		do
+			if [[ "$bid" = "$BOARD_ID" ]]
+			then
+				return 0
+			fi
+		done
+	}
+	return 1
+}
+
+#
+# This routine gets the list of all possible values from the configuration
+# file for the selected NICs.  Then it filters out those that are currently
+# in use already.
+#
+function get_config
+{
+[ -n "$DEBUG" ] && set -x
+
+	# get the list of possible values from the config file
+	NIC_NAME=$1
+	fname=${MENUDIR}/config/${NIC_NAME}
+
+	UNIT=NULL
+
+	# set VERIFY & REBOOT to false - if needed, it will be set to true in
+	# the config file
+	VERIFY=false
+	REBOOT=false
+	. $fname
+
+	CUSTOM_NUM=${CUSTOM_NUM:-0}
+	$VERIFY && echo > /tmp/nics.verify
+
+	$REBOOT && echo > /tmp/nics.reboot
+
+	# If it's an EISA or MCA system, and the card is autoconfigurable, and
+	# there are NO customized parameters, check for the board id of the
+	# network card.  If found, we can just return.
+	FOUND_BOARD_ID=false
+	[ "$BUSTYPE" = MCA -o "$BUSTYPE" = EISA ] && [ "$AUTOCONF" != false -a \
+	   "$CUSTOM_NUM" = 0 ] && {
+		find_board_id && retval=0 || retval=1
+		[ "$retval" = 0 -o "$BUS" = EISA -o "$BUS" = MCA ] && {
+			FOUND_BOARD_ID=true
+			CLASSES="$CLASS $CLASSES"
+			[[ -n "$DEPEND" ]] && echo DEPEND=\"$DEPEND\"
+			[[ -n "$IDTUNE_NUM" ]] && {
+				integer ii=1
+				while (( ii <= IDTUNE_NUM ))
+				do
+					echo "$IDTUNE ${IDTUNE_ARRAY[$ii]}"
+					let ii+=1
+				done >> /tmp/nics.idtune
+			}
+			unset INT_LIST PORT_LIST MEM_LIST DMA_LIST IDTUNE_NUM
+			return 0
+		} >> ${POST_FILE}
+	}
+
+	# clear header & footer and display a 'Please Wait' message
+	wputstr 1 "$nl"
+	wputstr 1 "$nl"
+	display "$PROCESS_MESSAGE"
+	DISPLAY_WID=$CURWIN
+	footer "$PLEASE_WAIT"
+	input_handler
+
+	OPTIONS=`grep = $fname| cut -f1 -d"="`
+
+	for i in $OPTIONS
+	do
+		case $i in
+		INT)	INT_LIST=$INT
+			filter_int
+			INT=
+			;;
+		PORT)	PORT_LIST=$PORT
+			filter_port
+			PORT=
+			;;
+		MEM)	MEM_LIST=$MEM
+			filter_mem
+			MEM=
+			;;
+		DMA)	DMA_LIST=$DMA
+			filter_dma
+			DMA=
+			;;
+		CLASS)	CLASSES="$CLASS $CLASSES"
+			;;
+		DEPEND)	echo DEPEND=\"$DEPEND\"
+			;;
+		*)	# do nothing
+			;;
+		esac
+	done >> $POST_FILE
+
+	# If it's an EISA card, or an ISA card that has been programmed
+	# into NVRAM via the ECU, then we don't prompt user for any of the
+	# standard info - this will be taken care of in res mgr database.
+	# However, we must still prompt for custom keywords (if any exist).
+	# NOTE: certain EISA cards may still need prompting which is why the
+	# "$AUTOCONF" check exists.  Also, AUTOCONF will never be set to
+	# true at this time, which is why we must check for ' != "false" '.
+	[ $BUS = EISA -a "$AUTOCONF" != "false" -o $FOUND_BOARD_ID = true ] && {
+		unset INT_LIST PORT_LIST MEM_LIST DMA_LIST
+		AUTOCONF=true
+	}
+
+	[[ -n "$IDTUNE_NUM" ]] && {
+		integer ii=1
+		while (( ii <= IDTUNE_NUM ))
+		do
+			echo "$IDTUNE ${IDTUNE_ARRAY[$ii]}"
+			let ii+=1
+		done >> /tmp/nics.idtune
+	}
+
+	# Handle Customized Parameters - these are all listed in the
+	# the config files within the CUSTOM array.  The variable
+	# CUSTOM_NUM tells us how many elements are in the array.
+	# The format of each element is:
+	#
+	#		CUSTOM[x]='
+	#		Parameter Name
+	#		Parameter Choices List
+	#		Parameter Choices List Descriptor
+	#		Parameter Descriptor
+	#		helpfile path
+	#		Choices Title
+	#		'
+	#
+	cnt=1
+	while (( cnt <= CUSTOM_NUM ))
+	do
+		# Make sure ${CUSTOM[$cnt]} actually is set to something.
+		# Otherwise, 'set <EMPTY_STRING>' sends a bunch of output
+		# to the screen - VERY UGLY.
+		[ -z "${CUSTOM[$cnt]}" ] && continue
+OIFS=$IFS
+IFS='
+'
+		set ${CUSTOM[$cnt]}
+		param_name[$cnt]=$1
+		param_list[$cnt]=$2
+		param_list_desc[$cnt]=$3
+		display[$cnt]=$4
+		helpfile[$cnt]=$5
+		title[$cnt]=$6
+IFS=${OIFS}
+		let cnt+=1
+	done
+
+	integer upg_loc_cntr2=1
+
+	# check if upgrade installation,
+	upg_nic_cnt=${upg_nic_cnt:-0}
+	upg_loc_cntr2=1
+	while (( upg_loc_cntr2 <= upg_nic_cnt ))
+	do
+		set ${upgrade[$upg_loc_cntr2]}
+		tmp_nic_name=$1
+		tmp_driver_name=$2
+
+		# check if same driver
+		[[ "$tmp_nic_name" = "$NAME" ]] && {
+
+			# pull in pre-existing values
+			Dev=$3
+			Config=$4
+			Unit=$5
+			Ipl=$6
+			Itype=$7
+			Vector=$8
+			PORT=$9-${10}
+			MEM=${11}-${12}
+			Dma=${13}
+
+			# check that above configuration doesn't cause
+			# conflict with another driver
+			[[ -n "$INT_LIST" ]] && {
+				check_irq_conflict $Vector || {
+					UP_IRQ_CONFLICT_SCREEN
+					unset INT
+				}
+			}
+
+			[[ -n "$DMA_LIST" ]] && {
+				check_dma_conflict $Dma || {
+					UP_DMA_CONFLICT_SCREEN
+					unset DMA
+				}
+			}
+
+			[[ -n "$PORT_LIST" ]] && {
+				check_port_conflict $PORT || {
+					UP_IO_CONFLICT_SCREEN
+					unset PORT
+				}
+			}
+
+			[[ -n "$MEM_LIST" ]] && {
+				check_mem_conflict $MEM || {
+					UP_RAM_CONFLICT_SCREEN
+					unset MEM
+				}
+			}
+		}
+		let upg_loc_cntr2+=1
+	done
+
+	#
+	# If network installation was performed, and this is the same
+	# Driver, set the default values.  However, we must FIRST make
+	# sure that the values used during Network Install are still valid
+	# (a driver may have been installed that now causes a conflict.
+	# 
+	#
+	if [ "$AUTOCONF" != "true" -a "$NETINST" = "true" -a "$NICS_NAME" = "$NAME" ]
+	then
+		# Mark that we found the card
+		FOUND_NETINST_NIC=true
+
+		# IO Address is saved without a hyphen so we must
+		# insert one
+		[ -n "$NI_IO" ] && {
+			OIFS=$IFS
+			IFS=" "
+			set $NI_IO
+			PORT="$1-$2"
+			IFS=$OIFS
+			check_port_conflict $PORT || {
+				NI_IO_CONFLICT_SCREEN
+				unset PORT
+			}
+		}
+
+		# RAM Address is saved without a hyphen so we must
+		# insert one
+		[ -n "$NI_RAM" ] && {
+			OIFS=$IFS
+			IFS=" "
+			set $NI_RAM
+			MEM="$1-$2"
+			IFS=$OIFS
+
+			check_mem_conflict $MEM || {
+				NI_RAM_CONFLICT_SCREEN
+				unset MEM
+			}
+		}
+
+		[ -n "$NI_IRQ" ] && {
+			check_irq_conflict $NI_IRQ || {
+				NI_IRQ_CONFLICT_SCREEN
+				unset INT
+			}
+		}
+		
+		[ -n "$NI_DMA" ] && {
+			check_dma_conflict $NI_DMA || {
+				NI_DMA_CONFLICT_SCREEN
+				unset DMA
+			}
+		}
+
+		# Now get the customized parameters.
+		[ -n "$NI_CUSTOM" ] && {
+
+			cnt=1
+			while (( cnt <= CUSTOM_NUM ))
+			do
+				param[$cnt]=${II_CUSTOM[$cnt]}
+				let cnt+=1
+			done
+		}
+	fi
+}	# get_config
+
+
+function check_irq_conflict
+{
+[ -n "$DEBUG" ] && set -x
+
+	IRQ=$1
+	IRQ_MATCH=false
+	# Put spaces on both sides of IRQ list to ensure
+	# a good match in case statement
+	INT_LIST=`echo \ $INT_LIST \ `
+	case "$INT_LIST" in
+	*\ $IRQ\ *)	INT="${IRQ:-$INT}"
+			IRQ_MATCH=true
+			break
+			;;
+	*)		# Do nothing
+			;;
+	esac
+	$IRQ_MATCH && return 0 || return 1
+}
+
+function check_port_conflict
+{
+[ -n "$DEBUG" ] && set -x
+
+	IO=$1
+	IO_MATCH=false
+	# Put spaces on both sides of PORT list to ensure
+	# a good match in case statement
+	PORT_LIST=`echo \ $PORT_LIST \ `
+	case $PORT_LIST in
+	*\ $IO\ *)	IO_MATCH=true
+			break
+			;;
+	*)		# Do nothing
+			;;
+	esac
+	$IO_MATCH && return 0 || return 1
+}
+
+function check_mem_conflict
+{
+[ -n "$DEBUG" ] && set -x
+
+	RAM=$1
+	RAM_MATCH=false
+	# Put spaces on both sides of MEM list to ensure
+	# a good match in case statement
+	MEM_LIST=`echo \ $MEM_LIST \ `
+	case $MEM_LIST in
+	*\ $RAM\ *)	RAM_MATCH=true
+			break
+			;;
+	*)		# Do nothing
+			;;
+	esac
+	$RAM_MATCH && return 0 || return 1
+}
+
+function check_dma_conflict
+{
+[ -n "$DEBUG" ] && set -x
+
+	DMA=$1
+	DMA_MATCH=false
+	# Put spaces on both sides of DMA list to ensure
+	# a good match in case statement
+	DMA_LIST=`echo \ $DMA_LIST \ `
+	case "$DMA_LIST" in
+	*\ $DMA\ *)	DMA="${DMA:-$DMA}"
+			DMA_MATCH=true
+			break
+			;;
+	*)		# Do nothing
+			;;
+	esac
+	$DMA_MATCH && return 0 || return 1
+}
+
+# Print display that there was a conflict between the Upgrade Installation
+# configuration parameters that were selected and the ones that are now
+# available (i.e., a driver was installed that now causes a conflict).
+function UP_IRQ_CONFLICT_SCREEN
+{
+[ -n "$DEBUG" ] && set -x
+
+	[ -n "${DISPLAY_WID}" ] && wclose "${DISPLAY_WID}"
+	[ -n "$CONFLICT_WID" ] && wclose "$CONFLICT_WID"
+	display -w "$UP_IRQ_CONFLICT_DISPLAY" -bg $MAGENTA -fg $WHITE
+	CONFLICT_WID=$CURWIN
+	ni_irq_conflict_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	input_handler
+	return
+}
+
+# Print display that there was a conflict between the Upgrade Installation
+# configuration parameters that were selected and the ones that are now
+# available (i.e., a driver was installed that now causes a conflict).
+function UP_IO_CONFLICT_SCREEN
+{
+[ -n "$DEBUG" ] && set -x
+
+	[ -n "${DISPLAY_WID}" ] && wclose "${DISPLAY_WID}"
+	[ -n "$CONFLICT_WID" ] && wclose "$CONFLICT_WID"
+	display -w "$UP_IO_CONFLICT_DISPLAY" -bg $MAGENTA -fg $WHITE
+	CONFLICT_WID=$CURWIN
+	ni_io_conflict_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	input_handler
+	return
+}
+
+# Print display that there was a conflict between the Upgrade Installation
+# configuration parameters that were selected and the ones that are now
+# available (i.e., a driver was installed that now causes a conflict).
+function UP_RAM_CONFLICT_SCREEN
+{
+[ -n "$DEBUG" ] && set -x
+
+	[ -n "${DISPLAY_WID}" ] && wclose "${DISPLAY_WID}"
+	[ -n "$CONFLICT_WID" ] && wclose "$CONFLICT_WID"
+	display -w "$UP_RAM_CONFLICT_DISPLAY" -bg $MAGENTA -fg $WHITE
+	CONFLICT_WID=$CURWIN
+	ni_ram_conflict_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	input_handler
+	return
+}
+
+# Print display that there was a conflict between the Upgrade Installation
+# configuration parameters that were selected and the ones that are now
+# available (i.e., a driver was installed that now causes a conflict).
+function UP_DMA_CONFLICT_SCREEN
+{
+[ -n "$DEBUG" ] && set -x
+
+	[ -n "${DISPLAY_WID}" ] && wclose "${DISPLAY_WID}"
+	[ -n "$CONFLICT_WID" ] && wclose "$CONFLICT_WID"
+	display -w "$UP_DMA_CONFLICT_DISPLAY" -bg $MAGENTA -fg $WHITE
+	CONFLICT_WID=$CURWIN
+	ni_dma_conflict_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	input_handler
+	return
+}
+
+# Print display that there was a conflict between the Network Installation
+# configuration parameters that were selected and the ones that are now
+# available (i.e., a driver was installed that now causes a conflict).
+function NI_IRQ_CONFLICT_SCREEN
+{
+[ -n "$DEBUG" ] && set -x
+
+	[ -n "${DISPLAY_WID}" ] && wclose "${DISPLAY_WID}"
+	[ -n "$CONFLICT_WID" ] && wclose "$CONFLICT_WID"
+	display -w "$NI_IRQ_CONFLICT_DISPLAY" -bg $MAGENTA -fg $WHITE
+	CONFLICT_WID=$CURWIN
+	ni_irq_conflict_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	input_handler
+	return
+}
+
+# Print display that there was a conflict between the Network Installation
+# configuration parameters that were selected and the ones that are now
+# available (i.e., a driver was installed that now causes a conflict).
+function NI_IO_CONFLICT_SCREEN
+{
+[ -n "$DEBUG" ] && set -x
+
+	[ -n "${DISPLAY_WID}" ] && wclose "${DISPLAY_WID}"
+	[ -n "$CONFLICT_WID" ] && wclose "$CONFLICT_WID"
+	display -w "$NI_IO_CONFLICT_DISPLAY" -bg $MAGENTA -fg $WHITE
+	CONFLICT_WID=$CURWIN
+	ni_io_conflict_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	input_handler
+	return
+}
+
+# Print display that there was a conflict between the Network Installation
+# configuration parameters that were selected and the ones that are now
+# available (i.e., a driver was installed that now causes a conflict).
+function NI_RAM_CONFLICT_SCREEN
+{
+[ -n "$DEBUG" ] && set -x
+
+	[ -n "${DISPLAY_WID}" ] && wclose "${DISPLAY_WID}"
+	[ -n "$CONFLICT_WID" ] && wclose "$CONFLICT_WID"
+	display -w "$NI_RAM_CONFLICT_DISPLAY" -bg $MAGENTA -fg $WHITE
+	CONFLICT_WID=$CURWIN
+	ni_ram_conflict_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	input_handler
+	return
+}
+
+# Print display that there was a conflict between the Network Installation
+# configuration parameters that were selected and the ones that are now
+# available (i.e., a driver was installed that now causes a conflict).
+function NI_DMA_CONFLICT_SCREEN
+{
+[ -n "$DEBUG" ] && set -x
+
+	[ -n "${DISPLAY_WID}" ] && wclose "${DISPLAY_WID}"
+	[ -n "$CONFLICT_WID" ] && wclose "$CONFLICT_WID"
+	display -w "$NI_DMA_CONFLICT_DISPLAY" -bg $MAGENTA -fg $WHITE
+	CONFLICT_WID=$CURWIN
+	ni_dma_conflict_wid=$CURWIN
+	footer "$PRESS_ANY_KEY_FOOTER"
+	msgnoerr "" ""
+	input_handler
+	return
+}
+
+#
+# This routine filters out the used IRQs from the list of possible ones
+#
+function filter_int
+{
+[ -n "$DEBUG" ] && set -x
+
+	# If we are configuring an ISA card on an EISA system, then we MUST use
+	# idcheck instead of resmgr.  This is in case the ISA card is already
+	# configured in the NVRAM (via ECU).
+	[ "$BUS" = "ISA" -a "$BUSTYPE" = "EISA" -o "$AUTOCONF" = "false" ] && {
+
+		unset NOT_USED_INT
+		for i in $INT_LIST
+		do
+			/etc/conf/bin/idcheck -v $i
+			rc=$?
+			(( rc == 0 )) && {
+				case $i in
+				2)      /etc/conf/bin/idcheck -v 9
+					rc=$?
+					;;
+				9)      /etc/conf/bin/idcheck -v 2
+					rc=$?
+					;;
+				esac
+			}
+			(( rc == 0 )) && NOT_USED_INT="$NOT_USED_INT $i"
+		done
+		# Must add blanks so as not to match only part of a number
+		# in case statement below...
+		#
+		#	(e.g., '12' will match on "*2*" but not "* 2 *"
+		PICKED_INTs=" $PICKED_INTs "
+		INT_LIST=`for i in $NOT_USED_INT
+		do
+			case "$PICKED_INTs" in
+			*\ $i\ *)	:
+					;;
+			       *)	echo $i
+					;;
+			esac
+		done`
+		# [ -z "$INT_LIST" ] && no_more_ints
+		return 0
+	}
+
+	# Now, we can use resmgr.  First, create a list of currently used IRQ
+	# values if not already set.
+
+	[ -z "$USED_INT" ] && USED_INT=`resmgr -p IRQ | egrep -v "IRQ|-"`
+
+	# Add all other IRQs that may have already been chosen for other cards
+	USED_INT="$USED_INT $PICKED_INTs"
+
+	# If 2 is in the used Interupt list, add 9 to it as well
+	# If 9 is in the used Interupt list, add 2 to it as well
+	TEMP_INT="$USED_INT"
+	for i in $USED_INT
+	do
+		case $i in
+		2)	TEMP_INT="$TEMP_INT 9"
+			;;
+		9)	TEMP_INT="$TEMP_INT 2"
+			;;
+		esac
+	done
+	# The 'echo' (which removes the new-line characters)
+	# and the backslashed spaces around TEMP_INT are
+	# NEEDED here (see comment below).
+	USED_INT=`echo \ $TEMP_INT \ `
+
+	# If any of the possible Interrupt vectors are already in use,
+	# we must remove them from the available list.  The reason that
+	# spaces need to surround each used interupt vector is so that
+	# we only match on the number itself, not on part of a number (e.g.,
+	# if 2 is the only interrupt vector in the possible list and 12
+	# is the only one in the used list, we have the following two cases:
+	#
+	#	    'A'		  |	    'B'
+	#	i=12		  |	i=12
+	#	case 12 in	  |	case 12 in
+	#			  |
+	#	*2*)  	  	  |	*\ 2\ *)
+	#	      ;;	  |		  ;;
+	#			  |
+	#	  *)  echo $i	  |           *)  echo $i
+	#	      ;;	  |		  ;;
+	#			  |
+	#	esac		  |	esac
+	#
+	# In 'A', 12 would match on "*2*" and so would be excluded from the
+	# the list.  In 'B', 12 would NOT match on "* 2 *" and so would be
+	# included in the list.  This code may be ugly & complex, but it
+	# saves a great deal of time by doing it with korn-shell built-ins.
+	#
+	NOT_USED_INT=`for i in $INT_LIST
+	do
+		case "$USED_INT" in
+		*\ ${i}\ *)	
+				;;
+	
+		         *)	echo $i
+				;;
+		esac
+	done`
+	INT_LIST="$NOT_USED_INT"
+	# [ -z "$INT_LIST" ] && no_more_ints
+}	# filter_int
+
+#
+# This routine filters out the used IOADDRs from the list of possible ones
+#
+function filter_port
+{
+[ -n "$DEBUG" ] && set -x
+
+	typeset i
+	OIFS=$IFS
+	port_len=0
+	NOT_USED_PORT=`for i in $PORT_LIST
+	do
+		IFS="-"
+		echo "$i" | read START END
+		IFS=$OIFS
+
+		# if the values haven't already been picked by another NIC,
+		# check to see if it is already in use by the system.
+		# If not, the add it to the list of possible.  Also, keep
+		# track of the longest port address and use this for the
+		# length of the input field.
+		CONFLICT=false
+		for i in $PICKED_S_PORTs
+		do
+			[ "$START" = "$i" ] && CONFLICT=true
+		done
+
+		for i in $PICKED_E_PORTs
+		do
+			[ "$END" = "$i" ] && CONFLICT=true
+		done
+
+		if [ "$CONFLICT" = "false" ]
+		then
+			/etc/conf/bin/idcheck -a -l $START -u $END
+			(( $? == 0 )) && {
+				echo "$START-$END"
+				start_end="$START-$END"
+				max $port_len ${#start_end} > /tmp/nics.portlen
+			}
+		fi
+	done`
+	read port_len < /tmp/nics.portlen
+	rm -f /tmp/nics.portlen
+
+	PORT_LIST="$NOT_USED_PORT"
+	# [ -z "$PORT_LIST" ] && no_more_ports
+
+}	# filter_port
+
+#
+# This routine filters out the used RAMADDRsfrom the list of possible ones
+#
+function filter_mem
+{
+[ -n "$DEBUG" ] && set -x
+
+	typeset i
+	OIFS=$IFS
+	mem_len=0
+	NOT_USED_MEM=`for i in $MEM_LIST
+	do
+		IFS="-"
+		echo "$i" | read START END
+		IFS="$OIFS"
+
+		# if the values haven't already been picked by another NIC,
+		# check to see if it is already in use by the system.
+		# If not, the add it to the list of possible
+		CONFLICT=false
+		for i in $PICKED_S_MEMs
+		do
+			[ "$START" = "$i" ] && CONFLICT=true
+		done
+
+		for i in $PICKED_E_MEMs
+		do
+			[ "$END" = "$i" ] && CONFLICT=true
+		done
+		
+		if [ "$CONFLICT" = "false" ]
+		then
+			/etc/conf/bin/idcheck -c -l $START -u $END
+			(( $? == 0 )) && {
+				echo "$START-$END"
+
+				# Since this is being done in a sub-shell,
+				# save this value in a file and read it in
+				# when done
+				start_end="$START-$END"
+				max $mem_len ${#start_end} > /tmp/nics.memlen
+			}
+		fi
+	done`
+	read mem_len < /tmp/nics.memlen
+	rm -f /tmp/nics.memlen
+	IFS=$OIFS
+
+	MEM_LIST="$NOT_USED_MEM"
+	# [ -z "$MEM_LIST" ] && no_more_mems
+
+}	# filter_mem
+
+#
+# This routine filters out the used DMAs from the list of possible ones
+#
+function filter_dma
+{
+[ -n "$DEBUG" ] && set -x
+
+	# If we are configuring an ISA card on an EISA system, then we MUST
+	# use idcheck instead of resmgr.  This is in case the ISA card is already
+	# configured in the NVRAM (via ECU).
+	[ "$BUS" = "ISA" -a "$BUSTYPE" = "EISA" -o "$AUTOCONF" = "false" ] && {
+		unset NOT_USED_DMA
+		for i in $DMA_LIST
+		do
+			/etc/conf/bin/idcheck -d $i
+			rc=$?
+			(( rc == 0 )) && NOT_USED_DMA="$NOT_USED_DMA $i"
+		done
+		DMA_LIST="$NOT_USED_DMA"
+		[ -n "$PICKED_DMAs" ] && {
+			DMA_LIST=`for i in $NOT_USED_DMA
+			do
+				case "$PICKED_DMAs" in
+				*${i}*)	:
+					;;
+		         	     *)	echo $i
+					;;
+				esac
+			done`
+		}
+		# [ -z "$DMA_LIST" ] && no_more_dmas
+		return 0
+	}
+	# First, create list of currently used DMAs values if not already set
+	[ -z "$USED_DMA" ] && USED_DMA=`resmgr -p DMAC | egrep -v "DMAC|-"`
+
+	# Add all other DMAs that may have already been chosen for other cards
+	USED_DMA="$USED_DMA $PICKED_DMAs"
+
+	NOT_USED_DMA=`for i in $DMA_LIST
+	do
+		case $USED_DMA in
+		*$i*)
+			;;
+	
+		*)	echo $i
+			;;
+		esac
+	done`
+	DMA_LIST="$NOT_USED_DMA"
+	# [ -z "$DMA_LIST" ] && no_more_dmas
+
+}	# filter_dma
+
+#
+# cfg_exit - user's way of escaping out of configuration 
+#
+function cfg_exit
+{
+[ -n "$DEBUG" ] && set -x
+
+	wclose ${_configure_nic_WID}
+	CHOOSE_TITLE="$CFG_EXIT_TITLE"
+
+	display "$CFG_EXIT_MSG"
+	cfg_exit_wid=$CURWIN
+
+	choose -f -e -exit 'cfg_exit_choices' -winparms \
+		"-below 0 -fg $COMBO2_FG -bg $COMBO2_BG" \
+		"$CFG_CONT" "$RETURN" "$CANCEL_NIC" "$CFG_CONT"
+	cfg_exit_2_wid=$CURWIN
+	return
+}
+
+#
+# cfg_exit_choices - This reads the choices of the cfg_exit screen.
+# We either return to selection screen or exit.
+#
+function cfg_exit_choices
+{
+[ -n "$DEBUG" ] && set -x
+
+	# close the display window
+	wclose ${cfg_exit_wid}
+	# close the choices window
+	wclose ${cfg_exit_2_wid}
+	wputstr 1 "$nl"
+	wputstr 1 "$nl"
+	footer
+	case "$CHOICE" in
+	"$RETURN")	# Unset previously chosen configuration values and
+			# go back to Selection Screen
+			CLASSES=none
+			unset PICKED_INTs PICKED_S_MEMs PICKED_S_PORTs \
+			      PICKED_DMAs PICKED_E_MEMs PICKED_E_PORTs \
+			      USED_INT USED_DMA NOT_USED_INT NOT_USED_DMA \
+			      INT_LIST PORT_LIST MEM_LIST USED_LIST \
+			      CUSTOM_NUM PARAM_STRING CUSTOM param
+			rm -f /tmp/nic.generic /tmp/nic.parameter \
+			      /tmp/nics.ether  /tmp/nics.token
+			CFG_EXIT_FLAG=1
+			;;
+	"$CANCEL_NIC")	# Cancel the installation and exit
+			msgnoerr "" ""
+			CFG_EXIT_FLAG=2
+			;;
+	"$CFG_CONT")	place_window ${CFG_WIN_WIDTH} ${line_cnt} -title \
+				"$CONFIG_TITLE" -bg ${CYAN} -fg ${BLACK}
+			set_hotkey 8 cfg_exit
+			run_form $MY_FORM_ID
+			input_handler
+			return
+			;;
+	esac
+}
+
+function get_classes
+{
+[ -n "$DEBUG" ] && set -x
+
+	bd_name=$1
+	case $bd_name in
+	all)	F_LIST=`echo ${MENUDIR}/config/*`
+		;;
+	*)	F_LIST="${MENUDIR}/config/$bd_name"
+		;;
+	esac
+
+	# Initialize CLASSES to none (CLASS 'none' must always gets installed)
+	echo none > /tmp/nics.classes
+
+	for i in $F_LIST
+	do
+		# Pull in configuration information
+		. $i
+
+		# If it is of the correct bus type for the machine being
+		# installed, add it to the CLASSES list
+		if [ "$BUS" = "$BUSTYPE1" -o "$BUS" = "$BUSTYPE2" ]
+		then
+			echo "$CLASS"
+		fi
+		unset BUS
+	done >> /tmp/nics.classes
+	for i in `sort -u /tmp/nics.classes`
+	do
+		CLASSES="$CLASSES $i"
+	done
+	rm -f /tmp/nics.classes
+}
+
+# Remove all of the drivers from the kernel (in case they're loaded)
+function remove_drivers
+{
+[ -n "$DEBUG" ] && set -x
+
+	typeset i
+	for i in ${MENUDIR}/config/*
+
+	do
+		# Do this in a subshell since we don't want
+		# these variables set in our current environment
+		( . $i; echo $DRIVER_NAME $BUS )
+	done > /tmp/nics.drvnames
+
+	sort -u -o /tmp/nics.drvnames /tmp/nics.drvnames 
+
+	[ "$HOW_INSTALL" != "POSTREBOOT" ] && {
+
+	   # Add support modules to the list
+	   echo "msm\nlsl\nethtsm\ntoktsm\nodisr\nnflxsr\n" >>/tmp/nics.drvnames
+
+	}
+
+	while read DRIVER_NAME BUS
+	do
+		[ -f /etc/conf/mdevice.d/$DRIVER_NAME ] && {
+			modadmin -U $DRIVER_NAME >&2
+			#[ "$BUS" = ISA  -a  "$PKGINSTALL_TYPE" = OVERLAY ] && {
+			#	resmgr -r -m $DRIVER_NAME
+			#}
+			$CONFBIN/idinstall -P nics -d $DRIVER_NAME >&2
+		}
+	done < /tmp/nics.drvnames
+
+	rm -f /tmp/nics.drvnames
+}
+
+#
+# silent_install = if SILENT_INSTALL = true, then this is a silent
+#		   installation.  All necessary information is available
+#		   via the environment so there is no reason to prompt
+#		   the user for any information.  Just set a few flags
+#		   and write all relevant data out to the file that the
+#		   postinstall processes.
+#
+function silent_install
+{
+[ -n "$DEBUG" ] && set -x
+
+	typeset MATCH=false ii loc_cnt
+	export CLASSES
+	cd $MENUDIR/config
+
+	for ii in *
+	do
+		# when pulling in config files, do it in a sub-shell so that
+		# the individual variables aren't set in the environment
+		(
+		. ./$ii;
+		for board_id in $BOARD_IDS
+		do
+			# INET_EISA_ID contains the network card Board ID#
+			for loc_cnt in 1 2 3 4
+			do
+			[[ "${INET_EISA_ID[$loc_cnt]}" = "$board_id" ]] && {
+
+				echo MATCH=true > /tmp/nics.silent
+				echo CLASSES=\"$CLASSES $CLASS\" >> /tmp/nics.silent
+				UNIT=${UNIT:-NULL}
+				INT=0
+				S_PORT=0
+				E_PORT=0
+				S_MEM=0
+				E_MEM=0
+				DMA=-1
+				echo "$NAME $DRIVER_NAME $UNIT $INT $S_PORT $E_PORT $S_MEM $E_MEM $DMA" >> /tmp/nic.generic
+				echo >> /tmp/nic.parameter
+				$VERIFY && echo > /tmp/nics.verify
+				[ -n "$DEPEND" ] && echo $DEPEND >> /tmp/nic.dep
+				[ -n "$POST_SCRIPT" ] && echo ALL_SCRIPTS=\"$ALL_SCRIPTS $POST_SCRIPT\" >> /tmp/nics.silent
+				break
+			}
+			done
+		done
+		)
+		[[ -f /tmp/nic.dep ]] && {
+			while read tmp_dep
+			do
+				DEPEND="$DEPEND $tmp_dep"
+			done < /tmp/nic.dep
+			rm -f /tmp/nic.dep
+		}
+
+		[ -f /tmp/nics.silent ] && . /tmp/nics.silent
+	done
+
+	# if there was a match, return success
+	$MATCH && return 0
+
+	# There wasn't a match so we cannot do a silent installation.
+	# Set the variable accordingly and return failure.
+	SILENT_INSTALL=false
+	return 1
+}
+
+function do_overlay
+{
+[ -n "$DEBUG" ] && set -x
+
+	integer retval
+	typeset Dev Config Unit Ipl Itype Vector Sioa Eioa Scma Ecma Dma aaa bbb
+	OVER_MDEV=/etc/conf/mdevice.d
+	OVER_SDEV=/etc/conf/sdevice.d
+	for fname in `ls ${MENUDIR}/config`
+	do
+		( . ${MENUDIR}/config/$fname
+		  [ "$BUS" = "$BUSTYPE1" -o "$BUS" = "$BUSTYPE2" ] || continue
+		  ADD_TO_USED_LIST=false
+		  OVER_CHECK=$UPGRADE_CHECK
+		  [[ -n "$DRIVER_NAME" ]] && {
+			[[ -f $OVER_MDEV/$DRIVER_NAME ]] &&
+			   [[ -f $OVER_SDEV/$DRIVER_NAME ]] && {
+				aaa=$DRIVER_NAME
+				bbb=$OVER_SDEV/$DRIVER_NAME
+				grep "^$aaa" $bbb | while read holder
+				do
+				   retval=1
+				   [[ -f "$MENUDIR/$OVER_CHECK" ]] && {
+				   	set $holder
+				   	echo $7 $8 $9 ${10} > /tmp/nic.upg.check
+				   	chmod +x $MENUDIR/$OVER_CHECK
+				   	$MENUDIR/$OVER_CHECK >> /tmp/nics.overlay 2>&1
+				   	retval=$?
+				   	rm /tmp/nic.upg.check
+				   }
+			   	   # if retval = 1, then, if driver hasn't
+				   # already been processed, save driver info
+			   	   (( retval )) && {
+					NICS_FLAG=false
+					for i in $USED_LIST
+					do
+					   [ "$DRIVER_NAME" = "$i" ] &&
+						NICS_FLAG=true
+					done
+					$NICS_FLAG || {
+					      ADD_TO_USED_LIST=true
+				   	      echo $NAME $DRIVER_NAME $holder
+				   	      $CONFBIN/idinstall -P nics -d $DRIVER_NAME >> /tmp/request.err 2>&1
+					   }
+			   	   }
+				done
+			        $ADD_TO_USED_LIST && echo $USED_LIST $DRIVER_NAME > /tmp/nics.used.list
+			}
+		  }
+		)
+		[ -f /tmp/nics.used.list ] && USED_LIST=$(</tmp/nics.used.list)
+	done | while read upgrade[$upg_nic_cnt]
+	do
+		let upg_nic_cnt+=1
+	done
+	let upg_nic_cnt-=1
+	[ -f /tmp/nics.used.list ] && removef -f nics
+}
+
+function do_upgrade
+{
+[ -n "$DEBUG" ] && set -x
+
+	integer retval
+	typeset Dev Config Unit Ipl Itype Vector Sioa Eioa Scma Ecma Dma aaa bbb
+
+	# The original /etc/conf files will either be in /etc/conf
+	# or in /etc/inst/save.user/etc/conf so look in both places.
+	UPGRADE_STORE=/etc/inst/save.user
+	UPGRADE_SDEV=$UPGRADE_STORE/etc/conf/sdevice.d
+	SDEV=/etc/conf/sdevice.d
+	for fname in `ls ${MENUDIR}/config`
+	do
+		( . ${MENUDIR}/config/$fname
+		  [ "$BUS" = "$BUSTYPE1" -o "$BUS" = "$BUSTYPE2" ] || continue
+		  [[ -n "$OLD_DRIVER_NAME" ]] && {
+			ADD_TO_USED_LIST=false
+			[[ -f $UPGRADE_SDEV/$OLD_DRIVER_NAME ]] && {
+			   aaa=$OLD_DRIVER_NAME
+			   bbb=$UPGRADE_SDEV/$OLD_DRIVER_NAME
+			   grep "^$aaa" $bbb | while read holder
+			   do
+			   	retval=1
+			   	[[ -f "$MENUDIR/$UPGRADE_CHECK" ]] && {
+			   		set $holder
+			   		echo $7 $8 $9 ${10} > /tmp/nic.upg.check
+			   		chmod +x $MENUDIR/$UPGRADE_CHECK
+			   		$MENUDIR/$UPGRADE_CHECK >> /tmp/nics.upgrade 2>&1
+			   		retval=$?
+			   		rm /tmp/nic.upg.check
+			   	}
+			   	# if retval = 1, then, if driver hasn't
+				# already been processed, save driver info
+			   	(( retval )) && {
+					NICS_FLAG=false
+					for i in $USED_LIST
+					do
+					   [ "$DRIVER_NAME" = "$i" ] &&
+						NICS_FLAG=true
+					done
+					$NICS_FLAG || {
+					      ADD_TO_USED_LIST=true
+				   	      echo $NAME $DRIVER_NAME $holder
+				   	      $CONFBIN/idinstall -d $OLD_DRIVER_NAME
+					   }
+			   	}
+			   done
+			   $ADD_TO_USED_LIST && echo $USED_LIST $DRIVER_NAME > /tmp/nics.used.list
+			}
+			[[ -f $SDEV/$OLD_DRIVER_NAME ]] && {
+			   aaa=$OLD_DRIVER_NAME
+			   bbb=$SDEV/$OLD_DRIVER_NAME
+			   grep "^$aaa" $bbb | while read holder
+			   do
+			   	retval=1
+			   	[[ -f "$MENUDIR/$UPGRADE_CHECK" ]] && {
+			   		set $holder
+					   echo $7 $8 $9 ${10} > /tmp/nic.upg.check
+					   chmod +x $MENUDIR/$UPGRADE_CHECK
+					   $MENUDIR/$UPGRADE_CHECK >> /tmp/nics.upgrade 2>&1
+					   retval=$?
+					   rm /tmp/nic.upg.check
+				}
+				(( retval )) && {
+					NICS_FLAG=false
+					for i in $USED_LIST
+					do
+					   [ "$DRIVER_NAME" = "$i" ] &&
+					      NICS_FLAG=true
+					done
+					$NICS_FLAG || {
+					   ADD_TO_USED_LIST=true
+					   echo $NAME $DRIVER_NAME $holder
+					   $CONFBIN/idinstall -d $OLD_DRIVER_NAME
+					}
+				}
+			   done
+			   $ADD_TO_USED_LIST && echo $USED_LIST $DRIVER_NAME > /tmp/nics.used.list
+			}
+		  }
+		)
+		[ -f /tmp/nics.used.list ] && USED_LIST=$(</tmp/nics.used.list)
+	done | while read upgrade[$upg_nic_cnt]
+	do
+		let upg_nic_cnt+=1
+	done
+	let upg_nic_cnt-=1
+}
+
+##
+##
+##			main ()
+##
+##
+
+# global variables - if possible, set as integers for faster 'ksh' processing
+integer upg_nic_cnt=0
+POST_FILE=$1
+
+set_vars
+
+check_term
+
+set_locale
+
+rm_old_pkgs
+
+get_bustype
+
+[ "${HOW_INSTALL}" = "ON_BFLOP" ] && copy_files_and_exit
+
+vt_switch
+
+# load winxksh 
+. ${MENUDIR}/nic_sttyrc
+getstty
+. /etc/dcu.d/menus/choose
+. ${DCUTXT}
+. /etc/dcu.d/scripts/winrc
+. /etc/dcu.d/scripts/scr_init
+. ${DCUHELP}
+. ${MENUDIR}/nic_strings
+
+print_wait_display
+
+[ "${HOW_INSTALL}" != "POSTREBOOT" ] && copy_files
+
+# If network installation was performed, get network configuration values
+[[ -s /var/sadm/dist/ii.parms ]] && get_netinst_params
+
+create_upgrade_map_file
+
+do_up_and_over
+
+do_silent
+
+remove_drivers
+
+$SILENT_INSTALL || {
+	nic_initialize
+	selection_screen true
+}
+
+vt_restore
+
+write_post_file
+
+goodbye

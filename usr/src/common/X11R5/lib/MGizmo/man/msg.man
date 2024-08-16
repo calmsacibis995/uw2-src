@@ -1,0 +1,85 @@
+'\"ident        "@(#)MGizmo:man/msg.man	1.1"
+.TH MsgGizmo 3L
+.SH NAME
+\f(CBMsgGizmo\f1 \- an abstract data type (ADT) that specifies an area
+consisting of a message field.
+The \f(CBMsgGizmo\fP
+consists of a data structure and a set of functions that operate on this
+Gizmo.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/MsgGizmo.h>
+
+void   SetMsgGizmoTextLeft(Gizmo \fIg\fP, char *\fItext\fP);
+void   SetMsgGizmoTextRight(Gizmo \fIg\fP, char *\fItext\fP);
+Widget GetMsgGizmoWidgetRight(Gizmo \fIg\fP);
+.ft
+.fi
+.SH "DESCRIPTION"
+An \f(CBMsgGizmo\fP is created by populating a \f(CBMsgGizmo\fP data
+structure and placing it's address in a \f(CBGizmoRec\fP structure.
+Ultimately, a \f(CBGizmoRec\fP structure is placed in one of the container
+Gizmos and the display is created by making a call to the function
+\f(CBCreateGizmo\fP(3L).
+Following is the definition of the \f(CBMsgGizmo\fP data type:
+.PP
+.nf
+.ft CB
+typedef struct _MsgGizmo {
+        HelpInfo *      help;
+        char *          name;
+        char *          leftMsgText;           /* XmNvalue */
+        char *          rightMsgText;          /* XmNvalue */
+} MsgGizmo;
+.fi
+.PP
+\f(CBSetMsgGizmoTextLeft\fP and \f(CBSetMsgGizmoTextRight\fP
+are used the change the message field of the Gizmo.
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBMessageGizmo\fP:
+.IP \fBGetGizmoWidget\fP 25
+Returns the widget id for the left message field.
+.IP \fBGetGizmoGizmo\fP 25
+Returns the handle to the \f(CBMessageGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 25
+Undefined.
+.IP \fBGetGizmoPreviousValue\fP 25
+Undefined.
+.PP
+\f(CBGetMsgGizmoWidgetRight\fP is used to retrieve the widget id for the
+right message field.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the label gadget.
+.SH "USAGE"
+.nf
+.ft CB
+MsgGizmo      footer = {
+        NULL,
+        "footer",
+        "Left footer",
+        "Right footer"
+};
+
+GizmoRec        record1[] = {
+        {MsgGizmoClass, &footer}
+};
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", NULL, record1, XtNumber(record1)
+};
+
+main()
+{
+        Gizmo   handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP

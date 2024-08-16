@@ -1,0 +1,38 @@
+#!/usr/gnu/bin/perl
+#ident	"@(#)mail:common/cmd/mail/mhs/keyVal	1.1"
+# -*-Perl-*-
+
+sub keyVal {				# (*assoc, @filenames)
+  return unless (scalar(@_) >= 2);
+  local(*keyVal) = (shift(@_));
+  foreach $filename (@_) {		# $filename implicitly local
+    local($FILE);
+    if (open($FILE, $filename)) {
+      while (<$FILE>) {
+	if (/([^=]+)=(.*)$/){
+	  local($key, $val) = ($1, $2);
+	  $val = $1 if ($val =~ /^"(.*)"$/);
+	  if (defined($keyVal{$key})) {
+	    $keyVal{$key} .= "|$val";
+	  }
+	  else {
+	    $keyVal{$key} = $val;
+	  }
+	}
+      }
+      close($FILE);
+    }
+  }
+}
+
+if ($0 eq "keyVal") {
+  %keyVal = ();
+  @ARGV = ("/etc/mail/smfcnfg") if ($#ARGV < $[);
+  &keyVal(*keyVal, @ARGV);
+  print "$0: contents of ", join(", ", @ARGV), "\n";
+  foreach $keyVal (keys(%keyVal)) {
+    print "$keyVal=\"$keyVal{$keyVal}\"\n";
+  }
+}
+
+1;

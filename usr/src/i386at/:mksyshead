@@ -1,0 +1,35 @@
+#ident	"@(#)mk:i386at/:mksyshead	1.4.2.4"
+#ident "$Header: $"
+#
+#	Install UNIX System 'sys' header files
+#
+trap `rm -f /tmp/utsrules;exit 1` 1 2 3 15
+
+Root=$1
+Mach=$2
+Work=$3
+
+#
+#	we don't have an env, yet, so copy
+#	kernel rulefile and edit to use host
+#	make and install command
+#
+ed uts/uts.rulefile <<X
+1,\$s|^MAKE[	 ]=.*|MAKE = make|
+1,\$s|^INS[	 ]=.*|INS = /etc/install|
+w /tmp/utsrules
+q
+X
+
+ROOT=${Root} ; export ROOT
+MACH=${Mach} ; export MACH
+UTSRULES=/tmp/utsrules
+UTSDEPEND=/dev/null
+export UTSDEPEND UTSRULES
+cd ${Root}/usr/src/${Work}/uts
+
+make -f unix.mk headinstall
+
+rm -f ${UTSRULES}
+
+exit 0

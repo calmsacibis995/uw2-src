@@ -1,0 +1,255 @@
+#ident\t"@(#)dthelp:Admin.Tools/NetWare_Setup.hlp	1.28"
+^*version^1
+^*title^NetWare Setup
+^:NetWare_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Setting up NetWare
+^0^NetWare Setup
+^$10
+NetWare Setup
+
+Use NetWare Setup to configure or reconfigure
+\d(Internetwork Package Exchange^IPX) IPX and Local Area Network (LAN)
+boards so you can use NetWare.
+
+If you installed a LAN board on your system when you installed UnixWare,
+the software automatically detected the board and address and configured
+Internetwork Package Exchange (IPX).
+
+If you did not install a LAN board when you installed UnixWare,
+or if you decide to add more boards, you will need to use NetWare
+Setup to configure, or reconfigure, IPX and LAN boards.
+ 
+Note: You must have permission to \k(Access NetWare Setup permission^dtadmin/user.hlp^Understanding Permissions) to use
+NetWare Setup. In addition, you should have extensive knowledge of both
+NetWare and networking administration before you make any changes with
+NetWare Setup.
+
+To set up your system to use NetWare, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on NetWare_Setup. The "NetWare Setup" window appears
+  \twith the following options:
+
+  \to\tServer Name: - Displays the name of your system.
+
+  \to\tNetWare UNIX Client: - Click on On if you want to enable
+  \t \tthe NetWare UNIX Client (NUC) services. Click on Off to disable
+  \t \tthe NetWare UNIX Client (NUC) services.
+
+  \to\tEnable IPX Auto Discovery: - This option is turned on when you first
+  \t \tinstall UnixWare to detect the network boards you have installed on
+  \t \tyour system. It also checks your network configuration each time you
+  \t \tboot the system.
+
+  \to\tIPX Internal LAN Address: - Type in the address (up to 8 characters)
+  \t \tof your internal network board. This address is prefixed with the
+  \t \tcharacters "0x." For example, 0x01010348.
+
+  \to\tIPX Maximum Hops: - Type in the maximum number of systems, or
+  \t \tnodes, that you want the data to transfer through.
+
+  \t \tThis option lets you limit the traffic coming through your network.
+  \t \tFor example, if you enter five as the maximum number of hops, the
+  \t \tsystem throws away any \d(packets^packet) that exceed five hops. If
+  \t \tyou are not a network administrator, we suggest you leave this value
+  \t \tat the default, 16 hops.
+
+  \to\tLogical LAN Configuration: - Click on this box if you want to display
+  \t \tand set the options for LAN configuration. See
+  \t \t\k(Configuring Your Logical LAN).  
+
+  \to\tSequenced Packet eXchange: - Click on this box if you want to display
+  \t \tand set the options for \d(Sequenced Packet eXchange^SPX) (SPXII). See
+  \t \t\k(Configuring SPXII).
+
+  \to\tPeer to Peer Communication: - Click on On if you want to \d(advertise)
+  \t \tyour applications to other users. See \k(Peer to Peer Communication).
+
+  \t \tBy default, this option is set to Off.
+
+  \to\tNetwork Management: - Click on this box if you want to display
+  \t \tand set the options for the NetWare Protocol Stack (NPS)
+  \t \tnetwork management and the NetWork Management Trap Time.
+  \t \tSee \k(Managing Your Network).
+
+  \to\tDiagnostics Daemon: - Click on this box if you want to run the
+  \t \tdiagnostics daemon. By default, this option is set to Off.
+
+  \to\tRemote NUC Auto Authentication: - By default, this option is
+  \t \tset to On, and displays the \k(authentication panel^Auto_Authenticator/xauto.hlp^Auto_Authenticator Window) whenever necessary.
+  \t \tWhen set to Off, users must use nwlogin to access NetWare servers.
+
+  \t \tFor more information on authentication, see \k(NetWare Access^NetWare_Access/NetWare_Access.hlp^NetWare Access).
+
+  \to\tEnable NetWare Single Login: - Click on On to let users log
+  \t \tin to remote systems without supplying a login ID and password
+  \t \t(provided the login ID and password are the same on both systems).
+
+4.\tClick on Save Current Settings to save the changes.
+
+  \tNote: You can also click on Restore Previous Settings to go back to
+  \tthe previous settings, or Restore Default to go back to the settings
+  \tthat were set when you installed UnixWare.
+
+  \tIf you decide not to make any changes, do not click on Save Current
+    Settings. Instead, click on Exit.
+
+
+^1^Configuring Your Logical LAN
+^$20
+Configuring Your Logical LAN
+
+When you select the Logical LAN Configuration option in the "NetWare
+Setup" window, the "Logical LAN Configuration" window appears. This window
+displays the status of logical LAN numbered from one through eight. A
+box appears next to each LAN. If a LAN is currently inactive but available
+for use, this box is marked with an "X."
+
+To configure a logical LAN, do the following:
+
+1.\tGo to the IPX Internal LAN Address field and type in the address
+  \tof the desired LAN.
+
+2.\tClick on the LAN options (the rectangular box next to the Logical LAN
+  \tConfiguration field). A pop-up window with a list of Logical LANs
+  \tappears.
+
+3.\tClick on the desired LAN. A pop-up window for the selected LAN
+  \tappears with the following fields:
+
+  \to\tIPX LAN Device: - Click on the rectangular box to bring up a list
+  \t \tof available devices; then, click on the desired device (for
+  \t \texample, /dev/wd_0).
+
+  \to\tIPX LAN Frame Type: - Click on the rectangular box to bring up
+  \t \ta list of available frame types; then, click on the desired type
+  \t \t(for example, Ethernet II).
+
+  \to\tIPX External LAN Address: - Type in the address assigned by your
+  \t \tnetwork administrator.  \t
+
+  \to\tLAN Speed (kilobytes/second): - Type in the desired transfer speed
+  \t \tin kilobytes. By default, this field is set to 10000.
+
+4.\tClick on OK to apply the settings.
+
+5.\tRepeat Steps 2 through 4 for any other Logical LAN you want to configure.
+
+6.\tClick on Close to dismiss the window and save your changes.
+
+^2^Logical LAN Configuration for <LAN> Window
+^$30
+Logical LAN Configuration for <LAN> Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tIPX LAN Device: - Click on the rectangular box to bring up a list
+  \t \tof available devices; then, click on the desired device (for
+  \t \texample, /dev/wd_0).
+
+  \to\tIPX LAN Frame Type: - Click on the rectangular box to bring up
+  \t \ta list of available frame types; then, click on the desired
+  \t \ttype (for example, Ethernet II).
+
+  \to\tIPX External LAN Address: - Type in a unique address for this
+  \t \tLAN, using up to ten characters (for example, 0x89413000). 
+
+  \to\tLAN Speed (kilobytes/second): - Type in the desired transfer
+  \t \tspeed in kilobytes. By default, this field is set to 10000.
+
+2.\tClick on OK to apply the settings and dismiss the window.
+
+See also:
+\k(Configuring Your Logical LAN)
+
+^1^Configuring SPXII
+^$40
+Configuring SPXII
+
+When you select On for the \d(Sequenced Packet eXchange^SPX) option in
+the "NetWare Setup" window, the "Sequenced Packet eXchange" window
+appears.
+
+To configure the maximum number of SPXII connections and \d(sockets^socket), and
+to turn on NetWare Virtual Terminal (NVT) for remote use, do the following:
+
+1.\tSet the following options:
+
+  \to\tSPX Network Remote Login (NVT): - Click on On if you want to
+  \t \tallow a remote NVT login, or Off if you do not want to allow
+  \t \ta remote NVT login.
+
+  \to\tMaximum SPX Connections: - Type in the maximum number of
+  \t \tconnections you want to allow for SPXII.
+
+  \to\tMaximum SPX Sockets: - Type in the maximum number of sockets
+  \t \tSPXII can use simultaneously for listening for incoming connect
+  \t \trequests from their endpoints.
+
+2.\tClick on OK to apply the settings and dismiss the window.
+
+  \tNote: You can also click on Cancel to dismiss the window without
+  \tmaking any changes.
+
+^1^Peer to Peer Communication
+^$50
+Peer to Peer Communication
+
+When you select On for the Peer to Peer Communication option in the
+"NetWare Setup" window, the "Service Advertising Protocol" window appears.
+
+To specify the number of services to \d(advertise), do the following:
+
+1.\tType in the maximum number of servers that you want the Service
+  \tAdvertising Protocol to recognize in the text field.
+
+  \tBy default, this field is set to 3000.
+
+2.\tClick on OK to apply the settings and dismiss the window.
+
+  \tNote: You can also click on Cancel to dismiss the window without
+  \tmaking any changes.
+
+^1^Managing Your Network
+^$60
+Managing Your Network
+
+When you select On for the Network Management option in the "NetWare
+Setup" window, the "Network Management" window appears. Network
+Management provides several ways for experienced network administrators
+to monitor their networks. 
+
+By default, the options in this window are inactive.
+
+Note: You must have some type of network management console (for example,
+Netview or Open View) to use these network managing tools.
+
+To turn on network management services, do the following:
+
+1.\tSet the following options:
+
+  \to\tNWUMPS Network Management: - Click on On to enable monitoring
+  \t \tof the NetWare for UNIX Management Protocol Stack.
+
+  \to\tNetwork Management Trap Time: - Type in a value for trap time.
+
+  \t \tNote: Trap time is how often the system sends network event and
+  \t \talert information to the network management console.
+
+  \t \tBy default, this field is set to 5 seconds.
+
+2.\tClick on OK to apply the settings and dismiss the window.
+
+  \tNote: You can also click on Cancel to dismiss the window without
+  \tmaking any changes.

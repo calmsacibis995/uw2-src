@@ -1,0 +1,54 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/criteria/set/object/Help	1.1.4.2"
+#ident  "$Header: Help 2.0 91/07/12 $"
+ABSTRACT:Set Object Level Criteria
+	The "set" task allows you to modify the events currently being
+	audited for the level in effect.  It will also allow you to
+	specify a list of events to be audited at the level, set of
+	levels or level range specified.
+
+Form.objaud:operation
+	Enter one of the following keywords available by pressing CHOICES.
+
+	addition - the events specified will be added to the current 
+	auditable events.  
+
+	deletion - the events specified will be deleted from the current 
+	auditable events.  
+
+	replacement - the events specified will replace the current 
+	auditable events.  
+
+	exception - all events except those specified replace the current 
+	auditable events.
+
+Form.objaud:event
+	Enter one or more valid event types or classes, separating 
+	multiple entries by a comma, or press CHOICES.
+
+	NOTE: CHOICES will display all classes without validation.
+
+	A record will be generated whenever one of the specified 
+	events occurs based upon the Level[s] or Level range.
+
+Form.objaud:levoperation
+	Enter one of the following keywords available by pressing CHOICES.
+	This operation will apply to the current setting of object
+	levels and level ranges, unless a new set of object levels and
+	level ranges are specified.
+
+	addition - the levels specified will be added to the current levels.  
+
+	deletion - the levels specified will be deleted from the current 
+	levels.  
+
+	replacement - the levels specified will replace the current levels.  
+
+Form.objaud:levels
+	Enter a valid security level or press CHOICES.
+	An alias name may also be used when specifying a level. 
+	
+Form.objaud:levelrange
+	Enter a valid security level or press CHOICES.
+	An alias name may also be used when specifying a level. 
+	The "High" level must dominate the "Low" level,
+	and both fields must be either set or left blank.

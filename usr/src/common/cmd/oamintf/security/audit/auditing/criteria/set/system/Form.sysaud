@@ -1,0 +1,83 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/criteria/set/system/Form.sysaud	1.1.5.2"
+#ident  "$Header: Form.sysaud 2.0 91/07/12 $"
+#	Module Name: Form.sysaud
+form="Set System Level Audit Criteria"
+
+framemsg=`readfile $INTFBASE/form.msg`
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+close=`rm -f $SYSAUDERR /tmp/$VPID.events /tmp/$VPID.tmpev`
+
+done=`set -l SYSAUDERR=/tmp/$VPID.sysauderr;
+	getfrm |set -l FRAMEID;
+	message -f "Setting system level audit criteria.";
+	if [ -n "$OP" ];
+	then
+		set -l SAUDARGS="$OP$EVENTS";
+	else
+		set -l SAUDARGS="$EVENTS";
+	fi;
+	shell "$TFADMIN auditset -s $!SAUDARGS" >/dev/null 2>$SYSAUDERR;
+	if [ $RET -ne 0 ];
+	then
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.sysnok";
+	elif test -s "$SYSAUDERR";
+	then
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.syswok";
+	else
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.sysok";
+	fi`$CMD
+
+# get event info (TYPES and CLASSES)
+`valevt pre | sed '/^$/d' >/tmp/$VPID.tmpev;
+ sed '/^[ 	].*$/d;/^$/d;s/alias //;s/ .*$//' 
+	/etc/security/audit/classes >> /tmp/$VPID.tmpev;
+ sort -u /tmp/$VPID.tmpev > /tmp/$VPID.events;`
+
+#F1
+name=Operation on events:
+lininfo=Form.sysaud:operation
+nrow=1
+ncol=3
+frow=1
+fcol=24
+rows=1
+columns=15
+value=replacement
+rmenu={ addition deletion replacement exception }
+valid=`if [ "$F1" = "addition" ]; then set -l OP="+";
+	elif [ "$F1" = "deletion" ]; then set -l OP="-";
+	elif [ "$F1" = "exception" ]; then set -l OP="!";
+	elif [ "$F1" = "replacement" ]; then unset -l OP;
+	else echo FALSE;
+	fi`
+invalidmsg= const "Error - Must enter addition, deletion, replacement, or exception."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F2
+name=Event type(s) or class(es):
+lininfo=Form.sysaud:event
+nrow=2
+ncol=3
+frow=2
+fcol=31
+rows=1
+columns=35
+scroll=TRUE
+rmenu=OPEN MENU $OBJ_DIR/Menu.events
+valid=`message -f "Please Wait.";
+	if [ -n "$F2" ];
+	then
+		echo "$F2" | set -l EVENTS;
+		if regex -v "$F2" '.*,.*';
+		then
+			echo "$F2" | sed 's/,/ /g' | set -l GF2;
+			valforloop "$GF2" "grep \$i /tmp/$VPID.events";
+		else
+			fmlgrep "$F2" /tmp/$VPID.events;
+		fi;
+	else
+		echo FALSE;
+	fi`
+invalidmsg=const "Error - Must enter one or more valid event types or classes"
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."

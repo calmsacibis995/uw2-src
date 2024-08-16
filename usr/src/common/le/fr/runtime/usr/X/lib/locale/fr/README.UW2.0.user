@@ -1,0 +1,139 @@
+
+
+
+        Mise à jour UnixWare 2 : le nouveau Bureau UnixWare amélioré !
+
+
+
+Bienvenue sous UnixWare 2 ! Vous avez peut-être remarqué que certains
+changements sont intervenus sur le Bureau, par rapport à la version 1.1
+d'UnixWare. Dans ce document, vous trouverez des réponses aux questions
+que voici :
+
+  * Le Bureau d'UnixWare a changé : qu'elles sont les nouveautés ?
+
+  * Les applications graphiques installées sous la version 1.1
+  fonctionneront-elles avec cette mise à jour ?
+
+  * J'ai défini de nouvelles classes de fichiers à l'aide de
+  l'utilitaire Configuration_icônes. Est-ce que les modifications que
+  j'ai apportées à la base de données de classes vont être conservées ?
+
+  * Qu'est-il arrivé à mes fichiers .Xdefaults, .olinitrc, .olsetup et
+  .dtfclass ?
+
+  * Où sont Préférences/Clavier et System_Setup/Terminal_Setup ?
+        
+  * Où sont Bibliothèque_de_toile_de_fond et Configuration_police ?
+
+  * Où se trouve Fingertip Librarian?
+
+  * Qu'est-il arrivé aux modifications que j'ai apportées aux
+  combinaisons de couleurs ?
+
+  * Mon Bureau UnixWare 1.1 était en mode OPENLOOK, mais après la mise à
+  jour il apparaît en mode Motif. Pourquoi ?
+
+  * Où se trouvent mes notes d'aide ?
+
+  * Il semble bien que j'aie perdu d'importantes modifications apportées
+  au Bureau d'UnixWare lors de la mise à jour. Comment les récupérer ?
+
+
+Pour obtenir des informations générales concernant le Bureau d'UnixWare,
+consultez le manuel de l'utilisateur du Bureau, le manuel du
+propriétaire du système ou le Bureau_Aide. Pour plus de détails sur les
+modifications apportées par la mise à jour à tout le système, consultez
+le fichier /usr/X/adm/README.UW2.0.
+
+
+Q : Le Bureau d'UnixWare a changé : qu'est-ce qui est nouveau ?
+R : Un nouveau répertoire, Outils_Admin, a été ajoute au Bureau
+d'UnixWare. Il contient des outils faisant partie du Bureau et qui
+étaient habituellement stockés sous Configuration_Système et Utilitaires
+Un autre répertoire, Outils_Admin/Gestion de réseau, a été crée pour les
+outils réseau. Par ailleurs, les outils qui se trouvaient sous
+Accessories, ont été déplacés sous Applications.
+
+Si vous n'aviez pas de fichiers ou d'applications personnels dans les
+répertoires Accessories, Utilitaires et Configuration_Système, ceux-ci
+ont été supprimés. Dans le cas contraire vous pouvez vouloir
+déplacer ces applications sous un de ces répertoires. Si vous aviez créé
+des liens symboliques dans leur ancien emplacement, vous devrez les
+redéfinir.
+
+Q : est-ce que les applications graphiques installées sous la version
+1.1 fonctionneront avec cette mise à jour ?
+R : oui. L'installation de la mise à jour ne les affecte pas. Tous les
+ajouts apportés par les applications dans la base de données de classes
+sont également copiés dans la nouvelle base de données. (Votre base de
+données de classes UnixWare 1.1 a été sauvegardée sous
+/usr/X/.SAV2.0/classdb pour la localisation C et sous
+/usr/X/.SAV2.0/locale/<nom_localisation>/classdb pour les localisations
+non-C.
+
+Q : J'ai défini de nouvelles classes de fichiers à l'aide de
+l'utilitaire Icon_Setup. Est-ce que les modifications que j'ai apportées
+à la base de données de classes vont être conservées ?
+R : Oui. Les classes privées seront conservées.
+
+Q : Qu'est-il arrive à mes fichiers .Xdefaults, .olinitrc, .olsetup et
+.dtfclass ?
+R : Ces fichiers ont été modifiés dans UnixWare 2. Lorsque cela a été
+possible (pour .Xdefaults, .dtfclass), vos modifications ont été
+conservées. Pour assurer le bon fonctionnement du système, quelques
+changements ont été effectués. Les versions de ces fichiers que vous
+aviez sous UnixWare 1.1 ont été sauvegardées dans votre répertoire
+.SAV2.0.
+
+.Xdefaults : les modifications du clavier et des polices d'affichage
+ont été supprimées. Les modifications individuelles de certaines touches
+via les préférences du clavier ne sont plus prises en charge. Les
+ressources en matière de polices ont changé sous UnixWare 2. Vous
+pouvez retrouver vos personnalisations de polices à l'aide de l'outil
+Polices du répertoire Préférences.
+
+.dtfclass : la classe DataFile de ce fichier a été améliorée. Toutes les
+classes personnalisées que vous avez ajoutées ont été conservées.
+
+.olinitrc : ce fichier a été remplacé dans la version 2 d'UnixWare.
+Votre ancienne version y a été ajoutée à la fin et mise en commentaire.
+
+.olsetup : ce fichier a été remplacé dans la version 2 d'UnixWare.
+Attention, le mode OPENLOOK du Bureau n'est plus pris en charge.
+
+Q: Où sont Préférences/Clavier et
+Configuration_Système/Configuration_Terminal ?
+R : Ces fonctions ne sont pas prises en charge par la version 2
+d'UnixWare.
+
+Q : Où se trouve Fingertip Librarian? R : Fingertip Librarian est
+remplacé par le Programme de lecture de documents Dynatext. Il est sur
+le Bureau UnixWare sous Applications/Docs_Enligne.
+
+Q : Qu'est-il arrivé aux modifications que j'ai apportées aux
+combinaisons de couleurs ?
+R : La page des propriétés des couleurs a été améliorée dans la version
+2. De nouvelles palettes de couleur prédéfinies ont été ajoutées. Au
+démarrage, votre Bureau présente la palette de couleurs par défaut.
+
+Q : Mon Bureau UnixWare 1.1 était en mode OPENLOOK, mais après la mise à
+jour il apparaît en mode Motif. Pourquoi ? R : Le nouveau Bureau ne
+prend pas en charge le mode OPENLOOK.
+
+Q : Où sont mes notes d'aide ?
+R : La version 2 d'UnixWare diffère
+sensiblement de la version 1.1 et vos notes ne sont probablement plus
+applicables. Par conséquent, le contenu du Bureau_Aide a été mis à jour
+de façon à refléter les nouvelles fonctionnalités et les répertoires
+pour vos notes n'existent plus. Les notes que vous aviez dans la version
+1.1 ont été conservées dans le fichier
+.SAV2.0/dthelp/<nom_localisation>/notes de votre répertoire,
+<nom_localisation> représentant le nom de la localisation.
+
+Q : Il semble bien que j'aie perdu d'importantes modifications apportées
+au Bureau d'UnixWare lors de la mise à jour. Comment les retrouver ?
+R : Vos fichiers UnixWare 1.1 qui ont été remplacés par ou fusionnés
+avec ceux de la version 2 pour la mise à jour, ont été sauvegardés
+sous .SAV2.0 dans votre répertoire privé.
+

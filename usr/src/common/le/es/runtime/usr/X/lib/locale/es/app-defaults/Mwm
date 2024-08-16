@@ -1,0 +1,54 @@
+!
+!  app-defaults RESOURCE SPECIFICATIONS FOR Mwm
+!		(mwm has precedence over Mwm)
+!
+
+!!
+!! NOTE: In Mwm 1.1.1 and newer, the resources 'buttonBindings' and
+!!	 'keyBindings' should not be defined in the Mwm app-defaults file.
+!!	 The defaults are set internally in Mwm to 'DefaultButtonBindings' and
+!!	 'DefaultKeyBindings' respectively.
+!!
+!!	 Users and system admin need only define the default button and key
+!!	 bindings in the appropriate mwm config file (ie. .mwmrc or
+!!	 system.mwmrc).
+!!
+!!	 The 'windowMenu' resource defaults to 'DefaultWindowMenu', and
+!!	 in Mwm 1.2 there is a default root menu that is defined as
+!!	 'DefaultRootMenu'.
+!!
+
+!Mwm*moveThreshold:		3
+
+!
+! component appearance resources 
+!
+
+!!
+!! NOTE: In Mwm 1.2, the resources 'resizeBorderWidth' and 'frameBorderWidth'
+!!	 are calculated dynamically depending on the size and resolution of
+!!	 the screen.  In general, you should not have to set these resources
+!!	 in the Mwm app-defaults file.
+!!
+
+
+!! Client decorations for common clients - SAMPLES
+!Mwm*XClock*clientDecoration:		border
+!Mwm*XLoad*clientDecoration:		border
+!Mwm*XBiff*clientDecoration:		border
+
+! default maximum icon image size
+Mwm*iconImageMaximum:           48x48
+
+! The following lines are added for traslation purpose
+! In C locale, they are not necessary
+Mwm*confirmRestart*messageString: ¿Reiniciar Mwm?
+Mwm*confirmDefaultBehavior*messageString: ¿Cambiar a comportamiento por defecto?
+Mwm*confirmCustomBehavior*messageString: ¿Cambiar a comportamiento personalizado?
+Mwm*confirmQuit*messageString: ¿Abandonar Mwm?
+Mwm*okLabelString: OK
+Mwm*cancelLabelString: Cancelar
+
+!
+!  END OF RESOURCE SPECIFICATIONS
+!

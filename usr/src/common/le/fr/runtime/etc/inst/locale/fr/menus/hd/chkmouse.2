@@ -1,0 +1,94 @@
+.pageno
+Page %d de %d
+.ul
+Installation du système UNIX
+.hhelp_ban
+Instructions
+.helpbanner
+Aide : sélection du port de la souris série
+.ur
+Sélection du port de la souris série
+.ll
+Entrez votre sélection.  Appuyez sur F1 pour obtenir de l'aide.
+.lr
+F1=Aide
+.top
+Pour utiliser une souris série, vous devez indiquer le programme
+d'installation auquel votre souris est connectée. Vous devez aussi
+indiquer le nombre de boutons de votre souris. Si vous utilisez une souris
+compatible MSC (Mouse Systems Corporation), vous devez sélectionner le mode
+Mouse Systems. Pour de plus amples informations, reportez-vous à
+l'utilitaire d'aide ou au Guide d'installation.
+
+Entrez les informations suivantes concernant votre souris série.
+.form
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //COM1::tty00 (COM 1)//COM2::tty01 (COM 2)//Port série auquel est connecté votre souris ://SPORT//
+#field options
+//Touches fléchées Gauche/Droite pour choix suivant (2 options)//
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //MICROSOFT::Microsoft//MSC::Mouse Systems//Type de souris par défaut ://PROTOCOL//
+#field options
+//Touches fléchées Gauche/Droite pour choix suivant (2 options)//
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //2//3//Nombre de boutons de la souris ://MOUSEBUTTONS//
+#field options
+//Touches fléchées Gauche/Droite pour choix suivant (2 options)//
+#
+#
+.button
+Appliquer
+Réinitialiser
+.bottom
+Appuyez sur "TAB" pour faire passer le curseur d'un champ à un autre.
+Ensuite, placez le curseur sur "Appliquer" et appuyez sur "ENTREE" pour
+continuer.
+.help
+Pour obtenir des instructions détaillées, vous pouvez à tout moment
+appuyer sur la touche F1 (ou sur "?").
+
+PORT SERIE
+
+Pour que le système UNIX puisse gérer correctement votre port série, il
+doit savoir à quel port série votre souris est connectée. Reportez-vous
+à la documentation associée à votre ordinateur pour déterminer si votre
+souris série est reliée à tty00 (aussi appelé COM1) ou à tty01 (aussi
+appelé COM2).
+
+TYPE DE SOURIS PAR DEFAUT
+
+Dans la plupart des cas, UnixWare détecte le type de souris série
+connecté à votre système. La souris Mouse Systems ne peut être
+détectée automatiquement. Pour éviter des problèmes potentiels lors de
+l'utilisation de votre souris, vous devez spécifier son mode de fonctionnement.
+
+La souris compatible MSC (Mouse Systems Corporation) est une souris série à
+trois boutons, identique à la souris série Microsoft. Avant de
+sélectionner cette souris, vérifiez que la souris est configurée pour
+fonctionner en mode MSC. Pour sélectionner ce mode, repérez le switch figurant
+sous la souris et positionnez-le sur le mode 3 boutons ou MSC. Si votre 
+souris compatible MSC ne correspond pas à cette description, ou si vous 
+ne parvenez pas à localiser le switch, suivez les instructions de la
+documentation utilisateur fournie avec votre souris.
+
+Remarque : le mode Mouse Systems ou MSC est également appelé mode "Souris PC".
+
+NOMBRE DE BOUTONS DE LA SOURIS
+
+Lorsque vous utilisez votre souris dans l'environnement utilisateur
+graphique du système UNIX, vous pouvez utiliser ses différents boutons
+pour exécuter diverses opérations, comme "faire glisser-déposer" des
+éléments, exécuter des doubles clics et faire apparaître des menus.
+Votre souris comporte deux ou trois boutons : entrez le chiffre
+approprié.
+
+Pour plus de détails, voir le Guide d'installation.
+.helpinst
+ECHAP=Quitter l'aide F1=Instructions 1=Page suiv. 2=Page préc.
+.hhelpinst
+ECHAP=Quitter les instructions 1=Page suiv. 2=Page préc.
+.working
+Chargement du pilote de souris...
+.end

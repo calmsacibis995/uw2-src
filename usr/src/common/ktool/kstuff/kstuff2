@@ -1,0 +1,412 @@
+#!	/bin/ksh -e
+#
+#ident	"@(#)ktool:common/ktool/kstuff/kstuff2	1.9"
+#ident  "$Header:"
+#
+# kstuff: Command to stuff a kernel onto a remote machine via rcp/rsh.
+#
+#	The default targets of this activity on the remote machine are:
+#
+#		config tree:	/etc/conf.unix.<login-id>
+#		kernel:		/stand/unix.<login-id>
+#
+#	This command supports both interactive and batch modes.
+#
+#	In interactive mode, the user selects among pre-build bundles, and
+#	kernel trees from which bundles can be built.
+#
+#	In batch mode, $ROOT/$MACH is used to select a kernel.
+
+usage() {
+	echo 'usage:
+    kstuff [ -BFIKMQRSTbiqv# ] [ -c command ] [ -d db.file ] ... \
+	   [ -n driver ] ... [ -N driver ] ... [ -Y driver ] ...
+	   [ -r rename.file ] [ -t kname ] [ host[:kname] ]
+        -B      Normal idbuild (defeats -F, -I, -K, -M, -Q, -S, -T and -#)
+		[default].
+	-F	Force a rebuild of the bundle from the source tree
+	-I	Perform an idbuild on the remote system, and install the
+		newly built kernel under the specified name, but do not
+		send down a bundle.
+        -K      Do not delete the temporary configuration files and object
+                modules created by idbuild.
+	-M	Send down a bundle, and merge configurations, but do not
+		perform an idbuild.
+	-N driver
+		Stuff the named driver even if it is not present in the target,
+		but make sure it is stubbed out.
+        -Q      Incrementally download new pack.d/*/Driver.o files and then
+                perform a quick idbuild.
+	-R	Defeat all previously specified -N, -Y, -c, -n, and -r options.
+	-S	Build a statically linked kernel.
+	-T	Build bundle with idtools (only applies when building
+		a bundle).
+	-Y driver
+		Stuff the named driver even if it is not present in the target,
+		but make sure that it is activated.
+        -b      Batch mode (defeats -i). Use kernel tree at $ROOT/$MACH.
+	-c command
+		File containing a command to execute on the target
+		system after the merge of configurations, but before
+		the idbuild.
+        -d db.file
+		File containing a data base of kernels. Format of lines:
+                        root:mach:bundle-file:pre_built_flag:comment
+        -i      Interactive mode [default]
+	-n driver
+		Stuff the named driver even if it is not present in the target.
+        -q      Quiet mode (defeats -v).
+	-r rename.file
+		Specifies a file containing a driver rename map.
+	-t kname
+		Merge configurations with the configuration tree corresponding
+		to the named kernel [default=unix].
+        -v      Verbose mode. [default]
+	-#	Enable verbose debugging for idbuild.
+        host    remote host which will receive the kernel
+        kname
+		Kernel name [default is unix.<login-id>]. Installs kernel
+		into file /stand/<kname>. Idbuild root becomes
+		/etc/conf.<kname> on the remote host.
+
+	Options are also read from '$KLOC'/.kstuff.rc
+	and $HOME/.kstuff.rc.
+' >&2
+	exit 1
+}
+
+question() {
+	while [ 1 ]
+	do
+		echo "${1}? \c" >&2
+		read ans
+		case "$ans" in
+			[yY]*) return 0 ;;
+			[nN]*) return 1 ;;
+			*) echo 'Please answer "y" or "n".' >&2 ;;
+		esac
+	done
+}
+
+enter() {
+	INPUT=
+	while [[ -z "$INPUT" ]]
+	do
+		echo "Enter ${1}: \c" >&2
+		read INPUT
+	done
+	echo "$INPUT" | sed 's/[ 	]//g'
+}
+
+xlat_host() {
+	case $HOST in
+		*/*) echo "host and kernel names must not include a \`\`/''" >&2
+		     return 1;;
+		:*) echo "no target host specified" >&2
+		    return 1;;
+		*:) HOST=${HOST%:}
+		    KNAME=unix.${WHO};;
+		*:*) KNAME=${HOST#*:}
+		     HOST=${HOST%:${KNAME}};;
+		*) KNAME=unix.${WHO};;
+	esac
+
+	return 0
+}
+
+getargs() {
+	while getopts :BFIKMN:QRSTY:bc:d:in:qr:t:v c
+	do
+		case $c in
+		b) CMD=klookup.awk;;
+		c) extra=$OPTARG
+		   case $extra in
+			/*) ;;
+			*) if [[ -x $extra ]]; then
+				extra=$(/bin/pwd)/$extra
+			   else
+				extra=${KLOC}/$extra
+			   fi;;
+		   esac
+		   if [[ ! -x $extra ]] then
+			echo ${extra}: no such file >&2
+			exit 1
+		   fi
+		   RCP_EXTRAS="$RCP_EXTRAS $extra"
+		   extra=${extra:##*/}
+		   EXTRAS="$EXTRAS -c $extra"
+		   WF_EXTRAS="$WF_EXTRAS /var/tmp/$extra";;
+		d) KPATH="$KPATH $OPTARG";;
+		i) CMD=kprompt.awk;;
+		n) NEW_DRIVERS="$NEW_DRIVERS -n $OPTARG";;
+		q) QUIET=1;;
+		r) extra=$OPTARG
+		   case $extra in
+			/*) ;;
+			*) if [[ -r $extra ]]; then
+				extra=$(/bin/pwd)/$extra
+			   else
+				extra=${KLOC}/$extra
+			   fi;;
+		   esac
+		   if [[ ! -r $extra ]] then
+			echo ${extra}: no such file >&2
+			exit 1
+		   fi
+		   RCP_EXTRAS="$RCP_EXTRAS $extra"
+		   extra=${extra:##*/}
+		   EXTRAS="$EXTRAS -r $extra"
+		   WF_EXTRAS="$WF_EXTRAS /var/tmp/$extra";;
+		t) TARGET="-t $OPTARG";;
+		v) QUIET=0;;
+		B) F=; I=0; K=; M=0; Q=; T=; S=; DBG= ;;
+		F) F=-F;;
+		I) I=1;;
+		K) K=-K;;
+		M) M=1;;
+		N) NEW_DRIVERS="$NEW_DRIVERS -N $OPTARG";;
+		Q) Q=-Q;;
+		S) S=-S;;
+		R) NEW_DRIVERS=
+		   EXTRAS=
+		   RCP_EXTRAS=
+		   WF_EXTRAS=
+		   ;;
+		T) T=-T;;
+		Y) NEW_DRIVERS="$NEW_DRIVERS -Y $OPTARG";;
+		\?) if [[ "$OPTARG" = "#" ]]; then
+			DBG=-#
+		    else
+			usage
+		    fi;;
+		\:) usage;;
+		esac
+	done
+	shift $((OPTIND - 1))
+	case $# in
+	0) ;;
+	1) HOST=$1;;
+	*) usage;;
+	esac
+}
+
+_cleanup() {
+	rm -f $WF
+	$RSH $HOST -n -l root rm -rf /var/tmp/bundle.Z /var/tmp/kstuff1 \
+		/var/tmp/kstuff1.awk /var/tmp/kstuff-install \
+		/var/tmp/etc $WF_EXTRAS
+}
+
+WHO=$(id)
+WHO=${WHO%%\)*}
+WHO=${WHO##*\(}
+
+WF=/tmp/kstuff$$
+MYHOST=$(uname -n)
+case $(uname -r) in
+3.2*)
+	RSH=resh
+	AWK=nawk;;
+*)
+	RSH=rsh
+	AWK=awk;;
+esac
+
+KLOC=$(whence kstuff)
+KLOC=${KLOC:%/*}
+KOPT=.kstuff.rc
+SYS_OPTS=$KLOC/$KOPT
+HOME_OPTS=$HOME/$KOPT
+
+CMD=kprompt.awk
+QUIET=0
+KPATH=
+F=
+I=0
+K=
+M=0
+Q=
+S=
+T=
+DBG=
+NEW_DRIVERS=
+RCP_EXTRAS=
+EXTRAS=
+WF_EXTRAS=
+TARGET=
+
+#
+# parse arguments
+#
+ARGS=
+if [[ -r $SYS_OPTS ]]; then
+	ARGS=$(<$SYS_OPTS)
+fi
+if [[ -r $HOME_OPTS ]]; then
+	ARGS="$ARGS $(<$HOME_OPTS)"
+fi
+getargs $ARGS "$@"
+
+if [[ ! -z "$HOST" ]]; then
+	xlat_host
+fi
+
+if [[ "${Q}${F}${T}" = -Q?* ]]; then
+	echo "-Q is incompatible with -F and -T" >&2
+	exit 1
+fi
+
+if [[ ! -z "$Q" && $CMD = kprompt.awk ]]; then
+	echo "-Q can only be used in batch mode" >&2
+	exit 1
+fi
+
+if [[ ( $QUIET -eq 0 || $CMD = kprompt.awk || -z "$HOST" ) && ! -t 0 ]]; then
+	echo "interactive mode requires a terminal" >&2
+	exit 1
+fi
+
+#
+# if neither -I or -M is set, then set both
+#
+if [[ "${I}${M}" = "00" ]]; then
+	I=1; M=1
+fi
+
+while [ 1 ]
+do
+	#
+	# prompt for kernel
+	#
+	if [[ $M -eq 1 ]]; then
+		eval $(echo "${ROOT} ${MACH}\n${KPATH}" |
+			$AWK -f $KLOC/$CMD)
+
+		if [[ $PRE_BUILT -eq 1 && ! -z "${F}${T}" ]]; then
+			echo "Cannot specify -F or -T with a pre-built bundle" >&2
+			exit 1
+		fi
+		DESC="the $DESC "
+	else
+		DESC=
+	fi
+
+	if [[ -z "$HOST" ]]; then
+		HOST=$(enter "hostname or hostname:kernelname")
+		if xlat_host 
+		then
+			echo "\c"
+		else
+			HOST=
+			continue
+		fi
+	fi
+	if [[ $QUIET -eq 1 ]] ||
+	   question "Install ${DESC}as $KNAME on host $HOST"
+	then
+		break
+	fi
+	HOST=
+done
+
+if [[ $M -eq 1 ]]; then
+	if [[ ! -z "$Q" ]]; then
+		cd $CONF_ROOT/etc/conf
+		NEW=$(find pack.d -name Driver.o -newer $BUNDLE -print)
+		if [[ -z "$NEW" ]]; then
+			echo "kbundle: No Driver.o changes since $BUNDLE was last built." >&2
+			exit 1
+		fi
+	elif [[ $PRE_BUILT -eq 0 ]]; then
+		ROOT=${CONF_ROOT%/*} MACH=${CONF_ROOT##*/} kbundle $F $T
+	fi
+fi
+
+if [[ $QUIET -eq 0 ]]
+then
+	if [ -r /etc/resolv.conf ]; then
+		eval $(nslookup $MYHOST | $AWK '
+			NR==4 {print "MYDHOST=" $2}
+			NR==5 {print "IPN=" $2}')
+	else
+		IPN=$($AWK '$2 == "'$1'" {print $1; exit}' /etc/inet/hosts)
+		MYDHOST=${MYHOST}'.<domainname>'
+	fi
+	cat << --eocat--
+
+You must have the ability to access $HOST via rcp and $RSH (as root). If
+necessary, verify the following.
+
+     => $HOST is in state init 2 or init 3 with the network up.
+     => The /.rhosts file on $HOST is owned and currently writeable 
+	by root.
+     => The /.rhosts file on $HOST is readable by user daemon.
+
+If $HOST is running with Domain Name Service, then verify that:
+
+     => A "${MYDHOST} $WHO" entry has been made in the
+	/.rhosts file on $HOST.
+
+Otherwise, verify that:
+
+     => A "$MYHOST $WHO" entry has been made in the /.rhosts file on $HOST.
+     => A "$IPN $MYHOST" entry has been made in the
+	 /etc/inet/hosts file on ${HOST}.
+
+WARNING: If $MYHOST has multiple ethernet interfaces, then it is possible
+	 that the hostname associated with one of the alternate interfaces
+	 must be specified in the /.rhosts and /etc/inet/hosts files on
+	 ${HOST}.
+
+--eocat--
+	question "Ready to continue" || exit 1
+fi
+
+trap "_cleanup; exit 100" 0 1 2 3 15
+
+rcp $KLOC/kstuff1 root@${HOST}:/var/tmp/
+if [[ $M -eq 1 ]]; then
+	echo
+	echo copying installation materials to ${HOST}.
+	echo
+	if [[ ! -z "$Q" ]]; then
+		echo "$NEW" | cpio -oc | compress |
+			$RSH $HOST -l root "cat > /var/tmp/bundle.Z"
+		EXTRAS=
+		RCP_EXTRAS=
+		EXTRAS=
+	else
+		rcp $BUNDLE root@${HOST}:/var/tmp/bundle.Z
+	fi
+
+	for f in $RCP_EXTRAS; do
+		rcp $f root@${HOST}:/var/tmp
+	done
+
+	$RSH $HOST -n -l root /var/tmp/kstuff1 -M $Q \
+		$NEW_DRIVERS $EXTRAS $TARGET $KNAME 2>&1 | tee $WF
+
+	grep -il error $WF > /dev/null 2>&1 && exit 1
+fi
+
+if [[ $I -eq 1 ]]; then
+	if [[ $QUIET -eq 0 && $M -eq 1 ]]; then
+		question "Ready to idbuild kernel" || exit 1
+	fi
+	$RSH $HOST -n -l root /var/tmp/kstuff1 -I $K $Q $S $DBG \
+		$TARGET $KNAME 2>&1 | tee $WF
+
+	grep -il error $WF > /dev/null 2>&1 && exit 1
+fi
+
+_cleanup
+trap 0 1 2 3 15
+
+if [[ $I -eq 1 && $QUIET -eq 0 ]]; then
+	echo
+	echo $HOST will now be rebooted.
+	echo
+	question "Ready to continue" || exit 1
+
+	$RSH $HOST -n -l root /sbin/init 6
+fi

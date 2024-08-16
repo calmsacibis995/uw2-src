@@ -1,0 +1,433 @@
+# $Id: errors.txt 1.47 1994/09/02 20:01:48 rll Exp $
+
+# Error database
+###################################
+# ERR_INFO	>= 0
+# ERR_WARNING	>= 2000
+# ERR_MINOR	>= 4000
+# ERR_SEVERE    >= 6000
+# ERR_FATAL     >= 8000 
+
+#### MULTI-LINE ERROR MESSAGES ARE SUPPORTED
+# Simply use '\' to "escape" the eol
+
+# global errors (0-99)
+###################################
+0000    Version 2.0
+0001	'%s' wird ausgeführt...
+0002	'%s' wird auf Zeile '%d' ausgeführt ...
+0003	Warnung
+# minor error
+0004	Fehler
+# major error
+0005	Fehler
+0006	schwerwiegender Fehler
+2000	Datei '%s' kann nicht geöffnet werden
+2001	Fehler beim Lesen von Datei '%s', bitte überprüfen Sie die Berechtigungen
+2002	Fehler beim Schreiben an Datei '%s', bitte überprüfen Sie die Berechtigungen 
+2003	%s noch nicht unterstützt
+2004	Systemfehler, %s
+2005	Verzeichnis '%s' kann nicht gelesen werden
+2006	an Verzeichis '%s' kann nicht geschrieben werden
+2007    Unterprozeß '%s' kann nicht ausgeführt werden
+2008	Datei '%s' existiert bereits
+2009	'%s' wurde ohne Erfolg zurückgegeben
+4000	Programm '%s' kann nicht mit EBT-Server registriert werden
+4001	keine Autorisation vom EBT-Server
+4002	Datei '%s' kann nicht entfernt werden
+4003	keine solche Datei '%s'
+4004	Fehler beim Lesen von Datei '%s', bitte überprüfen Sie die Berechtigungen
+4005	Fehler beim Schreiben an Datei '%s', bitte überprüfen Sie die Berechtigungen 
+4006    Speicherplatz für '%s' kann nicht zugeteilt werden
+4007	Datei kann nicht geöffnet werden, unzureichende Berechtigungen auf Datei '%s'
+4008	doppeltes Vorkommen von '%s', Vorkommen Nr.%d wird verwendet
+4012	keine Autorisation für Option '%s'
+6001	Antwort auf rpc-Aufruf '%s' nicht möglich
+6002	rpc-Routinen können nicht registriert werden
+6003    Öffnen von Socket nicht möglich
+6004	Verbindung zu Server %s bei '%s' nicht möglich
+6005	rpc-Fehler
+6006	Speicherzuteilung für %s nicht möglich
+6007	es kann nicht genügend Speicher freigemacht werden
+6008    rpc-Ruf '%s' kann nicht gesendet werden
+6010	Erstellen von %s nicht möglich
+6011	Fehler in Zeile %d in Datei '%s'
+6015	Falscher Case in Schalter für %s
+6016	Funktion '%s' ist fehlgeschlagen, als sie von '%s' aufgerufen wurde
+8000	Speicherzuteilung für %s nicht möglich
+8001	Fehler beim Lesen von Datei '%s', bitte überprüfen Sie die Berechtigungen
+8002	Fehler beim Schreiben an Datei '%s', bitte überprüfen Sie die Berechtigungen 
+8003	Datei '%s' kann nicht geöffnet werden
+8004	'%s' ist eine obligatorische .ebtrc-Variable
+8005	ungültiger Autorisationsdienst '%s'
+8006    Öffnen von Socket nicht möglich
+8007    rpc-Routine kann nicht registriert werden
+8008    Erreichen dieses Punktes '%s' unmöglich
+8009	Antworten auf rpc-Ruf '%s' nicht möglich
+8010	Erstellen von %s nicht möglich
+8011	falsche magische Zahl in %s
+8012	Datei '%s' kann nicht gefunden werden
+
+
+# pcolors package (100-109)
+###################################
+2100	%s ist ein zu langer Farbenname
+2101	Schwarz wird verwendet, Farbe '%s' konnte nicht analysiert werden
+2102	Schwarz wird verwendet, Farbe '%s' konnte nicht zugeteilt werden
+2103	Datei '%s' kann nicht gefunden werden
+
+# pfonts package (110-119)
+###################################
+6110	Standardschriftart '%s' kann nicht geladen werden
+4111	xtab '%s' kann nicht geladen werden, Zeichensatz eventuell aus
+4112	der Schriftart '%s' fehlt Zeichensatz '%s'
+2111	'%s' wird verwendet, '%s' konnte nicht geladen werden
+
+# pg package (120-129)
+###################################
+2120	Lesen von Bitmap-Datei '%s' nicht möglich
+8120	Anzeige kann nicht geöffnet werden
+
+# str,util package (130-139)
+###################################
+2130	Falsches Attributennamenzeichen (akzeptiert) in '%s': '%c'(%d)
+2131	offensichtlich fehlender Werteindikator in Attributzeichenkette '%s', bei '%s'
+2132	mehrfacher Werteindikator (ignoriert) in Attributzeichenkette '%s'
+2133	Wagenrücklauf (CR) oder Zeilenvorschub (LF) innerhalb von in Anführungszeichen gesetztem Attributwert
+2134	ungültiger util attr fsa Zustand
+2135    Zeichenkettenfehler '%s'       
+2136	
+2137	Puffer zu klein in Huffman-Decodierung
+2138	Puffer zu klein in Huffman-Codierung
+4130	%d ist zu klein für einen Attributpuffer
+6130	xtabunion widersprüchliche Zuweisungen für Zeichen '%d'
+8130	Huffman-Baum-Fehler
+
+# raster package (140-149)
+###################################
+6140	Bitmap-Datei '%s' kann nicht geöffnet werden
+6141	Bitmap-Abbild kann nicht geladen werden
+
+# browser,toc, and render packages (150-169)
+############################################
+4151	
+4152	zuviele Daten zu kopieren; %d Zeichen werden kopiert
+6150	Bitmap-Datei '%s' kann nicht geladen werden, Standard wird versucht
+6151    selbst Standardsymbol '%s' kann nicht geladen werden       
+6160	'%s' ist im init-Browser ungültig
+6161	Browser::init wird mehr als einmal aufgerufen
+6163	falsche Root-Element-ID '%s'
+8160	Erstellen von '%s' nicht möglich
+
+# et package (190-199)
+####################################
+2190	unbekannte Einheit in Datei '%s' bei Zeilennr.%ld
+2191	mögliche infinitive Rekursion für Einheit '%s'
+2192	ungültiger Seitenwechselmodus
+2193   
+2194    Elementtext hat keine Länge Nr.%ld
+2195    Element hat keine Attribute, ist cdata Nr.%ld
+4190	zuviel Rekursion in virtuellem Dokument '%s'
+4191	virtuelle Adresse kann nicht neuzugeordnet werden
+4192	Funktion '%s' sollte nicht mit einem einem virtuellem Dokument aufgerufen werden
+4193	virtuelle tdir-Adresse kann nicht neuzugeordnet werden
+4194	virtuelles Dokument ohne Unterdokumente
+4195	Unterdokument '%s' von Datenbank '%s' kann nicht geöffnet werden
+6190	falscher Header in Datei '%s'
+6191	edir-Versionsnummer stimmt nicht überein
+6192	Anzahl der Elemente in edir liegt unter 1
+6193	Etiketten können nicht gelesen werden
+6194	Elementverzeichnis kann nicht gelesen werden
+6195	Buch hat kein Verzeichnis für Inhaltsverzeichnis
+6196	ETgetEntity aufgerufen, Einheiten werden nicht länger gespeichert
+8191	BIO-Pufferpool kann nicht erstellt werden
+
+# image package (200-209)
+####################################
+2200	writeCALS noch nicht unterstützt
+2201	Fehler in Datei '%s'
+2202    falsche magische Zahl in Datei '%s'
+2203    falsche Breite und/oder Höhe in '%s'-Datei
+2204	writeTiff noch nicht unterstützt
+2205	nicht unterstütztes TIFF-Format
+2206	keine Farbzuordnung in Datei '%s'
+2207	'%s' wird in Datei '%s' nicht unterstützt
+4200	Bildfarbtabelle ist zu umfangreich
+4207	nicht unterstützter Modus oder Code '%s' bei oder in der Nähe von Zeile %d
+
+# dtl, dtext, and closely associated modules (250-269)
+########################################################
+250	Verwendung: %s [-col Buchdatenbank] [-target Skript] [-root Skript] [Buchname]
+251	'%s' befindet sich leider auf der Stopliste
+252     ein Wort befindet sich auf der Stopliste
+253	Auswertungsbuch von '%s'
+254	keine Vorkommen gefunden
+255	keine Vorkommen gefunden, aber Wort/Wörter auf Anhalteliste
+256	Auswertungsbuch
+2250	Verbindung für externes API kann nicht geöffnet werden
+2251	Buch '%s' kann nicht geöffnet werden
+2252	kein Buch '%s'
+2253	nicht-mdi übergeordnetes Fenster für Operation
+2254	cdata ohne Text
+2255	Stil '%s' kann nicht geladen werden
+2256	Buch '%s' ist bereits offen
+2257    Buch '%s' ist nicht geöffnet
+2258	Hilfesystem nicht verfügbar
+2259	kann Druckstrom und/oder Stildatenbank nicht öffnen, Drucken wird abgebrochen
+2260	Zielbuch '%s' kann nicht geöffnet werden
+2261	Querverweis zu aktuellem Fenster nicht möglich
+2262	Zielansicht '%s' kann nicht erstellt werden
+2263	keine aktive Ansicht
+2264	Tabelle kann nicht erstellt werden
+2265	Anmerkungen und Vorgeschichte für '%s' eventuell veraltet
+2266	Fulltext-Indexdatenbank '%s' kann nicht geöffnet werden
+2267	einzelnes Anführungszeichen "'" in Anmerkungsskript '%s'
+2268	Fehler beim Lesen von Index
+2270    momentan ist keine Abfrage aktiv
+4250	nicht autorisiert, Buch '%s' zu öffnen
+4251	kein Skript '%s'
+4252	Druckfehler 
+4253	kein Parameter '%s' für Skript
+4254    graphisches Bild von Datei '%s' kann nicht erstellt werden
+4255	wird ohne Fulltext-Index ausgeführt, '%s' kann nicht ausgeführt werden
+4256	Hinweisdatei '%s' kann nicht geladen werden
+4257    Speicherprobleme, Abfrageergebnisse sind zu groß
+4258    das Skript '%s' unterstützt kein Drucken
+4259	'%s' hat überarbeitete Auflage %d, aber Element hat überarbeitete Auflage %d
+4260	Anmerkung kann nicht hinzugefügt werden
+4261	Anmerkung kann nicht entfernt werden
+4262	Auswertungsbuch '%s' abgelaufen am '%s'
+4263	ungültger Frageausdruck
+4264	Skript für Element '%s' kann nicht erhalten werden
+4265	Element, zu der die Ansicht gerollt werden soll, kann nicht gefunden werden
+4266	Root der neuen Ansicht kann nicht gefunden werden 
+4267	nur der Eigentümer kann eine Anmerkung löschen
+4268	Sie haben keinen Autorisationsschlüssel für sicheres Buch '%s' angegeben
+6250	leeres Segment in freiem Puffer
+6251	Anmerkung bereits in Hash-Tabelle, Element-ID %ld
+6252	Stildatenbank '%s' kann nicht geladen werden
+6253	Standalone-Lizenz hat ungültige Host-ID
+6254	kann weder Autorisationsdatei finden noch Verbindung zu EBT-Server herstellen
+6255	Auswertungslizenz ist abgelaufen
+6256	Autorisationsdatei '%s' kann nicht gelesen werden
+6257	Autorisation fehlgeschlagen, EBT-Server kann nicht auf '%s' erreicht werden
+6258	Autorisation fehlgeschlagen: %s
+6259	ungültiger Autorisationsdienst '%s'
+6260	ungültiges data_dir an DTL weitergegeben
+6261	
+8250	
+8251	Stil '%s' kann nicht geladen werden
+8252	
+8253	
+8254	Initialisierung von Schnittstelle nicht möglich - '%s'
+8258	Verschachtelung von Stilen in Inhaltsverzeichnis, siehe '%s'
+8259	keine Ebenen 1 oder 2 in Inhaltsverzeichnis
+
+# ebt programs (290-300)
+######################################
+290	Datei '%s' wird aktualisiert
+291	Verwendung: %s [-buildmap Zuordnungsdatei -db1 Buchdbank1 -db2 Buchdbank2 -b1 Buch1 -b2 Buch2 \
+                  [-private Verzeichnis] [-public Verzeichnis] Zuordnungsdatei
+292	Befehlsformat:  %s %s [Datei] \
+                %s %s [Datei] \
+                %s %s [Datei] \
+                %s %s [Datei] \
+                %s %s [Datei] \
+                %s %s [Datei] \
+                %s %s [Datei] \
+                %s %s [Datei]
+
+# lwin package, lookups (300-305)
+######################################
+2300 Datei '%s' kann nicht gespeichert werden
+2301 Datei '%s' kann nicht geöffnet werden
+2302 Suchformat '%s' ist für dieses Buch nicht definiert
+2303 Abfrageausdruck fehlt für Suchformat '%s'
+2304 Felddefinition(en) fehlen für Suchformat '%s'
+2305 Namensattribut fehlt für Suchformat bei Zeile %ld der Datei '%s'
+
+# bwin package (306-315)
+######################################
+2306	Buchdatenbank '%s' hat Größe null 
+2307	Sie müssen mindesten ein Buch ausgewählt haben
+2308	Buch '%s' ist kein gültiges Buch
+
+# print and render packages (340-349)
+######################################
+2340	Fenster ist schmaler als das vom Stilblatt geforderte Minimum
+
+# index (380-389)
+######################################
+380	Wort ist in Stopliste
+381	kein solches Wort im Index
+382	Index-Flush Nr.%d, bei Element %ld ...
+383	Index-Flush Nr.%d, am Ende des Buches
+384	Daten mischen abgeschlossen
+385	es wird neu strukturiert... 
+386     Vokabular wird neu organisiert...
+387     Umstrukturierung abgeschlossen, es wird aufgeräumt...
+388	%.1f%% erledigt, bei Wort "%s"
+389     es wird gemischt... 
+2380	Probleme beim Öffnen der Stopliste, vergewissern Sie sich, daß der Pfad richtig ist 
+2381    Probleme beim Öffnen der Go-Liste, vergewissern Sie sich, daß der Pfad richtig ist
+4380	Datei kann nicht gelöscht werden
+4381	falscher Parameter weitergegeben
+4382	Index wurde nicht im richtigen Modus für Operation geöffnet
+4383	Subindex ist in diesem Index nicht aktiv
+4385	Fehler ist in Unterpaket %s aufgetreten
+4386	Datei kann nicht von '%s' zu '%s' umbenannt werden
+4387	der aktuelle Index ist leer
+4388	das Buch ist derzeit leer
+5380	nicht kompatible Datentypen in den Operanden eines logischen Operators
+5381	falscher Datentyp auf der linken Seite des "beinhaltenden" Operators
+5382	falscher Datentyp auf der rechten Seite des "inside" Operators
+6380    Suchen auf Position %ld in der Datei bei %s nicht möglich
+6381	angefordertes Zeichen nicht in Datei gefunden
+6382	in der Datei kann nicht gelesen werden
+6383	an die Datei kann nicht geschrieben werden
+6384	Vokabulardatei kann nicht halbiert werden
+6385	Datenbanksatz wirr für Wort '%s', Grund: %s
+6386    Elementstapel ist leer, Element kann nicht geschlossen werden
+6387    unbekannte Datenkomprimierungsmethode %d
+6388	Komprimierungssegment außerhalb des Bereichs: %d
+6389	INDEXflogCreate failed für %s
+6390	Problem beim Lesen der Datei %s, bitte überprüfen Sie die Berechtigungen
+6391	zuviele Flush-Dateien - versuchen Sie, den max. Speicher neu festzulegen
+6392	Datei '%s' ist keine mkbook-Protokolldatei
+6393	Pfadname für Buch stimmt nicht mit Flush-Datei überein
+6394    Flush-Satz von falscher Länge in Flush-Datei
+6395    ein Datensatz in Flush-Datei ist ungültig
+6396	Flush-Zähler nicht synchronisiert       
+6397	Problem beim Öffnen von Vokabular in %s. \
+                 Versuchen Sie eine Neuerstellung des Buchs
+6398	Problem beim Erhalten von Daten  in %s. \
+    Datei existiert nicht oder ist überaltert.  Versuchen Sie eine Neuerstellung des Buchs
+6399	Buch wurde nicht in letzter Zeit erstellt.\
+                Versuchen Sie eine Neuerstellung des Buchs
+
+# edit package (390-399)
+######################################
+2390	im Zwischenspeicher ist kein Text zum Einfügen vorhanden
+2391	Zugriff auf die Daten im Zwischenspeicher ist nicht möglich
+
+# os package (390-395) (regex is here)
+######################################
+
+# hist and annot package (430-434)
+######################################
+2430	Revision der Anmerkungsdatei ist negativ, möglicherweise veraltet
+4430	ungültiges Startetikett '%s' in Ereignisliste
+4431	'TITLE'-Etikett nicht innerhalb 'EVENT'-Etikett in Ereignisliste
+4432	Ereignisliste endete in der Mitte eines Ereignisses
+4433	ungültiges Startetikett '%s' in Anmerkungsdatei '%s'
+6430	SGML-Parser kann auf Datei '%s' nicht geöffnet werden
+
+# win, hwin and awin package (435-439)
+######################################
+435	im Zwischenspeicher sind keine Journaleinträge zum Einfügen vorhanden
+436	keine Journaleinträge zum Ausschneiden ausgewählt
+437	keine Journaleinträge zum Kopieren ausgewählt
+438     Doppelter Filtername
+439     Falscher Datenwert angegeben
+2434    Dieser Filter kann nicht bearbeitet werden
+2435	Dieser Filter kann nicht gelöscht werden
+2436    Ein Filtername ist erforderlich
+2437	Eine Annotation muß zuerst ausgewählt werden
+2438	Ein Filter muß zuerst aussgewählt werden
+2439	Sie müssen für diese Operation genau ein Element ausgewählt haben
+4435	Zugriff auf die Daten im Zwischenspeicher ist nicht möglich
+4436	Sie können die Filtergruppe '%s' nicht löschen, da Sie nicht Eigentümer sind.
+
+# mklibidx package -- Making library level index (600-640)
+######################################
+# 
+#
+8600 neuer Bibliotheksstufenindex kann nicht erstellt werden,\
+                Berechtigungen auf aktuellem Index überprüfen
+8601 in Datei .ebtrc wurde keine Sammlung angegeben
+8602 in Ihrer Datei .ebtrc wurde kein Datenverzeichnis angegeben
+8605 Befehlsformat: %s [-col Sammlung] [-config Buchliste]\
+                [-nl] [-v(erbose)] [-data_dir Datenverzeichnis]
+8603 Die Bibliothek %s existiert nicht
+8604 %s ist keine ebt-Bücherbibliothek
+
+## Errors, in parsing file
+2610 Zeile %2d der Aufbaudatei -- Gruppe hat keinen Namen,\
+                alle Indexanforderungen für diese Gruppe werden ignoriert
+2611 Zeile %2d der Aufbaudatei -- Gruppe '%s' wurde bereits hinzugefügt,\
+                 alle Indexanforderungen für diese Gruppe werden ignoriert
+2612 Zeile %2d der Aufbaudatei -- Buch hat keinen Namen,\
+                alle Indexanforderungen für dieses Buch werden ignoriert
+2613 Zeile %2d der Aufbaudatei -- Buch '%s' wurde bereits hinzugefügt,\
+                alle Indexanforderungen werden ignoriert
+2614 Zeile %2d der Aufbaudatei --unerkanntes Element '%s'
+2615 Zeile %2d der Aufbaudatei -- keine Gruppe oder kein Buch geöffnet, INDEX-Element ignoriert
+2621 Zeile %2d der Aufbaudatei -- Etikettname '%s' in Buch '%s' neu definiert
+2622 Zeile %2d der Aufbaudatei -- Etikettname '%s' in Gruppe '%s' neu definiert
+2628 Zeile %2d der Aufbaudatei -- Buch '%s', Warnung - Element '%s'  auslassen, neu definiert
+2629 Zeile %2d der Aufbaudatei -- Indexzeile gibt kein Element an
+
+## Errors, while building library-level index
+##
+2616 Buch '%s' -- in Gruppe '%s', welche nicht existiert
+2617 Buch '%s' konnte nicht hinzugefügt werden -- versuchen Sie, es neu zuerstellen, bevor Sie den Bibliotheksindex erstellen
+2630 Buch '%s' konnte nicht hinzugefügt werden -- nicht in Sammlung %s gefunden
+2631 Virtuelles Buch '%s' konnte nicht hinzugefügt werden -- zu viele Unterbücher 
+2620 Etikettnamenkonflikt in Buch '%s' für Etikett '%s' -- Buchdefinition wird verwendet
+4618 große Probleme beim Hinzufügen von Buch '%s'
+2625 Auslassungselement darf nur innerhalb eines Buches erscheinen
+2626 Auslassungselement '%s' in Buch '%s', nicht in Gruppe '%s'
+2627 Konflikt: Auslassungselement '%s' in Buch '%s' und ebenfalls in Indexliste
+2607 Probleme beim Hinzufügen von Buch '%s', es wurde bereits hinzugefügt
+
+## Status Messages while building library-level index
+##
+4605 Fehler beim Versuch, Buch '%s' hinzuzufügen
+606 Buch '%s' wurde hinzugefügt
+608 Sammlungsindex wird erstellt...
+609 Gesamtzeit für Indexerstellung der Sammlung: %s 
+637 *** Sammlungsindex abgeschlossen ***
+619 Buch '%s' wird hinzugefügt
+623 Konfigurationsdatei: %s
+634 Konfigurationsdatei: booklist.txt wird verwendet
+635 Konfigurationsdatei: Nichts angegeben -- Indexerstellung für ALLE BÜCHER
+624 Konfigurationsdatei konnte nicht gefunden werden: %s
+631 Für Buch '%s,' sollen folgende Elemente in den Index aufgenommen werden...
+632 -- %8s wurde gelöscht, wird nicht in den Index aufgenommen
+633 -- %8s wird unter '%s' in den Index aufgenommen
+636 --------------------------------------------------------
+
+
+# Lswin package
+###############
+#
+#
+
+666 Lswin: Reihe %d geht über den Rand des Feldes hinaus
+667 Lswin: Parameter außerhalb der Grenzen
+668 Lswin: Realloc hat NULL zurückgegeben
+669 Lswin: es wird versucht, ein Element einzustellen, das sich außerhalb der Grenzen befindet
+670 Lswin: Speicher hätte vergrößert werden müssen, um Element hinzuzufügen; dies war aber nicht möglich
+
+# Inwin Package
+###############
+
+671 Wählen Sie ein Stilblatt aus, oder geben Sie einen neuen Stilblattnamen ein.
+672 Wählen Sie eine Bibliothek und ein Buch aus.
+673 Wählen Sie ein Buch aus.
+
+##################################################################
+#
+# DynaTag Error Messages (700-799)
+#
+##################################################################
+
+# General Errors
+################
+
+6700 kein Speicherplatz mehr
+6701 Datei %s konnte nicht geöffnet werden
+6702 Datei %s konnte nicht zum Schreiben geöffnet werden
+6703 Sicherungsdatei %s konnte nicht erstellt werden
+
+

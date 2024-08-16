@@ -1,0 +1,15 @@
+#!/usr/bin/ksh
+#ident	"@(#)proto:desktop/buildscripts/dsmaps	1.12"
+
+pkgdir=$1
+shift
+cd $pkgdir
+{
+	find .extra.d -print
+	for i
+	do
+		echo $i/pkginfo
+		echo $i/pkgmap
+		[ -f $i/setinfo ] && echo $i/setinfo
+	done
+} | cpioout

@@ -1,0 +1,54 @@
+#ident	"@(#)olpkg.oam:dtxt/request	1.11"
+
+PKGMSG=${PKG}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+############# Begin UPGRADE AND OVERLAY #######################
+
+#  set INSTALL_MODE to CUSTOM, if not set
+[ "$INSTALL_MODE" ] || INSTALL_MODE=CUSTOM
+SCRIPTS=/usr/sbin/pkginst
+
+PKGINSTALL_TYPE=NEWINSTALL
+#chkpkgrel, returns a code, indicating which version of this pkg is installed.
+#Return code 2 indicates overlay of the same or older version. For overlay,
+#existence of the file $UPGRADE_STORE/$PKGINST.ver indicates presence of older
+#version. This file contains the old version.
+
+#       ${SCRIPTS}/chkpkgrel returns    0 if pkg is not installed
+#                                       1 if pkg if unknown version
+#                                       2 if pkg is SVR4.2
+#                                       4 if pkg is SVR4.0 V4
+#                                       9 if newer pkg is installed
+
+${SCRIPTS}/chkpkgrel
+PKGVERSION=$?
+case $PKGVERSION in
+	2)	PKGINSTALL_TYPE=OVERLAY	;;
+	4)	PKGINSTALL_TYPE=UPGRADE	;;
+	9)	exit 3 ;; #pkgrm newer version before older version installed
+	*)	;;
+esac
+
+[ "$PKGINSTALL_TYPE" = NEWINSTALL ] || {
+	AUTOMERGE=Yes
+}
+
+export INSTALL_MODE PKGINSTALL_TYPE AUTOMERGE
+############# End  UPGRADE AND OVERLAY #######################
+
+cat >$1 << !
+AUTOMERGE='$AUTOMERGE'
+PKGINSTALL_TYPE='$PKGINSTALL_TYPE'
+INSTALL_MODE='$INSTALL_MODE'
+!
+exit 0

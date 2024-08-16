@@ -1,0 +1,35 @@
+!
+!(c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+!ALL RIGHTS RESERVED 
+!
+!
+! Motif Release 1.2
+!
+
+module hebrew_strings
+    version = 'v1.1'
+    names = case_sensitive
+    character_set = iso_hebrew_lr
+
+value
+    local_font : exported
+           font('-Misc-Fixed-Medium-R-Normal--13-120-75-75-C-80-ISO8859-8', 
+	   character_set = iso_hebrew_lr);
+
+    string_direction : exported XmSTRING_DIRECTION_R_TO_L;
+
+    hello_label : exported compound_string("םולש", separate=true)&
+                           compound_string("!םלוע");
+
+    bye_label : exported compound_string("תוארתהל", 
+                         separate=true)&
+                         compound_string("!םלוע");
+
+    label_label : exported 
+           compound_string("תחא םעפ ץחל", 
+	       separate=true)&
+           compound_string("תרתוכה תונשל", 
+	       separate=true)&
+           compound_string(#iso_hebrew_lr"ופעמיים בכדי לצאת.");
+			  
+end module ;

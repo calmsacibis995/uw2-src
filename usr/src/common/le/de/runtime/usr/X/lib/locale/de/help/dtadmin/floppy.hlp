@@ -1,0 +1,228 @@
+#ident\t"@(#)dthelp:Disks-etc/floppy.hlp        1.20"
+^*version^1
+^*title^Laufwerk A oder B
+^:Laufwerk A oder Laufwerk B
+^*width^70
+^+DesktopMgr/help.defs
+^?Disketten verwenden
+^0^Laufwerk A oder B
+^$10
+Laufwerk A oder B
+
+Die Symbole "Diskette_A" und "Diskette_B" stellen die Diskettenlaufwerke
+Ihres Systems dar (wenn Ihr System nur ein Diskettenlaufwerk hat, wird
+nur das Symbol "Diskette_A" angezeigt).
+
+"Laufwerk A" oder "Laufwerk B" bietet Ihnen folgende Möglichkeiten:
+
+\to\t\k(Disketten formatieren^^Disketten formatieren)
+\to\t\k(Dateien und Ordner sichern und wiederherstellen^dtadmin/backup.hlp^Sichern-Wiederherstellen)
+\to\t\k(Diskette als Dateiordner öffnen^^Diskette als einen Dateiordner öffnen)
+\to\t\k(Anwendungen installieren^dtadmin/App_Installer.hlp^Anwend-Installierer)
+\to\t\k(Disketten löschen^^Diskette löschen)
+
+Hinweis: Bevor Sie Daten auf eine Diskette kopieren können, müssen Sie
+die Diskette formatieren.
+
+
+^1^Disketten formatieren
+^$20
+Disketten formatieren
+
+Dazu gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Platten usw." befinden,
+machen Sie weiter mit Schritt 2.
+
+1.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Disketten usw.". Das Fenster
+  \t"Ordner: Disketten usw." erscheint.
+
+2.\tKlicken Sie im Ordner "Disketten usw." "Diskette_A" (oder "Diskette_B")
+  \tan.
+
+3.\tVergewissern Sie sich, daß die Diskette nicht schreibgeschützt
+  \tist.
+
+  \to\tBei 3,5"-Disketten- Die schwarze Schreibschutzmarke auf der
+  \t \tRückseite der Diskette muß das Loch abdecken.
+
+  \to\tBei 5,25"-Disketten - Die Aussparung am äußeren Rand der
+  \t \tDiskette darf nicht abgedeckt sein.
+
+4.\tLegen Sie die Diskette in das entsprechende Laufwerk (A oder B)
+  \tein.
+
+5.\t\d(Rechtsklicken^rechtsklicken) Sie auf das Sysmbol "Diskette_A"
+  \toder "Diskette_B" .
+
+6.\tKlicken Sie "Formatieren" an. Das Fenster "Formatieren" erscheint.
+
+7.\tKlicken Sie die für Ihre Diskette erforderliche \k(Schreibdichte^^Diskettendichten) an.
+
+8.\tKlicken Sie den gewünschten \k(Typ^^Formattypen) an.
+
+9.\tKlicken Sie "Datei=>Formatieren" an. Das Fenster "Formatieren
+  \tfindet statt" erscheint.
+
+  \tIn diesem Fenster wird der Stand der Formatierung durch einen sich
+  \tverschiebenden Balken angezeigt. Außerdem wird die Meldung
+  \t"Formatieren läuft, bitte warten." angezeigt. Nach
+  \tabgeschlossener Formatierung zeigt dasselbe Fenster die Meldung
+  \t"Formatieren abgeschlossen" an.
+
+Siehe auch:
+\s(Disketten formatieren^dhelp "pe.de" userhb "Dateien und Ordner verwalten" "Disketten formatieren" || helpLinkErr)
+
+
+^2^Diskettendichten
+^$30
+Diskettendichten
+
+Der UnixWare Desktop unterstützt folgende Schreibdichten:
+
+\to\t720 KB
+
+\to\t360 KB
+
+\to\t1,2 MB
+
+\to\t1,44 MB
+
+\to\t2,88 MB
+
+^2^Formattypen
+^$40
+Formattypen
+
+Klicken Sie einen der folgenden Formattypen an:
+
+\to\tSicherungsverwendung -  Wenn Sie Dateien von Ihrer Festplatte auf
+\t \t\tDiskette kopieren möchten.
+
+\to\tDesktop-Ordner - Wenn Sie eine Diskette wie einen Ordner öffnen
+\t \tmöchten. Sie können dann die Dateien auf dieser Diskette wie die
+\t \tDateien in einem beliebigen Dateiordner bearbeiten.
+
+\t \tHinweis: Wenn Sie "Desktop-Ordner" wählen, aber nicht den
+\t \tStandardtyp des Dateisystems verwenden möchten, klicken Sie
+\t \t\k("Datei=>Eigenschaften"^^Fenster Format: Eigenschaften) an, um einen anderen Typ zu wählen.
+
+\to\tDOS-Format - Wenn Sie die Diskette mit dem Betriebssystem DOS
+\t \tverwenden möchten. (Auch wenn Sie sich auf einem UnixWare System
+\t \tbefinden, können Sie DOS als eine Anwendung auf Ihrem Desktop
+\t \tinstalliert haben.)
+
+Zusätzlich zu den von UnixWare erstellten Dateiformaten kann das
+Desktop auch Dateien lesen, die in anderen Formaten erstellt wurden
+(siehe \k(Zusätzlich unterstützte Formattypen) für weitere Informationen).
+
+^2^Fenster Format: Eigenschaften
+^$45
+Fenster Format: Eigenschaften
+
+Dieses Fenster zeigt die verschiedenen Dateisystemtypen an, aus denen
+Sie wählen können. Klicken Sie den gewünschten Typ und anschließend
+"OK" an.
+
+Für weitere Informationen über Dateitypen siehe
+\s(Dateisystemtypen verwalten^dhelp as sysag "Managing File System Types" "" || helpLinkErr).
+
+^2^Zusätzlich unterstützte Formattypen
+^$50
+Zusätzlich unterstützte Formattypen
+
+Zusätzlich zu den unter \k(Formattypen) beschriebenen Formaten
+kann der UnixWare Desktop auch Dateien lesen, die in anderen Formaten
+erstellt wurden. Unterstützte Diskettenformate sind:
+
+\to\tSicherungsverwendung - Obwohl der Desktop den Befehl
+\t \t\d(cpio) des UNIX Systems für die Erstellung von
+\t \tSicherungskopien verwendet, kann er auch Dateien wiederherstellen,
+\t \tdie mit dem Befehl tar(1) des UNIX Systems erstellt wurden.
+
+\t \tHinweis: Für weitere Befehle des UNIX Systems siehe die
+\t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+\to\tDesktop-Ordner - Der Desktop kann einen Dateiordner für Disketten
+\t \töffnen, die in einem von UnixWare unterstützten Dateisystem
+\t \terstellt wurden, z. B. s5, ufs und vxfs (siehe
+\t \t\k(Diskette als einen Dateiordner öffnen)).
+
+\t \t-\ts5 ist das UNIX Standarddateisystem System V. Dateinamen
+\t \t \tdürfen nicht mehr als 14 Zeichen umfassen.
+
+\t \t-\tufs gestattet längere Dateinamen als s5 und kann größere Datenblöcke
+\t \t \tauf einmal schreiben.
+
+\t \t-\tvxfs ist ein gefestigtes Dateisystem (das Ihnen gestattet, den
+\t \t \tlaufenden Computer ohne Datenverluste auszuschalten).
+
+\to\tDOS Format -  Der Desktop kann Dateien auf einer mit DOS
+\t \tformatierten Diskette lesen (und schreiben).
+
+\to\tInstallationsformate - Der Desktop kann Anwendungspakete lesen und
+\t \tinstallieren, die in verschiedenen UNIX Systemformaten
+\t \tu. a. pkgadd, tar, installpkg und custom formatiert wurden.
+
+Siehe auch:
+\k(Sichern-Wiederherstellen^dtadmin/backup.hlp^Sichern-Wiederherstellen)
+\k(Anwendungsinstallierer^dtadmin/App_Installer.hlp^Anwend-Installierer)
+\s(Dateisystemtypen verwalten^dhelp as sysag "Managing File System Types" "" || helpLinkErr)
+
+
+^1^Diskette als einen Dateiordner öffnen
+^$70
+Diskette als einen Dateiordner öffnen
+
+Sie können eine Diskette wie einen Dateiordner öffnen. Dies ist eine
+bequeme Art, mit Dateien zu arbeiten, da Sie sie wie die Dateien auf
+Ihrer Festplatte kopieren, hinzufügen oder löschen können.
+
+Hinweis: Sie können DOS formatierte Disketten wie Disketten, die für
+Ihren Desktop formatiert wurden, öffnen und verwenden.
+
+Um eine Diskette wie einen Dateiordner zu öffnen, gehen Sie wie folgt
+vor:
+
+1.\tFormatieren Sie die Diskette als Desktop-Ordner (siehe
+  \t\k(Disketten formatieren)).
+
+2.\t\d(Doppelklicken^doppelklicken) Sie auf das Diskettensymbol das
+  \tdie Diskette enthält, die Sie als Dateiordner verwenden möchten.
+  \tEin Ordnerfenster erscheint, das Ihnen folgende Möglichkeiten
+  \tbietet:
+
+  \to\tDateien auf diesen Ordner
+  \t \t\d(ziehen und ablegen^ziehen-und-ablegen),
+
+  \to\tBeliebige Funktionen des Dateimenüs verwenden (z. B.:
+  \t \t"Kopieren", "Löschen" und "Verschieben"),
+
+  \to\tOrdner im Fenster hinzufügen,
+
+  \to\tDateien öffnen und Programme starten.
+
+
+^1^Diskette löschen
+^$100
+Diskette löschen
+
+Hinweis: Die Option "Löschen" erscheint nur dann im Menü, wenn sie vom
+Gerät unterstützt wird.
+
+Um alle Daten auf einer Diskette zu löschen, gehen Sie wie folgt vor:
+
+1.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Disketten usw.". Das Fenster
+  \t"Disketten usw." erscheint.
+
+2.\tKlicken Sie "Diskette_A" (oder "Diskette_B") an.
+
+3.\tLegen Sie die Diskette in das erforderliche Laufwerk (A oder B)
+  \tein.
+
+4.\t\d(Rechtsklicken^rechtsklicken) Sie auf eine beliebige Stelle
+  \tdes Diskettensymbols.
+
+5.\tKlicken Sie "Löschen" an.

@@ -1,0 +1,307 @@
+^*version^1
+^*title^DOS e Win
+^*width^70
+^+DesktopMgr/help.defs
+^?Esecuzione di applicazioni DOS e Windows.
+^0^DOS e Win
+^$10
+DOS e Win
+
+  Scopo: Esecuzione di applicazioni DOS e Windows.
+
+  Sono previste le seguenti finestre:
+
+        \k(Finestra Opzioni)
+        \k(Finestra DOS o Windows)
+        \k(Finestra Informazioni dispositivi)
+^1^Finestra Opzioni
+^$20
+\k{DOS e Win}
+Finestra Opzioni
+
+La finestra Opzioni vi permette di impostare la modalità video,
+l'ammontare della memoria Standard e EMS, l'assegnamento dei drive F,
+G, H e I, e quali porte COM sono attive per il vostro ambiente DOS o
+Windows. La finestra Opzioni per DOS è accessibile dall'interno dal menu
+dell'icona DOS e la finestra Opzioni per Windows è accessibile
+dall'interno dal menu dell'icona Win. Visualizzate il menu delle
+icone DOS premendo e tenendo premuto il pulsante destro del mouse
+sull'icona, che si trova nella vostra cartella Applicazioni.
+
+
+Dalla finestra Opzioni possono essere imposrate le seguenti opzioni:
+
+   o Video: Selezionate il tipo di video con il quale volete che vengano
+     eseguite le applicazioni DOS. Fate clic su VGA, CGA, MDA o Hercules.
+
+   o Drive: Se il vostro computer possiede partizioni DOS,
+     potete assegnarle a una delle unità elencate.
+
+Nota: Le partizioni DOS sono sezioni del disco rigido create a
+parte per eseguire DOS; il DOS in una partizione DOS non funziona
+sotto UnixWare.
+
+Visualizzate il menu del drive identificato dalla lettera, facendo
+clic sul pulsante a forma di freccia che si trova vicino alla
+lettera corrispondente al drive. Dal menu selezionate Nessuno o la
+partizione DOS a cui volete assegnare il drive corrispondente a
+quella lettera.
+
+Nota: Non si deve assegnare la stessa partizione DOS contemporaneamente a
+più di una
+lettera di unità.
+
+   o Porte COM: Selezionate le porte COM richieste per la vostra
+     sessione DOS. Per esempio, un programma di comunicazione richiede
+     la disponibilità di una porta COM per accedere a un modem interno
+     o esterno.
+
+Nota: Le porte COM possono essere usate solo con il DOS quando non
+sono usate da altri utenti del vostro sistema, utenti UNIX compresi.
+Evitate di selezionare una porta COM a meno che non stiate eseguendo
+un'applicazione che richieda l'uso di una porta di questo tipo.
+
+   o Memoria: Selezionate la quantità di memoria standard o EMS
+     (Expanded Memory Specification) richiesta dalle attuali o future
+     sessioni DOS o Windows. La memoria EMS è generalmente utile solo
+     per i vostri ambienti DOS mentre quantità di memoria standard
+     superiori a 1 MB sono utili soltanto per gli ambienti Windows.
+
+Visualizzate il menu di selezione della memoria facendo clic sul
+pulsante che si trova a fianco del tipo di memoria che intendete
+modificare. Dal menu, selezionate il numero di MB (megabyte)
+desiderati.
+
+Nota: Se selezionate più memoria di quanta ne sia disponibile, la
+sessione DOS o Windows non può essere avviata. In questo caso,
+chiudete alcune finestre o selezionate meno memoria. Inoltre, l'uso di
+troppa memoria influisce negativamente sulle prestazioni del computer.
+
+Tutte le richieste di stampa vanno inviate allo spooler lp del sistema
+UNIX. Le richieste di stampa vengono gestite come se stampaste
+all'interno del sistema UNIX.
+Nota: Per stampare dallo spooler lp del sistema UNIX, bisogna avere
+una stampante con nome "doslp".
+
+I \d(buttons^pulsante) disponibili dalla finestra Opzioni DOS sono:
+
+        \k(Pulsante Avvia)
+        \k(Pulsante Esegui)
+        \k(Pulsante Default)
+        \k(Pulsante Guida)
+        \k(Pulsante Annulla)
+^2^Pulsante Avvia
+^$30
+\k{Finestra Opzioni}
+    Pulsante Avvia
+
+Il pulsante Avvia permette di aprire una finestra DOS o Windows. Se
+avete apportato delle modfiche all'interno della finestra Opzioni,
+tali modifiche saranno valide solo per l'attuale sessione.
+
+Ulteriori informazioni: \k(Finestra DOS o Windows)
+^2^Pulsante Esegui
+^$40
+\k{Finestra Opzioni}
+   Pulsante Esegui
+
+Il pulsante Esegui conferma le modifiche apportate alla finestra
+Opzioni a tutte le sessioni DOS o Windows future. Se volete che le
+modifiche abbiano effetto solo sulla prossima sessione, fate
+invece clic sul pulsante Avvia.
+
+Nota: Le modifiche non hanno effetto sulle finestre DOS o Windows che sono già
+aperte.
+
+Conviene evitare di effettuare modifiche che influenzano tutte le
+sessioni successive, a meno che tutte le applicazioni DOS o Windows che
+utilizzate richiedano le stesse opzioni. Conviene invece assegnare
+le opzioni a particolari applicazioni DOS (ma non applicazioni Windows). Per esempio, se usate
+un'applicazione di comunicazione dovete assegnare una porta COM
+al DOS in modo che l'applicazione possa accedere all'esterno tramite
+un modem. Per configurare l'applicazione di comunicazione in modo
+che la porta COM venga assegnata al DOS solo quando questa applicazione
+viene eseguita, premere e tenere premuto il tasto destro del mouse
+sull'icona dell'applicazione di comunicazione (.exe, .com, or .bat file)
+per visualizzare la finestra Opzioni. Impostate e salvate
+l'opzione della porta COM. >Da questo punto in poi potete eseguire questa
+applicazione di comunicazione facendo doppio clic sulla sua icona invece
+che eseguendo DOS. Così facendo si avvierà DOS, assegnerà ad esso la
+porta COM e quindi eseguirà l'applicazione. Altre applicazioni DOS
+possono avere opzioni impostate specificatamente in modo simile.
+^2^Pulsante Default
+^$50
+\k{Finestra Opzioni}
+    Pulsante Default
+
+Il pulsante Default riporta l'impostazione delle opzioni ai valori
+originali.
+^2^Pulsante Guida
+^$60
+\k{Finestra Opzioni}
+    Pulsante Guida
+
+Il pulsante Guida permette di accedere alla guida in linea per la
+finestra Opzioni.
+^2^Pulsante Annulla
+^$70
+\k{Finestra Opzioni}
+    Pulsante Esci
+
+Il pulsante Esci chiude la finestra Opzioni senza salvaguardare le
+modifiche.
+^1^Finestra DOS o Windows
+^$80
+\k{DOS e Win}
+Finestra DOS o Windows
+
+Potete aprire solo una finestra Windows. Potete aprire
+più finestre DOS contemporaneamente a seconda delle risorse
+disponibili all'interno del sistema. Quando una finestra DOS è aperta,
+potete accedere al menu DOS premendo il tasto Bloc Scorr.
+
+Le opzioni seguenti sono disponibili dal menu DOS:
+
+        \k(Zoom)
+        \k(Fuoco/Sfuoco)
+        \k(Rigenera)
+        \k(Colori DOS/Colori X)
+        \k(Tasti Desktop/Tasti DOS)
+        \k(Autoblocca sì/Autoblocca no)
+        \k(Uscita)
+
+In una finestra DOS (ma non in una finestra Windows) potete accedere
+alla finestra Informazioni dispositivi premendo Ctrl-Esc seguito
+da Ctrl-I.
+
+Ulteriori informazioni: \k(Finestra Informazioni dispositivi)
+^2^Zoom
+^$90
+\k{Finestra DOS o Windows}
+    Zoom
+
+L'opzione di menu Zoom visualizza la finestra DOS o Windows usando l'intero
+schermo. Ciò permette al vostro sistema UnixWare di apparire come un
+sistema DOS o Windows convenzionale. Per ritornare alla finestra DOS originale
+sotto UnixWare, premete il tasto Bloc Scorr.
+
+NOTA: L'opzione zoom non è disponibile quando eseguite Windows con il
+driver di video Windows/X. Non è neanche disponibile su stazioni X
+remote. Dovete essere alla console per eseguire zoom.
+^2^Fuoco/Sfuoco
+^$100
+\k{Finestra DOS o Windows}
+    Fuoco/Sfuoco
+
+L'opzione di menu Fuoco vi permette di usare il vostro mouse
+all'interno della finestra DOS. Questa opzione, però,
+disabilita il mouse per il resto di Desktop. Per usare il mouse in
+altre finestre, dovete annullare l'opzione Fuoco (Sfuoco) premendo
+il tasto Bloc Scorr per accedere al menu DOS e selezionando Sfuoco.
+
+Non occorre che usiate l'opzione Fuoco quando eseguite MS-Windows 3.1
+nella finestra DOS: in questa finestra il mouse viene automaticamente
+riconosciuto.
+
+Nota: Quando usate l'opzione Zoom, non dovete usare l'opzione Fuoco
+per utilizzare il mouse nella finestra DOS a tutto schermo.
+^2^Rigenera
+^$110
+\k{Finestra DOS o Windows}
+    Ritraccia
+
+L'opzione Ritraccia permette di ridisegnare la finestra DOS o Windows.
+Usate questa opzione quando la vostra finestra DOS o Windows diventa per qualche
+motivo illeggibile.
+^2^Colori DOS/Colori X
+^$120
+\k{Finestra DOS o Windows}
+    Colori DOS/Colori X
+
+A seconda dell'hardware installato sul vostro sistema, verranno
+visualizzati all'interno della finestra DOS o Windows i colori UnixWare
+o i colori DOS. Se vengono utilizzati i colori UnixWare, l'opzione
+Colori DOS vi permette di usare i colori DOS. Se il vostro sistema usa
+automaticamente i colori DOS, questa opzione di menu sarà inattiva
+(oscurata). Una volta usato per scegliere i colore DOS, il pulsante
+cambia in "Colori X". Selezionare questo per usare i colori UnixWare.
+^2^Tasti Desktop/Tasti DOS
+^$130
+\k{Finestra DOS o Windows}
+    Tasti Desktop/Tasti DOS
+
+La selezione dell'opzione "Tasti DOS" consente alle applicazioni DOS e Windows
+di acquisire tutti i tasti premuti (compresi gli acceleratori di
+Desktop). La selezione dell'opzione "Tasti Desktop" fa sì che tutti
+gli acceleratori vengano interpretati da Desktop (e non vengano
+ricevuti dall'applicazione DOS o Windows).
+
+^2^Autoblocca sì/Autoblocca no
+^$140
+\k{Finestra DOS o Windows}
+    Autoblocca sì/Autoblocca no
+
+La selezione dell'opzione "Autoblocca sì" fa sì che le applicazioni
+DOS o Windows vengano eseguite solo se si trova nella finestra attiva. In questo
+modo la CPU può servire altri programmi quando la finestra DOS o Windows è
+nascosta o ridotta a icona. Se non desiderate questa modalità di
+funzionamento, selezionate "Autoblocca no".
+
+^2^Uscita
+^$150
+\k{Finestra DOS o Windows}
+    Fine
+
+L'opzione Fine del menu permette di chiudere la finestra DOS o
+Windows. Prima di chiudere la finestra, verrà visualizzato un avviso
+di Fine DOS. In questo messaggio sono presenti due pulsanti:
+
+   o Pulsante Sì: Questo pulsante permette di chiudere la finestra
+     DOS.
+
+   o Pulsante No: Questo pulsante annulla la richiesta di chiusura
+     della finestra.
+^1^Finestra Informazioni dispositivi
+^$160
+\k{DOS e Win}
+Finestra Informazioni dispositivi
+
+Usate la finestra Informazioni dispositivi per visualizzare i
+dispositivi che sono disponibili per il DOS. Si può accedere alla
+finestra Informazioni dispositivi premendo Ctrl-Esc seguito da
+Ctrl-I dall'interno della finestra DOS. Non si può accedere a questa
+finestra da Windows o quando la vostra applicazione DOS è in modalità
+grafica.
+
+
+Nella finestra Informazioni dispositivi vengono visualizzate le
+seguenti informazioni:
+
+   o Video: L'adattatore video DOS è pronto all'uso.
+
+   o COM1 e COM2: Se la porta COM è disponibile per il DOS, verrà
+     mostrato il tipo di dispositivo ad essa collegato, quale per
+     esempio /dev/tty0. Se la porta COM non è disponibile per il
+     DOS verrà visualizzata la parola "nessuna".
+
+   o LPT1, LPT2 e LPT3: Per ogni dispositivo viene visualizzata la
+     destinazione delle richieste di stampa.
+
+   o RAM: Mostra la quantità di memoria standard utilizzata.
+
+   o EMS: Visualizza l'ammontare di memoria EMS usata.
+
+   o Mouse: Mostra il tipo di mouse che sta per essere usato.
+
+   o Drive per dischetti: Mostra il numero di drive usati da DOS.
+
+   o Condivisione UNIX/DOS: Mostra i drive a cui possono accedere
+     sia il sistema UNIX che il DOS.
+
+   o Partizioni DOS: Mostra i drive che rappresentano le partizioni
+     DOS.
+
+Per abbandonare la finestra Informazioni dispositivi e
+continuare a usare DOS, premete la barra spaziatrice.
+
+

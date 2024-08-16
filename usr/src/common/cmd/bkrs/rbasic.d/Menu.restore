@@ -1,0 +1,19 @@
+#ident	"@(#)bkrs:common/cmd/bkrs/rbasic.d/Menu.restore	1.2"
+#ident	"$Header: $"
+
+menu="Restore from Removable Media"
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+`message "Move to an item with the arrow keys and strike the ENTER key to select"`
+
+name=Personal Restore
+lininfo=personal
+action=open menu $OBJ_DIR/private/Menu.private 
+
+name=System Restore
+lininfo=system
+action=open menu $OBJ_DIR/system/Menu.system
+
+name=""
+button=16
+

@@ -1,0 +1,290 @@
+#ident	"@(#)proto:desktop/menus/ii_hw_select	1.37"
+exec 2>>/tmp/ii_look
+# set -x
+
+#  inetinst
+#  For configuring Ethernet Hardware.
+#
+#  Step 1.  Determine Card, and write configuration information to
+#           /tmp file so that menu can read it in.
+#
+
+typeset IIROOT=/.extra.d
+typeset BUSTYPE1 BUSTYPE2
+typeset iinum=0
+typeset iicnt iiindex
+
+#
+#  This function reduces a set of possible I/O address, RAM address,
+#  or IRQs by those values already in the resmgr that would conflict.
+#  Usage:
+#	ii_reduce PARM  (where PARM is one of IRQ, MEMADDR, or IOADDR)
+#
+function ii_reduce {
+	# echo ================== in ii_reduce ========== >> /tmp/ii_look
+	# set -x
+	typeset PARM=${1}
+	typeset INRANGE=0
+	typeset PSTART PEND TSTART TEND START END Modname Parm
+
+	resmgr -p "MODNAME ${PARM}" > /tmp/${PARM}.raw
+
+	#
+	#  Get rid of all entries with no modname or PARM value; they're
+	#  not relevant here.
+	#
+	while read Modname Parm 
+	do
+		[ "${Modname}" = "-" -o "${Modname}" = "$unused" ] && {
+			echo "${Modname} ${Parm}" >> /tmp/${PARM}.trash
+			continue
+		}
+		case "${Parm}" in
+		[0-9]*)
+			echo "${Parm}" >> /tmp/${PARM}.taken
+			continue
+			;;
+		esac
+		echo "${Modname} ${Parm}" >> /tmp/${PARM}.trash
+	done < /tmp/${PARM}.raw
+
+	OIFS=${IFS}
+	IFS="-"
+	> /tmp/${PARM}.ok
+	while read PSTART PEND
+	do
+		[ -z "${PEND}" ] && PEND="${PSTART}"
+		let START=16'#'${PSTART}
+		let END=16'#'${PEND}
+		INRANGE=0
+		IFS=${OIFS}
+		[ -s /tmp/${PARM}.taken ] && {
+			while read TSTART TEND
+			do
+				[ -z "${TEND}" ] && TEND="${TSTART}"
+				let TSTART=16'#'${TSTART}
+				let TEND=16'#'${TEND}
+				(( ${START} >= ${TSTART} && ${START} <= ${TEND} )) && {
+					INRANGE=1
+					break
+				}
+				(( ${END} >= ${TSTART} && ${END} <= ${TEND} )) && {
+					INRANGE=1
+					break
+				}
+			done < /tmp/${PARM}.taken
+		}
+		IFS="-"
+		[ "${INRANGE}" = "0" ] && {
+			if [ "${PARM}" = "IRQ" -o "${PARM}" = "DMAC" ]
+			then
+				echo "${PSTART}" >> /tmp/${PARM}.ok
+			else
+				echo "${PSTART}-${PEND}" >> /tmp/${PARM}.ok
+			fi
+		}
+	done < /tmp/${PARM}.poss
+	rm -f /tmp/${PARM}.raw /tmp/${PARM}.poss /tmp/${PARM}.taken \
+		> /dev/null 2>&1
+	IFS=${OIFS}
+}
+
+function ii_hw_parms {
+	# echo ================== in ii_hw_parms ========== >> /tmp/ii_look
+	# set -x
+
+	unset ADDRM BUS CLASS CONFIG_CMDS CUSTOM CUSTOM_NUM DEPEND DLPI_CABLE
+	unset DMA DRIVER_NAME ETHER EXTRA_FILES INT MEM NAME NETINSTALL_NAME
+	unset PORT POST_SCRIPT TOKEN UNIT NICS_NAME CONFIG_FILE
+
+	. ${IIFILE[${iiindex}]}
+
+	ETH_HW=${DRIVER_NAME}
+
+	#
+	#  If we are still trying to read in the resmgr command (netinst
+	#  script) in the bacground, make sure it's done before we continue.
+	#
+	wait
+
+	typeset iiparm 
+	typeset mustconfig=0
+	[ ! -z "${INT}" ] && {
+		> /tmp/IRQ.poss
+		for iiparm in ${INT}
+		do
+			echo "${iiparm}" >> /tmp/IRQ.poss
+		done
+		ii_reduce IRQ
+		cp /tmp/IRQ.ok /tmp/${ETH_HW}.irq
+		#
+		#  If all choices are exhausted, it's an error.
+		#
+		[ ! -s /tmp/${ETH_HW}.irq ] && {
+			wclose $CURWIN
+			display -w "${INETINST_NET_FAILURE} ${INETINST_NO_IRQ}" -bg $ERROR_BG -fg $ERROR_FG
+			input_handler
+			netinst_clean ERROR
+			return 1
+		}
+		mustconfig=1
+	}
+
+	[ ! -z "${PORT}" ] && {
+		> /tmp/IOADDR.poss
+		for iiparm in ${PORT}
+		do
+			echo "${iiparm}" >> /tmp/IOADDR.poss
+		done
+		ii_reduce IOADDR
+		cp /tmp/IOADDR.ok /tmp/${ETH_HW}.ioaddr
+		#
+		#  If all choices are exhausted, it's an error.
+		#
+		[ ! -s /tmp/${ETH_HW}.ioaddr ] && {
+			wclose $CURWIN
+			display -w "${INETINST_NET_FAILURE} ${INETINST_NO_IO}" -bg $ERROR_BG -fg $ERROR_FG
+			input_handler
+			netinst_clean ERROR
+			return 1
+		}
+		mustconfig=1
+	}
+
+	[ ! -z "${MEM}" ] && {
+		> /tmp/MEMADDR.poss
+		for iiparm in ${MEM}
+		do
+			echo "${iiparm}" >> /tmp/MEMADDR.poss
+		done
+		ii_reduce MEMADDR
+		cp /tmp/MEMADDR.ok /tmp/${ETH_HW}.ramaddr
+		#
+		#  If all choices are exhausted, it's an error.
+		#
+		[ ! -s /tmp/${ETH_HW}.ramaddr ] && {
+			wclose $CURWIN
+			display -w "${INETINST_NET_FAILURE} ${INETINST_NO_RAM}" -bg $ERROR_BG -fg $ERROR_FG
+			input_handler
+			netinst_clean ERROR
+			return 1
+		}
+		mustconfig=1
+	}
+
+	[ ! -z "${DMA}" ] && {
+		> /tmp/DMAC.poss
+		for iiparm in ${DMA}
+		do
+			echo "${iiparm}" >> /tmp/DMAC.poss
+		done
+		ii_reduce DMAC
+		cp /tmp/DMAC.ok /tmp/${ETH_HW}.dma
+		#
+		#  If all choices are exhausted, it's an error.
+		#
+		[ ! -s /tmp/${ETH_HW}.dma ] && {
+			wclose $CURWIN
+			display -w "${INETINST_NET_FAILURE} ${INETINST_NO_DMA}" -bg $ERROR_BG -fg $ERROR_FG
+			input_handler
+			netinst_clean ERROR
+			return 1
+		}
+		mustconfig=1
+	}
+
+	MY_CUSTOM=$CUSTOM
+	[ ! -z "${MY_CUSTOM}" ] && mustconfig=1
+	MY_FILE=${IIFILE[${iiindex}]}
+	echo "NICS_NAME=\"${IINAME[${iiindex}]}\"" >> /tmp/ii.parms
+	echo "CONFIG_FILE=\"$MY_FILE\"" >> /tmp/ii.parms
+	. /.extra.d/config/${MY_FILE}
+	#
+	#  If this is an EISA or MCA card, we don't have to ask for any
+	#  configuration parameters until we determine that there is more
+	#  than one of the selected NIC in the machine, which happens in
+	#  the netinst script.
+	#
+if [ \( "${BUS}" = "EISA" -o "${BUS}" = "MCA" \) -a "${ADDRM}" != "true" ]
+	then
+		if [ ! -z "${CUSTOM_NUM}" ]
+		then
+			ii_hw_config
+			return $?
+		else
+			return 0
+		fi
+	else
+		if [ "${mustconfig}" != "0" ]
+		then
+			ii_hw_config
+			return $?
+		else
+			return 0
+		fi
+	fi
+}
+
+#
+#  Routine to generate a FORM for selecting networking Hardware
+#  for Network Install
+#
+function ii_hw_select
+{
+	typeset bus
+	call sysi86 94 bus		# SI86BUSTYPE from sys/p_sysi86.h
+	bus=${_RETD}
+	case $bus in
+	0) #define ISA_BUS         0	#  from sys/p_sysi86.h
+		BUSTYPE1=ISA
+		BUSTYPE2=ISA
+		;;
+	1) #define EISA_BUS        1	#  from sys/p_sysi86.h
+		BUSTYPE1=ISA
+		BUSTYPE2=EISA
+		;;
+	2) #define MCA_BUS         2	#  from sys/p_sysi86.h
+		BUSTYPE1=MCA
+		BUSTYPE2=MCA
+		;;
+	esac
+
+	cd /.extra.d/config
+	iinum=0
+	for iifile in *
+	do
+		. ${iifile}
+		[ "$BUS" = "$BUSTYPE1" -o "$BUS" = "$BUSTYPE2" ] && {
+			IIFILE[${iinum}]=${iifile}
+			IINAME[${iinum}]=${NAME}
+			let iinum+=1
+		}
+
+	unset ADDRM BUS CLASS CONFIG_CMDS CUSTOM CUSTOM_NUM DEPEND DLPI_CABLE
+	unset DMA DRIVER_NAME ETHER EXTRA_FILES INT MEM NAME NETINSTALL_NAME
+	unset PORT POST_SCRIPT TOKEN UNIT NICS_NAME CONFIG_FILE
+
+	done
+		
+	CHOOSE_FOOTER="$INETINST_HW_SEL_FOOTER" 
+	CHOOSE_TITLE="$INETINST_HW_SEL_TITLE"
+
+	iinum=0
+	open_radio -entry 'footer "${INETINST_HW_SEL_FOOTER}"' -fg $COMBO2_FG -bg $COMBO2_BG -exit 'ii_hw_parms'
+	typeset IIRID=$RID
+	for iicnt in ${IINAME[@]}
+	do
+		add_radio -entry "iiindex=${iinum}; ETH_HW='${iicnt}'; footer \"${INETINST_HW_SEL_FOOTER}\"" -help "helpwin ${IIFILE[${iinum}]}" ${iicnt}
+		let iinum+=1
+	done
+	[ "$iinum" -ge "18" ] && let iinum=18
+	radio_runparms $IIRID ${iinum}
+
+	typeset title_len
+	let title_len=${#INETINST_HW_SEL_TITLE}+4
+	[ "$RADIO_WIN_WIDTH" -lt "${title_len}" ] && let RADIO_WIN_WIDTH=title_len
+	place_window $RADIO_WIN_WIDTH $RADIO_WIN_HEIGHT -right 1 -below 1 -fg $COMBO2_FG -bg $COMBO2_BG -title "${INETINST_HW_SEL_TITLE}"
+	run_radio $IIRID 0 $iinum
+
+}
+

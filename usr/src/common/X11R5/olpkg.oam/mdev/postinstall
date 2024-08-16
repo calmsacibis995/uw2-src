@@ -1,0 +1,52 @@
+#ident	"@(#)olpkg.oam:mdev/postinstall	1.8"
+#!/bin/sh
+
+#
+# compile uid files
+#
+cd /usr/X/lib/motifdemos/clipboard
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/cutpaste.uid cutpaste.uil
+cd /usr/X/lib/motifdemos/periodic
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/periodic.uid periodic.uil
+cd /usr/X/lib/motifdemos/motifanim
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/motifanim.uid motifanim.uil
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/dog.uid dog.uil
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/plane.uid plane.uil
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/superman.uid superman.uil
+cd /usr/X/lib/motifdemos/motifburger
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/motifbur.uid motifbur.uil
+cd /usr/X/lib/motifdemos/hellomotif
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/hellomotif.uid hellomotif.uil
+cd /usr/X/lib/motifdemos/helloint
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/helloint.uid helloint.uil
+cd /usr/X/lib/motifdemos/helloint/english/uid
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/english/uid/localstrings.uid localstrings.uil
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/localstrings.uid localstrings.uil
+cd /usr/X/lib/motifdemos/helloint/french/uid
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/french/uid/localstrings.uid localstrings.uil
+cd /usr/X/lib/motifdemos/helloint/hebrew/uid
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/hebrew/uid/localstrings.uid localstrings.uil
+cd /usr/X/lib/motifdemos/helloint/japan/uid
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/japan/uid/localstrings.uid localstrings.uil
+cd /usr/X/lib/motifdemos/textedit
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/textedit.uid textedit.uil
+cd /usr/X/lib/motifdemos/view/uid
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/fileview.uid fileview.uil
+cd /usr/X/lib/motifdemos/view/german/uid
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/german/uid/fileview.uid fileview.uil
+cd /usr/X/lib/motifdemos/view/french/uid
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/french/uid/fileview.uid fileview.uil
+cd /usr/X/lib/motifdemos/view/american/uid
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/american/uid/fileview.uid fileview.uil
+cd /usr/X/lib/motifdemos/xmtravel
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/client.uid client.uil
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/trip.uid trip.uil
+LD_LIBRARY_PATH=:/usr/X/lib /usr/X/bin/uil -o /usr/X/lib/uid/menu.uid menu.uil
+
+# need to update fonts.dir in /usr/X/lib/fonts/misc
+(cd /usr/X/lib/fonts/misc; /usr/X/bin/mkfontdir >/dev/null 2>&1)
+
+# update font path
+[ "$TERM" = "xterm" ] && LD_LIBRARY_PATH=/usr/X/lib /usr/X/bin/xset fp rehash >/dev/null 2>&1
+
+exit 0

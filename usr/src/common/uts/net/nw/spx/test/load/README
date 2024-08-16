@@ -1,0 +1,20 @@
+#ident	"@(#)kern:net/nw/spx/test/load/README	1.1"
+#ident	"$Id: README,v 1.1 1994/05/12 15:16:18 vtag Exp $"
+
+Very basic way to get started.
+
+
+On platform 1
+	load_d -v (verbose) -I (use ipx transport)
+This is the receiving node.
+
+
+On platform 2
+	load -v (verbose) -I (use ipx transport) \
+		-a ???????? (ipx net address in hex of platform 1) \
+		-n ????????????  (ipx node address in hex of platform 1)
+This is the sending node.
+
+Remove the -I to run over SPX
+
+Use -? to see additional options

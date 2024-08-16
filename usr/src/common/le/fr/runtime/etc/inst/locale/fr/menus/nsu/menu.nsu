@@ -1,0 +1,70 @@
+.ul
+Network Support Utilities
+.ur
+Configuration NSU
+.lr
+Suppr=Annuler  F1=Aide
+.top
+Entrez le nombre de pseudo-terminaux à configurer.
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "\nEn outre, vous devez indiquer si vous souhaitez que les fichiers de configuration initiaux"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "correspondant aux Network Support Utilities soient regroupés avec les nouveaux fichiers."`
+.form
+#
+3 0 64 1024//Nombre de pseudo-terminaux ://NREG//
+// Le nombre de pseudo-terminaux à configurer(64-1024)//
+#
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "2 2//Yes::Oui//No::No//Combiner automatiquement les fichiers de configuration ? ://AUTOMERGE//"`
+# field options
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "//Touches fléchées vers la gauche/vers la droite pour effectuer le choix suivant (2 options)//"`
+#
+.button
+Appliquer
+Réinitialiser
+.bottom
+Appuyez sur "TAB" pour faire passer le curseur d'un champ à un autre.
+Ensuite, placez le curseur sur "Appliquer" et appuyez sur "ENTREE" pour
+continuer.
+.hhelp_ban
+Instructions
+.helpbanner
+Aide : configuration de NSU (Network Support Utilities)
+.help
+Pour obtenir des instructions détaillées, appuyez sur sur la touche "F1"
+(ou sur "?") à tout moment.
+
+NETWORK SUPPORT UTILITIES (NSU)
+
+Le paquet Network Support Utilities contient plusieurs fichiers et
+programmes qui sont utilisés par votre système UNIX pour communiquer
+avec des terminaux intelligents et d'autres ordinateurs. Vous devez
+installer ce programme avant de configurer d'autres programmes de
+gestion de réseau.
+
+NOMBRE DE PSEUDO-TERMINAUX
+
+Un utilisateur fait appel aux pseudo-terminaux chaque fois qu'il essaie
+de se connecter à votre ordinateur au sein d'un réseau ou lorsqu'il
+tente de lancer certaines applications du bureau. Le nombre d'opérations
+susceptibles d'être exécutées au même moment sur votre ordinateur
+dépendra du nombre de pseudo-terminaux indiqué sur cet écran. Si vous ne
+connaissez pas exactement la valeur appropriée, sélectionnez la valeur
+par défaut.
+
+Ce nombre doit être compris entre 64 et 1024.
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo ""`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "REGROUPER AUTOMATIQUEMENT LES FICHIERS DE CONFIGURATION"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo ""`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "Si vous répondez oui à cette question, le programme d'installation va"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "tenter de regrouper toutes les modifications apportées aux fichiers de configuration"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "NSU existants dans les nouveaux fichiers de configuration."`
+.pageno
+Page %d de %d
+.optstring
+Les options disponibles sont :
+.helpinst
+ECHAP=Quitter l'aide F1=Instructions Suppr=Annuler 1=Page suiv. 2=Page préc.
+.hhelpinst
+ECHAP=Quitter les instructions Suppr=Annuler 1=Page suiv. 2=Page préc.
+.end

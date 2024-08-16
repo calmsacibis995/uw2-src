@@ -1,0 +1,39 @@
+#!/sbin/sh
+
+#ident	"@(#)kern:io/osm/osm.cf/Rc	1.10"
+
+# Start /dev/osm daemon to read from /dev/osm to log kernel messages
+# into a file (/var/adm/log/osmlog)
+
+# Check if already running
+pid=
+if [ -z "$_AUTOBOOT" ]
+then
+        pid=`/bin/ps -ef | /bin/grep /dev/osm | /bin/grep cat | /bin/awk '{print $2}'`
+fi      
+if [ "${pid}" = "" ]
+then
+	# make sure the linkage is correct
+	rm /etc/.osm >/dev/null 2>&1
+	ln -s /var/adm/log/osmlog /etc/.osm
+	# Not yet running
+	# First, save old file
+	if [ -f /var/adm/log/osmlog ]
+	then
+		mv /var/adm/log/osmlog /var/adm/log/osmlog.old
+		# just in case it got changed by someone
+		chmod 644 /var/adm/log/osmlog.old
+	fi
+
+	# If Enhanced Security is running,
+	# then allocate /dev/osm
+	mldmode > /dev/null 2>&1	# shell built-in
+	if [ "$?" = "0" ]
+	then
+		/usr/sbin/admalloc osm
+	fi
+
+	# Start the daemon in the background
+	cat /dev/osm > /var/adm/log/osmlog &
+	chmod 644 /var/adm/log/osmlog
+fi

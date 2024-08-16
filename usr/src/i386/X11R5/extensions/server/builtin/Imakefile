@@ -1,0 +1,23 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)builtinext:server/builtin/Imakefile	1.1"
+
+#include <Server.tmpl>
+
+SRCS = ext.c builtin.c app.c signal.c
+OBJS = $(SRCS:.c=.o)
+
+INCLUDES = -I$(INCLUDE_EXTENSION) -I$(SERVERSRC)/include
+
+NormalLibraryObjectRule()
+NormalLibraryTarget(builtinext,$(OBJS))
+SpecialObjectRule(app.o,,-I$(TOP)/lib)
+LintLibraryTarget(builtinext,$(SRCS))
+NormalLintTarget($(SRCS))
+DependTarget()

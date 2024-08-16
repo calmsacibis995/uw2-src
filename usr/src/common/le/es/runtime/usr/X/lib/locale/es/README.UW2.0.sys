@@ -1,0 +1,117 @@
+
+
+
+        UnixWare 2 Upgrade:  El escritorio de UnixWare nuevo y mejorado
+
+
+
+Bienvenido a UnixWare 2.  Es posible que haya advertido algunos 
+cambios con respecto al Escritorio UnixWare 1.1.  En este documento 
+encontrará las respuestas a las siguientes preguntas:
+
+  * Aparentemente, el Escritorio UnixWare ha cambiado.  ¿Qué novedades presenta?
+
+  * ¿Seguirán funcionando las aplicaciones gráficas instaladas bajo 
+  UnixWare 1.1 después de la instalación?
+
+  * ¿Se han conservado los archivos app-defaults de personalización 
+  de UnixWare 1.1?
+
+  * ¿Se han conservado las personalizaciones de la base de datos de clases 
+  de UnixWare 1.1?
+
+  *¿Dónde están la Librería_de_fondo y Config_fuentes?
+           
+  *¿Dónde está el Fingertip Librarian?
+
+  * En UnixWare 1.1 instalé un controlador de vídeo personalizado.  
+  ¿Va a seguir funcionando?
+
+  * ¿Dónde está setvideomode?
+
+  * Parece que se han perdido personalizaciones importantes 
+  del Escritorio UnixWare durante la actualización.  ¿Cómo puedo 
+  recuperarlas?
+
+
+Para obtener información general acerca del Escritorio UnixWare, 
+consúltese el Manual del usuario del Escritorio, el Manual del propietario 
+del sistema o el Escritorio_de_ayuda.  Para obtener información acerca 
+de las entradas de los usuarios, consúltese el archivo README.UW2 que 
+está bajo los directorios personales de usuarios.
+
+
+P:  Aparentemente, el Escritorio UnixWare ha cambiado.  ¿Qué novedades presenta?
+R:  Se ha añadido un nuevo directorio, Herramientas_de_Admin, al 
+Escritorio UnixWare.  Contiene las herramientas de escritorio que anteriormente se 
+almacenaban en Config_Sistema y Utilidades.  Se ha creado un directorio 
+independiente, Herramientas_de_Admin/Redes, para las herramientas 
+correspondientes a la red.  Las herramientas instaladas en el directorio 
+Accesorios se han trasladado al directorio Aplicaciones.  Para cada 
+cuenta de usuario existente, si estos directorios estaban vacíos después
+de la instalación de UnixWare 2, se han eliminado.  Las nuevas cuentas
+de usuario que se creen no obtendrán los directorios correspondientes a
+Config_Sistema, Utilidades ni Accesorios.
+
+P: ¿Seguirán funcionando las aplicaciones gráficas instaladas bajo 
+UnixWare 1.1 después de la instalación?
+R: Sí.  La instalación de la actualización no las ha modificado en
+absoluto.  Todas las adiciones a la base de datos de clase realizadas
+por las aplicaciones se copiaron también en la nueva base de datos de
+clase (la base de datos de clase de UnixWare 1.1 se ha guardado en
+/usr/X/.SAV2.0/classdb para la nacionalidad de C y en 
+/usr/X/.SAV2.0/locale/<nombre_nacionalidad>/classdb para las nacionalidades 
+no C).
+
+P: ¿Se han conservado los archivos app-defaults 
+de personalización de UnixWare 1.1?
+R: En la mayor parte de los casos, sí.  En algunos casos, 
+los cambios realizados en UnixWare 2 requerían la actualización 
+del archivo app-defaults.  Para los archivos app-defaults actualizados, 
+se han guardado copias de las versiones de UnixWare 1.1 
+en /usr/X/.SAV2.0/app-defaults (para las versiones de nacionalidades de C) 
+y en /usr/X/.SAV2.0/locale/<nombre_nacionalidad>/app-defaults (para las
+versiones de nacionalidades no C).
+
+P: ¿Se han conservado las personalizaciones de la base de datos de clases 
+de UnixWare 1.1?
+R: Sí.  Después de la instalación de la base de datos de clases de UnixWare 2, 
+se fusionaron las personalizaciones realizadas en la base de datos de 
+UnixWare 1.1 en la nueva.  Los archivos de la base de datos de clases 
+de UnixWare 1.1 se han guardado en /usr/X/.SAV2.0/classdb 
+(para las nacionalidades de C) y 
+en /usr/X/.SAV2.0/locale/<nombre_nacionalidad>/classdb (para las
+nacionalidades no C).
+
+P: ¿Dónde están Biblioteca_de_fondo y Config_fuentes?
+R: La Biblioteca_de_fondo ha sido renombrada como Papel_tapiz. 
+ La herramienta Config_fuentes ha sido renombrada como Fuentes, y 
+trasladada al directorio Preferencias.
+
+P: ¿Dónde está Fingertip Librarian?
+R: Fingertip Librarian ha sido reemplazado por el Observador de documentos de Dynatext.
+Está ubicado en el Escritorio UnixWare en Aplicaciones/Doc_en_línea.
+
+P: En UnixWare 1.1 instalé un controlador de vídeo personalizado. 
+¿Va a seguir funcionando? 
+R: Es posible.  Depende del controlador de que se trate.  
+Por seguridad, UnixWare 2 aparecerá en modo VGA la primera vez 
+que se arranque el Escritorio UnixWare.  El cliente Config_visualización 
+(en Herramientas_de_Admin) se puede usar para modificar la resolución
+del vídeo.  Consulte en Config_visualización cuál es la lista de tarjetas
+de vídeo que soporta UnixWare.  Debido a que UnixWare 2 soporta más
+tarjetas que UnixWare 1.1, es posible que descubra que el sistema base
+ahora sí soporta su tarjeta.  Si no es el caso, deberá volver a instalar
+el controlador de vídeo.
+
+P: ¿Dónde está setvideomode?
+R: setvideomode ha sido reemplazado por la herramienta gráfica 
+Config_visualización (en Herramientas_de_Admin).  setvideomode sigue 
+estando disponible en /usr/X/lib/display.
+
+P: Parece que se han perdido personalizaciones importantes del 
+Escritorio UnixWare durante  la actualización.  
+¿Cómo puedo recuperarlas?
+R: Los archivos del sistema de UnixWare 1.1 que han sido reemplazados 
+o se han fusionado con versiones de UnixWare 2 durante la actualización 
+se han guardado en /usr/X/.SAV2.0.  

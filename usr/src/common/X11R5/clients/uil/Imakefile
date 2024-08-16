@@ -1,0 +1,128 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)mclients:uil/Imakefile	1.5"
+XCOMM 
+XCOMM (c) Copyright 1989, 1990, 1991, 1992, 1993 OPEN SOFTWARE FOUNDATION, INC. 
+XCOMM ALL RIGHTS RESERVED 
+XCOMM 
+XCOMM 
+XCOMM Motif Release 1.2.2
+XCOMM 
+XCOMM   $RCSfile: Imakefile,v $ $Revision: 1.6.11.2 $ $Date: 92/11/16 17:15:54 $
+#include	<Motif.tmpl>
+#include	<Motif.rules>
+EXTRA_LOAD_FLAGS = -z nodefs
+
+#define DoNormalLib NormalLibXt
+#define DoSharedLib SharedLibXt
+#define DoDebugLib DebugLibUil
+#define DoProfileLib ProfileLibUil
+
+#include <Library.tmpl>
+
+#ifdef RsArchitecture
+REQUIREDLIBS = $(MRESOURCESRC)/libMrm.a $(MTOOLKITSRC)/libXm.a $(TOOLKITSRC)/libXt.a $(XLIBSRC)/libX11.a
+#endif
+
+INCLUDES = -I. -I$(INCLUDESRC) -I$(MINCLUDESRC) -I$(MLIBSRC)
+LOCAL_LIBRARIES = $(MRESOURCELIB) $(XMLIB) $(XTOOLLIB) $(XLIB) $(SYSLIBS)
+LINTLIBS = $(LINTMRESOURCE) $(LINTXMLIB) $(LINTXMTOOL) $(LINTXLIB)
+INSTALLFLAGS = $(INSTINCFLAGS)
+
+SRCS1 =	UilCmd.c 	UilDiags.c	UilKeyTab.c	UilLexAna.c  \
+	UilLexPars.c	UilLstLst.c	UilP2Out.c	UilP2Reslv.c \
+	UilSarComp.c	UilSarExp.c	UilSarInc.c	UilSarMod.c \
+	UilSarObj.c	UilSarProc.c	UilSarVal.c	UilSrcSrc.c  \
+	UilSymNam.c	UilSymStor.c	UilData.c	UilMain.c \
+	UilLstMac.c	UilSemVal.c	UilSemCSet.c	UilDB.c
+
+OBJS1 =	UilCmd.o	UilDiags.o	UilKeyTab.o	UilLexAna.o  \
+	UilLexPars.o	UilLstLst.o	UilP2Out.o	UilP2Reslv.o \
+	UilSarComp.o	UilSarExp.o	UilSarInc.o	UilSarMod.o \
+	UilSarObj.o	UilSarProc.o	UilSarVal.o	UilSrcSrc.o  \
+	UilSymNam.o	UilSymStor.o	UilData.o	UilMain.o \
+	UilLstMac.o	UilSemVal.o	UilSemCSet.o	UilDB.o
+
+SRCS2 = UilCmd.c	UilDiags.c	UilKeyTab.c	UilLexAna.c  \
+	UilLexPars.c	UilLstLst.c	UilP2Out.c	UilP2Reslv.c \
+	UilSarComp.c	UilSarExp.c	UilSarInc.c	UilSarMod.c \
+	UilSarObj.c	UilSarProc.c	UilSarVal.c	UilSrcSrc.c  \
+	UilSymNam.c	UilSymStor.c	UilData.c \
+	UilLstMac.c	UilSemVal.c	UilSemCSet.c	UilDB.c
+
+OBJS2 =	UilCmd.o	UilDiags.o	UilKeyTab.o	UilLexAna.o  \
+	UilLexPars.o	UilLstLst.o	UilP2Out.o	UilP2Reslv.o \
+	UilSarComp.o	UilSarExp.o	UilSarInc.o	UilSarMod.o \
+	UilSarObj.o	UilSarProc.o	UilSarVal.o	UilSrcSrc.o  \
+	UilSymNam.o	UilSymStor.o	UilData.o	UilParser.o \
+	UilLstMac.o	UilSemVal.o	UilSemCSet.o	UilDB.o
+
+HEADERS = 	Uil.h	UilSymGl.h	UilDBDef.h	UilSymDef.h \
+	UilDef.h	XmAppl.uil
+
+PROGRAMS = uil
+
+#if BuildMotif
+LibraryObjectRule()
+MComplexProgramTarget_1(uil,$(LOCAL_LIBRARIES),NullParameter)
+
+SpecialLibObjectRule(UilDB.o,$(ICONFIGFILES),-DLIBDIR=\"$(LIBDIR)\" -DINCDIR=\"$(INCDIR)\")
+#else /* BuildMotif */
+all::
+depend::
+InstallProgram(uil,$(BINDIR))
+lint::
+#endif /* BuildMotif */
+
+#if DoSharedLib
+#if BuildMotif
+#if DoNormalLib
+SharedLibraryTarget(Uil,$(SOUILREV),$(OBJS2),shared,..)
+#else
+SharedLibraryTarget(Uil,$(SOUILREV),$(OBJS2),.,.)
+#endif
+#endif /* BuildMotif */
+InstallSharedLibrary(Uil,$(SOUILREV),$(USRLIBDIR))
+#endif
+#if DoNormalLib
+#if BuildMotif
+NormalLibraryTarget(Uil,$(OBJS2))
+#endif /* BuildMotif */
+InstallLibrary(Uil,$(USRLIBDIR))
+#endif
+#if DoProfileLib
+#if BuildMotif
+ProfiledLibraryTarget(Uil,$(OBJS2))
+#endif /* BuildMotif */
+InstallLibrary(Uil_p,$(USRLIBDIR))
+#endif
+#if DoDebugLib
+#if BuildMotif
+DebuggedLibraryTarget(Uil,$(OBJS2))
+#endif /* BuildMotif */
+InstallLibrary(Uil_d,$(USRLIBDIR))
+#endif
+
+#if BuildMotif
+LintLibraryTarget(Uil,$(SRCS2))
+InstallLintLibrary(Uil,$(LINTLIBDIR))
+#endif /* BuildMotif */
+
+BuildIncludes($(HEADERS),uil,..)
+
+InstallMultiple($(HEADERS),$(INCROOT)/uil)
+
+LinkFile(UilParser.c,UilMain.c)
+SpecialLibObjectRule(UilParser.o,NullParameter,-DCALLABLE)
+
+#if BuildMotif
+#ifdef UseVista
+VistaMapRule(uil.M,libUil.a)
+#endif
+#endif /* BuildMotif */

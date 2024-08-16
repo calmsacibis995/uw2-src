@@ -1,0 +1,23 @@
+<FUNCTION name="Recherche par titre">
+	<FIELD title="Recherche sur le titre :" variable=q> 
+	<QUERY>$q inside <title></>
+</FUNCTION>
+<FUNCTION name="Mots du titre">
+	<FIELD title="Ce mot (phrase, r*p*tition) :" variable=q> 
+	<FIELD title="et celui-ci, dans un titre :" variable=r> 
+	<QUERY>($q and $r) inside <title> </>
+</FUNCTION>
+<FUNCTION name="Recherche par figures">
+	<FIELD title="Recherche sur les figures :" variable=q> 
+	<QUERY>$q inside <title> inside <figure></>
+</FUNCTION>
+<FUNCTION name="Recherche par table">
+	<FIELD title="Recherche sur les tables :" variable=q> 
+	<QUERY>$q inside <title> inside <table></>
+</FUNCTION>
+<FUNCTION name="Recherche de proximit*">
+	<FIELD title="Ce mot :" variable=w1> 
+	<FIELD title="au milieu de tant de mots :" variable=n> 
+	<FIELD title="de ce mot :" variable=w2>
+	<QUERY>$w1 within $n words of $w2 </>
+</FUNCTION>

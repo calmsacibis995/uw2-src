@@ -1,0 +1,80 @@
+#ident\t"@(#)dthelp:Applications/debug.defs     1.3"
+^=contexto actual
+El contexto actual correspondiente a un conjunto de ventanas determina
+lo que aparecerá en cada una de ellas.  El contexto actual viene
+determinado por el marco actual del proceso o subproceso actual.
+^=
+
+^=trama actual
+El marco actual, junto con el proceso o subproceso actual, determina
+el contexto actual.  El marco actual aparece con una mano que lo
+señala a su izquierda en el panel de stacks de la ventana Contexto.
+^=
+
+^=proceso o hilo actual
+El proceso o subproceso actual, junto con el marco actual, determinan
+el contexto actual.  El proceso o subproceso actual aparece con una
+mano que lo señala a su izquierda en el panel de procesos de la
+ventana Contexto.
+^=
+
+^=programa actual
+El programa actual es el que contiene el proceso o subproceso actual.
+El programa actual puede contener además otros procesos y subprocesos
+derivados del mismo archivo ejecutable.
+^=
+
+^=evento de parada
+Un evento onstop (en caso de parada) especifica una acción que el
+depurador deberá llevar a cabo siempre que se detenga un proceso o
+subproceso por cualquier razón.  La acción puede ser uno o más de los
+comandos disponibles a través de la interfaz de la línea de comandos
+del depurador.
+^=
+
+^=ventana de origen secundaria
+Las ventanas de origen secundario se indican con un asterisco (*) en
+el encabezado de la misma, y no se actualizan cuando el proceso o
+subproceso actual se detiene.  Se crean con la opción Nuevo origen y
+contienen un panel de estado y un panel de origen.
+^=
+
+^=evento de señal
+Un evento signal (de señal) detiene el proceso o subproceso y ejecuta
+los comandos asociados siempre que la señal se haya vinculado al
+proceso.  Para la misma señal se pueden crear múltiples eventos.
+^=
+
+^=evento de parada
+Un evento stop (de parada) detiene el proceso o subproceso y ejecuta
+los comandos asociados, si los hay, siempre que se cumple la condición
+especificada en el espacio de direcciones del programa.
+^=
+
+^=evento de llamada del sistema
+Un evento syscall (de llamada al sistema) detiene el proceso o
+subproceso y ejecuta los comandos asociados siempre que el proceso
+entra o sal de las llamadas al sistema especificadas.  Para la misma
+llamada al sistema se pueden crear múltiples eventos.
+^=
+
+^=conjunto de ventanas
+Un conjunto de ventanas se compone de una sola ocurrencia de cada
+ventana configurada en el depurador gráfico.  Cada ventana contiene
+uno o más paneles.  Las ventanas de un conjunto operan sobre el mismo
+proceso o hilo actual.
+^=
+
+^=Barra de botones
+Cada ventana puede contener opcionalmente una barra de botones.  Esta
+puede aparecer en la parte superior o inferior de la ventana.  Contiene
+una selección de los botones que existen además en uno de los menús
+desplegables de dicha ventana.
+^=
+
+^=LWP
+Un proceso ligero o LWP es el objeto de kernel básico (de apoyo) sobre
+el que se implantan los subprocesos.  El depurador sabe qué subproceso
+se está ejecutando en cada LWP, y controla el subproceso controlando
+su LWP asociado.
+^=

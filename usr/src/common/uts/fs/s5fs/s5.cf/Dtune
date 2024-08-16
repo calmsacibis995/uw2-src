@@ -1,0 +1,17 @@
+%% File System Parameters
+%%% S5 File System Parameters
+% S5FSFLUSH
+Specifies how often the fsflush daemon
+writes s5 inode data out to disk on S5 file systems.
+A smaller value causes the daemon to run more often,
+making the file system ``harder,'' that is,
+less likely to lose data in a crash.
+However, it does take some
+CPU
+time.
+% S5INODELWM
+Specifies the minimum number of inodes to keep in the dynamically
+allocated inode pool, the low water mark (LWM).
+This keeps the system from returning space to the KMA (Kernel Memory
+Allocator) when it is likely to need it back in the inode pool
+relatively quickly.

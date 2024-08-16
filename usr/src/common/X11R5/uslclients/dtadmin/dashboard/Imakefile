@@ -1,0 +1,51 @@
+/**/#ident	"@(#)dtadmin:dashboard/Imakefile	1.11.2.4"
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+         SRCS = \
+		dashboard.c \
+		tz.c \
+		misc.c 
+
+         OBJS = \
+		dashboard.o \
+		tz.o \
+		misc.o 
+
+      HEADERS = \
+		dashmsgs.h tz.h
+
+   DTCLIENTSLIB = $(USLCLIENTSRC)/libDtI
+       DTLIBSRC = $(LIBSRC)/Dt
+      DTILIBSRC = $(DTCLIENTSLIB)
+    GIZMOLIBSRC = $(LIBSRC)/Gizmo
+     DTAMLIBSRC = ../dtamlib
+         DTILIB = $(DTCLIENTSLIB)/libDtI.so
+          DTLIB = $(DTLIBSRC)/libDt.so
+       GIZMOLIB = $(GIZMOLIBSRC)/libGizmo.so
+        DTAMLIB = $(DTAMLIBSRC)/libdtam.a
+
+       INCLUDES = -I$(LIBSRC) -I$(LIBSRC)/Xol -I$(DTILIBSRC) -I$(USLCLIENTSRC)
+LOCAL_LIBRARIES = $(DTAMLIB) $(DTILIB) $(DTLIB) $(GIZMOLIB) XolClientLibs
+        DEPLIBS = $(DTAMLIB) $(DTILIB) $(DTLIB) $(GIZMOLIB) XolClientDepLibs
+
+  SYS_LIBRARIES = -lm -lgen
+
+CC = LD_RUN_PATH=/usr/lib/X11 $(PFX)cc
+
+ComplexProgramTarget(dashboard)
+
+InstallMultiple(dtstatus,$(DTADMDIR))
+InstallMultiple(StatusFile,$(DESKTOPDIR)/dashboard)
+InstallMultiple(countries,$(DESKTOPDIR)/dashboard)
+InstallMsgCatalog(dtdash)
+InstallMsgCatalog(tz)
+InstallDesktopClient($(BINDIR)/dashboard,$(DESKTOPDIR)/Admin_Tools/System_Status)

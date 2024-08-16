@@ -1,0 +1,15 @@
+cd $LOGINDIR
+if [ -f .Xdefaults ] && grep "^\*xnlLanguage:" .Xdefaults >/dev/null
+then
+	exit 0
+fi
+eval `defadm locale LANG 2> /dev/null`
+if [ $? != 0 ]
+then
+	LANG=C
+fi
+[ ! -d /usr/X/lib/locale/$LANG ] && exit 0
+[ ! -f /usr/X/lib/locale/$LANG/ol_locale_def ] && exit 0
+grep "\*[a-zA-Z]*:" /usr/X/lib/locale/$LANG/ol_locale_def |
+sed 's/^[ 	]*\([^:]*\):[ 	]*\([^ ]*\).*$/\1: \2/' >>.Xdefaults
+exit 0

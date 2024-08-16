@@ -1,0 +1,22 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/criteria/set/object/Menu.events	1.1.2.2"
+#ident  "$Header: Menu.events 2.0 91/07/12 $"
+#	Module Name: Menu.events
+#	Description: This menu provides the user with a multiselect pop-up
+#		     menu for selection of events and classes
+
+menu="Valid Event Types and Classes"
+multiselect=TRUE
+framemsg=`readfile $INTFBASE/msmenu.msg`
+
+done=`getitems "," | set -l "Form_Choice"`CLOSE
+
+`cat /tmp/$VPID.events | regex '^(.*)$0' 'name="$m0"'`
+
+name=
+button=1
+action=
+
+name=
+button=7
+action=
+

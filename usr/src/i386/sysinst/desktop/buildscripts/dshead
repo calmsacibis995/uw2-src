@@ -1,0 +1,19 @@
+#!/usr/bin/ksh
+#ident	"@(#)proto:desktop/buildscripts/dshead	1.1.1.6"
+pkgdir=$1
+shift
+tmp=/tmp/tmp$$
+{
+	echo '# PaCkAgE DaTaStReAm:zip'
+	# See lib/libpkg/dstream.c for reference.
+	for i
+	do
+		j=`head -1 $pkgdir/$i/pkgmap | cut -d" " -f2`
+		echo "$i $j 2000"
+	done
+	echo '# end of header'
+} > $tmp
+set -- $(ls -l $tmp)
+let siz="(($5-1)/512)+1"
+banner space space space space space | cat $tmp - | dd count=$siz bs=512
+rm -f $tmp

@@ -1,0 +1,125 @@
+#ident	"@(#)pkg4.i386:edebug/postremove	1.9"
+#
+
+if [ "$DTINSTALL" = "n" ]
+then
+	exit 0
+fi
+
+#Set up localized messaging
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then 
+	if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+		-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+	then
+		cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+		/usr/lib/locale/${LOCALE}/LC_MESSAGES
+		
+		installf ${PKGINST} /usr/lib/locale/${LOCALE}/LC_MESSAGES
+	fi
+fi
+
+# undo desktop installation here
+# inverse of postinstall
+#
+CLASSFILE=/usr/X/lib/classdb/dtadmin
+
+if [ ! -f $CLASSFILE ]
+then
+	# desktop not installed or already removed?
+	# so nothing to remove.
+	exit 0
+fi
+
+# delete debug.cdb from dtadmin
+grep "^INCLUDE debug.cdb;" $CLASSFILE >/dev/null 2>&1
+if [ $? = 0 ]
+then
+	ed $CLASSFILE >/dev/null <<!
+/^INCLUDE debug.cdb;/d
+w
+q
+!
+	if [ $? != 0 ]
+	then
+		# file not writable?
+		pfmt -s nostd -g ${PKGMSG}:2 "can't update file: %s\n" $CLASSFILE
+		exit 1
+	fi
+fi
+
+# remove entry from Help_Desk
+HDFILE=/usr/X/desktop/Help_Desk
+if [ ! -f $HDFILE ]
+then
+	pfmt -s nostd -g ${PKGMSG}:3 "file %s does not exist\n" $HDFILE
+	exit 1
+fi
+grep "^debug" $HDFILE >/dev/null 2>&1
+if [ $? = 0 ]
+then
+	ed $HDFILE >/dev/null <<!
+/^debug/d
+w
+q
+!
+	if [ $? != 0 ]
+	then
+		# file not writable?
+		pfmt -s nostd -g ${PKGMSG}:2 "can't update file: %s\n" $HDFILE
+		exit 1
+	fi
+fi
+
+# users' Application directory links are removed automatically
+# by pkging tool ONLY if not installed by AppInstaller
+
+if [ "$DTINSTALLICONS" = "n" ]
+then
+	# desktop installed the icons, so contents file was not updated
+	# since we don't know which and how many links were created
+	# we need to look through all home directories.
+	# NOTE: this is a temporory measure until AppInstaller can remove
+	#       what it installed.
+
+	DAYONEDIR=/usr/X/desktop/LoginMgr/DayOne
+	USERDIR=/usr/X/desktop/LoginMgr/Users
+	LOGDIRCMD=/usr/X/adm/upgrade/dtlogindir
+	if [ ! -d $DAYONEDIR -o ! -d $USERDIR -o ! -x $LOGDIRCMD ]
+	then
+		# desktop clobbered?
+		# not sure how this can happen, but just in case...
+		pfmt -s nostd -g ${PKGMSG}:5 "desktop icon removal failed\n"
+		exit 1
+	fi
+	# remove link for "future" desktop users
+	rm -f /usr/X/desktop/Applications/Debug
+	# remove links in users' home directories
+	for login in `ls $USERDIR`
+	do
+		if [ -f $DAYONEDIR/$login ]
+		then
+			hdir=`$LOGDIRCMD $login`
+			if [ $? -ne 0 ]
+			then
+				# desktop user with no home dir ?
+				continue
+			fi
+			locale=`cat $DAYONEDIR/$login`
+			appdir=`LC_ALL=$locale /usr/bin/gettxt dayone:4 "Applications"`
+			if [ -d $hdir/$appdir ]
+			then
+				debug=`LC_ALL=$locale /usr/bin/gettxt dayone:10 "Debug"`
+				if [ -s $hdir/$appdir/$debug -o -f $hdir/$appdir/$debug -o -h $hdir/$appdir/$debug ]
+				then
+					rm -f $hdir/$appdir/$debug
+				fi
+			fi
+		fi
+	done
+fi
+
+exit 0

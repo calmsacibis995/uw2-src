@@ -1,0 +1,11 @@
+#ident	"@(#)libsocket:common/lib/libsocket/README	1.2.1.5"
+#ident	"$Header: $"
+
+We make one versions of libsocket, libsocket.so, which uses System V
+name-to-address mapping to access either /etc/hosts or domain name service.
+
+The code that was formerly in the resolver directory has been removed.
+The DNS code that was in /usr/src/lib/nametoaddr/resolv/libresolv has been
+moved to /usr/src/lib/libresolv.  The /usr/src/lib/nametoaddr/resolv/libsocket
+directory has been eliminated.  These changes have been made in order to
+eliminate redundant code.

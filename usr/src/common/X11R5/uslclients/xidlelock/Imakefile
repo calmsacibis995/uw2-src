@@ -1,0 +1,50 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)xidlelock:Imakefile	1.5"
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+XLIBDIR     =  $(ROOT)/$(MACH)/usr/X/lib
+
+CC = LD_RUN_PATH=/usr/lib/X11 $(PFX)cc
+
+          SRCS1 = xidlelock.c 
+          OBJS1 = xidlelock.o 
+          HDRS1 = xildelock.h
+
+           OBJS = $(OBJS1)
+           SRCS = $(SRCS1)
+           HDRS = $(HDRS1)
+          PROGS = xidlelock 
+
+          XLIBS = $(XLIB) $(XTOOLLIB)
+
+all:: $(PROGS)
+
+InstallProgram($(PROGS),$(BINDIR))
+
+NormalProgramTarget($(PROGS),$(OBJS1),$(LLIBS),$(XLIBS),$(SYS_LIBS))
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 555)
+
+InstallDesktopClient($(BINDIR)/$(PROGS),$(DESKTOPDIR)/Preferences/ScreenLock)
+
+InstallAppDefaults(XIdlelock)
+
+InstallMsgCatalog(xidlelock)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()
+

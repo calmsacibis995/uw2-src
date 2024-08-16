@@ -1,0 +1,48 @@
+<!-- /lfs/doc/DMG/Projects/sgml/sccs/styles/modules/s.figtoc.rt 1.10 94/09/27 -->
+<style name="#TOC-ANNOT">
+   <font-family>	&annfam; </>
+   <font-size>		&annsize; </>
+   <foreground>		&annclr; </>
+</style>
+
+<style name="BOOK">
+   <font-family>	&bodfam; </>
+   <font-size>		&bodsize; </>
+   <line-spacing>	&bodspac; </>
+   <left-indent>	&docin; </>
+   <break-before>	line </>
+   <character-set>	iso8859-1 </>
+</style>
+
+<style name="FIGURE">
+   <title-tag>		TITLE </>
+   <break-before>	line </>
+   <select>		FIGURE,fig_if(isnull(attr(FILEREF,typechild(GRAPHIC))),
+			if(eq(typechild(INFORMALTABLE),0),
+			text,tbl),graphic) </>
+</style>
+
+<style name="FIGURE,TITLE">
+   <left-indent>        &figlin; </>
+   <first-indent>       &figfin; </>
+   <space-before>       &figfore; </>
+   <text-before>&tfignum;</>
+   <font-weight>	bold </>
+   <break-before>	line </>
+</style>
+
+<style name="fig_graphic">
+   <script>		ebt-raster filename="attr(FILEREF,typechild(GRAPHIC))"
+			title="&figtitl;" </>
+</style>
+
+<style name="fig_text">
+   <script>		ebt-reveal 
+			stylesheet="figtext.w"
+			root="1" title="&figtitl;" </>
+</style>
+
+<style name="fig_tbl">
+   <script>		ebt-reveal stylesheet="table.w"
+			root="1" title="&tbltitl;"</>
+</style>

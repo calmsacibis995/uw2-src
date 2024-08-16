@@ -1,0 +1,33 @@
+# If you want vt-switching to be snappy, you can reduce the amount of video 
+# memory that is saved by the video driver. By default, the driver saves all the
+# available video memory (ex: 1MB or 2MB or 4MB). If you use the non-X vt 
+# (ex: console) only for text mode, you need to save only 32K and if you use
+# the console for DOS/standard_vga graphics programs, you have to save 256K. 
+# uncomment one of the next two lines that is applicable to your usage.
+#vt-switch-save-lines=32
+#vt-switch-save-lines=256
+
+# Not all Mach64 cards are created equal! On some of the Mach64 cards, the
+# 'blocked VRAM' feature doesn't function properly - this is a hardware 
+# limitation; the side effect of using this feature without real hardware support
+
+# From our experience, we found that we cannot rely on the BIOS setting
+# for 'blocked write' feature for VRAM configurations. Irrespective of the
+# BIOS setting, it works fine on some machines and on others, you will see
+# random pixelization problems. We use the default BIOS setting. 
+# If you see random pixelization problems on the screen, set this feature to
+# "no". To find out the default for your configuration, try 'verbose-startup'
+# option. By setting this option to "no", you will see a drop of approximately 
+# 40K Xstones in performance! (don't blame us :-) )
+# But, on some m/c, even if the BIOS sets this feature to 'unsupported', we
+# can force this to "yes" with no side-effects, except for a gain of 40K Xstones
+# So, try both and use the "yes" option if you don't have any problems.
+#enable-blocked-memory-write=no
+#enable-blocked-memory-write=yes
+
+# on some PCI configurations, we noticed that the hardware cursor's doesn't work
+# properly on some PCI machines. If you don't see the cursor, use this option
+#cursor-type=software-cursor
+
+# If you want startup diagnostics printed out
+#verbose-startup=1

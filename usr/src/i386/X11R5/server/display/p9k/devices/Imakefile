@@ -1,0 +1,23 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)p9k:p9k/devices/Imakefile	1.2"
+
+#include <Server.tmpl>
+#include <sv4Lib.rules>
+
+#define IHaveSubdirs
+
+SUBDIRS = viper
+
+P9K_VINFOFILE = p9k.vinfo
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+InstallMultiple($(P9K_VINFOFILE),$(DISPLIBDIR))

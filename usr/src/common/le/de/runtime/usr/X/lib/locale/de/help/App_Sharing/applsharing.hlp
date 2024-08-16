@@ -1,0 +1,146 @@
+#ident\t"@(#)dthelp:Admin.Tools/applsharing.hlp 1.13"
+^*version^1
+^*title^Anwendungen gemeinsam nutzen
+^:Anwend_Sharing
+^*width^70
+^+DesktopMgr/help.defs
+^?Anwendungen gemeinsam nutzen
+^0^Anwendungs-Sharing
+^$10
+Anwendungs-Sharing
+
+Verwenden Sie die gemeinsame Nutzung von Anwendungen, um mit anderen
+UnixWare Systemen zu \d(bekanntmachen), auf denen Ihren Anwendungen
+zur Nutzung zur Verfügung stehen.
+
+Bei der gemeinsamen Nutzung von Anwendungen können Sie folgendes
+durchführen:
+
+\to\t\k(Konfigurieren Sie Ihr System für die gemeinsame Nutzung von Anwendungen^^Ihr System für Anwendungs-Sharing konfigurieren)
+\to\t\k(Anwendungen von der Liste der gemeinsam genutzten Anwendungen löschen^^Eine gemeinsam genutzte Andwendung löschen)
+\to\t\k(Das Start-Shell-Skript für gemeinsam genutzte Anwendungen individuell anpassen^^Das Startup-Shell-Skript einer gemeinsam genutzten Anwendung individuell anpassen)
+\to\t\k(Anwendungstypen ändern^^Anwendungstypen ändern)
+
+^1^Ihr System für Anwendungs-Sharing konfigurieren
+^$20
+Ihr System für Anwendungs-Sharing konfigurieren
+
+Bevor ferne Benutzer auf gemeinsam genutzte Anwendungen zugreifen
+können, müssen Sie \d(Peer-to-Peer-Kommunikation) aktivieren. Zusätzlich
+muß der Eigentümer des fernen Systems die Peer-to-Peer-
+Kommunikation auf dem fernen System aktivieren (siehe \k(NetWare Setup^NetWare_Setup/NetWare_Setup.hlp^NetWare Setup)).
+
+Weiterhin müssen Sie die
+\k(Berechtigung zur gemeinsamen Nutzung von Anwendungen^dtadmin/user.hlp^Mit Berechtigungen umgehen können) haben.
+
+Um die gemeinsame Nutzung von Anwendungen zu konfigurieren, führen Sie
+folgendes durch:
+
+1.\tÖffnen Sie das Fenster, das die Anwendung enthält, die Sie andern
+  \tBenutzern \d(bekanntmachen) wollen.
+
+  \tHinweis: Wenn Sie sich bereits im Ordner Verw_Tools befinden,
+  \tmachen Sie weiter mit Schritt 3.
+
+2.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner: Verwaltungs_Tools"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf Anwend.-Sharing. Das Fenster "Anwend.-Sharing"
+  \terscheint.
+
+4.\t\d(Ziehen-und-legen^ziehen-und-ablegen) Sie die Anwendungsdatei oder
+  \tden Ordern von Schritt 1 auf das Fenster "Anwendungen gemeinsam
+  \tnutzen - gemeinsam genutzte Anwendungen".
+
+5.\tKlicken Sie auf Abbrechen, um das Fenster zu schließen.
+  \tJetzt ist die ausführbare Datei in der Anwendungsdatei oder dem
+  \tAnwendungsordner für andere Benutzer verfügbar.
+
+Hinweis: Dieses Verfahren ist ausreichend, um einfache Programme, wie
+z.B. xclock, zur gemeinsamen Nutzung zu konfigurieren. Für den
+Großteil der Anwendungen müssen Sie jedoch Änderungen im
+Start-Shell-Skript durchführen. Siehe
+\k(Das Startup-Shell-Skript einer gemeinsam genutzten Anwendung individuell anpassen).
+
+^1^Eine gemeinsam genutzte Andwendung löschen
+^$30
+Eine gemeinsam genutzte Andwendung löschen
+
+Um eine Anwendung von der Liste der gemeinsam genutzten Anwendungen zu
+löschen (Angebot zurückziehen), gehen Sie folgendermaßen vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Anwend.-Sharing". Das Fenster
+  \t"Anwend.-Sharing" erscheint.
+
+3.\tKlicken Sie die Anwendung, die Sie löschen wollen, an.
+
+4.\tKlicken Sie auf Löschen. Das System entfernt die Anwendung von der
+  \tListe der gemeinsam genutzten Anwendung.
+
+^1^Das Startup-Shell-Skript einer gemeinsam genutzten Anwendung individuell anpassen
+^$40
+Das Startup-Shell-Skript einer gemeinsam genutzten Anwendung individuell anpassen
+
+Um das Start-Shell-Skript einer gemeinsam genutzten Anwendung
+individuell anzupassen, gehen Sie folgendermaßen vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Anwend.-Sharing". Das Fenster
+  \t"Anwend.-Sharing" erscheint.
+
+3.\tKlicken Sie auf die Anwendung, die Sie bearbeiten wollen.
+
+4.\tKlicken Sie auf Bearbeiten. Ein Fenster "Text-Editor", der das
+  \tAnwendungs-Skript enthält, wird geöffnet.
+
+5.\tMachen Sie die gewünschten Änderungen. Für weitere Informationen
+  \tzur Textbearbeitung siehe \k(Der Text-Editor^dtedit/edit.hlp^Der Text-Editor).
+
+Hinweis: Die Bearbeitung des Standard-Skripts, das die gemeinsam
+genutzten Anwendungen startet, ist eine fortschrittliche Funktion.
+Verwenden Sie diese Funktion nicht, wenn Sie sich mit der
+Shell-Programmierung des UNIX Systems nicht auskennen.
+
+^1^Anwendungstypen ändern
+^$50
+Anwendungstypen ändern
+
+Die gemeinsame Nutzung von Anwendungen unterstützt folgende zwei Typen
+von Anwendungen:
+
+\to\tTextanwendungen - Anwendungen, die im \k(Terminal-Fenster^xterm/term.hlp^Terminal) gestartet
+\t \twerden.
+
+\to\tX-Anwendung - Anwendungen, die über ihr eigenes Terminal-Fenster
+\t \tverfügen.
+
+Um zwischen diesen beiden Anwendungstypen umzuschalten, gehen Sie
+folgendermaßen vor:
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Anwend.-Sharing". Das Fenster
+  \t"Anwend.-Sharing" erscheint.
+
+3.\tKlicken Sie die gewünschte Anwendung an.
+
+4.\tKlicken Sie auf Typ Ändern. Wenn die Anwendung eine X-Anwendung
+  \twar, wird auf eine Textanwendung geändert. Wenn die Anwendung eine
+  \tTextanwendung war, wird auf eine X-Anwendung geändert.
+

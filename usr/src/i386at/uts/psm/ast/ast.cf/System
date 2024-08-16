@@ -1,0 +1,12 @@
+#ident	"@(#)kern-i386at:psm/ast/ast.cf/System	1.2"
+#ident	"$Header: $"
+# There are 3 interrupts which the AST psm needs to handle:
+#	24 -- SPI: System Priority Interrupt (a "maskable NMI")
+#	25 -- LSI: Local Software Interrupt (currently unused)
+#	26 -- IPI: Inter Processor Interrupt (xintr)
+# All of these are multiplexed through psm_intr()
+$version 2
+ast	Y	1	0	0	0	0	0	0	0	-1
+ast	Y	1	8	1	24	0	0	0	0	-1
+ast	Y	1	8	1	25	0	0	0	0	-1
+ast	Y	1	9	1	26	0	0	0	0	-1

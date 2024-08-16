@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+#  Build script for the lp support
+#
+#ident	"@(#)langsup:common/ls/:mklp	1.1"
+
+echo "Copying in the lp support files"
+if [ ! -d $PKGDIR/usr/lib/lp/locale ] ; then
+	/bin/mkdir -p $PKGDIR/usr/lib/lp/locale
+fi
+
+/bin/cp -r ./lp/locale/* $PKGDIR/usr/lib/lp/locale
+
+echo "Complete"
+echo ""
+

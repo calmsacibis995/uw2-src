@@ -1,0 +1,958 @@
+#ident	"@(#)pkg.nics:postinstall	1.76"
+
+exec 2>/tmp/postinstall.err
+
+# check for TERM
+[ -n "$TERM" ] || {
+
+	. ${REQDIR}/nic_strings
+	echo $TERM_NOT_SET
+	exit 1
+}
+
+# If DEBUG is set to anything (except NULL), it is in debug mode
+DEBUG=
+
+if [ "$RANDOM" = "$RANDOM" ]
+then
+        exec /usr/bin/xksh $0
+fi
+
+###########################################################################
+
+function start_up
+{
+[ -n "$DEBUG" ] && set -x
+
+	# if 'dependency' flag files exist, set the module dependency list.
+	#
+	ODI_MODS="lsl msm ethtsm toktsm odisr"
+
+	# unset ODI_MODS because they were already installed
+	# and built before the reboot.
+	[[ "$HOW_INSTALL" = POSTREBOOT ]] && ODI_MODS=
+
+	# Due to a undetermined bug (believed to be in xksh), the
+	# following assignment is REQUIRED - even though the variable
+	# is re-assigned immediately afterwards.  Without it, ODI_MODS
+	# gets unset when getstty is called (from main).
+	# This line should NOT be removed.
+	DEP_MODS="$ODI_MODS"
+
+	# Now check if there are any special dependencies to be loaded.
+	DEP_MODS="$DEPEND"
+}
+
+function set_vars
+{
+[ -n "$DEBUG" ] && set -x
+
+	export BUSTYPE=`/etc/conf/bin/idkname -a`
+	FAILURE=1	# fatal error
+	RSPDIR=/var/sadm/nics_resp
+	CONFDIR=/etc/conf
+	CONFBIN=${CONFDIR}/bin
+	ERROR1=" Errors have been written to the file $TMP."
+	NETINFO=/usr/sbin/netinfo
+	SCRIPTS=/usr/sbin/pkginst
+	PATH=$PATH:/etc/conf/bin export PATH
+	TMP=/tmp/$$.nics.err
+	INSTALL_CORE_STACK=${INSTALL_CORE_STACK:-false}
+	CONFIG_ERROR=0
+
+	#
+	# If installing from 'as' set installation, REQDIR is set incorrectly
+	# for this package to work.  However, the same environment occurs if
+	# nics has already been installed.  Therefore, if $REQDIR/$PKGINST
+	# exists, set REQDIR to it.
+	#
+	[ "${SETINST}" = "as" -o "${SETINST}" = "pe" -o \
+	 "${SETINST}" = "updset201" ] && [ "${HOW_INSTALL}" != "ON_BFLOP" ] && {
+		[ -d "${REQDIR}/${PKGINST}" ] && REQDIR=${REQDIR}/${PKGINST}
+	}
+}
+
+function set_locale
+{
+[ -n "$DEBUG" ] && set -x
+
+	# There is a heirarchial list of LOCALE variables to check.  If none
+	# are set, coming in to this script, then default to the C-locale.
+	LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-C}}}
+
+	C_MENUDIR=/etc/inst/locale/C/menus/nics
+	MENUDIR=/etc/inst/locale/${LOCALE}/menus/nics
+	[ ! -d ${MENUDIR} ] && MENUDIR=${C_MENUDIR}
+}
+
+function boot_flop_install
+{
+[ -n "$DEBUG" ] && set -x
+
+	# If HOW_INSTALL = ON_BFLOP then save the drivers in /tmp/nics
+	# in /etc/inst/drivers
+	
+	[ "${HOW_INSTALL}" = "ON_BFLOP" ] && {
+		#
+		# install the basic ODI support modules
+		#
+		for MOD_NAME in $ODI_MODS
+		do
+			cd /tmp/nics/${MOD_NAME}
+			idinstall -P nics -k -a ${MOD_NAME} >> $TMP 2>&1
+			installf -f nics
+		done
+		cleanup_exit 10
+	}
+}
+
+function print_install_display
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Tell user that drivers are being installed, clear header & footer,
+	# and print out a 'Please Wait' message
+	wputstr 1 "$nl"
+	wputstr 1 "$nl"
+
+	if $INSTALL_CORE_STACK
+	then display "$INSTALLING_CORE_STACK_MSG"
+	else display "$INSTALLING_DRIVER_MSG"
+	fi
+	INSTALLING_MSG_WID=$CURWIN
+
+	INSTALL_DISPLAY_WID=$CURWIN
+	footer "$PLEASE_WAIT"
+	input_handler
+}
+
+function do_installf
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Add the /etc/inst/locale/C/menus/nics files
+	# to the contents file (so that they are removed with pkgrm)
+	find ${C_MENUDIR} -print | while read fname
+	do
+		[ -f "$fname" ] && echo $fname f
+		[ -d "$fname" ] && echo $fname d 755 root sys
+	done | installf nics - >> $TMP 2>&1 || exit 2
+}
+
+function do_dep_mods
+{
+[ -n "$DEBUG" ] && set -x
+
+	# process dependency modules
+	DEP_LIST=
+	for dep_mod in $DEP_MODS $ODI_MODS
+	do
+		cd /tmp/nics/$dep_mod
+		idinstall -P nics -k -a ${dep_mod} >> $TMP 2>&1
+		DEP_LIST="$DEP_LIST -M $dep_mod"
+	done
+ 	# if on postreboot & $IDTUNE_FILE exists, then msm needs to be rebuilt.
+	[[ "$HOW_INSTALL" = POSTREBOOT ]] && [ -f "$IDTUNE_FILE" ] && 
+		DEP_LIST="$DEP_LIST -M msm"
+}
+
+function no_nics_picked
+{
+[ -n "$DEBUG" ] && set -x
+
+	$INSTALL_CORE_STACK && [ -n "$DEP_LIST" ] && idbuild $DEP_LIST >> $TMP 2>&1
+	clean_up
+	goodbye
+}
+
+function vt_switch
+{
+[ -n "$DEBUG" ] && set -x
+
+	# We cannot run the winxksh screens on the console since there may
+	# be NOTICE messages printed out there which mess up the screens.
+	# Therefore, run the scripts on a new & unused VT.  NOTE, the
+	# postreboot script already takes care of this.
+
+	NICS_TTY=`tty`
+	
+	if [ "$NICS_TTY" = "/dev/console" -o "$NICS_TTY" = "/dev/syscon" ]
+	then
+		exec 3<&0	# save current stdin
+		exec 4>&1	# save current stdout
+
+		# file containing a free vt should exist from the request
+		# script, but if case it doesn't, find a free vt to use.
+		if [ -s /tmp/nics.vt.info ]
+		then
+			read NEWVT < /tmp/nics.vt.info
+		else
+			[ -z "$NEWVT" ] && NEWVT=/dev/console
+			chmod +x ${REQDIR}/bin/findvt
+			NEWVT=`${REQDIR}/bin/findvt`
+		fi
+		exec 0< $NEWVT		# Redirect stdin  from NEWVT
+		exec 1> $NEWVT		# Redirect stdout to   NEWVT
+	fi
+}
+
+function vt_restore
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Restore stdin/stdout FDs
+	if [ "$NICS_TTY" = /dev/console -o "$NICS_TTY" = /dev/syscon ]
+	then
+		exec 0<&3	# restore old stdin
+		exec 1>&4	# restore old stdout
+	
+		exec 3<&-	# close fd 3
+		exec 4>&-	# close fd 4
+	fi
+}
+
+function do_dcu
+{
+[ -n "$DEBUG" ] && set -x
+
+	DCU_CONFLICT_ERROR=false
+
+	# On all MCA machines, run 'dcu -C'.  If the return value is '3',
+	# then there is a conflict.  As this will take about 20 seconds,
+	# put up a "please wait' screen.  NOTE also, that, since 'dcu -C'
+	# kicks off it's own winxksh instance, we must exit out beforehand
+	# and re-start it afterwards.
+	# 
+	[[ "$BUSTYPE" = MCA ]] && {
+		[[ "$HOW_INSTALL" = POSTREBOOT ]] && {
+			footer "$PRESS_KEY_TO_RUN_DCU_FOOTER"
+			display -w "${RUN_DCU_DISPLAY}"
+			input_handler
+
+			setstty
+			call endwin
+			mysetcolor -n
+			myclear
+			dcu -C
+			(( $? == 3 )) && DCU_CONFLICT_ERROR=true
+			. /etc/dcu.d/scripts/winrc
+			. /etc/dcu.d/scripts/scr_init
+			$DCU_CONFLICT_ERROR && {
+				footer "$PRESS_KEY_TO_SHUTDOWN_FOOTER"
+				display -w "$DCU_CONFLICT_DISPLAY_2"
+				input_handler
+				CHOICE="$SHUTDOWN" cfg_err_choices
+			}
+		}
+		[[ "$HOW_INSTALL" = NORMAL ]] && {
+			footer "$PLEASE_WAIT"
+			display "${RUN_DCU_DISPLAY2}"
+			DCU_WID=$CURWIN
+			sleep 5
+			dcu -C < /dev/null > /dev/null 2>&1
+			(( $? == 3 )) && {
+				BUILD_ERR_FLAG=true
+				FAILURE=1
+				goodbye
+			}
+			wclose $DCU_WID
+		}
+	}
+}
+
+function do_configure
+{
+[ -n "$DEBUG" ] && set -x
+
+	# If resmgr was run, we must update all System files.  We don't need
+	# to check if resmgr was run since idconfupdate itself checks to see
+	# if it needs to do anything.  NOTE: run idconfupdate regardless of
+	# whether a build failure occurred or not - sometimes a reboot is
+	# required to get the driver to work.
+
+	/etc/conf/bin/idconfupdate
+
+	[ "$BUILD_ERR_FLAG" != "true" ] && {
+		INET_PKG=/var/sadm/pkg/inet/pkginfo
+
+		# set flag to run the configure program
+		RUN_CONFIGURE=true
+
+		# if it is a post-installation reboot, and the inet package
+		# is installed, do NOT run configure
+		[ "$HOW_INSTALL" = "POSTREBOOT" -a -f $INET_PKG ] && {
+			RUN_CONFIGURE=false
+		}
+
+		# if it is an upgrade installation, do NOT run configure
+		[ "$PKGINSTALL_TYPE" = "UPGRADE" ] && RUN_CONFIGURE=false
+
+		$RUN_CONFIGURE && /etc/confnet.d/configure > /dev/null 2>&1
+	}
+}
+
+function edit_system_file
+{
+[ -n "$DEBUG" ] && set -x
+
+	DRIVER_NAME=$1
+
+	[ ! -d /tmp/$$.nodes ] && mkdir /tmp/$$.nodes
+
+	# If this is being run during the POSTREBOOT script, make a
+	# backup copy of the original file.  This way, if there is
+	# a configuration error and the user wants to start again, just
+	# move the original copy back into place.
+
+	[ "$HOW_INSTALL" = "POSTREBOOT" -a ! -f /tmp/nics/$DRIVER_NAME/.System ] && {
+
+		cp /tmp/nics/$DRIVER_NAME/System /tmp/nics/$DRIVER_NAME/.System
+	}
+
+	# Get existing values from System file.  We will only be changing
+	# IRQ, DMA, IO and MEM addresses.  The other stuff we need to keep
+	# the same.
+	grep "^$DRIVER_NAME" /tmp/nics/$DRIVER_NAME/System | tail -1 > /tmp/$$.system
+	read Dev Cfg Unit Ipl Itype irq Sio Eio Scma Ecma Dma < /tmp/$$.system
+
+	# If UNIT = NULL (which means it wasn't set in the config file),
+	# then use the default value in the System file
+	if [ "$UNIT" = "NULL" ]
+	then
+		UNIT=$Unit
+		N_UNIT=0
+	else
+		let N_UNIT="$UNIT - 1"
+	fi
+
+	# put configuration info for this NIC instance into System file
+	echo "$DRIVER_NAME\tY\t$UNIT\t$Ipl\t$Itype\t$INT\t$S_PORT\t$E_PORT\t$S_MEM\t$E_MEM\t$DMA" >> /tmp/nics/$DRIVER_NAME/System
+
+	# Now keep track of how many NODE UNITS are needed for each Driver.
+	# This information is processed in write_node_params.
+	if [ -s /tmp/$$.nodes/$DRIVER_NAME ]
+	then	read NODE_UNITS < /tmp/$$.nodes/$DRIVER_NAME
+		let NODE_UNITS="$NODE_UNITS + 1"
+	else	NODE_UNITS=0
+	fi
+	let NODE_UNITS="$NODE_UNITS + $N_UNIT"
+	echo "$NODE_UNITS" > /tmp/$$.nodes/$DRIVER_NAME
+}
+
+#
+# write_node_params - figures out how many nodes are needed
+#			  for each board
+#
+function write_node_params
+{
+[ -n "$DEBUG" ] && set -x
+
+	SAVED_PWD=`pwd`
+	[ -d /tmp/$$.nodes ] && {
+		cd /tmp/$$.nodes
+		for DRIVER_NAME in *
+		do
+			read N < $DRIVER_NAME
+			temp=0
+			while [ "$temp" -le "$N" ]
+			do
+				${NETINFO} -a -d ${DRIVER_NAME}_$temp
+				let temp="$temp + 1"
+			done
+		done
+		cd $SAVED_PWD
+	}
+}
+
+#
+# cfg_success - tell the user that the NIC was successfuly configured
+#
+function cfg_success
+{
+[ -n "$DEBUG" ] && set -x
+
+	card_name=$1
+	NEW_CFG_SUCCESS_MSG=`printf "$CFG_SUCCESS_MSG" "$card_name"`
+
+	wputstr 1 "$nl"
+	wputstr 1 "$nl"
+	footer "$PLEASE_WAIT"
+	display "$NEW_CFG_SUCCESS_MSG"
+	CFG_SUCCESS_DISPLAY_WID=$CURWIN
+	# return
+}
+
+#
+# undo_all - in case there was a configuration error, this function will:
+#
+#	- idinstall -d <MODULE> all NICS modules
+#	- modadmin -u <MODULE> all NICS modules
+#	- remove entries from resource manager
+#	- remove ALL /etc/conf NICS entries from contents file
+#
+# NOTE: this function is ONLY called when $HOW_INSTALL = POSTREBOOT
+#
+function undo_all
+{
+[ -n "$DEBUG" ] && set -x
+
+	wclose
+	wclose
+	#
+	# Tell user that drivers are being removed, clear header & footer,
+	# and print out a 'Please Wait' message
+	#
+	wputstr 1 "$nl"
+	wputstr 1 "$nl"
+	display "$REMOVING_DRIVER_MSG"
+	REMOVING_DRIVER_DISPLAY_WID=$CURWIN
+	footer "$PLEASE_WAIT"
+	input_handler
+	
+	# Must do the hardware drivers first since they are dependent
+	# on the support modules
+	DRIVER_NAME_LIST=""
+	OLD_DRIVER_NAME=""
+	integer brdinst=0
+	while read card_name DRIVER_NAME UNIT INT S_PORT E_PORT S_MEM E_MEM DMA
+	do
+		# If there is more than one occurence of the same driver, then
+		# increment brdinst by 1.  If not, then set brdinst to 0
+		[ "$OLD_DRIVER_NAME" = "$DRIVER_NAME" ] && let brdinst+=1 || brdinst=0
+		modadmin -U $DRIVER_NAME
+		${NETINFO} -r -d ${DRIVER_NAME}_$brdinst
+		mv /tmp/nics/${DRIVER_NAME}/.System /tmp/nics/${DRIVER_NAME}/System
+		DRIVER_NAME_LIST="$DRIVER_NAME_LIST $DRIVER_NAME"
+		OLD_DRIVER_NAME=$DRIVER_NAME
+	done < /tmp/nic.generic >> $TMP 2>&1
+
+	[ "${HOW_INSTALL}" != "POSTREBOOT" ] && {
+		{ echo /etc/inst/locale/C/menus/nics/nic_bdnames;
+		find ${C_MENUDIR} -print | while read fname
+		do
+			[ -f "$fname" ] && echo $fname f
+			[ -d "$fname" ] && echo $fname d 755 root sys
+		done } | removef nics - >> $TMP 2>&1 || exit 2
+		# Remove the INET board names file that was created
+		removef -f nics
+		rm -f /etc/inst/locale/C/menus/nics/nic_bdnames >> $TMP 2>&1
+		rm -rf $C_MENUDIR
+	}
+
+	# if we have two or more of the same cards, we cannot remove the
+	# driver via idinstall untill ALL of the entries have been removed
+	# from the Resource Manager.  Therefore, run idinstall -d last.
+	for DRIVER_NAME in $DRIVER_NAME_LIST
+	do
+		idinstall -P nics -d $DRIVER_NAME
+	done >> $TMP 2>&1
+
+	# Now process all of the dependency modules
+	for dep_mod in $DEP_MODS
+	do
+		modadmin -U $dep_mod
+		idinstall -P nics -d $dep_mod
+	done >> $TMP 2>&1
+
+	removef -f nics
+}
+
+#
+# This reads the choices of the configuration error screen.  We either
+# continue with the installation or shutdown the machine.  This function
+# is ONLY called when $HOW_INSTALL = POSTREBOOT.
+#
+function cfg_err_choices
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Close the Window ID that was passed in
+	wclose $1
+
+	case "$CHOICE" in
+	"$RETURN")	undo_all
+			setstty
+			call endwin
+			mysetcolor -n
+			myclear
+			exit 55
+			;;
+	"$CANCEL_NIC")	setstty
+			call endwin
+			mysetcolor -n
+			myclear
+			exit $FAILURE
+			;;
+	"$SHUTDOWN")	undo_all
+			setstty
+			call endwin
+			mysetcolor -n
+			myclear
+			exit 99
+			;;
+	# NOTE: REBOOT is NOT a variable name but rather a string that
+	# gets matched within this script.  It does NOT need to be
+	# translated and does NOT get preceeded by a '$'
+	"REBOOT")	clean_up
+			setstty
+			call endwin
+			mysetcolor -n
+			myclear
+			exit 99
+			;;
+	esac
+}
+
+#
+# cleanup_exit - if boot-floppy installation, save all files in /tmp
+#		 and exit
+#
+function cleanup_exit
+{
+[ -n "$DEBUG" ] && set -x
+
+	# $1 is the exit code
+	# clean up any tmp files created by upnover tools and then exit.
+
+	[ "$PKGINST" ] || PKGINST=nics
+
+	[ "$UPDEBUG" = YES ] && goany "cleanup_exit $1 $PKGINST"
+	$SCRIPTS/up_cleanup "$PKGINST"
+	exit 	$1
+}
+
+function clean_up
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Chances are the current process will be 'sitting' in the
+	# /tmp/nics directory so change directory to somewhere safe
+	cd /
+
+	#
+	# Now clean up
+	#
+	LIST=`grep "/tmp/nics[ /]" /var/sadm/install/contents | cut -d" " -f1`
+
+	[ "$UPDEBUG" = YES ] && goany "removef list=$LIST"
+
+	removef $PKGINST $LIST > /dev/null 2>&1
+	removef -f $PKGINST > /dev/null 2>&1
+	rm -rf $TMP /tmp/$PKGINST > /dev/null 2>&1
+
+	[ "$UPDEBUG" = YES ] && goany
+}
+
+function do_normal_params
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Handle the normal parameters (e.g., IRQ, IO, etc).
+	while read card_name DRIVER_NAME UNIT INT S_PORT E_PORT S_MEM E_MEM DMA
+	do
+		edit_system_file $DRIVER_NAME
+	done < /tmp/nic.generic
+}
+
+function goodbye
+{
+[ -n "$DEBUG" ] && set -x
+
+	setstty
+	call endwin
+	mysetcolor -n
+	myclear
+	if [ "$BUILD_ERR_FLAG" = "true" ]
+	then
+		exit $FAILURE
+	else
+		exit 0
+	fi
+}
+
+function do_idinstall
+{
+[ -n "$DEBUG" ] && set -x
+
+	OLD_DRIVER_NAME=""
+	while read card_name DRIVER_NAME UNIT INT S_PORT E_PORT S_MEM E_MEM DMA
+	do
+		# Only idinstall a driver once, so if there is more than one
+		# occurence of the same driver, skip all other attempts.
+		[ "$OLD_DRIVER_NAME" = "$DRIVER_NAME" ] && continue
+
+		cd /tmp/nics/$DRIVER_NAME
+		idinstall -P nics -k -a $DRIVER_NAME >> $TMP 2>&1
+
+		(( $? != 0 )) && CONFIG_ERROR=1
+
+		OLD_DRIVER_NAME=$DRIVER_NAME
+	done < /tmp/nic.generic
+	
+	# Sync up entries in resource manager - this MUST be done before
+	# the idbuild
+	dcu -S
+}
+
+function do_idbuild
+{
+[ -n "$DEBUG" ] && set -x
+
+	OLD_DRIVER_NAME=""
+	MOD_LIST=""
+	while read card_name DRIVER_NAME UNIT INT S_PORT E_PORT S_MEM E_MEM DMA
+	do
+		# Only idbuild a driver once, so if there is more than one
+		# occurence of the same driver, skip all other attempts.
+		[ "$OLD_DRIVER_NAME" = "$DRIVER_NAME" ] && continue
+
+		MOD_LIST="$MOD_LIST -M $DRIVER_NAME"
+		OLD_DRIVER_NAME=$DRIVER_NAME
+	done < /tmp/nic.generic
+
+	idbuild $DEP_LIST $MOD_LIST >> $TMP 2>&1
+	(( $? != 0 )) && CONFIG_ERROR=1
+
+	# Sync up entries in resource manager (this 2nd run of dcu is neede
+	# for those drivers with a verify routine).
+	[[ -f /tmp/nics.verify ]] && dcu -S
+}
+
+function do_idtune
+{
+[ -n "$DEBUG" ] && set -x
+
+	# /tmp/nics.idtune contains changes that must be made to
+	# tunable parameters
+	IDTUNE_FILE=/tmp/nics.idtune
+	[ -f ${IDTUNE_FILE} ] && {
+		chmod +x ${IDTUNE_FILE}
+		${IDTUNE_FILE}
+	}
+}
+
+#
+# Call resmgr to pass in any customized parameters
+#
+function parse_parameters
+{
+[ -n "$DEBUG" ] && set -x
+
+	MOD_NAME=$1
+	param_string=$2
+	BRDINST=$3
+	param_name=$4
+	resmgr -m ${MOD_NAME} -i $BRDINST -p "${param_name},s" -v "$param_string"
+}
+
+function do_cust_params
+{
+[ -n "$DEBUG" ] && set -x
+
+	# Handle the customized parameters (if any exist)
+	OLD_DRIVER_NAME=""
+	integer i j brdinst=0
+	while read param_line
+	do
+		set -A param_array $param_line
+		card_name=${param_array[0]}
+		DRIVER_NAME=${param_array[1]}
+		[ "$OLD_DRIVER_NAME" = "$DRIVER_NAME" ] && let brdinst+=1 || brdinst=0
+		i=2
+		while [ -n "${param_array[i]}" ]
+		do
+			let j=$i+1
+			parse_parameters "$DRIVER_NAME" "${param_array[$i]}" $brdinst "${param_array[$j]}"
+			let i+=2
+		done
+		OLD_DRIVER_NAME=$DRIVER_NAME
+	done < /tmp/nic.parameter
+}
+
+function do_modadmin
+{
+[ -n "$DEBUG" ] && set -x
+
+	OLD_DRIVER_NAME=""
+	SILENT_CHECK=false
+	[ -f /tmp/nics.reboot ] && {
+		# if on reboot, print out display and wait for input
+		[ "${HOW_INSTALL}" = "POSTREBOOT" ] && {
+			wclose $INSTALLING_MSG_WID
+			footer "$PRESS_KEY_TO_SHUTDOWN_FOOTER"
+			display -w "$MUST_SHUTDOWN" -bg $ERROR_BG -fg $ERROR_FG
+			input_handler
+			footer "$PLEASE_WAIT"
+			do_pscripts
+			do_configure
+			CHOICE=REBOOT cfg_err_choices
+		}
+		# we are not on the reboot and cannot accept input.
+		# print out a display, sleep for 10 seconds (to give
+		# user time to read it, then exit.  Also, print out
+		# error a log file.
+		wclose $INSTALLING_MSG_WID
+		display "$MUST_SHUTDOWN" -bg $ERROR_BG -fg $ERROR_FG
+		sleep 15
+		echo "$MUST_SHUTDOWN" >> /var/sadm/install/logs/nics.log
+		do_pscripts
+		do_configure
+		BUILD_ERR_FLAG=true goodbye
+	}
+	while read card_name DRIVER_NAME UNIT INT S_PORT E_PORT S_MEM E_MEM DMA
+	do
+		# Only load a driver once, so if there is more than one
+		# occurence of the same driver, skip all other attempts.
+		[ "$OLD_DRIVER_NAME" = "$DRIVER_NAME" ] && continue
+
+		modadmin -l ${DRIVER_NAME} >> $TMP 2>&1
+		if (( $? == 0 ))
+		then
+			SILENT_CHECK=true
+		else
+			CONFIG_ERROR=1
+			DRIVER_FAIL_LIST="$DRIVER_FAIL_LIST $DRIVER_NAME"
+		fi
+
+		OLD_DRIVER_NAME=$DRIVER_NAME
+	done < /tmp/nic.generic
+	# Certain cards share board IDs.  Therefore, if it is a silent
+	# installation, and at least 1 board was correctly configured,
+	# then report a successful installation.
+	$SILENT_INSTALL && $SILENT_CHECK && CONFIG_ERROR=0
+}
+
+function do_checkdevs
+{
+[ -n "$DEBUG" ] && set -x
+
+	OLD_DRIVER_NAME=""
+	SILENT_CHECK=false
+	integer brdinst=0
+	while read card_name DRIVER_NAME UNIT INT S_PORT E_PORT S_MEM E_MEM DMA
+	do
+		# If there is more than one occurence of the same driver, then
+		# increment brdinst by 1.  If not, then set brdinst to 0
+		[ "$OLD_DRIVER_NAME" = "$DRIVER_NAME" ] && let brdinst+=1 || brdinst=0
+		check_devs -g /dev/${DRIVER_NAME}_${brdinst} >> $TMP 2>&1
+		if (( $? != 0 ))
+		then	CONFIG_ERROR=1
+		else	echo ${DRIVER_NAME}_${brdinst} $card_name
+			SILENT_CHECK=true
+		fi
+		OLD_DRIVER_NAME=$DRIVER_NAME
+	done < /tmp/nic.generic > /etc/inst/locale/C/menus/nics/nic_bdnames
+	installf nics /etc/inst/locale/C/menus/nics/nic_bdnames
+	# Certain cards share board IDs.  Therefore, if it is a silent
+	# installation, and at least 1 board was correctly opened,
+	# then report a successful installation.
+	$SILENT_INSTALL && $SILENT_CHECK && CONFIG_ERROR=0
+}
+
+function do_inet
+{
+[ -n "$DEBUG" ] && set -x
+
+	integer i=1 j=1 dev INET_NIC_COUNT
+	resmgr -p "MODNAME BRDID SLOT" | while read modname brdid slot
+	do
+		# check that modname, brdid and slot are NOT null
+		[ "$modname" != "-" -a "$brdid" != "-" -a "$slot" != "-" ] && {
+			echo $modname $brdid $slot
+		}
+	done > /tmp/nics.temp
+
+	# sort the list so that all same modnames are grouped together
+	sort -o /tmp/nics.temp /tmp/nics.temp
+
+	while read modname brdid slot
+	do
+		[[ "$modname" = "$old_modname" ]] && let dev+=1 || dev=0
+		rm_modname[$i]="$modname"
+		rm_brdid[$i]="$brdid"
+		rm_slot[$i]="$slot"
+		rm_device[$i]="${modname}_${dev}"
+		old_modname=$modname
+		let i+=1
+	done < /tmp/nics.temp
+# 	rm /tmp/nics.temp
+	(
+	  . /tmp/unixware.dat
+	  while (( j <= INET_NIC_COUNT ))
+	  do
+		MATCH=false
+		(( i=1 ))
+		[[ -n "${INET_EISA_ID[$j]}" ]] && {
+			# for the entire list of modnames, go through loop
+			while [ -n "${rm_modname[$i]}" ]
+			do
+			    # if the board ids and slot numbers match,
+			    # and the connector is active (as seen by a
+			    # non-null INET_HEAD array value), write out
+			    # the name of the device
+			    [ "${rm_brdid[$i]}" = "${INET_EISA_ID[$j]}" -a \
+			      "${rm_slot[$i]}" = "${INET_SLOT[$j]}" -a \
+			      -n "${INET_HEAD[$j]}" ] && {
+					echo "INET_device[$j]=${rm_device[$i]}"
+					MATCH=true
+				}
+				$MATCH && break || let i+=1
+			done
+		}
+	  	let j+=1
+	  done
+	) >> /tmp/unixware.dat
+}
+
+function do_pscripts
+{
+[ -n "$DEBUG" ] && set -x
+
+	for PSCRIPT in $ALL_SCRIPTS
+	do
+		chmod +x ${MENUDIR}/scripts/$PSCRIPT
+		${MENUDIR}/scripts/$PSCRIPT > /tmp/$$.PSCRIPT 2>&1
+	done
+}
+
+function print_cleanup_display
+{
+[ -n "$DEBUG" ] && set -x
+
+	display "$CLEANUP_MSG"
+	msgnoerr "" ""
+	footer "$PLEASE_WAIT"
+}
+
+function do_err
+{
+	# If this is an MCA machine, null out all fields in the resmgr
+	[ "$BUSTYPE" = "MCA" ] && {
+
+		for DRIVER_NAME in $DRIVER_FAIL_LIST
+		do
+			integer mca_loc_cnt
+
+			# Get the number of $DRIVER_NAME entries in resmgr
+			mca_loc_cnt=$(resmgr -m $DRIVER_NAME | wc -l)
+
+			# Now subtract 2: 1 for the header
+			# 		  1 since resmgr array starts with '0'.
+			let mca_loc_cnt-=2
+
+			while (( mca_loc_cnt > -1 ))
+			do
+				resmgr -m $DRIVER_NAME -i $mca_loc_cnt \
+				   -p "IRQ IOADDR MEMADDR DMAC" -v "- - - - - -"
+				let mca_loc_cnt-=1
+			done
+		done
+	}
+
+	idconfupdate
+
+	do_err_display
+}
+
+function do_err_display
+{
+[ -n "$DEBUG" ] && set -x
+
+	wclose $INSTALLING_MSG_WID
+	if [ "${HOW_INSTALL}" != "POSTREBOOT" ]
+	then
+		BUILD_ERR_FLAG=true
+		if [ -f /tmp/nics.reboot ]
+		then echo "$MUST_SHUTDOWN" >> /var/sadm/install/logs/nics.log
+		else echo "$CFG_FAILURE_MSG" >> /var/sadm/install/logs/nics.log
+		fi
+	else
+		if $SILENT_INSTALL
+		then
+			msgnoerr
+			footer "$PRESS_ANY_KEY_FOOTER"
+			display -w "$CFG_SILENT_FAILURE_MSG"
+			echo "$CFG_FAILURE_MSG" >> /var/spool/nics.err
+		else
+			display "$CFG_FAILURE_MSG" -bg $ERROR_BG -fg $ERROR_FG
+			CFG_FAILURE_DISPLAY_WID=$CURWIN
+			CHOOSE_TITLE="$CFG_FAILURE_TITLE"
+			choose -f -e -exit 'cfg_err_choices ${CFG_FAILURE_DISPLAY_WID}' "" "${RETURN}" "$CANCEL_NIC" "$SHUTDOWN"
+		fi
+		input_handler
+	fi
+}
+
+#
+#	main ()
+#
+[ -n "$DEBUG" ] && set -x
+
+[ -f /tmp/nics.exit ] && exit 99
+
+start_up
+
+set_vars
+
+set_locale
+
+. $SCRIPTS/updebug
+
+boot_flop_install
+
+[ "${HOW_INSTALL}" != "POSTREBOOT" ] && vt_switch
+
+. ${MENUDIR}/nic_sttyrc
+getstty
+. ${MENUDIR}/nic_strings
+. /etc/dcu.d/menus/choose
+. /etc/dcu.d/scripts/winrc
+. /etc/dcu.d/locale/C/txtstrings
+. /etc/dcu.d/scripts/scr_init
+. /etc/dcu.d/locale/C/help/helpwin
+
+print_install_display
+
+do_installf
+
+do_idtune
+
+do_dep_mods
+
+[[ -f "/tmp/no.nics.picked" ]] && no_nics_picked
+
+do_normal_params
+
+write_node_params
+
+do_idinstall
+
+do_idbuild
+
+do_cust_params
+
+do_modadmin
+
+do_checkdevs
+
+[ -f /tmp/unixware.dat ] && do_inet
+
+do_pscripts
+
+do_configure
+
+# Finish updating the contents file for package nics
+installf -f nics
+
+wclose $INSTALL_DISPLAY_WID
+
+(( CONFIG_ERROR ))  &&  do_err  ||  do_dcu
+
+print_cleanup_display
+
+# Now remove temporary files that were put into the contents file
+clean_up
+
+[ "${HOW_INSTALL}" != "POSTREBOOT" ] && vt_restore
+
+goodbye

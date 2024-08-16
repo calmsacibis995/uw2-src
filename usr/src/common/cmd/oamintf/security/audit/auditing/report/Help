@@ -1,0 +1,112 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/report/Help	1.1.5.2"
+#ident  "$Header: Help 2.0 91/07/12 $"
+ABSTRACT:Display Event Log
+	The "report" task allows you to display all or parts of a
+	specified event log file(s).
+
+Form.report:logfile
+	Enter one or more full pathnames of existing files, separating
+	multiple files with spaces, or press CHOICES.
+
+	If auditing is enabled the default is the current event log, 
+	otherwise it is the latest event log file in /var/audit.
+
+Form.report:mapfile
+	Enter the full pathname of a directory containing the audit 
+	map files.
+
+Form.report:logcontents
+	Enter "newest" or "oldest". If "newest" is selected, then the 
+	contents of the event log file(s) will be displayed sequentially 
+	as they occurred. If "oldest" is selected, then the contents of 
+	the event log file(s) will be displayed in reverse order of 
+	occurance.
+
+Form.report:entirety
+	Enter "yes" or "no".  If "no" is entered, you will be able to
+	display audit data based on your responses to the criteria 
+	you will be prompted for.  Otherwise, all of the audit data for 
+	every entry in the event log(s) will be displayed.
+
+Form.rep2:gencrit
+	Enter "union" or "intersection".  "union" will display the
+	union of the specified criteria.
+
+	The default is "intersection".
+
+Form.rep2:event
+	Enter zero or more valid event types or classes, separating
+	multiple entries by a comma, or press CHOICES.  
+
+	This prompt may be left blank.
+
+Form.rep2:objects
+	Enter the full pathname of a regular file, special file, directory,
+	named pipe, or the id of an IPC object whose audited events you
+	wish to display.
+
+	This prompt may be left blank.
+
+Form.rep2:types
+	Enter one of the following letters or press CHOICES:
+	
+	f - regular file
+	c - character special file
+	b - block special file
+	d - directory
+	p - named or unnamed pipe
+	s - semaphore
+	h - shared memory
+	m - message
+
+	This prompt may be left blank.
+
+Form.rep2:users
+	Enter zero or more valid user login names or uids, separating
+	multiple entries by a comma, or press CHOICES.
+
+	This prompt may be left blank.
+
+Form.rep2:stime
+	Enter the time in the format used by the "date" command. 
+	Valid values are 0 to 23 for hours, 0 to 59 for minutes,
+	0 to 59 for seconds, 1 to 31 for days, 1 to 12 for months, 
+	and 0 to 99 for years.  The events existing at or after the 
+	specified time will be displayed.
+
+	This prompt may be left blank.
+
+Form.rep2:etime
+	Enter the time in the format used by the "date" command. 
+	Valid values are 0 to 23 for hours, 0 to 59 for minutes,
+	0 to 59 for seconds, 1 to 31 for days, 1 to 12 for months, 
+	and 0 to 99 for years.  The events existing at or before the 
+	specified time will be displayed.  Only the starting time of
+	an event is recorded.
+
+	This prompt may be left blank.
+
+Form.rep2:outcome
+	Enter "success" or "failure".  The recorded events for the
+	specified outcome will be displayed.
+
+	This prompt may be left blank.
+
+Form.rep2:levels
+	Enter zero or more valid security levels or aliases, separating
+	multiple entries by a comma, or enter a level range in the
+	form "levelmin-levelmax", where "levelmax" is greater than or
+	equal to "levelmin".  You may also press CHOICES to select valid
+	security levels.
+
+	This prompt may be left blank.
+
+Form.rep2:privs
+	Enter zero or more valid privileges, separating multiple entries 
+	by a comma, or press CHOICES.
+
+	The keyword "all" may be entered causing all audit records using 
+	any privilege to be displayed.
+
+	This prompt may be left blank.
+

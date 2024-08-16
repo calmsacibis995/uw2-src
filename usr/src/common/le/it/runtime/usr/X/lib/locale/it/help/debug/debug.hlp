@@ -1,0 +1,3191 @@
+^*version^1
+^*title^Messa a punto
+^:Debugger
+^+/usr/X/lib/locale/it/help/debug/debug.defs
+^?Un debugger a livello sorgente multiprocesso
+
+^1^Introduzione alla messa a punto
+^$1
+Introduzione alla messa a punto
+
+Debug è un debugger simbolico, a livello di processo con molte
+funzioni, tra cui il controllo su \k(processi e sottoprocessi) multipli e la
+valutazione di espressioni complesse in C o C++.  Il debugger
+visualizza le sue informazioni in svariate finestre differenti.  Ogni
+finestra è composta da una o più sottofinestre, ciascuna delle quali
+fornisce un tipo diverso di informazioni.  Quali sottofinestre sono
+disponibili in ciascuna diversa finestra viene configurato dall'utente
+(vedi \k(Configurazione)). Ci sono nove diversi tipi di sottofinestre.
+
+    La \k(Sottofinestra Processo) visualizza i processi e i sottoprocessi
+    sotto il controllo del debugger e indica quale è il processo o
+    sottoprocesso attuale.
+
+    La \k(Sottofinestra Stack) visualizza la traccia dello stack per
+    \d(processo o sottoprocesso corrente). Viene aggiornata ogni volta che il processo
+    o sottoprocesso attuale si arresta.
+
+    La \k(Sottofinestra Simbolo) visualizza i simboli per il processo o
+    sottoprocesso attuale. Viene aggiornata ogni volta che il processo
+    o sottoprocesso attuale si arresta.
+
+    La \k(Sottofinestra Sorgente) visualizza la sorgente del programma.
+    Quando il processo o sottoprocesso si arresta, la finestra
+    sorgente viene aggiornata per visualizzare la riga attuale del
+    file attuale. È possibile esaminare anche altri file e impostare e
+    cancellare punti di interruzione.
+
+    La \k(Sottofinestra Disassemblaggio) visualizza il disassemblato della funzione
+    attuale. La sottofinestra viene aggiornata ogni volta che il
+    sottoprocesso o processo si arresta.
+
+    La \k(Sottofinestra Registri) visualizza i valori dei registri della
+    macchina per il sottoprocesso o processo attuale. Viene
+    aggiornata ogni volta che il sottoprocesso o processo si arresta.
+
+    La \k(Sottfinestra Evento) visualizza gli eventi (punti di
+    interruzione, punti di osservazione, chiamate di sistema, ecc.).
+    La cancellazione, la disattivazione, l'attivazione e la modifica
+    degli eventi avvengono nella finestra che contiene questa
+    sottofinestra.
+
+    La \k(Sottofinestra Comando) mantiene una registrazione di tutti gli
+    eventi che si verificano. Qui viene visualizzato anche l'I/O dei
+    processi. Questa sottofinestra consente di immettere comandi come
+    se si stesse usando la versione a riga di comando del debugger.
+
+    La \k(Sottofinestra Stato) tiene traccia del processo o sottoprocesso
+    attuale per conto di qualunque finestra lo possegga. Visualizza lo
+    stato di quel processo o sottoprocesso e la sua posizione se viene
+    arrestato.
+
+La \k(configurazione) fornita dall'utente descrive un
+\d(set di finestre). Ogni set di finestre contiene almeno un'istanza
+di ciascuna delle nove sottofinestre del debugger (eccetto la
+\k(Sottofinestra Stato), che non è richiesta). Se non viene fornita
+nessuna configurazione utente, il debugger sistema le proprie
+sottofinestre in un set di sei finestre.
+
+Ciascun set di finestre controlla un sottoinsieme dei processi e
+sottoprocessi in fase di messa a punto, e ciascun sottoprocesso o
+processo appartiene ad un solo set di finestre, ma se si sta usando il
+debugger con sottoprocessi o processi multipli, si potrebbe voler
+analizzare ciascun sottoprocesso o processo in un set di finestre
+separato. I set di finestre vengono creati dall'opzione
+\k(Nuovo set finestre) del menu \k(File) di ciascuna finestra
+che contiene il \k(Sottofinestra Processo).
+
+Ciascuna finestra contiene alcuni o tutti i pulsanti di menu che
+seguono (secondo quali sottofinestre appaiono in quella finestra):
+
+\t\k(Pulsante File)
+\t\k(Pulsante Modifica)
+\t\k(Pulsante Visualizza)
+\t\k(Pulsante Controllo)
+\t\k(Pulsante Evento)
+\t\k(Pulsante Proprietà)
+\tPulsante Guida
+
+I menu visualizzati selezionando questi pulsanti forniscono i comandi
+per controllare lo stato di \k(processi e sottoprocessi), le opzioni per
+cambiare le informazioni visualizzate ed altro. Per i dettagli
+consultare le sezioni di guida dei singoli pulsanti.
+
+Ogni finestra può anche contenere una \d(Barra pulsanti).  La Barra
+dei Pulsanti può trovarsi in cima alla finestra (appena sotto i
+pulsanti di menu, nelle finestre che non hanno una \k(Sottofinestra Stato)
+o sotto la sottofinestra di stato, nelle finestre che ce l'hanno)
+oppure alla base della finestra. La Barra dei Pulsanti contiene un
+gruppo di pulsanti scelti dagli altri menu a tendina e fornisce un
+modo rapido per raggiungere i comandi del debugger di uso più
+frequente. I pulsanti disponibili nella Barra dei Pulsanti di ciascuna
+finestra sono configurabili dall'utente (vedi \k(Configurazione)).
+
+È possibile ridimensionare qualsiasi finestra e anche ridistribuire lo
+spazio all'interno della finestra. Per questo occorre dare clic con
+SELEZIONA sul bordo di una qualsiasi sottofinestra. Appare una
+maniglia, che si può trascinare verso l'alto o verso il basso per
+aumentare o diminuire la dimensione della sottofinestra rispetto alle
+altre.
+
+Diversi aspetti del comportamento e del look del debugger possono essere
+personalizzati usando le opzioni nel menu \k(Proprietà).
+Molte di queste proprietà possono anche essere impostate come risorse
+applicative nei file di risorse di sistema standard di finestra X, come
+il file .Xdefaults nella directory HOME dell'utente. Consultare
+\k(Personalizzazione) per i dettagli. Molte delle risorse personalizzabili
+possono anche essere impostate usando le opzioni delle righe di comando. (vedi
+\k(Richiamo del programma di messa a punto)).
+
+^2^Richiamo del programma di messa a punto
+^$11
+\k(Introduzione alla messa a punto)
+Richiamo del programma di messa a punto
+
+Dalla metafora del Desktop, il debugger può essere richiamato in tre
+modi:
+
+1) Trascinando un file oggetto da una cartella e rilasciandolo sopra
+   l'icona del debugger nella cartella Applicazioni.  Il debugger si
+   avvia con il file oggetto come processo creato. Questo dà il
+   vantaggio di rendere directory di lavoro attuale del debuggere la
+   cartella in cui appare il file oggetto. Lo svantaggio consiste nel
+   fatto che non si può fornire alcuna opzione al debugger o al
+   processo creato. Inoltre, non è possibile trascinare e rilasciare
+   un file di core sull'icona del debugger.
+
+2) Facendo doppio clic sull'icona del debugger nella cartella
+   Applicazioni. Il debugger si avvia con la Finestra di Contesto
+   vuota. Da qui è possibile creare o prendere il controllo di
+   processi con le opzioni del menu File. In questo modo si possono
+   passare delle opzioni ai processi, ma non al debugger. Questo
+   metodo ha anche lo svantaggio che la directory di lavoro attuale
+   del debugger può non avere alcuna connessione con la directory del
+   file da elaborare. È possibile impostare la directory di lavoro
+   attuale con l'opzione Cambia Directory nella Finestra di Contesto
+   del menu File.
+
+2) Digitando "debug options" in una finestra xterm.  Anche se si avvia
+   il debugger digitando un comando, viene lo stesso richiamata
+   l'interfaccia grafica. È però possibile usare l'interfaccia a riga
+   di comando digitando debug -ic (ic indica interfaccia a caratteri),
+
+   Seppure più laborioso che non fare clic su un'icona, questo metodo
+   è il più flessibile e consente di creare processi con opzioni, di
+   prendere il controllo di processi in esecuzione o prendere il
+   controllo di processi del nucleo dalla riga di comando. Per le
+   opzioni disponibili consultare debug(1).
+
+   L'opzione -X, che consente di passare opzioni al server X, è
+   l'unica opzione specifica dell'interfaccia utente grafica. Si può
+   usare l'opzione -X per specificare cose come font e colori. Ad
+   esempio,
+\tdebug -X"-background green"
+   rende verde lo sfondo di tutte le finestre del debugger,
+   e
+\tdebug -X '-xrm "debug*Context*background: green"'
+   imposta il colore di sfondo della sola Finestra del Contesto. Notare
+   che l'opzione -X accetta un solo argomento, quindi qualunque opzione
+   che comporti l'uso del carattere spazio va inserita tra virgolette.
+
+   Con questo metodo, la directory di lavoro attuale del debugger sarà
+   la stessa di quella della finestra xterm.
+
+   Parecchie delle proprietà che possono essere impostate dalle
+   opzioni del menu \k(Proprietà) o come personalizzabili
+   \k(risorse) possono anche essere impostate dalla riga
+   di comando. Le opzioni della riga di comando sono:
+
+   o -config nomefile - nomefile è il nome del file che il debugger
+     userà come specifica di configurazione (vedi
+     \k(Configurazione).
+
+   o -output_action azione - azione può essere una tra BEEP, MESSAGE,
+     RAISE o NONE (maiuscolo o minuscolo è indifferente).  L'azione
+     specifica il comportamento del debugger quando un processo soggetto
+     genera un output.  Vedi \k(Azione di output).
+
+   o -event_action azione - azione può essere una tra BEEP, MESSAGE,
+     RAISE o NONE (maiuscolo o minuscolo è indifferente).  L'azione
+     specifica il comportamento del debugger quando scatta un evento
+     in un processo soggetto.  Vedi \k(Azione di output).
+
+   o -command_level livello - livello può essere uno tra PROGRAM,
+     PROCESS, THREAD (maiuscolo o minuscolo è indifferente).  Il
+     livello specifica se i comandi del debugger si applicano per
+     default al sottoprocesso attuale, a tutti i sottoprocessi del
+     processo attuale o a tutti i sottoprocessi del programma attuale.
+     Vedi \k(Granularità).
+
+   o -event_level livello - livello può essere uno tra PROGRAM,
+     PROCESS, THREAD (maiuscolo o minuscolo è indifferente).  Il
+     livello specifica se gli eventi del debugger si applicano per
+     default al sottoprocesso attuale, a tutti i sottoprocessi del
+     processo attuale o a tutti i sottoprocessi del programma attuale.
+     Vedi \k(Granularità).
+
+   o -thread_action azione[,azione] - azione può essere NONE, STOP o
+     BEEP, oppure sia STOP che BEEP (immettere entrambe, separate da
+     una virgola, maiuscolo o minuscolo è indifferente).  Le azioni
+     specificano il comportamento del debugger quando un sottoprocesso
+     cambia stato.  Vedi \k(Azione di output).
+
+   o -symbols tipo[,tipo...] - tipo può essere LOCAL, FILE, GLOBAL,
+     DEBUGGER, USER (separate da virgole, maiuscolo o minuscolo è
+     indifferente). I tipi specificano i tipi di simboli da
+     visualizzare nel \k(Sottofinestra Simbolo).  Vedi \k(Simboli).
+
+Usando tutti e tre i metodi di chiamata, si può creare o prendere il
+controllo di processi aggiuntivi con le opzioni del menu
+\k(File) di qualsiasi finestra contenente
+\k(Sottofinestra Processo) o di qualsiasi finestra apparsa automaticamente
+all'avviamento del debugger (vedi \k(Configurazione).  Per i dettagli
+consultare \k(Crea), \k(Controllo processo) e
+\k(Controllo nucleo). Notare che i sottoprocessi possono essere creati
+solo sotto controllo programmatico e che non possono essere messi
+sotto controllo singolarmente.
+
+
+^2^Personalizzazione=risorse
+^$12
+
+\k(Introduzione alla messa a punto)
+Personalizzazione
+
+Molti aspetti dell'organizzazione, del comportamento e del look del
+debugger possono essere specificati come risorse di finestre X
+inserendo le definizioni di risorsa in un file di risorse di finestre
+X, come il file .Xdefaults nella directory home dell'utente. Il nome
+della classe delle risorse del debugger è Debug. Le risorse speciali
+del debugger sono:
+
+config_file:\tnomefile
+\tSpecifica il nome di percorso del file di configurazione del
+\tdebugger. Vedi \k(Configurazione).
+
+config_desc:\tconfigurazione
+\tSpecifica direttamente la configurazione del
+\tdebugger. La configurazione deve avere la forma specificata sotto
+\t\k(Configurazione). Una risorsa X deve consistere di
+\tuna singola stringa senza nuove righe, cosicché ciascuna riga di una
+\tconfigurazione su più righe deve continuare con una barra inversa (\\).
+
+output_action azione
+     azione può essere una tra BEEP, MESSAGE, RAISE o NONE 
+     (maiuscolo o minuscolo è indifferente).  L'azione specifica
+     il comportamento del debugger quando un processo soggetto
+     genera un output.  Vedi \k(Azione di output).
+
+event_action azione
+     azione può essere una tra BEEP, MESSAGE, RAISE o NONE
+     (maiuscolo o minuscolo è indifferente).  L'azione specifica
+     il comportamento del debugger quando scatta un evento in un
+     processo soggetto.  Vedi \k(Azione di output).
+
+command_level: livello
+     livello può essere uno tra PROGRAM, PROCESS o THREAD (maiuscolo o
+     minuscolo è indifferente).  Il livello specifica se i comandi del
+     debugger si applicano per default al sottoprocesso attuale, a
+     tutti i sottoprocessi del processo attuale o a tutti i
+     sottoprocessi del programma attuale.  Vedi \k(Granularità).
+
+event_level: livello
+     livello può essere uno tra PROGRAM, PROCESS o THREAD (maiuscolo o
+     minuscolo è indifferente).  Il livello specifica se gli eventi
+     del debugger si applicano per default al sottoprocesso attuale, a
+     tutti i sottoprocessi del processo attuale o a tutti i
+     sottoprocessi del programma attuale.  Vedi \k(Granularità).
+
+thread_action:azione[,azione]
+     azione può essere NONE, STOP o BEEP, oppure sia STOP che BEEP
+     (immettere entrambe, separate da una virgola, maiuscolo o
+     minuscolo è indifferente).  Le azioni specificano il
+     comportamento del debugger quando un sottoprocesso cambia stato.
+     Vedi \k(Azione di output).
+
+symbols tipo[,tipo...]
+     tipo può essere LOCAL, FILE, GLOBAL, DEBUGGER, USER
+     (separate da virgole, maiuscolo o minuscolo è indifferente).
+     I tipi specificano i tipi di simboli da visualizzare nel
+     \k(Sottofinestra Simbolo).  Vedi \k(Simboli).
+
+^2^Configurazione=configurazione
+^$13
+
+\k(Introduzione alla messa a punto)
+Configurazione
+
+La disposizione del debugger grafico è configurabile dall'utente, che
+può specificare:
+
+\to In ogni set di finestre, quali di queste contengono sottofinestre.
+\to Il numero di righe che ciascuna sottofinestra deve
+\t  contenere e per certe sottofinestre anche il numero di colonne.
+\to Il contenuto e la posizione (in alto o in basso) della
+\t  \d(Barra pulsanti) di ciascuna finestra.
+
+La configurazione viene specificata in un file di configurazione
+oppure direttamente entro un file di risorse di finestre X. Se è
+specificata in un file separato, il nome di percorso del file viene
+fornito come risorsa debug.config_file in un file di risorse di
+finestre X oppure usando l'opzione -config sulla riga di comando. Se è
+specificata direttamente in un file di risorse di finestre X, la
+configurazione è il valore della risorsa debug.config_desc. Vedi
+\k(Richiamo del programma di messa a punto) e \k(Personalizzazione).
+
+Nella directory /usr/ccs/lib/config sono disponibili vari esempi di
+configurazioni.
+
+Se il file di configurazione manca, è illeggibile o vuoto, o se viene
+specificata una configurazione non valida, verrà usata la
+configurazione di default del debugger.
+
+Una configurazione consiste in parole chiave e nomi definiti
+dall'utente. Nella lettura delle parole chiave il maiuscolo e il
+minuscolo vengono ignorati. I nomi vengono usati come intestazione
+nelle barre di titolo delle finestre e come etichette dei pulsanti
+nella \d(Barra pulsanti).  Ogni nome deve essere racchiuso tra
+virgolette (singole o doppie) e non può estendersi su più di una riga.
+
+Gli spazi vengono ignorati, eccetto nei nomi tra virgolette. Un
+commento inizia con il carattere diesis (#) e continua fino alla fine
+della riga. Anche i commenti vengono ignorati.
+
+Una configurazione è composta da una serie di descrizioni di
+finestre, ognuna delle quali inizia con la parola WINDOW, seguita da
+un nome definito dall'utente, usato come titolo della finestra. Se il
+nome della finestra è seguito dalla parola chiave AUTO, la finestra
+verrà visualizzata automaticamente ogni volta che viene richiamato il
+debugger o quando viene creata una nuova \d(set di finestre).
+
+La descrizione della finestra contiene una o più descrizioni di
+sottofinestre, ognuna delle quali consiste in un tipo di
+sottofinestra, seguito da un intero decimale opzionale che specifica
+il numero di righe della sottofinestra. Se lo specificatore di righe è
+presente, può essere seguito opzionalmente da un altro intero decimale
+che descrive il numero di colonne della sottofinestra.
+
+I tipi di sottofinestra validi sono:
+COMANDI\t\k(Sottofinestra Comando)
+DISASSEMBLATO\t\k(Sottofinestra Disassemblaggio)
+EVENTI\t\t\k(Sottfinestra Evento)
+PROCESSI\t\k(Sottofinestra Processo)
+REGISTRI\t\k(Sottofinestra Registri)
+SORGENTE\t\t\k(Sottofinestra Sorgente)
+STACK\t\t\k(Sottofinestra Stack)
+STATO\t\t\k(Sottofinestra Stato)
+SIMBOLI\t\k(Sottofinestra Simbolo)
+
+Lo specificatore di righe non ha effetto sulla Sottofinestra Stato (ha
+sempre 1 riga).  Lo Specificatore di colonne non ha effetto nelle
+sottofinestre Eventi, Processi, Stack, Stato e Simboli. Una finestra
+sarà larga quanto il suo elemento più largo, anche se contiene una
+sottofinestra con uno specificatore di colonne più piccolo.
+
+Una sottofinestra può essere specificata solo una volta in una
+finestra, ma può apparire in più finestre. Se una sottofinestra
+(diversa da \k(Sottofinestra Stato) non è specificata in nessuna finestra,
+il debugger crea una finestra che la contenga.
+
+L'elemento finale di una descrizione di finestra è la lista dei
+pulsanti. La lista dei pulsanti è opzionale e può trovarsi prima o
+dopo tutte le descrizioni di sottofinestra di quella finestra. Se non
+viene indicata una lista di pulsanti, la finestra non conterrà una
+\d(Barra pulsanti). Se la lista dei pulsanti si trova prima della
+descrizione delle sottofinestre, la barra dei pulsanti appare in alto
+nella finestra; se si trova dopo, appare in basso.
+
+Una lista di pulsanti inizia con la parola chiave BUTTONS ed è seguita
+da una serie di descrizioni di pulsante.
+
+Ciascuna descrizione di pulsante consiste in un tipo di pulsante,
+seguito da un nome opzionale, usato come etichetta del pulsante. Se
+non viene indicato alcun nome, il debugger usa un nome di default. I
+tipi di pulsante validi sono:
+
+ANIMA_DIS\t\k(Anima disassemblaggio)
+ANIMA_SORGENTE\t\k(Anima sorgente)
+CANCELLA\t\t\k(Cancella)
+DISTRUGGI\t\k(Distruggi)
+DISABILITA\t\t\k(Disattiva)
+ABILITA\t\t\k(Attiva)
+ESPANDI\t\t\k(Espande)
+ESPORTA\t\t\k(Esportare)
+HALT\t\t\k(Alt)
+INPUT\t\t\k(Input)
+INTERROMPI\t\k(Interruzione)
+ISTR_SORG_SUCC\t\k(Istruzione successiva)
+ISTR_DIS_SUCC\t\k(Affermazione successiva)
+PIN_SYM\t\t\k(Attaccare)
+POPUP\t\t\k(Pulsante Finestra a comparsa)
+RITORNA\t\t\k(Return)
+ESEGUI\t\t\k(Esegui)
+IMP_ATTUALE\t\k(Imposta corrente)
+IMP_WATCHPOINT\t\k(Imposta watchpoint)
+PASSO_ISTR_SORG\t\k(Istruzione passo-passo)
+PASSO_ISTR_DIS\t\k(Affermazione passo-passo)
+UNPIN_SYM\t\k(Staccare)
+
+Il pulsante POPUP è speciale. Può apparire più di una volta in una
+barra di pulsanti.  Questo pulsante viene usato come mezzo rapido per
+far comparire una diversa finestra.  Per questo tipo di pulsante è
+richiesto il campo etichetta, che deve corrispondere esattamente ad
+una delle etichette di finestra presenti nella configurazione. Facendo
+clic con SELEZIONA sul pulsante, compare la finestra associata. La
+descrizione del pulsante POPUP prevede un terzo campo opzionale, un
+nome definito dall'utente che viene usato come etichetta effettiva del
+pulsante. Può essere diverso dall'etichetta della finestra associata
+al pulsante. Se non viene indicato alcun nome, l'etichetta usata è la
+stessa della finestra.
+
+Diversi tipi di pulsanti sono validi solo se la finestra contiene una
+sottofinestra di un certo tipo.
+
+ANIMATE_DIS è valido solo se la finestra contiene una
+\k(Sottofinestra Disassemblaggio).
+
+ANIMATE_SOURCE è valido solo se la finestra contiene una
+\k(Sottofinestra Sorgente).
+
+DELETE, DISABLE ed ENABLE sono validi solo se la finestra contiene una
+\k(Sottfinestra Evento).
+
+INPUT e INTERRUPT sono validi solo se la finestra contiene una
+\k(Sottofinestra Comando).
+
+SET_CURRENT è valido solo se la finestra contiene una
+\k(Sottofinestra Processo) o una \k(Sottofinestra Stack).
+
+ESPANDI, ESPORTA, IMP_WATCHPOINT, PIN_SYM, e UNPIN_SYM sono valide solo
+se la finestra contiene una \k(Sottofinestra Simbolo).
+
+Tutti gli altri tipi di pulsante sono validi in tutte le finestre.
+
+Quella che segue è una configurazione di esempio che definisce la
+configurazione di default del debugger.
+
+WINDOW "Sorgente" AUTO
+\tBUTTONS
+\t\tSET_CURRENT\t"Imposta Attuale"
+\t\tRUN\t\t"Esegui"
+\t\tRETURN \t\t"Ritorna"
+\t\tSTEP_STMT\t"Step Stmt"
+\t\tNEXT_STMT\t"Next Stmt"
+\t\tHALT\t\t"Halt"
+\t\tDESTROY\t\t"Distruggi"
+\t\tPOPUP\t\t"Simboli"
+\tSTATUS
+\tSTACK\t4
+\tSOURCE\t10 60
+WINDOW "Processo"
+\tBUTTONS
+\t\tSET_CURRENT\t"Imposta Attuale"
+\t\tPOPUP\t\t"Comandi" "Cmd"
+\t\tPOPUP\t\t"Disassemblato" "Dis
+\t\tPOPUP\t\t"Eventi"
+\t\tPOPUP\t\t"Sorgente"
+\t\tPOPUP\t\t"Simboli"
+\tPROCESS\t5
+WINDOW "Simboli"
+\tBUTTONS
+\t\tEXPORT\t\t"Esporta"
+\t\tPIN_SYM\t\t"Pin"
+\t\tUNPIN_SYM\t"Unpin"
+\t\tSET_WATCHPOINT\t"Imposta WatchPt"
+\t\tPOPUP\t\t"Comandi" "Cmd"
+\t\tPOPUP\t\t"Disassemblato" "Dis"
+\t\tPOPUP\t\t"Eventi"
+\t\tPOPUP\t\t"Processo"
+\t\tPOPUP\t\t"Sorgente"
+\tSTATUS
+\tSYMBOLS\t5
+WINDOW "Disassemblato"
+\tBUTTONS
+\t\tSET_CURRENT\t"Imposta Attuale"
+\t\tRUN\t\t"Esegui"
+\t\tRETURN \t\t"Ritorna"
+\t\tSTEP_INST\t"Step Inst"
+\t\tNEXT_INST\t"Next Inst"
+\t\tHALT\t\t"Halt"
+\t\tDESTROY\t\t"Distruggi"
+\t\tPOPUP\t\t"Comandi" "Cmd"
+\t\tPOPUP\t\t"Processo"
+\t\tPOPUP\t\t"Sorgente"
+\tSTATUS
+\tREGISTER 6 70
+\tDISASSEMBLY 10 70
+WINDOW "Eventi"
+\tBUTTONS
+\t\tDISABLE\t"Disattiva"
+\t\tENABLE\t"Abilita"
+\t\tDELETE\t"Cancella"
+\t\tPOPUP\t"Comandi" "Cmd"
+\t\tPOPUP\t"Disassemblato" "Dis
+\t\tPOPUP\t"Processo"
+\t\tPOPUP\t"Sorgente"
+\t\tPOPUP\t"Simboli"
+\tSTATUS
+\tEVENT 8
+WINDOW "Comandi"
+\tBUTTONS
+\t\tINPUT\t\t"Input..."
+\t\tINTERRUPT\t"Interrupt"
+\t\tPOPUP\t\t"Disassemblato" "Dis"
+\t\tPOPUP\t\t"Eventi"
+\t\tPOPUP\t\t"Processo"
+\t\tPOPUP\t\t"Sorgente"
+\t\tPOPUP\t\t"Simboli"
+\tSTATUS
+\tCOMMAND 10 60
+
+^1^Sottofinestra Processo
+^$2
+Sottofinestra Processo
+
+La sottofinestra Processo elenca i \k(processi e sottoprocessi) controllati dal
+\d(set di finestre) dato. Le informazioni per ciascun processo o
+sottoprocesso sono:
+
+    Nome Programma\tNormalmente è il nome del file eseguibile.
+\t\tSe un processo si sdoppia, sia il processo superiore
+\t\tche il processo inferiore (e i loro eventuali sottoprocessi)
+\t\tapparterranno allo stesso \k(programma^^processi e sottoprocessi).
+
+    ID\t\tUn identificatore unico generato dal debugger.
+
+    Stato\t\tLo stato attuale del processo o sottoprocesso.
+
+    Funzione\tSe il processo o sottoprocesso è in Esecuzione o in
+\t\tEsecuzione a passi, questo campo rimane vuoto. Altrimenti, qui
+\t\tappare il nome della funzione in cui il processo o sottoprocesso è
+\t\tfermo.
+
+    Location\tSe il processo o sottoprocesso è in Esecuzione o in Esecuzione
+\t\ta passi, questo campo rimane vuoto.  Se il processo o
+\t\tsottoprocesso è fermo in una funzione che era stata compilata
+\t\tcon informazioni di debugging, contiene il nome e il numero
+\t\tdi riga (file@riga) in cui il processo o sottoprocesso è
+\t\tfermo. Se la funzione non era stata compilata con informazioni
+\t\tdi debugging, mostra l'indirizzo esadecimale in cui il
+\t\tprocesso o sottoprocesso è fermo.
+
+    Comando\tLa riga di comando usata per avviare il programma.
+
+Lo stato può essere uno dei seguenti:
+
+    In Esecuzione\tIl processo o sottoprocesso è in movimento in
+\t\tseguito a un comando \k(Esegui) o \k(Passo-Passo)
+
+    In esecuzione a passi\tQuesto stato appare solo quando il debugger
+\t\tdeve eseguire un processo o sottoprocesso un'istruzione alla
+\t\tvolta, tipicamente perché deve continuamente valutare il
+\t\tverificarsi di un'evento.
+
+    Fermo\tIl processo o sottoprocesso si è arrestato.
+
+    Sotto lwp\t\tQuesto è lo stato di un sottoprocesso multiplexato
+\t\tquando non è attualmente in esecuzione su un \d(LWP).
+\t\tÈ stato riprogrammato sotto un lwp dalla libreria dei
+\t\tsottoprocessi, perché bloccato su un I/O o su una primitiva di
+\t\tsincronizzazione som. Quando è pronto per riprendere l'esecuzione,
+\t\tverrà prelevato di nuovo da un LWP.
+
+    Sospeso\tQuesto è lo stato di un sottoprocesso che era 
+\t\tl'obiettivo di una chiamata a thr_suspend(). Riprenderà l'esecuzione
+\t\tquando verrà riavviato da un altro sottoprocesso.
+
+    Nucleo\t\tIl processo o sottoprocesso è un'immagine del nucleo,
+\t\te può essere esaminato ma non alterato o eseguito.
+
+    Nucleo sotto lwp\tQuesto è lo stato di un sottoprocesso che era
+\t\tnello stato Sotto lwp quando è stata prodotta l'immagine del nucleo.
+
+    Nucleo sospeso\tQuesto è lo stato di un sottoprocesso che era in stato
+\t\tSospeso quando è stata prodotta l'immagine del nucleo.
+
+È possibile selezionare una o più voci nella sottofinestra Processo.
+Le voci selezionate influiscono sul comportamento di molti dei comandi
+nei menu della finestra che contiene la sottofinestra.  Ad esempio, se
+si seleziona una voce e poi si fa clic con SELEZIONA sull'opzione
+\k(Esegui) nel menu \k(Controllo), gli oggetti
+selezionati vengono messi in esecuzione.  Se non era stato selezionato
+un processo o sottoprocesso prima di selezionare \k(Esegui),
+sarebbe stato messo in esecuzione \d(processo o sottoprocesso corrente). Selezionando un
+oggetto, si seleziona sia il processo o sottoprocesso che il
+\k(programma^processi e sottoprocessi). La maggior parte delle opzioni vale per gli oggetti
+selezionati, ma i comandi che creano eventi (\k(Arresto),
+\k(Segnale), \k(Syscall), e \k(On stop) nel
+menu \k(Evento)) per default valgono per il programma
+selezionato.  Questa situazione può essere cambiata con l'opzione
+\k(Granularità) nel menu \k(Proprietà).
+
+Il processo o sottoprocesso attuale viene indicato da una mano alla
+sinistra del nome del programma.  Il processo o sottoprocesso attuale
+determina cosa viene visualizzato nelle altre sottofinestre del set di
+finestre.  Il processo o sottoprocesso attuale può essere cambiato
+prima facendo clic con SELEZIONA su uno dei processi o sottoprocessi
+nella sottofinestra Processo, poi facendo clic con SELEZIONA
+sull'opzione \k(Imposta corrente) nel menu \k(Modifica).
+
+Si può anche spostare un sottoprocesso o processo da un set di
+finestre a un altro selezionando l'opzione Sposta nel menu
+\k(File) (vedi \k(Sposta)), o selezionando il
+sottoprocesso o processo e trascinandolo e rilasciandolo in una
+sottofinestra Processo di un altro set di finestre. Esso diventerà il
+processo o sottoprocesso attuale nel suo nuovo set di finestre.
+
+Se la riga di comando è troppo lunga per entrare nella sua colonna,
+per default viene troncata. E possibile forzare la continuazione sulla
+riga successiva con l'opzione \k(Sottofinestre) nel menu
+\k(Proprietà).
+
+^2^Programmi, Processi e Sottoprocessi=processi e sottoprocessi
+^$21
+\k(Sottofinestra Processo)
+Programmi, Processi e Sottoprocessi
+
+Un programma è un oggetto eseguibile, in uno dei formati di file
+oggetto che il debugger è in grado di comprendere, insieme con
+qualsiasi libreria condivisa che l'oggetto eseguibile può caricare al
+momento dell'esecuzione.  L'immagine eseguibile di un programma è un
+processo. Poiché un processo puo sdoppiarsi, alla fine da un singolo
+programma possono derivare molti processi.
+
+Un processo consiste in uno o più sottoprocessi di controllo. Ciascun
+sottoprocesso entro un processo condivide lo spazio di indirizzamento
+del processo comune, gli identificatori, i privilegi, le directory
+root e di lavoro, i descrittori di file, i lock di file e di record, i
+limiti delle risorse e il contesto di gestione dei segnali (tranne la
+maschera e lo stack dei segnali) di processo e di processo di livello
+superiore.
+
+Un sottoprocesso è un singolo contesto di esecuzione entro un
+processo. Ogni sottoprocesso ha set di registri, maschera di segnali e
+stack di segnali propri. Un "sottoprocesso" nel contesto del debugger
+si riferisce alle entità a livello di utente implementate dalle
+interfacce contenute in <thread.h>.  Questi sottoprocessi sono diversi
+dai processi light-weight (LWP) supportati dal kernel e sono costruiti
+sopra di essi.
+
+In ogni dato istante, un sottoprocesso può essere in esecuzione su un
+LWP oppure inattivo. Un sottoprocesso inattivo non può essere avviato
+dal debugger, ma il suo stato può essere esaminato e modificato.
+
+^1^Sottofinestra Stack
+^$3
+Sottofinestra Stack
+
+La sottofinestra Stack visualizza la traccia dello stack per
+\d(processo o sottoprocesso corrente). Le informazioni per ciascun frame di stack sono:
+
+    Numero del frame\tI frame sono numerati a partire da 0 dal
+\t\tfondo dello stack (il frame iniziale).
+
+    Funzione\tIl nome della funzione.  Il debugger visualizza un
+\t\tpunto interrogativo (?) se non riesce a trovare il nome
+\t\tdell'indirizzo dato, o perché non ci sono sufficienti
+\t\tinformazioni simboliche o perché il contatore di programma del
+\t\tframe punta al di fuori dello spazio di indirizzamento del processo.
+
+    Parametri\tI nomi e i valori degli argomenti. I nomi degli
+\t\targomenti possono non essere disponibili se non ci sono
+\t\tsufficienti informazioni simboliche.
+
+    Posizione\tIl punto di esecuzione attuale del frame. Se la funzione
+\t\tera stata compilata con informazioni di debugging, la
+\t\tposizione è in formato file@riga, altrimenti è un
+\t\tindirizzo esadecimale.
+
+Il frame evidenziato con la mano indicante è il \d(frame corrente).
+Il frame attuale determina ciò che viene visualizzato nelle altre
+finestre nel \d(set di finestre).  Il frame attuale può essere
+cambiato facendo clic con SELEZIONA su un frame diverso, poi facendo
+clic con SELEZIONA sull'opzione \k(Imposta corrente) nel menu
+\k(Modifica).
+
+Se una qualsiasi delle informazioni è troppo lunga per trovare
+posto nella sua colonna, viene troncata. È possibile forzare
+l'avvolgimento alla riga successiva delle colonne Parametri e
+Posizione con le opzioni \k(Sottofinestre) nel menu
+\k(Proprietà).
+
+^1^Sottofinestra Simbolo
+^$4
+Sottofinestra Simbolo
+
+La sottofinestra Simboli visualizza i valori delle variabili visibili
+dal \d(contesto corrente). I tipi di simboli che possono essere
+visualizzati sono:
+
+\tvariabili locali visibili dal \d(frame corrente),
+\tvariabili static di file visibili dal frame attuale,
+\tvariabili globali visibili nell'oggetto attuale,
+\tvariabili definite dal debugger e
+\tvariabili definite dall'utente e mantenute dal debugger.
+
+Per default, la sottofinestra Simboli visualizza solo le variabili
+locali. E possibile cambiare il tipo di variabili visualizzate con
+l'opzione \k(Simboli) nel menu \k(Proprietà).
+
+Le informazioni visualizzate per ciascun simbolo sono il nome del
+simbolo, la sua posizione, il tipo e il valore. Per le variabili
+locali la posizione è la funzione e il numero di riga dello scopo che
+le racchiude. Per i simboli statici di file è il nome del file, mentre
+per le variabili globali è il nome del file oggetto.
+
+Se una delle informazioni è troppo lunga per entrare nella propria
+colonna, viene troncata. E possibile forzare la continuazione
+sulla riga successiva delle colonne Tipo e Valore con l'opzione
+\k(Sottofinestre) nel menu \k(Proprietà).
+
+Notare che quando un oggetto di classe di C++ viene mostrato nella
+sottofinestra Simboli, i membri statici di quella classe non verranno
+mostrati nella lista dei valori dei mebri nella colonna Valori. Possono
+essere visti visualizzando l'oggetto classe nella finestra a comparsa
+\k(Espande) o \k(Visualizza valore) disponibile nel menu
+\k(Mostra) di qualsiasi finestra contenente la sottofinestra
+Simboli o \k(Sottofinestra Sorgente).
+
+^1^Sottofinestra Registri
+^$5
+Sottofinestra Registri
+
+La Sottofinestra Registri visualizza i valori dei registri di macchina
+del \d(processo o sottoprocesso corrente). I valori sono mostrati in esadecimale (e in
+virgola mobile, per i registri in virgola mobile) e vengono aggiornati
+ogni qual volta il processo o sottoprocesso attuale si arresta.
+
+^1^Sottofinestra Disassemblaggio
+^$6
+Sottofinestra Disassemblaggio
+
+La Sottofinestra Disassemblato mostra il disassemblato della funzione
+attuale. E possibile anche mostrare il disassemblato di altre funzioni
+con l'opzione \k(Mostra Dis funzione) nel menu \k(Mostra).
+
+La Sottofinestra Disassemblato visualizza un simbolo di stop nel
+margine sinistro per ciascuna istruzione che ha un punto di
+interruzione impostato.  È possibile impostare o rimuovere un punto di
+interruzione su un'istruzione facendo doppio clic con il pulsante
+SELEZIONA nel margine sinistro.
+
+^1^Sottofinestra Sorgente
+^$7
+Sottofinestra Sorgente
+
+La Sottofinestra Sorgente visualizza il file sorgente attuale. Quando
+il \d(processo o sottoprocesso corrente) si arresta, il file viene posizionato in modo
+da visualizzare la riga attuale nella funzione attuale. La riga
+attuale è evidenziata ed anche indicata da una freccia nel margine
+sinistro. Se non c'è un file attuale o se il file non era stato
+compilato con informazioni di debugging, la Sottofinestra Sorgente è
+vuota, così come nel caso che il debugger non riesca a trovare il file
+attuale; in quel caso è possibile usare il \k(Percorso sorgente) a
+comparsa disponibile dal menu \k(Proprietà) di qualsiasi
+finestra contenente una Sottofinestra Sorgente.
+
+Nel margine sinistro di ciascuna riga su cui è impostato un punto di
+interruzione appare un simbolo di stop.  È possibile impostare o
+rimuovere un punto di interruzione facendo doppio clic con il pulsante
+SELEZIONA nel margine sinistro della riga selezionata.  Se non è in
+grado di impostare il punto di interruzione sulla riga selezionata, il
+debugger visualizza un messaggio. L'impossibilità di impostare un
+punto di interruzione può essere dovuta a vari motivi:
+
+    o La riga del sorgente non contiene nulla che possa generare
+      codice eseguibile, come rige vuote e righe contenenti solo
+      commenti e dichiarazioni di veriabili.
+
+    o La riga è parte di un'istruzione su più righe. È possibile
+      impostare un punto di interruzione solo su una riga di
+      un'istruzione o su una condizione su più righe
+
+    o La riga è l'inizio di una definizione di funzione. Bisogna
+      impostare il punto di interruzione sulla prima istruzione della
+      funzione.
+
+Si possono anche mostrare altri file nella Sottofinestra Sorgente,
+aprendo un altro file dalla lista nella finestra a comparsa
+\k(Apri) o mostrando una funzione diversa dalla lista nella
+finestra a comparsa \k(Mostra sorgente funzione).
+
+È possibile esaminare altri file sorgente continuando a mostrare
+il file della Sottofinestra Sorgente creando una Finestra Sorgente Secondaria.
+Le Finestre Sorgente Secondarie vengono create selezionando l'opzione
+\k(Nuova sorgente) nel menu \k(File), e sono indicate
+da un asterisco ('*') nell'intestazione della finestra.  Ciascuna Finestra
+Sorgente Secondaria consiste di una \k(Sottofinestra Stato) e una
+Sottofinestra Sorgente.  La Sottofinestra Sorgente di una finestra secondaria
+non viene aggiornata quando il processo o sottoprocesso attuale si arresta.
+
+^1^Sottfinestra Evento
+^$8
+Sottfinestra Evento
+
+La Sottofinestra Eventi è divisa in due parti: la Sottofinestra Eventi
+Principale e la Sottofinestra Eventi Fermi.  La Sottofinestra Eventi
+Principale visualizza i \d(evento stop), i \d(evento segnale) e i
+\d(evento syscall) del \d(processo o sottoprocesso corrente).  La Sottofinestra On Stop
+visualizza i \d(evento onstop) del processo o sottoprocesso
+attuale. Le informazioni visualizzate per ciascun evento possono
+essere:
+
+    ID\t\tIl numero dell'evento. Si può anche vedere il carattere
+\t\t'D' accanto al numero se l'evento è stato \k(Disattivato^^Disattiva).
+
+    Tipo\t\tSTOP, SIGNAL, o SYSCALL. Il tipo di un evento syscall
+\t\tcomprende anche i caratteri 'E' o 'X', rispettivamente per
+\t\tl'ingresso o l'uscita dalla chiamata di sistema.
+
+    Processi\tI processi e i sottoprocessi per i quali l'evento è
+    impostato.
+
+    Condizione\tPer eventi di arresto, \k(Espressione di Stop) è la
+\t\tcondizione. Per eventi di segnale, è la lista dei segnali a cui si
+\t\tapplicano gli eventi.  Per gli eventi di chiamata di sistema, è la
+\t\tlista delle chiamate di sistema interessate.
+
+    Conteggio\t\tPer gli eventi di arresto e di chiamata di sistema,
+\t\til numero di volte che la condizione si verifica prima che scatti
+\t\tl'evento.
+
+    Lista Comandi\tI comandi che il debugger deve eseguire quando
+\t\tscatta l'evento.
+
+Se la lista dei processi, la condizione o la lista dei comandi sono
+troppo lunghe per entrare nelle proprie colonne, vengono troncate. E
+possibile forzarne la continuazione sulla riga successiva con
+l'opzione \k(Sottofinestre) nel menu \k(Proprietà).
+
+^1^Sottofinestra Comando
+^$9
+Sottofinestra Comando
+
+La Sottofinestra Comandi è divisa in due parti:
+
+\tla \k(Sottofinestra Trascrizione) e
+\tla \k(Riga di comando).
+
+La Sottofinestra Comandi visualizza una trascrizione della sessione di
+debugging (input e output del  debugger e del processo) nella
+\k(Sottofinestra Trascrizione). La \k(Riga di comando) viene usata per
+immettere i comandi del debugger come se si stesse usando l'interfaccia
+a riga di comando.
+
+^2^Sottofinestra Trascrizione
+^$91
+\k(Sottofinestra Comando)
+Sottofinestra Trascrizione
+
+La Sottofinestra Trascrizione visualizza la registrazione storica
+della sessione di debugging per quanto riguarda gli effetti su
+\d(set di finestre) di \k(Sottofinestra Comando). Comprende:
+
+    o L'annuncio di eventi per processi o sottoprocessi che
+      appartengono a questo set di finestre.
+
+    o L'output di qualsiasi comando associato a quegli eventi.
+
+    o L'output dei processi, se viene catturato (vedi
+      \k(Crea)) e
+
+    o L'output di qualsiasi comando immesso nella \k(Riga di comando).
+
+^2^Riga di comando
+^$92
+\k(Sottofinestra Comando)
+Riga di comando
+
+Si possono Immettere comandi nella Riga di Comando come se si stesse
+usando l'interfaccia a riga di comando del debugger. Premendo <Invio>
+il comando viene eseguito. Il comando e il suo output vengono
+visualizzati nella \k(Sottofinestra Trascrizione).  Per una descrizione dei
+comandi disponibili, consultare la pagina del manuale (debug(1)).
+
+Qualsiasi comando o blocco di comandi può essere seguito da '>' e da
+un nome di file. Questo ridirige l'output del comando in un file
+invece di visualizzarlo nella Sottofinestra Trascrizione. Si può
+anche usare ">> nomefile", per aggiungere l'output al file invece che
+sostituirne l'eventuale contenuto attuale. Il debugger non consente,
+però, il piping dell'output di un comando della shell del Sistema Unix(r).
+
+^1^Sottofinestra Stato
+^$10
+Sottofinestra Stato
+
+La Sottofinestra Stato è disponibile in finestre che non contengono
+anche una \k(Sottofinestra Processo).
+
+La Sottofinestra Stato indica la \d(contesto corrente), cioè la
+\d(processo o sottoprocesso corrente) per il \d(set di finestre), lo stato di quel
+processo o sottoprocesso e, se fermo, il nome della funzione e il
+numero di riga o l'indirizzo del \d(frame corrente).
+
+^1^Pulsante File=File
+^$110
+Pulsante File
+
+Il pulsante File consente di accedere ai file e alle finestre del
+debugger e di creare, mettere sotto controllo e rilasciare processi;
+facendo clic con MENU sul pulsante File, appare un menu con opzioni
+diverse, secondo quali sottofinestre sono presenti nella finestra.
+Ogni finestra fornisce un menu File con almeno le seguenti opzioni:
+
+\t\k(Finestre)
+\t\k(Chiudi finestra)
+\t\k(Esci)
+
+Inoltre, se la finestra è del tipo che viene visualizzato
+automaticamente all'avviamento del debugger (vedi \k(Configurazione)),
+il menu File contiene le seguenti opzioni:
+
+\t\k(Crea)
+\t\k(Controllo nucleo)
+\t\k(Controllo processo)
+\t\k(Rilascio)
+\t\k(Cambia directory)
+
+Se la finestra contiene una \k(Sottofinestra Processo), il menu File contiene
+le seguenti opzioni:
+
+\t\k(Crea)
+\t\k(Controllo nucleo)
+\t\k(Controllo processo)
+\t\k(Rilascio)
+\t\k(Cambia directory)
+\t\k(Nuovo set finestre)
+\t\k(Sposta)
+
+Se la finestra contiene una \k(Sottofinestra Sorgente), il menu File contiene
+le seguenti opzioni:
+
+\t\k(Apri)
+\t\k(Nuova sorgente)
+
+Infine, se la finestra contiene una \k(Sottofinestra Comando), il menu File
+contiene le seguenti opzioni:
+
+\t\k(Cambia directory)
+\t\k(Script)
+
+L'insieme di opzioni contenute nel menu File di ciascuna finestra è
+l'unione delle opzioni di default e delle opzioni di ciascuna
+sottofinestra contenuta in quella finestra.
+
+^2^Crea
+^$111
+\k(Pulsante File)
+Crea
+
+La finestra a comparsa Crea consente di creare uno o più processi. Si
+può specificare il file da creare trascinando un file oggetto da una
+cartella del Desktop e rilasciandola nella finestra Crea o digitando
+il nome di percorso del file oggetto nel campo Riga di Comando. La
+riga di comando di tipo shell può comprendere la ridirezione
+dell'input e dell'output e il piping. Tutti i processi risultanti
+vengono arrestati al \k(posizione) specificato nel campo
+Posizione di Avviamento. Se si specifica una funzione diversa da
+"main" e la funzione non viene trovata nello spazio di indirizzamento
+del processo, il processo viene arrestato alla funzione "main". Se non
+è possibile trovare "main", il processo viene arrestato all'indirizzo
+specificato nell'intestazione del file oggetto. Quando un processo a
+concatenamenti multipli viene creato, ha un sottoprocesso iniziale
+"main". Il sottoporocesso main viene arrestato alla posizione specificata.
+
+Dato che dopo la creazione i processi o sottoprocessi vengono
+arrestati, si deve poi usare uno dei comandi del menu
+\k(Controllo) per avviarli.
+
+Se l'opzione Cattura I/O è selezionata, l'input e l'output del
+processo vengono catturati e visualizzati nella \k(Sottofinestra Trascrizione) e
+l'input deve essere immesso con la finestra a comparsa
+\k(Input). Se l'opzione Cattura I/O non è selezionata,
+l'output del processo va alla finestra xterm di livello superiore del
+debugger e l'input viene immesso digitando in quella finestra. Questo
+comportamento si rivela utile quando si fa la messa a punto di
+programmi basati su curses o di programmi ad elevata interattività. La
+Cattura dell'I/O deve sempre essere selezionata se il debugger è stato
+richiamato tramite la sua icona invece che da una finestra xterm.
+
+L'opzione Segui Livelli inferiori controlla il comportamento del
+debugger quando uno dei processi o sottoprocessi creati si sdoppia. Se
+l'opzione Segui Livelli inferiori non è selezionata, il debugger non
+controlla il processo di livello inferiore. Se è selezionata, il
+debugger controlla il processo di livello inferiore e tutti i suoi
+sottoprocessi (il processo può essere rilasciato dal controllo del
+debugger usando il comando \k(Rilascio)). Tutti i sottoprocessi
+creati da un processo soggetto vengono seguiti dal debugger (ma
+possono anche essere rilasciati usando il pulsante
+\k(Rilascio)). La finestra a comparsa \k(Azione di output)
+consente il controllo del comportamento del debugger rispetto ai
+sottoprocessi creati ex-novo.
+
+Se l'opzione Annulla i Processi dalla Precedente Creazione è
+selezionata, tutti i processi risultanti dal precedente comando di
+creazione vengono annullati. Questo consente di riavviare i processi
+senza dover trovare ed annullare espressamente tutti i processi
+rimanenti.
+
+Se l'opzione Nuovo Set di Finestre non è selezionato, i processi
+creati vengono tutti aggiunti alla \d(set di finestre) della finestra
+Crea.  Se l'opzione Nuovo Set di Finestre è selezionata, viene creato
+un nuovo set di finetre e tutti i processi creati verranno controllati
+da esso. In entrambi i casi, il primo programma della catena di piping
+diventa il processo attuale nel set di finestre che lo controlla.
+
+Se si crea un processo con \k(Script) o tramite
+\k(Riga di comando), la riga di comando nella finestra Crea
+viene aggiornata per riflettere il comando di creazione più recente.
+
+La finestra Crea è sempre disponibile nel menu \k(File) di
+qualsiasi finestra che contiene una \k(Sottofinestra Processo) o di qualsiasi
+finestra che viene visualizzata automaticamente all'avviamento del
+debugger. Viene richiamata facendo clic con SELEZIONA su Crea nel menu
+\k(File).
+
+^2^Controllo nucleo
+^$112
+\k(Pulsante File)
+Controllo nucleo
+
+La finestra a comparsa Controlla Nucleo consente di aprire un file del
+nucleo e il suo corrispondente file oggetto per esaminarli. Immettere
+i nomi dei file nucleo e oggetto nelle righe corrispondenti nella
+finestra.  Si può anche trascinare un file di core da una cartella
+del desktop e rilasciarlo sulla finestra Controlla Core. In questo
+modo verranno riempiti i campi del file di core e del file oggetto.
+
+Se l'opzione Nuovo Set di Finestre è selezionata, viene creata una
+nuova \d(set di finestre) per visualizzare l'immagine del nucleo
+messa sotto controllo, altrimenti l'immagine del nucleo viene
+visualizzata nel set di finestre di livello superiore della finestra a
+comparsa. In entrambi i casi, l'immagine di core messa sotto
+controllo diventa il processo attuale nel suo set di finestre e il
+sottoprocesso che ha incontrato l'errore diventa, se possibile, il
+sottoprocesso corrente.
+
+Le immagini del nucleo messe sotto controllo possono essere esaminate
+usando tutti i comandi disponibili per l'esame dei processi attivi, ma
+non possono essere alterate o eseguite.
+
+La finestra Controlla Nucleo è sempre disponibile nel menu
+\k(File) di qualsiasi finestra che contiene una
+\k(Sottofinestra Processo) o di qualsiasi finestra che viene visualizzata
+automaticamente all'avviamento del debugger. Viene richiamata facendo
+clic con SELEZIONA su Controlla Core nel menu \k(File).
+
+^2^Controllo processo
+^$113
+\k(Pulsante File)
+Controllo processo
+
+La finestra a comparsa Controlla Processo consente di prendere il
+controllo di un processo attivo.  La finestra contiene una lista a
+scorrimento dei processi che si possono mettere sotto controllo (i
+processi diversi dal debugger stesso con la stessa ID di utente). È
+possibile selezionare dalla lista più di un processo.
+
+Per default, il debugger carica le informazioni simboliche del
+processo dal file oggetto dal quale il processo era stato creato.
+Nella riga File Oggetto è possibile immettere il nome di un file
+oggetto alternativo da cui caricare le informazioni simboliche.  Questo
+è utile quando si mettono a punto applicazioni lunghe che non hanno
+informazioni simboliche.  Se si immette un nome nella riga File
+Oggetto, bisogna selezionare un solo processo dalla lista.
+
+Se l'opzione Nuovo Set di Finestre non è selezionata, i processi messi
+sotto controllo vengono tutti aggiunti alla \d(set di finestre) della
+finestra Controlla Processo.  Se è selezionata, viene creato un nuovo
+set di finetre da cui vengono controllati tutti i processi messi sotto
+controllo. In entrambi i casi, la voce selezionata che appare per
+prima nella lista diventa il processo attuale nel suo set di finestre.
+Se quel processo usa le interfacce dei sottoprocessi, il debugger
+seleziona casualmente un sottoprocesso di quel processo che diventa il
+sottoprocesso attuale.
+
+L'opzione Segui Livelli inferiori controlla il comportamento del
+debugger quando uno dei processi messi sotto controllo si sdoppia.  Se
+l'opzione Segui Livelli inferiori non è selezionata, il debugger non
+controlla il processo di livello inferiore. Se è selezionata, il
+debugger controlla il processo di livello inferiore (il processo può
+essere rilasciato dal controllo del debugger usando il comando
+\k(Rilascio)). Tutti i sottoprocessi creati da un processo
+soggetto vengono seguiti dal debugger (ma possono anche essere
+rilasciati usando il pulsante \k(Rilascio)). La finestra a
+comparsa \k(Azione di output) consente il controllo del comportamento
+del debugger rispetto ai sottoprocessi creati ex-novo.
+
+La finestra Controlla Processo è sempre disponibile nel menu
+\k(File) di qualsiasi finestra che contiene una
+\k(Sottofinestra Processo) o di qualsiasi finestra che viene visualizzata
+automaticamente all'avviamento del debugger.  Viene richiamata facendo
+clic con SELEZIONA su Controlla Processo nel menu \k(File).
+
+^2^Rilascio
+^$114
+\k(Pulsante File)
+Rilascio
+
+L'opzione Rilascia consente di rilasciare uno o più processi o
+sottoprocessi dal controllo del debugger.  Facendo clic con SELEZIONA
+su Rilascia, appare un menu a comparsa con due opzioni, In esecuzione
+e Sospesi.  Se si sceglie In Esecuzione, i processi o sottoprocessi
+vengono rilasciati e lasciati in esecuzione.  Se sono selezionati dei
+sottoprocessi il menu In Esecuzione/Sospesi non appare, dato che i
+singoli sottoprocessi non possono essere rilasciati in uno stato
+fermo.  Per i processi, se si sceglie Sospesi vengono rilasciati in
+uno stato fermo e possono essere rimessi di nuovo sotto controllo in
+seguito.  Per rilasciare un processo concatenato in uno stato fermo, è
+possibile sia selezionare tutti i sottoprocessi del processo e poi
+selezionare Rilascia/Sospesi, sia selezionare uno dei sottoprocessi di
+livello inferiore, impostare a "Processo di livello superiore "
+l'opzione "Altri comandi si applicano a:" della proprietà di
+Granularità e poi selezionare Rilascia/Sospesi. Usando quest'ultimo
+metodo, ricordarsi che se la Proprietà di Granularità non viene
+ripristinata, tutti i comandi successivi si applicheranno al processo
+di livello superiore.
+
+Se in \k(Sottofinestra Processo) è selezionato qualche processo o
+sottoprocesso, viene rilasciato, altrimenti viene rilasciato
+\d(processo o sottoprocesso corrente).
+
+La finestra Rilascia è disponibile nel menu \k(File) di
+qualsiasi finestra che contiene una \k(Sottofinestra Processo) o di qualsiasi
+finestra che viene visualizzata automaticamente all'avviamento del
+debugger.  Viene richiamata facendo clic con SELEZIONA su Rilascia nel
+menu \k(File). L'opzione Release non è disponibile se non
+ci sono processi o sottoprocessi in \d(set di finestre).
+
+Possono essere rilasciati sia i processi messi sotto controllo che
+quelli creati (vedi \k(Controllo processo) e \k(Crea)).
+
+^2^Apri
+^$115
+\k(Pulsante File)
+Apri
+
+La finestra a comparsa Apri consente di scegliere un file da
+visualizzare in una \k(Sottofinestra Sorgente).  La finestra visualizza una
+lista dei file che compongono il programma che erano stati compilati
+con informazioni di debugging.  Per mostrare uno di questi file,
+selezionarlo e poi fare clic son SELEZIONA sul pulsante Apri, o
+trascinare il file e rilasciarlo sulla finestra Sorgente. Se si
+trascina il file e lo si rilascia nell'Area di Lavoro, il debugger
+crea una nuova \d(finestra sorgente secondaria).
+
+Notare che la lista dei file sorgenti proviene dal file oggetto stesso
+e non dalla directory attuale.  Il debugger non tenta di trovare un
+file fino a che non viene fatta una selezione.  Se non riesce a
+trovare il file selezionato, usare l'opzione \k(Percorso sorgente) nel
+menu \k(Proprietà) per dire al debugger dove trovare il file
+sorgente.
+
+La finestra Apri è sempre disponibile nel menu \k(File) di
+qualsiasi finestra che contiene una \k(Sottofinestra Sorgente). Viene
+richiamata facendo clic con SELEZIONA su Apri nel menu
+\k(File).
+
+^2^Nuova sorgente
+^$116
+\k(Pulsante File)
+Nuova sorgente
+
+L'opzione Nuovo Sorgente crea una \d(finestra sorgente secondaria) nuova. Le
+finestre sorgente secondarie possono essere usate per mostrare più
+file o funzioni contemporaneamente.  Quando viene creata, la finestra
+sorgente secondaria visualizza lo stesso file di \k(Sottofinestra Sorgente)
+nella finestra dalla quale era stata richiamata l'opzione Nuovo
+Sorgente, ma è possibile cambiarne il contenuto con le opzioni
+\k(Apri) o \k(Mostra sorgente funzione).
+
+La finestra Apri è sempre disponibile nel menu \k(File) di
+qualsiasi finestra che contiene una \k(Sottofinestra Sorgente). Viene
+richiamata facendo clic con SELEZIONA su Nuovo Sorgente nel menu
+\k(File).
+
+^2^Sposta
+^$1161
+\k(Pulsante File)
+Sposta
+
+La  finestra a comparsa Sposta consente di spostare un processo o
+sottoprocesso da un \d(set di finestre) a un altro. Se nella
+\k(Sottofinestra Processo) sono selezionati dei processi o
+sottoprocessi,  verranno spostati, altrimenti verrà spostato il 
+\d(processo o sottoprocesso corrente). La destinazione dello spostamento
+può essere un set di finestre nuovo o uno esistente. I set di finestre
+vengono identificati da un numero intero a partire da 1. Questo numero appare
+nel titolo di tutte le finestre del set. Il primo set di finestre ha un
+numero di identificazione implicito pari a 1.
+
+Se si sceglie l'opzione Set di finestre esistente, vengono
+mostrati tutti i set esistenti nella lista Set di Finestre Esistenti.
+Selezionando una voce in questa lista e facendo clic sul pulsante
+Sposta, o semplicemente facendo doppio clic su una voce, il processo
+o sottoprocesso viene spostato lì.
+
+Un altro modo di spostare un processo o sottoprocesso in un
+nuovo set di finestre consiste nel selezionarlo nella
+\k(Sottofinestra Processo) e fare clic su \k(Nuovo set finestre) nel menu
+\k(File). Si può anche trascinare un processo o
+sottoprocesso da una sottofinestra Processo di un set di finestre e
+rilasciarlo sulla sottofinestra Processo di un altro set di finestre.
+
+L'opzione Sposta è disponibile nel menu \k(File) di
+qualsiasi finestra che contiene una \k(Sottofinestra Processo). Viene
+richiamata facendo clic con SELEZIONA su Sposta nel menu
+\k(File). L'opzione Sposta non è disponibile se nel set di
+finestre non ci sono processi o sottoprocessi.
+
+^2^Script
+^$117
+\k(Pulsante File)
+Script
+
+La finestra a comparsa Script consente di eseguire comandi del
+debugger da un file.  Immettere il nome del file nella riga File
+Script o trascinare il file dalla sua cartella nel desktop e
+rilasciarlo sulla finestra Script.  È possibile specificare se devono
+essere ritrasmessi i comandi con l'opzione Ritrasmetti Comandi. I
+comandi e i loro output vengono visualizzati in \k(Sottofinestra Trascrizione).
+
+Quasi tutti gli altri comandi del debugger non sono disponibili quando
+c'è uno script in esecuzione.  I pochi comandi disponibili comprendono
+la chiusura delle finestre, il richiamo della Guida e l'interruzione
+dello script (con il pulsante \k(Interruzione) nel menu
+\k(Modifica) di qualsiasi finestra che contiene una
+\k(Sottofinestra Comando)).
+
+La finestra Script è sempre disponibile nel menu \k(File)
+di qualsiasi finestra che contiene una \k(Sottofinestra Comando). Viene
+richiamata facendo clic con SELEZIONA su Script nel menu
+\k(File).
+
+^2^Cambia directory
+^$118
+\k(Pulsante File)
+Cambia directory
+
+La finestra a comparsa Cambia Directory consente di cambiare la
+directory di lavoro attuale del debugger.  La directory di lavoro
+attuale appare in alto nella finestra. Immettere il nome di percorso
+della nuova directory attuale nel campo Nuova Directory. Se non si
+immette un nome di percorso, viene usata la directory specificata
+dalla variabile di ambiente HOME.
+
+La finestra Cambia Directory è sempre disponibile nel menu
+\k(File) di qualsiasi finestra che contiene una
+\k(Sottofinestra Comando) o una \k(Sottofinestra Processo) o di qualsiasi finestra
+che viene visualizzata automaticamente all'avviamento del debugger.  La
+finestra Cambia Directory viene richiamata facendo clic con SELEZIONA
+su Cambia Directory nel menu \k(File).
+
+^2^Nuovo set finestre
+^$119
+\k(Pulsante File)
+Nuovo set finestre
+
+Facendo clic con SELEZIONA sull'opzione Nuovo Set di Finestre si crea
+un nuovo \d(set di finestre). Appaiono tutte le finestre configurate
+per la visualizzazione automatica (vedi \k(Configurazione). Se nella
+\k(Sottofinestra Processo) del set di finestre precedente erano selezionati
+processi o sottoprocessi, vengono spostati nel nuovo set di finestre,
+altrimenti il nuovo set di finestre sarà vuoto.
+
+L'opzione Nuovo Set di Finestre è sempre disponibile nel menu
+\k(File) di qualsiasi finestra che contiene una
+\k(Sottofinestra Processo)
+
+^2^Finestre
+^$1110
+\k(Pulsante File)
+Finestre
+
+Facendo clic con SELEZIONA sull'opzione Finestre appare un menu a
+comparsa con un'opzione per ognuna delle altre finestre della
+\d(set di finestre). Selezionando una delle opzioni del menu a
+comparsa si apre la relativa finestra.
+
+Se nella sessione del debugger c'è più di un set di finestre attivo,
+il menu a comparsa contiene anche una voce per ciascuno degli altri
+set di finestre.  Ogni voce ha la forma "Set finestre ID", dove ID è
+un numero che appare anche nell'intestazione della finestra e nei
+titoli dei menu. La selezione di una di queste voci fa apparire tutte
+le finestre configurate per la visualizzazione automatica in quel set
+di finestre (vedi \k(Configurazione)).
+
+Il menu Finestre è disponibile nel menu \k(File) di tutte
+le finestre del debugger.
+
+^3^Pulsante Finestra a comparsa
+^$11101
+\k(Pulsante File)
+\k(Finestre)
+Pulsante Finestra a comparsa
+
+Il pulsante Attiva Finestra è disponibile solo nella
+\d(Barra pulsanti) di una finestra.  L'etichetta sul pulsante
+descrive la finestra che verrà attivata. Facendo clic con SELEZIONA
+sul pulsante appare la finestra associata a quel pulsante nello stesso
+set di finestre della finestra che contiene il pulsante. Una barra di
+pulsanti può contenere più pulsanti Attiva Finestra.
+
+^2^Chiudi finestra
+^$1111
+\k(Pulsante File)
+Chiudi finestra
+
+Facendo clic con SELEZIONA sull'opzione Chiudi Finestra si chiude la
+finestra. La finestra può essere riaperta con l'opzione
+\k(Finestre) nel pulsante del menu File di qualsiasi altra
+finestra nel suo set di finestre.
+
+Se la finestra è l'unica aperta nel suo \d(set di finestre),
+chiudendola ci si libera del set di finestre. Non è possibile chiudere
+l'ultima finestra di un set di finestre se questo contiene processi o
+sottoprocessi.
+
+Se la finestra è l'unica aperta del debugger, Chiudi Finestra è
+equivalente a \k(Esci). Se ci sono processi o
+sottoprocessi sotto il controllo del debugger, viene chiesta una
+conferma prima dell'uscita.
+
+L'opzione Chiudi Finestra è disponibile nel menu \k(File)
+di tutte le finestre del debugger.
+
+^2^Esci
+^$1112
+\k(Pulsante File)
+Esci
+
+Facendo clic con SELEZIONA sull'opzione Esci si esce dal debugger.
+Se ci sono processi o sottoprocessi sotto il controllo del debugger,
+viene chiesta una conferma.  Quando si esce dal debugger, tutti
+i processi e sottoprocessi controllati vengono annullati, se erano
+stati creati (vedi \k(Crea)), o rilasciati ed eseguiti, se
+erano stati messi sotto controllo (vedi \k(Controllo processo) o
+\k(Rilascio)).
+
+L'opzione Esci è disponibile nel menu \k(File) di qualsiasi
+finestra del debugger.
+
+^1^Pulsante Modifica=Modifica
+^$120
+Pulsante Modifica
+
+Facendo clic con MENU sul pulsante Modifica appare un menu con opzioni
+diverse, secondo quali sottofinestre sono presenti nella finestra.
+
+Se la finestra contiene una \k(Sottofinestra Processo) o una
+\k(Sottofinestra Stack), il menu Modifica contiene la seguente opzione:
+
+\t\k(Imposta corrente)
+
+Se la finestra contiene una \k(Sottofinestra Simbolo) il menu Modifica
+contiene le seguenti opzioni:
+
+\t\k(Esportare)
+\t\k(Attaccare)
+\t\k(Staccare)
+
+Se la finestra contiene una \k(Sottofinestra Sorgente), una
+\k(Sottofinestra Disassemblaggio) o una \k(Sottofinestra Registri), il menu Modifica
+contiene la seguente opzione:
+
+\t\k(Copia)
+
+Se la finestra contiene una \k(Sottfinestra Evento) il menu Modifica
+contiene le seguenti opzioni:
+
+\t\k(Disattiva)
+\t\k(Attiva)
+\t\k(Cancella)
+
+Infine, se la finestra contiene una \k(Sottofinestra Comando) il menu
+Modifica contiene le seguenti opzioni:
+
+\t\k(Copia)
+\t\k(Input)
+\t\k(Interruzione)
+
+L'insieme di opzioni contenute nel menu Modifica di ciascuna finestra
+è l'unione delle opzioni di ciascuna sottofinestra contenuta in quella
+finestra.
+
+^2^Copia
+^$121
+\k(Pulsante Modifica)
+Copia
+
+Facendo clic con SELEZIONA sul pulsante Copia nel menu Modifica, si
+copia un testo selezionato dalla \k(Sottofinestra Trascrizione),
+\k(Sottofinestra Sorgente), \k(Sottofinestra Registri) o dalla \k(Sottofinestra Disassemblaggio)
+agli appunti. Il pulsante Copia non è disponibile a meno che ci sia
+del testo selezionato.
+
+Copia è disponibile nel menu Modifica di qualsiasi finestra che
+contiene una \k(Sottofinestra Comando), \k(Sottofinestra Sorgente),
+\k(Sottofinestra Disassemblaggio) o una \k(Sottofinestra Registri).
+
+^2^Imposta corrente
+^$122
+\k(Pulsante Modifica)
+Imposta corrente
+
+L'opzione Imposta Attuale consente di cambiare \d(contesto corrente). Se
+è selezionato un processo o un sottoprocesso, Imposta Attuale rende
+\d(processo o sottoprocesso corrente) l'oggetto selezionato. Se è selezionato un frame
+di stack, Imposta Attuale rende \d(frame corrente) il frame
+selezionato. Le informazioni in tutte le finestre di
+\d(set di finestre) vengono aggiornate per riflettere il nuovo
+contesto.
+
+L'opzione Imposta Attuale non è disponibile a meno che sia selezionato
+un processo o sottoprocesso in \k(Sottofinestra Processo) o un frame in
+\k(Sottofinestra Stack). Imposta Attuale è disponibile nel menu Modifica
+di qualsiasi finestra che contiene una \k(Sottofinestra Processo) o una
+\k(Sottofinestra Stack).
+
+^2^Esportare
+^$123
+\k(Pulsante Modifica)
+Esportare
+
+L'opzione di menu Esporta consente di esportare all'ambiente una
+variabile mantenuta dal debugger e definita dall'utente. Le variabili
+esportate diventano parte dell'ambiente che viene ricevuto dai
+processi creati dal debugger. Se il valore delle variabili cambia,
+bisogna riesportarle perché i nuovi valori diventino parte
+dell'ambiente.  Notare che le variabili vengono esportate senza il
+prefisso '$'.
+
+L'opzione Esporta è disponibile solo se si stanno visualizzando
+variabili definite dall'utente nella \k(Sottofinestra Simbolo) e ne è stata
+selezionata almeno una. La finestra a comparsa \k(Simboli)
+consente di scegliere cosa visualizzare nella \k(Sottofinestra Simbolo).
+
+Esporta è disponibile solo nel menu Modifica delle finestre che
+contengono una \k(Sottofinestra Simbolo).
+
+^2^Disattiva
+^$124
+\k(Pulsante Modifica)
+Disattiva
+
+Facendo clic con SELEZIONA sul pulsante Disattiva si disattivano gli
+eventi selezionati in una delle due parti della \k(Sottfinestra Evento)
+(Sottofinestra Eventi Principale o Sottofinestra Eventi Fermi). Gli
+eventi disattivati non hanno effetto sui processi o sottoprocessi a
+cui si applicano, ma non vengono cancellati. Possono essere riattivati
+con \k(Attiva).
+
+Possono essere selezionati uno o più eventi in entrambe le
+sottofinestre. Questa opzione non è disponibile se gli eventi
+selezionati sono già disattivati.
+
+Disattiva è disponibile nel menu Modifica delle finestre che
+contengono una \k(Sottfinestra Evento).
+
+^2^Attiva
+^$125
+\k(Pulsante Modifica)
+Attiva
+
+Facendo clic con SELEZIONA sul pulsante Attiva si attivano gli eventi
+selezionati in una delle due parti della \k(Sottfinestra Evento)
+(Sottofinestra Eventi Principale o Sottofinestra Eventi Fermi).
+Possono essere selezionati uno o più eventi \k(Disattiva)
+disattivati in entrambe le sottofinestre.  Questa opzione non è
+disponibile se gli eventi selezionati non sono disattivati.  Una volta
+attivato, un evento ricomincia ad avere effetto sul processo o
+sottoprocesso in cui è attivato.
+
+Attiva è disponibile nel menu Modifica delle finestre che contengono
+una \k(Sottfinestra Evento).
+
+^2^Cancella
+^$126
+\k(Pulsante Modifica)
+Cancella
+
+Facendo clic con SELEZIONA sul pulsante Cancella si cancellano tutti
+gli eventi selezionati nella \k(Sottfinestra Evento). Questa opzione non è
+disponibile se non è selezionato alcun evento.
+
+Cancella è disponibile solo nel menu Modifica delle finestre che
+contengono una \k(Sottfinestra Evento).
+
+^2^Input
+^$127
+\k(Pulsante Modifica)
+Input
+
+La finestra a comparsa Input consente di inviare input a un processo
+il cui I/O è sotto cattura (vedi \k(Crea)). Immettere la
+stringa nel campo Input.  Se è impostata l'opzione Aggiungi Nuova
+Riga, viene aggiunto un carattere di nuova riga alla fine della
+stringa. La stringa viene ritrasmessa nella \k(Sottofinestra Trascrizione).
+
+La finestra Input può essere fatta apparire  facendo clic con
+SELEZIONA sull'opzione Input nel menu Modifica di qualsiasi finestra
+che contiene una \k(Sottofinestra Comando). Questa opzione non è disponibile
+a meno che l'I/O del \d(processo o sottoprocesso corrente) sia sotto cattura.
+
+^2^Interruzione
+^$128
+\k(Pulsante Modifica)
+Interruzione
+
+Facendo clic con SELEZIONA sull'opzione Interrompi si interrompe uno
+script o un comando dalla \k(Riga di comando). È utile quando lo
+script o il comando è entrato in un ciclo infinito o quando genera
+grandi quantità di output.
+
+Interrompi è disponibile solo nel menu Modifica delle finestre che
+contengono una \k(Sottofinestra Comando).
+
+^2^Attaccare
+^$129
+\k(Pulsante Modifica)
+Attaccare
+
+L'opzione Appunta è disponibile nel menu \k(Mostra) di
+qualsiasi finestra che contiene una \k(Sottofinestra Simbolo). Facendo clic
+con SELEZIONA sull'opzione Appunta si appuntano tutte le variabili
+selezionate. Questa opzione non è disponibile a meno che siano state
+selezionate una o più variabili non appuntate nella \k(Sottofinestra Simbolo).
+
+Una variabile appuntata rimane nella \k(Sottofinestra Simbolo) finché il
+processo in cui essa risiede è il \d(processo o sottoprocesso corrente) o finché le
+viene tolto l'appunto. Qualunque variabile dell'utente, del programma
+o del debugger può essere appuntata. Le variabili appuntate filtrano
+fino in cima alla lista quando viene aggiornata la
+\k(Sottofinestra Simbolo). Quando una variabile del programma esce dal suo
+scopo assume il valore "??".
+
+^2^Staccare
+^$1210
+\k(Pulsante Modifica)
+Staccare
+
+L'opzione Togli Appunto è disponibile nel menu \k(Mostra) di
+qualsisasi finestra che contiene una \k(Sottofinestra Simbolo).  Facendo
+clic con SELEZIONA sull'opzione Togli Appunto si toglie l'appunto
+da tutte le variabili selezionate che erano state appuntate in
+precedenza. Questa opzione non è disponibile a meno che siano
+selezionate una o più variabili appuntate nella \k(Sottofinestra Simbolo).
+
+Una variabile non appuntata scompare dalla \k(Sottofinestra Simbolo) se non
+appartiene più alla lista dei simboli che sarebbero normalmente
+visualizzati dallo scopo attuale secondo le impostazioni di proprietà
+di \k(Simboli).
+
+^1^Pulsante Visualizza=Mostra
+^$130
+Pulsante Visualizza
+
+Il pulsante Mostra fornisce il controllo sullo stato dei sottoprocessi
+e processi in fase di messa a punto.  Facendo clic con MENU sul
+pulsante Mostra appare un menu con opzioni diverse, secondo quali
+sottofinestre sono presenti nella finestra. Ogni finestra contiene un
+menu Mostra
+
+Se la finestra contiene una \k(Sottofinestra Processo) il menu Mostra contiene
+la seguente opzione:
+
+\t\k(Mappa)
+
+Se la finestra contiene una \k(Sottofinestra Simbolo) il menu Mostra
+contiene le seguenti opzioni:
+
+\t\k(Espande)
+\t\k(Visualizza valore)
+\t\k(Imposta valore)
+\t\k(Visualizza tipo)
+\t\k(Copia)
+
+Se la finestra contiene una \k(Sottofinestra Sorgente) il menu Mostra
+contiene le seguenti opzioni:
+
+\t\k(Visualizza linea)
+\t\k(Mostra sorgente funzione)
+\t\k(Cerca)
+\t\k(Espande)
+\t\k(Visualizza valore)
+\t\k(Imposta valore)
+\t\k(Visualizza tipo)
+
+Infine, se la finestra contiene una \k(Sottofinestra Disassemblaggio) il menu Mostra
+contiene le seguenti opzioni:
+
+\t\k(Visualizza ubicazione)
+\t\k(Mostra Dis funzione)
+\t\k(Cerca)
+\t\k(Visualizza valore)
+\t\k(Imposta valore)
+\t\k(Copia)
+\t\k(Mappa)
+
+L'insieme di opzioni contenute nel menu Mostra di ciascuna finestra è
+l'unione delle opzioni di ciascuna sottofinestra contenuta in quella
+finestra.
+
+^2^Espande
+^$131
+\k(Pulsante Visualizza)
+Espande
+
+La finestra a comparsa Espandi consente di vedere il contenuto di una
+struttura a cui punta una variabile puntatore, di seguire una catena
+di puntatori o di visualizzare il contenuto di un array.  Questa
+finestra appare facendo clic con SELEZIONA sull'opzione Espandi nel
+menu \k(Mostra) di qualsiasi finestra che contiene una
+\k(Sottofinestra Simbolo) o una \k(Sottofinestra Sorgente). Questa opzione è
+disponibile solo se si è selezionato un simbolo nella
+\k(Sottofinestra Simbolo) o un'espressione nella \k(Sottofinestra Sorgente).
+
+Se il simbolo selezionato è un puntatore, il campo Espressione viene
+inizializzato con l'espressione necessaria per dereferenziare il
+puntatore. (Per i programmi in C e C++, questa espressione è il
+simbolo *). Se il simbolo selezionato non è un puntatore, il campo
+Espressione visualizza il nome del simbolo. In entrambi i casi il
+campo Risultato mostra il valore dell'espressione.
+
+Se il campo Risultato visualizza membri di strutture, classi o array
+che sono essi stessi puntatori, è possibile dereferenziare uno dei
+puntatori selezionando quel membro nel campo Risultato e facendo clic
+con SELEZIONA sul pulsante Espandi. I campi Espressione e Risultato
+vengono aggiornati per mostrare la catena di puntatori attuale (È
+possibile vedere la stessa cosa digitando l'espressione nel campo
+Espressione della finestra a comparsa \k(Visualizza valore)). Non c'è
+limite al numero di puntatori che si possono dereferenziare in questo
+modo, ma non è possibile dereferenziare puntatori nulli (puntatori con
+valore 0), puntatori di tipo void *, o puntatori senza informazioni
+sul tipo puntato. Questo può succedere se l'unità di compilazione
+includeva una sola dichiarazione forward di nome del tipo e non
+includeva la definizione della classe o della struttura puntata.
+
+In qualsiasi punto, seguendo una catena di puntatori, è possibile
+tornare indietro lungo la catena facendo clic con SELEZIONA sul
+pulsante Riduci. Questo fa andare indietro di un anello della catena,
+o di un livello di dereferenziazione. È possibile fare clic con
+SELEZIONA su Riduci tante volte quante lo si è fatto su Espandi.
+
+^2^Visualizza valore
+^$132
+\k(Pulsante Visualizza)
+Visualizza valore
+
+La finestra a comparsa Mostra Valore consente di vedere il valore di
+un'espressione nel linguaggio attuale. Immettere l'espressione che si
+vuole calcolare nel campo Espressione.  Si può anche immettere una
+lista di espressioni separate da virgole.  Le espressioni possono
+contenere variabili del programma, variabili incorporate del debugger
+e variabili definite dall'utente. Facendo clic con SELEZIONA sul
+pulsante Mostra Valore, vengono calcolate le espressioni e viene
+visualizzato il risultato nell'area Risultato.  Per i dettagli sulle
+espressioni accettate, consultare la sezione specifica del linguaggio:
+
+        \k(Supporto per il linguaggio C)
+        \k(Supporto per il linguaggio C++)
+
+La finestra a comparsa Mostra Valore è disponibile dal menu Mostra in
+qualsiasi finestra che contiene una \k(Sottofinestra Simbolo),
+\k(Sottofinestra Sorgente) o una \k(Sottofinestra Disassemblaggio).  Se in una di queste
+sottofinestre era selezionata una variabile quando è apparsa la
+finestra Mostra Valore, il nome di quella variabile viene usato per
+inizializzare il campo Espressione. Se erano selezionati dei processi
+o sottoprocessi nella \k(Sottofinestra Processo), l'espressione viene
+calcolata nel contesto di ciascuno di quei processi o sottoprocessi.
+Se non erano selezionati processi o sottoprocessi, viene usata la
+\d(processo o sottoprocesso corrente).
+
+È possibile selezionare il formato del risultato da una delle scelte
+nella colonna Formato.  Scegliendo "Default" il debugger stampa il
+risultato nel formato che determina sulla base del tipo del risultato.
+Ci sono varie altre scelte, come "Ottale", "Decimale", e "Carattere".
+Scegliendo "Altro" si può immettere nel campo Specifica Formato una
+stringa di formato tipo printf (3C). Non è possibile immettere
+alcunché in questo campo senza aver prima selezionato "Altro".
+
+Per il calcolo di una chiamata di funzione il debugger crea un frame
+di stack per quella funzione ed esegue la funzione. Gli eventi del
+debugger vengono disattivati durante l'esecuzione della funzione.
+
+L'opzione \k(Espande) è simile all'opzione Mostra Valore, ma
+fornisce funzioni specializzate per la dereferenziazione
+dei puntatori.
+
+^2^Imposta valore
+^$133
+\k(Pulsante Visualizza)
+Imposta valore
+
+La finestra a comparsa Imposta Valore consente di impostare una
+variabile incorporata del debugger o una variabile definita
+dall'utente e mantenuta dal debugger o di calcolare una qualsiasi
+espressione del linguaggio. Per impostare una variabile del debugger o
+dell'utente, immettere un'espressione nella forma:
+          variabile = espressione [,espressione ...]
+nel campo Espressione. I valori ammessi per l'espressione dipendono
+dalla variabile. Se si immette una lista di stringhe e variabili
+dell'utente separate da virgole, i valori di stringa di queste
+espressioni vengono concatenati.
+
+Nel campo Espressione è possibile anche immettere qualsiasi
+espressione nel linguaggio attuale, anche se l'uso tipico
+consisterebbe nel calcolare un'espressione di assegnazione.  Per i
+dettagli sulle espressioni accettate, consultare la sezione specifica
+del linguaggio:
+
+        \k(Supporto per il linguaggio C)
+        \k(Supporto per il linguaggio C++)
+
+La finestra a comparsa Imposta Valore è disponibile dal menu Mostra in
+qualsiasi finestra che contiene una \k(Sottofinestra Simbolo),
+\k(Sottofinestra Sorgente) o una \k(Sottofinestra Disassemblaggio).  Se in una di queste
+sottofinestre era selezionata una variabile quando è apparsa la
+finestra Mostra Valore, il nome di quella variabile viene usato per
+inizializzare il campo Espressione. Se erano selezionati dei processi
+o sottoprocessi nella \k(Sottofinestra Processo), l'espressione viene
+calcolata nel contesto di ciascuno di quei processi o sottoprocessi.
+Se non erano selezionati processi o sottoprocessi, viene usata la
+\d(processo o sottoprocesso corrente).
+
+^2^Visualizza tipo
+^$134
+\k(Pulsante Visualizza)
+Visualizza tipo
+
+La  finestra a comparsa Mostra Tipo consente di vedere il tipo di
+un'espressione nel linguaggio attuale. Immettere l'espressione nel
+campo Espressione.  Facendo clic con SELEZIONA sul pulsante Mostra
+Tipo, viene visualizzato il tipo nell'area Tipo.  Per i dettagli sulle
+espressioni accettate, consultare la sezione specifica del linguaggio:
+
+        \k(Supporto per il linguaggio C)
+        \k(Supporto per il linguaggio C++)
+
+Nel campo Espressione si può anche immettere un nome di tipo. Il
+debugger visualizzerà allora la definizione del tipo, compresi i
+membri se il tipo è una classe, una struttura, una union o un tipo
+enumerazione.
+
+La finestra a comparsa Mostra Tipo è disponibile dal menu Mostra in
+qualsiasi finestra che contiene una \k(Sottofinestra Simbolo) o una
+\k(Sottofinestra Sorgente). Se in una di queste sottofinestre era selezionata
+una variabile quando è apparsa la finestra Mostra Tipo, il nome di
+quella variabile viene usato per inizializzare il campo Espressione.
+Se erano selezionati dei processi o sottoprocessi nella
+\k(Sottofinestra Processo), il tipo viene visualizzato nel contesto di
+ciascuno di quei processi o sottoprocessi. Se non erano selezionati
+processi o sottoprocessi, viene usata la \d(processo o sottoprocesso corrente).
+
+^2^Visualizza linea
+^$135
+\k(Pulsante Visualizza)
+Visualizza linea
+
+L'opzione Mostra Riga fa apparire una finestra a comparsa che consente
+di posizionare il file visualizzato nella Sottofinestra Sorgente a una
+specifica riga.  Immettere il numero di riga nel campo Riga.  La
+finestra Mostra Riga appare facendo clic con SELEZIONA sull'opzione
+Mostra Riga nel menu \k(Mostra) di qualsiasi finestra che
+contiene una \k(Sottofinestra Sorgente).
+
+^2^Mostra sorgente funzione
+^$136
+\k(Pulsante Visualizza)
+Mostra sorgente funzione
+
+L'opzione Mostra Sorgente Funzione consente di visualizzare il
+sorgente di qualsiasi funzione nella \d(processo o sottoprocesso corrente) che era stata
+compilata con informazioni di debugging.  Questa finestra appare
+facendo clic con SELEZIONA sull'opzione Mostra Sorgente funzione nel
+menu \k(Mostra) di qualsiasi finestra che contiene una
+\k(Sottofinestra Sorgente).
+
+La finestra a comparsa visualizza due liste a scorrimento.  La prima
+visualizza gli oggetti che costituiscono il processo selezionato o il
+processo di livello superiore del sottoprocesso selezionato; gli
+oggetti sono il file eseguibile e qualsiasi libreria condivisa da cui
+esso dipende.  La seconda è una lista di funzioni. Se è impostata
+l'opzione "Mostra Funzioni dal File Attuale", la lista a scorrimento
+degli Oggetti viene ignorata e nella lista delle Funzioni vengono
+mostrate solo le funzioni definite nel file attualmente visualizzato
+nella Sottofinestra Sorgente.  Se è impostata l'opzione "Mostra
+Funzioni dall'Oggetto Selezionato", la selezione nella lista degli
+Oggetti determina quali funzioni vengono elencate.  La lista delle
+Funzioni può essere vuota se l'oggetto selezionato non contiene
+nessuna funzione compilata con informazioni di debugging.
+
+È possibile selezionare una funzione dalla lista delle Funzioni.
+Facendo clic con SELEZIONA sul pulsante Mostra Funzione verrà
+visualizzata quella funzione nella \k(Sottofinestra Sorgente) della finestra
+di livello superiore. Si può anche trascinare la funzione selezionata
+e rilasciarla sulla \k(Sottofinestra Sorgente) o nell'Area di Lavoro.
+Rilasciandola nell'Area di Lavoro si apre una nuova
+\d(finestra sorgente secondaria) che visualizza la funzione selezionata.
+
+^2^Mostra Dis funzione
+^$137
+\k(Pulsante Visualizza)
+Mostra Dis funzione
+
+La finestra a comparsa Mostra Disass Funz consente di visualizzare il
+disassemblato di qualsiasi funzione nella \d(processo o sottoprocesso corrente).  La
+finestra Mostra Disass Funz appare facendo clic con SELEZIONA
+sull'opzione Mostra Disass Funz nel menu \k(Mostra) di
+qualsiasi finestra che contiene una \k(Sottofinestra Disassemblaggio).
+
+La finestra a comparsa visualizza due liste a scorrimento.  La prima
+visualizza gli oggetti che costituiscono il processo selezionato o il
+processo di livello superiore del sottoprocesso selezionato; gli
+oggetti sono il file eseguibile e qualsiasi libreria condivisa da cui
+esso dipende.  La selezione in questa lista determina quali funzioni
+vengono visualizzate nella seconda.
+
+È possibile selezionare una funzione dalla lista delle Funzioni.
+Facendo clic con SELEZIONA sul pulsante Mostra Funzione viene
+visualizzata quella funzione nella Sottofinestra Disassemblato della
+finestra Disassemblato di livello superiore. Si può anche trascinare
+la funzione selezionata e rilasciarla sulla \k(Sottofinestra Disassemblaggio).
+
+^2^Visualizza ubicazione
+^$138
+\k(Pulsante Visualizza)
+Visualizza ubicazione
+
+L'opzione Mostra Posizione fa apparire una finestra a comparsa che
+consente di posizionare la \k(Sottofinestra Disassemblaggio) a un'indirizzo
+specifico.  Immettere l'indirizzo esadecimale nel campo Posizione.  La
+finestra Mostra Posizione appare facendo clic con SELEZIONA
+sull'opzione Mostra Posizione nel menu \k(Mostra) di
+qualsiasi finestra che contiene una \k(Sottofinestra Disassemblaggio).
+
+^2^Cerca
+^$139
+\k(Pulsante Visualizza)
+Cerca
+
+La finestra a comparsa Ricerca consente di immettere una espressione
+regolare di tipo ed(1) da ricercare nella SOttofinestra Sorgente o
+Disassemblato. Immettere l'espressione da ricercare nel campo Testo. 
+L'espressione può contenere qualunque combinazione dei seguenti elementi:
+\t.\tCorrisponde a qualsiasi carattere eccetto il carattere di nuova riga
+\t[...]\tCorrisponde a uno qualsiasi dei caratteri racchiusi tra le parentesi,
+\t\t\tsono ammessi gli intervalli e ^ indica negazione
+\t*\tIndica zero o più ER precedenti
+\t^\tCorrisponde alla stringa nulla all'inizio di una riga
+\t$\tCorrisponde alla stringa nulla alla fine di una riga
+\t\{m\}\tIndica esattamente m occorrenze della ER precedente
+\t\{m,\}\tIndica almeno m occorrenze della ER precedente
+\t\{m,n\}\tIndica da m a n, comprese, occorrenze
+\t\(...\)\tCorrisponde alla stessa cosa di ...
+\tcifra\tCorrisponde alla n-esima ER tra parentesi nella stessa espressione.
+\t\<\tCorrisponde alla stringa nulla all'inizio di una parola
+\t\>\tCorrisponde alla stringa nulla alla fine di una parola
+
+La finestra Ricercapuò essere richiamata dal menu \k(Mostra)
+di qualsiasi finestra che contiene una \k(Sottofinestra Sorgente)
+o una \k(Sottofinestra Disassemblaggio).  Se in una di queste due sottofinestre
+c'è del testo selezionato, viene usato per inizializzare il campo
+Testo. Se la finestra di livello superiore contiene sia la
+sottofinestra Sorgente che la sottofinestra Disassemblato, sarà
+possibile selezionare la sottofinestra entro cui effettuare la
+ricerca.
+
+È possibile effettuare la ricerca in avanti o indietro. Se è
+selezionato del testo, la ricerca inizia dopo (o prima) della stringa
+selezionata; altrimenti las ricerca inizia dalla posizione attuale del
+cursore.
+
+^2^Copia
+^$1310
+\k(Pulsante Visualizza)
+Copia
+
+La finestra a comparsa Dump consente di vedere il contenuto della
+memoria a una specifica \k(posizione) nel processo o
+sottoprocesso selezionato. Immettere la posizione nel campo
+Posizione.
+
+È possibile immettere nel campo Conteggio il numero di byte da
+visualizzare. Se non si immette un numero, il debugger visualizza 256
+byte, 16 byte per riga. I byte vengono visualizzati in esadecimale e
+in ASCII.
+
+La finestra a comparsa Dump è disponibile dal menu \k(Mostra)
+di qualsiasi finestra che contiene una \k(Sottofinestra Simbolo) o una
+\k(Sottofinestra Processo).  Se in una di queste sottofinestre era selezionata
+una variabile, il suo nome viene usato per inizializzare il campo
+Posizione. Se era selezionato un processo o sottoprocesso nella
+\k(Sottofinestra Processo), viene mostrato il contenuto della posizione in
+quel processo o sottoprocesso. Se non era selezionato un processo o
+sottoprocesso, viene usata la \d(processo o sottoprocesso corrente).
+
+Le finestre \k(Visualizza valore) e \k(Espande) forniscono altri
+modi per esaminare lo spazio degli indirizzi di un processo o
+sottoprocesso.
+
+^2^Mappa
+^$1311
+\k(Pulsante Visualizza)
+Mappa
+
+La finestra a comparsa Mappa visualizza la mappa degli indirizzi
+virtuali del processo selezionato o del processo di livello superiore
+del sottoprocesso selezionato.  Le informazioni visualizzate sono gli
+indirizzi di inizio e di fine, la dimensione e i permessi di accesso
+per ciascun segmento.
+
+La finestra a comparsa Mappa è disponibile dal menu \k(Mostra) di
+qualsiasi finestra che contiene una \k(Sottofinestra Processo) o una
+\k(Sottofinestra Disassemblaggio).  Se è selezionato un processo nella
+\k(Sottofinestra Processo), viene visualizzata la mappa degli indirizzi di
+quel processo. Può essere selezionato solo un processo. Se non è
+selezionato alcun processo, viene visualizzata la mappa degli indirizzi
+del processo attuale.
+
+^1^Pulsante Controllo=Controllo
+^$14
+Pulsante Controllo
+
+Il pulsante Controllo fornisce l'accesso allo spazio di indirizzamento
+di un processo controllato.
+Facendo clic con MENU sul pulsante Controllo appare un menu con opzioni
+diverse, secondo quali sottofinestre sono presenti nella finestra. Tutte
+le finestre forniscono un menu Controllo con almeno le seguenti opzioni:
+
+\t\k(Esegui)
+\t\k(Return)
+\t\k(Esegui fino a)
+\t\k(Affermazione passo-passo)
+\t\k(Istruzione passo-passo)
+\t\k(Affermazione successiva)
+\t\k(Istruzione successiva)
+\t\k(Passo-Passo)
+\t\k(Salto)
+\t\k(Alt)
+
+Inoltre, se la finestra contiene una \k(Sottofinestra Sorgente) il menu
+Controllo contiene la seguente opzione:
+
+\t\k(Anima sorgente)
+
+Infine, se la finestra contiene una \k(Sottofinestra Disassemblaggio) il menu
+Controllo contiene la seguente opzione:
+
+\t\k(Anima disassemblaggio)
+
+L'insieme di opzioni contenute nel menu Controllo di ciascuna finestra
+è l'unione delle opzioni di default e delle opzioni di ciascuna
+sottofinestra contenuta in quella finestra.
+
+^2^Esegui
+^$141
+\k(Pulsante Controllo)
+Esegui
+
+L'opzione Esegui viene richiamata facendo clic con SELEZIONA sul
+pulsante Esegui del menu \k(Controllo) di qualsiasi finestra. Se
+la finestra contiene una \k(Sottofinestra Processo) e ci sono sottoprocessi
+o processi selezionati in questa sottofinestra, l'opzione Esegui li
+mette in esecuzione.  Se non ci sono processi o sottoprocessi
+selezionati, o se Esegui viene richiamata da una finestra che non
+contiene una \k(Sottofinestra Processo), viene messo in esecuzione il
+\d(processo o sottoprocesso corrente). L'opzione non è disponibile a meno che tutti i
+processi e i sottoprocessi selezionati siano fermi.
+
+^2^Return
+^$142
+\k(Pulsante Controllo)
+Return
+
+L'opzione Ritorna viene richiamata facendo clic con SELEZIONA sul
+pulsante Ritorna del menu \k(Controllo) di qualsiasi finestra.
+Se la finestra contiene una \k(Sottofinestra Processo) e ci sono sottoprocessi
+o processi selezionati in questa sottofinestra, l'opzione Ritorna li
+mette in esecuzione.  Se non ci sono processi o sottoprocessi selezionati,
+o se Ritorna viene richiamata da una finestra che non contiene una
+\k(Sottofinestra Processo), viene messo in esecuzione il \d(processo o sottoprocesso corrente).
+Ogni processo o sottoprocesso messo in esecuzione viene eseguito fino al
+ritorno della funzione attuale.
+
+Notare che il processo o sottoprocesso si può arrestare prima di
+ritornare alla funzione chiamante se scatta un evento mentre è in
+esecuzione.
+
+Questa opzione non è disponibile a meno che tutti i processi e i
+sottoprocessi selezionati siano fermi.
+
+^2^Esegui fino a
+^$143
+\k(Pulsante Controllo)
+Esegui fino a
+
+La finestra a comparsa Esegui Fino A consente di specificare una
+\k(posizione) fino a cui eseguire. Immettere la posizione nella
+riga etichettata Posizione.
+
+Esegui Fino A viene richiamata facendo clic con SELEZIONA sull'opzione
+Esegui Fino A nel menu \k(Controllo) di qualsiasi finestra. Se
+la finestra Esegui Fino A è stata richiamata da una finestra che
+contiene una \k(Sottofinestra Processo), vengono interessati i processi e i
+sottoprocessi selezionati (se ce ne sono) nella \k(Sottofinestra Processo).
+Altrimenti, viene interessato il \d(processo o sottoprocesso corrente).
+
+Notare che Esegui Fino A non garantisce che il processo o
+sottoprocesso raggiunga la posizione specificata.  Se il programma
+segue un percorso di esecuzione imprevisto, può terminare o
+semplicemente scavalcare la posizione; inoltre, se scatta un evento,
+potrebbe arrestarsi prima di raggiungere la posizione specificata.
+
+^2^Affermazione passo-passo
+^$144
+\k(Pulsante Controllo)
+Affermazione passo-passo
+
+Facendo clic son SELEZIONA sull'opzione Passi Istruzione Sorgente si
+esegue un passo di una istruzione del sorgente lungo i processi o
+sottoprocessi interessati, entrando nelle eventuali funzioni chiamate.
+
+Se la finestra contiene una \k(Sottofinestra Processo), l'opzione Passi
+Istruzione Sorgente ha effetto sui sottoprocessi o processi
+selezionati in questa sottofinestra.  Se non ci sono processi o
+sottoprocessi selezionati, o se Passi Istruzione Sorgente viene
+richiamata da una finestra che non contiene una \k(Sottofinestra Processo),
+l'opzione ha effetto sul \d(processo o sottoprocesso corrente).
+
+Questa opzione non è disponibile a meno che tutti i processi e i
+sottoprocessi selezionati siano fermi.
+
+^2^Istruzione passo-passo
+^$145
+\k(Pulsante Controllo)
+Istruzione passo-passo
+
+Facendo clic son SELEZIONA sull'opzione Passi Istruzione Macchina
+esegue un passo di una istruzione macchina lungo i processi o
+sottoprocessi interessati, entrando nelle eventuali funzioni chiamate.
+
+Se la finestra contiene una \k(Sottofinestra Processo), l'opzione Passi
+Istruzione Macchina ha effetto sui sottoprocessi o processi
+selezionati in questa sottofinestra.  Se non ci sono processi o
+sottoprocessi selezionati, o se Passi Istruzione Macchina viene
+richiamata da una finestra che non contiene una \k(Sottofinestra Processo),
+l'opzione ha effetto sul \d(processo o sottoprocesso corrente).
+
+Questa opzione non è disponibile a meno che tutti i processi e i
+sottoprocessi selezionati siano fermi.
+
+^2^Affermazione successiva
+^$146
+\k(Pulsante Controllo)
+Affermazione successiva
+
+Facendo clic son SELEZIONA sull'opzione Istruzione Sorgente Successiva
+si esegue un passo di una istruzione del sorgente lungo i processi o
+sottoprocessi interessati. Le chiamate di funzioni vengono trattate
+come singole istruzioni.  Notare che è possibile che il processo o
+sottoprocesso si arresti se scatta un evento mentre si trova nella
+subroutine chiamata.
+
+Se la finestra contiene una \k(Sottofinestra Processo), l'opzione Prossima
+Istruzione Sorgente ha effetto sui sottoprocessi o processi selezionati
+in questa sottofinestra.  Se non ci sono processi o sottoprocessi
+selezionati, o se Prossima Istruzione Sorgente viene richiamata
+da una finestra che non contiene una \k(Sottofinestra Processo), l'opzione ha effetto sul
+\d(processo o sottoprocesso corrente).
+
+Questa opzione non è disponibile a meno che tutti i processi e i
+sottoprocessi selezionati siano fermi.
+
+^2^Istruzione successiva
+^$147
+\k(Pulsante Controllo)
+Istruzione successiva
+
+Facendo clic son SELEZIONA sull'opzione Istruzione Macchina Successiva
+si esegue un passo di una istruzione del sorgente lungo i processi o
+sottoprocessi interessati. Le chiamate di funzioni vengono trattate
+come singole istruzioni.  Notare che è possibile che il processo o
+sottoprocesso si arresti se scatta un evento mentre si trova nella
+subroutine chiamata.
+
+Se la finestra contiene una \k(Sottofinestra Processo), l'opzione Prossima
+Istruzione ha effetto sui sottoprocessi o processi selezionati in
+questa sottofinestra.  Se non ci sono processi o sottoprocessi
+selezionati, o se Prossima Istruzione viene richiamata da una finestra
+che non contiene una \k(Sottofinestra Processo), l'opzione ha effetto sul
+\d(processo o sottoprocesso corrente).
+
+Questa opzione non è disponibile a meno che tutti i processi e i
+sottoprocessi selezionati siano fermi.
+
+^2^Passo-Passo
+^$148
+\k(Pulsante Controllo)
+Passo-Passo
+
+La finestra a comparsa Passi consente un maggiore controllo sull'esecuzione
+a passi rispetto alle altre opzioni del menu \k(Controllo).
+
+Il primo gruppo di opzioni consente di controllare quanti passi
+vengono eseguiti in un processo o sottoprocesso. Selezionando Passo
+Singolo si fa un solo passo lungo il processo o sottoprocesso. Se si
+seleziona Più Passi, bisogna immettere nel campo Conteggio il numero
+di passi desiderati.
+
+Le opzioni Istruzioni Sorgente e Istruzioni macchina specificano il
+livello al quale deve avvenire l'esecuzione a passi.
+
+L'opzione Ignora Chiamate consente di specificare se trattare le
+chiamate a funzioni come singole istruzioni oppure se eseguire
+anch'esse a passi.
+
+Se la finestra Passi è stata richiamata da una finestra che contiene
+una \k(Sottofinestra Processo), vengono interessati i processi e i
+sottoprocessi selezionati (se ce ne sono) nella \k(Sottofinestra Processo).
+Altrimenti, viene interessato il \d(processo o sottoprocesso corrente).
+
+Le opzioni \k(Affermazione passo-passo), \k(Istruzione passo-passo),
+\k(Affermazione successiva) e \k(Istruzione successiva) nel menu \k(Controllo)
+forniscono modi semplici per eseguire a passi un processo o un
+sottoprocesso. Ad esempio, \k(Istruzione successiva) è equivalente a
+selezionare Passo Singolo, Istruzione macchina e Ignora Chiamate nella
+finestra Passi. Inoltre, i pulsanti \k(Anima sorgente) e
+\k(Anima disassemblaggio) ripeteranno continuamente l'esecuzione a passi del
+processo o sottoprocesso fino a quando si arresta.
+
+^2^Anima sorgente
+^$149
+\k(Pulsante Controllo)
+Anima sorgente
+
+L'opzione Animazione Sorgente viene richiamata facendo clic con SELEZIONA
+su Animazione sorgente nel menu \k(Controllo) di qualsiasi
+finestra che contiene una \k(Sottofinestra Sorgente). L'opzione Animazione
+Sorgente inizia l'esecuzione a passi del \d(processo o sottoprocesso corrente)
+e la continua fino a quando scatta un evento o la si ferma. Appare un
+messaggio in fondo alla finestra che indica che il processo o
+sottoprocesso è in animazione.  Per fermare l'animazione, selezionare il
+pulsante  \k(Alt) nel menu \k(Controllo).
+Eccetto per \k(Distruggi) e \k(Input),
+nessuna azione che abbia effetto sullo stato del processo o sottoprocesso
+è ammessa durante l'animazione.
+
+Mentre il processo o sottoprocesso è in animazione, il debugger
+evidenzia nella \k(Sottofinestra Sorgente) l'istruzione che sta eseguendo.
+Esegue a passi qualsiasi chiamata di funzione che incontra. Le
+informazioni nelle altre finestre non vengono aggiornate fino al
+termine dell'animazione. L'animazione si arresta se il processo o
+sottoprocesso termina, o se il sottoprocesso entra in stato Sotto LWP
+o Sospeso, oppure se scatta un evento.
+
+Se l'esecuzione a passi è troppo veloce per poterla seguire, è possibile
+rallentarla usando l'opzione \k(Animazione) nel menu
+\k(Proprietà).
+
+Selezionando l'opzione Animazione Sorgente, si specifica l'esecuzione a passi
+a livello di istruzione sorgente.  L'opzione \k(Anima disassemblaggio)
+nel menu \k(Controllo) di qualsiasi finestra che contiene una
+\k(Sottofinestra Disassemblaggio) consente di animare il processo o sottoprocesso
+a livello di istruzione macchina.
+
+^2^Anima disassemblaggio
+^$1410
+\k(Pulsante Controllo)
+Anima disassemblaggio
+
+L'opzione Animazione Disassemblato viene richiamata facendo clic con SELEZIONA
+su Animazione Disassemblato nel menu \k(Controllo) di qualsiasi
+finestra che contiene una \k(Sottofinestra Disassemblaggio).  L'opzione Animazione
+Disassemblato inizia l'esecuzione a passi del \d(processo o sottoprocesso corrente)
+e la continua fino a quando scatta un evento o la si ferma. Appare un
+messaggio in fondo alla finestra che indica che il processo o sottoprocesso
+è in animazione.  Per fermare l'animazione, selezionare il pulsante
+\k(Alt) nel menu \k(Controllo).
+Eccetto per \k(Distruggi) e \k(Input),
+nessuna azione che abbia effetto sullo stato del processo o sottoprocesso
+è ammessa durante l'animazione.
+
+Mentre il processo o sottoprocesso è in animazione, il debugger
+evidenzia nella \k(Sottofinestra Disassemblaggio) l'istruzione che sta eseguendo.
+Esegue a passi qualsiasi chiamata di funzione che incontra. Le
+informazioni nelle altre finestre non vengono aggiornate fino al
+termine dell'animazione. L'animazione si arresta se il processo o
+sottoprocesso termina, o se il sottoprocesso entra in stato Sotto LWP
+o Sospeso, oppure se scatta un evento.
+
+Se l'esecuzione a passi è troppo veloce per poterla seguire, è possibile
+rallentarla usando l'opzione \k(Animazione) nel menu
+\k(Proprietà).
+
+Selezionando l'opzione Animazione Disassemblato, si specifica l'esecuzione
+a passi a livello di istruzione macchina.  L'opzione \k(Anima sorgente) nel
+menu \k(Controllo) di qualsiasi finestra che contiene una
+\k(Sottofinestra Sorgente) consente di animare il processo o sottoprocesso a
+livello di istruzione sorgente.
+
+^2^Salto
+^$1411
+\k(Pulsante Controllo)
+Salto
+
+La finestra a comparsa Salta consente di specificare una
+\k(posizione) da cui riprendere l'esecuzione dei processi e
+sottoprocessi interessati. Immettere la posizione nella riga
+Posizione.
+
+Questa opzione non riprende l'esecuzione dei processi o sottoprocessi
+selezionati. La prossima volta che si seleziona una delle altre opzioni nel
+menu \k(Controllo), l'esecuzione riprenderà da questa posizione.
+
+La posizione può essere qualunque indirizzo entro il testo dei
+processi selezionati, ma bisogna fare molta attenzione.  Salta non
+tenta di regolare lo stack del processo o sottoprocesso se l'indirizzo
+è al di fuori della funzione attuale. Bisogna anche fare molta
+attenzione a saltare nelle vicinanze di codice che potrebbe avere
+effetti collaterali di grande portata.
+
+Se la finestra contiene una \k(Sottofinestra Processo), l'opzione Salta ha
+effetto sui sottoprocessi o processi selezionati in questa
+sottofinestra.  Se non ci sono processi o sottoprocessi selezionati, o
+se Salta viene richiamata da una finestra che non contiene una
+\k(Sottofinestra Processo), l'opzione ha effetto sul \d(processo o sottoprocesso corrente).
+
+Questa opzione non è disponibile a meno che tutti i processi e i
+sottoprocessi selezionati siano fermi.
+
+^2^Alt
+^$1412
+\k(Pulsante Controllo)
+Alt
+
+Facendo clic con SELEZIONA sull'opzione Halt si sospende
+immediatamente l'esecuzione dei processi e dei sottoprocessi
+interessati. Questa opzione non è disponibile a meno che tutti i
+processi e i sottoprocessi selezionati siano in stato Esecuzione o
+Esecuzione a Passi.
+
+Se la finestra contiene una \k(Sottofinestra Processo), l'opzione Alt ha
+effetto sui sottoprocessi o processi selezionati in questa
+sottofinestra.  Se non ci sono processi o sottoprocessi selezionati, o
+se Alt viene richiamata da una finestra che non contiene una
+\k(Sottofinestra Processo), l'opzione ha effetto sul \d(processo o sottoprocesso corrente).
+
+Notare che la richiesta di Halt può non avere effetto istantaneamente,
+a causa della latenza del sistema e delle variazioni di
+programmazione.
+
+^1^Pulsante Evento=Evento
+^$15
+Pulsante Evento
+
+Il pulsante Eventi consente all'utente di creare eventi che alterano
+il flusso di controllo di un sottoprocesso o processo.  Facendo clic
+con MENU sul pulsante Eventi appare un menu con opzioni diverse,
+secondo quali sottofinestre sono presenti nella finestra. Ogni
+finestra fornisce un menu Eventi con almeno le seguenti opzioni:
+
+\t\k(Arresta su funzione)
+\t\k(Arresto)
+\t\k(Segnale)
+\t\k(Syscall)
+\t\k(On stop)
+\t\k(Annulla)
+\t\k(Distruggi)
+\t\k(Kill)
+\t\k(Ignora segnali)
+
+Inoltre, se la finestra contiene una \k(Sottofinestra Simbolo), il menu
+Eventi contiene la seguente opzione:
+
+\t\k(Imposta watchpoint)
+
+Se la finestra contiene una \k(Sottofinestra Sorgente) o una
+\k(Sottofinestra Disassemblaggio) il menu Eventi contiene le seguenti opzioni:
+
+\t\k(Imposta punto di interruzione)
+\t\k(Cancella punto di interruzione)
+
+Infine, se la finestra contiene una \k(Sottfinestra Evento), il menu
+Eventi contiene la seguente opzione:
+
+\t\k(Cambia)
+
+L'insieme di opzioni contenute nel menu Eventi di ciascuna finestra è
+l'unione delle opzioni di default e delle opzioni di ciascuna
+sottofinestra contenuta in quella finestra.
+
+^2^Imposta punto di interruzione
+^$151
+\k(Pulsante Evento)
+Imposta punto di interruzione
+
+L'opzione Imposta Punto di Interruzione è disponibile se si è
+selezionata una riga nella \k(Sottofinestra Sorgente) o un'istruzione nella
+\k(Sottofinestra Disassemblaggio) e se il \d(processo o sottoprocesso corrente) è fermo. Facendo clic
+con SELEZIONA su quest'opzione si crea un punto di interruzione (un
+tipo di \d(evento stop)) nel \d(programma corrente) o nel
+\d(processo o sottoprocesso corrente). L'evento viene indicato da un simbolo di stop
+sulla riga o sull'istruzione selezionata. L'evento viene anche
+visualizzato nella Sottofinestra Eventi Principale del
+\k(Sottfinestra Evento). Si può impostare un punto di interruzione anche
+facendo doppio clic con SELEZIONA sul margine sinistro della riga o
+dell'istruzione selezionata.
+
+Nel tentativo di impostare un punto di interruzione su una riga
+sorgente, il debugger visualizza un messaggio se non è in grado di
+impostare il punto di interruzione sulla riga selezionata. Questa
+impossibilità può essere dovita a vari motivi:
+
+    o La riga del sorgente non contiene nulla che possa generare
+      codice eseguibile, come rige vuote e righe contenenti solo
+      commenti e dichiarazioni di veriabili.
+
+    o La riga è parte di un'istruzione su più righe. È possibile
+      impostare un punto di interruzione solo su una riga di
+      un'istruzione o su una condizione su più righe
+
+    o La riga è l'inizio di una definizione di funzione. Bisogna
+      impostare il punto di interruzione sulla prima istruzione della
+      funzione.
+
+^2^Cancella punto di interruzione
+^$152
+\k(Pulsante Evento)
+Cancella punto di interruzione
+
+L'opzione Cancella Punto di Interruzione è disponibile se si è
+selezionato una riga sorgente contrassegnata con il simbolo di stop
+nella \k(Sottofinestra Sorgente) o un'istruzione contrassegnata con il
+simbolo di stop nella \k(Sottofinestra Disassemblaggio). Il simbolo di stop indica
+che su quella riga o su quell'istruzione c'è un punto di interruzione
+(un tipo di \d(evento stop)).  Facendo clic con SELEZIONA
+sull'opzione Cancella Punto di Interruzione, si rimuove il punto di
+interruzione e si cancella l'evento.  Un punto di interruzione può
+anche essere rimosso facendo doppio clic con SELEZIONA nel margine
+sinistro della riga che lo contiene.
+
+^2^Imposta watchpoint
+^$153
+\k(Pulsante Evento)
+Imposta watchpoint
+
+L'opzione Imposta Punto di Osservazione è disponibile nel menu \k(Controllo)
+di qualsiasi finestra che contiene una \k(Sottofinestra Simbolo).
+Facendo clic con SELEZIONA su quest'opzione si impostano dei punti di
+osservazione sulle variabili selezionate.  Questa opzione non è
+disponibile a meno che si sia selezionato una o più variabili di programma
+nella \k(Sottofinestra Simbolo).
+
+Un punto di osservazione è un tipo di \d(evento stop) che dice al
+debugger di arrestare il programma di arrestare il programma quando la
+variabile cambia valore.  Il debugger crea un evento di arresto
+separato per ogni variabile.  I nuovi eventi vengono visualizzati, e
+possono essere cancellati o disattivati, nella \k(Sottfinestra Evento).
+
+^2^Arresta su funzione
+^$154
+\k(Pulsante Evento)
+Arresta su funzione
+
+La finestra a comparsa Arresta su Funzione consente di impostare un
+punto di interruzione su una funzione. Questa finestra è disponibile
+dal menu \k(Evento) di qualsiasi finestra.
+
+La finestra a comparsa visualizza due liste a scorrimento.  La prima
+visualizza gli oggetti (il file eseguibile e le librerie condivise)
+che costituiscono il processo selezionato o il processo di livello
+superiore del sottoprocesso selezionato.  La selezione in questa lista
+determina quali funzioni vengono visualizzate nella seconda.
+
+Per impostare un punto di interruzione è possibile selezionare una
+funzione nella seconda lista.  L'impostazione di un punto di
+interruzione crea un \d(evento stop).  Per default, gli eventi si
+applicano a tutti processi e sottoprocessi derivati dal \k(programma^^processi e sottoprocessi)
+selezionato e non solo al processo o sottoprocesso selezionato. Se si
+desidera modificare questo comportamento, usare l'opzione
+\k(Granularità) nel menu \k(Proprietà) .  Se non si è
+selezionato un programma in \k(Sottofinestra Processo), o se si è richiamato
+Arresta alla funzione da una finestra che non contiene una
+sottofinestra Processo, viene presupposto il \d(programma corrente). I
+programmi interessati vengono elencati nella riga Programmi in alto
+nella finestra a comparsa. L'evento creato dall'esecuzione di questo
+comando verrà visualizzato nella sottofinestra Evento Principale della
+\k(Sottfinestra Evento).
+
+^2^Arresto
+^$155
+\k(Pulsante Evento)
+Arresto
+
+La finestra a comparsa Arresta consente di creare un
+\d(evento stop). Un evento di arresto specifica una condizione
+nello spazio degli indirizzi del programma che provoca l'arresto
+dell'esecuzione del programma da parte del debugger.
+
+Immettere una \k(Espressione di Stop) sulla riga dell'Espressione.  Mentre
+il processo o sottoprocesso soggetto è in esecuzione, il debugger
+calcola continuamente l'espressione di arresto. Il debugger arresta il
+processo o sottoprocesso soggetto quando l'espressione diventa vera.
+
+È possibile immettere, in un campo Comandi, un'azione che il debugger
+deve eseguire nell'istante in cui scatta l'evento. L'azione è
+costituita da uno o più dei comandi disponibili tramite l'interfaccia
+a riga di comando del debugger. Il risultato dell'esecuzione dei
+comandi viene visualizzato nella \k(Sottofinestra Comando).
+
+È possibile immettere un numero nel campo Conteggio per dire al
+debugger di lasciare scattare l'evento più volte prima di attuare
+l'halt del processo o sottoprocesso.  Dopo la prima volta, il processo
+o sottoprocesso verrà arrestato ogni volta che in seguito scatterà
+l'evento.
+
+La finestra a comparsa Arresta è disponibile dal menu
+\k(Evento) di qualsiasi finestra.  Se la finestra Arresta è
+stata richiamata da una finestra contenente un \k(Sottofinestra Processo) il
+nuovo evento si applica agli eventuali \k(programmi^^processi e sottoprocessi) selezionati nella
+\k(Sottofinestra Processo).  Altrimenti l'evento si applica al
+ \d(programma corrente) o al \d(processo o sottoprocesso corrente).
+
+Per default, gli eventi si applicano a tutti i processi e i sottoprocessi
+derivati da un programma, non solo al processo o sottoprocesso
+selezionato.  Se si desidera modificare questo comportamento,
+usare la finestra a comparsa \k(Granularità). I programmi o i
+processi interessati sono elencati nella riga Programmi in alto nella
+finestra a comparsa.
+
+L'evento creato eseguendo questo comando viene visualizzato nella
+Sottofinestra Eventi Principale della \k(Sottfinestra Evento).
+
+^3^Espressione di Stop
+^$1551
+\k(Pulsante Evento)
+\k(Arresto)
+Espressione di Stop
+
+Le espressioni di arresto sono espressioni speciali accettate dal
+comando \k(Arresto). Un'espressione di arresto consiste in uno
+o più eventi di arresto, uniti dagli operatori speciali && (and) e ||
+(or).  Questi operatori sono associativi a sinistra, ma il debugger
+non garantisce l'ordine con cui vengono calcolati i loro operandi.
+Ciascun evento di arresto può essere:
+\tposizione
+\t( espr )
+\t*lvalue
+
+Ciascun tipo di evento di arresto ha una qualche azione che fa sì che
+il debugger si accorga dell'evento. Quando si verifica tale azione,
+viene valutata la "verità" dell'intera espressione di arresto. Se è
+vera, l'evento scatta nel modo normale (il debugger informa l'utente
+dell'evento ed esegue eventuali comandi associati).
+
+Una \k(posizione) è un indirizzo nel testo del processo o
+sottoprocesso in cui il debugger può impostare un punto di
+interruzione.  Quando il processo o sottoprocesso raggiunge la
+posizione specificata il debugger si accorge dell'evento. Per eventi
+di arresto di posizione che si riferiscono a nomi di funzione,
+l'espressione è vera se quella funzione è attiva. Per eventi di
+arresto di posizione che si applicano a un particolare indirizzo o a
+un numero di riga, l'espressione è vera solo quando il processo o
+sottoprocesso si trova a quell'indirizzo o riga. Quando il linguaggio
+attuale è il C++, gli eventi di arresto di posizione possono anche
+usare caratteristiche specifiche del C++.  Per maggiori dettagli,
+consultare la sezione su \k(supporto C++).
+
+"espr" può essere qualsiasi espressione valida nel \k(Linguaggio)
+attuale. Il debugger si accorge dell'evento di arresto quando uno qualsiasi
+degli identificatori compresi nell'espressione cambia di
+valore.  Allora viene calcolata l'intera espressione nel contesto del
+linguaggio attuale.
+
+"lvalue" può essere un'espressione nel linguaggio attuale che sarebbe
+valida sul lato sinistro di un'istruzione di assegnazione in quel
+linguaggio.  Il debugger si accorge di questo evento quando il
+contenuto della posizione cambia. Il cambiamento stesso rende vero
+questo tipo di evento di arresto.
+
+Espressioni di arresto più potenti possono essere create combinando
+eventi di arresto usando l'operatore speciale && (and). Ad esempio,
+per arrestare l'esecuzione nella funzione a solo quando anche la
+funzione b è attiva, immettere "stop a && b" nel campo Espressione
+della finestra a comparsa \k(Arresto). Per arrestare
+l'esecuzione quando il valore di un'espressione x diventa vero entro
+la funzione y, immettere "stop y && (x)".
+
+^3^Posizione=posizione
+^$1552
+\k(Pulsante Evento)
+\k(Arresto)
+Posizione
+
+La sintassi per una posizione è:
+\t[processo/sottoprocesso nome@][nomefile@]riga
+\to [processo/sottoprocesso nome@][nomefile@]simbolo[+-costante]
+\to indirizzo[+-costante]
+\to nome_registro
+dove "indirizzo" è un indirizzo di programma ottale o esadecimale,
+e "costante" è un decimale intero.
+
+Alcuni esempi di locazioni sono:
+    17\t\tun numero di riga nel file attuale (%file)
+    foo.c@17\tun numero di riga in qualche altro file
+    0x80801234\tun indirizzo
+    main\t\tun nome o un'etichetta di funzione
+    main+3\ttre byte dopo l'etichetta
+    p1@main\tun nome di funzione in un processo specificato
+    %loc\t\tla posizione attuale
+    %line\t\til numero di riga e il file attuale
+    %r0\t\tun registro
+    %r0+80\tun registro più un'offset
+    %pc-4\tun registro meno un'offset
+    $miavar\tuna variabile definita dall'utente
+
+^2^Segnale
+^$156
+\k(Pulsante Evento)
+Segnale
+
+La finestra a comparsa Segnale consente di creare un
+\d(evento segnale). Un evento di segnale specifica un'azione da
+eseguire quando i processi o sottoprocessi del \k(programma^^processi e sottoprocessi) selezionato
+ricevono un particolare segnale.
+
+Non è necessario creare un apposito evento per arrestare il processo o
+sottoprocesso quando riceve un segnale, dato che lo farà il debugger per
+default. Per i dettagli sull'attivazione e disattivazione di questa
+capacità, vedere \k(Ignora segnali).
+
+I segnali vengono visualizzati in una lista a scorrimento.  È
+possibile selezionare uno o più segnali dalla lista. I segnali nella
+lista sono ordinati numericamente per default. La lista può essere
+ordinata alfabeticamente selezionando l'opzione Ordina Lista per Nome.
+
+Bisogna immettere, nel campo Comando, un'azione che il debugger deve
+eseguire quando scatta l'evento.  L'azione deve essere uno o più
+comandi tra quelli disponibili tramite l'interfaccia a riga di comando
+del debugger.  I risultati dell'esecuzione dei comandi vengono
+visualizzati nella \k(Sottofinestra Comando).
+
+La finestra a comparsa Segnale è disponibile dal menu
+\k(Evento) di qualsiasi finestra.  Se la finestra Segnale è
+stata richiamata da una finestra contenente un \k(Sottofinestra Processo) il
+nuovo evento si applica agli eventuali \k(programmi^^processi e sottoprocessi) selezionati
+nella \k(Sottofinestra Processo). Altrimenti l'evento si applica al
+\d(programma corrente) o al \d(processo o sottoprocesso corrente).
+
+Per default, gli eventi si applicano a tutti i processi e i sottoprocessi
+derivati da un programma, non solo al processo o sottoprocesso
+selezionato.  Se si desidera modificare questo comportamento,
+usare la finestra a comparsa \k(Granularità). I programmi o i
+processi interessati sono elencati nella riga Programmi in alto nella
+finestra a comparsa.
+
+L'evento creato eseguendo questo comando viene visualizzato nella
+Sottofinestra Eventi Principale della \k(Sottfinestra Evento).
+
+^2^Syscall
+^$157
+\k(Pulsante Evento)
+Syscall
+
+La finestra a comparsa Chiamata si sistema consente di creare un
+\d(evento syscall). Un evento di chiamata di sistema specifica
+un'azione da eseguire quando i processi del \k(programma^^processi e sottoprocessi) selezionato
+entrano o escono da una chiamata di sistema.
+
+Le chiamate di sistema valide sono elencate in una lista a
+scorrimento, da cui si possono selezionare una o più chiamate di
+sistema. Per default, le chiamate di sistema sono elencate in ordine
+alfabetico.  La lista può essere messa in ordine numerico selezionando
+l'opzione Ordina la lista per Numero.  Il debugger esegue una halt dei
+processi e sottoprocessi interessati all'ingresso e/o all'uscita dalle
+chiamate di sistema selezionate, se sono impostate rispettivamente, le
+opzioni All'ingresso o All'uscita.
+
+È possibile immettere, in un campo Comandi, un'azione che il debugger
+deve eseguire nell'istante in cui scatta l'evento. L'azione è
+costituita da uno o più dei comandi disponibili tramite l'interfaccia
+a riga di comando del debugger. Il risultato dell'esecuzione dei
+comandi viene visualizzato nella \k(Sottofinestra Comando).
+
+È possibile immettere un numero nel campo Conteggio per dire al
+debugger di lasciare scattare l'evento più volte prima di attuare
+l'halt del processo o sottoprocesso.  Dopo la prima volta, il processo
+o sottoprocesso verrà arrestato ogni volta che in seguito scatterà
+l'evento.
+
+La finestra a comparsa Chiamata di sistema è disponibile dal menu
+\k(Evento) di qualsiasi finestra.  Se la finestra Chiamata di
+sistema è stata richiamata da una finestra contenente un
+\k(Sottofinestra Processo) il nuovo evento si applica agli eventuali \k(programmi^^processi e sottoprocessi)
+selezionati nella \k(Sottofinestra Processo).  Altrimenti l'evento si applica
+al \d(programma corrente) o al \d(processo o sottoprocesso corrente).
+
+Per default, gli eventi si applicano a tutti i processi e i sottoprocessi
+derivati da un programma, non solo al processo o sottoprocesso
+selezionato.  Se si desidera modificare questo comportamento,
+usare la finestra a comparsa \k(Granularità). I programmi, i
+processi o i sottoprocessi interessati sono elencati nella riga Programmi
+in alto nella finestra a comparsa.
+
+L'evento creato eseguendo questo comando viene visualizzato nella
+Sottofinestra Eventi Principale della \k(Sottfinestra Evento).
+
+^2^On stop
+^$158
+\k(Pulsante Evento)
+On stop
+
+La finestra a comparsa All'Arresto consente di creare una
+\d(evento onstop). Un evento all'arresto specifica un'azione da
+eseguire quando un processo o sottoprocesso interessato di arresta.
+Immettere l'azione nello spazio etichettato Comandi. L'azione deve
+essere uno o più comandi tra quelli disponibili tramite l'interfaccia
+a riga di comando del debugger.  Ogni volta che un processo o
+sottoprocesso si arresta, vengono eseguiti i comandi e vengono
+visualizzati i risultati nella \k(Sottofinestra Comando). L'arresto
+comprende l'esecuzione di un singolo passo e l'arresto per un altro
+evento del debugger (\k(Segnale), \k(Syscall) o
+\k(Arresto)).
+
+La finestra a comparsa All'Arresto è disponibile dal menu
+\k(Evento) di qualsiasi finestra.  Se la finestra All'Arresto è
+stata richiamata da una finestra contenente un \k(Sottofinestra Processo) il
+nuovo evento si applica agli eventuali \k(programmi^^processi e sottoprocessi) selezionati
+nella \k(Sottofinestra Processo).  Altrimenti l'evento si applica al
+\d(programma corrente) o al \d(processo o sottoprocesso corrente).
+
+Per default, gli eventi si applicano a tutti i processi e i
+sottoprocessi derivati da un programma, non solo al processo o
+sottoprocesso selezionato.  Se si desidera modificare questo
+comportamento, usare la finestra a comparsa \k(Granularità). I
+programmi, i processi o i sottoprocessi interessati sono elencati
+nella riga Programmi in alto nella finestra a comparsa.
+
+L'evento creato eseguendo questo comando viene visualizzato nella
+Sottofinestra Eventi Principale della \k(Sottfinestra Evento).
+
+^2^Annulla
+^$159
+\k(Pulsante Evento)
+Annulla
+
+La finestra a comparsa Annulla consente di annullare tutti i segnali
+catturati dal debugger.  Quando un segnale viene inviato a un processo
+o sottoprocesso, il debugger viene avvertito prima che il processo o
+sottoprocesso lo riceva. Annulla consente di eliminare il segnale in
+modo che il processo o sottoprocesso non lo veda.
+
+La finestra a comparsa visualizza una lista a scorrimento dei segnali
+in attesa del processo o sottoprocesso selezionato. La prossima volta
+che si esegue il processo o sottoprocesso, non riceverà il segnali
+selezionati nella lista.
+
+Per default, i segnali nella lista sono in ordine numerico. La lista
+può essere messa in ordine alfabetico selezionando l'opzione Ordina la
+lista per Nome.
+
+La finestra a comparsa Annulla è disponibile dal menu
+\k(Evento) di qualsiasi finestra. Se la finestra Annulla è
+stata richiamata da una finestra che contiene una \k(Sottofinestra Processo),
+i segnali visualizzati saranno in attesa del processo o sottoprocesso
+selezionato (se c'è) nella \k(Sottofinestra Processo). Altrimenti viene usato
+il \d(processo o sottoprocesso corrente).
+
+^2^Distruggi
+^$1510
+\k(Pulsante Evento)
+Distruggi
+
+L'opzione Distruggi invia il segnale SIGKILL ai processi interessati.
+Questo segnale non può essere catturato e provoca la terminazione dei
+processi interessati.
+
+L'opzione Distruggi è disponibile dal menu \k(Evento) di
+qualsiasi finestra.  Se si è selezionato Distruggi da una finestra che
+contiene una \k(Sottofinestra Processo), verranno interessati i processi (se
+ce ne sono) selezionati nella \k(Sottofinestra Processo).  Se non è
+selezionato nulla o se Distruggi è stata selezionata da una finestra
+che non contiene una sottofinestra Processi, viene interessato solo
+il processo attuale.
+
+^2^Kill
+^$1511
+\k(Pulsante Evento)
+Kill
+
+La finestra a comparsa Kill consente di inviare un segnale a un
+processo o sottoprocesso.  La finestra a comparsa visualizza una lista
+a scorrimento di segnali; è possibile selezionare un segnale dalla
+lista. Per default, i segnali nella lista sono in ordine numerico. La
+lista può essere messa in ordine alfabetico selezionando l'opzione
+Ordina la lista per Nome.
+
+La finestra a comparsa Kill è disponibile dal menu \k(Evento)
+di qualsiasi finestra. Se la finestra Kill è stata richiamata da una
+finestra che contiene una \k(Sottofinestra Processo), il segnale vine inviato
+ai processi e ai sottoprocessi selezionati (se ce ne sono) nella
+\k(Sottofinestra Processo). Se sono selezionati tutti i sottoprocessi di un
+processo viene chiesto se il segnale deve essere inviato al processo
+di livello superiore o a ciascuno dei processi di livello inferiore.
+Se non è selezionato niente o se la finestra Kill era stata chioamata
+da una finestra che non contiene una sottofinestra Processo, il
+segnale viene inviato al processo o sottoprocesso attuale.
+Notare che i segnali non possono essere inviati a sottoprocessi negli
+stati Sotto lwp e Sospeso
+
+^2^Ignora segnali
+^$1512
+\k(Pulsante Evento)
+Ignora segnali
+
+Per default, quando un segnale viene inviato a un processo o
+sottoprocesso il debugger intercetta (cattura) il segnale e ne
+annuncia l'esistenza. È possibile poi cancellare il segnale (con la
+finestra a comparsa \k(Annulla)) oppure eseguire il rpcesso e
+lasciare che riceva il segnale.  Se si desidera che il debugger non
+intercetti un particolare segnale, è possibile chiedergli di
+ignorarlo.
+
+La finestra a comparsa Ignora Segnali consente di specificare l'azione
+del debugger (cattura o ignora) per ciascun segnale. La finestra a
+comparsa visualizza una lista a scorrimento dei segnali con l'azione
+attuale per il processo o sottoprocesso. È possibile cambiare
+l'azione selezionando uno o più segnali nella lista. Per default, i
+segnali nella lista sono in ordine numerico. La lista può essere messa
+in ordine alfabetico selezionando l'opzione Ordina la lista per Nome.
+La lista comprende anche il nome del gestore di segnali registrato dal
+programma per ciascun segnale.
+
+La finestra a comparsa Ignora Segnali è disponibile dal menu
+\k(Evento) di qualsiasi finestra. Se la finestra Annulla è
+stata richiamata da una finestra che contiene una \k(Sottofinestra Processo),
+viene interessato il processo o sottoprocesso selezionato (se c'è)
+nella \k(Sottofinestra Processo). Altrimenti, viene interessato il
+\d(processo o sottoprocesso corrente).
+
+L'opzione Ignora Segnali non è disponibile a meno che il processo o
+sottoprocesso selezionato sia fermo.
+
+^2^Cambia
+^$1513
+\k(Pulsante Evento)
+Cambia
+
+L'opzione Cambia è disponibile nel menu \k(Evento) di
+qualsiasi finestra che contiene una \k(Sottfinestra Evento). Questa
+opzione fornisce una finestra a comparsa che consente di modificare un
+evento esistente. È disponibile solo se è selezionato un evento nella
+Sottofinestra Eventi Principale o nella Sottofinestra All'Arresto.  La
+finestra a comparsa ha l'aspetto di una delle finestre
+\k(Arresto), \k(Segnale), \k(Syscall) o
+\k(On stop), secondo il tipo di evento selezionato.  I campi
+della finestra vengono inizializzati con i valori dell'evento
+selezionato, dopodiché è possibile cambiare un campo qualsiasi.  Al
+termine, i cambiamenti verranno riportati nella Finestra Eventi.
+
+^1^Pulsante Proprietà=Proprietà
+^$16
+Pulsante Proprietà
+
+Il pulsante Proprietà consente di cambiare alcune delle proprietà
+associate alle diverse sottofinestre del debugger.  Facendo clic con
+MENU sul pulsante Proprietà appare un menu con opzioni diverse,
+secondo di quali sottofinestre sono presenti nella finestra,
+
+Se la finestra è del tipo che viene visualizzato automaticamente
+all'avviamento del debugger, il menu Proprietà contiene le seguenti
+opzioni:
+
+\t\k(Linguaggio)
+\t\k(Granularità)
+\t\k(Azione di output)
+\t\k(Percorso sorgente)
+
+Se la finestra contiene una \k(Sottofinestra Processo) il menu Proprietà
+contiene le seguenti opzioni:
+
+\t\k(Sottofinestre)
+\t\k(Granularità)
+
+Se la finestra contiene una \k(Sottofinestra Stack) il menu Proprietà
+contiene la seguente opzione:
+
+\t\k(Sottofinestre)
+
+Se la finestra contiene una \k(Sottofinestra Simbolo) il menu Proprietà
+contiene le seguenti opzioni:
+
+\t\k(Sottofinestre)
+\t\k(Simboli)
+
+Se la finestra contiene una \k(Sottofinestra Comando) il menu Proprietà
+contiene le seguenti opzioni:
+
+\t\k(Azione di output)
+\t\k(Percorso sorgente)
+\t\k(Linguaggio)
+
+Se la finestra contiene una \k(Sottofinestra Sorgente) il menu Proprietà
+contiene le seguenti opzioni:
+
+\t\k(Percorso sorgente)
+\t\k(Linguaggio)
+\t\k(Granularità)
+\t\k(Animazione)
+
+Se la finestra contiene una \k(Sottofinestra Disassemblaggio) il menu Proprietà
+contiene la seguente opzione:
+
+\t\k(Animazione)
+
+Infine, se la finestra contiene una \k(Sottfinestra Evento) il menu
+Proprietà contiene le seguenti opzioni:
+
+\t\k(Sottofinestre)
+\t\k(Granularità)
+
+L'insieme di opzioni contenute nel menu Proprietà di ciascuna finestra
+è l'unione delle opzioni di ciascuna sottofinestra contenuta in quella
+finestra.
+
+Molte delle opzioni del menu Proprietà possono anche essere impostate
+come risorse di finestra X in un file di risorse di finestra X (come
+il file .Xdefaults) o sulla riga di comando del debugger. Vedi
+\k(Personalizzazione) e \k(Richiamo del programma di messa a punto).
+
+^2^Sottofinestre
+^$161
+\k(Pulsante Proprietà)
+Sottofinestre
+
+La finestra a comparsa Sottofinestre consente di scegliere se certe
+colonne nella \k(Sottofinestra Processo), nella \k(Sottofinestra Stack), nella
+\k(Sottofinestra Simbolo) e nella \k(Sottfinestra Evento) devono andare a capo o
+vengono troncate se le informazioni che contengono non trovano posto
+nella colonna. Pre default, vengono tutte troncate.
+
+Le colonne interessate sono la colonna Comando nella
+\k(Sottofinestra Processo), le colonne Parametri e Posizione nella
+\k(Sottofinestra Stack), le colonne Nome, Tipo e Valore nella
+\k(Sottofinestra Simbolo) e le colonne Processi e Lista comandi in entrambe
+le parti della \k(Sottfinestra Evento).
+
+Questa opzione è sempre disponibile nel menu \k(Proprietà) di
+qualsiasi finestra che contiene le sottofinestre interessate.
+
+^2^Simboli
+^$162
+\k(Pulsante Proprietà)
+Simboli
+
+La finestra a comparsa Simboli consente di scegliere quale tipo di
+simboli vengono visualizzati nella \k(Sottofinestra Simbolo). Le scelte
+sono:
+
+\tGlobali\tVisualizza i simboli globali definiti nell'oggetto
+\t\tattuale (file eseguibile o libreria condivisa).
+
+\tFile\tVisualizza i simboli statici di file definiti nel
+\t\tfile attuale.
+
+\tLocali\tVisualizza le variabili locali definite nella funzione
+\tattuale.
+
+\tDebugger\tVisualizza le variabili incorporate del debugger.
+
+\tUtente\tVisualizza le variabili utente manutenute dal debugger.
+
+È possibile scegliere qualunque combinazione di queste categorie. Per
+default, vengono visualizzati i simboli locali.
+
+La finestra a comparsa Simboli è sempre disponibile, e può essere richiamata
+dal menu \k(Proprietà) di qualsiasi finestra che contiene una
+\k(Sottofinestra Simbolo). Le selezioni interessano solo la \d(set di finestre)
+di livello superiore.
+
+^2^Percorso sorgente
+^$163
+\k(Pulsante Proprietà)
+Percorso sorgente
+
+La finestra a comparsa Percorso Sorgente consente di impostare il
+percorso usato dal debugger per cercare i file sorgente.
+
+È possibile immettere più directory, una su ogni riga. È possibile
+anche modificare un gruppo di directory esistente. Le directory
+vengono ricercate nell'ordine in cui appaiono.
+
+Se si sceglie l'opzione "Percorso specifico del programma", il percorso
+verrà usato solo per il \k(programma^^processi e sottoprocessi) selezionato.  Se si sceglie l'opzione
+"Percorso globale", il  debugger cerca qualsiasi programma in quella
+lista di directory se non riesce a trovare prima il file
+nel percorso specifico del programma.
+
+Percorso Sorgente viene richiamata facendo clic con SELEZIONA su
+Percorso Sorgente nel menu \k(Proprietà) di qualsiasi finestra
+che contiene una \k(Sottofinestra Comando) o una \k(Sottofinestra Sorgente) o di
+qualsiasi finestra configurata per essere visualizzata automaticamente
+all'avviamento del debugger (vedi \k(Configurazione)). Se la finestra
+Percorso Sorgente è stata richiamata da una finestra che contiene una
+\k(Sottofinestra Processo), vengono interessati dal "Percorso Specifico del
+Programma" i programmi selezionati (se ce ne sono) nella
+\k(Sottofinestra Processo).  Altrimenti viene interessato il programma
+attuale.
+
+^2^Linguaggio
+^$164
+\k(Pulsante Proprietà)
+Linguaggio
+
+La finestra a comparsa Linguaggio consente di ignorare il linguaggio
+di default per il calcolo delle espressioni.  Il linguaggio di default
+è visualizzato nella riga intitolata "Linguaggio Sorgente Attuale". Il
+debugger usa le informazioni nel file oggetto in fase di debugging per
+determinare il linguaggio di default.  Se il file oggetto non fornisce
+questa informazione, per default il linguaggio sorgente attuale è il
+C.
+
+Quando si sceglie Nessuno per il linguaggio da usare, viene usato il
+linguaggio sorgente attuale per il calcolo delle espressioni. Se si
+sceglie C o C++, il linguaggio scelto diventa il linguaggio attuale.
+
+Il linguaggio attuale influisce sulla valutazione delle espressioni nelle
+finestre a comparsa \k(Espande), \k(Imposta valore), \k(Visualizza valore), \k(Visualizza tipo) e \k(Arresto),
+oltre che sui comandi immessi nella \k(Sottofinestra Comando).  Per i dettagli
+su come essi vengono influenzati, vedi la sezione specifica del linguaggio:
+        \k(Supporto per il linguaggio C)
+        \k(Supporto per il linguaggio C++)
+
+L'opzione Linguaggio viene richiamata facendo clic con SELEZIONA su Linguaggio
+nel menu \k(Proprietà) di qualsiasi finestra che contiene una
+\k(Sottofinestra Comando) o una \k(Sottofinestra Sorgente) o di qualsiasi finestra
+configurata per essere visualizzata automaticamente all'avviamento del
+debugger (vedi \k(Configurazione)). Il Linguaggio è una proprietà
+globale e interessa tutti i \d(set di finestre).
+
+^3^Supporto per il linguaggio C=supporto C
+^$1641
+\k(Pulsante Proprietà)
+\k(Linguaggio)
+Supporto per il linguaggio C
+
+Quando il linguaggio attuale è il C, il debugger supporta il calcolo
+di tutte le espressioni valide del C ANSI, tranne quelle che
+comportano l'espansione delle macro o le dichiarazioni dei tipi
+struttura, unione ed enumerazione. Un esempio di dichiarazione di tipo
+in un'espressione è:
+\t((struct { int i; char c; } *)p)->c = 'a';
+
+^3^Supporto per il linguaggio C++=supporto C++
+^$1642
+\k(Pulsante Proprietà)
+\k(Linguaggio)
+Supporto per il linguaggio C++
+
+Il debugger riconosce un file oggetto compilato con il Sistema
+di Compilazione C++ 2.0 o con il traduttore C++,
+cfront (Release 2.1 o 3.0), e imposta il linguaggio attuale
+(visualizzato nella finestra a comparsa \k(Linguaggio)) a C++.
+I nomi appaiono come nel sorgente C++, non come nel file oggetto.
+
+Quando il linguaggio attuale è il C++, il debugger accetta un subset
+delle espressioni C++, comprese:
+
+     o  Tutte le espressioni accettate quando il linguaggio attuale è
+        il C,
+     o  Chiamate a funzioni membro, comprese le funzioni membro
+        virtuali e le funzioni membro statiche,
+     o  Chiamate a funzioni sovraccaricate,
+     o  Espressioni che usano nomi di tipo come typedef,
+     o  Espressioni che usano funzioni operatore sovraccaricate e
+     o  Espressioni che accedono a membri di classe con un puntatore
+        "this" implicito, quando il processo o sottoprocesso viene
+        arrestato in una funzione membro di classe.
+
+Le espressioni possono essere immesse nelle finestre a comparsa
+\k(Imposta valore), \k(Visualizza valore), \k(Visualizza tipo) e \k(Arresto), oltre che nella \k(Sottofinestra Comando).
+
+Se, dato un puntatore a un oggetto di classe base con funzioni virtuali,
+il debugger può determinare che il tipo dell'oggetto puntato è una classe
+derivata dalla classe base, la finestra \k(Visualizza tipo)
+visualizza sia la classe base che la classe derivata. Anche le finestre
+\k(Visualizza valore) e \k(Espande) visualizzano
+l'oggetto in termini di tipo derivato.
+
+Nel mostrare il contenuto di una struttura, \k(Visualizza valore) e
+\k(Espande) visualizzano i membri di classe statica, con la
+notazione che essi sono statici. Notare che la \k(Sottofinestra Simbolo)
+non visualizza membri statici.
+
+Usando le finestre a comparsa \k(Arresto) or
+\k(Arresta su funzione), i punti di interruzione possono essere impostati
+su:
+
+     o  Funzioni membro di classe, compresi costruttori, distruttori
+        e funzioni di conversione,
+     o  Funzioni operatore sovraccaricate e
+     o  Funzioni sovraccaricate, usando il prototipo completo, o
+     o  Funzioni sovraccaricate, senza informazioni di prototipo.
+        In questo caso, il debugger visualizza una lista delle
+        funzioni e chiede di selezionare una o tutte le scelte.
+
+Un \d(evento stop) può essere creato anche su una specifica
+combinazione di oggetto e funzione membro, usando la sintassi
+"puntatore->funzione" o "oggetto.funzione".  Il debugger arresta il
+processo o sottoprocesso all'ingresso della funzione solo se il
+puntatore "this" corrisponde all'oggetto specificato.  Se la funzione
+è virtuale, il debugger imposta il punto di interruzione sulla
+funzione appropriata. Esempi delle espressioni che possono essere
+immesse nella finestra \k(Arresto) sono:
+        C::f(int)
+        C::C
+        C::~C
+        C::operatore int()
+        C::operatore+
+        ptr->f(char *)
+
+^2^Granularità
+^$165
+\k(Pulsante Proprietà)
+Granularità
+
+La finestra a comparsa Granularità consente di specificare il
+comportamento del debugger rispetto ai programmi, ai processi e ai
+sottoprocessi.
+
+Un \d(set di finestre) ha sia un \d(processo o sottoprocesso corrente) che un
+\d(programma corrente) (il programma attuale è sempre il programma di
+livello superiore del processo o sottoprocesso attuale). Su quale si
+staoperando in ogni dato istante dipende da quale opzione è
+selezionata tra "Solo Sottoprocesso", "Processo di Livello Superiore"
+o "Programma di Livello Superiore".  Per default, quasi tutti i
+comandi (\k(Passo-Passo), \k(Visualizza valore), ecc.) si applicano
+al sottoprocesso o al processo se questo non ha sottoprocessi, ma i
+comandi che creano eventi si applicano al programma.  Impostando gli
+eventi nel programma invece che nel processo o nel sottoprocesso, se
+si deve ricreare il programma o se il processo si sdoppia, il nuovo
+processo erediterà tutti gli eventi definiti in quello vecchio. Se si
+imposta un evento solo nel processo, tutti i sottoprocessi creati da
+quel processo ereditano l'evento, ma se il processo si sdoppia, il
+nuovo processo non lo eredita, e l'evento scomparirà quando il
+processo muore.  Se si imposta un evento in uno specifico
+sottoprocesso, non verrà impostato in nessun altro processo o
+sottoprocesso, e scomparirà all'uscita dal sottoprocesso. È possibile
+impostare la granularità dei comandi di evento separatamente dalla
+granularità degli altri comandi.  L'impostazione della granularità per
+gli altri comandi si applica anche alle selezioni nella
+\k(Sottofinestra Processo).
+
+I comandi che creano eventi sono \k(Arresto),
+\k(Arresta su funzione), \k(Imposta watchpoint), \k(Imposta punto di interruzione),
+\k(Cancella punto di interruzione), \k(Segnale), \k(Syscall), e
+\k(On stop).
+
+L'opzione Granularità viene richiamata facendo clic con SELEZIONA su
+Granularità nel menu \k(Proprietà) di qualsiasi finestra che
+contiene una \k(Sottofinestra Processo), una \k(Sottofinestra Sorgente) o una
+\k(Sottfinestra Evento) o di qualsiasi finestra configurata per essere
+visualizzata automaticamente all'avviamento del debugger
+(vedi \k(Configurazione)). La Granularità selezionata interessa solo
+il \d(set di finestre) di livello superiore.
+
+^2^Azione di output
+^$166
+\k(Pulsante Proprietà)
+Azione di output
+
+La finestra a comparsa Azione di Output consente di specificare le
+azioni che il debugger deve eseguire quando si verifica un evento,
+quando un sottoprocesso cambia stato o quando un processo o
+sottoprocesso sotto controllo genera output.  La finestra contiene tre
+gruppi di pulsanti, uno per gli eventi del processo e dell'utente, uno
+per i cambiamenti di stato del sottoprocesso e uno per l'I/O del
+processo.
+
+Le scelte disponibili per gli eventi e l'I/O del processo sono:
+
+    o Apri e Solleva: Il debugger fa apparire una finestra che
+      contiene una \k(Sottofinestra Comando), dove viene visualizzata la
+      notifica dell'evento o l'output del processo nella
+      \k(Sottofinestra Trascrizione).
+
+    o Bip
+
+    o Casella di avviso: Il debugger visualizza un messaggio che
+      informa sull'accaduto.
+
+    o Nessuna azione: Il debugger non fa niente di speciale.
+
+Per default, il debugger emette un bip quando si verifica un evento,
+dato che la notifica dell'evento viene anche visualizzata in fondo
+alle finestre principali.
+
+Quando un processo il cui output è sotto cattura (vedi
+\k(Crea)) genera output, l'azione di default è Apri e
+Solleva (il debugger solleva la Sottofinestra Comandi per mostrare
+l'output).  Notare che questo non si applica ai processi il cui output
+non è sotto cattura; il debugger non è in grado di dire quando quei
+processi generano output.
+
+Un sottoprocesso può cambiare stato durante la sua vita. Ad esempio,
+un sottoprocesso multiplexato può essere programmato su un
+\d(LWP) e può in seguito essere ripreso da un altro
+\d(LWP), oppure può essere sospeso da un altro
+sottoprocesso e continuato in seguito da un altro ancora.
+
+Le scelte per le azioni di cambiamento di stato di un sottoprocesso
+sono:
+
+    o Bip
+
+    o Stop: I sottoprocessi interessati vengono arrestati, e devono
+      essere riavviati in modo esplicito.
+
+Queste azioni, a differenza di quelle per gli eventi e l'I/O dei
+processi, sono cumulative. È possibile cioè selezionare sia Bip che
+Stop. Per default, sono selezionate entrambe, e nei vari scenari
+vengono eseguite le seguenti azioni:
+
+    o Viene creato un nuovo sottoprocesso:  bip, viene visualizzato il
+        messaggio di creazione del sottoprocesso, il sottoprocesso
+        creatore viene arrestato e, se il sottoprocesso nuovo non è
+        stato creato con l'indicatore THR_SUSPENDED viene arrestato
+        anch'esso, altrimenti il sottoprocesso sospeso non è eseguibile
+        fino a quando viene esplicitamente rimesso in esecuzione.
+
+    o Un sottoprocesso passa sotto LWP: bip, viene visualizzato il
+      messaggio sotto LWP.
+
+    o Un sottoprocesso sotto LWP preleva un LWP: bip, viene
+      visualizzato il messaggio prelievo LWP e il sottoprocesso viene
+      arrestato.
+
+    o Un sottoprocesso viene sospeso: bip, viene visualizzato il
+      messaggio sospeso.
+
+    o Un sottoprocesso sospeso viene rimesso in esecuzione: bip, viene
+      visualizzato il messaggio continua, il sottoprocesso viene
+      arrestato.
+
+    o Un sottoprocesso esce: bip, viene visualizzato il messaggio
+      uscita.
+
+L'opzione Azione di Output viene richiamata facendo clic con SELEZIONA su
+Azione di Output nel menu \k(Proprietà) di qualsiasi finestra
+che contiene una \k(Sottofinestra Comando) o di qualsiasi finestra
+configurata per essere visualizzata automaticamente all'avviamento
+del debugger (vedi \k(Configurazione)).
+
+^2^Animazione
+^$167
+\k(Pulsante Proprietà)
+Animazione
+
+La finestra a comparsa Animazione consente di controllare il tempo tra
+i passi mentre un processo o sottoprocesso è in animazione. Un
+processo o sottoprocesso viene messo in animazione selezionando
+l'opzione \k(Anima sorgente) nel menu \k(Controllo) di una
+finestra che contiene una \k(Sottofinestra Sorgente) o l'opzione
+\k(Anima disassemblaggio) nel menu \k(Controllo) di una finestra che
+contiene una \k(Sottofinestra Disassemblaggio). Quando il processo o sottoprocesso è
+animato, il debugger continua l'esecuzione a passi del processo o
+sottoprocesso, evidenziando ogni istruzione mano a mano che viene
+eseguita. Se l'esecuzione a passi è troppo veloce per poterla seguire,
+è possibile rallentarla specificando un ritardo tra i passi.
+
+La finestra a comparsa visualizza un cursore a scorrimento con un
+intervallo di ritardo da 0 a 1 secondo. Posizionando il cursore tra le
+due estremità si introduce un ritardo di una frazione di secondo.
+
+Notare che il debugger impiega un pò di tempo per eseguire i passi
+lungo il processo o sottoprocesso e per aggiornare lo schemo. A
+seconda delle caratteristiche del sistema, questo tempo può essere
+precettibile anche senza introdurre ritardi. Il ritardo specifica solo
+un tempo minimo tra i passi. Se il tempo tra i passi è maggiore del
+ritardo specificato, il debugger non aggiunge alcun ritardo.
+

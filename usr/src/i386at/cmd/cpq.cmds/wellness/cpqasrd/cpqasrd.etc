@@ -1,0 +1,39 @@
+#ident	"@(#)cpq.cmds:wellness/cpqasrd/cpqasrd.etc	1.2"
+#
+# ASR daemon start/stop script
+#
+# LOGFILE is where all the messages from the ASR daemon will go.
+#
+LOGFILE=/var/spool/compaq/asr/cpqasrd.log
+ 
+if [ ! -d /var/spool/compaq/asr ]
+then
+       mkdir -p /var/spool/compaq/asr
+fi
+
+PATH=/etc:/bin:/usr/bin:/usr/sbin:/usr/bin/compaq/asr; export PATH 
+
+case "$1" in
+'start')
+	ps -e | grep cpqasrd > /dev/null 2>&1
+	if [ $? -eq 0 ]
+	then
+		exit 0
+	fi
+	cd /usr/bin/compaq/asr
+	cpqasrd > ${LOGFILE} 2>&1
+	echo ""
+	;;
+
+'stop')
+	kill `/usr/bin/ps -e | /usr/bin/sed -n \
+		-e'/ cpqasrd$/s/[^0-9 \t].*//p'` 2>/dev/null
+	;;
+
+*)
+	echo "Usage: $0 [ start | stop ]"
+	exit 1
+	;;
+esac
+
+exit 0

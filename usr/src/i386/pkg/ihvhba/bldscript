@@ -1,0 +1,364 @@
+#!/usr/bin/sh
+#ident	"@(#)pkg.ihvhba:i386/pkg/ihvhba/bldscript	1.31"
+
+abort()
+{
+cd $BASE
+rm -fr $TMPDIR/hba.$$ $TMPDIR/$DRIVER $BASE/tmp $TMPDIR $TMPDIR/$$.stubs
+umount /mnt 2>/dev/null
+exit ${1}
+}
+
+
+Populate_Drv_Image()
+{
+	stub=
+	if [ "$1" ] 
+	then
+		stub=true
+		L_DRIVER=$1
+	else
+		L_DRIVER=$DRIVER
+	fi
+
+	[ ! -d $BASE/tmp/$L_DRIVER ] && mkdir -p $BASE/tmp/$L_DRIVER 
+
+	cp $ROOT/usr/src/$WORK/uts/io/hba/$DRIVER/$L_DRIVER.cf/[MSd]* \
+		$BASE/tmp/$L_DRIVER || abort 1
+	sed "s/^${L_DRIVER}	N/${L_DRIVER}	Y/" \
+		$ROOT/usr/src/$WORK/uts/io/hba/$DRIVER/$L_DRIVER.cf/System > \
+		$BASE/tmp/$L_DRIVER/System || abort 1
+
+	if [ ! "$stub" ]
+	then
+		cp $ROOT/usr/src/$WORK/uts/io/hba/$DRIVER/$DRIVER.h  \
+			$BASE/tmp/$DRIVER || abort 1
+		# For iiop, copy Driver.o.poll to build module
+		# and Driver.o into the package image.
+		if [ "$DRIVER" = "iiop" ] 
+		then
+			cp $ROOT/usr/src/$WORK/uts/io/hba/iiop/iiop.cf/Driver.o.poll \
+				$BASE/tmp/$DRIVER/Driver.o || abort 1
+			cp $ROOT/usr/src/$WORK/uts/io/hba/iiop/iiop.cf/Space.c.poll \
+				$BASE/tmp/$DRIVER/Space.c || abort 1
+		else
+			cp $ROOT/$MACH/etc/conf/pack.d/$DRIVER/Driver.o \
+				$BASE/tmp/$DRIVER || abort 1
+		fi
+	else
+		cp $ROOT/usr/src/$WORK/uts/io/hba/$DRIVER/$L_DRIVER.cf/Driver.o \
+			$BASE/tmp/$L_DRIVER || abort 1
+	fi
+}
+
+Build_Driver()
+{
+	NAME=$1
+	if [ "$2" = "stub" ]
+	then
+		TYPE=stub
+	else	
+		TYPE=
+	fi
+
+	echo "\n\n### Creating ${TYPE} module for $NAME ..."
+
+	####
+	# Build the loadable module
+	####
+	rm -rf $TMPDIR/$NAME
+	mkdir -p $TMPDIR/$NAME/$MACH/etc/conf/pack.d \
+		$TMPDIR/$NAME/$MACH/etc/conf/cf.d \
+		$TMPDIR/$NAME/$MACH/etc/conf/ftab.d \
+		$TMPDIR/$NAME/$MACH/etc/conf/mtune.d \
+		$TMPDIR/$NAME/$MACH/etc/conf/mtune.d/$NAME
+	cp $ROOT/$MACH/etc/conf/ftab.d/kernel $TMPDIR/$NAME/$MACH/etc/conf/ftab.d
+	cd $BASE/tmp/$NAME
+	$TOOLS/etc/conf/bin/${PFX}idinstall -R$TMPDIR/$NAME/$MACH/etc/conf -ak $NAME
+	if [ $? -ne 0 ]
+	then
+		echo "ERROR: idinstall of $NAME failed. Aborting." >&2
+		rm -fr $TMPDIR/$NAME
+		abort 1
+	fi
+
+	# Set -I to cross-environment include directory so the cross
+	# environment header files are used for building driver modules.
+	ROOT=$TMPDIR/$NAME $TOOLS/etc/conf/bin/idbuild \
+		-I $TOOLS/usr/include -M $NAME
+	if [ $? -ne 0 ]
+	then
+		echo "ERROR: idbuild of $NAME failed. Aborting." >&2
+		rm -fr $TMPDIR/$NAME
+		abort 1
+	fi
+	cp $TMPDIR/$NAME/$MACH/etc/conf/mod.d/$NAME $BASE/tmp/$NAME
+	chmod 755 $BASE/tmp/$NAME/*
+	if [ "$DRIVER" = "iiop" ]
+	then
+		cp $ROOT/usr/src/$WORK/uts/io/hba/iiop/iiop.cf/Driver.o \
+			$BASE/tmp/iiop/Driver.o
+		cp $ROOT/usr/src/$WORK/uts/io/hba/iiop/iiop.cf/Space.c \
+			$BASE/tmp/iiop/Space.c
+		cp $ROOT/usr/src/$WORK/pkg/ihvhba/iiop/atup.space.c \
+			$BASE/tmp/iiop/atup.space.c
+		rm -f $BASE/tmp/iiop/Space.c.poll
+	else
+		rm $BASE/tmp/$NAME/Driver.o
+	fi
+	### Don't want System and Master file in archive
+	mkdir $TMPDIR/${NAME}_tmp
+	mv $BASE/tmp/$NAME/System $TMPDIR/${NAME}_tmp/System
+	rm $BASE/tmp/$NAME/Master 
+	rm -fr $TMPDIR/$NAME
+
+	if [ "$2" != "stub" ]
+	then
+		echo "6:1:$NAME:$NAME" >$BASE/tmp/$NAME/loadmods
+		echo $NAME >>$TMPDIR/hbaflop/etc/modules
+	else
+		echo "6:1:$STUB:$STUB" >>$BASE/tmp/$NAME/loadmods
+	fi
+}
+
+trap "abort 1" 1 2 3 6 15
+
+#
+### Check if this is being run from the cross-environment
+#
+type i386cc 2>&1 >/dev/null
+if [ $? -ne 0 ]
+then
+	echo "`basename $0` must be run from the cross environment" >&2
+	exit 1
+fi
+
+
+BASE=$ROOT/usr/src/$WORK/pkg/ihvhba
+if [ "`pwd`" != "$BASE" ]
+then
+	echo "You must run this script from $BASE." >&2
+	exit 1
+fi
+
+TMPDIR=${TMPDIR:=/tmp}
+TMPDIR=${TMPDIR}/hba.$$
+[ ! -d $TMPDIR ] && mkdir -p ${TMPDIR}
+
+WRT=$ROOT/usr/src/$WORK/sysinst/cmd/wrt
+BZIP=$ROOT/usr/src/$WORK/sysinst/bin/bzip
+
+echo "\nThe packaging script will now package and transfer the packages"
+echo "(which includes the files you have populated) into $TMPDIR/hbaflop. It"
+echo "will then format the floppy of your choice and transfer the files to"
+echo "the floppy. You must be root user. Please hit ENTER to continue. \c"
+read x
+ID=`id | cut -d"(" -f2 | cut -d")" -f1`
+if [ "$ID" != "root" ]
+then
+	echo "You are not root user. After becoming root user run the script" >&2
+	echo "again." >&2
+	exit 1
+fi
+
+
+# Clean up possible previous files
+rm -rf $TMPDIR/hba.$$ $BASE/tmp 2>&1 >/dev/null
+
+CONF=$TMPDIR/hbaflop/etc/conf/mod.d
+mkdir -p $CONF
+D=`date '+%D'`
+
+# $REL should be set and exported in :mkpkg. If not, use RELEASE.
+[ "$REL" ] || REL=$RELEASE
+LOADNAME=${LOADNAME:="UnixWare 2.01 Host Bus Adapter Drivers"}
+
+# For each driver to be included on HBA floppy
+if  [ $# -eq 0 ]
+then
+	LIST=`ls`
+else
+	LIST=$*
+fi
+
+# Keep track of the fact that a pkg was build  
+COUNT=0	
+
+for DRIVER in $LIST
+do
+	cd $BASE
+	####
+	# Do for subdirectories representing packages
+	####
+	if [ -f $BASE/$DRIVER/pkginfo ] 
+	then
+		grep "CATEGORY=stub" $BASE/$DRIVER/pkginfo 2>&1 >/dev/null
+		[ $? -eq 0 ] && continue
+	else
+		continue
+	fi
+	MODULE_LIST="$MODULE_LIST $DRIVER"
+	PKG_LIST="$PKG_LIST $DRIVER"
+
+	# Copy necessary files for driver package 
+	Populate_Drv_Image
+
+	# Build module
+	Build_Driver $DRIVER
+
+	# If stubs exist, include them in the loadmods file for this driver.
+	if [ -f $BASE/$DRIVER/stubs ]
+	then
+		for STUB in `cat $BASE/$DRIVER/stubs`
+		do
+			echo $STUB >>$TMPDIR/$$.stubs
+			MODULE_LIST="$MODULE_LIST $STUB"
+			Populate_Drv_Image $STUB
+			Build_Driver $STUB stub
+		done
+	fi
+done
+
+cd $BASE
+if [ "$MODULE_LIST" = "" ]
+then
+	echo "`basename $0`: No valid drivers were selected.  Aborting" >&2
+	abort 1
+fi 
+
+####
+# Move all modules out of the tmp directory so they don't get
+# archived with the rest of the package stuff.  We'll create
+# an individual archive for each of the modules so that less time
+# is taken to unwind them during system installation.
+####
+for MODULE in $MODULE_LIST
+do
+	mkdir -p $TMPDIR/tmp/$MODULE
+	echo "\n### Creating $MODULE module archive ..."
+	mv $BASE/tmp/$MODULE/$MODULE $TMPDIR/tmp/$MODULE/$MODULE
+	cd $TMPDIR
+	find tmp -type f -print | cpio -oLD -H crc >$TMPDIR/$$.out 2>/dev/null
+
+	####
+	# Zip the module but wait to wrt it to $BASE/tmp image until
+	# after we've created the package archive since we don't want
+	# the module included in the package archive.
+	####
+	$BZIP -s32k $TMPDIR/$$.out >$TMPDIR/${MODULE}.z.$$
+	rm -fr $TMPDIR/tmp/$MODULE
+	cd $BASE
+done
+	  
+
+####
+# Create compressed cpio archive of files excluding 
+# all package information and driver module files. 
+####
+find tmp -type f -print | cpio -oLD -H crc >$TMPDIR/$$.out 2>/dev/null
+$BZIP -s32k $TMPDIR/$$.out >$TMPDIR/$$.out.z
+$WRT -s $TMPDIR/$$.out.z >$BASE/tmp/hba.cpio.z
+
+COUNT=0
+for DRIVER in $MODULE_LIST
+do
+	[ -f $TMPDIR/$$.stubs ] && grep $DRIVER $TMPDIR/$$.stubs 2>&1 >/dev/null
+	if [ $? -ne 0 ]
+	then
+		# Not stub module
+		LASTREAL=$DRIVER
+		$WRT -s $TMPDIR/$DRIVER.z.$$ >$BASE/tmp/$DRIVER/mod.cpio.z
+		cp $TMPDIR/${DRIVER}_tmp/System $BASE/tmp/$DRIVER/System
+		cp $ROOT/usr/src/$WORK/uts/io/hba/$DRIVER/$DRIVER.cf/Master \
+			$BASE/tmp/$DRIVER/Master
+		cp $ROOT/usr/src/$WORK/uts/io/hba/$DRIVER/$DRIVER.cf/Drvmap \
+			$BASE/tmp/$DRIVER/Drvmap
+		echo "\n\nCreating package \"$DRIVER\" image... "
+
+		# Not stub module, create a package for it.
+		cd $BASE/$DRIVER 
+		if [ -f $ROOT/usr/src/$WORK/cmd/pkgtools/oampkg/pkgmk/pkgmk ]
+		then
+			PKGMK=$ROOT/usr/src/$WORK/cmd/pkgtools/oampkg/pkgmk/pkgmk
+		else
+			PKGMK=/usr/bin/pkgmk
+		fi
+		$PKGMK -p "$REL $D" -ai386 -r $BASE -f prototype \
+			-l2800 -B512 -d $TMPDIR/hbaflop
+
+		if [ $? -ne 0 ]
+		then
+			echo "`basename $0`: pkgmk failed.  Aborting." >&2
+			abort 1
+		fi 
+
+		####
+        	# If this is not the first package being created, clear up space
+	        # on the package image by creating a link to the first package's
+	        # compressed cpio archive and link all duplicate package information
+	        # files.
+		####
+	        if [ $COUNT -eq 0 ]
+	        then
+	                FIRSTPKG=$DRIVER
+	       	        COUNT=1
+		else
+                	ln $TMPDIR/hbaflop/$FIRSTPKG/root/tmp/hba.cpio.z \
+                        	$TMPDIR/hbaflop/$DRIVER/root/tmp/hba.cpio.z || exit 1
+	        fi
+	else
+		# This is a stub module
+		mkdir -p $TMPDIR/hbaflop/$DRIVER/root/tmp/$DRIVER
+		$WRT -s $TMPDIR/$DRIVER.z.$$ > \
+			$TMPDIR/hbaflop/$DRIVER/root/tmp/$DRIVER/mod.cpio.z
+	fi
+
+	cat $BASE/tmp/$DRIVER/loadmods >>$TMPDIR/hbaflop/etc/loadmods
+	cd $BASE
+
+done
+
+
+echo "$LOADNAME" >$TMPDIR/hbaflop/etc/load.name
+
+DESC1="`devattr diskette1 desc`"
+if [ $? -ne 0 ]
+then
+	echo "ERROR: No diskette1 drive defined in /etc/device.tab . Aborting."
+	abort 1
+fi
+
+DESC2="`devattr diskette2 desc 2>/dev/null"
+if [ $? -ne 0 ]
+then
+	echo "Place floppy in $DESC1 and press ENTER"
+	read X
+	ans=diskette1
+else
+
+	LABEL="Diskette Drive Selection"
+	PROMPT="Select which floppy drive you want the IHV HBA drivers placed on" 
+	DEFAULT="diskette1"
+	HELP="You must enter one of the choices"
+	ans=`ckitem -m1 -W75 -n -l "$LABEL" -p "$PROMPT" -h "$HELP" \
+		-d "$DEFAULT" "diskette1" "diskette2"` || abort 1
+fi
+echo "\nNow making a filesystem on the floppy."
+`devattr "$ans" mkfscmd`
+
+echo "mount -Fs5 `devattr $ans bdevice` /mnt"
+mount -Fs5 `devattr $ans bdevice` /mnt 
+if [ $? != 0 ]
+then
+	echo "mount failed, exiting .." >&2
+	abort 1
+fi
+cd $TMPDIR/hbaflop
+echo
+echo Now transferring package contents to floppy filesystem.
+find . -print | cpio -pmud /mnt
+sync
+sync
+umount /mnt
+echo The packaging is complete.
+abort 0

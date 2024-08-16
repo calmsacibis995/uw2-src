@@ -1,0 +1,44 @@
+#ident	"@(#)olpkg.oam:dtxtfonts/preremove	1.19"
+
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+#
+#       Graphics Supplemental Fonts
+#
+
+PKGMSG=${PKG}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+NAME="Graphics Supplemental Fonts"
+pfmt -s nostd -g ${PKGMSG}:51 "\n\tRemoving\n\t%s\n\tpackage...\n\n" $NAME 2>&1
+
+#
+# update the fonts.dir file
+#
+/usr/X/bin/mkfontdir /usr/X/lib/fonts/misc
+/usr/X/bin/mkfontdir /usr/X/lib/fonts/75dpi
+/usr/X/bin/mkfontdir /usr/X/lib/fonts/100dpi
+
+#
+# re-run xset if the package is removed will in graphics
+#
+[ "$TERM" = "xterm" ] && LD_LIBRARY_PATH=/usr/X/lib /usr/X/bin/xset fp rehash >/dev/null 2>&1
+
+exit 0

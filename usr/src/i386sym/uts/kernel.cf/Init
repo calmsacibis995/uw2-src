@@ -1,0 +1,30 @@
+#ident	"@(#)kern-i386sym:kernel.cf/Init	1.12"
+#ident	"$Header: $"
+swap::sysinit:/sbin/swap -a /dev/dsk/wd0s1 >/dev/console 2>&1
+cr::sysinit:/sbin/ckroot >/dev/console 2>&1
+ck::sysinit:/sbin/setclk >/dev/console 2>&1
+mm::sysinit:/etc/conf/bin/idmodreg >/dev/null 2>&1
+ldmd::sysinit:/etc/conf/bin/idmodload >/dev/console 2>&1
+ap::sysinit:/sbin/autopush -f /etc/ap/chan.ap
+bchk::sysinit:/sbin/bcheckrc </dev/console >/dev/console 2>&1
+key::sysinit:/sbin/sh -c '[ -x /sbin/keyadm ] && /sbin/keyadm -s' >/dev/console 2>&1
+onl::sysinit:/sbin/psradm -n -a
+bu::sysinit:/etc/conf/bin/idrebuild reboot </dev/console >/dev/console 2>&1
+me::sysinit:/etc/conf/bin/idmkenv >/dev/console 2>&1
+xdc::sysinit:/sbin/sh -c 'if [ -x /etc/rc.d/es_setup ] ; then /etc/rc.d/es_setup ; fi' >/dev/console 2>&1
+ia::sysinit:/sbin/creatiadb </dev/console >/dev/console 2>&1
+is:2:initdefault:
+bd:56:wait:/etc/conf/bin/idrebuild </dev/console >/dev/console 2>&1
+r0:0:wait:/sbin/rc0 off >/dev/console 2>&1 </dev/console
+r1:1:wait:/sbin/rc1 >/dev/console 2>&1 </dev/console
+r2:23:wait:/sbin/rc2 >/dev/console 2>&1 </dev/console
+r3:3:wait:/sbin/rc3  >/dev/console 2>&1 </dev/console
+r5:5:wait:/sbin/rc0 firm >/dev/console 2>&1 </dev/console
+r6:6:wait:/sbin/rc0 reboot >/dev/console 2>&1 </dev/console
+sd:0:wait:/sbin/uadmin 2 0 >/dev/console 2>&1 </dev/console
+fw:5:wait:/sbin/uadmin 2 2 >/dev/console 2>&1 </dev/console
+rb:6:wait:/sbin/uadmin 2 1 >/dev/console 2>&1 </dev/console
+li:23:wait:/usr/bin/ln /dev/systty /dev/syscon >/dev/null 2>&1
+sc:234:respawn:/usr/lib/saf/sac -t 300
+co:12345:respawn:/usr/lib/saf/ttymon -g -p "Console Login: " -d /dev/console -l console -m ldterm
+d2:23:once:/sbin/dinit >/dev/console 2>&1 </dev/console

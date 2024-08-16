@@ -1,0 +1,897 @@
+#ident\t"@(#)dthelp:Admin.Tools/Printer_Setup.hlp       1.21"
+^*version^1
+^*title^Configuration des imprimantes
+^:Conf_imprim
+^*width^70
+^+DesktopMgr/help.defs
+^?Configuration des imprimantes
+^0^Configuration des imprimantes
+^$10
+Configuration des imprimantes
+
+L'option Configuration des imprimantes vous permet d'ajouter, de
+supprimer, de partager, de contrôler des imprimantes ou d'en modifier
+les propriétés.
+
+\to\t\k(Ajouter une imprimante locale^^Ajout d'une imprimante locale) (\d(en série^imprimante en série) ou \d(parallèle^imprimante parallèle))
+\to\t\k(Ajouter une imprimante UNIX à distance^^Ajout d'une imprimante UNIX à distance)
+\to\t\k(Ajouter une imprimante NetWare à distance^^Ajout d'une imprimante NetWare à distance)
+\to\t\k(Assigner une imprimante par défaut^^Affectation d'une imprimante par défaut)
+\to\t\k(Modifier les propriétés d'une imprimante^^Changement des caractéristiques d'une imprimante)
+\to\t\k(Connecter une imprimante locale à un serveur d'impression NetWare^^Connexion d'une imprimante locale à un serveur d'impression NetWare)
+\to\t\k(Contrôler les imprimantes locales et à distance^^Contrôle d'une imprimante)
+
+\to\t\k(Supprimer une imprimante^^Suppression d'une imprimante)
+\to\t\k(Déconnecter une imprimante locale d'un serveur d'impression NetWare^^Déconnexion d'une imprimante locale d'un serveur d'impression NetWare)
+\to\t\k(Copier une icône d'imprimante dans un dossier^^Copie de l'icône d'une imprimante dans un dossier)
+\to\t\k(Définir les droits d'accès des utilisateurs locaux^^Définition de l'accès des utilisateurs locaux)
+\to\t\k(Définir les droits d'accès des utilisateurs à distance^^Définition de l'accès des systèmes à distance)
+\to\t\k(Afficher les propriétés des imprimantes^^Visualisation des caractéristiques d'une imprimante)
+
+Pour plus d'informations sur l'impression d'un fichier, sur la
+vérification et sur la modification des requêtes d'impression, voir
+\k(Utilisation de votre imprimante^dtadmin/printuse.hlp^Utilisation de votre imprimante).
+
+Voir également :
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+\s(Utilisation de Configuration des imprimantes^dhelp "pe.fr" ownerhb "Définition et configuration des imprimantes" "Utilisation de Configuration des imprimantes" || helpLinkErr)
+\s(Présentation du service d'impression LP^dhelp as sysag "Providing Print Services" "" || helpLinkErr)
+
+^1^Ajout d'une imprimante locale
+^$20
+Ajout d'une imprimante locale
+
+Pour pouvoir ajouter une imprimante locale à votre système, vous devez
+avoir \k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations).
+
+Pour ajouter une imprimante locale dans votre système, procédez comme
+suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur Imprimante=>Ajouter imprimante locale. La
+  \tfenêtre "Configuration des imprimantes : Ajouter imprimante
+  \tlocale" s'affiche ; elle comprend les champs suivants :
+
+  \to\tNom de l'imprimante : - Entrez le nom que vous souhaitez
+  \t \taffecter à l'imprimante locale attachée à votre système.
+
+  \to\tImprimante : - Pour vous déplacer au sein de la liste
+  \t \trépertoriant les types d'imprimantes, utilisez la barre de
+  \t \tdéfilement ; cliquez sur le type correspondant à votre
+  \t \timprimante.
+
+  \to\tType de connexion : - Cliquez sur \d(en série^imprimante en série)
+  \t \tou sur \d(parallèle^imprimante parallèle) selon le type de port
+  \t \tauquel l'imprimante est connecté.
+
+  \t \tRemarque : lorsque vous connectez une imprimante directement à
+  \t \tvotre ordinateur, les câbles et les connecteurs utilisent une
+  \t \tinterface série ou parallèle. Si vous ne savez pas si vous
+  \t \tdisposez d'une timprimante parallèle ou en série, reportez-vous
+  \t \tau manuel livré avec l'imprimante.
+
+  \t \tSi vous sélectionnnez En série, cliquez sur Configuration en
+  \t \tsérie pour définir les options suivantes :
+
+  \t \t-\tDébit en bauds - Cliquez sur la valeur correspondant à la
+  \t \t \tvitesse de votre imprimante. Par défaut, ce champ affiche la
+  \t \t \tvaleur 9600.
+
+  \t \t-\tParité - Cliquez sur la parité adéquate. Le système utilise
+  \t \t \t\d(parité) pour procéder à la détection des erreurs.
+  \t \t \tPar défaut, ce champ est paramétré sur Aucune.
+
+  \t \t-\tBits d'arrêt - Cliquez sur les bits d'arrêt de votre choix.
+  \t \t \tPar défaut, ce champ est paramétré sur 1.
+
+  \t \t-\tTaille des caractères - Cliquez sur la taille de caractères
+  \t \t \tappropriée. Par défaut, ce champ est paramétré sur la valeur 8.
+
+  \to\tPort : - Si vous ajoutez une imprimante série, cliquez sur COM1,
+  \t \tCOM2 ou sur Autre. Si vous ajoutez une imprimante parallèle,
+  \t \tcliquez sur LPT1, LPT2 ou sur Autre.
+
+  \t \tSi vous sélectionnez Autre, une zone de texte Périphérique
+  \t \ts'affiche. Entrez le \d(chemin d'accès) du périphérique auquel
+  \t \tl'imprimante est connectée.
+
+  \to\tEnvoyer courrier si incident au niveau de l'imprimante : -
+  \t \tCliquez sur Oui si vous voulez être avisé de tout incident
+  \t \tsurvenant au niveau de l'imprimante via un courrier
+  \t \télectronique, ou sur Non si vous ne souhaitez recevoir aucun
+  \t \tmessage.
+
+  \to\tImprimer bannière par défaut : - Cliquez sur Oui si vous voulez
+  \t \tque le système imprime une bannière par défaut, ou sur Non dans
+  \t \tle cas contraire.
+
+  \to\tAutoriser remplacement de la bannière : - Cliquez sur Oui si
+  \t \tvous voulez que les autres utilisateurs aient la possibilité de
+  \t \tremplacer la bannière par défaut, ou sur Non dans le contraire.
+
+  \to\tConfiguration facultative : - Cliquez sur ce bouton si vous
+  \t \tvoulez associer à votre imprimante les options supplémentaires
+  \t \tsuivantes :
+
+  \t \t-\tLongueur de page
+
+  \t \t-\tLargeur de page
+
+  \t \t-\tPas des caractères
+
+  \t \t-\tInterligne
+
+  \t \tA chacune de ces options sont associées une valeur numérique et
+\t \tune unité. Cette unité peut être exprimée en pouces, en
+\t \tcentimètres ou en caractères.
+
+4.\tCliquez sur Ajouter. Une icône d'imprimante s'affiche dans la
+  \tfenêtre "Configuration des imprimantes".
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser afin de
+  \trestituer les paramètres affectés à l'origine à l'ensemble de ces
+  \toptions, ou sur Annuler afin de refermer la fenêtre sans ajouter
+  \td'imprimante.
+
+Voir aussi : 
+\k(Copie de l'icône d'une imprimante dans un dossier)
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^1^Ajout d'une imprimante UNIX à distance
+^$30
+Ajout d'une imprimante UNIX à distance
+
+Pour pouvoir ajouter une imprimante à distance à votre système, vous
+devez avoir \k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations). Pour configurer
+l'accès à une imprimante UNIX à distance, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur Imprimante=>Ajouter imprimante UNIX. La fenêtre
+  \t"Configuration des imprimantes : Ajouter imprimante UNIX à
+  \tdistance" s'affiche ; elle comprend les champs suivants :
+
+  \to\tNom de l'imprimante : - Entrez le nom que vous voulez attribuer
+  \t \tà l'imprimante UNIX à distance sur votre système local.
+
+  \to\tType : - Pour afficher un menu comportant les différents
+  \t \ttypes d'imprimantes, cliquez sur le rectangle situé dans la case
+  \t \tprès du champ Type. Cliquez ensuite sur le type approprié.
+
+  \to\tType de système d'exploitation à distance : - Cliquez sur le
+  \t \tsystème V ou BSD (en cas d'incertitude, consultez la personne
+  \t \tchargée de l'administration du système à distance).
+
+  \to\tSystème à distance : - Si votre système n'est pas configuré pour
+  \t \t\k(DNS^dtadmin/inet.hlp^Accès à DNS) et \k(NIS^dtadmin/inet.hlp^Accès à DNS), cette option affiche uniquement la liste Systèmes
+  \t \t(/etc/hosts).
+
+  \t \tSi votre système est configuré pour DNS et NIS, la case située
+  \t \tdans le coin gauche répertorie les domaines disponibles (serveur
+  \t \tDNS (Domain Network Service), serveur NIS (Networking
+  \t \tInformation Service) et liste Systèmes)
+
+  \t \tCliquez sur le système de votre choix.
+
+  \t \tRemarque : lorsque vous cliquez sur un domaine, tous les
+  \t \tsous-domaines associés s'affichent à droite dans la case prévue
+  \t \tà cet effet. Vous pouvez cliquer sur un sous-domaine particulier
+  \t \tet afficher à droite les sous-domaines éventuels existants.
+  \t \tPoursuivez cette opération jusqu'à ce que vous ayez trouvé le
+  \t \tnom du système recherché.
+
+  \t \tLe système affiche uniquement deux colonnes ou cases à la fois.
+  \t \tPour visualiser d'autres cases et vous déplacer vers la gauche
+  \t \tou vers la droite, utilisez la barre de défilement située dans
+  \t \tla partie supérieure.
+
+  \to\tNom de l'imprimante à distance : - Entrez le nom de l'imprimante
+  \t \tsur le système à distance.
+
+  \to\tImprimer bannière par défaut : - Cliquez sur Oui si vous voulez
+  \t \tque le système imprime une bannière par défaut, ou sur Non dans
+  \t \tle cas contraire.
+
+  \to\tAutoriser remplacement de la bannière : - Cliquez sur Oui si
+  \t \tvous voulez que les autres utilisateurs aient la possibilité de
+  \t \tremplacer la bannière par défaut, ou sur Non dans le contraire.
+
+4.\tCliquez sur Ajouter. Une icône d'imprimante s'affiche dans la
+  \tfenêtre Configuration des imprimantes.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser afin de
+\trestituer les paramètres affectés à l'origine à l'ensemble de ces
+\toptions, ou sur Annuler afin de refermer la fenêtre sans ajouter
+\td'imprimante.
+
+Voir aussi : 
+\k(Copie de l'icône d'une imprimante dans un dossier)
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^1^Ajout d'une imprimante NetWare à distance
+^$40
+Ajout d'une imprimante NetWare à distance
+
+Pour pouvoir ajouter une imprimante NetWare à distance à votre
+système, vous devez avoir \k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations).
+
+Pour configurer une file d'attente permettant d'accéder à une
+imprimante NetWare, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur Imprimante=>Ajouter imprimante NetWare. La fenêtre
+  \t"Configuration des imprimantes : Ajouter une imprimante NetWare"
+  \ts'affiche ; elle comprend les champs suivants :
+
+  \to\tNom de l'imprimante : - Entrez le nom que vous souhaitez
+  \t \tutiliser localement pour accéder à l'imprimante NetWare à
+  \t \tdistance.
+
+  \to\tType : - Cliquez sur le type d'imprimante qui convient.
+
+  \to\tServeur NetWare : - Cliquez sur le serveur de votre choix dans
+  \t \tla liste Serveur de fichiers. Le nom de ce serveur s'affiche
+  \t \tdans le champ, et la liste Imprimantes située à droite
+  \t \trépertorie les imprimantes disponibles pour ce serveur.
+
+  \to\tImprimantes : - Cliquez sur l'imprimante à laquelle vous
+  \t \tsouhaitez accéder. Le nom de l'imprimante s'affiche dans le
+  \t \tchamp Imprimante NetWare.
+
+  \to\tImprimer bannière par défaut : - Cliquez sur Oui si vous voulez
+  \t \tque le système imprime une bannière par défaut, ou sur Non dans
+  \t \tle cas contraire.
+
+  \to\tAutoriser remplacement de la bannière : - Cliquez sur Oui si
+  \t \tvous voulez que les autres utilisateurs aient la possibilité de
+  \t \tremplacer la bannière par défaut, ou sur Non dans le cas
+  \t \tcontraire.
+
+  \to\tEnvoyer saut de page par défaut : - Cliquez sur Oui si vous
+  \t \tvoulez introduire un saut de page à la fin de chaque tâche
+  \t \td'impression, ou sur Non dans le cas inverse.
+
+  \t \tSi vous demandez l'introduction d'un saut de page, la tâche
+  \t \tsuivante sera imprimée en haut d'une nouvelle page.
+
+  \t \tRemarque : si la fonction de saut de page en fin de fichier est
+  \t \tdéjà activée automatiquement par une application donnée et que
+  \t \tvous ajoutez en plus cette option, l'imprimante insère une page
+  \t \tblanche entre la tâche précédente et la tâche suivante.
+
+  \to\tAutoriser annulation du saut de page : - Cliquez sur Oui si vous
+  \t \tvoulez que les autres utilisateurs aient la possibilité
+  \t \td'annuler le saut de page par défaut, ou sur Non dans le
+  \t \tcontraire.
+
+4.\tCliquez sur Ajouter pour ajouter l'imprimante et appliquer les
+  \toptions sélectionnées.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser afin de
+\trestituer les paramètres affectés à l'origine à l'ensemble de ces
+\toptions, ou sur Annuler afin de refermer la fenêtre sans ajouter
+\td'imprimante.
+
+Voir aussi : 
+\k(Copie de l'icône d'une imprimante dans un dossier)
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^1^Suppression d'une imprimante
+^$50
+Suppression d'une imprimante
+
+Pour pouvoir supprimer une imprimante de votre système, vous devez
+avoir \k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations).
+
+Pour supprimer une imprimante, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'imprimante que vous souhaitez supprimer.
+
+4.\tCliquez sur Imprimante=>Supprimer. Le système supprime l'icône
+  \tde l'imprimante de la fenêtre "Configuration des imprimantes".
+
+Voir aussi :
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^1^Visualisation des caractéristiques d'une imprimante
+^$60
+^1^Visualisation des caractéristiques d'une imprimante
+
+Pour afficher les propriétés d'une imprimante, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'imprimante que vous souhaitez afficher.
+
+4.\tCliquez sur Imprimante=>Propriétés. La fenêtre "Configuration
+  \tdes\timprimantes : Propriétés" s'affiche.
+
+5.\tLes informations ci-après offrent une description des champs et
+  \tdes options correspondant à chaque type d'imprimante :
+
+    o\tDans le cas d'une imprimante locale (en série ou parallèle),
+     \tconsultez l'étape 3 de \k(Ajout d'une imprimante locale).
+
+  \to\tDans le cas d'une imprimante UNIX à distance, voir l'étape 3 de
+  \t \t\k(Ajout d'une imprimante UNIX à distance).
+
+  \to\tDans le cas d'une imprimante NetWare à distance, voir l'étape 3
+  \t \tde \k(Ajout d'une imprimante NetWare à distance).
+
+6.  Cliquez sur Annuler pour refermer la fenêtre.
+
+^1^Changement des caractéristiques d'une imprimante
+^$70
+Changement des caractéristiques d'une imprimante
+
+Pour pouvoir modifier les propriétés d'une imprimante, vous devez
+avoir \k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations).
+
+Pour modifier les propriétés d'une imprimante, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'imprimante à laquelle vous voulez apporter des
+  \tmodifications.
+
+4.\tCliquez sur Imprimante=>Propriétés. La fenêtre "Configuration
+  \tdes\timprimantes : Propriétés" s'affiche.
+
+5.\tEffectuez les modifications requises. Vous trouverez ci-après des
+  \tinformations concernant les champs et les options disponibles pour
+  \tchaque type d'imprimante :
+
+   \to\tDans le cas d'une imprimante locale (en série ou parallèle),
+   \t \tconsultez l'étape 3 de \k(Ajout d'une imprimante locale).
+
+  \to\tDans le cas d'une imprimante UNIX à distance, voir l'étape 3 de
+  \t \t\k(Ajout d'une imprimante UNIX à distance).
+
+  \to\tDans le cas d'une imprimante NetWare à distance, voir l'étape 3
+  \t \tde \k(Ajout d'une imprimante NetWare à distance).
+
+  \tRemarque : vous ne pouvez pas modifier le nom d'une imprimante.
+
+6.\tCliquez sur OK pour appliquer les changements.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \trestaurer les modifications précédentes ou sur Annuler pour
+  \trefermer la fenêtre sans effectuer aucune modification.
+
+Voir aussi :
+\k(Affectation d'une imprimante par défaut)
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^1^Affectation d'une imprimante par défaut
+^$80
+Affectation d'une imprimante par défaut
+
+Vous pouvez attribuer à une de vos imprimantes le statut d'imprimante
+par défaut. En d'autres termes, les tâches d'impression seront
+affectées automatiquement à cette imprimante si vous sélectionnez
+l'option d'impression depuis une application sans indiquer
+d'imprimante, ou si vous choisissez Fichier=>Imprimer depuis la
+fenêtre d'un dossier.
+
+Pour définir une imprimante par défaut, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'imprimante que vous voulez définir comme
+  \tl'imprimante par défaut.
+
+4.\tCliquez sur Imprimante=>Paramétrer par défaut. L'imprimante
+  \tsélectionnée\tdevient alors votre imprimante par défaut.
+
+Voir aussi :
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^1^Connexion d'une imprimante locale à un serveur d'impression NetWare
+^$90
+Connexion d'une imprimante locale à un serveur d'impression NetWare
+
+Pour pouvoir connecter une imprimante locale à un serveur d'impression
+NetWare, vous devez avoir \k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations).
+
+Pour connecter une imprimante locale à un serveur d'impression
+NetWare, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'imprimante que vous voulez connecter.
+
+4.\tCliquez sur Imprimante=>Nimprimante. La fenêtre "Configuration des
+  \timprimantes : Statut des connexions au serveur d'impression
+  \tNetWare" s'affiche et présente le message suivant :
+
+    <Nom de l'imprimante> n'est pas connectée. Souhaitez-vous la
+    connecter ?
+
+5.\tCliquez sur Oui. La fenêtre "Configuration des imprimantes :
+  \tConnecter imprimante locale au serveur d'impression NetWare"
+  \ts'affiche.
+
+  \tRemarque : si vous changez d'avis et ne souhaitez plus connecter
+  \tl'imprimante, cliquez sur Non afin de refermer la fenêtre sans
+  \tprocéder à la connexion.
+
+6.\tCliquez dans la liste Serveurs de fichiers sur le système de votre
+  \tchoix. Les serveurs d'impression disponibles pour ce système
+  \tapparaissent dans la partie droite de la liste.
+
+7.\tCliquez sur le serveur d'impression de votre choix. Les
+  \timprimantes disponibles sur ce serveur s'affichent dans le cadre
+  \tsitué à droite intitulé Nom de l'imprimante.
+
+8.\tCliquez sur le nom de l'imprimante de votre choix.
+
+9.\tCliquez sur Connecter. L'imprimante peut à présent prendre en
+  \tcharge les requêtes placées dans la file d'attente d'impression
+  \tNetWare.
+
+  \tRemarque : vous pouvez aussi cliquer sur Annuler pour refermer la
+  \tfenêtre sans connecter l'imprimante.
+
+Voir aussi :
+\k(Déconnexion d'une imprimante locale d'un serveur d'impression NetWare)
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^1^Déconnexion d'une imprimante locale d'un serveur d'impression NetWare
+^$100
+Déconnexion d'une imprimante locale d'un serveur d'impression NetWare
+
+Pour pouvoir déconnecter une imprimante locale d'un serveur
+d'impression NetWare, vous devez avoir
+\k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations).
+
+Pour déconnecter une imprimante locale d'un serveur d'impression
+NetWare, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'imprimante que vous souhaitez déconnecter.
+
+4.\tCliquez sur Nimprimante. La fenêtre "Configuration des imprimantes
+  \t: Statut des connexions au serveur d'impression NetWare" s'affiche
+  \tet presente les messages suivants :
+
+  \t<Nom de l'imprimante> est connectée au serveur d'impression
+  \tNetWare <Nom_serveur_impression> en tant que
+  \t<Nom_imprimante_NetWare> correspondant à une imprimante à
+  \tdistance.
+
+  \tVoulez-vous déconnecter l'imprimante ?
+
+5.\tCliquez sur Oui. L'imprimante est à présent déconnectée.
+
+  \tRemarque : vous pouvez aussi cliquer sur Non afin de refermer la
+  \tfenêtre sans déconnecter l'imprimante.
+
+Voir aussi :
+\k(Connexion d'une imprimante locale à un serveur d'impression NetWare)
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^2^Fenêtre Configuration des imprimantes : statut des connexions au serveur d'impression NetWare
+^$110
+Fenêtre Configuration des imprimantes : statut des connexions au serveur d'impression NetWare
+
+Si votre imprimante locale est connectée à un serveur NetWare, cette
+fenêtre affiche des messages du type suivant :
+
+\t\t\t<Nom_imprimante> est connectée au serveur d'impression NetWare
+\t\t\t<Nom_serveur_impression> en tant que <Nom_imprimante_NW>
+\t\t\tcorrespondant à une imprimante à distance :
+
+\t\t\tVoulez-vous déconnecter l'imprimante ?
+
+Cliquez sur Oui si vous voulez déconnecter l'imprimante, ou sur Non
+dans le cas inverse.
+
+Si votre imprimante locale n'est pas connectée à un serveur NetWare,
+cette fenêtre affiche des messages du type suivant :
+
+\t\t\t<Nom_imprimante> n'est pas connectée à un serveur d'impression
+\t\t\tNetWare.
+
+\t\t\tVoulez-vous connecter l'imprimante ?
+
+Cliquez sur Oui si vous voulez connecter l'imprimante, ou sur Non dans
+le cas inverse.
+
+Voir aussi :
+\k(Connexion d'une imprimante locale à un serveur d'impression NetWare)
+\k(Déconnexion d'une imprimante locale d'un serveur d'impression NetWare)
+
+^1^Définition de l'accès des systèmes à distance
+^$120
+Définition de l'accès des systèmes à distance
+
+Pour permettre aux systèmes à distance d'accéder aux imprimantes
+locales, vous devez avoir \k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations).
+
+Remarque : si vous n'avez pas l'autorisation de gérer les imprimantes,
+vous pouvez utiliser la procédure suivante afin de visualiser les
+systèmes pour lesquels l'accès est autorisé ou refusé, mais vous ne
+pouvez apporter aucune modification.
+
+Lorsque vous configurez une imprimante pour la première fois,
+l'ensemble des systèmes à distance n'y ont pas accès. Pour que les
+systèmes à distance puissent accéder aux imprimantes locales, procédez
+comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'imprimante à laquelle les systèmes à distance
+  \tpeuvent accéder.
+
+4.\tCliquez sur Imprimante=>Configurer l'accès à distance. La fenêtre
+  \t"Configuration des imprimantes : Configurer l'accès à distance"
+  \ts'affiche. La boîte située dans le coin gauche affiche les
+  \tdomaines disponibles :
+
+  \t \tRemarque : lorsque vous cliquez sur un domaine, tous les
+  \t \tsous-domaines associés s'affichent à droite dans la case prévue
+  \t \tà cet effet. Vous pouvez cliquer sur un sous-domaine particulier
+  \t \tet afficher à droite les sous-domaines éventuels existants.
+  \t \tPoursuivez cette opération jusqu'à ce que vous ayez trouvé le
+  \t \tnom du système recherché.
+
+  \tLe système affiche uniquement deux colonnes ou cases à la fois.
+  \tPour visualiser d'autres cases et vous déplacer vers la gauche ou
+  \tvers la droite, utilisez la barre de défilement située dans la
+  \tpartie supérieure.
+
+5.\tPour autoriser ou refuser l'accès à l'imprimante à distance,
+  \tprocédez comme suit :
+
+  \tRemarque : pour sélectionner plusieurs systèmes, cliquez sur le
+  \tbouton gauche de la souris tout en maintenant enfoncée la touche
+  \t<Ctrl>.
+
+  \to\tCliquez sur Autoriser tous les systèmes hormis, cliquez ensuite
+  \t \tsur le(s) système(s) de votre choix dans le programme de lecture
+  \t \tsur plusieurs colonnes, puis cliquez sur Ajouter. Le(s)
+  \t \tsystème(s) sélectionné(s) sont placés dans la liste de droite.
+
+  \t \tTous les systèmes à l'exception de ceux insérés dans la liste
+  \t \tont accès à l'imprimante à distance.
+
+  \to\tCliquez sur Interdire à tous les systèmes hormis, cliquez
+  \t \tensuite sur le(s) système(s) de votre choix dans le programme de
+  \t \tlecture sur plusieurs colonnes, puis cliquez sur Ajouter. Le(s)
+  \t \tsystème(s) sélectionné(s) sont placés dans la liste de droite.
+
+  \t \tTous les systèmes à l'exception de ceux insérés dans la liste
+  \t \tn'ont pas accès à l'imprimante à distance.
+
+  \tPour supprimer des systèmes, procédez comme suit :
+
+  \to\tCliquez sur le(s) système(s) de votre choix, cliquez ensuite sur
+  \t \tSupprimer (afin de supprimer les systèmes sélectionnés) ou sur
+  \t \tSupprimer tout (afin de supprimer l'ensemble des systèmes).
+
+6.\tCliquez sur OK. L'imprimante est à présent accessible à des
+  \tutilisateurs à distance.
+
+  \tRemarque : vous pouvez également cliquer sur Annuler si vous ne
+  \tsouhaitez pas configurer l'accès à distance.
+
+Voir aussi :
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^1^Définition de l'accès des utilisateurs locaux
+^$130
+Définition de l'accès des utilisateurs locaux
+
+Pour rendre des imprimantes accessibles à des utilisateurs locaux,
+vous devez avoir \k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations).
+
+Remarque : si vous n'avez pas l'autorisation de gérer les imprimantes,
+vous pouvez utiliser la procédure suivante afin de visualiser les
+utilisateurs pour lesquels l'accès est autorisé ou refusé, mais vous
+ne pouvez apporter aucune modification.
+
+Lorsque vous configurez une imprimante pour la première fois, tous les
+utilisateurs y ont accès. Pour contrôler l'accès aux imprimantes
+locales ou à distance dont bénéficient les utilisateurs locaux,
+procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'imprimante pour laquelle vous voulez autoriser ou
+  \tinterdire l'accès.
+
+4.\tCliquez sur Imprimante=>Configurer accès utilisateurs. La fenêtre
+  \tConfiguration des imprimantes : Configurer accès utilisateurs
+  \ts'affiche.
+
+5.\tPour autoriser ou interdire l'accès, procédez comme suit :
+
+  \tRemarque : pour sélectionner plusieurs utilisateurs, cliquez sur
+  \tle bouton gauche de la souris tout en maintenant enfoncée la
+  \ttouche <Ctrl>.
+
+  \to\tPour autoriser l'accès, cliquez sur les utilisateurs de votre
+  \t \tchoix, puis cliquez sur Autoriser. Les noms d'utilisateurs
+  \t \tsélectionnés sont alors placés dans la liste Autoriser.
+
+   \to\tPour interdire l'accès, cliquez sur les utilisateurs de votre
+   \t \tchoix, puis cliquez sur Refuser. Les noms d'utilisateurs
+   \t \tsélectionnés sont alors placés dans la liste Refuser.
+
+  \to\tPour supprimer tous les utilisateurs de la liste Autoriser,
+  \t \tcliquez sur Refuser à tous. Tous les utilisateurs sont
+  \t \ttransférés de la liste Autoriser dans la liste Refuser.
+
+6.\tCliquez sur OK.
+
+   \tRemarque : vous pouvez également cliquer sur Annuler si vous ne
+   \tvoulez ni autoriser ni refuser l'accès aux utilisateurs locaux.
+
+Voir aussi :
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+
+^1^Contrôle d'une imprimante
+^$140
+Contrôle d'une imprimante
+
+Pour pouvoir activer ou désactiver des imprimantes locales et à
+distance, et déterminer si telle imprimante peut accepter de nouvelles
+requêtes d'impression, vous devez avoir
+\k(l'autorisation de gérer les imprimantes^dtadmin/user.hlp^Présentation des autorisations).
+
+Remarque : si vous n'avez pas l'autorisation de gérer les imprimantes,
+vous pouvez utiliser la procédure suivante afin de vérifier si une
+imprimante est activée ou désactivée, et si elle reçoit des requêtes
+d'impression ; en revanche, vous ne pouvez apporter aucune
+modification.
+
+Pour configurer une imprimante, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'imprimante que vous souhaitez configurer.
+
+4.\tCliquez sur Imprimante=>Gérer. La fenêtre "Configuration des
+  \timprimantes : Gestion de l'imprimante" s'affiche ; elle comporte
+  \tles champs et options suivants :
+
+  \to\t<Nom de l'imprimante est activé/désactivé> : - Affiche le nom de
+  \t \tl'imprimante actuellement sélectionnée, et indique si celle-ci
+  \t \test activée ou désactivée.
+
+  \to\tNouvelles requêtes : - Cliquez sur Accepter si vous voulez que
+  \t \tl'imprimante prenne en compte les nouvelles requêtes dans sa
+  \t \tfile d'impression, ou sur Refuser dans le cas inverse.
+
+  \to\tEtat de l'imprimante : - Cliquez sur Activer si vous voulez que
+  \t \tl'imprimante traite les tâches placées dans la file d'attente ou
+  \t \tsur Désactiver dans le cas inverse.
+
+5.\tCliquez sur Appliquer pour enregistrer les modifications.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \trestaurer les modifications précédentes ou sur Annuler pour
+  \trefermer la fenêtre sans effectuer aucune modification.
+
+Voir également :
+\k(Utilisation de la barre d'outils de Configuration des imprimantes)
+\s(Contrôle des imprimantes et impression des fichiers au niveau de la ligne de commande^dhelp "pe.fr" ownerhb "Définition et configuration des imprimantes" "Contrôle des imprimantes et impression des fichiers au niveau de la ligne de commande" || helpLinkErr)
+
+^1^Copie de l'icône d'une imprimante dans un dossier
+^$150
+Copie de l'icône d'une imprimante dans un dossier
+
+Lorsque vous aurez ajouté une imprimante à votre système, vous voudrez
+peut-être copier l'icône de l'imprimante dans un dossier pour pouvoir
+y accéder plus facilement.
+
+Pour copier l'icône d'une imprimante dans un dossier, procédez comme
+suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_imprimante. La fenêtre
+  \t"Configuration\tdes imprimantes" s'affiche.
+
+3.\tCliquez sur l'icône de l'imprimante que vous souhaitez copier dans
+  \tun autre dossier.
+
+4.\tOuvrez le dossier dans lequel vous souhaitez copier l'icône de
+  \tl'imprimante.
+
+5.\t\d(Faites glisser ^faire glisser) l'icône de l'imprimante dans
+  \tle dossier.
+
+Vous pouvez également utiliser les options de menu pour copier une
+icône d'imprimante dans un autre dossier.
+Voir \k(Fenêtre Configuration des imprimantes : copier dans dossier).
+
+
+^2^Fenêtre Configuration des imprimantes : copier dans dossier
+^$160
+Fenêtre Configuration des imprimantes : copier dans dossier
+
+Pour copier l'icône d'une imprimante dans un autre dossier à l'aide
+des options de menu, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_Imprimantes. La fenêtre
+  \tConfiguration des imprimantes s'affiche.
+
+3.\tCliquez sur l'icône de l'imprimante que vous souhaitez copier dans
+  \tun autre dossier.
+
+4.\tCliquez sur Imprimante=>Copier dans dossier. La fenêtre
+  \t"Configuration des imprimantes : copier dans dossier" qui contient
+  \tles champs suivants s'affiche :
+
+  \tCopier : - Affiche le nom de l'imprimante sélectionnée.
+
+ \tDest : - Sélectionnez le fichier \d(chemin d'accès) dans le dossier
+ \tdésiré en cliquant sur les noms de dossier dans le programme de
+ \tlecture multicolonne. Si un dossier sélectionné comporte des
+ \tdossiers complémentaires, ces derniers apparaissent dans la colonne
+ \tde droite. Vous pouvez alors cliquer sur un dossier dans cette case.
+ \tSi vous cliquez sur un dossier qui contient d'autres dossiers, une
+ \ttroisième case apparaît à droite de cette colonne.
+
+\tVous pouvez continuer à cliquer sur les dossiers jusqu'à ce que vous
+\tatteigniez le fichier \d(chemin d'accès) désiré. Pour visualiser
+\tles différentes colonnes, utilisez la barre de défilement de façon à
+\tdéplacer les cases vers la gauche et vers la droite.
+
+ \tRemarque : vous pouvez également taper l'intégralité de
+ \t\d(chemin d'accès) dans le dossier désiré figurant dans la case
+ \tSélection.
+
+5.\tCliquez sur OK. Le système copie l'icône de l'imprimante dans le
+  \tdossier.
+
+^1^Utilisation de la barre d'outils de Configuration des imprimantes
+^$170
+Utilisation de la barre d'outils de Configuration des imprimantes
+
+La fenêtre "Configuration des imprimantes" comporte une barre d'outils
+qui permet d'accéder facilement à certaines fonctions. Au lieu
+d'accéder à une fonction à partir d'un menu, vous pouvez simplement
+cliquer sur l'icône de la barre d'outils associée à cette fonction.
+
+Par exemple, si vous souhaitez effacer l'imprimante actuellement
+sélectionnée, vous pouvez cliquer sur l'icône de la barre d'outils au
+lieu de cliquer sur Imprimante=>Effacer.
+
+La barre d'outils figure sous la barre de menus. Si vous placez le
+pointeur de la souris sur une icône de la barre d'outils, le système
+affiche une brève description de cette icône dans la zone de bas de
+page située sous cette icône.
+
+Vous pouvez accéder aux fonctions suivantes en cliquant sur les icônes
+de la barre d'outils dans la fenêtre Configuration des imprimantes :
+
+\to  \k(Ajout d'une imprimante locale^^Ajout d'une imprimante locale)
+\to  \k(Ajout d'une imprimante UNIX à distance^^Ajout d'une imprimante UNIX à distance)
+\to  \k(Ajout d'une imprimante NetWare à distance^^Ajout d'une imprimante NetWare à distance)
+\to  \k(Suppression d'une imprimante^^Suppression d'une imprimante)
+\to  \k(Modification des propriétés d'une imprimante^^Changement des caractéristiques d'une imprimante)
+\to  \k(Copie de l'icône d'une imprimante dans un dossier^^Copie de l'icône d'une imprimante dans un dossier)
+\to  \k(Affectation d'une imprimante par défaut^^Affectation d'une imprimante par défaut)
+
+\to  \k(Contrôle d'une imprimante^^Contrôle d'une imprimante)
+\to  \k(Définition de l'accès utilisateur^^Définition de l'accès des utilisateurs locaux)
+\to  \k(Définition de l'accès à distance^^Définition de l'accès des systèmes à distance)
+\to  \k(Connexion ou déconnexion d'une imprimante NetWare^^Connexion d'une imprimante locale à un serveur d'impression NetWare)
+\to  \k(Aide^DesktopMgr/help.hlp^Utiliser l'aide)
+\to  Quitter (identique à Fichier=>Quitter)
+

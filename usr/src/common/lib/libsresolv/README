@@ -1,0 +1,20 @@
+#ident	"@(#)libresolv:common/lib/libsresolv/README	1.1.1.2"
+#ident "$Header: $"
+
+libresolv.so	functions for using Domain Name Service.
+
+This version of libresolv.so uses the TLI library rather than
+the sockets library to access the Domain Name Service.
+
+The shared library libresolv.so is built by compiling the source
+files that used to comprise nametoaddr/resolv/libresolv, then
+linking the resulting object files with the shared library libnsl.so
+and with libsocket.so.
+
+In earlier releases, libresolv.so was simply linked in the file
+system with resolv.so.  Now, resolv.so is built just from resolv.o
+and is dynamically linked with libresolv.so, so it is much smaller
+than before.  
+
+This change also facilitates the consolidation of duplicate code
+in libsocket and nametoaddr/resolv.

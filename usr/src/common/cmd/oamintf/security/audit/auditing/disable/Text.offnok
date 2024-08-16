@@ -1,0 +1,24 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/disable/Text.offnok	1.1.2.2"
+#ident  "$Header: Text.offnok 2.0 91/07/12 $"
+#	Module Name: Text.offnok
+
+title="Error Disabling Auditing"
+framemsg=`readfile $INTFBASE/conf.msg`
+lifetime=shortterm
+
+rows=6
+columns=60
+
+text="
+An error occured in trying to disable auditing.
+
+`readfile $OFFAUDERR`"
+
+altslks
+name=CONT
+button=11
+action=CLOSE
+
+name=CANCEL
+button=14
+action=CLEANUP

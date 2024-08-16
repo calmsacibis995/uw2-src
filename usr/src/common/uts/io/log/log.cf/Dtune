@@ -1,0 +1,19 @@
+%% STREAMS Parameters
+% LOGHIWAT
+The high water mark (in bytes) for the long driver.
+High and low water marks are used by STREAMS for
+flow control.
+When debugging modules and drivers,
+strace (1M)
+can be used.
+If the messages are generated too quickly,
+strace
+may lose some of them.
+Setting these
+values allows you to control the amount of data that
+flows through the driver to prevent messages from being lost.
+% LOGLOWAT
+The low water mark (in bytes) for the log driver.
+See
+LOGHIWAT
+for more information.

@@ -1,0 +1,25 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/parameters/set/Text.setnok	1.1.2.2"
+#ident  "$Header: Text.setnok 2.0 91/07/12 $"
+#	Module Name: Text.setnok
+
+title="Error Setting Event Log Parameters"
+
+framemsg=`readfile $INTFBASE/conf.msg`
+lifetime=shortterm
+
+rows=6
+columns=55
+
+text="
+An error occured while trying to set event log parameters.
+
+`readfile $SLOGERR`"
+
+altslks
+name=CONT
+button=11
+action=CLOSE
+
+name=CANCEL
+button=14
+action=CLEANUP

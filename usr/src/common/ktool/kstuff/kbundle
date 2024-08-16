@@ -1,0 +1,162 @@
+#!	/bin/ksh -e
+#
+#ident	"@(#)ktool:common/ktool/kstuff/kbundle	1.3"
+#ident  "$Header:"
+#
+# kbundle: command to build a bundle for kstuff
+#
+#	The kernel is specified by $ROOT/$MACH (taken from the
+#	environment).
+#
+#	The name of the bundle is derived using the same rules
+#	that kstuff uses to find the bundles.
+#
+#	The idtools (if included in the bundle) will be taken from
+#	$ROOT/$MACH/etc/conf/bin or from the path (presumably within a
+#	cross environment).
+#
+#	By default, the bundle is rebuilt only if some Driver.o
+#	is younger than the bundle.
+
+usage() {
+	echo '
+    kbundle [ -BFT ] [ -d db.file ] ...
+        -B      Normal bundle build (defeats -F and -T) [default].
+	-F	Force a bundle rebuild.
+	-T	Include idtools
+        -d db.file
+		file containing a data base of kernels. Format of lines:
+                        root:bundle-file:pre_built_flag:comment
+	Options are also read from /int/bin/.kstuff.rc and $HOME/.kstuff.rc.
+' >&2
+	exit 1
+}
+
+getargs() {
+	while getopts ':BFIKMN:QRSTY:bc:d:in:qr:t:v' c
+	do
+		case $c in
+		d) KPATH="$KPATH $OPTARG";;
+		F) F=1;;
+		B) F=0; T=0;;
+		T) T=1;;
+		I|K|M|N|Q|R|S|Y|b|c|i|n|q|r|t|v) ;;	# ignore kstuff options
+		\:) usage;;
+		\?) if [[ $OPTARG != "#" ]]; then usage; fi;;
+		esac
+	done
+	if [[ $((OPTIND - $#)) -ne 1 ]]; then
+		usage
+	fi
+}
+
+KOPT=.kstuff.rc
+SYS_OPTS=/int/bin/$KOPT
+HOME_OPTS=$HOME/$KOPT
+MYPATH=$(whence kbundle)
+MYPATH=${MYPATH:%/*}
+KPATH=
+F=0
+T=0
+MYHOST=$(uname -n)
+case $MYHOST in
+hoss) AWK=nawk;;
+*) AWK=awk;;
+esac
+
+#
+# parse arguments
+#
+ARGS=
+if [[ -r $SYS_OPTS ]]; then
+	ARGS=$(<$SYS_OPTS)
+fi
+if [[ -r $HOME_OPTS ]]; then
+	ARGS="$ARGS $(<$HOME_OPTS)"
+fi
+getargs $ARGS $*
+
+#
+# lookup the name of the bundle in the data base, or use default name
+#
+eval "$(echo "${ROOT} ${MACH}\n${KPATH}" |
+	$AWK -f $MYPATH/klookup.awk)"
+
+#
+# if necessary, find idtools, and symbolically link them into etc/conf/bin
+#
+cd $CONF_ROOT/etc/conf
+if [[ ! -d bin && $T -eq 1 ]]; then
+	TOOLS_PATH=$(whence idbuild)
+	TOOLS_PATH=${TOOLS_PATH:%/*}
+	if [[ "$TOOLS_PATH" = "" ]]; then
+		echo "Cannot find idtools" >&2
+	fi
+	rm -f bin
+	ln -s $TOOLS_PATH bin
+fi
+
+#
+# if necessary, link include files into  etc/conf/include.d
+#
+if [[ ! -d include.d ]]; then
+	rm -f include.d
+	ln -s $CONF_ROOT/usr/include include.d
+fi
+
+#
+# make sure bundle parent exists
+#
+BUNDLE_DIR=${BUNDLE:%/*}
+if [[ ! -d $BUNDLE_DIR ]]; then
+	mkdir -p $BUNDLE_DIR
+fi
+
+#
+# suppress build if there are no new Driver.o(s)
+#
+if [[ -r ${BUNDLE} && $F -eq 0 ]]; then
+	NEW=$(find pack.d -name Driver.o -newer $BUNDLE -print)
+	if [[ -z "$NEW" ]]; then
+		echo "kbundle: No Driver.o changes since $BUNDLE was last built." >&2
+		exit 0
+	fi
+fi
+
+echo building bundle at ${BUNDLE}
+
+SUFFIX=n$$
+trap "rm -f ${BUNDLE}.${SUFFIX}; exit 100" 0 1 2 3 15
+/bin/ls -LR | $AWK '
+	/^\.\/.*:$/ {
+		prefix = substr($1, 3, length($1) - 3) "/"
+		if (prefix == "sassign.d/" || prefix == "modnew.d/" || \
+		    prefix == "mod.d/" || prefix == "kstuff.d/")
+			prefix = "SKIP"
+		next
+	}
+	prefix == "SKIP" || $0 ~ /^$/ { next }
+	{ print prefix $1 }
+' | sed \
+	-e '/^cf\.d\/config.h/d' \
+	-e '/^cf\.d\/conf.c/d' \
+	-e '/^cf\.d\/direct/d' \
+	-e '/^cf\.d\/ifile/d' \
+	-e '/^cf\.d\/modlist/d' \
+	-e '/^cf\.d\/conf.o/d' \
+	-e '/^cf\.d\/sdevice.new/d' \
+	-e '/^cf\.d\/sassign.new/d' \
+	-e '/^cf\.d\/unix/d' \
+	-e '/^cf\.d\/res_major/d' \
+	-e '/^pack\.d\/[^/][^/]*\/mod_reg/d' \
+	-e '/^pack\.d\/[^/][^/]*\/mod_ifile/d' \
+	-e '/^pack\.d\/[^/][^/]*\/space.o/d' \
+	-e '/^pack\.d\/[^/][^/]*\/stubs.o/d' \
+	-e '/^pack\.d\/[^/][^/]*\/tune.o/d' \
+	-e '/^pack\.d\/[^/][^/]*\/mod_conf.[co]/d' \
+	-e '/^pack\.d\/[^/][^/]*\/mod_sec.[so]/d' \
+	-e '/^bin\/[^i]/d' \
+	-e '/^bin\/i[^d]/d' |
+cpio -ocL | compress > ${BUNDLE}.${SUFFIX}
+mv ${BUNDLE}.${SUFFIX} ${BUNDLE}
+trap 0 1 2 3 15

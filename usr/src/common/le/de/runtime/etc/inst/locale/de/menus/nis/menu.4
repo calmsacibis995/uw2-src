@@ -1,0 +1,49 @@
+.ul
+Installation und Konfiguration des Pakets Network Information Service
+(NIS)
+.lr
+F1=Hilfe
+.top
+`[ "$TYPE" != "1" ] && echo "  \n \n  Damit NIS richtig betrieben werden kann, muß eine Liste\n  mit einem oder mehreren NIS-Servern konstruiert werden:\n \n \n"`
+`[ "$first_loop" = "yes" ] && [ "$TYPE" = "1" ] && echo "  \n \n  Der NIS-Hauptserver ist: $SERVER1\n \n \n"`
+`[ "$first_loop" = "yes" ] && [ "$TYPE" = "1" ] && echo "  Sie können jetzt null oder mehr NIS-Nebenserver eingeben.\n \n"`
+.button
+Anwenden
+Zurücksetzen
+.bottom
+Drücken Sie 'TAB', um den Cursor zwischen den Feldern zu bewegen. Nach 
+Beendigung der Eingaben bewegen Sie den Cursor auf "Anwenden" und 
+drücken anschließend 'ENTER', um fortzufahren.
+.form
+`[ "$first_loop" = "yes"  ] && [ "$TYPE" = "1" ] && echo "5 0 36//[A-z0-9 ]*//Servername://SERVER2//"`
+#`[ "$first_loop" = "yes"  ] && [ "$TYPE" != "1" ] && echo "5 1 36//[A-z0-9 ]*//Server name://SERVER1//"`
+`[ "$first_loop" = "yes"  ] && echo "5 1 36//[A-z0-9 ]*//Servername://SERVER1//"`
+`[ "$first_loop" = "yes" ] && echo "//Geben Sie den Host-Namen eines NIS-Servers ein.//"`
+`[ "$first_loop" = "no" ] && echo "5 0 36//[A-z0-9 ]*//Servername://SERVER1//"`
+`[ "$first_loop" = "no" ] && echo "//Geben Sie den Host-Namen eines NIS-Servers ein.//"`
+5 0 36//[A-z0-9 ]*//Servername://SERVER2//
+//Geben Sie den Host-Namen eines NIS-Servers ein.//
+5 0 36//[A-z0-9 ]*//Servername://SERVER3//
+//Geben Sie den Host-Namen eines NIS-Servers ein.//
+`[ "$first_loop" = "no" ] && echo "5 0 36//[A-z0-9 ]*//Servername://SERVER4//"`
+`[ "$first_loop" = "no" ] && echo "//Geben Sie den Host-Namen eines NIS-Servers ein.//"`
+#5 0 36//[A-z0-9 ]*//Server name://SERVER5//
+#//Enter host name of an NIS server//
+2 2//No::Nein//Yes::Ja//Mehr NIS-Server hinzufügen?://more_servers//
+//Wählen Sie Ja mit Hilfe der Tasten <Pfeil-nach-links/rechts>, um 
+weitere Server hinzuzufügen. //
+.help
+Wenn dieser Computer ein NIS-Hauptserver ist, geben Sie die Namen von 
+null oder mehreren Computern ein, die für diese Domain als NIS-Server
+agieren. 
+
+Wenn dieser Computer ein NIS-Nebenserver ist, geben Sie die Namen 
+eines oder mehrerer Computer ein, die als NIS-Server für diese Domain 
+agieren. 
+
+Stellen Sie sicher, daß die Computer, die Sie eingeben, Einträge in 
+der Datei /etc/inet/hosts besitzen. 
+
+Einzelheiten entnehmen Sie dem Handbuch des NIS-Verwalters.
+.helpinst
+Entf=Abbrechen  F1=Hilfe  ESC=Hilfe verlassen  1=Vor  2=Zurück

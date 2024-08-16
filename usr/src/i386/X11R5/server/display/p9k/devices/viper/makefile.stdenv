@@ -1,0 +1,94 @@
+#ident	"@(#)p9k:p9k/devices/viper/makefile.stdenv	1.1"
+#	NAME
+#
+#		makefile : Make file.
+#
+#	SYNOPSIS
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	AUTHORS
+#
+#
+#	HISTORY
+#
+
+#
+# special files.
+#
+..source: viper.dat
+..source: defaults.h messages.h
+..special: viper${LOGNAME}_g.so
+..source: Imakefile
+
+#	AM directives.
+
+
+c_files = viper.c   viper_pci.c
+o_files = ../../stdenv.o
+
+m_files = debug.m 
+
+cpp_options = -I../..
+
+# 	What are we building?
+
+..made_debug:	viper${LOGNAME}_g.so
+..made_optimized: viper${LOGNAME}_O.so
+..made_profiled: viper.a
+
+_cc_options_ = $(shell directory_to_make_option cc)
+_ld_options_ = $(shell directory_to_make_option ld) ../../libp9k.so
+_as_options_ = $(shell directory_to_make_option as)
+_ar_options_ = $(shell directory_to_make_option ar)
+
+..made: $(shell directory_to_make_option made)
+
+#	Standard make include file.
+
+include ${std_make_include_file}
+
+__cc_options__ = -DLIBRARY_NAME=\"VIPER\" -DCHIPSET_NAME=\"P9000\"\
+	-DLIBRARY_VERSION="\"0.02\""
+
+# 	Munch rules.
+$(munch_c_files) : $(non_munch_o_files)
+
+debug.c : debug.m $(non_munch_o_files)
+	$(munch) -d -i '^.*_debug$$' -f viper_debug_control $(non_munch_o_files) > $(@)
+
+viper.o:../../p9k.h ../../p9k_state.h ../../stdenv.h
+
+viper${LOGNAME}_g.so: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ld) $(LD_OPTIONS) -o $@ $(o_files) $(as_o_files)
+
+viper${LOGNAME}_O.so: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ld) $(LD_OPTIONS) -o $@ $(o_files) $(as_o_files)
+
+viper.a: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ar) $(AR_OPTIONS) $@ $(o_files) $(as_o_files)
+
+##$(am)
+
+viper.d : viper.c ../../stdenv.h messages.h defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../p9k_state.h ../../g_state.h ../../p9k_regs.h ../../g_regs.h ../../p9k.h ../../p9k_gbls.h ../../generic.h ../../p9k_modes.def ../../p9k_dacs.h ../../p9k_dacs.def ../../p9k_clocks.h ../../p9k_clocks.def
+debug.d : debug.c
+viper.ln : viper.c ../../stdenv.h messages.h defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../p9k_state.h ../../g_state.h ../../p9k_regs.h ../../g_regs.h ../../p9k.h ../../p9k_gbls.h ../../generic.h ../../p9k_modes.def ../../p9k_dacs.h ../../p9k_dacs.def ../../p9k_clocks.h ../../p9k_clocks.def
+debug.ln : debug.c
+debug.o : debug.c
+
+##$(am)

@@ -1,0 +1,30 @@
+#ident	"@(#)olpkg.oam:desksup/preremove	1.5"
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+#
+#       USL Desktop Manager Development
+#
+
+PKGMSG=${PKG}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+NAME="Desktop Manager Development"
+pfmt -s nostd -g ${PKGMSG}:51 "\n\tRemoving\n\t%s\n\tpackage...\n\n" $NAME 2>&1
+

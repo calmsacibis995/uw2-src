@@ -1,0 +1,77 @@
+/*ident	"@(#)libc-port:fmt/cvt-script	1.3"*/
+/*
+* Initialize quick scan power-of-two tables.
+*
+* for i in [0,4]:
+*	m[i] is 8^i
+*	l[i] is 2^(8^i)
+*/
+m[0] = 1
+l[0] = 2
+for (i = 0; i < 4; ++i) {
+	m[i+1] = m[i] * 8
+	x = l[i] * l[i]
+	x = x * x
+	l[i+1] = x * x
+}
+
+/*
+* Computes each of s^0, s^1, s^2, ... s^k
+* as a normalized binary value x*2^e where 1<=x<2.
+*
+* After computation is complete, a table of triples are printed:
+* the assumed value for s^i as a power of 10, the binary exponent,
+* and the binary significand, down from s^k to s^0 to s^(-k).
+*
+* Returns the value s^k.
+*/
+define n(p, s, k) {
+	auto h, i, j, r, q, x, y, z, t[], e[], b[]
+
+	obase = 10
+	t[0] = 1
+	e[0] = 0
+	b[0] = 1
+	h = 0
+	for (i = 0; i < k; ++i) {
+		x = t[i] * s
+		y = e[i]
+		z = b[i]
+		while (h < 5) {
+			if (l[h] >= x) {
+				break;
+			}
+			h =+ 1
+		}
+		j = h
+		while (--j >= 0) {
+			while (z < x) {
+				r = y
+				q = z
+				y =+ m[j]
+				z =* l[j]
+			}
+			y = r
+			z = q
+		}
+		t[i+1] = x
+		e[i+1] = y
+		b[i+1] = z
+	}
+	for (i = k; i >= 0; --i) {
+		obase = 10
+		"NUM=1e"; p * i
+		"EXP="; e[i]
+		obase = 2
+		"SIG="; t[i] / b[i]
+	}
+	for (i = 1; i <= k; ++i) {
+		obase = 10
+		"NUM=1e-"; p * i
+		"EXP="; -e[i] - 1
+		obase = 2
+		"SIG="; (b[i] + b[i]) / t[i]
+	}
+	obase = 10
+	return (t[k])
+}

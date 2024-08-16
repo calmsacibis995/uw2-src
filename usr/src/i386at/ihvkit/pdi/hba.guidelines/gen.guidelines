@@ -1,0 +1,306 @@
+#ident	"@(#)ihvkit:pdi/hba.guidelines/gen.guidelines	1.2"
+
+    INTRODUCTION
+
+
+    All IHVs, OEMs, or third party vendors planning to supply Novell with
+    source code versions of device drivers should adhere to a broad set 
+    of development and delivery guidelines.  The following list of
+    guidelines is meant to supplement the requirements or guidelines
+    outlined in any individual statement(s) of work. This list of guidelines
+    is also applicable and extremely valuable to any vendor planning to
+    support only binary versions of drivers across the various UnixWare
+    platforms.
+
+
+    GENERAL GUIDELINES
+
+
+	DRIVER SET
+
+         The driver source must be complete.  In order to be considered
+         complete a delivery of the driver source must include at least
+         the following files:
+
+             - Driver C-language source files
+             - Driver assembly language source files (if required)
+             - Driver header files
+             - Driver makefile
+             - System file
+             - Master file
+             - Space.c file
+             - disk.cfg file (HBA drivers only)
+             - any other files or shell scripts required to package the
+                 driver on an IHV floppy
+
+          The driver source must be delivered on 3.5 inch, 1.44 MB floppy
+          disk media in either cpio or tar format. Complete instructions for
+          obtaining the source from the delivery media must be included
+          with the delivered media.
+
+
+	DDI/DKI Compliance
+
+          The driver source must be DDI/DKI compliant.  A tool will be
+          supplied by Novell to verify that the driver supplied by THE
+          VENDOR is compliant with the DDI/DKI interface specification.
+          This tool will verify that the driver uses no kernel symbols
+          except those specified by the DDI/DKI documents.
+
+
+	MAKEFILE GUIDELINES
+
+          Driver source must follow UnixWare 2.0 source and makefile
+          guidelines.  The guidelines are documented in the Novell source
+          file and makefile guidelines document.
+
+
+	LINT
+
+          The driver source must have no lint(1) errors.  Any exceptions to
+          this requirement must be negotiated on a case by case basis.
+
+
+	DRIVER SOURCE FILES
+
+          The driver source for both UnixWare 1.1 and UnixWare 2.0 must be
+          common.  The same driver source must provide support for UnixWare
+          1.1 and UnixWare 2.0.  The #ifdef statement should be used to
+          conditionally compile any sections that may be specific to uni-
+          processor or multi-processor implementations.
+
+
+	SOURCE BUILD
+
+          The driver source must build on UnixWare 1.1 and UnixWare 2.0
+          systems without errors or warnings.  The source code for the
+          driver must build cleanly in either a UnixWare 1.1 or a UnixWare
+          2.0 system development environment.
+
+
+	LOADABLE DRIVERS
+
+          The driver must be dynamically loadable.  The driver must
+          function correctly whether it is built into the UnixWare kernel
+          (i.e., statically configured) or dynamically loaded.
+
+
+	MULTITHREADING DRIVERS
+
+          The driver, when compiled for UnixWare 2.0, must be multi-threaded.
+          The multi-threaded version of the driver shall not show any
+          significant performance loss over the single-threaded version of
+          the driver.  This requirement applies only to UnixWare 2.0 drivers.
+
+
+	AUTOCONFIGURATION
+
+          The driver must comply with the requirements specified in the
+          UnixWare 2.0 Auto-configuration Requirements document.
+
+
+	CODE REVIEW
+
+          The driver must be subjected to a code review attended by
+          technical representatives of THE VENDOR and NOVELL prior to
+          final delivery of the source code. The driver code must meet
+          the criteria of both THE VENDOR and NOVELL.  The technical
+          representatives of THE VENDOR must include the authors of the
+          code being reviewed. NOVELL must be given a copy of the code
+          to be reviewed one (1) week prior to the review meeting.
+
+
+	TEST CONFIGURATIONS
+
+          With each delivery of the source code for the driver, a list of
+          all test configurations used to exercise the driver must be supplied
+          by THE VENDOR.
+
+
+	KNOWN PROBLEMS
+
+          With each delivery of the source code for the driver, a list of
+          any known problems must be supplied by THE VENDOR.
+
+
+	MAN PAGES
+
+          A manual page must be supplied  by THE VENDOR for each driver.
+          The format of the manual page must be in accordance with the
+          sample manual page provided in the IHV kit.
+
+
+	TESTING GUIDELINES
+
+          Test results showing compliance to acceptance criteria may consist
+          of, but are not limited to, the following items:
+
+             - output of the tool provided by NOVELL to test for driver
+               source compliance to the DDI/DKI and PDI specifications
+
+             - output of the UnixWare Certification Test Suite 2.4
+
+             - output of a performance measurement program for the driver
+               on UnixWare 1.1 and UnixWare 2.0 systems.
+
+             - output showing the successful execution of the tests
+               specified in the PDI HBA Test Specification document
+
+             - any output which supports the satisfaction of the acceptance
+               requirements
+
+             - a list of hardware configurations tested
+
+             - a list of known problems
+
+
+
+    HBA SPECIFIC GUIDELINES
+     
+
+	PDI COMPLIANCE
+
+          The driver source must be PDI compliant.  A tool will be supplied
+          by Novell to verify that the driver supplied by THE VENDOR is
+          compliant with  the PDI interface specification.  This tool will
+          verify that the driver uses no kernel symbols except those
+          specified by the  PDI documents.
+
+
+	IHV HBA FLOPPY
+
+          The HBA driver must be packaged correctly as an IHV floppy.  The
+          correctness of this packaging will be determined by using the
+          floppy to install the driver during the initial installation
+          process and as an add-on (that is, used in addition to the driver
+          controlling the boot device).
+
+
+	DSP INSTALLAION
+
+          The HBA driver must install cleanly and without error using
+          the IHV floppy and pkgadd on UnixWare 1.1 and UnixWare 2.0
+          systems.  This capability allows driver upgrade through re-
+          installation of the IHV floppy.  The phrase "install cleanly" is
+          defined as not affecting any files other than those contained in
+          the driver package with the exception of the /etc/loadmods file.
+
+
+	DSP REMOVAL
+
+
+          The HBA driver must un-install cleanly and without error 
+          using the IHV floppy and pkgrm on UnixWare 1.1 and 2.0 systems.
+          This capability allows the driver to be removed from a system
+          where it is no longer required.  The phrase 'un-install cleanly'
+          is defined as not affecting any files other than those contained
+          in the driver package with the exception of the /etc/loadmods file.
+
+
+
+	ADD-ON ROLES AND BINARY COMPLIANCE
+
+
+          The HBA driver must function correctly in an add-on role on a
+          UnixWare 1.1 and a UnixWare 2.0 system.  If applicable, the driver
+          must function correctly when not controlling the boot device on a
+          system.
+
+
+          It must be possible to install UnixWare 2.0 by using the UnixWare
+          1.1 binary version of the supplied driver on an IHV floppy.  The
+          HBA controlling the boot hard disk on the system being installed
+          must be controlled by the driver on the IHV floppy.
+
+
+          The driver, compiled for UnixWare 1.1, must function correctly in
+          an add-on role with  UnixWare 2.0.  It must be possible to
+          install the UnixWare 1.1 binary version of the driver using an
+          IHV floppy with a UnixWare 2.0 system.
+
+
+
+	DRIVER TESTING REQUIREMENTS
+
+          The HBA driver must conform to all tests specified in the
+          PDI HBA Test Specification document.  THE VENDOR must show
+          that the HBA driver passes all tests specified in this document.
+          Compliance may be shown by either (1) THE VENDOR
+          writing test cases and providing these test cases and their
+          output to NOVELL; or (2) manual execution of each specified test.
+          If the testing is performed manually, documentary evidence of
+          the test results must still be supplied to NOVELL.
+
+
+
+          The driver must pass all PDI tests currently implemented (that
+          is, pditp, qtdtp, and cdfstp).  These tests must all execute
+          without failure unless the failures are not caused by the HBA
+          driver supplied by THE VENDOR.  All failures must be individually
+          evaluated to determine whether or not this criteria has been met.
+
+
+
+          The driver must simultaneously support at least four (4) HBA
+          controllers installed in the same system.  It must be possible,
+          after installing the UnixWare system with the driver, to use the
+          pdiadd(1M) command to add support for three (3) additional
+          instances of the HBA device that the driver supports.  These
+          additional instances must be fully functional.  Each add-on HBA
+          device must be tested with at least one (1) attached SCSI
+          peripheral.  Each HBA device must be able to function
+          simultaneously with the other HBA devices on the system.
+
+
+
+          The HBA driver must be tested with all seven(7) targets in place
+          on the SCSI bus.  These targets can be any mix of SCSI devices
+          but should include at least two(2) disk devices.  Each of the
+          target devices must continue to function when all of the target
+          devices are busy.
+
+
+
+          The driver must be tested with only a tape drive in place on the
+          SCSI bus.  When installed on a system in an add-on role, the HBA
+          driver must work correctly when being used to control only a SCSI
+          tape drive.
+
+
+
+          The driver must be tested with two (2) disk drives, two (2) tape
+          drives, and two (2) CD-ROM drives (double-speed) installed on
+          the SCSI bus at the same time.  If available, a WORM device
+          should also be installed.  Each of the target devices must
+          continue to function when all of the target devices are busy.
+
+
+
+          On an UnixWare 1.1 (that is, uni-processor) system and on a
+          UnixWare 2.0 (multi-processor) system, HBA drivers will be
+          certified by the execution of applicable tests in the UnixWare
+          Certification Test Suite Release 2.4.
+
+
+
+          On an UnixWare 1.1 (uni-processor) system, a load and stress test
+          suite provided by NOVELL must be executed. The system under test must
+          remain stable (for example, no kernel panic) for a period of five
+          (5) days.
+
+
+          On an UnixWare 2.0 (multi-processor) system, a load and stress test
+          suite provided by NOVELL must be executed. The system under test must
+          remain stable (for example, no kernel panic) for a period of five
+          (5) days.
+
+
+	PERFORMANCE REQUIREMENTS
+
+
+          A performance benchmark program (for example, GAEDE), provided
+          by NOVELL, must be executed. The results of this program must
+          be compared to the results obtained from benchmarking the
+          existing micro-channel SCSI (mcis) HBA driver on its
+          supported caching HBA controller.  The performance must exceed
+          the performance of the current mcis driver.

@@ -1,0 +1,1136 @@
+Befehlsformat: %s [Intervall]\n
+Intervall %s muß > 0 sein\n
+kann Ressourcenliste für %s nicht erhalten (id:%d)\n
+unerwartete Ressource für %s (id:%d)\nerwartet:%d erhalten:%d\n
+zusätzliche Ressourcen für %s (id:%d)\n
+kann Objektgröße für %s nicht erhalten (id:%d)\n
+kein Speicherplatz mehr\n
+ZEILEN
+SPALTEN
+GESPERRT
+kann nicht sperren
+Intervall:%5d (%0.2f)
+geben Sie <?> für Hilfe ein
+Cursorbewegungen: <Cursortasten> oder h,j,k,l oder ^P,^N,^B,^F.
+Plotten:       <Leertaste> zeichnet das aktuelle Feld, c löscht die Anzeigen.
+Balkendiagramm:       b schaltet die Anzeige des %%cpu-Balkendiagramms um.
+                Auf kleinen Bildschirmen rollen ^und v das Balkendiagramm.
+Subbildschirm:    <Leerstelle> in Kopfzeile zeigt detaillierte metrische Angaben.
+                < and > metrische Rollangaben und ps-Daten auf kleinen Bildschirmen.
+Rückgabebildschirm:  <esc> kehrt zum vorherigen Bildschirm zurück.
+P-Sperrre:      x schaltet um, wenn %s im Speicher gesperrt ist.
+Intervall:      + und - ändern das Musterintervall.
+Optionen:       p ändert das Plottingformat. u, s, a Anzeige
+                Benutzer, System und alle anderen Prozesse auf dem LWP-Bildschirm.
+Auffrischen:    ^L frischt den Bildschirm auf.
+Beenden:        q oder ^D beendet %s.
+<esc> um fortzufahren
+jJ\016
+kK\020
+hH\002
+lL\006
+ \n\r
+\033
+xX
+?
+uU
+sS
+aA
+pP
+^
+vV
+<
+>
++
+-
+cC
+bB
+\014
+qQ\004
+gesamt
+CPU %02d
+CPU %-2d
+CPU:%d
+Gerät:%s
+Dateisystem:%s
+Platte:%s
+pool:ovsz
+pool:%d
+%%s= %%u-
+     CPU:   
+   AUFRUFE/s: 
+    E-A/s:   
+    WARTESCHLANGE:  
+    TTY/s:  
+    ETHER:  
+%%u+s         calls        reads        runq         rcvs         xpkt/s
+%%w+i         forks        rdblk        %%run         xmit         rpkt/s
+%%usr         execs        writs        prunq        mdms         xoct/s
+%%sys         reads        wrblk        %%prun        canch        roct/s
+%%wio         writs        qlen         swpq         rawch        xerrs
+%%idl         Krwch        %%busy        %%swp         outch        rerrs
+   SPEICHER:  
+  SEITENWECHSELVERFAHREN/s 
+ DATEISYSTEM/s: 
+    LWPS:   
+
+
+kma          pgins        igets        lwps         strms        tcp/s
+frmem        pgots        lkups        run          ques         udp/s
+frswp        atchs        dirbk        sleep        evnts        icmp/s
+%%mem         pflts        %%dnlc        zomb         links        ip/s
+%%swp         vflts        inode        procs        msgbs        errs
+         frmem          frswpm           frswpdsk          swpmem          mem
+         %%mem           %%swpmem          %%swpdsk           swpdsk          kma
+kmasz      mem    alloc      req  fail  kmasz      mem    alloc      req  fail
+ovsz
+lwps                ausführbare lwps         Zombie-lwps         procs
+lwps auf CPU         schlafende lwps         untätige lwps           procmax
+lwpfail             gestoppte lwps          andere lwps          procfail
+      SEITE EINLAGERN:      
+ SEITE HINAUS/AUSLAGERN: 
+Seiteneinlag./s                  Seitenauslag./s
+Seiten eingelag./s                      Seiten ausgelag./s
+preattaches/s                        virtuell gescannte Seiten/s
+Anhänge/s                           virtuell freigegebene Seiten/s
+Anhänge aus Freiliste/s             physisch freigegebene Seiten/s
+Anhang von Freiliste-Auslagerung/s          Ausgelagerte Seiten/s
+Anhang-Auslassungen/s           physisch ausgelagerte Seiten/s
+Schutzfehler/s                        virtuell ausgelagerte Seiten/s
+Gültigkeitsfehler/s                 Seiteneinlager./s
+Software-Sperren/s                 eingelagerte Seiten/s
+Ströme                     Ströme/s
+Warteschlangen          Warteschlangen/s
+Meldungsblöcke         Meldungsblöcke/s
+mdbblks                     mdbblks/s
+Verweise                 Verweise/s
+
+
+   DATEISYSTEMAUFRUFE:  
+    PUFFERCACHE:   
+     VERSCH./TABELLEN:   
+reads/s                     lreads/s                  max. I-Knoten
+writes/s                    lwrites/s                 akt. I-Knoten
+readchars/s                 breads/s                  benutzte I-Knoten
+writechars/s                bwrites/s                 I-Knoten mit Fehler
+lookups/s                   phreads/s                 file tbl inuse
+dir hits/s                  phwrites/s                file tbl fail
+dir misses/s                %%rcache                   flck tbl max
+%%dnlc hits                  %%wcache                   flck tbl/s
+                                                      flck tbl inuse
+                                                      flck tbl fail
+igets/s                     recl mit Seiten/s         fs wio jobs
+Verz.-Blöcke/s              recl ohne Seiten/s        phys wio jobs
+   IGETS/DIRBLKS:   
+   KNOTENRÜCKFORDERUNGEN:  
+     ETHERNET:      
+   EINGABE-FEHLER:      
+  AUSGABE-FEHLER:         
+Pakete empf/s           Empf.Fehler:               Kollisionen
+übertr Pakete/s           Rahmenausrichtung        Pakete bei der Ausgabe verworfen
+Sendung erhalten/s        crc Fehler               Übertragungsfehler
+Sendung übertragen/s      Überläufe                Schnittstellenabbrüche
+Oktet empf/s              Unterläufe               Träger verloren
+Oktet übertr/s            fehlende Pakete
+Länge der Warteschl übertr     gute Pakete verworfen:
+                          Lesewarteschlange voll
+                          Ressourcen empfangen
+Pakete empfangen/s              zu sendende Anforderungen/s
+fehlerhafter Header-crc         gelieferte Pakete/s
+Paket zu kurz                   keine Routen
+Datengröße zu klein             Umleitungen gesendet
+fehlerhafte Header-Länge        Pakete weitergeleitet
+fehlerhafte Datenlänge          Pakete nicht weiterleitbar
+unbekanntes Protokoll           fragmentierte Pakete
+Fragmente empfangen             Fragmente erstellt
+abgelegte Fragmente             fehlgeschlagene Fragmente
+abgelaufene Fragmente           Eingabesystemfehler
+Pakete neu assemblieren         Ausgabesystemfehler
+Paket senden/s      Paket empf/s        aftwinpkt           estabrsets
+Datenpaket/s        Paket ACK/s         aftwinbyt           rttupdat/s
+Datenbyte/s         Byte ACK/s          winprobes           segstimd/s
+Paket neu übertr    doppelte ACKs       winupdats           rexmtimeot
+Byte neu übertr     zu viele ACKs       falsche Prüfsummen  Ablagezeitpunkt
+nur ACKs            inseqpk/s           badhdroff           persisttio
+ACKs verzögern      inseqby/s           Paket zu kurz       keeptimeot
+DRINGENDE Pakete    doppelte Pakete     Verbindungsanf      keepprobes
+probes              doppelte Byte       akzept Verb         keepdrops
+win updts           prtdupkt            Verbindungen        anstehend
+Steuerpakete        prtdupyt            Verb geschl         lngrtimeot
+resets              outordpkt           abgelegt            lingrcancl
+Eingabefehler       outordbyt           Verb. geschl        lingrabort
+                    aftclspkt           Versuch fehlgeschlagen
+                                                 ein        aus
+Nachrichten gesendet/s  echo-Antwort
+Nachrichten empf/s      Ziel unerreichbar
+Nachrichtantw/s         Ursprungslöschung
+icmp-Fehler             Routing-Umleitungen
+alte icmp-Nachricht     echo
+falsches Codefeld       Zeit abgelaufen
+Nachricht zu kurz       Parameterprobleme
+fehlerhafte Prüfsummen  Zeitstempel
+fehlerhafte Länge       Zeitstempelantwort
+Ausgabesystemfehler     Info-Anforderung
+                        Info-Antwort
+                        Maskenanforderung für Adresse
+                        Antwort für Adressenmask
+                                                            udp:
+Meld. gesendet/s     Paket senden/s    Pakete empf/s        Pakete senden/s
+Meld. empf/s         Datenpaket/s      Fragment empf/s      Paket geliefert/s
+Meld.-Antw./s        Datenbyte/s       Paket neu assembliert  Header-Ablagen
+icmp-Fehler          Paket neu übertr  Paket weitergeleitet fehlerhafte Datenlänge
+alte icmp-Meld.     Byte neu übertr    per Umleitung senden fehlerhaftes Header-crc
+fehlerh. Codefeld    Verbindungen      Pakete geliefert/s   belegtes Socket
+Meld. zu kurz        Paket empf/s      Anford. senden/s     keine Schnittstellen
+fehlerhafte Prüfsummen  Pakete ACK/s  fragmentierte Pakete Eingabesystemfehler
+fehlerhafte Länge    Byte ACK/s        Fragmente
+Ausgabesystemfehler  Eingabefehler     Eingabesystemfehler
+                                       Ausgabesystemfehler
+        ICMP:       
+       TCP:      
+         IP:        
+hz
+cpu
+Platte
+FSTyp
+FSNamen
+kmpool
+kmasize
+Seitengröße
+dsname
+nether
+Ethernetname
+%%usr
+%%sys
+%%wio
+%%idl
+iget/s
+dirblk/s
+ipage/s
+inopage/s
+freemem
+freeswp
+fswio
+physwio
+runq
+%%runocc
+swpq
+%%swpocc
+procfail
+procfail/s
+procinuse
+procmax
+mem
+balloc
+ralloc
+kmfail
+kmfail/s
+preatch/s
+atch/s
+atchfree/s
+atfrpgot/s
+atchmiss/s
+pgin/s
+pgpgin/s
+pgout/s
+pgpgout/s
+swpout/s
+ppgswpot/s
+vpgswpot/s
+swpin/s
+pgswpin/s
+virscan/s
+virfree/s
+physfree/s
+pfault/s
+vfault/s
+sftlck/s
+syscall/s
+fork/s
+lwpcreat/s
+exec/s
+read/s
+write/s
+readch/s
+writech/s
+lookup/s
+dnlchits/s
+dnlcmiss/s
+fltblinuse
+fltblfail
+fltblfail/s
+flcktblmax
+flcktbluse
+flcktblfal
+flcktblfail/s
+flcktbl/s
+maxinode
+currinode
+inodeinuse
+inodefail
+inodefail/s
+pswtch/s
+prunq
+%%prunocc
+bread/s
+bwrite/s
+lread/s
+lwrite/s
+phread/s
+phwrite/s
+rcvint/s
+xmtint/s
+mdmint/s
+rawch/s
+canch/s
+outch/s
+ipcmsgq/s
+ipcsema/s
+lwpfail
+lwpfail/s
+lwpinuse
+lwpmax
+dscyl
+dsflags
+instqlen
+%%busy
+avgqlen
+dsread/s
+dsrblk/s
+dswrit/s
+dswblk/s
+%%(usr+sys)
+%%(wio+idl)
+lwp_sleep
+lwp_run
+lwp_idle
+lwp_onproc
+lwp_zombie
+lwp_stop
+lwp_other
+lwp_total
+lwp_nproc
+(rd+wrt)/s
+(r+w)Kb/s
+%%dnlc
+kma(pg)
+InUcastPkts/s
+OutUcastPkts/s
+InNUcastPkts/s
+OutNUcastPkts/s
+InOctets/s
+OutOctets/s
+InErrors
+InErrors/s
+etherAlignErrors
+etherAlignErrors/s
+etherCRCerrors
+etherCRCerrors/s
+etherOverrunErrors
+etherOverrunErrors/s
+etherUnderrunErrors
+etherUnderrunErrors/s
+etherMissedPkts
+etherMissedPkts/s
+InDiscards
+InDiscards/s
+etherReadqFull
+etherReadqFull/s
+etherRcvResources
+etherRcvResources/s
+etherCollisions
+etherCollisions/s
+OutDiscards
+OutDiscards/s
+OutErrors
+OutErrors/s
+etherAbortErrors
+etherAbortErrors/s
+etherCarrierLost
+etherCarrierLost/s
+OutQlen
+ip_total/s
+ip_badsum
+ip_badsum/s
+ip_tooshort
+ip_tooshort/s
+ip_toosmall
+ip_toosmall/s
+ip_badhlen
+ip_badhlen/s
+ip_badlen
+ip_badlen/s
+ip_unknownproto
+ip_unknownproto/s
+ip_fragments
+ip_fragments/s
+ip_fragdropped
+ip_fragdropped/s
+ip_fragtimeout
+ip_fragtimeout/s
+ip_reasms
+ip_reasms/s
+ip_forward
+ip_forward/s
+ip_cantforward
+ip_cantforward/s
+ip_noroutes
+ip_noroutes/s
+ip_redirectsent
+ip_redirectsent/s
+ip_inerrors
+ip_inerrors/s
+ip_indelivers/s
+ip_outrequests/s
+ip_outerrors
+ip_outerrors/s
+ip_pfrags
+ip_pfrags/s
+ip_fragfails
+ip_fragfails/s
+ip_frags
+ip_frags/s
+icmp_error
+icmp_error/s
+icmp_oldicmp
+icmp_oldicmp/s
+icmp_echo_reply_out
+icmp_echo_reply_out/s
+icmp_dest_unreachable_out
+icmp_dest_unreachable_out/s
+icmp_source_quench_out
+icmp_source_quench_out/s
+icmp_routing_redirects_out
+icmp_routing_redirect_out/s
+icmp_echo_out
+icmp_echo_out/s
+icmp_time_exceeded_out
+icmp_time_exceeded_out/s
+icmp_parameter_problems_out
+icmp_parameter_problems_out/s
+icmp_time_stamp_out
+icmp_time_stamp_out/s
+icmp_time_stamp_reply_out
+icmp_time_stamp_reply_out/s
+icmp_info_request_out
+icmp_info_request_out/s
+icmp_info_reply_out
+icmp_info_reply_out/s
+icmp_address_mask_request_out
+icmp_address_mask_request_out/s
+icmp_address_mask_reply_out
+icmp_address_mask_reply_out/s
+icmp_badcode
+icmp_badcode/s
+icmp_tooshort
+icmp_tooshort/s
+icmp_checksum
+icmp_checksum/s
+icmp_badlen
+icmp_badlen/s
+icmp_echo_reply_in
+icmp_echo_reply_in/s
+icmp_dest_unreachable_in
+icmp_dest_unreachable_in/s
+icmp_source_quench_in
+icmp_source_quench_in/s
+icmp_routing_redirects_in
+icmp_routing_redirect_in/s
+icmp_echo_in
+icmp_echo_in/s
+icmp_time_exceeded_in
+icmp_time_exceeded_in/s
+icmp_parameter_problems_in
+icmp_parameter_problems_in/s
+icmp_time_stamp_in
+icmp_time_stamp_in/s
+icmp_time_stamp_reply_in
+icmp_time_stamp_reply_in/s
+icmp_info_request_in
+icmp_info_request_in/s
+icmp_info_reply_in
+icmp_info_reply_in/s
+icmp_address_mask_request_in
+icmp_address_mask_request_in/s
+icmp_address_mask_reply_in
+icmp_address_mask_reply_in/s
+icmp_reflect
+icmp_reflect/s
+icmp_intotal/s
+icmp_outtotal/s
+icmp_outerrors
+icmp_outerrors/s
+tcp_sndtotal/s
+tcp_sndpack/s
+tcp_sndbyte/s
+tcp_sndrexmitpack
+tcp_sndrexmitpack/s
+tcp_sndrexmitbyte
+tcp_sndrexmitbyte/s
+tcp_sndacks
+tcp_sndacks/s
+tcp_delack
+tcp_delack/s
+tcp_sndurg
+tcp_sndurg/s
+tcp_sndprobe
+tcp_sndprobe/s
+tcp_sndwinup
+tcp_sndwinup/s
+tcp_sndctrl
+tcp_sndctrl/s
+tcp_sndrsts
+tcp_sndrsts/s
+tcp_rcvtotal
+tcp_rcvtotal/s
+tcp_rcvackpack
+tcp_rcvackpack/s
+tcp_rcvackbyte
+tcp_rcvackbyte/s
+tcp_rcvdupack
+tcp_rcvdupack/s
+tcp_rcvacktoomuch
+tcp_rcvacktoomuch/s
+tcp_rcvpack
+tcp_rcvpack/s
+tcp_rcvbyte
+tcp_rcvbyte/s
+tcp_rcvduppack
+tcp_rcvduppack/s
+tcp_rcvdupbyte
+tcp_rcvdupbyte/s
+tcp_rcvpartduppack
+tcp_rcvpartduppack/s
+tcp_rcvpartdupbyte
+tcp_rcvpartdupbyte/s
+tcp_rcvoopack
+tcp_rcvoopack/s
+tcp_rcvoobyte
+tcp_rcvoobyte/s
+tcp_rcvpackafterwin
+tcp_rcvpackafterwin/s
+tcp_rcvbyteafterwin
+tcp_rcvbyteafterwin/s
+tcp_rcvwinprobe
+tcp_rcvwinprobe/s
+tcp_rcvwinupd
+tcp_rcvwinupd/s
+tcp_rcvafterclose
+tcp_rcvafterclose/s
+tcp_rcvbadsum
+tcp_rcvbadsum/s
+tcp_rcvbadoff
+tcp_rcvbadoff/s
+tcp_rcvshort
+tcp_rcvshort/s
+tcp_inerrors
+tcp_inerrors/s
+tcp_connattempt
+tcp_connattempt/s
+tcp_accepts
+tcp_accepts/s
+tcp_connects
+tcp_connects/s
+tcp_closed
+tcp_closed/s
+tcp_drops
+tcp_drops/s
+tcp_conndrops
+tcp_conndrops/s
+tcp_attemptfails
+tcp_attemptfails/s
+tcp_estabresets
+tcp_estabresets/s
+tcp_rttupdated
+tcp_rttupdated/s
+tcp_segstimed
+tcp_segstimed/s
+tcp_rexmttimeo
+tcp_rexmttimeo/s
+tcp_timeoutdrop
+tcp_timeoutdrop/s
+tcp_persisttimeo
+tcp_persisttimeo/s
+tcp_keeptimeo
+tcp_keeptimeo/s
+tcp_keepprobe
+tcp_keepprobe/s
+tcp_keepdrops
+tcp_keepdrops/s
+tcp_linger
+tcp_linger/s
+tcp_lingerexp
+tcp_lingerexp/s
+tcp_lingercan
+tcp_lingercan/s
+tcp_lingerabort
+tcp_lingerabort/s
+udp_hdrops
+udp_hdrops/s
+udp_badlen
+udp_badlen/s
+udp_badsum
+udp_badsum/s
+udp_fullsock
+udp_fullsock/s
+udp_noports
+udp_noports/s
+udp_indelivers/s
+udp_inerrors
+udp_inerrors/s
+udp_outtotal/s
+ip_sum/s
+icmp_sum/s
+udp_sum/s
+tcp_sum/s
+neterr_sum
+neterr_sum/s
+%%rcache
+%%wcache
+%%mem
+%%memswp
+%%dskswp
+dskswp
+dskfreeswp
+memswp
+totalmem
+Ströme
+Ströme/s
+Warteschlangen
+Warteschlangen/s
+mdbblks
+mdbblks/s
+msgblks
+msgblks/s
+Verweise
+Verweise/s
+Ereignisse
+Ereignisse/s
+fehlgesch_Ereignisse
+fehlgesch_Ereignisse/s
+lbolt
+<-
+->
+<>
+*
+|
+%3d|
+=
+-
+^
+v
+%%%%%% S     BENTZ  PID LWPID CPU PRI    CPUZEIT   GRSS TTY     SYSBEFEHL[LWP]
+%%%%%% S     BENTZ  PID LWPID CPU PRI    CPUZEIT   GRSE TTY     BENTZBEF[LWP]
+%%%%%% S     BENTZ  PID LWPID CPU PRI    CPUZEIT   GRSE TTY     BEFEHL[LWP]
+/proc kann nicht geöffnet werden\n
+ftw() fehlgeschlagen\n
+<-   mehr   ->
+<-   mehr
+     mehr   ->
+?
+mmap() fehlgeschlagen\n
+/etc/.rtpmrc
+.rtpmrc
+HOME
+:
+Hintergrund
+Etiketten
+Header
+Meldungen
+Standard
+plot
+Balkendiagramm
+==
+!=
+<
+>
+<=
+>=
+schwarz
+rot
+grün
+gelb
+blau
+magenta
+zyan-blau
+weiß
+;
+Fehler in Farbbereichsausdruck wird ignoriert, Datei:%s Zeile:%d\n
+_
+plot
+umkehren
+(
+)
+,
+*
+Fehler in .rtpmrc wird ignoriert, Datei: %s Zeile:%d\n
+Befehlsformat: %s [-h history_Puffergröße] [Intervall]\n
+%s ignoriert histsz-Argument, muß > %d sein\n
+spx_max_connections
+spx_max_used_connections
+sap_total_servers
+sap_unused
+sap_Lans
+sap_TotalInSaps/s
+sap_GSQReceived/s
+sap_GSRReceived/s
+sap_NSQReceived/s
+sap_SASReceived/s
+sap_SNCReceived/s
+sap_GSIReceived/s
+sap_NotNeighbor
+sap_NotNeighbor/s
+sap_EchoMyOutput
+sap_EchoMyOutput/s
+sap_BadSizeInSaps
+sap_BadSizeInSaps/s
+sap_BadSapSource
+sap_BadSapSource/s
+sap_TotalOutSaps/s
+sap_NSRSent/s
+sap_GSRSent/s
+sap_GSQSent/s
+sap_SASAckSent/s
+sap_SASNackSent
+sap_SASNackSent/s
+sap_SNCAckSent/s
+sap_SNCNackSent
+sap_SNCNackSent/s
+sap_GSIAckSent/s
+sap_BadDestOutSaps
+sap_BadDestOutSaps/s
+sap_SrvAllocFailed
+sap_SrvAllocFailed/s
+sap_MallocFailed
+sap_MallocFailed/s
+sap_TotalInRipSaps
+sap_TotalInRipSaps/s
+sap_BadRipSaps
+sap_BadRipSaps/s
+sap_RipServerDown
+sap_RipServerDown/s
+sap_ProcessesToNotify/s
+sap_NotificationsSent/s
+saplan_Network
+saplan_LanNumber
+saplan_UpdateInterval
+saplan_AgeFactor
+saplan_PacketGap
+saplan_PacketSize
+saplan_PacketsSent/s
+saplan_PacketsReceived/s
+saplan_BadPktsReceived
+saplan_BadPktsReceived/s
+ipxlan_InProtoSize
+ipxlan_InProtoSize/s
+ipxlan_InBadDLPItype
+ipxlan_InBadDLPItype/s
+ipxlan_InCoalesced
+ipxlan_InCoalesced/s
+ipxlan_InPropagation/s
+ipxlan_InNoPropagate
+ipxlan_InNoPropagate/s
+ipxlan_InTotal/s
+ipxlan_InBadLength
+ipxlan_InBadLength/s
+ipxlan_InDriverEcho
+ipxlan_InDriverEcho/s
+ipxlan_InSap
+ipxlan_InRipDropped
+ipxlan_InRipDropped/s
+ipxlan_InRipRouted/s
+ipxlan_InSap/s
+ipxlan_InSapBad
+ipxlan_InSapBad/s
+ipxlan_InSapIpx/s
+ipxlan_InSapNoIpxToSapd/s
+ipxlan_InSapNoIpxDrop
+ipxlan_InSapNoIpxDrop/s
+ipxlan_InDiag
+ipxlan_InDiag/s
+ipxlan_InDiagInternal
+ipxlan_InDiagInternal/s
+ipxlan_InDiagNIC
+ipxlan_InDiagNIC/s
+ipxlan_InDiagIpx
+ipxlan_InDiagIpx/s
+ipxlan_InDiagNoIpx
+ipxlan_InDiagNoIpx/s
+ipxlan_InNICDropped
+ipxlan_InNICDropped/s
+ipxlan_InBroadcast/s
+ipxlan_InBroadcastInternal/s
+ipxlan_InBroadcastNIC/s
+ipxlan_InBroadcastDiag
+ipxlan_InBroadcastDiag/s
+ipxlan_InBroadcastDiagFwd
+ipxlan_InBroadcastDiagFwd/s
+ipxlan_InBroadcastDiagRoute
+ipxlan_InBroadcastDiagRoute/s
+ipxlan_InBroadcastDiagResp
+ipxlan_InBroadcastDiagResp/s
+
+
+ipxlan_InForward/s
+ipxlan_InRoute/s
+ipxlan_InInternalNet/s
+ipxlan_OutPropagation/s
+ipxlan_OutTotalStream/s
+ipxlan_OutTotal/s
+ipxlan_OutSameSocket
+ipxlan_OutSameSocket/s
+ipxlan_OutFillInDest/s
+ipxlan_OutInternal/s
+ipxlan_OutBadLan
+ipxlan_OutBadLan/s
+ipxlan_OutSent/s
+ipxlan_OutQueued/s
+ipxlan_Ioctl/s
+ipxlan_IoctlSetLans/s
+ipxlan_IoctlGetLans/s
+ipxlan_IoctlSetSapQ/s
+ipxlan_IoctlSetLanInfo/s
+ipxlan_IoctlGetLanInfo/s
+ipxlan_IoctlGetNodeAddr/s
+ipxlan_IoctlGetNetAddr/s
+ipxlan_IoctlGetStats/s
+ipxlan_IoctlLink/sk/s
+ipxlan_IoctlUnlink/s
+ipxlan_IoctlUnknown
+ipxlan_IoctlUnknown/s
+ipxsock_IpxInData/s
+ipx_datapackets/s
+ipxsock_IpxOutData/s
+ipxsock_IpxOutBadSize
+ipxsock_IpxOutBadSize/s
+ipxsock_IpxOutToSwitch/s
+ipxsock_IpxTLIOutData/s
+ipxsock_IpxTLIOutBadState
+ipxsock_IpxTLIOutBadState/s
+ipxsock_IpxTLIOutBadSize
+ipxsock_IpxTLIOutBadSize/s
+ipxsock_IpxTLIOutBadOpt
+ipxsock_IpxTLIOutBadOpt/s
+ipxsock_IpxTLIOutHdrAlloc
+ipxsock_IpxTLIOutHdrAlloc/s
+ipxsock_IpxTLIOutToSwitch/s
+ipxsock_IpxBoundSockets
+ipxsock_IpxBoundSockets/s
+ipxsock_IpxBind/s
+ipxsock_IpxTLIBind/s
+ipxsock_IpxTLIOptMgt/s
+ipxsock_IpxTLIUnknown
+ipxsock_IpxTLIUnknown/s
+ipxsock_IpxTLIOutBadAddr
+ipxsock_IpxTLIOutBadAddr/s
+ipxsock_IpxSwitchInvalSocket
+ipxsock_IpxSwitchInvalSocket/s
+ipxsock_IpxSwitchSumFail
+ipxsock_IpxSwitchSumFail/s
+ipxsock_IpxSwitchAllocFail
+ipxsock_IpxSwitchAllocFail/s
+ipxsock_IpxSwitchSum/s
+ipxsock_IpxSwitchEven/s
+ipxsock_IpxSwitchEvenAlloc/s
+Dieses ist eine unbenutzte Zeile in der Datei RTPM.str
+ipxsock_IpxDataToSocket/s
+ipxsock_IpxTrimPacket/s
+ipxsock_IpxSumFail
+ipxsock_IpxSumFail/s
+ipxsock_IpxBusySocket
+ipxsock_IpxBusySocket/s
+ipxsock_IpxSocketNotBound
+ipxsock_IpxSocketNotBound/s
+ipxsock_IpxRouted/s
+ipxsock_IpxRoutedTLI/s
+ipxsock_IpxRoutedTLIAlloc
+ipxsock_IpxRoutedTLIAlloc/s
+ipx_sent_to_tli/s
+ipx_total_ioctls/s
+ipxsock_IpxIoctlSetWater/s
+ipxsock_IpxIoctlBindSocket/s
+ipxsock_IpxIoctlUnbindSocket/s
+ipxsock_IpxIoctlStats/s
+ipxsock_IpxIoctlUnknown
+ipxsock_IpxIoctlUnknown/s
+rip_ReceivedPackets/s
+rip_ReceivedNoLanKey
+rip_ReceivedNoLanKey/s
+rip_ReceivedBadLength
+rip_ReceivedBadLength/s
+rip_ReceivedCoalesced/s
+rip_ReceivedNoCoalesce
+rip_ReceivedNoCoalesce/s
+rip_ReceivedRequestPackets/s
+rip_ReceivedResponsePackets/s
+rip_ReceivedUnknownRequest
+rip_ReceivedUnknownRequest/s
+ripP_total_router_packets_sent/s
+rip_SentAllocFailed
+rip_SentAllocFailed/s
+rip_SentBadDestination
+rip_SentBadDestination/s
+rip_SentRequestPackets/s
+rip_SentResponsePackets/s
+rip_SentLan0Dropped
+rip_SentLan0Dropped/s
+rip_SentLan0Routed/s
+rip_ioctls_processed/s
+rip_RipxIoctlInitialize/s
+rip_RipxIoctlGetHashSize/s
+rip_RipxIoctlGetHashStats/s
+rip_RipxIoctlDumpHashTable/s
+rip_RipxIoctlGetRouterTable/s
+rip_RipxIoctlGetNetInfo/s
+rip_RipxIoctlCheckSapSource/s
+rip_RipxIoctlResetRouter/s
+rip_RipxIoctlDownRouter/s
+rip_RipxIoctlStats/s
+rip_RipxIoctlUnknown
+rip_RipxIoctlUnknown/s
+spx_current_connections
+spx_current_connections/s
+spx_alloc_failures
+spx_alloc_failures/s
+spx_open_failures
+spx_open_failures/s
+spx_ioctls/s
+spx_connect_req_count/s
+spx_connect_req_fails
+spx_connect_req_fails/s
+spx_listen_req/s
+spx_listen_req_fails
+spx_listen_req_fails/s
+spx_send_mesg_count/s
+spx_unknown_mesg_count
+spx_unknown_mesg_count/s
+spx_send_bad_mesg
+spx_send_bad_mesg/s
+spx_send_packet_count/s
+spx_send_packet_timeout
+spx_send_packet_timeout/s
+spx_send_packet_nak
+spx_send_packet_nak/s
+spx_rcv_packet_count/s
+spx_rcv_bad_packet
+spx_rcv_bad_packet/s
+spx_rcv_bad_data_packet
+spx_rcv_bad_data_packet/s
+spx_rcv_dup_packet
+spx_rcv_dup_packet/s
+spx_rcv_packet_sentup/s
+spx_rcv_conn_req
+spx_rcv_conn_req/s
+spx_abort_connection
+spx_abort_connection/s
+spx_max_retries_abort
+spx_max_retries_abort/s
+spx_no_listeners
+spx_no_listeners/s
+spxcon_netaddr
+spxcon_nodeaddr
+spxcon_sockaddr
+spxcon_connection_id
+spxcon_o_netaddr
+spxcon_o_nodeaddr
+spxcon_o_sockaddr
+spxcon_o_connection_id
+spxcon_con_state
+spxcon_con_retry_count
+spxcon_con_retry_time
+spxcon_con_type
+spxcon_con_ipxChecksum
+spxcon_con_window_size
+spxcon_con_remote_window_size
+spxcon_con_send_packet_size
+spxcon_con_rcv_packet_size
+spxcon_con_round_trip_time
+spxcon_con_window_choke
+spxcon_con_send_mesg_count/s
+spxcon_con_unknown_mesg_count
+spxcon_con_unknown_mesg_count/s
+spxcon_con_send_bad_mesg
+spxcon_con_send_bad_mesg/s
+spxcon_con_send_packet_count/s
+spxcon_con_send_packet_timeout
+spxcon_con_send_packet_timeout/s
+spxcon_con_send_packet_nak
+spxcon_con_send_packet_nak/s
+spxcon_con_send_ack/s
+spxcon_con_send_nak
+spxcon_con_send_nak/s
+spxcon_con_send_watchdog/s
+spxcon_con_rcv_packet_count/s
+spxcon_con_rcv_bad_packet
+spxcon_con_rcv_bad_packet/s
+spxcon_con_rcv_bad_data_packet
+spxcon_con_rcv_bad_data_packet/s
+spxcon_con_rcv_dup_packet
+spxcon_con_rcv_dup_packet/s
+spxcon_con_rcv_packet_outseq
+spxcon_con_rcv_packet_outseq/s
+spxcon_con_rcv_packet_sentup/s
+spxcon_con_rcv_packet_qued/s
+spxcon_con_rcv_ack/s
+spxcon_con_rcv_nak
+spxcon_con_rcv_nak/s
+spxcon_con_rcv_watchdog/s
+   lan_%02d
+ spx_%02d
+lan:%02d
+spx:%02d
+   TCP/IP:  
+   NETWARE: 
+Ströme            Ströme/s
+Warteschlangen    Warteschlangen/s
+Meld.-Blcke       Meld.-Blcke/s
+Meld.-Blcke       Meld.-Blcke/s
+Verweise          Verweise/s
+Ereignisse        Ereignisse/s      fehlgesch_Ereignisse
+sap_total/s
+spx_total/s
+ipx_total/s
+rip_total/s
+netware_errs
+netware_err/s
+kma          pgins        igets        lwps         spx/s        tcp/s
+frmem        pgots        lkups        run          ipx/s        udp/s
+frswp        atchs        dirbk        sleep        sap/s        icmp/s
+%%mem         pflts        %%dnlc        zomb         rip/s        ip/s
+%%swp         vflts        Knoten       Prozesse     Fehler       Fehler
+      SPX:        
+      IPX:          
+      SAP:         
+      RIP:          
+Paket empf/s       Paket empf/s         Paket empf/s        Paket empf/s
+  fehlerhafte        Pakete drvrecho/s    GSQ-Paket/s       Routing-Anf./s
+  fehlerhafte Daten  senden/s             GSR-Paket/s        Routing-Antw./s
+ dop. Pakete         rip-Paket/s          NSQ-Paket/s         coalesced
+  sentup/s           sap-Paket/s          lcl adv/s           fehlerhafte Länge
+ges. Paket/s         diag-Paket/s         lcl chg/s           keine Länge
+  timeouts           propagat/s           lcl shm/s         ges. Paket/s
+  rcv_naks         ges. Paket/s           outlan/s            angef Paket/s
+Meld. ges/s          an LANs/s            RIP Paket/s           Antw.-Paket/s
+  unk Meldungen     in Warteschlange/s  Paket ges./s          lan0rout/s
+  fehlerhafte Meldungen tot ISM/s         GSQ Paket/s         lan0drop
+Verb.-Anf./s         Netbios/s            GSR Paket/s        fehlerhaftes Ziel
+  Abbrüche         ioctl/s                NSR Paket/s       ioctl/s
+      senden:                  empfangen:                ioctl:
+Gesamtpaket/s             Gesamtpaket/s            gesamt-ioctl/s
+Anforderung/s             Anforderung/s            init/s
+Antwort/s                 fehlerhafte Routerlänge Hash-Größe holen/s
+alloc fehlgeschlagen      Antwort/s                Hash-Status holen/s
+fehlerhaftes Ziel         kein LAN-Schlüssel  Hash-Tabellenspeicherauszug/s
+lan0 abgelegt             coalesced/s              Router-Tabelle holen/s
+lan0 gerouted/s           coalesce fehlgeschlagen Netzinfo holen/s
+                          unk Anforderungen        sap-Ursprung überprüfen/s
+                                                   Router neueinstellen/s
+                                                   Router herunter/s
+                                                   stats/s
+                                                   unk
+Meldung/s                  Paket/s                     aktuelle Verbindungen
+unk Meldungen              fehlerhafte Pakete          max. in Verwendung
+fehlerhafte Meldungen      fehlerhafte Daten           max. Verbindungen
+Pakete/s                   dop. Pakete                 Öffnen fehlgeschlagen
+abgelaufene Pakete         sentup/s                    alloc fehlgeschlagen
+Pakete nak'd               Verbindung erforderlich/s   ioctl/s
+Verbindungs-Anf./s           Abbrüche
+Verbindung fehlgeschlagen    erneute Abbruchversuche
+Zuhörer-Anf./s             kein Zuhörer
+listen fehlgeschlagen
+     SPX SENDEN:        
+     SPX EMPFANGEN:       
+     SPX VERSCH.:        
+Meldung gesendet/s
+ unk Meldungen
+ fehlerhafte Meldungen
+Paket gesendet/s
+ timeouts
+ Paket naks
+ACKs gesendet/s
+naks gesendet
+watchdg/s
+Paket empfangen/s
+ fehlerhafte Pakete
+ fehlerhafte Daten
+ doppelte Pakete
+ out seq
+ sentup/s
+ in Warteschlage/s
+ACKs empfangen/s
+rcvnaks/s
+                                             empfangen:      gesendet:
+bekannte LANs          SAP-Pakete:                empf./s      gesendet/s
+bekannte Server          GSQ:                     empf./s       gesendet/s
+Pakete gesendet/s        GSR:                     empf./s       gesendet/s
+Pakete empf./s           NSQ:                     empf./s 
+  RIP-Netz heruntergefahren NSR:                                 gesendet/s
+  RIP-Server heruntergefahren außerhalb des LAN: empf. gesendet
+  RIP fehlerhafte Pakete lcl bekanntmachen:     Anforderungen/s  ACK/s
+  fehlerhafte Pakete                                             nacks
+  fehlerhafte Größe lcl-Änderung benachrichtgen:  Anforderung/s  ACK/s
+  ungültiger Ursprung                                            nacks
+  ablegen, SAPD Echo                              Prozesse     Anforderung/s
+Server-alloc fehlgeschlagen  shm-ID holen:   Anforderung/s ACK/s 
+Ursprung-alloc fehlgeschlagen
+    LAN-DATEN:               
+LAN-Index
+updt intvl
+Zeitfaktor
+pktgap(ms)
+Paketgröße
+Paket gesendet/s
+Paket empfangen/s
+  fehlerhafte Pakete
+in Datenpaket/s    in Sendepaket/s      in diagpaket/s      ioctl-Paket/s
+ geroutet/s         an ISM/s             Routen an ISM       setlan/s
+ coalesced          an NIC/s             addr NIC            getlan/s
+ fehlerhafte Länge   Diagnose             ISM routen         setsap/s
+
+ ISM routen/s         ipx routen        Ges.Pakete senden/s  Info holen/s
+ abgelegt             ipx resp           ges. ISM/s          Knoten holen/s
+
+ kein DPLI         DLPI echo/s           ISM routen/s        Status holen/s
+in SAP-Paket/s     in RIP-Paket/s       LAN routen/s         Verweis/s
+ ISM routen/s       ipx routen/s         LAN in Warteschlange/s Verweis aufheben/s
+
+ fehlerhafte Pakete in Netbios/s         fillin-Ziel
+
+insges empf Datenpakete/s  TLI out LAN rtr/s          ungültige Prüfsummen
+von ISM empf Pakete/s  an  Sockets gebunden           aktive Sockets
+aus an LAN-Router/s        nicht-TLI Bindungsanf/s    Socket nicht gebunden
+IPX geroutet/s             TLI-Socket-Bindungsanf./s  von IPX geroutete TLI/s
+aus nicht-TLI Datenpaket/s TLI Optionsmgment-Anf/s    TLI-Header alloc fehlgeschlagen
+falsche Länge ges < Headergröße TLI unbekannte Anf    an TLI-Socket gesendet/s
+aus TLI-Datenpaket/s       ungültiger Ursprungssocket ioctl insges/s
+  Socket nicht gebunden  num. Blockzuordnung/s          setwater/s
+  fehlerhafte Adressengröße num. Blockzuordnung fehlgeschlagen Socket binden/s
+  fehlerhafte Datengröße   even pad/s                   Socket-Bindung aufheben/s
+  fehlerhafte Optionsgröße Prüfsumme gen/s              stats/s
+  Header-alloc fehlgeschlagen Prüfsumme fehlgeschlagen  unbekannt
+Datenpaket an Socket/s     Datengröße trim Paket/s
+                             Länge < ipx-Headergröße
+in Datenpaket/s        in RIP-Paket/s            insgesamt erhaltene Datenpakete/s
+  geroutet/s             ISM routen/s            von ISM empfangene Pakete/s
+  coalesced            in Netbios-Paket/s        aus an LAN-Router/s
+  Router weiterleiten/s in diag-Paket/s          IPX geroutet/s
+  ISM routen/s           an ISM routen           aus nicht-TLI Datenpaket/s
+in sap-Paket/s         aus Gesamtpaket/s         aus TLI-Datenpaket/s
+  ipx routen/s           Gesamt-ISM/s            TLI aus an LAN-Router/s
+  sapd routen/s          Netbios-Paket/s         Datenpakete an Socket/s
+in Sendepaket/s          ISM routen/s            von IPX geroutete TLI/s
+  an ISM/s               gesendet an LAN/s
+  an NIC/s               in Warteschlange für LAN/s
+  DLPI echo/s          ioctl Paket/s
+                IPX LAN ROUTER                 
+    IPX SOCKET MUX            
+ipxsock_IpxInBadSize
+pxsock_IpxInBadSize/s
+ipxlan_InBroadcastRoute
+ipxlan_InBroadcastRoute/s
+ zu klein            geroutet/s          prop Pakete/s       getaddr/s
+ kein ISM/s         nicht geroutet       falsches LAN
+ rtesapd/s          fallengelassen/s     gleiches Socket     unbekannt
+ fwd rtr/s            an LANs             ipx rsp/s          setinfo/s
+%%eisa
+eisa_cnt

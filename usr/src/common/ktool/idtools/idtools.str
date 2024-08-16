@@ -1,0 +1,280 @@
+#ident	"@(#)ktool:common/ktool/idtools/idtools.str	1.33"
+
+Cannot open file %s for writing.\n
+Usage:  idinstall -[adugGM] [-ek] [-optbmsnirhATFIO] [-R rootdir] [-f maj_list] [-P pkg_name] module_name\n
+Must have exactly one of -a, -d, -u, -g, -G, -M options.\n
+Must specify exactly one device name.\n
+Device name must be nonblank.\n
+Insufficient disk space to reconfigure.\n
+-l/-c no longer supported except with -a or -u; use -m/-s\n
+Cannot find device driver directory.\n
+Device package already exists.\n
+Cannot open driver package directory.\n
+Local directory does not contain a Driver object (Driver.o) file.\n
+Cannot have both Mfsys/Sfsys and Master/System.\n
+Local directory must contain both Master and System files (or Mfsys and Sfsys).\n
+Must have one of -p, -t, -m, -s, -n, -i, -r, -h, -A, -T\noptions when using -g or -G.\n
+-o and -b options not allowed with -g and -G.\n
+idinstall: Cannot remove driver package directory\n
+Cannot link <%s> to <%s>: '%s'\n
+Line too long in %s file\n
+cannot remove file %s\n
+Cannot find driver component.\n
+LINE:
+Cannot copy files - read open failed.\n
+Cannot copy files - write open failed.\n
+Cannot copy files - read error on %s.\n
+%s removed\n
+Old execsw module Master/System must be converted by hand.\n
+Illegal function indicator in Master file\n
+Can't convert old System file w/o old Master file.\n
+Illegal usage of 'C' flag for %s Master file.\n
+Not enough memory to search mdevice entries\n
+Cannot create recovery files.\n
+Cannot create recovery file - /etc/.last_dev_del/dev\n
+Cannot create recovery files - read mdevice.\n
+Cannot create recovery files - create mdevice.\n
+Cannot create recovery files - copy mdevice.\n
+%s: can not open for mode %s\n
+number of fields is incorrect\n
+unknown entry\n
+illegal major number entry\n
+%s Master file has %s major number range (%d-%d)\n\twhich don't match with the reserved range (%d-%d)\n
+%s is using the %s major number reserved by %s (%d-%d)\n
+%s major number reserved by %s (%d-%d) is not in res_major file\n
+Cannot save the original file.\n
+Can't make %s directory.\n
+%s Master file has non-zero major numbers, but no 'k' flag;\n\tignoring input numbers and assigning new major numbers.\n
+Error opening %s file.\n
+Error reading %s file.\n
+Incorrect version number in %s file.\n
+Wrong number of fields in %s file.\n
+Illegal character in flags field in %s file for %s module.\n
+Syntax error in major number in %s file for %s module.\n
+Invalid major range (start not less than end) in %s file for %s module.\n
+Type character in %s file must be 'b' for block or 'c' for character.\n
+Unknown entry-point name in Master file.\n
+Unknown dependee module name in Master file.\n
+Invalid $interface line in Master file for %s module.\n
+Module type name too long.\n
+Empty magic line or more than one magic line.\n
+Unrecognized field in Autotune file.\n
+\nUsage: $0 [-Q] [-K] [[-I include_path] ...] [-O output_file]\n\t[-S] [-B] [-#] [[-M module] ...] [-l sym_list] [[-D symbol] ...]\n\t[[-U symbol] ...]\n
+\n\tThe UNIX Operating System kernel cannot be rebuilt\nwhile running in enhanced security mode.\nPlease reboot mUNIX and try it again.\n
+The directory %s doesn't exist.\n
+\n\tThe %s kernel will be rebuilt now\n\tThis will take some time. Please wait.\n\n
+\n\tThe unix kernel will be rebuilt to include your\n\tconfiguration changes during the next system reboot.\n\n
+The following loadable modules will be configured now:\n
+Root for this process is %s\n\n
+Build failed in idtune.\n
+Failed to make /dev entries for the specified modules.\n
+Failed to register the specified loadable modules.\n
+Failed to create inittab entries for the specified modules.\n
+Module configuration is completed.\n
+\n\tCannot load the symbol table for %s\n\tThe rebuild of the UNIX Operating System kernel failed.\n
+No symbol table will be loaded for %s\n
+\n\tFailed to load kdb commands.\n\tIf any commands were specified in kdb.rc,\n\tthey will not be executed during system initialization.\n
+The %s kernel has been rebuilt.\n
+Usage: %s [-r root] [ -c | -s | -t tunemem ]\n
+For %s, maximum is less than minimum.  This indicates\nan inconsistent autotune file.\n
+For %s, default is less than minimum.  This indicates\nan inconsistent autotune file.  Default will be increased to minimum.\n
+For %s, default is greater than maximum.  This indicates\nan inconsistent autotune file.  Default will be decreased to maximum.\n
+Out of space during autotune\n
+must have one of -g or -l options\n
+Usage: %s -l | -g value1 value2\n
+must specify two values to compare\n
+Only one of -p, -y, -v, -d, -a or -c allowed\n
+Usage: idcheck [-r] [-R dir] [-p module_name] [-y module_name]\n
+cannot find /etc/conf/cf.d/stune\n
+cannot find /etc/conf/modnew.d\n
+cannot find /etc/conf/cf.d/mod_register\n
+Failed to install the new UNIX Operating System kernel in /stand.\nThe following is the contents of /stand:\n
+Do you want to retry by removing some files from /stand? 
+The new UNIX Operating System kernel is not installed.\n
+Please enter the file(s) to be removed: 
+Cannot mount /stand. The installation of the new\nUNIX Operating System kernel failed.\n
+Saved the previous UNIX Operating System kernel as %s.old.\n
+Can not save the previous UNIX Operating System kernel.\n
+Installed new UNIX Operating System kernel.\n
+link(%s, %s) failed: %s\n
+Unable to read all contents of %s%s\n
+Setting up new kernel environment\n
+Usage: idmkinit [-o directory] [-e directory] [[-M module_name] ...] [-#]\n
+Cannot parse line: %s\n
+Can't access %s for module %s\n
+Usage: idmknod [-o dev_dir] [-r conf_dir] [-M mod_name] [-s] [-d sdev] [-#]\n
+FILE: %s\n
+can not stat %s/%s\n
+can not chdir to %s\n
+%s: can not make node. Errno = %d\n
+%s: can not chown. Errno = %d\n
+%s: can not open for mode '%s'\n
+%s: unknown device\n
+can not erase node '%s'\n
+%s: type of node does not match the driver type\n
+%s major offset produces major number out of range\n
+%s: node file for driver <%s> contains invalid minor number\n
+Fail to read the Master file for module %s\n
+Usage:\tidmodload [-r root] [-f modlist] [-#]\n
+Usage:\tidmodreg [-r root] [-f mreglist] [[-M module] ...] [-c conf_dir] [-#]\n
+cannot find %s for %s, need to be preconfiged by idbuild\n
+Too many magic numbers.\n
+number of fields is incorrect\n
+exec type data is incorrect\n
+number of fields is incorrect, ignored.\n
+Usage:  idspace [-i inodes] [-r blocks | -u blocks | -t blocks]\n
+only one of -r, -u, -t options at a time.\n
+Can not find / file system\n
+Can not find /usr file system\n
+Can not find /tmp file system\n
+Not enough free space or i-nodes in %s file system.\n\t%ld blocks, %ld inodes are needed.\n
+Cannot obtain size of unix, assume %d blocks.\n
+Usage: %s [options] module_name\n\t-r dir\tspecify an alternate /etc/conf directory\n\t-d\tdelete entries from resmgr instead of adding\n\t-f\tadd even if there are already entries for this driver in the\n\t\tRM database\n\t-n\tdon't supply CM_ENTRY_DEFAULT on new entries; remove other\n\t\tdefault entries for this driver from the RM database\n
+can't malloc %d bytes\n
+Start I/O Address, %lx, greater than End I/O Address, %lx\n
+Start Memory Address, %lx, greater than End Memory Address, %lx\n
+I/O Address range, %lx and %lx, must be within (%lx, %lx)\n
+Controller Memory Address, %lx, must be greater than %lx\n
+Interrupt vector number, %hd, must be within (%d, %d)\n
+Interrupt priority level, %hd, must be within (%d, %d)\n
+Interrupt type, %hd, must be within (%d, %d)\n
+DMA channel, %hd, must not be greater than %hd\n
+I/O Address ranges overlap for devices '%s' and '%s'\n
+Memory Address ranges overlap for devices '%s' and '%s'\n
+DMA channel conflict between devices '%s' and '%s'\n
+Id '%c' shared by devices '%s' and '%s'\n
+Block device major number range, %hd-%hd, must be within (%d, %d)\n
+Identical block device major number range, %hd-%hd, for '%s' and '%s'\n
+Character device major number range, %hd-%hd, must be within (%d, %d)\n
+Identical character device major number range, %hd-%hd, for '%s' and '%s'\n
+Unit, %hd, must be within (%hd, %hd)\n
+
+Only one specification of device '%s' allowed\n
+Unknown tunable parameter '%s'\n
+Tunable parameter '%s' respecified\n
+The value of parameter '%s', %ld, must be within (%ld, %ld)\n
+Unknown device '%s'\n
+'%s' must be a block or character device\n
+Minor device number must be within (%d, %d)\n
+Conflicting use of interrupt vector; already used as type %d, ipl %d\n
+Interrupt vector conflict between devices '%s' and '%s'\n
+Block device '%s' must have an 'open' function\n
+Block device '%s' must have a 'close' function\n
+Block device '%s' must have a 'strategy' function\n
+Block device '%s' must have a 'print' function\n
+Streams module/driver '%s' must have an 'info' structure\n
+Console driver '%s' must have a 'conssw' structure\n
+Terminal driver '%s' must have an '_tty' array\n
+Execsw module '%s' must have an 'exec' function\n
+Dispatcher module '%s' must have an '_init' function\n
+Filesystem module '%s' must have an 'init' function\n
+Selected default console '%s' is not a console driver\n
+Directory '%s' does not exist\n
+Missing value for tunable parameter '%s'\n
+Cannot open '%s' for mode '%s'\n
+Wrong number of fields in %s line\n
+No such device '%s' in mdevice\n
+Not enough memory for %s table\n
+Configured field for device '%s' must contain 'Y' or 'N'\n
+Cannot find value for MAXMINOR tunable, using %lu\n
+Error reading symbol table from %s\n
+%s: version is too new\n
+%s: specified entry-point '%s' not present\n
+missing intermediate file for %s module\n
+%s: %s major number used is over the switch table size\n
+modules %s and %s share interrupt but bind to different cpu\n
+No magic number configured for exec type %s.\n
+Module '%s' is wrong type for magic numbers.\n
+%sdev must be a block device.\n
+%sdev may not be a loadable driver.\n
+To complete the install/remove process a shutdown is being initiated\nautomatically.  If you have other packages to install/remove you may\ncancel this shutdown and wait to perform a shutdown until you have\nfinished with all your packages.\n
+Make sure your floppy drive is empty.\nIf you are installing or removing controller boards, you\nmay power down the system after the shutdown has completed.\n
+When all package install/remove operations are completed,\nyou should shutdown as soon as possible to include the changes in the UNIX\nOperating System kernel.\n
+A new UNIX Operating System kernel, to include recent\nsoftware configuration\nchanges, could not be built while\nrunning a enhanced security kernel.\nPlease reboot the mUNIX to do the kernel rebuild.\n
+The %s file system (%s) is being checked.\n
+%s: Failed to mount /usr.\nThe rebuild of the UNIX Operating System kernel is aborted.\n
+The UNIX Operating System kernel\nwill now be rebuilt to incorporate recent configuration changes.\n
+The rebuild of the UNIX Operating System kernel has been aborted.\nA rebuild will be attempted at next reboot.\n
+A new UNIX Operating System kernel, to include recent software\nconfiguration changes, could not be successfully built.\n
+Subject: UNIX Operating System kernel rebuild failed\n\nThe last UNIX Operating System kernel rebuild failed with the following output:\n
+The system is being rebooted.\n
+File modified for symbol remapping: %s\n
+Not enough memory for mtune table.\n
+Not enough memory for stune table.\n
+autotune linetype %s unrecognized, using STEP\n
+autotune file specified %s default smaller than min\ndefault will be set to minimum\n
+autotune file specified %s default larger than max\ndefault will be set to maximum\n
+Usage: %s [options]\n\t-f          force update\n\t-o file     set output file (default is /stand/resmgr)\n\t-s          create a database from the sdevice files\n\t-r confdir  specify an alternate /etc/conf directory\n
+must specify -o when using -s\n
+write failed\n
+out of memory\n
+can't save original sdevice file %s\n
+Usage: idtune [ -f | -m ] [ -c ] name value\n  -or- idtune -g [ -c ] name\n  -or- idtune -d [ -c ] name\n
+Tunable Parameter %s is currently set to %s.\n
+\tIs it OK to return it to autotuning? (y/n) 
+\tIs it OK to change it to %s? (y/n) 
+%s left at %s.\n
+Tunable Parameter %s is currently set to %s.\n
+\tIs it OK to change it to %s? (y/n) 
+%s left at %s.\n
+Tunable Parameter %s is currently autotuned\n.
+\tIs it OK to change it to %s? (y/n) 
+%s left autotuning.\n
+Cannot tune the system while running in enhanced security mode.\nPlease reboot mUNIX and try it again.\n
+The mtune file %s does not exist.\n
+The Tunable Parameter %s does not exist.\n
+The requested value for Tunable Parameter %s, %s,\nis higher than the upper limit in mtune, %s.\n%s left unchanged.\n
+The requested value for Tunable Parameter %s, %s,\nis lower than the lower limit in mtune, %s.\n%s left unchanged.\n
+%s left at %s.\n
+Usage: idtype [ type ]\n
+
+can't change MAC-Level of \"%s\" to %d, %s\n
+Local directory must contain readable Master and System files.\n
+Version 0 System and Master files must be installed together\n
+Can't convert old Master file w/o System file.\n
+Can't convert old Master file w/o Driver.o file.\n
+Error reading symbol table for Driver.o file.\n
+Not enough memory to convert Master file\n
+Can't make directory %s\n
+Cannot find Driver.o for %s (%s).\n
+Error loading %s module symbol table from %s\n
+%s is not loadable\n
+%sdevflag missing from '%s' module\n
+%s_vfsops missing from '%s' module\n
+%s_fsflags missing from '%s' module\n
+can't allocate memory for static_modules.\n
+Module %s uses non-conforming symbol, %s\n
+No such interface supported: %s\n
+No required interface versions supported for %s interface\n
+Usage: idmkunix [-i|o|r|I dir] [-T|d|t|a|O file] [-S|Q] [[-D|U symbol] ...] [[-M mod] ...]\n
+command name must end in \"%s\"\n
+'%s' requires an 'h' flag\n
+$name line malformed or name too long.\n
+Version 0 driver '%s' without 'f' flag not supported.\n
+Circular reference in interface.d $replace lines.\n
+Compile/link of '%s' for %s module failed.\n\tExit code = %d\n
+Cannot link-edit %s\n
+$interface line in %s module has duplicate name or version.\n
+Only one $replace line allowed.\n
+Filenames in interface.d must be '<name>.<ver>'.\n
+No interface.d file for $replace line in file %s.\n
+Errors encountered. Configuration terminated.\n
+Usage: %s -l | -g value1 value2\n
+Usage: %s [-r confdir]\n
+Syntax error in %s\n
+Must give a category before the first tag\n
+Categories may not exceed a depth of %d\n
+Next subcategory cannot be deeper than level %d\n
+out of memory (can't malloc %d bytes)\n
+out of memory (can't realloc %d bytes)\n
+cannot register module '%s': %s\n
+Fail to read the Master file for module %s\n
+%s \"%s\" failed to load: %s\n
+WARNING: Any application(s) or commands(s) that uses one or more of these\n\tmodules may not work correctly.\nTo fix: See the Troubleshooting section of the documentation.\n
+Cannot open %s for read.\n
+WARNING: number of fields is incorrect, ignored.\n
+WARNING: number of fields is incorrect, ignored.\n
+%s: module name too long.\n
+Last line does not end in newline in %s file\n
+Module %s uses non-conforming symbol, %s\n
+No $interface lines in Master file for %s\n

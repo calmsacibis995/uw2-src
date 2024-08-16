@@ -1,0 +1,803 @@
+#ident\t"@(#)dthelp:Admin.Tools/DialMgr.hlp     1.23"
+^*version^1
+^*title^Configuration de connexion
+^:Conf_connexions
+^*width^70
+^+DesktopMgr/help.defs
+^?Configuration et gestion des communications de connexions
+^0^Configuration de connexion
+^$10
+Configuration de connexion
+
+Utilisez Configuration des connexions pour configurer les
+communications par modem et les connexions directes. Cette option vous
+permet d'effectuer les opérations suivantes :
+
+\to\t\k(Configurer l'accès à un système à distance^^Configuration de l'accès à un système à distance)
+\to\t\k(Configurer un périphérique de connexion^^Configuration d'un périphérique de connexion)
+\to\t\k(Copier une icône de périphérique de connexion dans un dossier^^Copie de l'icône d'un périphérique de connexion dans un dossier)
+\to\t\k(Copier une icône de système à distance dans un dossier^^Copie de l'icône d'un système à distance dans un dossier)
+\to\t\k(Effacer un périphérique de connexion^^Suppression d'un périphérique de connexion)
+
+\to\t\k(Effacer une entrée de système à distance^^Suppression d'un système à distance)
+\to\t\k(Connexion à un système au hasard^^Connexion à un système non prédéfini) 
+\t \t(c'est-à-dire à un système non configuré pour l'accès à distance)
+\to\t\k(Rechercher une entrée de système à distance^^Recherche d'un système à distance)
+\to\t\k(Visualiser ou modifier les caractéristiques associées à un périphérique de connexion^^Visualisation ou modification des caractéristiques d'un périphérique de connexion)
+\to\t\k(Visualiser ou modifier les caractéristiques associées à un système à distance^^Visualisation ou modification des caractéristiques d'un système à distance)
+
+Voir également :
+\s(Utilisation de Configuration des connexions^dhelp "pe.fr" ownerhb "Configuration de modems et" "interface Configuration des connexions" || helpLinkErr)
+
+^1^Configuration d'un périphérique de connexion
+^$20
+Configuration d'un périphérique de connexion
+
+Remarque :
+Vous devez disposer des \k(autorisations Modifier la configuration des connexions^dtadmin/user.hlp^Présentation des autorisations)
+pour pouvoir configurer un périphérique de connexion.
+
+Un périphérique de connexion vous permet d'appeler un autre système et
+de vous connecter à ce dernier.
+
+Pour configurer une entrée associée à un périphérique de connexion sur
+votre système, exécutez les opérations suivantes :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2. Si vous vous trouvez déjà dans le dossier Gestion
+de réseaux, passez à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La
+  \t\k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels) s'affiche.
+
+4.\tCliquez sur Actions=>Configurer les périphériques. La
+  \t\k(fenêtre "Configuration des connexions : périphériques"^^Fenêtre Configuration des appels : périphériques) \ts'affiche.
+
+5.\tCliquez sur Périphérique=>Nouveau. La fenêtre "Configuration des
+  \tpériphériques : Ajouter nouveau périphérique" s'affiche et
+  \tcontient les champs suivants :
+
+ \to\tPort : - Connexion physique du périphérique relié à votre
+ \t \tordinateur. Il peut s'agir d'un port série (par exemple, COM1
+ \t \treprésente le port série 1) ou d'un autre type de port. Si vous
+ \t \tcliquez sur Autre, vous devez entrer le nom du port dans la case
+ \t \tde texte. Par défaut, le port est paramétré sur COM1.
+
+\to\tConnexion à : - Nom du périphérique ou du modem que vous utilisez.
+\t \tCliquez sur la case fléchée pour faire apparaître la liste des
+\t \ttypes de périphériques. Cliquez ensuite sur le type de
+\t \tpériphérique souhaité.
+
+  \t \tRemarque : si vous devez ajouter un modem dans la liste des
+  \t \ttypes de périphériques existants, consultez
+  \t \t\s(Ajout de programmes de numérotation^dhelp "pe.fr" ownerhb "Configuration de modems et" "entrées relatives au programme de numérotation" || helpLinkErr)
+  \t \tdans le guide du propriétaire système, et reportez-vous à la 
+  \t \tcommande dtmodem(1M) dans \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \to\tMode de configuration du port : - Sélectionnez l'une des options
+  \t \tsuivantes :
+
+  \t \to\tBidirectionnel - Permet la réception et l'émission d'appels à
+  \t \t \tpartir de votre système.
+
+  \t \t \tRemarque : si vous choisissez l'option Bidirectionnel, le
+  \t \t \tsystème affiche les différentes vitesses d'appels entrants que
+  \t \t \tvous pouvez sélectionner. Par défaut, la vitesse est définie
+  \t \t \tsur 9600. La vitesse des appels sortants est paramétrée sur
+  \t \t \tSélection automatique. Si vous choisissez une vitesse
+  \t \t \téquivalente à 14400 ou à 28800, le système sélectionne la
+  \t \t \tvaleur autorisée immédiatement supérieure. La vitesse des
+  \t \t \tappels sortants est toujours définie sur Sélection
+  \t \t \tautomatique.
+
+  \t \to\tAppels sortants uniquement - Permet l'émission des appels par
+  \t \t \tle système, mais ne permet pas leur réception. Pour ce
+  \t \t \ttype de modem, la vitesse est définie par défaut sur Sélection
+  \t \t \tautomatique.
+
+\t \t-\tEntrant uniquement - Permet au système de recevoir des appels,
+\t \t \tmais ne lui permet pas d'en émettre.
+
+  \t \t \tRemarque : si vous choisissez Appels entrants uniquement,
+  \t \t \tle système affiche les différentes vitesses que
+  \t \t \tvous pouvez sélectionner. Par défaut, la vitesse est définie
+  \t \t \tsur 9600. Si vous choisissez une vitesse équivalente à 14400
+  \t \t \tou à 28800, le système sélectionne la valeur autorisée
+  \t \t \timmédiatement supérieure. La vitesse des appels sortants est
+  \t \t \ttoujours définie sur Sélection automatique.
+
+  \t \to\tType de port : - Par défaut, ce champ est activé. Si vous
+  \t \t \tvoulez désactiver le port, cliquez sur Désactivé.
+
+6.\tCliquez sur Ajouter pour ajouter un nouveau périphérique et
+  \trefermer la fenêtre. Une icône représentant le périphérique
+  \tapparaît dans la fenêtre "Configuration des connexions :
+  \tpériphériques". Si vous le souhaitez, vous pouvez copier cette
+  \ticône dans un autre dossier. Voir
+  \t\k(Copie de l'icône d'un périphérique de connexion dans un dossier).
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \trestaurer les paramètres d'origine, ou sur Annuler pour refermer
+  \tla fenêtre sans configurer le périphérique.
+
+^1^Copie de l'icône d'un périphérique de connexion dans un dossier
+^$30
+Copie de l'icône d'un périphérique de connexion dans un dossier
+
+Pour copier une icône de périphérique de connexion dans un autre
+dossier, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2. Si vous vous trouvez déjà dans le dossier Gestion
+de réseaux, passez à l'étape 3.
+
+1.\tCliquez deux fois sur Outils_admin dans
+  \t\kla(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La
+  \tfenêtre "Dossier : outils_admin" s'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La fenêtre
+  \t\k("Configuration des connexions : périphériques" ^^Fenêtre Configuration des appels : périphériques) \ts'affiche.
+
+4.\t\d(Cliquez deux fois^cliquer deux fois) sur le dossier dans lequel
+  \tvous souhaitez copier l'icône du périphérique de connexion.
+
+5.\t\d(Faites glisser^faire glisser) le périphérique souhaité de la
+  \tfenêtre "Configuration des connexions : périphériques" sur le
+  \tdossier que vous avez ouvert à l'étape 4.
+
+  \tVous pouvez maintenant cliquer deux fois sur l'icône du
+  \tpériphérique de connexion pour faire apparaître la fenêtre
+  \t\k("Configuration des connexions : connexion rapide"^^Connexion à un système non prédéfini).
+
+Remarque : vous pouvez également copier une icône de périphérique de
+connexion dans l'un de vos dossiers en utilisant l'option
+\k(Copier dans dossier).
+
+^2^Fenêtre Configuration des appels
+^$40
+Fenêtre Configuration des appels
+
+Il s'agit de la principale fenêtre associée aux fonctions
+Configuration des connexions. Elle affiche le système à distance
+auquel vous pouvez vous connecter grâce à un modem ou à un autre
+périphérique.
+
+Remarque : ces systèmes sont définis dans votre fichier
+/etc/uucp/Systems.
+
+Pour plus d'informations sur les fichiers système UNIX, voir
+\s(Répertoires et fichiers^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Fenêtre Configuration des appels : périphériques
+^$50
+Fenêtre Configuration des appels : périphériques
+
+Cette fenêtre affiche les périphériques connectés à votre système que
+vous pouvez utiliser pour appeler les systèmes à distance.
+
+Remarque : ces périphériques sont définis dans votre fichier
+/etc/uucp/Devices.
+
+Pour plus d'informations sur les fichiers système UNIX, voir
+\s(Répertoires et fichiers^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Fenêtre Configuration des appels : ajouter périphérique
+^$60
+Fenêtre Configuration des appels : ajouter périphérique
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tDéfinissez les options suivantes :
+
+  \to\tPort : - Il s'agit de la connexion physique du périphérique
+  \t \trelié à votre ordinateur. Il peut s'agir d'un port série (par
+  \t \texemple, COM1 représente le port série 1) ou d'un autre type de
+  \t \tport.  Si vous cliquez sur Autre, vous devez entrer le nom du
+  \t \tport dans la case de texte. Par défaut, le port est
+  \t \tparamétré sur COM1.
+
+  \to\tConnexion à : - Nom du périphérique ou du modem utilisé.
+  \t \tCliquez sur la case fléchée pour faire apparaître la liste des
+  \t \ttypes de périphériques. Cliquez ensuite sur le type de
+  \t \tpériphérique souhaité.
+
+  \t \tRemarque : si vous devez ajouter un modem dans la liste des
+  \t \ttypes de périphériques existants, consultez
+  \t \t\s(Ajout de programmes de numérotation^dhelp  "pe.fr" ownerhb  "Configuration de modems et" "entrées relatives au programme de numérotation" || helpLinkErr)
+  \t \tdans le guide du propriétaire système, et reportez-vous à la 
+  \t \tcommande dtmodem(1M) dans \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \to\tMode de configuration du port : - Sélectionnez l'une des options
+  \t \tsuivantes :
+
+  \t \to\tBidirectionnel - Permet la réception et l'émission d'appels à
+  \t \t \tpartir de votre système.
+
+  \t \t \tRemarque : si vous choisissez l'option Bidirectionnel, le
+  \t \t \tsystème affiche les différentes vitesses d'appels entrants que
+  \t \t \tvous pouvez sélectionner. Par défaut, la vitesse est définie
+  \t \t \tsur 9600. La vitesse des appels sortants est paramétrée sur
+  \t \t \tSélection automatique. Si vous choisissez une vitesse
+  \t \t \téquivalente à 14400 ou à 28800, le système sélectionne la
+  \t \t \tvaleur autorisée immédiatement supérieure. La vitesse des
+  \t \t \tappels sortants est toujours définie sur Sélection
+  \t \t \tautomatique.
+
+  \t \to\tAppels sortants uniquement - Permet l'émission des appels par
+  \t \t \tle système, mais ne permet pas leur réception. Pour ce
+  \t \t \ttype de modem, la vitesse est définie par défaut sur Sélection
+  \t \t \tautomatique.
+
+\t \t-\tEntrant uniquement - Permet au système de recevoir des appels,
+\t \t \tmais ne lui permet pas d'en émettre.
+
+  \t \t \tRemarque : si vous choisissez Appels entrants uniquement,
+  \t \t \tle système affiche les différentes vitesses que
+  \t \t \tvous pouvez sélectionner. Par défaut, la vitesse est définie
+  \t \t \tsur 9600. Si vous choisissez une vitesse équivalente à 14400
+  \t \t \tou à 28800, le système sélectionne la valeur autorisée
+  \t \t \timmédiatement supérieure. La vitesse des appels sortants est
+  \t \t \ttoujours définie sur Sélection automatique.
+
+  \t \to\tType de port : - Par défaut, ce champ est activé. Si vous
+  \t \t \tvoulez désactiver le port, cliquez sur Désactivé.
+
+2.\tCliquez sur Ajouter pour ajouter un nouveau périphérique et
+  \trefermer la fenêtre. \tUne icône représentant ce périphérique
+  \tapparaît dans la\t fenêtre Configuration des connexions :
+  \tpériphériques. Si vous le souhaitez, vous pouvez copier cette
+  \ticône dans un autre dossier. Voir
+  \t\k(Copie de l'icône d'un périphérique de connexion dans un dossier).
+
+Voir également :
+\k(Configuration d'un périphérique de connexion).
+
+^1^Suppression d'un périphérique de connexion
+^$70
+Suppression d'un périphérique de connexion
+
+Pour effacer un périphérique de connexion, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La
+  \t\k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels) s'affiche.
+
+4.\tCliquez sur Actions=>Configurer les périphériques. La
+  \t\k(fenêtre "Configuration des connexions : périphériques"^^Fenêtre Configuration des appels : périphériques) \ts'affiche.
+
+5.\tCliquez sur le périphérique que vous souhaitez effacer.
+
+6.\tCliquez sur Périphérique=>Effacer. L'icône représentant ce
+  \tpériphérique \tdisparaît de la fenêtre "Configuration des
+  \tconnexions : périphériques".
+
+
+^1^Configuration de l'accès à un système à distance
+^$80
+Configuration de l'accès à un système à distance
+
+Avant de configurer l'accès à un système à distance, vous devez
+exécuter les opérations suivantes :
+
+  o  \k(Configurer un périphérique de connexion^^Configuration d'un périphérique de connexion).
+
+  o  Procurez-vous un nom d'ouverture de session et un mot de passe
+     correspondant au système auquel vous souhaitez vous connecter.
+
+  o  Procurez-vous le numéro de téléphone du système auquel vous
+     souhaitez vous connecter.
+
+Pour configurer l'accès à un système à distance, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La fenêtre
+  \t\k("Configuration des connexions"^^Fenêtre Configuration des appels) s'affiche.
+
+4.\tCliquez sur Système=>Nouveau. La fenêtre "Configuration des
+  \tconnexions : ajouter nouveau système" apparaît. Elle comporte
+  \tles champs suivants :
+
+  \to\tNom du système : - Entrez le nom du système à distance auquel
+  \t \tvous souhaitez vous connecter.
+
+  \to\tConnexion via : - Cliquez sur le type de périphérique que vous
+  \t \tutilisez.
+
+  \to\tDébit : - Cliquez sur la valeur correspondant au débit de votre
+  \t \tmodem ou de votre port. Si vous ne savez pas quel débit
+  \t \tsélectionner, cliquez sur Auto-sélection. Pour une connexion
+  \t \tdirecte, cliquez sur 19200.
+
+  \to\tNuméro de téléphone : - Entrez le numéro de téléphone du système
+  \t \tauquel vous souhaitez vous connecter. Il doit comprendre le
+  \t \tchiffre 9 (si vous souhaitez émettre un appel externe),
+  \t \tl'indicatif de la région (si le numéro ne figure pas dans votre
+  \t \tcirconscription), puis un numéro à sept chiffres. Par
+  \t \texemple : 92015551234.
+
+  \t \tRemarque : ce champ n'est pas disponible pour les connexions
+  \t \tdirectes.
+
+5.\tCliquez sur Catégorie=>Séquence d'ouverture de session pour
+  \taccéder à des options complémentaires qui vous permettent
+  \td'envoyer du courrier ou de transférer des fichiers vers d'autres
+  \tsystèmes en utilisant \k(UUCP^DesktopMgr/uucp.hlp^Utilisation de la zone d'entrée UUCP)
+  \tvia un périphérique de connexion.
+
+  \tRemarque : Vous devez avoir
+  \t\k(l'autorisation de changer la configuration des connexions^dtadmin/user.hlp^Présentation des autorisations) si vous
+  \tsouhaitez modifier la séquence d'ouverture de sessions.
+
+  \tLes options complémentaires suivantes apparaissent :
+
+  \to\tInvite : - Entrez la chaîne de texte que le système doit
+  \t \tafficher comme invite.
+
+  \t \tRemarque : vous ne devez pas entrer la chaîne complète.
+
+  \to\tRéponse : - Entrez la chaîne de texte qui doit être renvoyée au
+  \t \tsystème à distance en réponse à l'invite.
+
+  \to\tSéquence d'ouverture de session actuelle : - Faites défiler
+  \t \tcette liste pour afficher les entrées associées à l'invite et à
+  \t \tla réponse. Les entrées de cette liste et les invites affichées
+  \t \tpar le système à distance doivent apparaître dans le même ordre.
+  \t \tCliquez sur l'une des options suivantes :
+
+\t \t-\tAjouter - Permet de placer le contenu des champs Invite et
+\t \t \tRéponse dans la liste de défilement.
+
+\t \t-\tModifier - Permet de remplacer l'entrée sélectionnée dans la
+\t \t \tSéquence d'ouverture de session par le contenu actuel des
+\t \t \tchamps Invite et/ou Réponse.
+
+  \t \t-\tEffacer Permet de supprimer l'entrée sélectionnée de la liste
+  \t \t \tde défilement.
+
+6.\tCliquez sur Ajouter (dans la fenêtre "Configuration des connexions :
+  \tajouter nouveau système"). Une entrée associée au système à
+  \tdistance apparaît dans la fenêtre \k("Configuration des connexions"^^Fenêtre Configuration des appels).
+
+  \tRemarque : pour copier une icône représentant le nouveau système
+  \tdans un autre dossier, reportez-vous à
+  \t\k(Copie de l'icône d'un système à distance dans un dossier). Vous
+  \tpouvez alors vous connecter au système à distance en cliquant deux
+  \tfois sur cette icône et transférer les fichiers vers le système à
+  \tdistance en les \d(faisant glisser^faire glisser) sur cette icône.
+
+^2^Fenêtre Configuration des appels : ajouter système
+^$90
+Fenêtre Configuration des appels : ajouter système
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tDéfinissez les options suivantes :
+
+  \to\tNom du système : - Entrez le nom du système à distance auquel
+  \t \tvous souhaitez vous connecter.
+
+  \to\tConnexion via : - Cliquez sur le type de périphérique que vous
+  \t \tutilisez.
+
+  \to\tDébit : - Cliquez sur la valeur correspondant au débit de votre
+  \t \tmodem ou de votre port. Si vous ne savez pas quelle vitesse
+  \t \tsélectionner, cliquez sur Auto-Sélection. Pour une connexion
+  \t \tdirecte, cliquez sur 19200.
+
+  \to\tNuméro de téléphone : - Entrez le numéro de téléphone du système
+  \t \tauquel vous souhaitez vous connecter. Il doit comporter le
+  \t \tchiffre 9 (pour émettre un appel externe), l'indicatif de la
+  \t \trégion (si le numéro ne figure pas dans votre circonscription
+  \t \tgéographique), puis un numéro à sept chiffres. Exemple :
+  \t \t92015551234.
+
+  \t \tRemarque : ce champ n'est pas disponible pour les connexions
+  \t \tdirectes.
+
+2.\tCliquez sur Catégorie=>Séquence d'ouverture de session pour
+  \taccéder aux options complémentaires qui vous permettent d'envoyer
+  \tdu courrier ou de transférer des\t fichiers vers d'autres systèmes
+  \tà l'aide d'\k(UUCP^DesktopMgr/uucp.hlp^Utilisation de la zone d'entrée UUCP) via un périphérique de connexion.
+
+  \tRemarque : Vous devez avoir
+  \t\k(l'autorisation de changer la configuration des connexions^dtadmin/user.hlp^Présentation des autorisations) si vous
+  \tsouhaitez modifier la séquence d'ouverture de sessions.
+
+  \tLes options complémentaires suivantes apparaissent :
+
+  \to\tInvite : - Entrez la chaîne de texte que le système doit
+  \t \tafficher comme invite.
+
+  \t \tRemarque : vous ne devez pas entrer la chaîne complète.
+
+  \to\tRéponse : - Entrez la chaîne de texte qui doit être renvoyée
+  \t \tau système à distance en réponse à l'invite.
+
+  \to\tSéquence d'ouverture de session actuelle : - Faites défiler
+  \t \tcette liste pour afficher les entrées associées à l'invite et à
+  \t \tla réponse. Les entrées de cette liste et les invites affichées
+  \t \tpar le système doivent apparaître dans le même ordre. Cliquez
+  \t \tsur l'une des options suivantes :
+
+\t \t-\tAjouter - Permet de placer le contenu des champs Invite et
+\t \t \tRéponse dans la liste de défilement.
+
+\t \t-\tModifier - Permet de remplacer l'entrée sélectionnée dans la
+\t \t \tSéquence d'ouverture de session par le contenu actuel des
+\t \t \tchamps Invite et/ou Réponse.
+
+  \t \t-\tEffacer Permet de supprimer l'entrée sélectionnée de la liste
+  \t \t \tde défilement.
+
+3.\tCliquez sur Ajouter. Le système à distance apparaît dans la
+  \t\k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels).
+
+Voir également :
+\k(Configuration de l'accès à un système à distance)
+
+^1^Suppression d'un système à distance
+^$100
+Suppression d'un système à distance
+
+Pour supprimer un système à distance, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La
+  \t\k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels) s'affiche.
+
+4.\tCliquez sur le système que vous souhaitez effacer.
+
+5.\tCliquez sur Système=>Effacer. L'entrée correspondant au système
+  \tdisparaît de la fenêtre "Configuration des connexions".
+
+^1^Copie de l'icône d'un système à distance dans un dossier
+^$110
+Copie de l'icône d'un système à distance dans un dossier
+
+Vous pouvez copier une icône représentant un système de connexion à
+distance dans l'un de vos dossiers. Vous pouvez ensuite ouvrir une
+session à distance sur ce système en cliquant deux fois sur cette
+icône.
+
+En outre, vous pouvez transférer un fichier sur ce système à distance
+en \d(faisant glisser^faire glisser) ce fichier sur l'icône du
+système à distance.
+
+Pour copier une icône de système à distance dans l'un de vos dossiers,
+procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La
+  \t\k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels) s'affiche.
+
+4.\tCliquez deux fois sur le dossier dans lequel vous
+  \tsouhaitez copier l'icône du système d'appel à distance.
+
+5.\tFaites glisser le système sélectionné dans la fenêtre
+  \t"Configuration\t des connexions" sur le dossier que vous avez
+  \touvert à l'étape 4.
+
+Remarque : vous pouvez également copier l'icône d'un système à
+distance dans l'un de vos dossiers en utilisant l'option
+\k(Copier dans dossier).
+
+^2^Copier dans dossier
+^$120
+Copier dans dossier
+
+Pour copier l'icône d'un système à distance ou d'un périphérique de
+connexion dans l'un de vos dossiers, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La fenêtre
+  \t\k("Configuration des connexions"^^Fenêtre Configuration des appels) apparaît.
+
+4.\tCliquez sur Actions=>Configuration. La fenêtre 
+  \k("Configuration des connexions : périphériques"^^Fenêtre Configuration des appels : périphériques) apparaît.
+
+5.\tCliquez sur l'icône du système à distance ou du périphérique de
+  \tconnexion de votre choix.
+
+6.\tCliquez sur Système=>Copier dans dossier. La fenêtre
+  \t"Configuration des connexions : copier dans dossier" apparaît.
+
+7.\tCliquez sur un nom de dossier ou sur le Dossier parent dans la
+  \tliste Dossier(s) jusqu'à ce que le dossier désiré apparaisse.
+
+8.\tCliquez sur Copier. L'icône apparaît dans le dossier.
+
+^1^Fenêtre Configuration des appels : copier dans dossier
+^$130
+Fenêtre Configuration des appels : copier dans dossier
+
+Cliquez sur un nom de dossier ou sur le Dossier parent dans la liste
+Dossier(s) jusqu'à ce que vous trouviez le dossier dans lequel vous
+souhaitez copier l'icône du système de connexion à distance. Cliquez
+ensuite sur Copier.
+
+^1^Recherche d'un système à distance
+^$140
+Recherche d'un système à distance
+
+Si votre \k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels) comporte plusieurs
+systèmes à distance, vous pouvez utiliser l'option Rechercher pour
+localiser l'entrée désirée.
+
+Pour localiser une entrée de système à distance, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La
+  \t\k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels) s'affiche.
+
+4.\tCliquez sur Rechercher.
+
+5.\tCliquez sur l'une des options suivantes :
+
+  \to\tRechercher - La fenêtre "Configuration des connexions :
+  \t \trechercher" apparaît. Entrez le nom du système à distance désiré
+  \t \tet cliquez sur Rechercher. Le nom du système apparaît en
+  \t \tsurbrillance dans la fenêtre "Configuration des connexions".
+
+  \t \tRemarque : Si le Bureau ne parvient pas à localiser le nom du
+  \t \tsystème à distance que vous recherchez, une fenêtre affichant un
+  \t \tmessage d'erreur apparaît.
+
+\to\tPremier - Le système sélectionne le premier système à distance
+\t \tdans la fenêtre "Configuration des connexions".
+
+\to\tDernier -  Le système sélectionne le dernier système à distance
+\t \tdans la fenêtre "Configuration des connexions".
+
+^2^Fenêtre Configuration des appels : rechercher
+^$150
+Fenêtre Configuration des appels : rechercher
+
+Entrez le nom du système à distance désiré et cliquez sur Rechercher.
+Le système à distance apparaît en surbrillance dans la fenêtre
+"Configuration des connexions".
+
+^1^Connexion à un système non prédéfini
+^$160
+Connexion à un système non prédéfini
+
+Pour appeler un système non prédéfini, c'est-à-dire un système à
+distance non configuré pour l'accès à distance, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La
+  \t\k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels) s'affiche.
+
+4.\tCliquez sur Actions=>Configurer les périphériques. La
+  \t\k(fenêtre "Configuration des connexions : périphériques"^^Fenêtre Configuration des appels : périphériques) \ts'affiche.
+
+5.\tCliquez sur le périphérique que vous souhaitez appeler.
+
+6. Cliquez sur Actions=>Numéroter. La fenêtre "Configuration des
+   connexions : connexion rapide" apparaît et comporte les champs
+   suivants :
+
+  \to\tNuméro de téléphone : entrez le numéro de téléphone du système
+  \t \tauquel vous souhaitez vous connecter. Ce champ n'apparaît que
+  \t \tsi le périphérique sélectionné est un modem.
+
+  \to\tDébit : - Cliquez sur la valeur qui correspond au débit de votre
+  \t \tpériphérique de connexion. Si vous ne la connaissez pas, cliquez
+  \t \tsur Auto-sélection.
+
+  \to\tParité : - Cliquez sur \d(parité) du système auquel
+  \t \tvous vous connectez. Certains systèmes se servent de la parité
+  \t \tpour le contrôle d'erreurs. Si vous appelez un système UNIX,
+  \t \tsélectionnez Aucun.
+
+  \to\tTaille des caractères : - Cliquez sur 7 si vous appelez un autre
+  \t \tsystème UNIX. Si vous appelez un système ne fonctionnant pas
+  \t \tsous UNIX, vous devrez probablement sélectionner 8, bien que
+  \t \tcertains systèmes non UNIX utilisent 7 bits.
+
+  \to\tMode duplex : cliquez sur Intégral ou sur Semi-duplex, en
+  \t \tfonction du logiciel de communication utilisé par votre système.
+  \t \tUnixWare fonctionne en mode duplex intégral.
+
+  \t \tSi vous n'êtes pas directement connecté au système que vous
+  \t \tessayez d'appeler, vérifiez que votre modem est paramétré en
+  \t \tmode duplex intégral.
+
+7.\tCliquez sur Connecter pour appeler le système à distance.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \trestaurer les valeurs d'origine dans les champs, ou sur Annuler si
+  \tvous décidez de ne pas exécuter une connexion rapide.
+
+^2^Fenêtre Configuration des connexions : connexion rapide
+^$170
+Fenêtre Configuration des connexions : connexion rapide
+
+Dans cette fenêtre, sélectionnez l'une des options suivantes :
+
+1.\tDéfinissez les options suivantes :
+
+  \to\tNuméro de téléphone : entrez le numéro de téléphone du système
+  \t \tauquel vous souhaitez vous connecter. Ce champ n'apparaît que
+  \t \tsi le périphérique sélectionné est un modem.
+
+  \to\tDébit : - Cliquez sur la valeur qui correspond au débit de votre
+  \t \tpériphérique de connexion. Si vous ne la connaissez pas, cliquez
+  \t \tsur Auto-sélection.
+
+  \to\tParité : - Cliquez sur \d(parité) du système auquel
+  \t \tvous vous connectez. Certains systèmes se servent de la parité
+  \t \tpour le contrôle d'erreurs. Si vous appelez un système UNIX,
+  \t \tsélectionnez Aucun.
+
+  \to\tTaille des caractères : - Cliquez sur 7 si vous appelez un autre
+  \t \tsystème UNIX. Si vous appelez un système ne fonctionnant pas
+  \t \tsous UNIX, vous devrez probablement sélectionner 8, bien que
+  \t \tcertains systèmes non UNIX utilisent 7 bits.
+
+  \to\tMode duplex : cliquez sur Intégral ou sur Semi-duplex, en
+  \t \tfonction du logiciel de communication utilisé par votre système.
+  \t \tUnixWare fonctionne en mode duplex intégral.
+
+  \t \tSi vous n'êtes pas directement connecté au système que vous
+  \t \tessayez d'appeler, vérifiez que votre modem est paramétré en
+  \t \tmode duplex intégral.
+
+2.\tCliquez sur Connecter pour appeler le système à distance.
+
+Voir également :
+\k(Connexion à un système non prédéfini).
+
+^1^Visualisation ou modification des caractéristiques d'un périphérique de connexion
+^$180
+Visualisation ou modification des caractéristiques d'un périphérique de connexion
+
+Pour visualiser ou modifier les caractéristiques d'un périphérique de
+connexion, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La
+  \t\k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels) s'affiche.
+
+4.\tCliquez sur Actions=Configurer les périphériques. La
+  \t\k(fenêtre "Configuration des connexions : périphériques"^^Fenêtre Configuration des appels : périphériques) apparaît.
+
+5.\tCliquez sur le périphérique désiré.
+
+6.\tCliquez sur Périphérique=>Caractéristiques. La fenêtre
+  \t"Configuration des connexions : caractéristiques"
+  \tapparaît.
+
+  \tVoir étape 6 de \k(Configuration d'un périphérique de connexion) pour une description
+  \tdes champs dans cette fenêtre (les champs sont identiques
+  \tà ceux de la
+  \t\k(fenêtre "Configuration des connexions : ajouter nouveau périphérique^^Fenêtre Configuration des appels : ajouter périphérique).
+
+
+7.\tCliquez sur Annuler si vous vous contentez de visualiser les
+  \tcaractéristiques. Cliquez sur Appliquer si vous les avez
+  \tmodifiées.
+
+^1^Visualisation ou modification des caractéristiques d'un système à distance
+^$190
+Visualisation ou modification des caractéristiques d'un système à distance
+
+Pour visualiser ou modifier les caractéristiques d'un système à
+distance, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_connexions. La
+  \t\k(fenêtre "Configuration des connexions"^^Fenêtre Configuration des appels) s'affiche.
+
+4.\tCliquez sur le système à distance désiré.
+
+5.\tCliquez sur Système=>Caractéristiques. La fenêtre "Configuration
+  \tdes connexions : caractéristiques du système à distance" apparaît.
+
+  \tVoir les étapes 4 et 5 de \k(Configuration de l'accès à un système à distance) pour
+\tune description des champs de cette fenêtre (ces champs sont
+\tidentiques à ceux de la
+\t\k(fenêtre "Configuration des connexions : ajouter nouveau système"^^Fenêtre Configuration des appels : ajouter système).
+
+6.\tCliquez sur Annuler si vous vous contentez de visualiser les
+  \tcaractéristiques. Cliquez sur Appliquer si vous les avez
+  \tmodifiées.

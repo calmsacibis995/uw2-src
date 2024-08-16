@@ -1,0 +1,470 @@
+#ident	"@(#)proto:desktop/scripts/inst.gen	1.1.10.22"
+
+. /funcrc
+if [ ! -f "/step1rc" ]
+then
+	echo You cannot run inst from a chroot-ed shell
+	echo Please exit shell and try again
+	exit 1
+fi
+
+#The following lines with "XXX" get edited by sysinst/cmd/pick.set.sh
+typeset -x REL_FULLNAME="XXX"
+typeset -x RELEASE="XXX"
+typeset -x VERSION="XXX"
+typeset -x FULL_SET_NAME="XXX"
+typeset -x SET_NAME="XXX"
+typeset -x LANG="XXX"
+typeset -x LC_CTYPE="XXX"
+typeset -x RELPKGS="XXX"
+
+export SCRIPTS=/etc/inst/scripts
+export C_SCRIPTS=/etc/inst/locale/C/menus
+export LANGDEP_SCRIPTS=/etc/inst/locale/${LANG}/menus
+[ -d $LANGDEP_SCRIPTS ] || LANGDEP_SCRIPTS=$C_SCRIPTS
+export IDCMD=/etc/conf/bin
+
+. $LANGDEP_SCRIPTS/txtstrings
+. /globals.sh
+[ -n "$SH_VERBOSE" ] && set -x
+
+. ${SCRIPTS}/start || {
+	faultvt "Internal Error -- start failed"
+	halt
+}
+[ -z "$RESET" ] || {
+	umountall > /dev/null 2>&1
+	[ -s /tmp/swap.rem ] && /tmp/swap.rem
+	exec winxksh -c inst
+}
+
+if [ "$NOND" = "yes" ]
+then
+	display "$NOND_PREP_MSG"
+	get_fscks
+	umountall> /dev/null 2>&1
+	mountloop ${BLOCK_DISK_NODES[0]%s0}s1 $HDROOT
+	call unlink $HDROOT/etc/conf/.new_unix
+	while read special fsckdev mountp fstyp fsckpass automnt mountopts macceiling
+
+	do
+		case $mountp in
+
+			/usr | /home )
+				if [ "$automnt" = "yes" ]
+				then
+					sh_mount -F$fstyp $special $HDROOT/$mountp
+					if [ $? != 0 ]
+					then
+						/etc/fs/$fstyp/fsck -y $fsckdev > /dev/null 2>&1
+						sh_mount -F$fstyp $special $HDROOT/$mountp
+						if [ $? != 0 ]
+						then
+							error=1
+						fi
+					fi
+				fi
+				continue;;
+
+			/var | /stand )
+				sh_mount -F$fstyp $special $HDROOT/$mountp
+				if [ $? != 0 ]
+				then
+					/etc/fs/$fstyp/fsck -y $fsckdev > /dev/null 2>&1
+					sh_mount -F$fstyp $special $HDROOT/$mountp
+					if [ $? != 0 ]
+					then
+						error=1
+					fi
+				fi
+				continue;;
+
+			*) continue;;
+		esac
+	done < /tmp/new.vfstab
+	sh_rm -fr /.extra.d/etc/fs
+	export PKGINSTALL_TYPE AUTOMERGE
+	export UPGRADE_STORE=/etc/inst/save.user
+	UPTMP=$HDROOT/etc/inst/up/patch
+	mkdir -p $HDROOT/$UPGRADE_STORE $UPTMP 2>/dev/null
+	mkdir -p $HDROOT/etc/inst/save.orig 2>/dev/null
+	export UPTMP
+	mkdir -p $HDROOT/$SCRIPTS 2>/dev/null
+	mkdir -p $HDROOT/var/sadm/upgrade/SVR4.2/etc/saf 2>/dev/null ###TEMP ###
+	rm $HDROOT/tmp/pkg.newinstall
+	for i in $ALLPKGS
+        do
+                if (( $i )) && grep "^$i$" /tmp/pkgs >/dev/null 2>&1
+		then
+			echo "PKGINSTALL_TYPE=$PKGINSTALL_TYPE" > $HDROOT/var/sadm/upgrade/$i.env
+			echo "AUTOMERGE=$AUTOMERGE" >> $HDROOT/var/sadm/upgrade/$i.env
+			echo "PKGINSTALL_TYPE=$PKGINSTALL_TYPE" > $HDROOT/$UPGRADE_STORE/$i.env
+			echo "AUTOMERGE=$AUTOMERGE" >> $HDROOT/$UPGRADE_STORE/$i.env
+			grep "^$i" /etc/pkg.LIST|$HDROOT/usr/bin/cut -f2 > $UPTMP/$i.LIST
+			chroot $HDROOT /sbin/sh -x /usr/sbin/pkginst/pkgsavfiles $i \
+				> $HDROOT/var/sadm/upgrade/sav.$i.out 2>&1
+			grep "^$i" /etc/pkg.LIST|$HDROOT/usr/bin/cut -f2-5 \
+				>$HDROOT/etc/inst/save.orig/$i.LIST
+			cp $UPTMP/$i.LIST $SCRIPTS
+			cp $UPTMP/$i.LIST $HDROOT/$SCRIPTS
+			[ -x /etc/inst/scripts/$i.prep -a "$PKGINSTALL_TYPE" = "UPGRADE" ] && {
+				cp /etc/inst/scripts/$i.prep $HDROOT/tmp
+				chmod 555 $HDROOT/tmp
+				chroot $HDROOT /tmp/$i.prep >$HDROOT/$UPGRADE_STORE/$i.prep.out \
+					2>$HDROOT/$UPGRADE_STORE/$i.prep.err
+			}
+		else
+			echo $i >>$HDROOT/tmp/pkg.newinstall
+		fi
+	done
+	if [ "$PKGINSTALL_TYPE" = "UPGRADE" ]
+	then
+		UPGRADE="YES"
+		rm -f $HDROOT/etc/.app_server 2>/dev/null
+		for i in $REMOVE_PKGS
+		do
+			echo $i >>/tmp/pkgrm.out
+			echo $i >>/tmp/pkgrm.err
+			chroot $HDROOT /usr/sbin/pkgrm -n $i >>/tmp/pkgrm.out 2>>/tmp/pkgrm.err
+			[ $i = "els" ] && if [ "$LANG" = "ja" ]
+						then
+							/usr/bin/kb_remap -l $LANG vt00 vt01
+						else
+							/usr/bin/kb_remap -f 88591
+						fi
+		done
+
+		chroot $HDROOT /usr/bin/mv /dev /dev.sav 2>/dev/null
+		chroot $HDROOT /usr/bin/mv /etc/conf /etc/conf.sav 2>/dev/null
+		mkdir $HDROOT/dev $HDROOT/etc/conf 2>/dev/null
+		$REMOVE_UPDATE && {
+			rm -fr $HDROOT/var/sadm/pkg/update111	2>/dev/null
+			rm -fr $HDROOT/var/sadm/pkg/update112	2>/dev/null
+			rm -fr $HDROOT/var/sadm/pkg/update5j	2>/dev/null
+			rm -fr $HDROOT/var/sadm/bkup/update111	2>/dev/null
+			rm -fr $HDROOT/var/sadm/bkup/update112	2>/dev/null
+			rm -fr $HDROOT/var/sadm/bkup/update5j	2>/dev/null
+			rm -fr $HDROOT/var/sadm/pkg/ptf*	2>/dev/null
+		}
+
+		(cd $HDROOT/var/sadm/upgrade;find . -print|cpio -pdm $HDROOT/etc/inst/save.user >/dev/null 2>&1)
+
+	fi
+	if [ "$PKGINSTALL_TYPE" = "OVERLAY" ]
+	then
+		OVERLAY="YES"
+		for i in $REMOVE_PKGS
+		do
+			echo $i >>/tmp/pkgrm.out
+			echo $i >>/tmp/pkgrm.err
+			chroot $HDROOT /usr/sbin/pkgrm -n $i >>/tmp/pkgrm.out 2>>/tmp/pkgrm.err
+		done
+	fi	
+	( . $SCRIPTS/overlaysav.sh )
+	wclose $CURWIN
+fi
+PATH=$PATH:$HDROOT/oldroot/usr/bin
+ENV=/funcrc
+SHELL=/sbin/sh
+display "$INSTMSG"
+INSTWID=$CURWIN
+. copy2hd
+(
+[ -n "$SH_VERBOSE" ] && set -x
+[ -n "$SH_DEBUG" ] &&	set > $HDROOT/tmp/set.out
+
+cd /
+if [ $SEC_MEDIUM_TYPE = cdrom ]
+then
+	sh_umount /cd-rom
+	sh_mount -r -F cdfs $SEC_MEDIUM $HDROOT/cd-rom
+fi
+
+if [ "${SEC_MEDIUM_TYPE}" = "spx" ]
+then
+	read PID < /etc/netware/npsd.pid
+	kill $PID
+fi
+
+# For debugging or patching, we might need to install our own version of
+# postreboot.sh.  This version overwrites the one installed by the base package.
+[ -s $SCRIPTS/postreboot.sh ] && cp $SCRIPTS/postreboot.sh $HDROOT/tmp
+
+call chroot $HDROOT
+export cpio=/tmp/ncp
+. ${SCRIPTS}/initialize
+echo "TZ=$TZ\nexport TZ" > /etc/TIMEZONE
+chmod 555 /etc/TIMEZONE
+
+# inetinst - get config data
+[ -f /tmp/ii.parms ] &&
+	. /tmp/ii.parms
+
+# inetinst - ds_to_disk may come from install server
+case $SEC_MEDIUM_TYPE in
+tcp)
+	# inetinst - make sure we have a locale, get pkgs from server
+	[ -z "${LANG}" ] && LANG="C"
+	NETPATH=${SEC_MEDIUM_TYPE} /usr/sbin/pkgcat -n ${SEC_MEDIUM_TYPE} \
+	  -s ${SERVER_INET_ADDR}:/var/spool/dist/${REL_FULLNAME}/${LANG} \
+	  ${SET_NAME}.package |
+		ds_to_disk $INSTPKGS > /tmp/netinst.out 2>&1 &
+	;;
+spx)
+	# inetinst - make sure we have a locale, get pkgs from server
+	LC_CTYPE="" /usr/sbin/npsd -v >> /tmp/stderr
+	[ -z "${LANG}" ] && LANG="C"
+	NETPATH=${SEC_MEDIUM_TYPE} LC_CTYPE="" /usr/sbin/pkgcat -n ${SEC_MEDIUM_TYPE} \
+	  -s ${SERVER_NAME}:/var/spool/dist/${REL_FULLNAME}/${LANG} \
+	  ${SET_NAME}.package |
+		ds_to_disk $INSTPKGS > /tmp/netinst.out 2>&1 &
+	;;
+cdrom)
+	PKGDEV_MOUNTPT=/cd-rom
+	ds_to_disk $INSTPKGS < /cd-rom/$SET_NAME.image >/dev/null 2>&1 &
+	;;
+tape)
+	ds_to_disk $INSTPKGS < $SEC_MEDIUM >/dev/null 2>&1 &
+	;;
+diskette)
+	#NY Not yet implemented
+	;;
+esac
+
+ds_to_disk_PID=$!
+
+PKGDEV="$SEC_MEDIUM"
+. pkginst /var/tmp/inst $INSTPKGS
+
+[ -f /tmp/unixware.dat ] && {
+	case "$CODE_SET" in
+	PC850)
+		iconv -f PC850 -t 88591 /tmp/unixware.dat
+		;;
+	sjis)
+		iconv -f sjis -t eucJP /tmp/unixware.dat
+		;;
+	*)
+		faultvt "Internal Error: Bad CODE_SET in /tmp/unixware.dat"
+		halt
+		;;
+	esac > /tmp/unixware.tmp
+	call rename /tmp/unixware.tmp /tmp/unixware.dat
+	[ -s /tmp/unixware.dat ] || {
+		faultvt "Internal Error: /tmp/unixware.dat is empty."
+		halt
+	}
+}
+
+cd /
+[ -s /tmp/postreboot.sh ] && mv /tmp/postreboot.sh ${SCRIPTS}/postreboot.sh
+mv ${SCRIPTS}/postreboot.sh /etc/init.d/S02POSTINST
+call link /etc/init.d/S02POSTINST /etc/rc2.d/S02POSTINST
+
+echo "$SerialNumber" > /etc/.snum
+echo "$SerialID\t$ActKey" > /etc/config/licensekeys
+chown root /etc/.snum /etc/config/licensekeys
+chgrp sys  /etc/.snum /etc/config/licensekeys
+chmod 444  /etc/.snum
+chmod 600  /etc/config/licensekeys
+
+# Assign mode/owner/group to all possible mount points.
+/usr/bin/egrep '^(/|/home|/home2|/stand|/tmp|/usr|/var|/var/tmp)[	 ]' \
+	/var/sadm/install/contents |
+while read line
+do
+	set $line
+	chmod $4 $1
+	chown $5 $1
+	chgrp $6 $1
+done
+
+echo "LANG=$LANG" > /etc/default/locale
+> /etc/default/Xim
+chmod 644 /etc/default/locale /etc/default/keyboard /etc/default/Xim
+
+if [ "$LANG" = "C" -a "$KEYBOARD" = "NONE" ] || [ "$LANG" = "ja" ] ||
+	[ "$KEYBOARD" = "AX" ] || [ "$KEYBOARD" = "A01" ]
+then
+	TERM=${TERM%-ie}
+else
+	echo "COFONT=\"8859-1\"" >/etc/default/cofont
+fi
+if [ "$LANG" = "ja" ]
+then
+	TERM=${TERM%-mb}
+	TERM=${TERM%-ie}-mb
+	echo "MBCONSOLE=yes" >>/etc/default/coterm
+fi
+
+echo "set -a;AUTOMERGE=$AUTOMERGE\nUPGRADE=$UPGRADE\n\
+PKGINSTALL_TYPE=$PKGINSTALL_TYPE\nTERM=$TERM\nFULL=$FULL" > $SCRIPTS/common.sh
+echo "$RELEASE	$VERSION" > $UNIX_REL
+[ $PKGINSTALL_TYPE = "UPGRADE" ] && > /etc/inst/.kern_rebuild
+
+rm -f /stand/?ip
+cp /etc/initprog/?ip /stand
+cp /etc/initprog/logo.img /stand
+[ $PKGINSTALL_TYPE = "NEWINSTALL" ] && {
+	print rootfs=$ROOTFS
+} >> /stand/boot
+/usr/lib/dstime/dst_pgen TZ_OFFSET $($SCRIPTS/get_tz_offset) >/dev/null 2>&1
+/usr/sbin/disksetup -b /etc/boot ${CHAR_DISK_NODES[0]}
+
+stty min 1
+$SILENT_INSTALL || . ${SCRIPTS}/loadhba
+for i in $CPQ_HBA_LIST
+do
+	# pkgadd seems to close stdin when called with these options.  Since
+	# we can't allow it to close *our* stdin (the keyboard), we give it
+	# something harmless to close (/dev/zero).
+
+	/usr/sbin/pkgadd -lpqn -d /cd-rom/.cpq.pkgs $i \
+		< /dev/zero 2>> /tmp/more_pkgadd.err
+done
+
+# If the osmp package was installed, the following
+# scripts will exist. Run these scripts to prompt
+# the user for PSM floppies.
+if [ -f /tmp/osmp.req.sh ]
+then 
+	# run this script in a subshell to avoid side-effects
+	(
+	. /tmp/osmp.req.sh
+	)
+	call unlink /tmp/osmp.req.sh
+
+	# ditto - run this script in a subshell to avoid side-effects
+	(
+	. /tmp/osmp.post.sh
+	)
+	call unlink /tmp/osmp.post.sh
+fi
+
+#
+#  inetinst - make sure we take the networking card out of the
+#  resmgr database BEFORE the idbuild.
+#
+if [ "${SEC_MEDIUM_TYPE}" = "tcp" -o "${SEC_MEDIUM_TYPE}" = "spx" ]
+then
+	. /var/sadm/dist/ii.parms
+	/sbin/resmgr > /tmp/${ETH_HW}.rmcmd
+	grep " ${ETH_HW} " /tmp/${ETH_HW}.rmcmd | read KEY JUNK
+
+	[ ! -z "${KEY}" ] &&
+		/sbin/resmgr -k ${KEY} -r
+
+	#
+	#  if nwnet pkg was not installed, remove entries from /etc/netconfig
+	#
+	[ ! -d /var/sadm/pkg/nwnet ] && {
+		/usr/bin/sed -e "/^ipx/d" -e "/^spx/d" \
+			< /etc/netconfig > /tmp/netconfig.$$
+		mv /tmp/netconfig.$$ /etc/netconfig
+	}
+
+	#
+	#  if inet pkg was not installed, remove entries from /etc/netconfig
+	#
+	[ ! -d /var/sadm/pkg/inet ] && {
+		/usr/bin/sed -e "/^tcp/d" -e "/^udp/d" -e "/^icmp/d" \
+			-e "/^rawip/d" < /etc/netconfig > /tmp/netconfig.$$
+		mv /tmp/netconfig.$$ /etc/netconfig
+	}
+fi
+
+[ -s /tmp/unixware.dat -o $BACK_END_MANUAL = "true" ] && {
+	[ "$SEC_MEDIUM_TYPE" = "cdrom" ] || {
+		faultvt "Internal Error -- /tmp/unixware.dat exists and/or\n\
+BACK_END_MANUAL is true but SEC_MEDIUM_TYPE\n\
+is not cdrom.\n$CONTROL_D"
+		halt
+	}
+	if [ -f /cd-rom/.extras.d/bin/install_more ] 
+	then
+		cp /cd-rom/.extras.d/bin/install_more $SCRIPTS
+	else
+		faultvt "Internal Error in inst:\n\
+Cannot find /cd-rom/.extras.d/bin/install_more"
+		halt
+	fi
+
+	if [ $BACK_END_MANUAL = "true" ]
+	then
+		INSTALL_LIST="cpqupd"
+	else
+		# This is a SILENT_INSTALL, get responses from the 
+		# unixware.dat file.	
+		. /tmp/unixware.dat
+		INSTALL_LIST="$INSTALL_LIST $( $INSTALL_CIMACTIVE && print "cim" ) cpqupd"
+	fi
+
+	# The as set is already installed. Now install additional sets 
+	# and/or packages.  These include sets/packages the user selected 
+	# and any sets/packages that we automatically install.  
+	wclose $SETUPWID
+	footer
+	msg
+	install_more /cd-rom
+	display "$DO_SETUP"
+	SETUPWID=$CURWIN
+	footer "$GENERIC_WAIT_FOOTER"
+}
+
+[ -f /cd-rom/cpq.inst ] && /cd-rom/cpq.inst
+. $SCRIPTS/pdiconfig
+wclose $SETUPWID
+footer
+msg
+$ODM_UP && . $SCRIPTS/odm
+display "$REBUILD_MSG"
+REBUILD_WID=$CURWIN
+. $SCRIPTS/rebuild
+/etc/conf/bin/idcpunix > /tmp/cpunix.out 2>&1
+wclose $REBUILD_WID
+footer
+msg
+[ "$NOND" = "yes" ] && {
+	display -w "$UPGRADE_WARN"
+	footer "$WELCOME_FOOTER"
+	input_handler
+	footer
+}
+stty min 1
+while :
+do
+	unset NOT_EMPTY_MSG
+	display -w "$REBOOT_MSG"
+	input_handler
+	if /usr/sbin/check_devs -g /dev/rdsk/f0t &&
+		/usr/bin/dd if=/dev/rdsk/f0t of=/dev/null count=1 2> /dev/null
+		# Some floppy drives do not support the Disk Change Signal (see
+		# FD_DOOR_SENSE in uts/io/io.cf/Dtune).  So, we need to try a read()
+		# using dd to check whether such drives are empty.
+	then
+		NOT_EMPTY_MSG="$FLOPPY_NOT_EMPTY"
+	elif [ $SEC_MEDIUM_TYPE = cdrom ] && /usr/sbin/check_devs -g $SEC_MEDIUM
+	then
+		NOT_EMPTY_MSG="$CD_NOT_EMPTY"
+	fi
+	[ -z "$NOT_EMPTY_MSG" ] || {
+		display -w "$NOT_EMPTY_MSG" -bg $ERROR_BG -fg $ERROR_FG
+		footer "$WELCOME_FOOTER"
+		input_handler
+		footer
+		continue
+	}
+	break
+done
+call endwin
+/usr/bin/tput clear > /dev/console	#clear the VT00 screen
+/usr/bin/tput clear 				#clear the VT01 screen
+)
+#We are no longer chrooted to $HDROOT.
+[ -f $HDROOT/etc/conf/.new_unix ] || {
+	faultvt "inst: Internal Error: $HDROOT/etc/conf/.new_unix does not exist"
+	halt
+}
+umountall
+/usr/bin/kb_remap -f default
+call uadmin 2 1 #Soft reboot

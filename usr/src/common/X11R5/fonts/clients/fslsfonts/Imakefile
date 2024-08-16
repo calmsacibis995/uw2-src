@@ -1,0 +1,20 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)r5fonts:clients/fslsfonts/Imakefile	1.2"
+
+XCOMM $XConsortium: Imakefile,v 1.5 91/07/17 16:04:48 gildea Exp $
+LOCAL_LIBRARIES = $(FSLIBSRC)/libFS.a
+EXTRA_LIBRARIES = ExtraLibraries -lsocket
+DEPLIBS = $(LOCAL_LIBRARIES)
+SRCS = fslsfonts.c
+OBJS = fslsfonts.o
+INCLUDES = -I$(FONTSRC)/include
+
+ComplexProgramTarget(fslsfonts)
+

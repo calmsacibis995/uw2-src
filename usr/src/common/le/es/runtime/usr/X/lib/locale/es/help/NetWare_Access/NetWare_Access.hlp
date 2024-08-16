@@ -1,0 +1,379 @@
+#ident\t"@(#)dthelp:Admin.Tools/NetWare_Access.hlp      1.13"
+^*version^1
+^*title^Acceso a NetWare
+^:Acceso_Netware
+^*width^70
+^+DesktopMgr/help.defs
+^?Acceso a un servidor NetWare en otro sistema UnixWare
+^0^Acceso a NetWare
+^$10
+Acceso a NetWare
+
+Use Acceso NetWare para conectarse a un servidor NetWare de 
+otro sistema UnixWare.
+
+Puede hacer lo siguiente con Acceso a NetWare:
+
+\to\t\k(Entrar a un servidor NetWare^^Entrada a un servidor NetWare)
+\to\t\k(Salir de un servidor NetWare^^Salida de un servidor NetWare)
+\to\t\k(Cambiar su contraseña en un servidor NetWare^^Modificación de la contraseña NetWare)
+\to\t\k(Guardar una lista de servidores^^Salvaguarda de una lista de servidores NetWare)
+\to\t\k(Habilitar el acceso de entrada única para todos los usuarios en el sistema^^Habilitación o inhabilitación de entrada única en el sistema)
+\to\t\k(Inhabilitar el acceso de entrada única para todos los usuarios en el sistema^^Habilitación o inhabilitación de entrada única en el sistema)
+
+\to\t\k(Definir un servidor principal^^Definición de un servidor principal)
+\to\t\k(Guardar una lista de servidores^^Salvaguarda de una lista de servidores NetWare)
+\to\t\k(Ver una lista de los usuarios de un servidor NetWare^^Visualización de usuarios en un servidor NetWare)
+\to\t\k(Ver una lista de los volúmenes de un servidor NetWare^^Visualización de volúmenes en un servidor NetWare)
+\to\t\k(Ver las direcciones de red y nodo^^Visualización de la dirección de red y de nodo)
+
+Véase también:
+\s(Acceso a NetWare^dhelp "pe.es" userhb "Acceso a NetWare" "" || helpLinkErr)
+\s(Configuración y definición de la conectividad NetWare^dhelp "pe.es" ownerhb "Configuración y definición de la conectividad NetWare" "" || helpLinkErr)
+
+^1^Entrada a un servidor NetWare
+^$20
+Entrada a un servidor NetWare
+
+Nota: Antes de que pueda acceder a un servidor NetWare desde un
+sistema UnixWare, debe conseguir una entrada en el sistema y una
+contraseña para dicho servidor.
+
+Para entrar en un servidor NetWare desde un sistema UnixWare, haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  Aparecerá la ventana "Carpeta:
+  \tHerramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Acceso_NetWare.
+  \tAparecerá la \k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>), que mostrará
+  \tuna lista de servidores NetWare que estén conectados o se
+  \tpuedan conecar a su sistema UnixWare.
+
+4.\tPulse en el icono que representa al servidor al que desea
+  \tconectarse.
+
+5.\tPulse en Entrar y aparecerá la ventana "Panel de autenticación".
+
+6.\tDefina las opciones siguientes:
+
+  \to\tTeclee su nombre de entrada en el servidor NetWare.
+
+  \t \tVea también: \k(Entrada a un servidor NetWare usando otro <usuario>)
+
+  \to\tTeclee su contraseña para la entrada en el servidor NetWare.
+
+7.\tPulse en Aplicar para entrar en el servidor y cerrar la ventana
+  \to en Cancelar si decide que no va a entrar en el servidor.
+
+8.\tCierre la ventana "Acceso NetWare para <usuario>" una vez 
+  \thaya entrado con éxito en el servidor NetWare.
+
+  \tNota: Si el servidor NetWare al que está intentando conectarse
+  \testá cerrado o desconectado, el Escritorio mostrará un reloj que,
+  \tdespués de 45 segundos, será reemplazado por el siguiente mensaje:
+  \tNo se puede conectar al servidor.
+
+   \tPóngase en contacto con el administrador del sistema de este
+   \tservidor para saber por qué está cerrado o desconectado, o
+  \tinténtelo de nuevo más tarde.
+
+Véase también:
+\k(Acceso a un servidor NetWare a través de otro sistema UnixWare)
+\s(Configuración y definición de la conectividad NetWare^dhelp "pe.es" ownerhb "Configuración y definición de la conectividad NetWare" "" || helpLinkErr)
+
+
+^2^Ventana Acceso NetWare para <usuario>
+^$30
+Ventana Acceso NetWare para <usuario>
+
+Esta ventana muestra los servidores NetWare a los que está conectado
+o se puede conectar su sistema UnixWare (donde <usuario> se reemplaza
+por su registro de entrada).
+
+Puede actualizar la lista de servidores pulsando en
+Acciones=>Actualizar servidores. Aparecerá una lista de servidores
+actualizada, que le permita ver si un servidor se ha cerrado o abierto
+desde la última vez que abrió esta ventana.
+
+Vea también:
+\k(Entrada a un servidor NetWare usando otro <usuario>)
+\k(Salida de un servidor NetWare)
+\k(Modificación de la contraseña NetWare)
+\k(Salvaguarda de una lista de servidores NetWare)
+
+^2^Ventana Panel de autenticación
+^$40
+Ventana Panel de autenticación
+
+Esta ventana aparece cuando intenta acceder a un servidor NetWare
+remoto desde su Escritorio UnixWare. Debe tener una entrada y una
+contraseña en este servidor para tener acceso a él.
+
+Teclee su entrada y contraseña, y pulse luego en Aplicar.
+
+^2^Entrada a un servidor NetWare usando otro <usuario>
+^$50
+Entrada a un servidor NetWare usando otro <usuario>
+
+Nota: Antes de poder entrar en un servidor NetWare usando otro
+usuario, deberá tener el registro de entrada y la contraseña de
+dicho usuario, así como el permiso del usuario propietario de
+la cuenta.
+
+Para entrar en un servidor NetWare desde su sistema UnixWare usando
+otro usuario válido (que no sea el suyo), haga lo
+siguiente desde la \k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>):
+
+1.\tPulse en Acciones=>Nuevo usuario y aparecerá la ventana "Elegir
+  \tusuarios".
+
+2.\tHaga clic en el usuario deseado de la lista de 
+  \tusuarios válidos para el sistema UnixWare.
+
+   \tNota: Si necesita añadir un usuario a su sistema, vea
+  \t\k(Añadir un nuevo usuario^dtadmin/user.hlp^Adición de un nuevo usuario).
+
+3.\tTeclee la contraseña de entrada UnixWare para este usuario.
+
+4.\tPulse en Cancelar para cerrar la ventana de la contraseña.
+
+5.\tPulse en Cancelar para cerrar la ventana "Elegir usuarios".
+
+6.\tVaya a \k(Entrada a un servidor NetWare).
+
+
+^2^Ventana Elegir usuario
+^$60
+Ventana Elegir usuario
+
+Esta ventana muestra una lista de usuarios válidos de su servidor
+UnixWare.
+
+Vea \k(Entrada a un servidor NetWare usando otro <usuario>) para
+más información sobre esta ventana.
+
+^2^Acceso a un servidor NetWare a través de otro sistema UnixWare
+^$70
+Acceso a un servidor NetWare a través de otro sistema UnixWare
+
+Para acceder a un servidor NetWare desde su sistema a través de
+Application Server o Personal Edition, haga lo siguiente después de
+conectarse con el sistema remoto UnixWare:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  Aparecerá la ventana "Carpeta:
+  \tHerramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Acceso_NetWare de la carpeta de red.
+  \tAparecerá la \k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>)
+
+4.\tEntre en el servidor NetWare deseado (tal como se describe en
+  \t\k(Entrada a un servidor NetWare)).
+
+Nota: Si está entrando en Personal Edition o Application Server de
+modo remoto (por ejemplo, mediante telnet u otro método no gráfico)
+para acceder a un servidor de archivos NetWare, primero debe
+\k(autenticar^^Ventana Panel de autenticación) Personal Edition o Application Server en el servidor
+NetWare.
+
+
+^1^Salida de un servidor NetWare
+^$80
+Salida de un servidor NetWare
+
+Para salir de uno o más servidores NetWare, haga lo siguiente desde la
+\k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>):
+
+1.\tPulse en los servidores de los que desea salir.
+
+2.\tHaga clic en Salir.  Saldrá de los servidores NetWare especificados, 
+  \ty su usuario desaparecerá de la columna Autenticado como
+  \tde la ventana "Acceso NetWare para <usuario>".
+
+^1^Modificación de la contraseña NetWare
+^$90
+Modificación de la contraseña NetWare
+
+Para cambiar la contraseña NetWare, haga lo siguiente desde la
+\k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>):
+
+1.\tPulse en el servidor NetWare en el que desea cambiar su contraseña.
+
+2.\tPulse en Contraseña y aparecerá la ventana "Cambiar contraseña".
+
+3.\tTeclee la contraseña antigua (actual) y pulse en Aplicar.
+
+4.\tTeclee la nueva contraseña y pulse en Aplicar. Aparecerá otra
+  \tventana en la que se le solicita que introduzca de nuevo su
+  \tcontraseña.
+
+5.\tVuelva a teclear la nueva contraseña, pulse en Aplicar y se
+  \tcerrará la ventana. Use la nueva contraseña la próxima vez que
+  \tentre en el servidor.
+
+^1^Salvaguarda de una lista de servidores NetWare
+^$100
+Salvaguarda de una lista de servidores NetWare
+
+Es conveniente que guarde una lista de servidores, para que, la
+siguiente vez que entre, sólo aparezcan los servidores seleccionados.
+Para ello, haga lo siguiente desde la
+\k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>):
+
+1.\tPulse en los servidores que quiere guardar en una lista.
+
+2.\tPulse en Seleccionar.
+
+3.\tPulse en Acciones=>Guardar selección. El sistema guarda los
+  \tservidores seleccionados en una lista. La próxima vez que pulse
+  \tdos veces en Acceso_NetWare, sólo aparecerán los servidores
+  \tseleccionados.
+
+  \tNota: Si desea visualizar todos los servidores, pulse en
+  \tAcciones=>Mostrar todo.
+
+^1^Habilitación o inhabilitación de entrada única en el sistema
+^$105
+Habilitación o inhabilitación de entrada única en el sistema
+
+"Activar entrada NetWare sencilla" deberá estar activada en
+\k(Configuración de NetWare^NetWare_Setup/NetWare_Setup.hlp^Configuración de NetWare) para que los usuarios puedan activar y
+desactivar Entrada sencilla.
+
+Si su ID y contraseña están sincronizados entre el sistema UnixWare
+y un servidor NetWare, Entrada sencilla le dará acceso "silencioso" a
+cualquier servidor; es decir, le permitirá entrar en un servidor
+NetWare sin proporcionar el ID de entrada ni la contraseña, siempre
+que sean iguales a los que haya registrado en el servidor NetWare al
+que esté tratando de acceder. Por defecto, Entrada sencilla está
+activada para cualquier usuario.
+
+Para activar o desactivar el acceso de Entrada sencilla, haga lo
+siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, vaya al paso 2.
+Si ya está en la carpeta de red, vaya al paso 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin de la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^Introducción al Escritorio UnixWare). Aparecerá la ventana "Carpeta:
+  \tHerramientas_de_Admin").
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga clic en uno de las siguientes opciones:
+
+  \to\tAcciones=Activar entrada única (para activar la entrada
+  \t \túnica.
+  \to\tAcciones=Desactivar entrada única (para desactivar la entrada
+  \t \túnica).
+
+^1^Definición de un servidor principal
+^$107
+Definición de un servidor principal
+
+Normalmente, los usuarios ven la lista de los servidores acoplados
+al servidor más cercano.  Definiendo un servidor principal permitirá a
+los usuarios que vean la lista adicional de servidores NetWare (que
+puede detectar este servidor principal), que no detectaría el servidor
+más cercano.
+
+Para definir un servidor principal, haga lo siguiente desde la
+\k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>):
+
+1.\tHaga clic en Acción=>Definir servidor principal.  Aparecerá la
+  \tventana "Definir servidor principal", con el siguiente campo:
+
+  \tServidor principal: - Teclee el nombre del servidor deseado.
+
+2.\tHaga clic en Aplicar.
+
+3.\tHaga clic en Acción=>Actualizar.  El sistema actualizará la lista
+  \tde servidores e incluirá los servidores adicionales detectados por
+  \tel servidor principal recientemente especificado.
+
+
+^1^Visualización de usuarios en un servidor NetWare
+^$110
+Visualización de usuarios en un servidor NetWare
+
+Para ver una lista de usuarios en un servidor NetWare, haga lo
+siguiente:
+
+1.\tEntre en un servidor NetWare tal y como se describe en
+  \t\k(Entrada a un servidor NetWare).
+
+2.\tHaga clic en Lista de usuarios, de la
+  \t\k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>):
+
+  \tSe abrirá una ventana de aparición instantánea con la siguiente
+  \tinformación sobre cada usuario del servidor:
+
+  \to\tID de conexión NetWare
+
+  \to\tNombre de usuario
+
+  \to\tHora del servidor de entrada NetWare
+
+3.\tPulse en Cancelar para cerrar esta ventana.
+
+^1^Visualización de volúmenes en un servidor NetWare
+^$120
+Visualización de volúmenes en un servidor NetWare
+
+Para ver una lista de volúmenes en un servidor NetWare, haga lo
+siguiente:
+
+1.\tEntre en un servidor NetWare tal y como se describe en
+  \t\k(Entrada a un servidor NetWare).
+
+2.\tHaga clic en Lista de volúmenes de la
+  \t\k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>):
+
+  \tAparecerá una ventana con la siguiente información para cada 
+  \tvolumen del servidor NetWare al que pueda acceder:
+
+  \to\tNombre de volumen
+
+  \to\tEspacio de disco total en volumen
+
+  \to\tEspacio de disco disponible en volumen
+
+  \to\tDirectorios totales en volumen
+
+  \to\tDirectorios disponible en volumen
+
+^1^Visualización de la dirección de red y de nodo
+^$130
+Visualización de la dirección de red y de nodo
+
+Por defecto, la ventana "Acceso a red" muestra los nombres de
+servidores en la columna Servidores de archivos y los nombres de
+usuarios en la columna Autenticado como.
+
+Puede modificar la visualización a fin de que incluya las direcciones
+de red y nodo.  Para ello, haga lo siguiente
+desde la \k(ventana "Acceso NetWare para <usuario>"^^Ventana Acceso NetWare para <usuario>):
+
+1.\tPulse en Visualizar=>Formato=>Largo. El sistema mostrará ahora la
+  \tdirección de cada servidor con el nombre del servidor de archivos
+  \ty del usuario autenticado.
+
+2.\tPulse en Visualizar =>Formato=>Abreviado para volver a la
+  \tvisualización por defecto.
+
+

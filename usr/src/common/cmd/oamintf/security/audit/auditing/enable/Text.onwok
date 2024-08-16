@@ -1,0 +1,25 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/enable/Text.onwok	1.1.1.2"
+#ident  "$Header: Text.onwok 2.0 91/07/12 $"
+#	Module Name: Text.onwok
+
+title="Warning Setting Audit Criteria"
+
+framemsg=`readfile $INTFBASE/conf.msg`
+lifetime=shortterm
+
+rows=4
+columns=66
+
+text="
+A warning occured while setting the specified auditing criteria.
+
+`readfile $ONAUDERR`"
+
+altslks
+name=CONT
+button=11
+action=CLOSE
+
+name=CANCEL
+button=14
+action=CLEANUP

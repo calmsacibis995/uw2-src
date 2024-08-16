@@ -1,0 +1,45 @@
+!
+!(c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+!ALL RIGHTS RESERVED 
+!
+!
+! Motif Release 1.2
+!
+
+module kanji_strings
+    version = 'v1.0'
+    names = case_sensitive
+    character_set = jis_kanji
+
+value
+  romanFont : font (
+   	'-*-JISX0201.1976-0');
+  kanjiFont : font (
+	'-*-JISX0208.1983-1',
+	character_set = jis_kanji);
+
+  local_font : exported font_table (jis_katakana = romanFont,
+				 kanjiFont);
+				 
+  string_direction : exported XmSTRING_DIRECTION_L_TO_R;
+
+  hello_label : exported 
+                compound_string("こんにちは", 
+		separate=true)&
+                compound_string(#jis_katakana"Hello!");
+
+  bye_label : exported 
+              compound_string("こんにちは", 
+	      separate=true)&
+              compound_string(#jis_katakana"Good-bye!");
+
+  label_label :  exported compound_string(
+        "１回のクリックで", 
+	         separate=true)&
+                          compound_string(
+        "ラベルが変わり", 
+	         separate=true)&
+                          compound_string(	
+       "２回で終了します");
+
+end module ;

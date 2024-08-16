@@ -1,0 +1,10 @@
+#ident	"@(#)langsup:common/ls/lp/locale/88591/LCL_WRAP	1.1"
+#!/usr/bin/sh
+
+unset	LC_ALL LC_COLLATE LC_CTYPE LC_MESSAGES LC_MONETARY LC_NUMERIC LC_TIME
+
+_lang=`dirname $0`
+LANG=`basename $_lang`
+export LANG
+
+exec /usr/lib/lp/bin/wrap "$@"

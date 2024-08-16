@@ -1,0 +1,133 @@
+#ident	"@(#)S3:S3/s3_clks.def	1.3"
+
+/***
+ ***	NAME
+ ***
+ ***	s3_clocks.def : clock definitions for the clock chips 
+ ***			supported by the S3 series of chipsets.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***	#define S3_CLOCK_CHIP(CHIP_NAME, DESC, CLOCK_INIT_FUNC, 
+ ***				CLOCK_UNINIT_FUNC,CLOCK_FREQ_COUNT,f1, f2 .. f16...)
+ ***
+ ***	#include "s3_clocks.def"
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		__DEBUG__ : Enable debugging and assertion checking.
+ ***
+ ***	FILES
+ ***
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***		The number of clock frequencies could be 16 or lesser. This is
+ ***		because only 4 bits are available in cr42 to select the clock
+ ***		frequency. In case of a clock synthesiser like icd2061 which
+ ***		can generate any frequency in a range the number of frequencies
+ ***		is specified as 0. Same is the case with any other clock 
+ ***		chip which provides more than 16 clock frequencies. The clock
+ ***		chip init functions would then handle these appropriately.
+ ***		In case of such synthesisers etc the first frequency is the
+ ***		minimum freq and the second frequency is the maximum freq
+ ***		that the clock chip can generate. All other entries are ignored.
+ ***
+ ***
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	HISTORY
+ ***
+ ***/
+
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_NULL,
+	"Clock Chip Delimiter",
+	NULL,NULL,16,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+
+/*
+ * Values suggested by the S3 manual page: 8-3
+ */
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_APPROXIMATE_VALUES,
+	"None. Use table given in the programmers manual",
+	s3_clock_init_func_standard, s3_clock_uninit_func_standard,16,
+	25175, 28322, 40000, -1, 50000, 77000, 36000, 
+	44889, -1, -1, 80000, 31500, -1, 65000, 75000, 0),
+
+/*
+ * Actix boards clock chips. Data from x386 server files.
+ */
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_CHRONTEL_CH9204_VERSION_C,
+	"Chrontel Ch9204C",
+	s3_clock_init_func_standard, s3_clock_uninit_func_standard,16,
+	25175, 28322, 40000, 72000, 50000, 77000, 36000, 44900,
+	80000, 120000, 130000, 31500, 110000, 65000, 75000, 72000),
+
+/*
+ * Clock chip on orchid farenhiet card. 
+ */
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_CHRONTEL_CH9294_VERSION_G,
+	"Chrontel Ch9294G",
+	s3_clock_init_func_standard, s3_clock_uninit_func_standard,16,
+	25175, 28322, 40000, 72000, 50000, 77000, 36000, 44900,
+	130000, 120000, 80000, 31500, 110000, 65000, 75000, 94500),
+
+/*
+ * From XFree86 source.
+ */
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_CHRONTEL_CH9204_VERSION_B,
+	"Chrontel Ch9204B",
+	s3_clock_init_func_standard, s3_clock_uninit_func_standard,16,
+	25175, 28322, 32514, 36000, 40000, 44900, 50350, 65000,
+	78000, 56644, 63000, 75000, 80000, 89800, 100700, 31500),
+
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_ICD_2061A,
+	"ICD 2061A",
+	s3_clock_init_func_icd_2061, s3_clock_uninit_func_icd_2061,0,
+	25175, 150000, 40000, 32500, 50000, 65000, 36000, 
+	44900, 74500, 80160, 50350, 31500, 63000, 77160, 
+	-1, -1),
+
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_ICD_2061,
+	"ICD 2061",
+	s3_clock_init_func_icd_2061, s3_clock_uninit_func_icd_2061,0,
+	25175, 150000, 40000, 32500, 50000, 65000, 36000, 
+	44900, 74500, 80160, 50350, 31500, 63000, 77160, 
+	-1, -1),
+
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_AV9194_56,
+	"Avasem Av9194-56",
+	s3_clock_init_func_standard, s3_clock_uninit_func_standard,16,
+	25175, 28322, 40000, 0, 50000, 77000, 36000, 44900,
+	130000, 120000, 80000, 31500, 110000, 65000, 75000, 72000),
+
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_AV9194_07,
+	"Avasem Av9194-07",
+	s3_clock_init_func_standard, s3_clock_uninit_func_standard,16,
+	25175, 28322, 40000, 0, 50000, 77000, 36000, 44900,
+	130000, 120000, 80000, 31500, 110000, 65000, 75000, 94500),
+
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_AV9194_11,
+	"Avasem Av9194-11",
+	s3_clock_init_func_standard, s3_clock_uninit_func_standard,16,
+	25175, 28322, 40000, 0, 50000, 77000, 36000, 44900,
+	130000, 120000, 80000, 31500, 110000, 65000, 75000, 94500),
+
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_TI_3025,
+	"Clock chip built in Ti3025 DAC",
+	s3_clock_init_func_ti3025, s3_clock_uninit_func_ti3025,0,
+	25175, 220000, 0, 0, 0, 0, 0, 0,
+	0, 0, 0, 0, 0, 0, 0, 0),
+
+DEFINE_CLOCK_CHIP(S3_CLOCK_CHIP_COUNT,
+	"Clock Chip Delimiter",
+	NULL, NULL,16,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+

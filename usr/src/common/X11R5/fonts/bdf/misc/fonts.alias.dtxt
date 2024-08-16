@@ -1,0 +1,19 @@
+sed -e "/# pkg=$PKGINST$/d" /usr/X/lib/fonts/misc/fonts.alias 2>/dev/null
+
+if [ "$1" = install ]
+then
+	# add the following aliases to the file
+	cat - <<!
+variable     -adobe-times-bold-r-normal--12-120-75-75-p-67-iso8859-1 # pkg=$PKGINST
+iso-8859-1   -*-lucidatypewriter-medium-r-*-*-*-120-*-*-m-*-iso8859-1 # pkg=$PKGINST
+6x13         -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1 # pkg=$PKGINST
+fixed        -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1 # pkg=$PKGINST
+7x14         -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso8859-1 # pkg=$PKGINST
+a14          -misc-fixed-medium-r-normal--14-*-*-*-*-*-iso8859-1 # pkg=$PKGINST
+8x13         -misc-fixed-medium-r-normal--13-120-75-75-c-80-iso8859-1 # pkg=$PKGINST
+8x13bold     -misc-fixed-bold-r-normal--13-120-75-75-c-80-iso8859-1 # pkg=$PKGINST
+vtbold       -misc-fixed-bold-r-normal--13-120-75-75-c-80-iso8859-1 # pkg=$PKGINST
+!
+fi
+
+exit 0

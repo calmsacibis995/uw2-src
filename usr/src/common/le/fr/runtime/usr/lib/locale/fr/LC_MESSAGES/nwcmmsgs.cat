@@ -1,0 +1,180 @@
+
+
+$quote "
+
+
+
+$
+$ Copyright 1991, 1992 Novell, Inc.
+$ All Rights Reserved.
+$
+$ This work is subject to U.S. and International copyright laws and
+$ treaties.  No part of this work may be used, practiced, performed,
+$ copied, distributed, revised, modified, translated, abridged,
+$ condensed, expanded, collected, compiled, linked, recast,
+$ transformed or adapted without the prior written consent
+$ of Novell.  Any use or exploitation of this work without
+$ authorization could subject the perpetrator to criminal and
+$ civil liability.
+$
+
+$  DEVELOPERS:  Do NOT add messages or constants to this file
+$
+$  You must go to file "nls/English/nwcmmsg.m4" and make additions there.
+$
+$
+$ The text in this file may be translated and the
+$ corresponding catalog file rebuilt for other languages.
+$ Rebuilding a catalog file is done with the following:
+$  % gencat nwcmmsgs.cat nwcmmsgs.msg
+$        where nwumsgs.cat is the new catalog file.
+$
+$set 1  MSG_NWCM_REV_SET
+$ Do NOT touch the following REV string. (MUST match msgtable.h)
+1 "@(#)$Header: /SRCS/esmp/usr/src/nw/lib/libnutil/nls/English/nwnet/nwcmmsg.m4,v 1.5 1994/08/30 15:29:17 mark Exp $"
+$set 3  MSG_NWCM_FOLD_SET
+1 "Paramètres non documentés"
+2 "Paramètres généraux associés au serveur"
+3 "Paramètres associés aux services de répertoire NetWare"
+4 "Paramètres associés au serveur AFP"
+5 "Paramètres modifiables par le système"
+6 "Paramètres divers"
+7 "Paramètres de localisation"
+8 "Paramètres de transport IPX/SPX/NetBIOS"
+9 "Paramètres SAP"
+10 "Paramètres de transport Apple Talk"
+11 "Paramètres des services d'impression AppleTalk"
+12 "Paramètres de gestion de réseau"
+13 "Paramètres Pserver"
+14 "Paramètres NPRINTER"
+15 "Paramètres NVT"
+16 "Paramètres de synchronisation de l'heure"
+17 "Paramètres du client NetWare UNIX"
+101 "a"
+102 "g"
+103 "c"
+104 "m"
+105 "f"
+106 "d"
+107 "l"
+108 "n"
+109 "P"
+110 "t"
+111 "s"
+112 "i"
+113 "v"
+114 "e"
+115 "r"
+116 "y"
+117 "W"
+
+$set 4  MSG_NWNET_DH_SET
+1 "Définition du paramètre incorrecte"
+2 "Nom du serveur"
+3 "Activer l'auto-détection du réseau IPX ?"
+4 "Numéro de réseau interne IPX"
+5 "Nombre de Hash Buckets Routeur IPX"
+6 "Nom du périphérique routeur IPX"
+7 "Nom du daemon périphérique routeur IPX"
+8 "Type de routeur"
+11 "Nom du fichier journal SAP"
+12 "Nom de fichier Dump SAP"
+13 "Nom du fichier piste SAP"
+14 "Nombre maximum de messages entrés dans le fichier SAP"
+15 "Nombre maximum de serveurs SAP"
+16 "Priorité d'exécution SAP"
+17 "Activer le protocole SPX ?"
+18 "Nombre maximal de sockets d'écoute SPX"
+21 "Nombre maximal de connexions SPX"
+22 "Activer l'ouverture de session réseau SPX à distance (NVT)?"
+23 "Lancer IPX lors du démarrage ?"
+
+24 "Adresse réseau LAN IPX"
+25 "Nom du périphérique LAN IPX"
+26 "Numéro PPA périphérique LAN IPX"
+27 "Type de périphérique LAN IPX"
+28 "Type de trame LAN IPX"
+31 "Nom d'interface LAN IPX"
+
+32 "Intervalle entre les diffusions RIP"
+33 "Intervalle d'obsolescence du RIP"
+34 "Taille maximale du paquet RIP"
+35 "Minimiser le trafic WAN RIP ?"
+36 "Délai en milliseconde entre les paquets RIP."
+37 "Intervalle entre les diffusions SAP"
+38 "Intervalles de péremption SAP"
+41 "Taille maximale du paquet SAP"
+42 "Minimiser le trafic WAN SAP ?"
+43 "Délai en millisecondes entre les paquets SAP."
+44 "Répondre à la requête Obtenir le serveur le plus proche ?"
+45 "Vitesse du LAN en kilo-octets/seconde"
+46 "Nombre maximal de sauts IPX"
+
+47 "Activer les services de diagnostics ?"
+48 "Nom du daemon des services diagnostics"
+51 "Nom du fichier journal des services diagnostics"
+52 "Chemin de répertoire pour les fichiers binaires"
+53 "Chemin de répertoire pour les fichiers journal"
+54 "Activer NetBIOS?"
+55 "Nom de la routine de test NetBIOS IPX"
+56 "Activer la compatibilité des fichiers SAP /var/spool/sap/in,out ?"
+57 "Activer l'initialisation rapide du daemon SAP?"
+58 "Rendre disponible le partage des applications à distance ?"
+61 "Rendre disponibles les services d'installation du serveur ?"
+62 "Communications point à point ?"
+$
+$	Note to translators.  Any occurrence of the string \047 in the
+$ following text is a representation of a quote character,
+$ i.e., the four character sequence \047 is displayed as a quote character.
+$
+101 "Aide relative à ce paramètre non disponible"
+102 "Ce paramètre contrôle le nom sous lequel tous les services IPX (Installation, NVT, NCP, ...) sont rendus disponibles sur le réseau. Ce nom doit être différent des autres serveurs NetWare sur le réseau. Il ne doit pas comporter d'espaces ou de signes de ponctuation. Lorsqu'un service IPX est rendu disponible, les caractères alphabétiques du nom sont transformés en majuscules. Lors de chaque démarrage, le nom du serveur est automatiquement aligné sur le nom du noeud UNIX.  Pour déclarer un nom de serveur différent du nom de noeud UNIX, vous devez modifier le script /etc/init.d/nw.\n\nLongueur : 2 à 47 caractères\nValeur par défaut : \047\047"
+103 "Ce paramètre contrôle la détection automatique de l'adresse du server\047s. Lorsqu'il est activé, il permet la détection automatique de l'adresse réseau pour ce serveur. Lorsqu'il est désactivé, la détection automatique est interrompue. Si l'adresse LAN interne IPX a une valeur différente de zéro, la détection automatique est lancée une fois puis s'arrête.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : activé"
+104 "Ce paramètre fournit une adresse réseau unique pour un accès à partir de plusieurs LAN. Il spécifie l'adresse réseau du réseau interne (LAN 0). Réglez ce paramètre seulement si plusieurs réseaux sont configurés sur votre système. Cette adresse réseau doit être différente de toute autre adresse réseau assignées sur l'inter-réseau IPX. La valeur par défaut (zéro) indique qu'aucun réseau interne est configuré. Vous pouvez entrer la valeur sous forme héxadécimale (0xNNNNN), décimale (NNNNN) ou octale (0NNNN). Les valeurs sont toujours affichées sous forme héxadécimale.\n\nValeurs supportées : 1 à 0xfffffffe\nValeur par défaut : 0"
+105 "Ce paramètre indique le nombre d'entrées de hachage figurant dans la table des informations de routage. Augmentez cette valeur si vous pouvez visualiser un très grand nombre de réseaux à partir du réseau local sur lequel le routeur/serveur réside. Diminuez cette valeur si vous ne pouvez visualiser qu'un nombre très limité de réseaux à partir du réseau local sur lequel le routeur/serveur réside. Toute valeur indiquée est élevée à la puissance 2.\n\nValeurs supportées : 1 à 32768\nValeur par défaut : 64"
+106 "Ce paramètre indique le chemin d'accès complet au périphérique RIPX.\n\nLongueur maximale : 127\nValeur par défaut : \047/dev/ripx\047"
+108 "Ce paramètre spécifie le nom d'un daemon routeur de remplacement qui utilise l'interface Routeur remplaçable.\n\nLongueur maximale : 127\nValeur par défaut : \047\047"
+111 "Ce paramètre indique si le daemon du protocole de mise à disposition du serveur (SAPD) démarre, et si la requête d'interruption rend les réseaux IPX disponibles. Si le paramètre de réseau interne IPX contient une valeur différente de zéro, le type de routeur est automatiquement réglé sur PLEIN lorsque IPX démarre. Si le type de routeur est réglé à PLEIN, SAPD démarre et la requête d'interruption rend disponible. Si le type de routeur est réglé sur CLIENT, SAPD ne démarre pas et la requête d'interruption ne rend pas disponible.\n\nValeurs supportées : PLEIN, CLIENT\nRéglage initial : Serveur d'application=PLEIN, Edition personnelle=CLIENT"
+112 "Ce paramètre spécifie le nom du fichier journal regroupant les messages envoyés pendant le fonctionnement normal du daemon SAP (par exemple les rapports d'heures de départ/arrêt ou les alertes face à toute situation anormale rencontrée). La valeur de ce paramètre peut correspondre à tout nom de fichier UNIX valide (créé dans le répertoire log) ou à un chemin et nom de fichier valide.\n\nLongueur maximale : 127\nValeur par défaut: \047sap.log\047"
+113 "Ce paramètre spécifie le nom du fichier qui reçoit les résultats lorsque le démon SAP vide les tables SAP. Le vidage est lancé par l'envoi d'un SIGPIPE au démon SAP et il est en général utilisé uniquement pour le débogage. Les valeurs autorisées correspondent à tout nom de fichier UNIX correct (créé dans log_directory), à un chemin d'accès et à un nom de fichier corrects ou \"/dev/null\" (désactivation de la journalisation).\"\n\nLongueur maximale : 127\nValeur par défaut : \047sap.dump\047"
+114 "Ce paramètre spécifie le périphérique affichant les messages de suivi faisant état des paquets SAP lorsque la commande \047track on\047 est envoyée. La valeur de ce paramètre peut correspondre à tout nom de fichier UNIX valide (créé dans le répertoire journal), à un chemin et nom de fichier valide, ou la console, \047/dev/console\047\n\nLongueur maximale : 127\nValeur par défaut : \047/dev/console\047"
+115 "Ce paramètre spécifie le nombre maximum de messages pouvant être consignés dans le fichier spécifié par le paramètre de fichier journal sap. Utilisez une valeur de 0 pour désactiver la journalisation.\n\nValeurs supportées : 0 à 4294967295\nValeur par défaut : 300"
+116 "Ce paramètre spécifie le nombre maximum des serveurs de tout type pouvant être aperçus sur les réseaux reconnus par SAP. Il permet de déterminer la taille de la zone de mémoire partagée utilisée par SAP. Si ce paramètre est trop petit, les nouveaux noms de serveurs ne rentrant pas dans la table seront ignorés. \n\nValeurs supportées : 50 à 4294967295\nValeur par défaut : 3000"
+117 "Ce paramètre déclare une valeur qui spécifie la priorité de lancement pour le daemon SAP par rapport à d'autres procédés. Elle est généralement utilisée pour donner une priorité plus importante au SAP par rapport à d'autre procédés.\n\nValeurs supportées : 0 à 40\nValeur par défaut : 15"
+121 "Ce paramètre indique si le pilote SPX a démarré après le lancement de la pile de protocole IPX. SPX est un protocole de transport Novell fonctionnant avec le transport IPX pour garantir un acheminement réussi des paquets de données sur le réseau. IPX est un service datagramme et SPX est un service basé sur des connexions. Certains services NetWare nécessitent SPX, par exemple l'impression et NVT.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : activé"
+122 "Ce paramètre spécifie le nombre de sockets utilisables simultanément par SPX pour l'écoute des requêtes de connexion provenant d'autres extrémités. Ce paramètre peut être configuré de façon à ce que les petits systèmes utilisent efficacement la mémoire affectée et optimisent ainsi leurs performances. Augmentez cette valeur en cas de dysfonctionnement des applications car les sockets d'écoute ne peuvent alors être ouverts.\n\nValeurs supportées : 5 à 200\nValeur par défaut : 50"
+123 "Ce paramètre spécifie le nombre maximum de connexions que SPX peut gérer. Dans le cas de petits systèmes, il est préférable de réduire la valeur de ce paramètre afin de conserver les ressources mémoire du noyau. Si le système utilise les services d'impression NetWare, allouez suffisement de connexions pour le serveur d'impression, les imprimantes et autre serveurs NetWare servis par le serveur d'impression. Il est probablement nécessaire d'augmenter ce paramètre dans le cas de systèmes configurés pour les services NVT, car NVT utilise maintenant SPXII pour son protocole de base. Si les connexions échouent, augmentez ce paramètre car plus aucun périphérique ou socket ne sont disponibles.\n\nValeurs supportées : 5 à 1024\nValeur par défaut : 100"
+124 "Ce paramètre indique si les services d'ouverture de session à distance NVT vont être activés.\n\nValeurs supportées : activé, désactivé\nRéglage initial : Application Server=activé, Personal Edition=désactivé"
+125 "Ce paramètre contrôle le lancement de IPX au démarrage. S'il est activé, IPX est lancé automatiquement  au démarrage. S'il est désactivé, IPX n'est pas lancé au démarrage. Notez que lorsque IPX n'est pas lancé, d'autres services nécessitant IPX ne pourront pas être lancés, comme Client réseau Unix, NVT, etc.\n\nValeurs supportées : activé, désactivé\nValeur par défaut: activé"
+131 "Ce paramètre spécifie le numéro de réseau externe IPX pour le système de cablâge auquel la carte réseau est attachée. Tous les pilotes IPX reliés à ce système de cablâge doivent utiliser le même numéro de réseau pour le système de cablâge et le type de trame s. Le x dans le nom du paramètre désigne le réseau configuré. Chaque type de trame requiert son numéro unique de réseau externe IPX. Les valeurs peuvent être entrée sous forme héxadécimale (0xNNNNN), décimale (NNNNN) ou octale (0NNNN).  Les valeurs sont toujours affichées sous forme héxadécimale. Ce paramètre doit être spécifié : la valeur par défaut n'est pas valide.\n\nValeurs supportées : toute valeur de 1 à 0xFFFFFFFE n'entrant pas en conflit avec d'autres numéros de réseau IPX déclarés (interne et externe)\nValeur par défaut : 0"
+132 "Ce paramètre spécifie le nom du pilote de périphérique pour la carte réseau. Les valeurs valides sont le chemin et le nom du fichier d'un pilote LAN valide.\n\nLongueur maximale : 127\nValeur par défaut : \047\047"
+133 "L'utilisation de ce paramètre est spécifique au fournisseur DLPI. Il spécifie le point physique d'attache. Utilisez la valeur par défaut sur UnixWare.\n\nValeurs supportées : 0 à 65535\nValeur par défaut : 0"
+134 "Ce paramètre spécifie l'interface entre le pilote de périphérique et IPX en indiquant la topologie du câblage (Ethernet ou Token Ring).\n\nValeurs supportées : ETHERNET_DLPI, TOKEN-RING_DLPI\nValeur par défaut : \047ETHERNET_DLPI\047"
+135 "Ce paramètre spécifie le type de trame.\n\nValeurs supportées: ETHERNET_II, ETHERNET_802.2, ETHERNET_802.3, ETHERNET_SNAP, TOKEN-RING, TOKEN-RING_SNAP\nValeur par défaut : ETHERNET_802.2 pour réseaux Ethernet\n         TOKEN_RING pour réseaux Token Ring"
+136 "L'utilisation de ce paramètre est spécifique au fournisseur DLPI. Il spécifie le nom de l'interface. Utilisez la valeur par défaut sur UnixWare.\n\nLongueur maximale : 127\n\nValeur par défaut : \047\047"
+137 "Ce paramètre spécifie le nombre d'intervalles entre chaque diffusion RIP (un intervalle est égal à 30 secondes).\n\nValeurs supportées : 1 à 65535\nValeur par défaut : 2 (60 secondes)"
+138 "Ce paramètre spécifie le nombre d'intervalles entre les diffusions RIP devant s'écouler depuis la réception du dernier paquet diffusé, avant que le réseau ne soit considéré comme \'bas\' et supprimé de la table d'information des routeurs.\n\nValeurs supportées : 1 à 256\nValeur par défaut : 4 (4 * 2 * 30 = 240 secondes)'"
+141 "Ce paramètre spécifie la taille maximale en octets pour les paquets RIP.\n\nValeurs supportées : 40 à 4294967295. Toutefois, les paquets plus grands que la taille maximale supportée ne peuvent pas être envoyés\nValeur par défaut : 432"
+142 "Ce paramètre permet à l'administrateur de réduire le trafic RIP traffic sur un WAN et indique si le pilote RIP diffuse seulement les modifications disponibles de routeur ou si le RIP diffuse périodiquement toutes les informations. S'il est activé, le RIP diffuse seulement les modifications (WAN). S'il est désactivé, le RIP diffuse périodiquement toutes les informations du serveur.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : désactivé"
+143 "Ce paramètre spécifie en millisecondes l'intervalle entre chaque envoi de paquet sur un LAN par le pilote RIP. Ceci permet aux serveurs/routeurs de ne pas recevoir les paquets trop rapidement. (Ce paramètre est ignoré si le réseau est un WAN (par exemple, Diminuer le trafic WAN RIP est activé)\n\nValeurs supportées : 0 à 500\nValeur par défaut : 55"
+144 "Ce paramètre spécifie le nombre d'intervalles entre chaque diffusion SAP (un intervalle est égal à 30 secondes).\n\nValeurs supportées : 1 à 65535\nValeur à défaut : 2 (60 secondes)"
+145 "Ce paramètre spécifie le nombre d'intervalles entre les diffusions SAP devant s'écouler depuis la réception du dernier paquet diffusé, avant que le réseau ne soit considéré comme \'hors service\' et supprimé de la table d'information des routeurs.\n\nValeurs supportées : 1 à 256\nValeur par défaut : 4 (4 * 2 * 30 = 240 secondes)'"
+146 "Ce paramètre spécifie en octets la taille maximale des paquets SAP.\n\nValeurs supportées : 96 à 4294967295\nValeur par défaut : 480"
+147 "Ce paramètre permet à l'administrateur de réduire le trafic SAP traffic sur un WAN et indique si le pilote SAP diffuse seulement les modifications disponibles de routeur ou si le SAP diffuse périodiquement toutes les informations. S'il est activé, le SAP diffuse seulement les modifications (WAN). S'il est désactivé, le SAP diffuse périodiquement toutes les informations du serveur.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : désactivé"
+148 "Ce paramètre spécifie en millisecondes l'intervalle entre chaque envoi de paquet sur un LAN par le daemon SAP. Ceci permet aux serveurs/routeurs de ne pas recevoir les paquets trop rapidement. (Ce paramètre est ignoré si le réseau est un WAN.)\n\nValeurs supportées : 0 à 500\nValeur par défaut : 55"
+151 "Ce paramètre indique si les réponses sont envoyées à la requête d'obtention du serveur le plus proche.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : activé"
+152 "Ce paramètre spécifie la vitesse (en Ko par seconde) de transfert des données à travers le réseau. La valeur de ce paramètre est utilisée pour calculer le nombre de cycles pour les paquets routeurs.\n\nValeurs supportées : 0 à 4294967295\nValeur par défaut : 10000"
+153 "Ce paramètre spécifie le nombre maximum de routeurs pouvant être traversés durant la recherche d'un réseau de destination. Lorsque cette limite est atteinte, le paquet est supprimé.\n\nValeurs supportées : 2 à 16\nValeur par défaut : 16"
+154 "Ce paramètre indique si les services de diagnostics sont activés ou non. Si les services de diagnostic sont activés, les protocoles de diagnostic IPX seront activés et cette machine répondra aux requêtes des protocoles de diagnostic IPX. Ce paramètre doit être activé si le gestionnaire de réseau est activé. Les fenêtres de console NMS demandent au protocole de diagnostic de tracer la topologie du réseau.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : désactivé"
+155 "Ce paramètre spécifie le nom du daemon de protocole de diagnostic IPX. Le daemon se trouve dans le répertoire spécifié par le paramètre de configuration du répertoire binaire.\n\nLongueur maximale : 127\nValeur par défaut : \047nwdiagd\047"
+156 "Ce paramètre spécifie le nom du fichier journal regroupant les messages envoyés pendant le fonctionnement normal du daemon de diagnostic (par exemple les rapports d'heures de départ/arrêt ou les alertes face à toute situation anormale rencontrée). La valeur de ce paramètre peut correspondre à tout nom de fichier UNIX valide (créé dans le répertoire log) ou à un chemin et nom de fichier valide.\n\nLongueur maximale : 127\nValeur par défaut: \047diag.log\047"
+161 "Ce paramètre spécifie le chemin UNIX du répertoire où se trouvent les fichiers exécutables NetWare.\n\nLongueur maximale : 127\nValeur par défaut : \047/usr/sbin\047"
+162 "Ce paramètre spécifie le chemin UNIX du répertoire où se trouvent les fichiers journal NetWare.\n\nLongueur maximale : 127\nValeur par défaut : \047/var/netware\047"
+163 "Ce paramètre indique si le NetBIOS est lancé ou non. Lorsqu'il est activé, ce paramètre permet de démarrer le datagramme NetBIOS et les points terminaux des sessions de transport NetBIOS.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : désactivé"
+164 "Ce paramètre définit le joint de continuité NetBios. Ce joint de continuité fournit une interface au protocole IPX.\nLongueur maximale : 127\n\nValeur par défaut : \047nbix\047"
+165 "Ce paramètre est utilisé pour activer l'utilisation compatible UnixWare 1.0 des fichiers /var/spool/sap/in et /var/spool/sap/out pour la mise à disposition du service. Toutefois, les développeurs devraient utiliser les API de mise à disposition SAP disponibles dans la bibliothèque nwutil library plutôt que d'activer ce paramètre.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : désactivé"
+166 "Ce paramètre indique si le daemon SAP effectue ou non une initialisation rapide. Si ce paramètre est activé, le daemon SAP devient opérationnel tout en établissant la table des serveurs de réseau. Si ce paramètre est désactivé, le daemon SAP devient opérationel après l'établissement de la table des serveurs de réseau connus.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : activé"
+167 "Ce paramètre contrôle si le serveur rend ou non disponible le partage d'applications à distance. Lorsqu'il est activé, le serveur signale qu'il contient des applications prêtes à être partagées. Lorsqu'il est désactivé, le partage d'application n'est pas signalé.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : désactivé"
+168 "Ce paramètre contrôle si cette machine est ou n'est pas rendu disponible comme serveur d'installation. Lorsqu'il est activé, il permet à d'autres utilisateurs de lancer et d'installer des logiciels à partir de cette machine.\n\nValeurs supportées : activé, désactivé\nValeur par défaut : désactivé"
+171 "Ce paramètre contrôle si cette machine est ou n'est pas rendue disponible comme plate-forme UnixWare. Lorsqu'il est activé, les autres machines peuvent obtenir le nom du serveur et l'adresse IPX de cette machine. Ce paramètre doit être activé dans le cas d'une exploitation point à point (par exemple le partage d'applications).\n\nValeurs supportées : activé, désactivé\nValeurs par défaut : activé"
+

@@ -1,0 +1,105 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)dtftp:Imakefile	1.3.3.2"
+
+#ifdef Release5
+#include <sv4Lib.tmpl>
+#endif
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+           STAR = *
+      DNDLIBSRC = $(LIBSRC)/DnD
+         DNDLIB = $(DNDLIBSRC)/libDnD.so
+       DTLIBSRC = $(LIBSRC)/Dt
+      DTILIBSRC = $(USLCLIENTSRC)/libDtI
+          DTLIB = $(DTLIBSRC)/libDt.so
+         DTILIB = $(DTILIBSRC)/libDtI.so
+       GIZMOSRC = $(LIBSRC)/Gizmo
+       GIZMOLIB = $(GIZMOSRC)/libGizmo.so
+
+#if defined(SYSV) || defined(SystemV4)
+        HELPDIR = $(USRLIBDIR)/locale/C/help
+#else
+        HELPDIR = $(LIBDIR)/C/help
+#endif
+
+          DEBUG = 
+
+SRCS1 = \
+	SlideGizmo.c \
+	SWGizmo.c \
+	TEditGizmo.c \
+	TextFGizmo.c \
+	cmds.c \
+	connect.c \
+	copy.c \
+	dir.c \
+	dm.c \
+	drop.c \
+	error.c \
+	exit.c \
+	hash.c \
+	io.c \
+	main.c \
+	mkdir.c \
+	open.c \
+	p3open.c \
+	passwd.c \
+	print.c \
+	property.c \
+	stat.c \
+	statetable.c
+
+OBJS1 = $(SRCS1:.c=.o)
+
+HDRS1 = \
+	SlideGizmo.h \
+	SWGizmo.h \
+	TEditGizmo.h \
+	TextFGizmo.h \
+	dm.h \
+	ftp.h
+
+          PROG1 = dtftp
+
+           OBJS = $(OBJS1)
+           SRCS = $(SRCS1)
+           HDRS = $(HDRS1)
+          PROGS = $(PROG1)
+
+       INCLUDES = -I$(LIBSRC) -I$(LIBSRC)/Xol \
+                  -I$(DTLIBSRC) \
+                  -I$(DNDLIBSRC) \
+                  -I$(DTILIBSRC) \
+                  -I$(GIZMOSRC)
+LOCAL_LIBRARIES = $(DNDLIB) $(DTLIB) $(DTILIB) $(WSMLIB) $(GIZMOLIB) XolClientLibs
+  SYS_LIBRARIES = -lgen
+        DEPLIBS = $(DNDLIB) $(DTLIB) $(DTILIB) $(WSMLIB) $(GIZMOLIB) XolClientDepLibs
+
+all:: $(PROGS)
+
+NormalProgramTarget($(PROG1),$(OBJS1),$(DEPLIBS),$(LOCAL_LIBRARIES),$(SYS_LIBRARIES))
+
+/*
+ * FIX: when the Imake rules are fixed
+ */
+clobber:: clean
+	$(RM) $(PROGS)
+
+InstallProgram($(PROG1),$(BINDIR))
+InstallManPage($(PROG1),$(BINDIR))
+
+/*InstallMultipleHelpFiles(help/$(STAR).hlp,$(HELPDIR)/dtftp)*/
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()

@@ -1,0 +1,870 @@
+#ident\t"@(#)dthelp:Admin.Tools/Printer_Setup.hlp       1.21"
+^*version^1
+^*title^Configurazione stampante
+^:Cfg_stampante
+^*width^70
+^+DesktopMgr/help.defs
+^?Configurazione di stampanti
+^0^Configurazione stampante
+^$10
+Configurazione stampante
+
+Usare Configurazione Stampanti per aggiungere, cancellare,
+condividere, controllare e cambiare le proprietà delle stampanti.
+
+\to\t\k(Aggiungi una stampante locale^^Aggiunta di una stampante locale) (\d(seriale^stampante seriale) o \d(parallela^stampante parallela))
+\to\t\k(Aggiungi una stampante UNIX remota^^Aggiunta di una stampante UNIX remota)
+\to\t\k(Aggiungi una stampante remota NetWare^^Aggiunta di una stampante NetWare remota)
+\to\t\k(Assegna una stampante di default^^Attribuzione di una stampante di default)
+\to\t\k(Cambia le proprietà di una stampante^^Modifica delle proprietà della stampante)
+\to\t\k(Collega una stampante locale a un server di stampa NetWare^^Connessione di una stampante locale ad un server di stampa NetWare)
+\to\t\k(Controlla stampanti locali e remote^^Controllo di una stampante)
+
+\to\t\k(Cancella una stampante^^Cancellazione di una stampante)
+\to\t\k(Scollega una stampante locale dal server di stampa NetWare^^Disonnessione di una stampante locale da un server di stampa NetWare)
+\to\t\k(Copia l'icona di una stampante in una cartella^^Copia di un'icona di stampante in una cartella)
+\to\t\k(Imposta accesso per utenti locali^^Impostazione dell'accesso per gli utenti locali)
+\to\t\k(Imposta accesso per utenti remoti^^Impostazione dell'accesso per i sistemi remoti)
+\to\t\k(Mostra proprietà della stampante^^Visualizzazione delle proprietà della stampante)
+
+Per informazioni sulla stampa di un file, la verifica di richieste di
+stampa e il cambiamento delle richieste di stampa, vedere
+\k(Uso della Stampante^dtadmin/printuse.hlp^Uso della stampante).
+
+Vedi anche:
+\k(Uso della barra strumenti della configurazione stampante)
+\s(Uso di Configurazione stampante^dhelp "pe.it" ownerhb "Impostazione e configurazione delle stampanti" "Uso di Configurazione stampante" || helpLinkErr)
+\s(Cos'è il servizio di stampa LP?^dhelp as sysag "Providing Print Services" "" || helpLinkErr)
+
+^1^Aggiunta di una stampante locale
+^$20
+Aggiunta di una stampante locale
+
+Per poter aggiungere una stampante locale al proprio sistema bisogna avere
+il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi)
+
+Per aggiungere una stampante locale al proprio sistema, procedere come
+segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic su Stampante=>Aggiungi Stampante Locale. Appare la
+  \tfinestra "Configurazione Stampante: Aggiungi Stampante Locale" con
+  \ti seguenti campi:
+
+  \to\tNome Stampante: - Immettere il nome che si desidera usare per
+  \t \tla stampante locale collegata al proprio sistema.
+
+  \to\tStampante: - Usare la barra di scorrimento per spostarsi su e
+  \t \tgiù lungo la lista dei tipi di stampanti; fare clic sul tipo che
+  \t \tcorrisponde alla propria stampante.
+
+  \to\tTipo di Connessione: - Fare clic su \d(Serial^stampante seriale) o
+  \t \t\d(Parallel^stampante parallela) secondo il tipo di porta a cui è
+  \t \tcollegata la stampante.
+
+  \t \tNota: Quando si collega una stampante direttamente al proprio
+  \t \tcomputer, i cavi e i connettori usano l'interfaccia seriale o
+  \t \tl'interfaccia parallela. Se non si è sicuri se la propria
+  \t \tstampante è seriale o parallela, verificare il manuale in
+  \t \tdotazione alla stampante.
+
+  \t \tSe si seleziona Seriale, fare clic su Configurazione Seriale
+  \t \tper impostare le opzioni per quanto segue:
+
+  \t \t- Velocità di trasmissione - Fare clic sulla velocità
+  \t \t  corrispondente a quella della stampante. Per default, questo
+  \t \t  campo è impostato a 9600.
+
+  \t \t-\tParità - Fare clic sulla parità appropriata. Il sistema usa
+  \t \t \t\d(parità) per la verifica degli errori. Per default,
+  \t \t \tquesto campo è impostato su Nessuno.
+
+  \t \t-\tBit di Stop - Fare clic sui bit di stop desiderati. Per
+  \t \t \tdefault, questo campo è impostato a 1.
+
+  \t \t-\tDimensione Carattere - Fare clic sulla dimensione
+  \t \t \tappropriata del carattere. Per default, questo campo è
+  \t \t \timpostato a 8.
+
+  \to\tPorta: - Se si sta aggiungendo una stampante seriale, fare clic
+  \t \tsu COM1, COM2, o Altro. Se si sta aggiungendo una stampante
+  \t \tparallela, fare clic su LPT1, LPT2, o Altro.
+
+  \t \tSe si seleziona Altro, appare una casella di testo Dispositivo.
+  \t \tImmettere il \d(percorso)
+  \t \tdel dispositivo a cui è collegata la stampante.
+
+  \to\tInvia Posta se la Stampante si Guasta: - Fare clic su Sì se si
+  \t \tdesidera ricevere un messaggio di posta elettronica se la
+  \t \tstampante si guasta, o fare clic su No se non si vuole ricevere
+  \t \til messaggio di posta elettronica.
+
+  \to\tStampa Pagina di Intestazione per Default: - Fare clic su Sì se
+  \t \tsi desidera che il sistema stampi per default una pagina di
+  \t \tintestazione, o fare clic su No se non si desidera la stampa
+  \t \tdella pagina di intestazione.
+
+  \to\tConsenti Annullamento Pagina di Intestazione: - Fare clic su Sì
+  \t \tse si desidera che gli altri utenti possano annullare la pagina
+  \t \tdi intestazione di default; fare clic su No se non si desidera
+  \t \tche gli utenti annullino la pagina di intestazione.
+
+  \to\tConfigurazione Opzionale: - Fare clic su questo pulsante se
+  \t \tsi desidera impostare queste opzioni aggiuntive per la
+  \t \tstampante:
+
+  \t \t-\tLunghezza Pagina
+
+  \t \t-\tLarghezza Pagina
+
+  \t \t-\tPasso di stampa
+
+  \t \t-\tInterlinea
+
+  \t \tCiascuna di queste opzioni ha un valore numerico e una unità di
+  \t \tmisura. È possibile selezionare l'unità di misura pollici,
+  \t \tcentimetri o caratteri.
+
+4.\tFare clic su Aggiungi. Appare un'icona per la stampante nella
+  \tfinestra "Configurazione Stampante".
+
+  \tNota: E possibile anche fare clic su Ripristina per riportare
+  \ttutte le opzioni all'impostazione originale, o su Annulla per
+  \tliberare questa finestra senza aggiungere la stampante.
+
+Vedi anche:
+\k(Copia di un'icona di stampante in una cartella)
+\k(Uso della barra strumenti della configurazione stampante)
+
+^1^Aggiunta di una stampante UNIX remota
+^$30
+Aggiunta di una stampante UNIX remota
+
+Per poter aggiungere una stampante remota al proprio sistema bisogna avere
+il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi). Per
+configurare l'accesso a una stampante UNIX remota, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic su Stampante=>Aggiungi stampante UNIX. Appare la
+  \tfinestra "Configurazione Stampante: Aggiungi stampante UNIX
+  \tremota" con i seguenti campi:
+
+  \to\tNome Stampante: - Immettere il nome da assegnare alla stampante
+  \t \tUNIX remota sul proprio sistema.
+
+  \to\tTipo: - Fare clic sul rettangolo nella casella di testo a
+  \t \tfianco del campo Tipo per far apparire un menu di tipi di
+  \t \tstampanti. Poi fare clic sul tipo appropriato.
+
+  \to\tTipo Sistema Operativo Remoto: - Fare clic su System V o su BSD
+  \t \t(se non si è sicuri chiedere all'amministratore del sistema
+  \t \tremoto).
+
+  \to\tSistema Remoto: - Se il proprio sistema non è configurato per
+  \t \t\k(DNS^dtadmin/inet.hlp^Accesso a DNS) e \k(NIS^dtadmin/inet.hlp^Accesso a NIS), questa opzione visualizza
+  \t \tsolo la Lista dei Sistemi (/etc/hosts).
+
+  \t \tSe il sistema è configurato per DNS e NIS, la casella
+  \t \tnell'angolo sinistro elenca i domini disponibili (server Domain
+  \t \tNetwork Service, server Networking Information Service e Lista
+  \t \tdi Sistemi).
+
+  \t \tFare clic sul sistema desiderato.
+
+  \t \tNota: Quando si fa clic su un dominio, qualsiasi sottodominio
+  \t \tdi quel dominio appare nella casella alla sua destra. Da qui, si
+  \t \tpuò fare clic sul sottodominio desiderato, e se questo ha a sua
+  \t \tvolta dei sottodomini, appaiono nella casella alla sua destra.
+  \t \tContinuare a fare clic sui sottodomini fino a individuare il
+  \t \tnome del sistema desiderato.
+
+  \t \tIl sistema visualizza solo due colonne, o caselle, alla volta.
+  \t \tPer mostrare altre caselle, usare la barra di scorrimento in
+  \t \talto nelle caselle per spostarsi a sinistra e a destra.
+
+  \to\tNome Stampante Remota: - Immettere il nome della stampante sul
+  \t \tsistema remoto.
+
+  \to\tStampa Pagina di Intestazione per Default: - Fare clic su Sì se
+  \t \tsi desidera che il sistema stampi per default una pagina di
+  \t \tintestazione, o fare clic su No se non si desidera la stampa
+  \t \tdella pagina di intestazione.
+
+  \to\tConsenti Annullamento Pagina di Intestazione: - Fare clic su Sì
+  \t \tse si desidera che gli altri utenti possano annullare la pagina
+  \t \tdi intestazione di default; fare clic su No se non si desidera
+  \t \tche gli utenti annullino la pagina di intestazione.
+
+4.\tFare clic su Aggiungi. Appare un'icona per la stampante nella
+  \tfinestra Configurazione Stampante.
+
+  \tNota: E possibile fare clic su Ripristina per riportare tutte le
+  \topzioni alla loro impostazione originale, o su Annulla per
+  \tliberare questa finestra senza aggiungere la stampante.
+
+Vedi anche:
+\k(Copia di un'icona di stampante in una cartella)
+\k(Uso della barra strumenti della configurazione stampante)
+
+^1^Aggiunta di una stampante NetWare remota
+^$40
+Aggiunta di una stampante NetWare remota
+
+Per poter aggiungere una stampante NetWare remota al proprio sistema bisogna
+avere il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi).
+
+Per configurare una coda per l'accesso a una stampante NetWare,
+procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic su Stampante=>Aggiungi Stampante NetWare. Appare la
+  \tfinestra "Configurazione Stampante: Aggiungi Stampante NetWare"
+  \tcon i seguenti campi:
+
+  \to\tNome Stampante: - Immettere il nome che si desidera usare
+  \t \tlocalmente per accedere alla stampante NetWare remota.
+
+  \to\tTipo: - Fare clic sul tipo di stampante appropriato.
+
+  \to\tServer NetWare: - Fare clic sul server desiderato nella lista
+  \t \tFile Server. In questo campo appare il nome del server e nella
+  \t \tlista Stampanti a destra appare una lista di stampanti
+  \t \tdisponibili per quel server.
+
+  \to\tStampanti: - Fare clic sulla stampante a cui si desidera
+  \t \taccedere. Il nome della stampante appare nel campo Stampante
+  \t \tNetWare.
+
+  \to\tStampa Pagina di Intestazione per Default: - Fare clic su Sì se
+  \t \tsi desidera che il sistema stampi per default una pagina di
+  \t \tintestazione, o fare clic su No se non si desidera la stampa
+  \t \tdella pagina di intestazione.
+
+  \to\tConsenti Annullamento Pagina di Intestazione: - Fare clic su Sì
+  \t \tse si desidera che gli altri utenti possano annullare la pagina
+  \t \tdi intestazione di default; fare clic su No se non si desidera
+  \t \tche gli utenti annullino la pagina di intestazione.
+
+  \to\tInvia Salto Pagina per Default: - Fare clic su Sì se si desidera
+  \t \tattivare il salto pagina alla fine di un lavoro di stampa; fare
+  \t \tclic su No se non si desidera il salto pagina alla fine di un
+  \t \tlavoro di stampa.
+
+  \t \tL'attivazione del salto pagina garantisce che il lavoro di
+  \t \tstampa successivo inizi in una pagina nuova.
+
+  \t \tNota: Se un'applicazione attiva automaticamente il salto pagina
+  \t \talla fine di un file, l'aggiunta di questa opzione provoca
+  \t \tl'emissione da parte della stampante di un foglio bianco prima
+  \t \tche inizi il successivo lavoro di stampa.
+
+  \to\tConsenti Annullamento Salto pagina: - Fare clic su Sì se si
+  \t \tdesidera che gli utenti possano annullare il salto pagina di
+  \t \tdefault; fare clic su No se non si desidera che gli utenti
+  \t \tannullino il salto pagina.
+
+4.\tFare clic su Aggiungi per aggiungere la stampante e applicare le
+  \topzioni selezionate.
+
+  \tNota: E possibile fare clic su Ripristina per riportare tutte le
+  \topzioni alla loro impostazione originale, o su Annulla per
+  \tliberare questa finestra senza aggiungere la stampante.
+
+Vedi anche:
+\k(Copia di un'icona di stampante in una cartella)
+\k(Uso della barra strumenti della configurazione stampante)
+
+^1^Cancellazione di una stampante
+^$50
+Cancellazione di una stampante
+
+Per poter cancellare una stampante dal proprio sistema bisogna avere
+il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi).
+
+Per cancellare una stampante, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic sulla stampante che si desidera cancellare.
+
+4.\tFare clic su Stampante=>Cancella. Il sistema rimuove l'icona della
+  \tstampante dalla finestra "Configurazione Stampante".
+
+Vedi anche:
+\k(Uso della barra strumenti della configurazione stampante)
+
+^1^Visualizzazione delle proprietà della stampante
+^$60
+^1^Visualizzazione delle proprietà della stampante
+
+Per mostrare le proprietà di una stampante, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic sulla stampante che si desidera mostrare.
+
+4.\tFare clic su Stampante=>Proprietà. Appare la finestra
+  \t"Configurazione Stampante: Proprietà".
+
+5.\tVedere il seguito per la descrizione dei campi e delle opzioni per
+  \tciascun tipo di stampante:
+
+    o\tPer una stampante locale (sia seriale che parallela), vedi il Punto 3 di
+  \t \t\k(Aggiunta di una stampante locale).
+
+  \to\tPer una stampante UNIX remota, vedi Fase 3 di
+  \t \t\k(Aggiunta di una stampante UNIX remota).
+
+  \to\tPer una stampante NetWare remota, vedi Fase 3 di
+  \t \t\k(Aggiunta di una stampante NetWare remota).
+
+5.  Fare clic su Annulla per liberare la finestra.
+
+^1^Modifica delle proprietà della stampante
+^$70
+Modifica delle proprietà della stampante
+
+Per cambiare le proprietà della stampante bisogna avere
+il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi).
+
+Per cambiare le proprietà di una stampante, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic sulla stampante che si desidera modificare.
+
+4.\tFare clic su Stampante=>Proprietà. Appare la finestra
+  \t"Configurazione Stampante: Proprietà".
+
+5.\tApportare le modifiche desiderate. Vedere il seguito per i
+  \tdettagli sui campi e le opzioni disponibili per ciascun tipo di
+  \tstampante:
+
+    o\tPer una stampante locale (sia seriale che parallela), vedi il Punto 3 di
+  \t \t\k(Aggiunta di una stampante locale).
+
+  \to\tPer una stampante UNIX remota, vedi Fase 3 di
+  \t \t\k(Aggiunta di una stampante UNIX remota).
+
+  \to\tPer una stampante NetWare remota, vedi Fase 3 di
+  \t \t\k(Aggiunta di una stampante NetWare remota).
+
+  \tNota: Non è possibile cambiare il nome di una stampante.
+
+6.\tFare clic su OK per applicare le modifiche.
+
+  \tNota: Si può anche fare clic su Ripristina per tornare alle
+  \tmodifiche precedenti, o su Annulla per liberare la finestra senza
+  \tapportare modifiche.
+
+Vedi anche:
+\k(Attribuzione di una stampante di default)
+\k(Uso della barra strumenti della configurazione stampante)
+
+^1^Attribuzione di una stampante di default
+^$80
+Attribuzione di una stampante di default
+
+E possibile rendere una delle stampanti la stampante di default.  I
+lavori di stampa verranno automaticamente diretti a questa stampante
+se si seleziona l'opzione di stampa dall'interno di un'applicazione
+senza specificare la stampante, o se si sceglie File=>Stampa
+dall'interno di una finestra di cartella.
+
+Per assegnare una stampante di default, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic sulla stampante che si desidera sia la stampante di
+  \tdefault.
+
+4.\tFare clic su Stampante=>Rendi Default. La stampante attualmente
+  \tselezionata diventa la stampante di default.
+
+Vedi anche:
+\k(Uso della barra strumenti della configurazione stampante)
+
+^1^Connessione di una stampante locale ad un server di stampa NetWare
+^$90
+Connessione di una stampante locale ad un server di stampa NetWare
+
+Se si ha il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi),
+si può connettere una stampante locale a un server di stampa NetWare.
+
+Per connettere una stampante locale a un server di stampa NetWare,
+procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic sulla stampante che si desidera connettere.
+
+4.\tFare clic su Stampante=>StampanteN. Appare la finestra
+  \t"Configurazione Stampante: Server di Stampa NetWare" con il
+  \tseguente messaggio:
+
+    <Nome Stampante> non è connessa. Devo connetterla?
+
+5.\tFare clic su Sì. Appare la finestra "Configurazione Stampante:
+  \tConnetti Stampante Locale a Server di Stampa NetWare".
+
+  \tNota: Se si cambia idea e si decide di non connettere la
+  \tstampante, fare clic su No per liberare la finestra senza
+  \teffettuare la connessione.
+
+6.\tFare clic sul sistema desiderato nella lista File Server. I server
+  \tdi stampa disponibili per quel sistema appaiono a destra nella
+  \tlista Server di Stampa.
+
+7.\tFare clic sul server di stampa desiderato. Le stampanti
+  \tdisponibili per quel server appaiono nella casella Nome Stampante
+  \ta destra.
+
+8.\tFare clic sul nome della stampante desiderata.
+
+9.\tFare clic su Connetti. La stampante può ora servire le richieste
+  \tdi stampa dalla coda di stampa NetWare.
+
+  \tNota: Si può anche fare clic su Annulla per liberare la finestra
+  \tsenza connettere la stampante.
+
+Vedi anche:
+\k(Disonnessione di una stampante locale da un server di stampa NetWare)
+\k(Uso della barra strumenti della configurazione stampante)
+
+^1^Disonnessione di una stampante locale da un server di stampa NetWare
+^$100
+Disonnessione di una stampante locale da un server di stampa NetWare
+
+Se si ha il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi),
+si può sconnettere una stampante locale da un server di stampa NetWare.
+
+Per sconnettere una stampante locale da un server di stampa NetWare,
+procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic sulla stampante che si desidera sconnettere.
+
+4.\tFare clic su StampanteN. Appare la finestra "Configurazione
+  \tStampante: Stato Connessioni Server di Stampa NetWare" con i
+  \tseguenti messaggi:
+
+  \t<Nome Stampante> è connessa al Server di Stampa NetWare
+  \t<Nome_Server_di_stampa> come Stampante remota
+  \t<Nome_stampante_NetWare>
+
+  \tDevo sconnetterla?
+
+5.\tFare clic su Sì. La stampante è ora sconnessa.
+
+  \tNota: Si può anche fare clic su No per liberare la finestra
+  \tsenza sconnettere la stampante.
+
+Vedi anche:
+\k(Connessione di una stampante locale ad un server di stampa NetWare)
+\k(Uso della barra strumenti della configurazione stampante)
+
+^2^Configurazione stampante: Finestra Stato delle connessioni al server di stampa Netware
+^$110
+Configurazione stampante: Finestra Stato delle connessioni al server di stampa Netware
+
+Se la propria stampante locale è connessa a un server NetWare, questa
+finestra visualizza messaggi simili ai seguenti:
+
+\t\t\t<Nome Stampante> è connessa al Server di Stampa\t\t\tNetWare
+\t\t\t<Nome_Server_di_stampa> come Stampante remota
+\t\t\t<Nome_stampante_NetWare>
+
+\t\t\tDevo sconnetterla?
+
+Fare clic su Sì se si desidera sconnettere la stampante; su No se non
+si desidera sconnettere la stampante.
+
+Se la propria stampante locale non è collegata a un server NetWare,
+questa finestra visualizza messaggi simili ai seguenti:
+
+\t\t\t<Nome Stampante> non è conmnessa a un server di stampa NetWare.
+
+\t\t\tDevo connetterla?
+
+Fare clic su Sì se si desidera connettere la stampante; su No se non
+si desidera connettere la stampante.
+
+Vedi anche:
+\k(Connessione di una stampante locale ad un server di stampa NetWare)
+\k(Disonnessione di una stampante locale da un server di stampa NetWare)
+
+^1^Impostazione dell'accesso per i sistemi remoti
+^$120
+Impostazione dell'accesso per i sistemi remoti
+
+Per configurare l'accesso dei sistemi remoti alle stampanti locali bisogna
+avere il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi).
+
+Nota: Se non si ha il Permesso di Amministrazione di Stampanti, si può
+usare la procedura che segue per vedere quale sistema consente o nega
+l'accesso, ma non si possono effettuare cambiamenti.
+
+Quando si configura per la prima volta una stampante, l'accesso a
+quella stampante è negato a tutti i sistemi. Si può configurare
+l'accesso dei sistemi remoti alle stampanti locali procedendo come
+segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3. \tFare clic sulla stampante locale che si desidera configurare
+   \tper l'accesso da sistemi remoti.
+
+4.\tFare clic su Stampante=>Imposta Accesso Remoto. Appare la finestra
+  \t"Configurazione Stampante: Imposta Accesso Remoto". La casella
+  \tnell'angolo sinistro visualizza i domini disponibili.
+
+  \tNota: Quando si fa clic su un dominio, qualsiasi sottodominio
+  \tdi quel dominio appare nella casella alla sua destra. Da qui, si
+  \tpuò fare clic sul sottodominio desiderato, e se questo ha a sua
+  \tvolta dei sottodomini, appaiono nella casella alla sua destra.
+  \tContinuare a fare clic sui sottodomini fino a individuare il nome
+  \tdel sistema desiderato.
+
+  \tIl sistema visualizza solo due colonne, o caselle, alla volta. Per
+  \tmostrare altre caselle, usare la barra di scorrimento in alto
+  \tnelle caselle per spostarsi a sinistra e a destra.
+
+5.\tPer impostare o negare l'accesso alla stampante remota procedere
+  \tcome segue:
+
+  \tNota: Per selezionare più sistemi premere e tenere premuto il
+  \ttasto <Ctrl> mentre si fa clic con il pulsante sinistro del mouse.
+
+  \to\tFare clic su Consenti a Tutti i Sistemi Eccetto, fare clic sui
+  \t \tsistemi desiderati, nella lista a più colonne, poi fare clic su
+  \t \tAggiungi. I sistemi selezionati si spostano nella lista della
+  \t \tcasella a destra.
+
+  \t \tTutti i sistemi eccetto quelli aggiunti alla lista hanno
+  \t \taccesso alla stampante remota.
+
+  \to\tFare clic su Nega a Tutti i Sistemi Eccetto, fare clic sui
+  \t \tsistemi desiderati, nella lista a più colonne, poi fare clic su
+  \t \tAggiungi. I sistemi selezionati si spostano nella lista della
+  \t \tcasella a destra.
+
+  \t \tA tutti i sistemi eccetto quelli aggiunti alla lista viene
+  \t \tnegato l'accesso alla stampante remota.
+
+  \tPer rimuovere i sistemi procedere come segue:
+
+  \to\tFare clic sui sistemi desiderati, poi fare clic su Rimuovi (per
+  \t \tcancellare i sistemi selezionati) o su Rimuovi Tutti (per
+  \t \tcancellare tutti i sistemi).
+
+6.\tFare clic su OK. La stampante è ora configurata per l'accesso
+  \tdagli utenti remoti.
+
+  \tNota: Si può anche fare clic su Annulla se si decide di non
+  \tconfigurare l'accesso remoto.
+
+Vedi anche:
+\k(Uso della barra strumenti della configurazione stampante)
+
+^1^Impostazione dell'accesso per gli utenti locali
+^$130
+Impostazione dell'accesso per gli utenti locali
+
+Per configurare l'accesso degli utenti locali bisogna avere
+il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi).
+
+Nota: Se non si ha il Permesso di Amministrazione di Stampanti, si può
+usare la procedura che segue per vedere a quali utenti è consentito o
+negato l'accesso, ma non si possono effettuare cambiamenti.
+
+Quando si configura per la prima volta una stampante, tutti gli utenti
+hanno l'accesso a quella stampante. Si può controllare l'accesso di
+utenti locali a stampanti locali o remote procedendo come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic sulla stampante a cui si vuole consentire o negare
+  \tl'accesso.
+
+4.\tFare clic su Stampante=>Imposta Accesso Utenti. Appare la finestra
+  \t"Configurazione Stampante: Imposta Accesso Utenti".
+
+5.\tPer consentire o negare l'accesso procedere come segue:
+
+  \tNota: Per selezionare più utenti premere e tenere premuto il tasto
+  \t<Ctrl> mentre si fa clic con il pulsante sinistro del mouse.
+
+  \to\tPer consentire l'accesso, fare clic sugli utenti desiderati,
+  \t \tpoi fare clic su Consenti. Gli utenti si spostano nella lista
+  \t \tConsenti.
+
+  \to\tPer negare l'accesso, fare clic sugli utenti desiderati,
+  \t \tpoi fare clic su Nega. Gli utenti si spostano nella lista Nega.
+
+  \to\tPer rimuovere tutti gli utenti dalla lista Consenti, fare clic
+  \t \tsu Nega a Tutti. Tutti gli utenti si spostano dalla lista
+  \t \tConsenti alla lista Nega.
+
+6.\tFare clic si OK.
+
+  \tNota: Si può anche fare clic su Annulla se si decide di non
+  \tconfigurare negare l'accesso agli utenti locali.
+
+Vedi anche:
+\k(Uso della barra strumenti della configurazione stampante)
+
+^1^Controllo di una stampante
+^$140
+Controllo di una stampante
+
+Se si ha il \k(Permesso di Amministrazione di Stampanti^dtadmin/user.hlp^Comprensione dei permessi),
+si può attivare e disattivare sia le stampanti locali che quelle remote,
+e determinare se una stampante deve o meno accettare nuove richieste di stampa.
+
+Nota: Se non si ha il Permesso di Amministrazione di Stampanti, si può
+usare la procedura che segue per vedere se una stampante è attivata o
+disattivata, o se accetta richieste di stampa, ma non si possono
+effettuare cambiamenti.
+
+Per impostare i controlli di una stampante, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic sulla stampante di cui si vuole impostare i controlli.
+
+4.\tFare clic su Stampante=>Controllo. Appare la finestra
+  \t"Configurazione Stampante: Controllo stampante" con i seguenti
+  \tcampi e opzioni:
+
+  \to\t<Nome Stampante è Attivata/Disattivata>: - Visualizza il nome
+  \t \tdella stampante attualmente selezionata, e se è attivata
+  \t \to disattivata.
+
+  \to\tNuove Richieste: - Fare clic su Accetta se si desidera che la
+  \t \tstampante accetti nuove richieste nella coda di stampa, o su
+  \t \tRifiuta se non si desidera che la stampante accetti nuove
+  \t \trichieste nella coda di stampa.
+
+  \to\tStato Stampante: - Fare clic su Attiva se si desidera che la
+  \t \tstampante stampi i lavori in coda, o su Disattiva se si desidera
+  \t \tche la stampante cessi la stampa dei lavori in coda.
+
+5.\tFare clic su Applica per salvare le modifiche.
+
+  \tNota: Si può anche fare clic su Ripristina per tornare alle
+  \tmodifiche precedenti, o su Annulla per liberare la finestra senza
+  \tapportare modifiche.
+
+Vedi anche:
+\k(Uso della barra strumenti della configurazione stampante)
+\s(Controllo di stampanti e stampa di file dalla riga di comando^dhelp "pe.it" ownerhb "Impostazione e configurazione delle stampanti" "Controllo di stampanti e stampa di file dalla riga di comando" || helpLinkErr)
+
+^1^Copia di un'icona di stampante in una cartella
+^$150
+Copia di un'icona di stampante in una cartella
+
+Dopo l'aggiunta di una stampante al sistema, si può scegliere di
+copiare in una cartella l'icona della stampante per agevolarne
+l'accesso.
+
+Per copiare in una cartella un'icona di stampante, procedere come
+segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione Stampante. Appare la finestra
+  \t"Configurazione Stampante".
+
+3.\tFare clic sull'icona di stampante da copiare nell'altra cartella.
+
+4.\tAprire la cartella in cui copiare l'icona di stampante.
+
+5.\t\d(Trascinare-e-rilasciare^trascinare e rilasciare) l'icona di stampante
+  \tsulla cartella.
+
+Per copiare in un'altra cartella un'icona di stampante si possono
+usare anche le opzioni di menu. Vedi \k(Configurazione stampante: Copia in una finestra della cartella).
+
+
+^2^Configurazione stampante: Copia in una finestra della cartella
+^$160
+Configurazione stampante: Copia in una finestra della cartella
+
+Per copiare in un'altra cartella un'icona di stampante usando le
+opzioni di menu procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_stampante. Appare la finestra
+  \tConfigurazione stampante.
+
+3.\tFare clic sull'icona di stampante da copiare nell'altra cartella.
+
+4.\tFare clic su Stampante=>Copia su Cartella. Appare la finestra
+  \t"Configurazione Stampante: Copia su Cartella" con i seguenti
+  \tcampi:
+
+  \tCopia: - Visualizza il nome della stampante selezionata.
+
+  \tIn: - Selezionare il \d(percorso) per la cartella
+  \tdesiderata facendo clic sui nomi delle cartelle nell'elenco
+  \tmulti-colonne. Selezionando una cartella con cartelle aggiuntive,
+  \tqueste appaiono nella colonna a destra. Si può quindi fare clic
+  \tsu una cartella in questo riquadro. Se questa cartella ne ha
+  \taltre, un terzo riquadro compare alla destra di questa colonna.
+
+  \tSi può continuare a fare clic sulle cartelle fino a raggiungere il
+  \t\d(percorso) desiderato. Per scorrere le colonne multiple
+  \tspostare i riquadri a destra e a sinistra mediante la barra di
+  \tscorrimento.
+
+  \tNota: Si può anche digitare per esteso il \d(percorso)
+  \talla propria cartella nella Casella di selezione
+
+5.\tFare clic su OK. L'icona di stampante viene copiata nella
+  \tcartella.
+
+^1^Uso della barra strumenti della configurazione stampante
+^$170
+Uso della barra strumenti della configurazione stampante
+
+Nella finestra "Configurazione Stampante" una barra degli strumenti
+facilita l'accesso a certe funzioni. Invece di richiamare una funzione
+da un menu basta fare clic sull'icona di questa funzione nella barra
+
+Ad esempio, per cancellare la stampante attualmente selezionata,
+invece di fare clic su Stampante=>Cancella, basta fare clic nella
+barra degli strumenti sull'icona per cancella.
+
+La barra degli strumenti è collocata sotto la barra dei menu.
+Spostando il puntatore del mouse sopra un'icona nella barra, compare
+una breve descrizione relativa all'icona nell'area sottostante.
+
+Seguono le funzioni a cui si può accedere facendo clic sulla barra
+degli strumenti nella finestra "Configurazione Stampante":
+
+\to  \k(Aggiungere una stampante locale^^Aggiunta di una stampante locale)
+\to  \k(Aggiungere una Stampante Remota UNIX^^Aggiunta di una stampante UNIX remota)
+\to  \k(Aggiungere una Stampante Remota NetWare^^Aggiunta di una stampante NetWare remota)
+\to  \k(Cancellare una stampante^^Cancellazione di una stampante)
+\to  \k(Modificare le proprietà della stampante^^Modifica delle proprietà della stampante)
+\to  \k(Copiare un'icona di stampante in una cartella^^Copia di un'icona di stampante in una cartella)
+\to  \k(Assegnare una stampante di default^^Attribuzione di una stampante di default)
+
+\to  \k(Controllo Stampante^^Controllo di una stampante)
+\to  \k(Impostazione accesso utente^^Impostazione dell'accesso per gli utenti locali)
+\to  \k(Impostazione accesso remoto^^Impostazione dell'accesso per i sistemi remoti)
+\to  \k(Connettere o disconnettere una stampante NetWare^^Connessione di una stampante locale ad un server di stampa NetWare)
+\to  \k(Guida^DesktopMgr/help.hlp^Uso di Guida)
+\to  Esci (uguale a  File=>Esci)
+

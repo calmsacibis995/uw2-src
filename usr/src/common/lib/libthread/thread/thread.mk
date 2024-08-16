@@ -1,0 +1,554 @@
+#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+#ident	"@(#)libthread:common/lib/libthread/thread/thread.mk	1.1.8.11"
+
+# 
+# libthread: thread routines
+#
+
+MAKEFILE = thread.mk
+LIBTHREADRULES = ../thread/../libthread.rules
+
+CSRCS = disp.c lwp.c ma.c sig.c slp.c subr.c thread.c timer.c trace.c \
+	queue.c tidvec.c sched.c lock.c
+COBJS = disp.$O lwp.$O ma.$O sig.$O slp.$O subr.$O thread.$O timer.$O trace.$O \
+	queue.$O tidvec.$O sched.$O lock.$O
+
+include $(LIBRULES)
+include $(LIBTHREADRULES)
+
+# Dependencies
+
+disp.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/memory.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h
+
+lock.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h
+
+lwp.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(COMMINC)/trace.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h
+
+ma.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(INC)/errno.h \
+	$(INC)/fcntl.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fcntl.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/mman.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h
+
+queue.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h
+
+sched.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(COMMINC)/trace.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/string.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/fppriocntl.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/tspriocntl.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h \
+	$(INC)/values.h
+
+sig.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(COMMINC)/trace.h \
+	$(INC)/dlfcn.h \
+	$(INC)/errno.h \
+	$(INC)/fcntl.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fcntl.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h
+
+slp.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h
+
+subr.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/stdlib.h \
+	$(INC)/string.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/unistd.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h \
+	$(INC)/unistd.h
+
+thread.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(COMMINC)/trace.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/memory.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/stdlib.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h \
+	$(INC)/values.h
+
+tidvec.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/string.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h
+
+timer.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(INC)/errno.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/unistd.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h \
+	$(INC)/unistd.h
+
+trace.$O: \
+	$(ARCHINC)/archdep.h \
+	$(ARCHINC)/libcsupp.h \
+	$(ARCHINC)/synonyms.h \
+	$(ARCHINC)/thrsig.h \
+	$(ARCHINC)/tls.h \
+	$(COMMINC)/debug.h \
+	$(COMMINC)/libthread.h \
+	$(COMMINC)/synch.h \
+	$(COMMINC)/thread.h \
+	$(COMMINC)/trace.h \
+	$(INC)/errno.h \
+	$(INC)/fcntl.h \
+	$(INC)/limits.h \
+	$(INC)/lwpsynch.h \
+	$(INC)/machlock.h \
+	$(INC)/siginfo.h \
+	$(INC)/signal.h \
+	$(INC)/stdio.h \
+	$(INC)/stdlib.h \
+	$(INC)/string.h \
+	$(INC)/sys/errno.h \
+	$(INC)/sys/fcntl.h \
+	$(INC)/sys/fp.h \
+	$(INC)/sys/list.h \
+	$(INC)/sys/lwp.h \
+	$(INC)/sys/param.h \
+	$(INC)/sys/param_p.h \
+	$(INC)/sys/priocntl.h \
+	$(INC)/sys/reg.h \
+	$(INC)/sys/regset.h \
+	$(INC)/sys/select.h \
+	$(INC)/sys/siginfo.h \
+	$(INC)/sys/signal.h \
+	$(INC)/sys/stat.h \
+	$(INC)/sys/sysmacros.h \
+	$(INC)/sys/sysmacros_f.h \
+	$(INC)/sys/time.h \
+	$(INC)/sys/types.h \
+	$(INC)/sys/ucontext.h \
+	$(INC)/sys/unistd.h \
+	$(INC)/sys/usync.h \
+	$(INC)/time.h \
+	$(INC)/ucontext.h \
+	$(INC)/unistd.h
+

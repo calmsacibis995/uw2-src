@@ -1,0 +1,61 @@
+*ident	"@(#)kern:proc/proc.cf/Mtune	1.8"
+*ident	"$Header: $"
+
+* maximum number of groups per process (default, min, max)
+* name		default	min	max
+NGROUPS_MAX	16	1	16
+
+* maximum length of argument strings for exec
+* name		default	min	max
+ARG_MAX		10240	10240	1048576
+
+* maximum number of (COFF) shared libraries per process
+* name		default	min	max
+SHLBMAX		3	2	6
+
+* Resource Limit Parameters ------------------
+*
+* Default per process resource limits (set to 0x7FFFFFFF for infinite limit)
+* S prefix is for soft limits, H prefix is for hard limits
+*
+* CPULIM - maximum combined user and system time in seconds
+* FSZLIM - maximum file size in bytes
+* DATLIM - maximum writeable mapped memory (swap space) in bytes
+* STKLIM - maximum size of current stack in bytes
+* CORLIM - maximum size of core file in bytes
+* FNOLIM - maximum number of file descriptors
+* VMMLIM - maximum amount of simultaneously mapped virtual memory in bytes
+*		default		min		max
+SCPULIM		0x7FFFFFFF	60		0x7FFFFFFF
+HCPULIM		0x7FFFFFFF	60		0x7FFFFFFF
+SFSZLIM		0x3FFFFFFF	0x100000	0x7FFFFFFF
+HFSZLIM		0x3FFFFFFF	0x100000	0x7FFFFFFF
+SDATLIM		0x1000000	0x1000000	0x7FFFFFFF
+HDATLIM		0x1000000	0x1000000	0x7FFFFFFF
+SSTKLIM		0x1000000	0x2000		0x7FFFFFFF
+HSTKLIM		0x1000000	0x2000		0x7FFFFFFF
+SCORLIM		0x1000000	0x100000	0x7FFFFFFF
+HCORLIM		0x1000000	0x100000	0x7FFFFFFF
+SFNOLIM		64		20		2048
+HFNOLIM		2048		20		2048
+SVMMLIM		0x2000000	0x1000000	0x7FFFFFFF
+HVMMLIM		0x2000000	0x1000000	0x7FFFFFFF
+
+* Default Scheduler Class
+INITCLASS 	TS
+
+* processor cache affinity related tunables:
+* MAXCACHEWARM - maximum number of context switches after which the 
+* cache is assumed to have turned cold,
+* MAXIMBALANCE - max difference between two local run queues that is
+* allowed, once this max is exceeded, load balancing requirements
+* will dictate putting affinitized LWPs on global run queue.
+MAXCACHEWARM	30	0	5000
+MAXIMBALANCE	5	0	100
+LOAD_BAL_FREQ	100	1	10000
+
+# stack overflow control
+#	OVSTACK_SIZE - amount of overflow memory in Kbytes
+#	OVSTACK_PREEMPT - allow preemption while running on the extension
+OVSTACK_SIZE	10	1	0x1000
+OVSTACK_PREEMPT	0	0	1

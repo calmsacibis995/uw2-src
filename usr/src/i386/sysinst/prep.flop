@@ -1,0 +1,306 @@
+#!/usr/bin/sh
+#ident	"@(#)proto:prep.flop	1.1.2.32"
+
+# This script will create the mini-kernel, build special boot-floppy only
+# commands, and prep the executables included on the boot floppy.  The shell
+# script cut.flop must be used to create the boot floppy.
+
+############# Initialization and Command-line Parsing #############
+
+test -z "$ROOT" && {
+	echo "ROOT not set"
+	exit 1
+}
+test -z "$WORK" && {
+	echo "WORK not set"
+	exit 1
+}
+test -z "$MACH" && {
+	echo "MACH not set"
+	exit 1
+}
+test -z "$PFX" && {
+	echo "PFX not set"
+	exit 1
+}
+[ -z "$LCL_MACH" ] && LCL_MACH=.$MACH export LCL_MACH
+test -f cmd/mini_kernel.sh || {
+	echo "ERROR -- You need to be in the directory $PROTO"
+	exit 1
+}
+
+PATH=:$PROTO/bin:$TOOLS/usr/ccs/bin:$PATH export PATH
+RAMPROTO="desktop/files/ramdfs.proto" export RAMPROTO
+FLOP_TMP_DIR=/tmp/flop.$$ export FLOP_TMP_DIR
+
+# IMPORTANT -- DO NOT CHANGE THE ORDER OF THE MODULES IN _DRVMODS!
+_DRVMODS="dpt cpqsc adsc ictha dcd" export _DRVMODS
+
+CMD=$0
+Usage()
+{
+	{
+	echo "Usage: ${CMD} [-c] [-k|-K] [-u]"
+	echo "\t-c builds the local commands."
+	echo "\t-k builds a non-kdb kernel."
+	echo "\t-K builds a kdb kernel."
+	echo "\t-u builds an unofficial floppy (no pstamping)."
+	echo "\tThe -k and -K options are mutually exclusive."
+	} >&2
+	# The -q option is intentionally not listed here.
+	exit 1
+}
+
+command=false
+Kflag=false
+kflag=false
+kernel=false
+official=true
+quick=false
+LANG=$LOCALE export LANG
+
+while getopts ckKuq c
+do
+	case $c in
+		c)
+			command=true
+			;;
+		k)
+			kernel=true
+			kflag=true
+			SYMS="-l $FLOP_TMP_DIR/symlist"
+			KDB=nokdb
+			;;
+		K)
+			kernel=true
+			Kflag=true
+			SYMS=""
+			KDB=kdb
+			;;
+		u)
+			official=false
+			;;
+		q)
+			quick=true
+			;;
+		\?)
+			Usage
+			;;
+		*)
+			echo Internal error during getopts. >&2
+			exit 2
+			;;
+	esac
+done
+shift `expr $OPTIND - 1`
+$Kflag && $kflag && Usage
+
+############# Function defintions #############
+
+make_native()
+{
+	OCMDRULES=$CMDRULES
+	CMDRULES=$XCMDRULES
+	OPATH=$PATH
+	PATH=/usr/bin:$PATH
+	export CMDRULES PATH
+
+	make -f cmd.mk bzip checkwhite hsflop wrt || exit $?
+	install -f $PROTO/bin bzip
+	install -f $PROTO/bin checkwhite
+	install -f $PROTO/bin hsflop
+	install -f $PROTO/bin wrt
+
+	CMDRULES=$OCMDRULES
+	PATH=$OPATH
+}
+
+build_commands()
+{
+	[ -d $PROTO/bin ] || mkdir -p $PROTO/bin
+	echo "Building local commands."
+
+	echo "\nWorking in desktop/instcmd directory."
+	(cd desktop/instcmd; make -P -f instcmd.mk install) || exit $?
+
+	echo "\nWorking in cmd directory."
+	(cd cmd; make -f cmd.mk install) || exit $?
+	(cd cmd; make_native) || exit $?
+
+	install -f $PROTO bin/cut.flop
+	install -f $PROTO bin/cut.netflop
+}
+
+build_kernel()
+{
+	trap "rm -rf $FLOP_TMP_DIR; exit" 0 1 2 3 15
+	mkdir $FLOP_TMP_DIR
+	$quick || {
+		echo "\nCreating a kernel build tree in $ROOT/$LCL_MACH"
+		rm -f $ROOT/$LCL_MACH/stand/unix.nostrip
+		[ -d $ROOT/$LCL_MACH/stand ] || mkdir -p $ROOT/$LCL_MACH/stand
+		[ -d $ROOT/$LCL_MACH/etc/conf/mod.d ] ||
+			mkdir -p $ROOT/$LCL_MACH/etc/conf/mod.d
+		[ -d $ROOT/$LCL_MACH/etc/conf/modnew.d ] ||
+			mkdir -p $ROOT/$LCL_MACH/etc/conf/modnew.d
+		(
+		cd $ROOT/$MACH
+		find etc/conf/*.d etc/initprog etc/*fboot -print |
+			egrep -v 'unix$|\.o$|mod\.d|modnew\.d' |
+			cpio -pdumV $ROOT/$LCL_MACH
+		find etc/conf/pack.d \( -name Driver.o -o -name Modstub.o \) -print |
+			cpio -pdumV $ROOT/$LCL_MACH
+		)
+		[ -h $ROOT/$LCL_MACH/etc/conf/bin ] ||
+			ln -s $ROOT/$MACH/etc/conf/bin $ROOT/$LCL_MACH/etc/conf/bin
+	}
+
+	echo "\nReconfiguring files under $ROOT/$LCL_MACH/etc/conf"
+	# mini_kernel echoes the list of loadable modules to stdout.
+	MODLIST=`MACH=$LCL_MACH mini_kernel $KDB` || exit $?
+	
+	echo "\nCreating loadable modules."
+	MODARGS=`for i in $MODLIST
+		do
+			echo "-M $i \c"
+		done`
+	MACH=$LCL_MACH $ROOT/$LCL_MACH/etc/conf/bin/idbuild -c \
+		-I$ROOT/$MACH/usr/include $MODARGS || exit $?
+	mv $ROOT/$LCL_MACH/etc/conf/mod.d/* $ROOT/$LCL_MACH/etc/conf/modnew.d
+
+	echo "\nExamining symbol tables of various loadable modules."
+	(
+	cd $ROOT/$LCL_MACH/etc/conf/modnew.d
+	for i in $MODLIST
+	do
+		[ -f $i ] || {
+			echo ERROR -- Cannot find $ROOT/$LCL_MACH/etc/conf/modnew.d/$i >&2
+			exit 1
+		}
+		${PFX}nm $i | grep UNDEF | sed -e 's/.*|//' > $FLOP_TMP_DIR/${i}list
+	done
+	)
+	sed -e '/#/D' -e '/^$/D' desktop/staticlist > $FLOP_TMP_DIR/staticlist
+	{
+	for i in $MODLIST static
+	do
+		cat $FLOP_TMP_DIR/${i}list
+	done
+	} | sort -u > $FLOP_TMP_DIR/symlist
+
+	echo "\nModifying $ROOT/$LCL_MACH/etc/conf/pack.d/ramd/space.c"
+	t=`sed -n -e '3s/^\([0-9]*\) [0-9]*$/\1/p' ${RAMPROTO}`
+	s=`sed -n -e '/^#define RAMD_SIZE	(/p' $ROOT/$LCL_MACH/etc/conf/pack.d/ramd/space.c`
+	z=`expr "$s" : '^#define RAMD_SIZE	(\([0-9]*\).*'`
+	w=`expr "$z" \* 2`
+	t=`expr "$t" + 3`
+	p=`expr "$t" / 2`
+	ed -s $ROOT/$LCL_MACH/etc/conf/pack.d/ramd/space.c <<-EOF
+	/RAMD_SIZE/s/$z/$p/
+	w
+	q
+	EOF
+
+	echo "\nBuilding the mini-kernel."
+#
+# -c flag added to override the various mdep.c checks in idmkunix,
+# e.g. don't do dma channel conflict checking, memory address overlap
+# checking, etc.
+#
+	MACH=$LCL_MACH $ROOT/$LCL_MACH/etc/conf/bin/idbuild -c ${SYMS} \
+		-DRAMD_BOOT -I$ROOT/$MACH/usr/include \
+		-O $ROOT/$LCL_MACH/stand/unix.nostrip ||
+			exit $?
+
+	# collect PDI driver entries from mod_register file
+	rm -f $ROOT/$LCL_MACH/stand/loadmods
+	for i in $_DRVMODS
+	do
+		grep $i $ROOT/$LCL_MACH/etc/conf/cf.d/mod_register \
+			>> $ROOT/$LCL_MACH/stand/loadmods
+	done
+}
+
+# If we have a pstamp command, use it.  Otherwise just strip the comment
+# section using mcs(1).  The pstamp command is not needed for builds outside of
+# Novell official integration.
+
+# The "type" builtin command in older versions of sh returns 0 even if it
+# cannot find the operand.  Therefore, we cannot just check the return
+# value of "type".
+
+type pstamp | grep "not found" > /dev/null
+if [ $? -ne 0 ] && $official
+then
+	f_pstamp()
+	{
+		if [ -w $1 ]
+		then
+			${PFX}strip $1 > /dev/null 2>&1
+			pstamp -p unix -r $REL -l $PSTAMP_LOAD -t i386 $1
+		else
+			echo "WARNING: Cannot write file $1, not pstamping"
+		fi
+	}
+else
+	f_pstamp()
+	{
+		if [ -w $1 ]
+		then
+			${PFX}strip $1 > /dev/null 2>&1
+			${PFX}mcs -d $1 > /dev/null 2>&1
+		else
+			echo "WARNING: Cannot write file $1, not mcs'ing"
+		fi
+	}
+fi
+
+strip_em()
+{
+	echo "\nStripping various files."
+	cd $PROTO
+	export SLBASE
+	SLBASE=$PROTO/bin
+	for name in bin/*
+	do
+		f_pstamp $name
+	done
+	SLBASE=$ROOT/.$MACH
+	for name in $ROOT/$LCL_MACH/etc/conf/modnew.d/* \
+		$ROOT/$LCL_MACH/etc/initprog/*
+	do
+		f_pstamp $name
+	done
+
+	$official && {
+		export SLBASE
+		SLBASE=$ROOT/$MACH
+		nawk '$1 !~ /#/ && $NF ~ /ROOT..MACH/ {print $NF}' $RAMPROTO |
+		while read file
+		do
+			eval f_pstamp ${file}
+		done
+		SLBASE=$ROOT/.$MACH
+		nawk '$1 !~ /#/ && $NF ~ /ROOT...MACH/ {print $NF}' $RAMPROTO |
+		while read file
+		do
+			eval f_pstamp ${file}
+		done
+	}
+}
+
+#main()
+{
+	$command && build_commands
+	[ -s $PROTO/bin/bzip ] || {
+		echo ERROR -- You must use the -c option at least once. >&2
+		exit 1
+	}
+	$kernel && build_kernel
+	[ -s $ROOT/$LCL_MACH/stand/unix.nostrip ] || {
+		echo ERROR -- You must use the -k or -K flag at least once. >&2
+		exit 1
+	}
+	strip_em
+	echo "\n$0: Done."
+}

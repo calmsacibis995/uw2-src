@@ -1,0 +1,225 @@
+#ident\t"@(#)dthelp:Disks-etc/floppy.hlp        1.20"
+^*version^1
+^*title^Disco A o B
+^:Disco A o Disco B
+^*width^70
+^+DesktopMgr/help.defs
+^?Uso de los disquetes
+^0^Disco A o B
+^$10
+Disco A o B
+
+Los iconos Disco_A y Disco_B representan las unidades de disquete del
+sistema (si el computador tiene sólo una, únicamente podrá ver el
+icono Disco_A).
+
+Use Disco A o Disco B para hacer lo siguiente:
+
+\to\t\k(Formatear disquetes^^Formateo de disquetes)
+\to\t\k(Realizar copias de seguridad y restaurar archivos y
+\to\t\kcarpetas^dtadmin/backup.hlp^CopiaSeg-Restaurar)
+\to\t\k(Abrir un disquete como una carpeta de archivos^^Apertura de un disquete como carpeta de archivos)
+\to\t\k(Instalar una aplicación^dtadmin/App_Installer.hlp^Instalador de aplicaciones)
+\to\t\k(Borrar el contenido de un disquete^^Borrado del contenido de un disquete)
+
+Nota: Antes de poder copiar información a un disquete, éste deberá
+estar formateado.
+
+
+^1^Formateo de disquetes
+^$20
+Formateo de disquetes
+
+Para formatear disquetes, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Discos-etc, vaya al paso 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Discos-etc de la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare). Aparecerá la ventana de la carpeta
+  \tDiscos-etc.
+
+2.\tHaga clic en Disco_A (o Disco_B) de la carpeta Discos-etc.
+
+3.\tAsegúrese de que el disquete no está protegido contra escritura.
+
+  \to\tEn los disquetes de 3,5 pulgadas: la pestaña negra de la parte
+  \t \tposterior del disquete deberá estar sobre el orificio.
+
+  \to\tEn los disquetes de 5,25 pulgadas: La muesca del borde exterior
+  \t \tdel disquete deberá estar descubierta.
+
+4.\tInserte el disquete en la unidad adecuada (A o B).
+
+5.\t\d(Haga clic con el botón derecho^hacer clic en el botón derecho) en el icono
+  \tDisco_A o Disco_B.
+
+6.\tHaga clic en Formatear.  Aparecerá la ventana "Formatear".
+
+7.\tHaga clic en la \k(Densidad^^Densidad de disquetes) adecuada para el disquete.
+
+8.\tHaga clic en el \k(Tipo^^Tipos de formato).
+
+9.\tHaga clic en Archivo=>Formatear.  Aparecerá la ventana "Formato en
+  \tproceso".
+
+  \tEsta ventana muestra una barra deslizante que le permite ver el
+  \tprogreso de la operación de formateo, y muestra el mensaje
+  \t"Formato en proceso, por favor, espere".  Una vez finalizado, la
+  \tventana mostrará el mensaje "Formato finalizado".
+
+Véase también:
+\s(Formateado de disquetes^dhelp "pe.es" userhb "Gestión de archivos y carpetas" "Formateado de disquetes" || helpLinkErr).
+
+
+^2^Densidad de disquetes
+^$30
+Densidad de disquetes
+
+El escritorio UnixWare soporta las siguientes densidades de disco:
+
+\to\t720 KB
+
+\to\t360 KB
+
+\to\t1.2 MB
+
+\to\t1.44 MB
+
+\to\t2.88 MB
+
+^2^Tipos de formato
+^$40
+Tipos de formato
+
+Haga clic en uno de los tipos de formato siguientes:
+
+\to\tUso para copias de seguridad: Si desea guardar archivos del disco
+\t \tduro al disquete.
+
+\to\tCarpeta de Escritorio: Si desea poder abrir el disquete como si
+\t \tfuera una carpeta.  Puede manipular los archivos escritos en este
+\t \tdisquete del mismo modo que los archivos escritos en cualquier
+\t \tcarpeta.
+
+\t \tNota: Si escoge Carpeta de escritorio pero no desea usar el tipo
+\t \tde sistema de archivos por defecto, haga clic en \k(Archivo=>Propiedades^^Ventana Formato: Propiedades) para seleccionar otro
+\t \ttipo.
+
+\to\tFormato DOS - Si desea usar el disquete con el sistema operativo
+\t \tDOS (aunque se encuentre en un sistema UnixWare, también puede
+\t \ttener DOS instalado como aplicación en el Escritorio).
+
+Además de los formatos de archivos creados por UnixWare, el Escritorio
+también puede leer los archivos creados en otros formatos.  Véase
+ \k(Tipos de formato adicionales soportados) para obtener más información.
+
+^2^Ventana Formato: Propiedades
+^$45
+Ventana Formato: Propiedades
+
+Esta ventana muestra los tipos de sistema de archivos disponibles.  
+Haga clic en el sistema de archivos deseado y, a continuación, 
+haga clic en OK.
+
+Para obtener más información acerca de los tipos de archivos, véase
+\s(Gestión de los tipos de sistemas de archivos^dhelp as sysag "Managing File System Types" "" || helpLinkErr).
+
+^2^Tipos de formato adicionales soportados
+^$50
+Tipos de formato adicionales soportados
+
+Además de los formatos descritos en \k(Tipos de formato), el Escritorio
+UnixWare también puede leer archivos creados en otros formatos.  Los
+formatos de disquete soportados incluyen los siguientes.
+
+\to\tUso de backup: Aunque el EScritorio usa el comando del sistema
+\t \tUNIX llamado \d(cpio) para crear copias de seguridad,
+\t \ttambién puede restaurar archivos creados con el comando tar(1) del
+\t \tsistema.
+
+\t \tNota: Para obtener más información acerca de los comandos del
+\t \tsistema UNIX, véase la \s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr).
+
+\to\tCarpeta de escritorio: El Escritorio puede abrir una carpeta de
+\t \tarchivos para los disquetes creados en cualquier sistema de
+\t \tarchivos soportados por UnixWare, por ejemplo s5, ufs, y vxfs
+\t \t(véase \k(Apertura de un disquete como carpeta de archivos)).
+
+\t \t-\ts5 es el sistema de archivos estádar del sistema UNIX V.  No
+\t \t \tpermite usar nombres de archivos de más de 14 caracteres.
+
+\t \t-\tufs acepta nombres de archivos más largos que s5, y está
+\t \t \tajustado para la escritura de bloques más grandes de datos al
+\t \t \tmismo tiempo.
+
+\t \t-\tvxfs es el sistema de archivos de hardware (que le permite
+\t \t \tapagar el computador mientras esté funcionando sin perder los
+\t \t \tdatos).
+
+\to\tFormato de DOS:  El Escritorio puede leer (y escribir) archivos
+\t \tdesde (y en) un disquete formateado para DOS.
+
+\to\tFormatos de instalación: El Escritorio puede leer e instalar
+\t \tpaquetes de aplicaciones formateados en diversos formatos del
+\t \tsistema UNIX, incluidos pkgadd, tar, installpkg, y personalizado.
+
+Véase también:
+\k(Copias de seguridad-Restaurar^dtadmin/backup.hlp^CopiaSeg-Restaurar)
+\k(Instalador de aplicaciones^dtadmin/App_Installer.hlp^Instalador de aplicaciones)
+\s(Gestión de los tipos de sistemas de archivos^dhelp as sysag "Managing File System Types" "" || helpLinkErr)
+
+
+^1^Apertura de un disquete como carpeta de archivos
+^$70
+Apertura de un disquete como carpeta de archivos
+
+Es posible que desee abrir un disquete como carpeta de archivos.  
+Esta es una forma cómoda de trabajar con los archivos, 
+porque le será posible copiarlos, añadirlos o borrarlos del mismo 
+modo que si estuviesen en el disco duro del computador.
+
+Nota: Puede abrir y usar un disquete formateado para DOS de la misma 
+forma que lo haría con un disquete formateado para el Escritorio.
+
+Para abrir un disquete como una carpeta de archivos, haga lo
+siguiente:
+
+1.\tFormatee el disquete como Carpeta de escritorio (véase
+  \t\k(Formateo de disquetes)).
+
+2.\t\d(Haga doble clic^hacer doble clic) en el icono del disquete que
+  \tcontenga el disco que desee usar como carpeta de archivos.
+  \tAparecerá una ventana de carpeta.  Desde esta ventana, puede hacer
+  \tlo siguiente:
+
+  \to\t\d(Arrastrar y soltar^arrastrar y soltar) los archivos hasta la
+  \t \tcarpeta.
+
+  \to\tUsar todas las funcionalidades disponibles en el menú Archivo
+  \t \t(tales como Copiar, Suprimir, o Mover)
+
+  \to\tAñadir carpetas a la ventana.
+
+  \to\tAbrir archivos y arrancar programas.
+
+
+^1^Borrado del contenido de un disquete
+^$100
+Borrado del contenido de un disquete
+
+Nota: La opción para borrar el contenido del disquete sólo aparecerá
+en el menú si el dispositivo la soporta.
+
+Para borrar todos los datos de un disquete, haga lo siguiente:
+
+1.\t\d(Haga doble clic^hacer doble clic) en Discos-etc de la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare). Aparecerá la carpeta Discos-etc.
+
+2.\tHaga clic en Disco_A (o Disco_B).
+
+3.\tInserte el disquete el la unidad apropiada (A o B).
+
+4.\t\d(Haga clic con el botón derecho del ratón^hacer clic en el botón derecho) en
+  \tcualquier punto del icono del icono del disquete.
+
+5.\tHaga clic en Borrar.

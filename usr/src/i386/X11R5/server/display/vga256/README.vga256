@@ -1,0 +1,90 @@
+#ident	"@(#)vga256:vga256/README.vga256	1.2"
+
+
+This driver supports most of the dumb super VGA's and some of the
+"fixed" graphics function chips. This driver supports the following
+chipsets:
+	
+	1. ETW32/ETW32i/ETW32p
+	2. Cirrus 5420 through 5434
+	3. WD 90c31
+	4. ET4000
+	5. NCR 77C22E
+	6. T8900
+	7. old ATI V3, V4, V5
+
+
+
+ETW32p NOTES
+============
+
+The following section is SPECIFIC to ETW32p only.
+
+  User can disable/enable any particular hardware function(s) in etw32p driver 
+  by setting appropriate option through environment variable HWFUNCS.
+  When any hardware function is disabled, vga256 driver (basically software),
+  will take the responsibility of that drawing operation.
+
+pci_burst  
+         For enabling pci_burst mode.   (applicable only for pci cards).
+		 But it doesn't seem to provide improved performance in xbench. 
+		 default: disabled
+		 To enable: export HWFUNCS="pci_burst"
+
+chipset_override
+		 Whenever etw32p driver cannot detect a ET4000/W32p chipset, it will
+		 exit.    Currently it can detect only Rev A, Rev B, Rev C versions
+		 of ET4000/W32p chipset.  There could be future versions too.  If
+		 user is **100%** sure that he has an ET4000/W32p chipset and etw32p
+		 driver reports 'cannot detect ET4000/W32p chipset.  exiting..',
+		 then user can override the 'exit' by setting this value in HWFUNCS.
+		 default : disable
+		 To enable:  export HWFUNCS="chipset_override"
+    
+polyfill
+         To disable hardware rectangle fill( solidfill, tilefill,stipplefill).
+		 default: enabled
+		 To disable: export HWFUNCS="!polyfill"
+        
+ss_bitblt
+		To disable hardware scr->scr bitblt.
+		default: enabled
+		To disable: export HWFUNCS="!ss_bitblt"
+
+ms_bitblt
+	    To disable hardware mem->scr bitblt.
+		default: enabled
+		To disable: export HWFUNCS="!ms_bitblt"
+
+sm_bitblt
+	    To disable hardware scr->mem bitblt.
+		default: enabled
+		To disable: export HWFUNCS="!sm_bitblt"
+
+ms_stplblt
+		To disable hardware mem->scr stplblt.
+		default: enabled
+		To disable: export HWFUNCS="!ms_stplblt"
+
+solid_fill
+		To disable hardware solid fill.
+		default: enabled
+		To disable: export HWFUNCS="!solid_fill"
+
+font
+		To disable hardware font drawing
+		default: enabled
+		To disable: export HWFUNCS="!font"
+
+line
+		To disable hardware line drawing
+		default: enabled
+		To disable: export HWFUNCS="!line"
+
+It is possible to provide more than one option at a time.
+For ex:
+	  export HWFUNCS="!solid_fill !ss_bitblt"
+	   will disable hardware solid fill and scr->scr operations.
+
+End: ETW32p NOTES
+=================

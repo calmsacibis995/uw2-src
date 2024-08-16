@@ -1,0 +1,35 @@
+#
+#   Primary Screen definition
+#
+DEFINE SCREEN 0
+        chipset = MACH32		# video chipset
+         memory = 1024			# video memory
+          class = MACH			# class of this DisplayModule
+          model = MACH32		# the core drawing lib for this class
+     vendor_lib = ultra.so.1
+   virtual_size = 1024x768		# Frame Buffer size
+   display_size = 1024x768		# display (viewing) size within the FB
+         visual = PseudoColor		# visual for this class
+       fb_depth = 8			# number of colors
+         device = /dev/console		# device used
+        monitor = MULTISYNC 		# type of monitor
+   monitor_size = 15.45x11.59		# size of the monitor
+   refresh_rate	= 72			# vertical refresh rate
+  monitor_specs = NONE			# info passed to vendor lib - optional
+  info2classlib = 			# info passed to class lib - optional
+ info2vendorlib = options-variable=mach_options
+         vendor = "ATI Technologies"
+     configfile = mach.cfg
+END
+#
+#   Primary Screen definition
+#
+#	Supported display resolutions: 640x480, 800x600, 1024x768, 1120x750,
+#		1280x1024 : at various resolutions
+#	Supported virtual resolutions: 640x480, 800x600, 1024x768, 1120x750
+#		1280x1024.  If the virtual resolution is less 
+#		than the displayed dimension, hardware panning 
+#		of the displayed screen is enabled.
+# 	Supported depths: 4/8 bit.
+#	Supported monitors: STDVGA (640x480), MULTISYNC.
+#

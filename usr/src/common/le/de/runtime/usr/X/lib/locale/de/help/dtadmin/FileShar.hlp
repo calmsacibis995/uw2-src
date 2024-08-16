@@ -1,0 +1,750 @@
+#ident\t"@(#)dthelp:Admin.Tools/FileShar.hlp    1.26"
+^*version^1
+^*title^Datei-Sharing
+^:Datei-Sharing
+^*width^70
+^+DesktopMgr/help.defs
+^?Auf Dateien ferner Systeme zugreifen
+^0^Datei-Sharing
+^$10
+Datei-Sharing
+
+Mit "Datei-Sharing" können Sie auf Dateien ferner Systeme so
+zugreifen, als befänden sie sich auf Ihrem eigenen System. Außerdem
+können Sie Ihr System so einrichten, daß andere Systeme auf Ihre
+Dateien zugreifen können.
+
+Wenn Sie Datei-Sharing, das heißt die gemeinsame Benutzung von
+Dateien, eingerichtet haben, müssen Sie nichts weiter tun, um die
+fernen Dateien zu verwenden. Sie öffnen ferne Ordner, starten ferne
+Anwendungen und benutzen ferne Daten, als wären sie lokal.
+
+Mit "Datei-Sharing" haben Sie folgende Möglichkeiten:
+
+\to \tvon einem anderen System \k(auf Ferne Share-Objekte zugreifen ^^Auf Share-Objekte zugreifen)
+\to \tfür die Verwendung durch andere Systeme
+\t  \t\k(lokale Share-Objekte erstellen^^Lokale Share-Objekte erstellen)
+\to \t\k(Eigenschaften ferner gemeinsam benutzter Objekte anzeigen und ändern^^Eigenschaften von fernen Share-Objekten ansehen und ändern)
+\to \t\k(Eigenschaften lokaler gemeinsam benutzter Objekte anzeigen und ändern^^Eigenschaften von lokalen Share-Objekten ansehen und ändern)
+\to \tvon Ihrem System aus die 
+\t   \t\k(Verbindung zu fernen Share-Objekten aufheben oder sie löschen^^Verbindung mit fernen Share-Objekten aufheben und diese löschen)
+\to \tvon Ihrem System aus die 
+\t  \t\k(Bekanntmachung lokaler gemeinsam benutzter Objekte aufheben oder sie löschen^^Bekanntmachung von lokalen Share-Objekten aufheben und diese löschen)
+
+Siehe auch:
+\s(Ferne Dateien und Ordner gemeinsam benutzen^dhelp "pe.de" ownerhb "Ferne Dateien und Ordner gemeinsam benutzen" "" || helpLinkErr)
+
+^1^Auf Share-Objekte zugreifen
+^$20
+Auf Share-Objekte zugreifen
+
+Hinweis: Sie müssen über die
+\k(Berechtigung für das Herstellen von Verbindungen zu fernen Ordnern/Dateien^dtadmin/user.hlp^Mit Berechtigungen umgehen können)
+verfügen, um Zugriff auf fernen Share-Objekte einzurichten. Um Ihr
+System für den Zugriff auf ferne \d(Share-Objekte^Share-Objekt)
+ einzurichten, machen Sie folgendes:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Datei-Sharing". Das Fenster
+   \t"Datei-Sharing-Setup" erscheint \t(für ferne oder lokale gemeinsam
+   \tbenutzte Objekte, je nach der von \tIhnen zuletzt verwendeten
+   \tAnsicht).
+
+4.\tKlicken Sie "Aktionen=>Status" an. Das
+   \t\k(Fenster "Datei-Sharing: Status"^^Fenster Datei-Sharing: Status) erscheint.
+
+5.\tStellen Sie fest, ob NFS läuft. Wenn nicht, klicken Sie "NFS
+   \tstarten" an. Wenn NFS startet, erscheint eine Meldung, und die
+   \tSchaltfläche "NFS starten" wird abgedunkelt.
+
+   \tHinweis: Der Start von NFS dauert einige Minuten.
+
+6.\tKlicken Sie "Abbrechen" im Fenster "Datei-Sharing: Status" an.
+
+7.\tKlicken Sie "Anzeigen=>Fern" an. Das Fenster
+   \t"Datei-Sharing-Setup: Ferne Share-Objekte"
+   \terscheint.
+
+ \tHinweis: Das Fenster "Ferne Share-Objekte" kann schon
+ \tangezeigt sein, da es sich dabei um die Standardansicht handelt.
+
+8.\tKlicken Sie Share-Objekt=>Neu an.
+   \tDas Fenster "Datei-Sharing: Neues Share-Objekt
+   \thinzufügen Fernzugriff" erscheint. Es enthält folgende Felder:
+
+   \to \tName des fernen Systems: - Geben Sie den Namen des Systems mit
+   \t  \tdem Share-Objekt ein, auf das Sie zugreifen
+   \t  \twollen, oder klicken Sie "Nachschlagen" an, tum das
+   \t  \t\k(Fenster "Ferne Systeme nachschlagen"^^Fenster Fernes System nachschlagen) zu öffnen, in dem Sie in
+   \t  \teiner Liste verfügbarer Systeme wählen können, und klicken Sie
+   \t  \t"OK" an. Etwas Geduld, es kann einige Sekunden dauern, bis die
+   \t  \tListe erscheint, wenn Ihr System für \k(DNS^dtadmin/inet.hlp^Auf DNS zugreifen) konfiguriert ist.
+
+  \to\tVerfügbare Objekte anzeigen: - Klicken Sie die Schaltfläche
+  \t \tVerfügbare Objekte anzeigen an, um eine Liste der im
+  \t \tgewählten System verfügbaren Share-Objekte zu
+  \t \töffnen. Wenn Sie Namen des fernen Systems nachschlagen gewählt
+  \t \thaben, wird diese Liste vom System automatisch angezeigt.
+
+ \t  \tKlicken Sie das Objekt an, das Sie benutzen möchten.
+
+  \to \tSymbolname: - Zeigt den Namen des Symbols des ausgewählten
+  \t  \tObjekts an. (im Fenster Datei-Sharing).
+
+ \to \tZu verbindendes Share-Objekt: - Zeigt den vollständigen
+ \t  \t\d(Pfadnamen^Pfad) des gewählten Objekts an.
+
+  \to\tLokaler Ordner, mit dem es verbunden werden soll: - Geben Sie
+  \t \tden Namen des Ordners auf Ihrem System ein, von dem Sie auf das
+  \t \tShare-Objekt zugreifen möchten, oder klicken Sie "Ordner suchen"
+  \t \tan, damit das \k(Fenster "Datei-Sharing: Ordner"^^Fenster Datei-Sharing: Ordner) erscheint.
+
+   \t  \tHinweis: Wenn Sie den Namen eines Ordners eingeben, der nicht
+   \t  \texistiert, werden Sie vom System aufgefordert, den Ordner zu
+   \t  \terstellen, sobald Sie "Hinzufügen" anklicken (siehe
+   \t  \t"\k(Ordnermeldung erstellen)"). Wenn Sie den Namen eines Ordners
+   \t  \teingeben, der nicht leer ist, erscheint eine Warnmeldung
+   \t  \t(siehe "\k(Meldung Ordner nicht leer)").
+
+   \to \tShare-Objekt virbinden als: - Klicken Sie "Nur lesen"
+   \t  \tan, wenn Sie die Dateien und Ordner des gemeinsam genutzten
+   \t  \tObjekts zwar verwenden, aber nicht ändern möchten. Klicken
+   \t  \tSie "Lesen und Schreiben" an, wenn Sie die Dateien und Ordner
+   \t  \tdes Objekts auch ändern können möchten.
+
+   \t  \tHinweis: Wenn Sie "Lesen und Schreiben" auswählen, das ferne
+   \t  \tSystem das Objekt jedoch nur für "Nur lesen" bekanntgemacht
+   \t  \that, können Sie in das Objekt nicht schreiben.
+
+   \to \tVerbindung beim Start von NFS? - Klicken Sie "Ja" an, wenn
+   \t  \teine Verbindung zum Share-Objekt jetzt und
+   \t  \tjedesmal beim Start von NFS hergestellt werden soll. Klicken
+   \t  \tSie "Nein" an, wenn Sie die Verbindung nur jetzt herstellen
+   \t  \tmöchten.
+
+   \to \tErweiterte Optionen: - Klicken Sie diese Option an, um die
+   \t  \tfolgenden zusätzlichen Optionen anzuzeigen:
+
+   \t  \t- \tVerbindung ist: - Klicken Sie
+   \t  \t  \t\k(lösbare oder feste Verbindung^^Lösbare und feste Verbindungen) an.
+
+  \t \t-\tAndere Befehlszeilenoptionen: - Geben Sie die
+  \t \t \tBefehlszeilenoptionen für den Befehl mount ein. Siehe Option
+  \t \t \tmount(1M) in der\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+9.\tKlicken Sie "Hinzufügen" an. Im Fenster "Datei-Sharing-Setup:
+   \tFerne Share-Objekte" erscheint das Symbol des
+   \tbetreffenden Objekts.
+
+   \tHinweis: Wenn Sie das Objekt nicht hinzufügen möchten, klicken
+   \tSie "Abbrechen" an.
+
+Siehe auch:
+\s(Datei-Sharing verwenden^dhelp "pe.de" ownerhb "Ferne Dateien und Ordner gemeinsam benutzen" "Datei-Sharing verwenden" || helpLinkErr)
+\s{Einführung in die NFS-Verwaltung^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Ordnermeldung erstellen
+^$24
+Ordnermeldung erstellen
+
+Der Ordnername, den Sie in das Textfeld "Verbindung mit lokalem
+Ordner" eingegeben haben, existiert nicht. Klicken Sie eine der
+folgenden Optionen an:
+
+ \to \tErstellen - um den Ordner zu erstellen;
+
+ \to \tAbbrechen - um den Auftrag, den Ordner zu erstellen,
+ \t  \tzurückzunehmen. In diesem Fall müssen Sie einen anderen lokalen
+ \t  \tOrdner für die Verbindung mit dem fernen gemeinsam benutzten
+ \t  \tObjekt angeben.
+
+^2^Meldung Ordner nicht leer
+^$25
+Meldung Ordner nicht leer
+
+Der Ordnername, den Sie in "Verbindung mit lokalem Ordner" eingegeben
+haben, enthält bereits Dateien bzw. Dateien und Ordner. Diese Dateien
+und Ordner sind nicht verfügbar, wenn die Verbindung mit dem
+\d(Share-Objekt) hergestellt wird. Das kann dazu führen, daß
+bestimmte Anwendungen auf Ihrem System oder Teile des Systems selbst
+nicht mehr funktionieren.
+
+Klicken Sie eine der folgenden Optionen an:
+
+ \to \tHinzufügen - um weiterzumachen und das neue gemeinsam benutzte
+ \t  \tObjekt hinzuzufügen, selbst wenn die im Ordner bereits
+ \t  \tenthaltenen Dateien und Ordner danach nicht mehr verfügbar sind.
+
+ \to \tAbbrechen - um die Forderung nach Erstellung eines Ordners
+ \t  \tzurückzunehmen. In diesem Fall müssen Sie einen anderen lokalen
+ \t  \tOrdner für die Verbindung mit dem fernen Objekt angeben.
+
+^2^Fenster Fernes System nachschlagen
+^$30
+Fenster Fernes System nachschlagen
+
+In diesem Fenster können Sie in einer der beiden folgenden Ansichten
+nach einem System suchen und ein System auswählen:
+
+ \to \t\k(Domainliste^^Domainauflistung) - die Standardansicht, wenn Sie DNS auf Ihrem
+ \t  \tSystem konfiguriert haben.
+
+ \to \t\k(Systemliste) - die Standardansicht, wenn Sie DNS nicht
+ \t  \tauf Ihrem System konfiguriert haben. Angezeigt wird hier der
+ \t  \tInhalt Ihrer Datei "/etc/hosts".
+
+Wenn Sie eine DNS-Liste haben und Ihre Systemliste andere Einträge als
+den Namen des lokalen Systems enthält, können Sie zwischen beiden
+Ansichten umschalten. Dazu klicken Sie "Anzeigen=>Domainliste" bzw.
+"Anzeigen=>Systemliste" an.
+
+Siehe auch:
+\k(Auf DNS zugreifen^dtadmin/inet.hlp^Auf DNS zugreifen)
+\s(Verzeichnisse und Dateien^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^3^Domainauflistung
+^$40
+Domainauflistung
+
+Um die Domainliste anzuzeigen, klicken Sie "Anzeigen=>Domainliste"
+an.
+
+Standardmäßig zeigt die Domainliste die Systeme in Ihrer lokalen
+Domain an.
+
+Um andere Domain (und UnterDomain) anzuzeigen und auszuwählen, gehen
+Sie wie folgt vor:
+
+1. \tGeben Sie den Namen der gewünschten Domain in das Textfeld
+   \t"Domainname" ein (das heißt den Namen der Domäne, in der das
+   \tSystem, nach dem Sie suchen, residiert).
+
+2. \tKlicken Sie "Liste aktualisieren" an.
+
+   \tWenn unter der angegebenen Domain Unterdomain vorhanden sind,
+   \terscheinen sie an der Spitze der Domainliste.
+
+3. \tSie zeigen den Inhalt einer Unterdomain an, indem Sie auf den
+   \tEintrag der \tUnterdomain \d(doppelklicken^doppelklicken).
+   \tRechts davon erscheint eine \tneue Liste, in der der Inhalt dieser
+   \tUnterdomain angezeigt wird.
+
+   \tSie können so lange auf Unterdomain klicken und sie anzeigen, bis
+   \tkeine weiteren mehr vorhanden sind. Allerdings können zu einem
+   \tgegebenen Zeitpunkt nur drei Domainebenen auf dem Bildschirm
+   \tangezeigt werden. Wenn Sie mehr als drei Ebenen haben, verwenden
+   \tSie die nach links und rechts gerichteten Pfeile im Zentrum des
+   \tBildschirms, um sich in den Listen vorwärts und rückwärts zu
+   \tbewegen.
+
+4. \tDurchsuchen Sie die Listen, bis Sie das gewünschte System finden,
+   \tund klicken Sie den Eintrag dieses Systems an.
+
+5. \tKlicken Sie "OK" an.
+
+^3^Systemliste
+^$50
+Systemliste
+
+Um die Systemliste anzuzeigen, klicken Sie "Anzeigen=>Systemliste" an.
+
+Hinweis: Wenn "/etc/hosts" nur einen Eintrag für Ihr System und nicht
+für andere Systeme enthält, ist diese Ansicht nicht verfügbar.
+
+In der Systemliste werden die in Ihrer Datei "/etc/hosts" enthaltenen
+Systeme angezeigt. Klicken Sie das gewünschte System und anschließend
+"OK" an.
+
+Siehe auch:
+\s(Verzeichnisse und Dateien^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^2^Fenster Datei-Sharing: Ordner
+^$60
+Fenster Datei-Sharing: Ordner
+
+Sie haben folgende Möglichkeiten:
+
+ \to \tKlicken Sie einen Ordner oder den übergeordneten Ordner in der
+ \t  \tOrdnerliste an, bis Sie den gewünschten Ordner gefunden haben.
+
+ \to \tGeben Sie den \d(Pfad) des gewünschten Ordners ein.
+
+^1^Lokale Share-Objekte erstellen
+^$70
+Lokale Share-Objekte erstellen
+
+Hinweis: Um lokale Share-Objekte zu erstellen, müssen
+Sie die \k(Berechtigung zur Bekanntmachung lokaler Ordner/Dateien^dtadmin/user.hlp^Mit Berechtigungen umgehen können) haben.
+
+Ein lokales Share-Objekt erstellen Sie, wenn Sie
+möchten, daß ferne Benutzer und ferne Systeme auf Dateien und Ordner
+Ihres Systems zugreifen können.
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Datei-Sharing". Das Fenster
+   \t"Datei-Sharing-Setup" erscheint \t(für ferne oder lokale gemeinsam
+   \tbenutzte Objekte, je nach der von \tIhnen zuletzt verwendeten
+   \tAnsicht).
+
+4.\tKlicken Sie "Aktionen=>Status" an. Das
+   \t\k(Fenster "Datei-Sharing: Status"^^Fenster Datei-Sharing: Status) erscheint.
+
+5.\tStellen Sie fest, ob NFS läuft. Wenn nicht, klicken Sie "NFS
+   \tstarten" an. Wenn NFS startet, erscheint eine Meldung, und die
+   \tSchaltfläche "NFS starten" wird abgedunkelt.
+
+   \tHinweis: Der Start von NFS kann einige Minuten dauern.
+
+6.\tKlicken Sie "Abbrechen" im Fenster "Datei-Sharing: Status" an.
+
+7.\tKlicken Sie Anzeigen=>Lokal an, um die lokalen gemeinsam
+  \tbenutzten Objekte anzuzeigen. Sie müssen eine lokale Ansicht
+  \tanzeigen, ehe ein Share-Objekt \d(bekanntmachen)
+  \tkann.
+
+8.\tKlicken Sie "Share-Objekt=>Neu" an. Das Fenster
+   \t"Datei-Sharing: Neues Share-Objekt hinzufügen -
+   \tLokal" erscheint. Es enthält folgende Felder:
+
+  \to\tOrdner/Datei für gemeinsame Benutzung: - Klicken Sie Suchen
+  \t \tan. Das \k(Fenster "Datei-Sharing: Share-Objekt^^Fenster Datei-Sharing: Share-Objekt)
+  \t \terscheint. Darin werden die Dateien und Ordner in Ihrem
+  \t \t\d(Stammordner^home-Verzeichnis) angezeigt.
+
+   \t  \tSie haben folgende Möglichkeiten:
+
+   \t  \t- \tKlicken Sie einen Ordnernamen oder den übergeordneten
+   \t  \t  \tOrdner in der Ordnerliste an, bis Sie den gewünschten Ordner
+   \t  \t  \tgefunden haben.
+
+   \t  \t- \tGeben sie den \d(Pfad) Pfadnamen des
+   \t  \t  \tgewünschten Ordners ein.
+
+   \to \tSymbolname: - Geben Sie einen Namen zur Bezeichnung des
+   \t  \tObjekts ein. Standardmäßig verwendet das System den im Feld
+   \t  \t"Ordner/Datei zur gemeinsamen Benutzung" eingegebenen Namen.
+
+   \to \tBekanntmachen, wenn NFS beginnt? - Klicken Sie "Ja" an, um
+   \t  \tdas Objekt jetzt und künftig beim Start von NFS
+   \t  \tbekanntzumachen. Klicken Sie "Nein" an, wenn das Objekt nur
+   \t  \tjetzt (automatisch bei Neustart des Systems) bekanntgemacht
+   \t  \twerden soll.
+
+   \to \tBekanntmachen als: - Klicken Sie eine der folgenden Optionen
+   \t  \tan:
+
+   \t  \t- \tNur lesen - Damit können andere Systeme das Objekt
+   \t  \t  \tbenutzen aber nicht ändern.
+
+   \t  \t- \tLesen und Schreiben - Damit wird voller Zugriff auf die
+   \t  \t  \tgemeinsam genutzten Objekte gestattet.
+
+   \t  \t- \tKein Zugriff: - Damit wird der Zugriff auf die Systeme
+   \t  \t  \tbeschränkt, die in der Ausnahmeliste stehen.
+
+   \t \t \tGeben Sie in das Feld Ausnahmen: Systemname die Namen der
+   \t \t \tSysteme ein, mit denen Sie das Objekt gemeinsam benutzen
+   \t \t \twollen. Sie können auch Nachschlagen anklicken, um das
+   \t \t \t\k(Fenster "Ferne Systeme nachschlagen"^^Fenster Fernes System nachschlagen) zu öffnen.
+
+   \t  \t  \tKlicken Sie anschließend "Nur Lesen einfügen" oder "Lesen
+   \t  \t  \tund Schreiben einfügen", um der Ausnahmeliste ein System
+   \t  \t  \thinzuzufügen.
+
+   \t  \t  \tHinweis: Um ein System aus der Ausnahmeliste zu löschen,
+   \t  \t  \tklicken Sie das System und anschließend "Löschen" an. Um
+   \t  \t  \talle Systeme aus der Liste zu löschen, klicken Sie "Alles
+   \t  \t  \tlöschen" an.
+
+   \to \tErweiterte Optionen: - Klicken Sie dieses Feld an, um die
+   \t  \tfolgenden erweiterte Optionen anzuzeigen:
+
+  \t \t-\tAndere Befehlszeilenoptionen - Geben Sie Befehlszeilenoptionen
+  \t \t \tfür den Befehl share(1M) an. Schlagen Sie in der
+  \t \t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr) Informationen über Befehlszeilenoptionen
+  \t \t \tnach.
+
+9. \tKlicken Sie "Hinzufügen" an. Im Fenster "Datei-Sharing: Lokale
+   \tShare-Objekte" erscheint das Symbol des lokalen Objekts.
+
+   \tHinweis: Wenn Sie das Objekt nicht hinzufügen möchten, klicken
+   \tSie "Abbrechen" an.
+
+Siehe auch:
+\s(Datei-Sharing verwenden^dhelp "pe.de" ownerhb "Ferne Dateien und Ordner gemeinsam benutzen" "Datei-Sharing verwenden" || helpLinkErr)
+\s{Einführung in die NFS-Verwaltung^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Fenster Datei-Sharing: Status
+^$80
+Fenster Datei-Sharing: Status
+
+Im Fenster "Datei-Sharing: Status" werden folgende Informationen
+angezeigt:
+
+ \to \tob NFS derzeit läuft;
+
+ \to \tob das System bereit ist, Dateien zu \d(bekanntmachen) oder zu
+ \t  \t\d(verbinden);
+
+ \to \tob lokale, \d(Share-Objekte^Share-Objekt) derzeit von fernen
+ \t  \tSystemen benutzt werden. Ist dies der Fall, zeigt der Desktop
+ \t  \tsie in diesem Fenster im Listenfeld "Lokaler Ordner/Dateien" an.
+
+Klicken Sie "NFS starten" an, um NFS zu starten.
+
+Klicken Sie \k("NFS anhalten"^^Fenster NFS anhalten) an, um NFS zu stoppen.
+
+Siehe auch:
+\s{Einführung in die NFS-Verwaltung^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Fenster NFS anhalten
+^$85
+Fenster NFS anhalten
+
+Vergewissern Sie sich, daß Sie NFS auf Ihrem System wirklich anhalten
+wollen.
+
+Wenn Sie NFS anhalten, unterbricht das System die Verbindung zu allen
+fernen gemeinsam genutzten Objekten, und lokale,
+\d(gemeinsam genutzte Objekte^Share-Objekt) stehen fernen Systemen
+nicht mehr zur Verfügung. Das Anhalten kann mehrere Minuten dauern.
+
+Wenn Sie NFS anhalten möchten, klicken Sie im Nachrichtenfenster "NFS
+anhalten" an. Andernfalls klicken Sie "Abbrechen" an.
+
+Siehe auch:
+\s{Einführung in die NFS-Verwaltung^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+
+^2^Lösbare und feste Verbindungen
+^$90
+Lösbare und feste Verbindungen
+
+Verwenden Sie nur feste Verbindungen, wenn es wichtig ist, daß
+Informationen nicht verlorengehen, die Sie auf ein fernes System
+schreiben.
+
+Bei einer festen Verbindung wird das System gezwungen, auf den
+erneuten Anschluß eines fernen Objekts zu warten, wenn eine Trennung
+der Verbindung erfolgt. Im wesentlichen heißt das, daß das System
+"einfriert" und nicht verwendet werden kann. Bei einer lösbaren
+Verbindung dagegen scheitert der Schreibvorgang, wenn das ferne System
+nach kurzer Zeit nicht antwortet, und das System kann wieder benutzt
+werden. Sie müssen Ihre Daten dann lokal speichern und sie zu einem
+späteren Zeitpunkt an das ferne System senden.
+
+^2^Fenster Datei-Sharing: Share-Objekt
+^$100
+Fenster Datei-Sharing: Share-Objekt
+
+In diesem Fenster wird eine Liste angezeigt, die verfügbare
+\d(gemeinsam genutzte Objekte^Share-Objekt). enthält. Mit der
+Bildlaufleiste können Sie in der Liste nach oben und unten gehen.
+Klicken Sie das gewünschte Objekt an. Das System überträgt das
+Objekt in das Feld "Ordner/Datei zur gemeinsamen Benutzung" im
+Fenster "Datei-Sharing: Neues Share-Objekt hinzufügen".
+
+
+^1^Eigenschaften von fernen Share-Objekten ansehen und ändern
+^$120
+Eigenschaften von fernen Share-Objekten ansehen und ändern
+
+Um ferne \d(Share-Objekt) und deren Eigenschaften anzuzeigen,
+gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Datei-Sharing". Das Fenster
+   \t"Datei-Sharing-Setup" erscheint (für ferne oder lokale Objekte,
+   \tje nach der letzten von Ihnen gewählten Ansicht).
+
+   \tHandelt es sich um das Fenster für ferne Objekte, machen Sie mit
+   \tSchritt 5 weiter. Andernfalls gehen Sie zum nächsten Schritt.
+
+4.\tKlicken Sie "Anzeigen=>Fern" an. Das Fenster "Datei-Sharing-Setup:
+  \tFerne Share-Objekte" erscheint.
+
+5.\tKlicken Sie das gewünschte Share-Objekt an.
+
+6.\tKlicken Sie "Share-Objekt=>Eigenschaften" an. Das Fenster
+  \t"Datei-Sharing: Eigenschaften des Share-Objekts - Fern" erscheint.
+  \tEs enthält folgende Felder:
+
+   \to \tName des fernen Systems: - Zeigt den Namen des Systems an, auf
+   \t  \tdem sich das Share-Objekt befindet.
+
+   \to \tSymbolname: - Zeigt den Namen des Symbols des ausgewählten
+   \t  \tObjekts an.
+
+   \to \tZu verbindendes Share-Objekt: - Zeigt den vollständigen
+   \t  \t\d(Pfadnamen^Pfad) des ausgewählten Share-Objekts
+   \t  \tan.
+
+   \to \tLokaler Ordner, mit dem es verbunden werden soll: - Zeigt den
+   \t  \tNamen des Ordners in Ihrem System an, in dem das Share-Objekt
+   \t  \tresidiert.
+
+   \to \tShare-Objekt verbinden als: - Wenn "Nur lesen" gewählt
+   \t  \twurde, können Sie die Dateien und Ordner des gemeinsam
+   \t  \tgenutzten Objekts zwar verwenden, aber nicht ändern. Wenn
+   \t  \t"Lesen und Schreiben" gewählt wurde, haben Sie vollen Zugriff
+   \t  \tauf das Objekt und können es auch ändern (vorausgesetzt, das
+   \t  \tferne System macht es für "Lesen und Schreiben" bekannt).
+
+   \to \tVerbindung beim Start von NFS? - Wurde "Ja" gewählt, wird vom
+   \t  \tSystem eine Verbindung zum Share-Objekt jetzt
+   \t  \tund jedesmal beim Start von NFS hergestellt. Wurde "Nein"
+   \t  \tgewählt, wird die Verbindung beim Start von NFS nicht
+   \t  \tautomatisch hergestellt.
+
+   \to \tErweiterte Optionen: - Klicken Sie diese Option an, um die
+   \t  \tfolgenden zusätzlichen Optionen anzuzeigen:
+
+   \t  \t- \tVerbindung ist: - Zeigt an, ob es sich um eine
+  \t  \t  \t\k(lösbare oder feste Verbindung^^Lösbare und feste Verbindungen) handelt.
+
+  \t  \t- \tAndere Befehlszeilenoptionen - Zeigt
+  \t  \t  \tBefehlszeilenoptionen für den Befehl mount(1M) an.
+
+7.  Nehmen Sie die ggf. gewünschten Änderungen vor, und klicken Sie
+    "Anwenden" bzw., wenn Sie keine Änderungen vornehmen möchten,
+    "Abbrechen" an, und kehren Sie ins Fenster "Datei-Sharing-Setup:
+    Ferne Share-Objekte" zurück.
+
+
+Siehe auch:
+\s(Datei-Sharing verwenden^dhelp "pe.de" ownerhb "Ferne Dateien und Ordner gemeinsam benutzen" "Datei-Sharing verwenden" || helpLinkErr)
+\s{Einführung in die NFS-Verwaltung^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+
+^1^Eigenschaften von lokalen Share-Objekten ansehen und ändern
+^$130
+Eigenschaften von lokalen Share-Objekten ansehen und ändern
+
+Um Eigenschaften lokaler \d(Share-Objekt) anzuzeigen oder zu
+ändern, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Datei-Sharing". Das Fenster
+   \t"Datei-Sharing-Setup" erscheint (je nach der letzten gewählten
+   \tAnsicht für ferne oder lokale Share-Objekte).
+
+   \tWurde die Ansicht für lokale Share-Objekte gewählt, gehen Sie zu
+   \tSchritt 5. Andernfalls gehen Sie zum folgenden Schritt.
+
+4.\tKlicken Sie "Anzeigen=>Lokal" an. Das Fenster
+   \t"Datei-Sharing-Setup: Lokale Share-Objekte" erscheint.
+
+5. \tKlicken Sie das gewünschte Share-Objekt an.
+
+6.\tKlicken Sie "Share-Objekt=>Eigenschaften" an. Das
+   \tFenster "Datei-Sharing: Eigenschaften des Share-Objekts - Lokal" erscheint. Es enthält folgende
+   \tFelder:
+
+   \to \tOrdner/Datei für gemeinsame Benutzung: - Zeigt den Namen der
+   \t  \tDatei/des Ordners an, die/den Sie mit anderen Systemen
+   \t  \tgemeinsam benutzen.
+
+   \to \tSymbolname: - Zeigt den Namen des Symbols des gemeinsam
+   \t  \tbenutzten Objekts an.
+
+   \to \tBekanntmachen wenn NFS beginnt? - Wurde "Ja" gewählt, macht
+   \t  \tdas System das Share-Objekt beim Start von NFS
+   \t  \timmer bekannt. Wurde "Nein" gewählt, macht das System das
+   \t  \tObjekt beim Start von NFS nicht automatisch bekannt.
+
+   \to \tBekanntmachen für - Wurde "Nur lesen" gewählt, können andere
+   \t  \tSysteme das Share-Objekt benutzen, aber nicht
+   \t  \tändern. Wurde "Lesen und Schreiben" gewählt, haben andere
+   \t  \tSysteme vollen Zugriff auf die Objekte. Wurde "Kein Zugriff"
+   \t  \tgewählt, haben nur Systeme der Ausnahmeliste Zugriff auf das
+   \t  \tObjekt.
+
+   \to \tErweiterte Optionen - Klicken Sie diese Option an, um die
+   \t  \tfolgenden zusätzlichen Optionen anzuzeigen:
+
+  \t \t-\tAndere Befehlszeilenoptionen - Zeigt Befehlszeilenoptionen für
+  \t \t \tden Befehl share(1M) an. Schlagen Sie in der \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr)
+  \t \t \tInformationen über Befehlszeilenoptionen nach.
+
+7.\tNehmen Sie die ggf. gewünschten Änderungen vor, und klicken Sie
+   \t"Anwenden" an, oder klicken Sie "Abbrechen" an, um ohne Änderungen
+   \tins Fenster "Datei-Sharing-Setup: Lokale Share-Objekte" zurückzukehren.
+
+Siehe auch:
+\s(Datei-Sharing verwenden^dhelp "pe.de" ownerhb "Ferne Dateien und Ordner gemeinsam benutzen" "Datei-Sharing verwenden" || helpLinkErr)
+\s{Einführung in die NFS-Verwaltung^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Verbindung mit fernen Share-Objekten aufheben und diese löschen
+^$140
+Verbindung mit fernen Share-Objekten aufheben und diese löschen
+
+Um die Verbindung zu einem fernen \d(Share-Objekt) aufzuheben oder
+das Objekt zu löschen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Datei-Sharing". Das Fenster
+   \t"Datei-Sharing-Setup" erscheint (je nach letzter gewählter Ansicht
+   \tfür ferne oder lokale Share-Objekte).
+
+   \tHandelt es sich um das Fenster für ferne Share-Objekte, machen Sie
+   \tmit Schritt 5 weiter. Andernfalls gehen Sie zum nächsten Schritt.
+
+4.\tKlicken Sie "Anzeigen=>Fernzugriff" an. Das Fenster
+   \t"Datei-Sharing-Setup: Ferne Share-Objekte"
+   \terscheint.
+
+5.\tKlicken Sie das Share-Objekt an, zu dem Sie die
+   \tVerbindung aufheben oder das sie löschen möchten.
+
+6.\tNun haben Sie folgende Möglichkeiten:
+
+   \to \tVerbindung aufheben -  Klicken Sie "Aktionen=>Verbindung
+   \t  \taufheben" an.
+
+   \t  \tDie Verbindung zum gewählten Share-Objekt besteht nicht mehr. Das
+   \t  \theißt, daß Sie die mit dem Share-Objekt
+   \t  \tverbundenen Dateien nicht mehr benutzen können. Das Share-Objekt
+   \t  \tbleibt jedoch in diesem Fenster und kann beim nächsten Start
+   \t  \tvon NFS wieder verbunden werden.
+
+   \to \tLöschen - Klicken Sie "Share-Objekt=>Löschen"
+   \t  \tan.
+
+   \t  \tEin \k(Bestätigungsfenster^^Fenster Löschbestätigung) wird aufgeklappt. Klicken Sie darin
+   \t  \t"Löschen" an, wenn Sie die Bekanntmachung für das gemeinsam
+   \t  \tbenutzte Objekt aufheben und es permanent aus Ihrem System
+   \t  \tentfernen möchten. Klicken Sie "Abbrechen" an, wenn Sie das
+   \t  \tObjekt nicht auf Dauer löschen möchten.
+
+Siehe auch:
+\s(Datei-Sharing verwenden^dhelp "pe.de" ownerhb "Ferne Dateien und Ordner gemeinsam benutzen" "Datei-Sharing verwenden" || helpLinkErr)
+\s{Einführung in die NFS-Verwaltung^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Bekanntmachung von lokalen Share-Objekten aufheben und diese löschen
+^$150
+Bekanntmachung von lokalen Share-Objekten aufheben und diese löschen
+
+Hinweis: Ehe Sie die Bekanntmachung für ein lokales
+\d(Share-Objekt) aufheben oder es löschen, vergewissern Sie sich,
+daß es nicht verwendet wird. Im \k(Fenster "Datei-Sharing: Status"^^Fenster Datei-Sharing: Status) werden
+alle fernen Systeme angezeigt, die mit dem Objekt verbunden sind.
+Verwendet ein fernes System das Share-Objekt, setzen Sie
+sich mit dem Verwalter oder Eigentümer des Systems in Verbindung, um
+sicherzustellen, daß die Aufheben der Verbindung in Ordnung geht.
+
+Um die Verbindung zu einem lokalen Share-Objekt aufzulösen oder es zu
+löschen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Datei-Sharing". Das Fenster
+   \t"Datei-Sharing-Setup" erscheint (je nach letzter gewählter Ansicht
+   \tfür ferne oder lokale Share-Objekte).
+
+   \tWurde die Ansicht für lokale Share-Objekte gewählt, gehen Sie zu
+   \tSchritt 5. Andernfalls gehen Sie zum folgenden Schritt.
+
+4.\tKlicken Sie "Anzeigen=>Lokal" an. Das Fenster
+  \t"Datei-Sharing-Setup: Ferne Share-Objekte" erscheint.
+
+5.\tKlicken Sie das bekanntgemachte Share-Objekt an, für das Sie die
+   \tBekanntmachung aufheben oder das Sie löschen möchten.
+
+6.\tNun haben Sie folgende Möglichkeiten:
+
+   \to \tBekanntmachung aufheben - Klicken Sie
+   \t  \t"Aktionen=>Bekanntmachung aufheben" an.
+
+   \t  \tDas ausgewählte Share-Objekt wird nicht länger bekanntgemacht.
+  \t  \tFerne Systeme können auf die Datei daher nicht mehr zugreifen.
+  \t  \tDas Objekt bleibt jedoch im Fenster und kann beim nächsten
+  \t  \tStart von NFS wieder bekanntgemacht werden.
+
+   \to \tLöschen - Klicken Sie "Share-Objekt=>Löschen"
+   \t  \tan.
+
+   \t  \tEin \k(Bestätigungsfenster^^Fenster Löschbestätigung) wird aufgeklappt. Klicken Sie darin
+   \t  \t"Löschen" an, wenn Sie die Bekanntmachung für das Objekt
+   \t  \taufheben und es auf Dauer aus dem Fenster "Datei-Sharing"
+   \t  \tentfernen wollen. Klicken Sie "Abbrechen" an, wenn Sie das
+   \t  \tFenster nicht dauerhaft löschen möchten.
+
+Siehe auch:
+\s(Datei-Sharing verwenden^dhelp "pe.de" ownerhb "Ferne Dateien und Ordner gemeinsam benutzen" "Datei-Sharing verwenden" || helpLinkErr)
+\s{Einführung in die NFS-Verwaltung^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Fenster Löschbestätigung
+^$160
+Fenster Löschbestätigung
+
+Stellen Sie sicher, daß Sie das Share-Objekt wirklich
+auf Dauer aus dem Fenster "Datei-Sharing" entfernen wollen. Beachten
+Sie, daß das System die mit dem Objekt verbundenen Dateien nicht
+entfernt. Es entfällt lediglich die Möglichkeit für ferne Systeme, auf
+die Dateien zuzugreifen.
+
+Wenn Sie das Share-Objekt nicht entfernen möchten,
+klicken Sie "Abbrechen" an. In diesem Fall wird nichts gelöscht.
+Andernfalls klicken Sie "Löschen" an, um das Objekt zu entfernen.
+
+
+

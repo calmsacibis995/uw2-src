@@ -1,0 +1,764 @@
+#pragma ident	"@(#)S3:S3/s3_opt.gen	1.12"
+
+#	NAME
+#
+#		s3_opt.gen : option definition file for the s3
+#						   chipset library.
+#
+#	SYNOPSIS
+#
+#		genoptions -p s3_options_ -i s3_opt.gen -o\
+#				s3_options.c
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#		${std_group_root}/lib/option.template : template for C code.
+#
+#	SEE ALSO
+#
+#		genoptions : script to generate the option parser from the 
+#					 definition file.
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	AUTHORS
+#
+#	HISTORY
+#
+#		1.0.0  First coding.
+
+#
+#		SDD CONFIGURATION
+#
+#
+
+#
+#	Version number
+#
+@option si-interface-version
+	@option-type	unique-enumeration
+	@valid-range	1-0 1-1 auto-configure
+	@default		auto-configure
+	@description	The version number that the SDD returns to the SI \
+					server.
+
+@option verbose-startup
+	@option-type	numeric
+	@valid-range	0..1
+	@default		0
+	@description	Print messages about chipset configuration if\
+					set to 1.
+	
+#
+# 	CURSOR RELATED.
+#
+
+# 	Cursor types.
+@option	cursor-type
+	@option-type	unique-enumeration
+	@valid-range	hardware-cursor software-cursor 
+	@default		hardware-cursor
+	@description	Cursor implementation types.
+
+
+#	Downloadable cursors.
+@option cursor-max-size
+	@option-type	string
+	@description	Maximum size of a cursor in WxH.
+
+#	Downloadable cursors.
+@option number-of-downloadable-cursors
+	@option-type	numeric
+	@valid-range	0..1
+	@default		1
+	@description	Number of downloaded hardware cursors.  `0' means\
+					use internal default.
+#
+# 	FONT RELATED
+#
+
+#	Fonts.
+@option	number-of-downloadable-fonts
+	@option-type	numeric
+	@valid-range	0..
+	@default		17
+	@description	Number of downloaded fonts. `0' means to turn off\
+					font handling in the SDD.
+
+#	The number of glyphs in a font suitable for downloading.
+@option max-number-of-glyphs-in-downloadable-font
+	@option-type	numeric
+	@valid-range	0..
+	@default		256
+	@description	The maximum number of glyphs in a font suitable\
+					for downloading.  0 means ignore this criterion.
+
+#	Criterion to decide if we should pre-cache all the glyphs in
+#   offscreen memory, or try to cache on a glyph by glyph basis.
+@option max-fully-cacheable-font-size
+	@option-type	numeric
+	@valid-range	0..
+	@default		1
+	@description	If the total size of the font's glyphs is below\
+					this value, we will download all its glyphs into\
+					offscreen memory at font download time.  If the\
+					size exceeds this value, caching of glyphs will\
+					occur as and when the glyph is first used,\
+					provided there is sufficient offscreen space.
+
+# 	VT switch size
+@option vt-switch-save-lines
+	@option-type	numeric
+	@valid-range	0..4096
+	@default		4096
+	@description	Number of lines of screen to save. Exact values would \
+					save the total memory occupied by the x server.
+
+#	Graphics state
+@option number-of-graphics-states
+	@option-type	numeric
+	@valid-range	0..
+	@default		4
+	@description	Number of SDD graphics states. `0' means use\
+					internal default.
+	
+#	Strategy decisions
+@option	tile-best-size
+	@option-type	string
+	@default		"64x64"
+	@description	Best tile size as seen by the Si code
+
+@option stipple-best-size
+	@option-type	string
+	@default		"64x64"
+	@description	Best stipple size as seen by si code.
+
+#	Controlling caching of offscreen memory parameters.
+@option	offscreen-tile-padded-width
+	@option-type	numeric
+	@valid-range	1..
+	@default		128
+	@description	Pad small tiles to this value in offscreen memory.\
+					Should be a power of two.
+
+@option	offscreen-tile-padded-height
+	@option-type	numeric
+	@valid-range	1..
+	@default		32
+	@description	Pad small tiles to this value in offscreen memory.\
+					Should be a power of two.
+
+@option	offscreen-stipple-padded-width
+	@option-type	numeric
+	@valid-range	1..
+	@default		128
+	@description	Pad small stipples to this value in offscreen memory.\
+					Should be a power of two.
+
+@option	offscreen-stipple-padded-height
+	@option-type	numeric
+	@valid-range	1..
+	@default		32
+	@description	Pad small stipples to this value in offscreen memory.\
+
+@option maximum-offscreen-downloadable-bitmap-width
+	@option-type	numeric
+	@valid-range	1..
+	@default		256
+	@description	Do not download tiles/stipples of more than this width\
+					into offscreen memory
+
+@option maximum-offscreen-downloadable-bitmap-height
+	@option-type	numeric
+	@valid-range	1..
+	@default		256
+	@description	Do not download tiles/stipples of more than this height\
+					into offscreen memory
+
+@option	bitmap-reduction-threshold
+	@option-type	numeric
+	@valid-range	1..
+	@default		32
+	@description	Stipples/tiles  with width/height more then this value\
+					will not be considered for reduction to 8x8
+
+@option glyph-cache-size
+	@option-type	string
+	@default		"64x64"
+	@description	Cache glyphs smaller than this size in offscreen memory
+
+@option arc-cache-size
+	@option-type	numeric
+	@valid-range	0..
+	@default		16
+	@description	The number of arcs to cache in the display library
+					at a given time. `0' means switch off arc caching.
+#
+# 		CRTC CONFIGURATION
+#
+#
+#	CRT start offset
+@option	crtc-start-offset
+	@option-type	numeric
+	@valid-range	0..
+	@default		0
+	@description	Offset of start of display memory.
+
+#	CRTC parameters
+@option	crtc-parameters
+	@option-type	string
+	@description	CRTC parameters in hexadecimal :\
+			h-total h-disp-end h-blank-start h-blank-end h-sync-start \
+			h-sync-end v-total v-retrace-start v-retrace-end v-display-end \
+			v-blank-start v-blank-end preset-row-scan max-scan-line \
+			logical-screen-offset clock-frequency interlace_retrace_start \
+			crtc_mode-control line-compare num-screen-pages physical_width\
+			physical_height
+
+#	MODEDB entry
+@option	modedb-string
+	@option-type	string
+	@description	ModeDB entry in the following format: \
+					\"Clock HorizontalTiming VerticalTiming Flags\". \
+					Clock is in MHz.\
+					The Timing field consists of Display, SyncStart,\
+						SyncEnd and Total timings in that order.\
+					Flags field may or may not be present. \
+					The two options modedb-string and crtc-parameters\
+					are mutually exclusive. However, if both are present,\
+					this option takes higher priority. Depths of 4bpp\
+					and 8bpp only are supported. Supported video memory\
+					sizes are 1, 2, 3 and 4MB.
+
+#
+# End Horizontal blank register, display skew.
+#
+@option display-skew
+	@option-type	numeric
+	@valid-range	0..3
+	@default		0
+	@description	Amount of display enable skew. Bits 5,6 in CR3
+
+#
+# End Horizontal sync register, horixontal skew.
+#
+@option horizontal-skew
+	@option-type	numeric
+	@valid-range	0..3
+	@default		0
+	@description	Amount of horizontal skew. Bits 5,6 in CR5
+
+#
+#		MONITOR CONFIGURATION
+#
+#	Monitor sync type
+@option	monitor-sync-type
+	@option-type 	unique-enumeration
+	@valid-range	composite-sync sync-on-green separate-sync
+	@default		composite-sync
+	@description	The monitor's SYNC type.
+
+#	Vertical Sync Pulse Polarity.
+@option	vsync-polarity
+	@option-type	unique-enumeration
+	@valid-range	positive negative default
+	@default		default
+	@description	The polarity of the v-sync pulse. Actually monitor\
+					dependent. But most monitors could handle either case.
+
+#	Horizontal Sync Pulse Polarity.
+@option	hsync-polarity
+	@option-type	unique-enumeration
+	@valid-range	positive negative default
+	@default		default
+	@description	The polarity of the h-sync pulse. Actually monitor\
+					dependent. But most monitors could handle either case.
+
+#
+#		OFF SCREEN MEMORY MANAGER CONFIGURATION
+#
+# 	Off-Screen Memory Manager Options.
+@option	omm-named-allocation-list
+	@option-type	string
+	@default		""
+	@description	Named allocation requests for the offscreen memory\
+					manager.
+
+@option omm-horizontal-constraint
+	@option-type	numeric
+	@valid-range	0..
+	@default		0
+	@description	The widths of all offscreen memory requests are\
+					rounded up to this value.  O means use an\
+					internal heuristic.
+
+@option omm-vertical-constraint
+	@option-type 	numeric
+	@valid-range	0..
+	@default		0
+	@description	The heights of all offscreen memory requests are\
+                    rounded up to this value. 0 implies internal default.
+
+@option omm-neighbour-list-increment
+    @option-type    numeric
+    @valid-range    0..
+    @default        0
+    @description    Number of neighbour list nodes allocated at one time.\
+                    Neighbour lists are managed during every allocate and\
+                    free operation. 0 implies an internal default.
+
+@option omm-full-coalesce-watermark
+    @option-type    numeric
+    @valid-range    0..
+    @default        2
+    @description    If the number of currently allocated blocks falls below\
+                    this value the omm will attempt a full coalesion operation.\
+                    Remember that coalesion is an expensive operation.
+
+@option omm-hash-list-size
+    @option-type    numeric
+    @valid-range    0..
+    @default        0
+    @description    Size of the hash table of omm free blocks. 0 implies\
+                    an internal default.
+
+
+#
+#	DIRECT HARDWARE REGISTER OVERRIDES
+#
+@option register-values-string
+	@option-type 	string
+	@default		""
+	@description	This option provides a general way of programming \
+					crtc registers of the chipset. Format of the string\
+					is as follows \
+					\"index mask value rbits, index mask value rbits , ...\"\
+					Each 4-tuple is comma seperated. No range value checking\
+					is done. The meanings of index,mask,value,rbits are :\
+					index - register index to program ( like crtc registers)\
+					mask,value  - value bits corresponding to a 1 in the mask\
+								  will be programmed.\
+					rbits	- bit positions with a 1 in rbits are treated as\
+							  reserved bits. ( a 0 will be written).
+#
+#  System control registers. System Config CR40.
+#
+@option wait-state-control
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		yes
+	@description	Wait state Control. yes = 1 waitstate, no = no waitstate
+
+@option enable-write-posting
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	Enable fast write buffer, write posting into the fifo.
+
+@option decode-wait-control
+	@option-type	numeric
+	@valid-range	0..3
+	@default		3
+	@description	Decode Wait Control for 386/486 Local buses.
+
+@option read-wait-control
+	@option-type	numeric
+	@valid-range	0..3
+	@default		3
+	@description	This option on a 386/486 local bus denotes read wait\
+					control. On an ISA bus controls enabling of the NOWS-bar\
+					signal. Any value other than 0 on an isa bus will \
+					disable nows-bar signal.
+#
+# Extended system control 2 register. CR51
+#
+@option enable-eprom-write 
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	Enable/diable flash memory write control to the BIOS \
+					ROM address.
+
+@option enable-split-transfers 
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		yes
+	@description	Split transfers enabled/disabled
+
+#
+# Extended memory control 1. CR53
+#
+@option enable-nibble-swap
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	Swap nibbles in each byte of a linear memory address \
+					read or write operation.
+
+@option enable-nibble-write-control
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	enable nibble write control for the graphics engine.
+
+@option vram-addressing-mode
+	@option-type	unique-enumeration
+	@valid-range	parallel serial
+	@default		serial
+	@description	Parallel or serial vram addressing mode.
+
+#
+# Extended memory control 2.
+#
+@option rac-extra-prefetch
+	@option-type	numeric
+	@valid-range	1..7
+	@default		0
+	@description	Read ahead cache extra prefetch control.Only meaningful\
+					values are 1 3 and 7.
+
+#
+# Linear address window control register. CR58
+#
+
+@option limit-write-posting
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	specifies if write-post entry depth will be limited\
+					to avoid isa bus time out due to wait cycle limit. \
+					Choosing no denotes normal write-post entry control (9)
+
+@option enable-read-ahead-cache
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	whether to enable or disable the read ahead cache
+				
+@option latch-isa-addr
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description 	whether to latch the isa address on every cycle , \
+					choosing no specifies unlatch isa address on every cycle.
+
+#@option linear-addr-window-size
+#	@option-type	numeric
+#	@valid-range	0..
+#	@default		64
+#	@description 	linear address window size in kbytes. Valid values are\
+#					64,1024,2048
+
+@option serial-access-mode-control
+	@option-type	unique-enumeration
+	@valid-range	512 256
+	@default		512
+	@description 	Serial Access Mode 256 words control.
+
+@option ras-m-clk
+	@option-type	unique-enumeration
+	@valid-range	7 6
+	@default		7
+	@description 	RAS MCLK cycles for random read/write cycle time
+
+#
+# Type of video memory and enhanced registers access. 
+#
+@option	memory-and-register-access-mode
+	@option-type	multiple-enumeration
+	@valid-range	io-access mmio-read-enhanced-regs mmio-write-enhanced-regs\
+					mmio-read-pixtrans mmio-write-pixtrans lfb-access
+	@default		io-access
+	@description	Specification for the type of memory and register access\
+					on the S3 card. Recemmended not mix mmio and lfb. \
+					mmio-read- options are not supported by the 801/928 till \
+					the E steps.
+
+#
+#		LINEAR FRAME BUFFER CONFIGURATION
+#
+@option	linear-frame-buffer-size
+	@option-type	numeric
+	@valid-range	0..4
+	@default		0
+	@description	Size in MB of linear frame buffer aperture.
+ 
+@option use-save-unders
+	@option-type	unique-enumeration
+	@valid-range	no yes
+	@default		no
+	@description	Implement save-unders in the SDD if `yes'.
+
+#
+#		BOARD CONFIGURATION
+#
+
+# 	Chipset name : use this to override the auto-detection scheme.
+@option	chipset-name
+	@option-type	unique-enumeration
+	@valid-range	86C801 86C911 86C924 86C928 86C928-PCI auto-detect
+	@default		auto-detect
+	@description	The type of accelarator.
+
+# 	Chipset stepping number : use this to override the auto-detection scheme.
+@option	stepping-number
+	@option-type	unique-enumeration
+	@valid-range	a-step b-step c-step d-step e-step g-step auto-detect
+	@default		auto-detect
+	@description	The stepping number on the chipset.
+
+#	Clock chip.
+@option	clock-chip-name
+	@option-type	unique-enumeration
+	@valid-range	approximate-values chrontel-ch9204b chrontel-ch9204c\
+					icd-2061 icd-2061a av9194-56 av9194-07 av9194-11 \
+					chrontel-ch9294g ti-3025 unknown
+	@default		unknown
+	@description	The type of clock chip on the video board.  approximate\
+					values refer to the list given in the programmers guide.
+
+#	S3 System Bus width
+@option	s3-bus-width
+	@option-type	unique-enumeration
+	@valid-range	16-bit 8-bit 
+	@default		16-bit
+	@description	The bus width as seen by the s3 chipset.(memory/system)
+
+#  Read modify writes
+@option fast-rmw
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	whether or not to permit a fast read modify write cycle.
+
+# Alternate address for IO ports.
+@option	enable-alternate-ioport-address
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	This option enables the user to choose the extended \
+					io ports to be mapped at x2e8 ^ 3a0 instead of x2e8h.\
+					This would help in overcoming ioaddress space clashes.
+
+#	Graphics engine loop timeout count
+@option	graphics-engine-loop-timeout-count
+	@option-type	numeric
+	@valid-range	1..
+	@default		200000
+	@description	Number of cycles to wait before signalling an error.
+
+#	Graphics engine micro delay count
+@option	graphics-engine-micro-delay-count
+	@option-type	numeric
+	@valid-range	1..
+	@default		40
+	@description	Number of cycles spin-wait between register accesses.
+
+#	Graphics engine micro delay count
+@option	crtc-sync-timeout-count
+	@option-type	numeric
+	@valid-range	1..
+	@default		100000
+	@description	Number of cycles to wait for sync pulse to occour
+
+@option	dac-name
+	@option-type	unique-enumeration
+	@valid-range	att20c491 sc15025 sc11481-6-2-3 sc11485-7 sc11484-8 \
+					sc11489 sc11471-6 sc11478 imsg171 imsg176  imsg178 \
+					bt471-6 bt478 Bt485KPJ110 Bt485KPJ135 w82c478 w82c476 \
+					w82c490 tr9c1710 att20c490 ss2410 ti3020 ti3025 unknown-dac
+	@default		unknown-dac
+	@description	The type of DAC on board.
+
+@option dac-max-frequency
+	@option-type 	numeric
+	@valid-range	0..
+	@default		0
+	@description	Every dac has a maximum frequency to which it can operate\
+					without damaging itself/card/monitor. This option allows\
+					overriding of the builtin default value for the dac.\
+					A value of 0 (default) will use the builtin defaults.\
+					UTMOST CAUTION SHOULD BE TAKEN WHILE CHANGING THIS OPTION.\
+					Wrong use can damage your system. The value is in Hz.
+
+@option dac-external-sid-threshold
+	@option-type	numeric
+	@valid-range	0..
+	@default		0
+	@description	For dacs that have support for external serial input \
+					like the BT485 this specifies the threshold for enabling\
+					this mode as opposed to the standard mode. A value of 0\
+					(default) will use the builtin defaults.
+
+@option clock-doubler-threshold
+	@option-type	numeric
+	@valid-range	0..
+	@default		0
+	@description	This option provides a way of specifying the threshold \
+					greater than which the clock doubler will be enabled\
+					for dacs that have an internal clock doubler. A  value\
+					of 0 indicates that builtin default threshold values\
+					have to be used.
+
+@option use-clock-doubler
+	@option-type	unique-enumeration
+	@valid-range	no auto-configure
+	@default		auto-configure
+	@description	Controls whether to use the clock doubler, if any.\
+					If a clock doubler is present and the clock frequency\
+					is more than the thereshold specified, the clock doubler\
+					will be used by default.
+
+@option use-dac-external-sid-mode
+	@option-type	unique-enumeration
+	@valid-range	no auto-configure
+	@default		auto-configure
+	@description	Controls whether to use the dac's external sid mode\
+					capability, if any. If the dac has this capability \
+					and the clock frequency used exceeds the thereshold\
+					specified, this capability will be used by default.
+
+
+#	DAC Access delay count
+@option	dac-access-delay-count
+	@option-type	numeric
+	@valid-range	1..
+	@default		1000
+	@description	Number of cycles to wait between dac accesses.
+
+#	DAC RGB width
+@option	dac-rgb-width
+	@option-type	unique-enumeration
+	@valid-range	6 8 default
+	@default		6
+	@description	Number of significant bits per R/G/B output.\
+					`default' will use the industry standard of 6.
+
+#	DAC 24 bit option
+@option	dac-24-bit-color-mode
+	@option-type	unique-enumeration
+	@valid-range	rgba abgr
+	@default		rgba
+	@description	Order of R/G/B pixels in a 32 bit word.
+
+#	DAC 16 bit options
+@option dac-16-bit-color-mode
+	@option-type	unique-enumeration
+	@valid-range	555 565 655 664
+	@default		555
+	@description	Bits for R/G/B in 16 bit mode.
+
+#
+#		VISUAL HANDLING
+#
+#	Visuals supported by the Diamond stealth pro board
+#	As of now we have only one visual per screen.
+@option	screen-8-4-bit-visual-list
+	@option-type	multiple-enumeration
+	@valid-range	static-gray gray-scale static-color pseudo-color\
+					true-color direct-color
+    @description    Supported display visuals in addition to the\
+                    screen default visual specified in the server\
+                    config file.  Caveat : the core server does not\
+                    seem to handle multiple visuals per screen yet ...
+
+#   A description file for static colormaps
+@option static-colormap-description-file
+	@option-type    string
+
+#	Graphics engine fifo blocking factor.
+@option	graphics-engine-fifo-blocking-factor
+	@option-type	numeric
+	@valid-range	1..8
+	@default		8
+	@description	Number of fifo entries to wait for by default.
+
+
+#
+#	CONTROLLING DRAWING CODE
+#
+@option rectfill-options
+	@option-type	multiple-enumeration
+	@valid-range	use-solid-fill-rect use-tile-fill-rect\
+					use-stipple-fill-rect use-ge-patfill\
+					use-offscreen-memory reduce-stipples reduce-tiles none
+	@default		use-solid-fill-rect use-tile-fill-rect \
+					use-stipple-fill-rect use-ge-patfill use-offscreen-memory\
+					reduce-stipples reduce-tiles
+	@description	Controlling fill functionality.
+
+#	Controlling drawing code
+@option bitblt-options
+	@option-type	multiple-enumeration
+	@valid-range	use-ss-bitblt use-ms-bitblt \
+					use-sm-bitblt use-ms-stplblt none
+	@default		use-ms-bitblt use-sm-bitblt\
+					use-ss-bitblt use-ms-stplblt
+	@description	Controlling fill functionality.
+
+#	Controlling drawing code
+@option linedraw-options
+	@option-type	multiple-enumeration
+	@valid-range	use-line-draw use-line-rectangles \
+					use-segment-draw use-dashed-line none
+	@default		use-line-draw use-segment-draw use-line-rectangles \
+					use-dashed-line
+	@description	Controlling line draw functionality.
+
+#	Spans fill control.
+@option spansfill-options
+	@option-type	multiple-enumeration
+	@valid-range	use-solid-fill use-stipple-fill\
+					use-tile-fill  use-ge-patfill \
+					use-offscreen-memory none
+	@default	 	use-solid-fill use-tile-fill use-stipple-fill
+	@description	Controlling spans fill functionality.
+
+#	Point draw control
+@option	pointdraw-options
+	@option-type	multiple-enumeration
+	@valid-range	use-plot-point none
+	@default		use-plot-point
+	@description	Controlling plot point functionality.
+
+@option fontdraw-options
+	@option-type 	multiple-enumeration
+	@valid-range	draw-non-terminal-fonts draw-terminal-fonts\
+					use-offscreen-memory  assemble-glyphs none
+	@default	 	draw-non-terminal-fonts draw-terminal-fonts \
+					use-offscreen-memory	assemble-glyphs
+	@description	Controlling the kinds of fonts the display library\
+					should handle, and whether we should attempt to\
+					download fonts into offscreen memory.
+
+@option override-ss-stippling
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		yes
+	@description	Some 928 cards seem to have some problems with screen\
+					to screen stippling with the rop set to GXinvert or \
+					Gxclear/set. This option enables this functionality to \
+					be overridden with s/w methods ( though slow).
+
+#	Arc drawing control
+@option	arcdraw-options
+	@option-type	multiple-enumeration
+	@valid-range	draw-one-bit-arcs
+	@default		draw-one-bit-arcs 
+	@description	Controls the drawing operation for arcs.
+
+# 	Meta options
+@option	options-file
+	@option-type	option-file
+
+@option	options-variable
+	@option-type	option-environment
+

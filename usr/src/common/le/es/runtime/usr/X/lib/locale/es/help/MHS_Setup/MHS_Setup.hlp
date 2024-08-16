@@ -1,0 +1,184 @@
+#ident\t"@(#)dthelp:Admin.Tools/MHS_Setup.hlp   1.12"
+^*version^1
+^*title^Configuración de MHS
+^:Config_MHS
+^*width^70
+^+DesktopMgr/help.defs
+^?Configuración del Servicio de gestión de mensajes (MHS)
+^0^Configuración de MHS
+^$10
+Configuración de MHS
+
+Use Configuración de MHS (servicio de gestión de mensajes) para
+configurar el extremo UnixWare de la gateway entre MHS y el correo
+UnixWare.
+
+Deberá tener \k(permiso para administrar la gateway MHS^dtadmin/user.hlp^Comprensión de los permisos) para poder
+usar Configuración de MHS.
+
+Antes de configurar MHS, vea lo siguiente:
+
+\to\t\k(Determinación de si es necesario configurar un gateway MHS)
+\to\t\k(Configuración del gateway MHS)
+
+Véase también:
+\s(Configuración de MHS^dhelp "pe.es" ownerhb "Configuración y definición del correo" "Configuración de MHS" || helpLinkErr)
+
+^1^Determinación de si es necesario configurar un gateway MHS
+^$20
+Determinación de si es necesario configurar un gateway MHS
+
+Antes de que decida configurar un gateway MHS, necesita comprender
+lo que es y cuándo necesita utilizarlo.
+
+Las siguientes preguntas pueden ayudarle a determinar si necesita o no
+configurar un gateway:
+
+\to\t¿Qué es un gateway MHS?
+
+\t \tEl gateway UnixWare-MHS es un conjunto de programas que permiten
+\t \tal Correo de UnixWare enviar y recibir mensajes desde un sistema
+\t \tde correo del Servicio de gestión de mensajes (MHS). Para ello, el
+\t \tgateway traduce los datos entre el formato de correo RFC-822 de
+\t \tInternet y el de SMF-71 de MHS. Coloca los mensajes SMF-71 en la cola
+\t \tde correo de salida de MHS y recupera los mensajes SMF-71 destinados a
+\t \tUnixWare desde una cola de correo de entrada.
+
+\to\t¿Cuándo necesita utilizar un gateway MHS?
+
+\t \tDebe utilizar el gateway cuando necesite intercambiar mensajes entre
+\t \tel sistema de correo de UnixWare y uno del MHS.
+
+\to\t¿Debe configurar un gateway MHS en cada sistema UnixWare de sus
+\t \tinstalaciones?
+
+\t \tNo. Sólo necesita un gateway MHS por instalación.
+
+\to\t¿Necesita ejecutar Configurar MHS en cada Escritorio UnixWare?
+
+\t \tNo. Use sólo el programa Configurar MHS en el sistema que vaya a
+\t \ttconfigurar como gateway MHS. Use la variable Smarter Host en
+\t \t\k(Configurar Correo^Mail_Setup/Mail_Setup.hlp^Configuración de correo) para configurar todos los demás sistemas a fin de
+\t \tque puedan enviar correo limitado al MHS al sistema gateway.
+
+\to\t¿Qué usuario se debe usar para el nombre de entrada requerido 
+\t \tpor Configuración de MHS?
+
+\t \tDebe utilizar el mismo nombre de entrada en el sistema que usa
+\t \tMHS para transferir correo entre hosts de MHS. Consulte con la persona 
+\t \tque administra MHS para conocer el nombre de entrada en el sistema y la contraseña correctas.
+
+^1^Configuración del gateway MHS
+^$30
+Configuración del gateway MHS
+
+Un gateway MHS, configurado con un servidor de archivos NetWare,
+functiona como un agente de transferencia para los mensajes de entrada
+y salida a través de NetWare y UnixWare.
+
+Cuando el correo llega a una red MHS, el host de MHS dirige
+automáticamente el correo a una caja de buzón (un directorio gateway)
+de un servidor. UnixWare lo recoge del servidor, lo traduce del
+formato de correo MHS SMF-71 al de \k(Internet^dtadmin/inet.hlp^Configuración de Internet) RFC-822 y lo envía al
+programa de correo UnixWare (/bin/mail) para su entrega al
+destinatario final.
+
+Para configurar un gateway MHS, debe hacer lo siguiente:
+
+\to\t\k(Configurar un sistema NetWare para el gateway MHS^^Configuración de la parte NetWare del gateway MHS)
+\to\t\k(Configurar un sistema UnixWare para el gateway MHS^^Configuración de la parte UnixWare del gateway MHS)
+
+^2^Configuración de la parte NetWare del gateway MHS
+^$40
+Configuración de la parte NetWare del gateway MHS
+
+Para configurar la parte de NetWare de un gateway MHS, haga lo
+siguiente:
+
+\to\tAsegúrese de que los NLMs adecuados están instalados en el
+\t \tservidor de archivos NetWare (vea \k(Configurar NetWare^NetWare_Setup/NetWare_Setup.hlp^Configuración de NetWare)).
+
+\to\tCree un nuevo gateway en el host MHS (utilice un gateway de la
+\t \tversión 71 o SMF71, según sea el software del MHS).
+
+\to\tConfigure las vías de accesi de MHS para los usuarios de correo UnixWare
+\t \tque van a recibir correo MHS a través del gateway.
+
+^2^Configuración de la parte UnixWare del gateway MHS
+^$50
+Configuración de la parte UnixWare del gateway MHS
+
+Para configurar la parte de UnixWare de un gateway MHS de modo que
+pueda enviar y recibir correo MHS, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  Aparecerá la ventana "Carpeta:
+  \tHerramientas_de_Admin".
+
+2.\tPulse dos veces en Configurar_MHS y aparecerá la ventana
+  \t"Configuración de correo MHS".
+
+3.\tDefina las variables deseadas (consulte con el administrador de
+  \tredes o de NetWare si necesita información adicional sobre
+  \tcualquiera de las variables).
+
+  \tPuede utilizar la tecla <Tab> para desplazarse de un campo a otro.
+
+  \tNota: Al pulsar en una etiqueta de variable, aparecerá información
+  \tdetallada sobre dicha variable en un cuadro de descripción.
+
+4.\tPulse en OK para aplicar los parámetros.
+
+  \tNota: También puede pulsar en Redefinir para recuperar los
+  \tparámetros anteriores o en Cancelar para cerrar la ventana
+  \tsin hacer ningún cambio.
+
+Vea también:
+\k(Configuración de Correo UnixWare^Mail_Setup/Mail_Setup.hlp^Configuración de correo)
+\k(Uso del correo MHS)
+
+^1^Uso del correo MHS
+^$60
+Uso del correo MHS
+
+A continuación hay unos ejemplos de direcciones que puede usar
+cuando envíe correo a través de un gateway MHS:
+
+\to\tPara enviar correo desde MHS a UnixWare, puede utilizar una de las
+\t \topciones siguientes:
+
+\t \t-\t<usuario>@<gateway>
+
+\t \t-\t<usuario>@<grupo de trabajo>
+
+\t \t-\t<xxx>@<gateway> {<dirección rfc-822>}
+
+ \t \tDonde xxx es un emplazamiento conforme con el estándar SMF-71
+\t \t(único entre las demás direcciones de un mensaje) y la dirección
+\t \trfc-822 representa la dirección del usuario que se encuentra en el
+\t \totro lado del gateway.
+
+\to\tPara enviar correo a MHS desde un sistema UnixWare que no tenga
+\t \tun nombre de dominio, puede hacer lo siguiente:
+
+\t \t-\t<usuario>[.<apl>]@[<grupo_trabajo>.]<gateway_internet>
+
+\t \tDonde apl y grupo de trabajo son opcionales. Grupo de trabajo es
+\t \tel grupo de trabajo por defecto del servidor, apl es la aplicación
+\t \tpor defecto del usuario y gateway internet es el valor del campo
+\t \tde gateway internet introducido en Configurar MHS.
+
+\to\tPara enviar correo a MHS desde un sistema UnixWare que no tiene
+\t \tnombre de dominio, puede hacer lo siguiente:
+
+ \t \to\t<usuario>[.<apl>]@[<grupo_trabajo.]<gateway_internet>
+ \t \t \t[<dominio>]
+
+\t \tDonde apl, grupo de trabajo y dominio son opcionales. Grupo de
+\t \ttrabajo es el grupo de trabajo por defecto del servidor MHS, apl
+\t \tes la aplicación por defecto del usuario, gateway internet es el
+\t \tvalor del campo de gateway internet introducido en Configurar MHS
+\t \ty dominio es el dominio por defecto del host UnixWare.
+

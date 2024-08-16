@@ -1,0 +1,104 @@
+#ident	"@(#)pkg-nm:prototype	1.10"
+#
+#	Network Management
+#
+
+i pkginfo
+i depend
+i request
+i preinstall
+i postinstall
+i preremove
+i copyright
+#
+# Directories
+#
+d base /etc ? ? ? ? ? ?
+d base /etc/init.d ? ? ? ? ? ?
+d base /etc/rc0.d ? ? ? ? ? ?
+d base /etc/rc1.d ? ? ? ? ? ?
+d base /etc/rc2.d ? ? ? ? ? ?
+d base /etc/netmgt 0775 root sys 1 NULL NULL
+d base /etc/netware 0775 root sys
+d base /etc/netware/conf 0775 root sys
+d base /usr ? ? ? ? ? ?
+d base /usr/lib ? ? ? ? ? ?
+d base /usr/lib/locale ? ? ? ? ? ?
+d base /usr/lib/locale/C ? ? ? ? ? ?
+d base /usr/lib/locale/C/LC_MESSAGES ? ? ? ? ? ?
+d base /usr/sbin ? ? ? ? ? ?
+
+#
+# Commands
+#
+!default     0555     bin     bin
+f base  /usr/sbin/getid
+f base  /usr/sbin/getmany
+f base  /usr/sbin/getnext
+f base  /usr/sbin/getone
+f base  /usr/sbin/getroute
+f base  /usr/sbin/setany
+f base  /usr/sbin/snmpstat
+f base  /usr/sbin/trap_rece
+f base  /usr/sbin/trap_send
+
+#
+# Libraries
+#
+!default     0444    bin     bin
+f base     /usr/lib/libsmux.so
+f base     /usr/lib/libsnmp.so
+f base     /usr/lib/libsnmpio.so
+
+#
+# Etc Files
+#
+!default     0500   root    sys 
+f base  /etc/init.d/snmp
+l base  /etc/rc2.d/S73snmp=/etc/init.d/snmp
+l base  /etc/rc1.d/K67snmp=/etc/init.d/snmp
+
+!default     0600     root   sys
+v base  /etc/netmgt/snmpd.comm
+v base  /etc/netmgt/snmpd.peers
+v base  /etc/netmgt/snmpd.trap
+!default     0644     root   sys
+v base  /etc/netmgt/snmpd.conf
+
+#
+# Definition Files
+#
+!default     0444     root     sys
+f base	/etc/netware/conf/netmgt.bin
+f base  /etc/netmgt/nwumpsd.defs
+v base  /etc/netmgt/snmpd.defs
+f base  /etc/netmgt/unixwared.defs
+
+#
+# Management Information Base Files
+#
+!default     0444     root     sys
+f base  /etc/netmgt/hr.mib
+f base  /etc/netmgt/ipx.mib
+f base  /etc/netmgt/nm.mib
+f base  /etc/netmgt/nwudiag.mib
+f base  /etc/netmgt/nwuspx.mib
+f base  /etc/netmgt/ripsap.mib
+f base  /etc/netmgt/mibII.my
+f base  /etc/netmgt/smi.my
+
+#
+# Catalog Files
+#
+!default     0755     root     bin
+f base /usr/lib/locale/C/LC_MESSAGES/nmmsgs.cat
+f base /usr/lib/locale/C/LC_MESSAGES/nmmsgs.cat.m
+
+#
+# Network Management UnixWare - SNMP Agent, Host Resource MIB and NetWare
+#				Protocol Stack Management Daemons.
+#
+!default     0500     root     sys
+f base /usr/sbin/in.snmpd
+f base /usr/sbin/hostmibd
+f nwnet /usr/sbin/nwumpsd

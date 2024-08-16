@@ -1,0 +1,147 @@
+#ident	"@(#)langsup:i386/ls/:mk	1.2"
+#
+
+
+Root=$1
+Mach=$2
+Work=$3
+Tools=$4
+Cpu=$5
+
+shift 5
+
+
+ROOT=${Root}
+MACH=${Mach}
+TOOLS=${Tools}
+CPU=${Cpu}
+export MACH ROOT TOOLS CPU
+
+
+if [ "$ROOT" = "" ] ; then
+	echo "ROOT not set"
+	exit 1
+fi
+
+if [ "$MACH" = "" ] ; then
+	echo "MACH not set"
+	exit 1
+fi
+
+if [ "$WORK" = "" ] ; then
+	echo "WORK not set"
+	exit 1
+fi
+chmod 0755 ./:mk*
+# set permissions on files if extracted from SCCS
+if [ ! -w :mkxim ]; then
+	/bin/chmod 744 :mkperm
+	./:mkperm
+fi
+
+#  Set the directory in which to create the package
+PKGDIR=$ROOT/$MACH; export PKGDIR
+HOMEDIR=`/bin/pwd`; export HOMEDIR
+MACHINE=`/bin/uname -m`; export MACHINE
+
+#  Tell the user that we've started
+echo "Building the Language Supplement"
+
+#  Now create the directories as required
+if [ ! -d $PKGDIR/usr/bin ] ; then
+	/bin/mkdir -p $PKGDIR/usr/bin
+fi
+
+if [ ! -d $PKGDIR/usr/lbin ] ; then
+        /bin/mkdir -p $PKGDIR/usr/lbin
+fi
+
+if [ ! -d $PKGDIR/usr/lib/mapchan ] ; then
+	/bin/mkdir -p $PKGDIR/usr/lib/mapchan
+fi
+
+if [ ! -d $PKGDIR/usr/lib/keyboard ] ; then
+	/bin/mkdir -p $PKGDIR/usr/lib/keyboard
+fi
+
+#  Make the utilities
+cd $HOMEDIR
+sh -x ./:mkcmd "${ROOT}" "${MACH}" "${WORK}" "${TOOLS}" "${CPU}"
+
+#  Copy the etc files
+cd $HOMEDIR
+sh -x ./:mketc
+
+#  Build the locales
+cd $HOMEDIR
+sh -x ./:mklocale
+
+#  Build the fonts
+cd $HOMEDIR
+sh -x ./:mkfont
+
+#  Copy the keyboard maps
+echo "Copying keyboard maps"
+cd $HOMEDIR
+
+/bin/cp keyboard/* $PKGDIR/usr/lib/keyboard
+mv $PKGDIR/usr/lib/keyboard/kb.list $PKGDIR/var/opt/ls
+
+echo "Complete"
+echo ""
+
+#  Now build the X keyboard maps
+if [ ! -d $PKGDIR/usr/lib/keyboard/X ] ; then
+	/bin/mkdir -p $PKGDIR/usr/lib/keyboard/X
+fi
+
+echo "Copying X keyboard maps"
+
+cd $HOMEDIR
+/bin/cp xkeyboard/* $PKGDIR/usr/lib/keyboard/X
+echo "Complete"
+echo ""
+
+#  Build the X stuff
+cd $HOMEDIR
+sh -x ./:mkxim "${ROOT}" "${MACH}" "${WORK}" "${TOOLS}" "${CPU}"
+
+echo "Complete"
+echo ""
+
+# 
+# make fonts in /usr/X/fonts/misc
+#
+cd $HOMEDIR/X/fonts/misc
+${TOOLS}/usr/ccs/bin/${CPU}make -f fonts.mk install
+cd $HOMEDIR
+
+echo "make of /usr/X/fonts/misc complete"
+echo ""
+
+#  Copy the mapchan maps
+echo "Copying mapchan files"
+cd $HOMEDIR
+/bin/cp mapchan/* $PKGDIR/usr/lib/mapchan
+echo "Complete"
+echo ""
+
+#  Build the code set maps
+cd $HOMEDIR
+sh -x ./:mkcodesets
+
+#  Make the terminfo entries
+cd $HOMEDIR
+sh -x ./:mkterminfo
+
+
+#
+# Copy in in the lp support files
+#
+cd $HOMEDIR
+sh -x ./:mklp
+
+> $PKGDIR/var/opt/ls/config
+
+echo "BUILD COMPLETE"
+exit 0

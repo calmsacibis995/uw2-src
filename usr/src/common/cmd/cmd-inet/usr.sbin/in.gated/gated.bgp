@@ -1,0 +1,31 @@
+#ident	"@(#)cmd-inet:common/cmd/cmd-inet/usr.sbin/in.gated/gated.bgp	1.2"
+#ident	"$Header: $"
+
+#
+#	STREAMware TCP
+#	Copyright 1987, 1993 Lachman Technology, Inc.
+#	All Rights Reserved.
+#
+
+#
+#	Copyright (c) 1982, 1986, 1988
+#	The Regents of the University of California
+#	All Rights Reserved.
+#	Portions of this document are derived from
+#	software developed by the University of
+#	California, Berkeley, and its contributors.
+#
+
+#
+#	sample BGP config file
+#
+
+traceoptions internal external route bgp ;
+
+autonomoussystem 963 ;
+
+rip no ;
+
+bgp yes {
+	peer 128.212.64.1 linktype horizontal asin 519 interface wde0 gateway houdini ;
+} ;

@@ -1,0 +1,101 @@
+#ident	"@(#)mail:common/cmd/mail/rewrite	1.5"
+#ident "@(#)rewrite	1.2 'attmail mail(1) command'"
+# This file contains header rewriting rules for mail.
+# The function main() is executed before the mailsurr
+# rules are executed. Other functions may be executed
+# from mailsurr via Rewrite rules or H= invocations
+# on delivery lines. The function local() is executed
+# before local delivery. See /etc/mail/rewrite.samp
+# for examples.
+
+# function add_missing_headers()
+#
+# Insert missing headers based on transport information, such as mail with no
+# From:, Date:, or {To:|Cc:} headers.
+#
+# The environment where this would be useful is one where a host acts as a
+# gateway to the Internet and should verify that it is sending legal,
+# replyable mail.
+
+function main()
+{
+    add_missing_headers();
+}
+
+function add_missing_headers()
+{
+    if (localmessage())
+	{
+	# if no Date: header, use current date
+	if (!exists("Date"))
+	    append_header("Date", "Bcc", rfc822date());
+	# if no From: header, create one
+	if (!exists("From"))
+	    prepend_header("From", "To", username() @ domain());
+	# if no To/Cc/Bcc headers, put in a Group name of "Anonymous"
+	if (!exists("To") && !exists("Cc") && !exists("Bcc") &&
+	    !exists("Resent-To") && !exists("Resent-Cc") && !exists("Resent-Bcc"))
+	    append_header("To", "To", "Anonymous: ;");
+	}
+
+    else
+	{
+	# if no From: header, create one using the return path
+	if (!exists("From"))
+	    prepend_header("From", "To", returnpath());
+	# if no To/Cc/Bcc headers, generate one from the
+	# recipient list
+	if (!exists("To") && !exists("Cc") && !exists("Bcc") &&
+	    !exists("Resent-To") && !exists("Resent-Cc") && !exists("Resent-Bcc"))
+	    {
+	    var user, userlist;
+	    for (user from recipients())
+		{
+		if (userlist)
+		    userlist = userlist @ ",\n" @ user;
+		else
+		    userlist = user;
+		}
+	    append_header("To", "To", userlist);
+	    }
+	}
+}
+
+# function add_from_header
+#
+# Add a >From line.
+
+function add_from_header()
+{
+    # Create the From header.
+    var retpath, elementArray, newHeader;
+    retpath = returnpath();
+    if(strstr(retpath, "!") != 0)
+	{
+	retpath = substitute(retpath, "^(.+)!([^!]+)$", "\\1:\\2");
+	elementArray = split(retpath, ":");
+	newHeader = elementArray[1] @ " " @ fromdate(time()) @ " remote from " @ elementArray[0];
+	}
+    else if(strstr(retpath, "@") == 0)
+	{
+	newHeader = retpath @ " " @ fromdate(time()) @ " remote from " @ mailsystem(0);
+	}
+    else
+	{
+	retpath = gsubstitute(retpath, ":@", "!");
+	retpath = substitute(retpath, "^@", "");
+	if(strstr(retpath, ":") == 0)
+	    {
+	    retpath = substitute(retpath, "([^!@]+)@([^@]+)$", "\\2:\\1");
+	    }
+	else
+	    {
+	    retpath = substitute(retpath, "([^:]*)[:]([^!@]+)@([^@]+)$", "\\1!\\3:\\2");
+	    }
+
+	elementArray = split(retpath, ":");
+	newHeader = elementArray[1] @ " " @ fromdate(time()) @ " remote from " @ elementArray[0];
+	}
+
+    prepend_header(">From", ">From", newHeader);
+}

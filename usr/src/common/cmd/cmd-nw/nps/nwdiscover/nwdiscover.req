@@ -1,0 +1,377 @@
+#ident	"@(#)cmd-nw:common/cmd/cmd-nw/nps/nwdiscover/nwdiscover.req	1.1"
+#ident	"$Id: nwdiscover.req,v 1.1 1994/03/02 22:53:47 vtag Exp $"
+
+	Autodiscovery of NetWare Frame-Type, Network Number, and Adapter Type
+
+This document highlights a set of requirements for and explains how NetWare
+autodiscovery is implemented for the UnixWare 2.0 product.  Autodiscovery
+means that the system will automatically discover the IPX network number,
+MAC Frame Type, and the network device name for the network(s) connected to
+the node.
+
+Requirements and Usefulness:
+	1.  Make configuration of IPX automatic in most cases and easy in
+		all cases.
+
+	2.  Automatically identify the connected network and frame type when
+		only a single connection to an IPX network required.
+
+	3.  Allow a node be moved from a single configured IPX network and
+		connected to a single different IPX network without the need for
+		manual reconfiguration.
+
+	4.  If multiple IPX network connections are required for a node, the
+		administrator must configure the ipx_internal_network number using
+		either the configuration manager or GUI.
+
+	5.  If multiple IPX networks are connected to a node, the administrator
+		can automatically discover all connected networks on demand
+		through the GUI.
+
+	6.  If a node is the only (or first) platform on the internetwork,
+		it will invent a network number and choose the 802.2 frame type.
+
+	7.  Allow any configuration values discovered to be altered by the
+		administrator.  Allow autodiscovery to be disabled.
+
+	8.  Allow the administrator to view all IPX active networks without
+		updating the configuration.
+
+	9.  There must exist a standalone command with the following options:
+	  -a   
+	  	   Check all frame types and device types, even if there is a response
+	       from a server (default is to stop searching after getting first
+		   response).
+	 
+	  -d   <path_name>
+		   Use only this path name as the network device driver (default is
+	       what ever is returned by the netinfo command).
+	 
+	  -e   <frame_type>
+		   Exclude the specified frame type.  The -e option may be used
+		   multiple times on the same command line.
+		   
+	  -f   <frame_type>
+		   Specify Frametype.  Query the network to see if there is a server
+		   responding to messages of this frame type. Do not try to discover
+		   any other frame types.  (default is to try all frame types)
+	 
+	  -r   <retry_count>
+		   Set retry count. If there is no response from the network,
+		   try again, -r times.  (default is 2)
+
+	  -t   <time_in_seconds>
+		   Set timeout between retries.  Nwdiscover times out after -t seconds.
+		   (default is 3)
+	 
+	  -v  
+		   Turn on verbose mode. This will print debugging information to
+		   stderr (default is verbose mode off).
+	
+	  -u   
+		   Update the configuration with the frame type, network name and
+		   network address. (default is to not update the config file).
+	 
+	  no options
+	       All frame types and network devices will be searched until a
+		   response is received.
+
+	10. If nwdiscover is called with the -u option, nwdiscover will configure
+		the network based on the first response received and ignore all others.
+
+		if an internal network is configured, and nwdiscover is called with
+		the -ua option, nwdiscover will configure all networks discovered,
+		after deconfiguring any existing networks.  The internal network
+		must be configured, otherwise the -ua option returns an error.
+
+	11. Add the "nwdiscover" command to the nw package. It should be installed
+		as /usr/sbin/nwdiscover with mode 0550, user "root" and group "sys".
+		The package should require that package eth is already installed and
+		the command /usr/sbin/netinfo exists.
+
+	12. The new manual page will be added to the administrative guide,
+		section 1M.
+
+	13. The command should support both ethernet and token ring device types.
+
+	14. Must support configurations supporting IPX internal networks
+		and configurations not supporting IPX internal networks.
+	
+	15. Auto discovery will communicate directly with the network driver
+		and not require an IPX stack be in place on the system. It will
+		construct appropriate request packets and understand the responses.
+		These packets should be of type SAP or RIP.
+	
+	16. On a PE and AS systems, the nwdiscover command should assume one local
+		area network and no internal networks.  The number of LANs will
+		later be determined by counting the number of different frame
+		types discovered.
+
+	17.	Autodiscovery should work correctly on networks with and without
+		routers and work correctly on networks with sap filtering.
+
+	18. The command nwdiscover should ideally be network card independent.
+		That is, there should be no special code for network drivers and
+		instead a standard interface should be used.
+
+	19. The command nwdiscover will runs on machines with big or little
+		endian byte order, if it compiled for that machine.  Initially
+		it will be tested only on machines with little endian byte order.
+
+	20.	If configuring multiple frame types, the following order of discovery
+		should be used:
+			802.2
+			Ethernet II
+			802 Snap
+			802.3 RAW
+		If either 802.2 or 802 Snap are discovered on an adapter, 
+		there should be no attempt to discover 802.3, as 802.3 RAW cannot
+		coexist with 802.2 or 802 SNAP frame types.
+
+*************************** DESIGN ***********************************
+Implementation:
+
+The key program used for autodiscovery is "nwdiscover".  It has a list
+of MAC frame types for Ethernet.  These are: 802.2, Ethernet II, 802 SNAP,
+and 802.3 RAW.  It will cycle through each configured ethernet device
+(lan adapter) and bind to each frame type in turn, sending SAP Get Nearest
+Service Queries of types 0x3E4 (UnixWare O/S) and 0x4 - (NetWare File Server).
+If no response is received, "nwdiscover" tries a general RIP request.
+
+Frame types to be added for Token Ring are Token Ring and Token Ring Snap.
+
+Any response received indicates IPX servers or UnixWare servers running
+on the network.  The nwdiscover program uses these responses to
+set the network number, adapter, and frame type in the configuration
+manager.  These values are used when the IPX protocol stack is started.
+
+During installation of the "nw" package:
+
+	The following configuration parameters will be set during installation:
+	Other parameters listed are important for the autodiscovery process
+	and are listed here for reference.
+
+		server_name - set to output of "uname -n".
+
+		server_type 
+			The default for this parameter is PE.  If the installed O/S is
+			of type PE, the validation function in the configuration manager
+			"nwcm" will not allow the parameter to be modified.  If
+			the O/S is not type PE, this parameter can be set or changed to
+			any of the following values:
+				PE - Personal Edition
+				AS - Application Server
+				ES - Enterprise Server
+
+			During installation the postinstall script will attempt
+			to change the value of "server_type" to AS.  It will only
+			succeed if the installed O/S is not a PE.
+
+		auto_discovery - The default for this parameter is "active".
+			It will be left at the default value.  If set to active
+			the system will discover characterists of the attached
+			network.
+
+		router_type - The default for this parameter is "client".
+			It will be left at the default value on PS systems and
+			set to "full" on AS systems..  This parameter controls
+			the whether or not the system can act as a server.  "full"
+			means the SAP daemon is running, full RIP services are provided,
+			thus the system can act as a server..  "client" means that the
+			SAP daemon is NOT running and client RIP is running.  Among other
+			things, client RIP is completly silent, doing no periodic or
+			broadcasts of changes.  A value of "client" implies that the
+			system cannot act as a server, and can advertise no services.
+			This parameter must be set to "full" for AS or ES systems.
+
+		ipx_internal_network - The default for this parameter is zero.
+			It will be left at the default value.  Multiple configured
+			networks are allowed only if this parameter is set.  If not
+			set, "nwdiscover" will stop at the first configured frame type.
+
+		spx_network_rlogin  - The default for this parameter is "inactive".
+			It will be left at the default value on PE systems and set to
+			active on AS systems.  This parameter controls whether or not
+			NVT services are offered.  
+		
+		sap_file_compatibility - The default for this parameter is "inactive".
+			It will be left at the default value.  This parameter controls
+			whether the files in /var/spool/sap are created for compatibility
+			with UnixWare 1.1 applications that use these files.
+
+During the Boot Process, the script for the "nw" package in rc2.d (S26nw)
+performs the following functions:
+
+	If the configuration parameter "auto_discovery" has a value of "active",
+	the "nwdiscover" program will be run with the "-u" option, meaning
+	update configuration.  The autodiscover program will do the following:
+
+		case 1:	 If the "auto_discovery" parameter has a value of "inactive",
+			"nwdiscover" exists without attempting any autodiscovery
+			and does not change any configuration parameters.
+
+		Cases 2 or 3 are performed only if the value of "auto_discovery"
+		is "active" and the value of "internal_network" is zero.
+
+		case 2:  The lan_1_network has a value, meaning IPX has
+			been running and configured on previous boots.
+
+			Get the value for the parameters lan_1_adapter and
+			lan_1_frame_type.  Use the values from lan_1_adapter
+			and lan_1_frame_type bind to that frame type, on the configured
+			adapter and send a SAP and RIP Queries for that frame
+			type.  If a response is received, it will set the returned
+			network number in the configuration manager and exit.
+
+			If no response is returned, it cycles through all adapters and
+			all frame types until a response is received.  If a response
+			is received, it sets the network, adapter, and frame type
+			accordingly.  If no response is received on any adapter and
+			any frame type, it uses the configured adapter, frame type,
+			and network number.
+
+			This logic insures that on a network with multiple frame type,
+			the node doesn't switch indiscriminately between frame types.
+
+			The "auto_discover" configuration value is left at "active".
+
+		case 3:  The lan_1_network value is zero.
+
+			The autodiscover program will cycle through all configured
+			ethernet adapters and frame types and select the first one
+			discovered.
+
+			If no response is returned for any adapter or frame type, the
+			autodiscover program will select the first adapter, will
+			select 802.2 frame type, and invent a network number computed by
+			adding the time of day in seconds to the last four characters of
+			the server_name. 
+
+			The "auto_discover" configuration value is left at "active".
+
+		Case 4 is performed only if the value of "auto_discovery" is
+			"active" and the value of "internal_network" is NOT zero.
+			This case is normally never performed during boot time,
+			but is performed on demand when invoked by the administrator, 
+			typically when the internal network number is configured.
+
+			"nwdiscover" is invoked with the -au option
+
+			"nwdiscover" sets the value of lan_x_network for all lans
+			to zero.
+			
+			The autodiscover program cycles through all configured
+			ethernet adapters and frame types and sets configuration
+			parameters for all lans discovered.
+
+			If no response is returned for any adapter or frame type, the
+			autodiscover program will select the first adapter, will
+			select 802.2 frame type, and invent a network number computed by
+			adding the time of day in seconds to the last four characters of
+			the server_name.  This situation occurs on an isolated network
+			with servers or routers.
+
+			When all frame types are discovered, nwdiscover sets the
+			"auto_discover" configuration value to "inactive".
+
+	The IPX protocol stack is started.  It uses the configuration parameters
+	set by the "nwdiscover" program.
+
+	If the "sap_file_compatibility" parameter is set, the "nucsapd" daemon
+	is started.
+
+Administrator Capabilities.
+
+	Any of the configuration parameters can be changed by invoking the
+	configuration manager "nwcm"  Most of the configuration parameters
+	can be changed by the GUI.  The parameters generally take affect
+	when IPX is started, typically at boot time.
+
+	Since the internal network is typically set by company policy, it
+	cannot be generated dynamically, but must be set manually, either
+	through the configuration manager "nwcm" or via the GUI.
+
+	When the internal network is set via the GUI, the administrator 
+	can click on a button to invoke autodiscovery of all connected
+	networks.  The GUI must set the "auto_discover" parameter to "active"
+	and set the internal network to the specified value before invoking
+	"nwdiscover".  "nwdiscover" will set the "auto_discover"
+	configuration parameter to "inactive" at the completion of its work.
+
+	"nwdiscover" can also be invoked to list all IPX networks connected
+	to the node.
+
+
+SAP/RIP Requirements
+
+	1.	Any UnixWare system that advertises local services requires
+		a SAP daemon.  An Application Server always requires a
+		Sap daemon.  A Personal Edition system requires a SAP daemon if
+		peer-to-peer or NVT is enabled.
+
+	2.	Any UnixWare system that has a SAP daemon also requires a full
+		router on the system.
+
+		When the SAP daemon is not present on a system, the router (RIP) is
+		SILENT.  When SAP is actived or deactivated on a running system, the
+		router is changed from SILENT to FULL, or FULL to SILENT.
+		A SILENT router is different from a FULL router in that it only
+		listens to broadcasts.  It never responds to queries and never
+		does periodic broadcasts.
+
+	3.	A Personal Edition is by default started with the SAP daemon inactive.
+		This implies that a server or router must exist on that network,
+		and that sap requests from the PE will be broadcasts on the network.
+
+		If a Personal Edition is brought up on a network that has
+		no existing server or router, it will start with full SAP 
+		and RIP services and become the server/router for that
+		network.
+
+		If peer-to-peer is enabled on a Personal Edition, the SAP daemon
+		will be started, and the configuration parameter "sap" will be set
+		to active.  The SAP daemon will be started during reboots and
+		will be active until peer-to-peer is disabled.
+
+		If peer-to-peer is disabled on a Personal Edition, the SAP daemon
+		will be stopped, and the configuration parameter "sap" will be
+		set to inactive.
+
+		On a Personal Edition, the SAP APIs will always go on the wire
+		for SAP requests even if peer-to-peer is enabled.  Otherwise
+		if the SAP daemon was stopped, the APIs will be left with a
+		stale shared memory segment and no way to know that it is
+		stale..  
+
+		NVT can only be started or stopped by changing the spx_network_rlogin
+		configuration parameter and rebooting the machine.  NVT services
+		requires the SAP daemon to be running.  NVT is by default inactive
+		on a PE.  NVT is by default active on an AS.
+
+	4.	An Application Server is always started with SAP active.
+		The SAP daemon will remain active for as long as the machine
+		is running at init level 3.
+
+Router Discovery for a network.
+
+	To run properly, a network with only PEs and clients attached needs
+	at least one machine running full RIP and the SAP daemon.  This means
+	that the first PE coming active on a network must discover if
+	a router is present. 
+
+	To properly discover if a router exists on the directly attached
+	networks, nwdiscover should do the following:
+
+		1.	Send two GNS request packets, one type 0x4 (file server), and one
+			type 0x3e4 (UnixWare).  No delay is needed between the packets.
+			If a response is received to either one, nwdiscover knows 
+			a router or server exists and nwdiscover can get the network
+			and frametype information from the response.
+
+		2.	If no response was received to the GNS request packets, nwdiscover
+		   	should send a RIP general request.  Any response means that
+			a router or server exists and nwdiscover can get the network
+			and frametype information from the response.
+
+		3.  If no response was received to the RIP general request,
+			nwdiscover tries the next frame type or adapter type.

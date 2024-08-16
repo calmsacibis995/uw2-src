@@ -1,0 +1,25 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/parameters/set/Text.setwok	1.1.1.2"
+#ident  "$Header: Text.setwok 2.0 91/07/12 $"
+#	Module Name: Text.setwok
+
+title="Warning Setting Audit Criteria"
+
+framemsg=`readfile $INTFBASE/conf.msg`
+lifetime=shortterm
+
+rows=4
+columns=66
+
+text="
+A warning occured while setting the specified auditing criteria.
+
+`readfile $SLOGERR`"
+
+altslks
+name=CONT
+button=11
+action=CLOSE
+
+name=CANCEL
+button=14
+action=CLEANUP

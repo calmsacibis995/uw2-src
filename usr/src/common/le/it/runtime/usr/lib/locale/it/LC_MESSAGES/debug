@@ -1,0 +1,467 @@
+Avviso: 
+Errore: 
+Errore fatale: 
+Errore fatale: Errore interno in %s alla linea %d\n
+Errore: Errore interno in %s alla linea %d; il contenuto del prossimo messaggio è inattendibile\n
+Uso:\n%s [opz_comuni] [[-f all|none|procs] [-r] riga_comando]\n
+%s [opz_comuni] [-f all|none|procs] [-l file_caric] processo...\n
+%s [opz_comuni] -c file_core oggetto\n
+       opz_comuni: [-V] [-i c|x] [-X opz] [-d default] [-s percorso] [-Ya|f|g,dir]\n
+Creato nuovo programma %s (processo %s)\n
+%s ucciso\n
+Processo %s lanciato con exec; il nuovo eseguibile è %s, programma %s\n
+Processo %s biforcato; il nuovo processo %s è ora controllato\n
+Creata immagine core di %s (processo %s)\n
+Nuovo programma %s (processo %s) acquisito\n
+I/O di programma ridiretto su pseudoterminale %s\n
+Programma   ID       Stato Pid    Funzione  Posizione       Comando\n
+%s%-10.10s %-7.7s %6d Nucleo     %-10.10s %-15.15s %s\n
+ %-10.10s             -1 Morto                               %s\n
+ %-10.10s             -1 Rilasciato                          %s\n
+%s%-10.10s %-7.7s %6d In esecuzione                       %s\n
+%s%-10.10s %-7.7s %6d Esec. passo-passo                   %s\n
+%s%-10.10s %-7.7s %6d Sconosciuto                        %s\n
+%s%-10.10s %-7.7s %6d Arrestato  %-10.10s %-15.15s %s\n
+Mappa indirizzi per %s\n Intervallo indirizzi\t\tDimensione\t\tAccesso\tFile oggetto\n
+Eventi per %s, programma %s\n
+Eventi per programma (morto) %s\n
+  ID      Tipo        Condizione stat.                     Lista comandi\n
+  ID      Tipo       Condizione stat.\n
+[%.4d]%s%s ARRESTO      %5d %-30s %s\n
+[%.4d]%s%s ARRESTO       %5d %s\n\tLista oggetti:\t%s\n\tComando:\t%s\n
+[%.4d]%s%s SYSCALL %-2s %5d %-30s %s\n
+[%.4d]%s%s SYSCALL %-2s %5d %s\n\tLista oggetti:\t%s\n\tComando:\t%s\n
+[%.4d]%s%s SEGNALE           %-30s %s\n
+[%.4d]%s%s SEGNALE          %s\n\tLista oggetti:\t%s\n\tComando:\t%s\n
+[%.4d] %s ONSTOP                                          %s\n
+[%.4d] %s ONSTOP\n\tLista oggetti:\t%s\n\tComando:\t%s\n
+Disposizione segnale per %s, programma %s\n
+%4d\tsig%-7s\tintercettato\n
+%4d\tsig%-7s\tignorato\n
+EVENTO [%d] assegnato\n
+PASSO-PASSO %s
+PASSO-PASSO %s
+SOSPESO %s
+SEGNALATO %d (%s) in %s
+ENTRATA CHIAMATA SIS. %d (%s) in %s
+USCITA CHIAMATA SIS. %d (%s) in %s
+FILE CORE
+STOP EVENTO ATTIVATO: %s%sin %s
+Segnale: %s\n
+Segnale: %s\tIndirizzo errore: %#x\n
+Il processo attruale è ora %s, programma %s\n
+Non ci sono più processi\n
+Uscita dal processo %s\n
+Rilascio ed esecuzione del processo %s\n
+Rilascio e sospensione del processo %s\n
+Rilascio immagine nucleo %s\n
+ [%s in %s]\n
+%d:\t<testo sorgente non disponibile>\n
+Disassemblaggio per %s, Programma %s\n
+Contenuto registro per %s, programma %s\n
+Dump grezzo per %s, Programma %s\n
+Traccia di stack per %s, Programma %s\n
+%spresunto: %#x
+Simboli per %s, Programma %s\nNome                 Posizione        Linea\n
+Simboli per %s, Programma %s\nNome                 Posizione        Linea Tipo\n
+Simboli per %s, Programma %s\nNome               Posizione        Linea  Tipo              Valore\n
+Simboli per %s, Programma %s\nNome             Posizione          Linea Valore\n
+%-20.20s %-15.15s %5.5s  %s (presunto)\n
+%-20.20s %-15.15s %5.5s  %-11s (presunto int)\n
+%-20.20s %-15.15s %5.5s  %-3.3s (presunto)       %s\n
+Stato incoerente nella funzione %s alla linea %d\n
+Esec. passo-passo di %s per esaminare espr. di stop\n
+Impossibile avviare %s, è già in esecuzione\n
+Impossibile avviare %s, è un file core\n
+Impossibile arrestare %s, è un file core\n
+Impossibile riavviare l'esecuzione di %s\n
+Impossibile arrestare %s\n
+Impossibile impostare lo stato del segnale in %s\n
+Impossibile tracciare le chiamate di sistema in %s\n
+Impossibile impostare il tracciato di errore in %s\n
+Impossibile impostare il punto di interruzione su %#x in %s\n
+Impossibile rimuovere il punto di interruzione su %#x in %s\n
+Indirizzo non valido per il punto di interruzione in %s: %#x\n
+Impossibile annullare il segnale nel processo %s\n
+Impossibile eseguire il processo inseguitore (%s): %s\n
+Fork fallito nella creazione del processo: %s\n
+Processo %s biforcato: impossibile controllare inferiore: %s\n
+Il processo ha eseguito vfork(); riavviare superiore e inferiore per evitare lo stallo\n
+Processo %s avviato con exec(): impossibile controllare il nuovo eseguibile\n
+Il nome di programma %s è già in uso; viene usato %s\n
+Impossibile accedere a %s\n
+Nessun evento attivo con id %d\n
+Formato non valido per id evento: \"%s\"\n
+Impossibile configurare pseudoterminale: %s\n
+Impossibile leggere da pseudoterminale %s: %s\n
+Impossibile leggere la mappa di memoria del processo: %s\n
+Tabella di diramazione non trovata in %s\n
+Impossibile valutare l'espressione di stop in %s\n
+Visibilità non trovata per espressione di stop in %s\n
+Impossibile trovare l'indirizzo di ritorno per la funzione nel processo: %s\n
+Problema di formato del file core\n
+Problemi nell'accesso al file core %s\n
+File core troncato\n
+Impossibile scrivere nei registri del file core\n
+Impossibile leggere i registri per %s\n
+Impossibile scrivere i registri per %s\n
+Problemi di lettura dal processo %s, indirizzo %#x\n
+Problemi di scrittura al processo %s, indirizzo %#x\n
+L'istruzione di stop per il processo %d è stata\ninterrotta. Il processo è in esecuzione ma verrà\n fermato\n
+Segmento di memoria non trovato per l'indirizzo %#x nel processo %s\n
+Nessun oggetto corrispondente all'elemento nella lista processi: %s\n
+Impossibile aprire la libreria condivisa %s: %s\n
+Impossibile controllare il processo %d: ha eseguito un programma setuid o setgid\n
+Errore di I/O del processo %d\n
+Errore di sistema tentando di controllare il processo %d\n
+Punto di interruzione impostato sull'indirizzo dati %#x in %s\n
+Watchpoint impostato sull'indirizzo testo %#x in %s\n
+Impossibile copiare l'evento %d nel processo %s\n
+Impossibile azzerare l'evento %d nel processo %s\n
+Non supportato: variabile di debugger %s come valore della variabile di debugger %s\n
+Informazioni di debug non riconosciute all'offset %#x\n
+Informazioni di debug non riconosciute\n
+Descrizione posizione troppo complessa\n
+Versione di file oggetto %d sconosciuta\n
+Tipo di file oggetto %d non valido\n
+Nessuna informazione di debug in %s\n
+Impossibile leggere %d byte dal file oggetto all'offset %#x\n
+Conversione forzata di tipi di puntatore incompatibili\n
+Nessuna informazione di tipo per %s, presunto int\n
+Formato file oggetto non valido\n
+File oggetto per il tipo di macchina sbagliato\n
+Impossibile costruire descrizione di tipo\n
+Impossibile eseguire %s (Interfaccia a finestre)\n
+Indicazione di interfaccia non valida: -i%s\n
+%s più recente di %s\n
+Nessun loop while in sospeso\n
+Comando non valido per %s\n
+Manca lista eventi per %s\n
+Impossibile valutare espressione\n
+Nessun processo\n
+Registrazione già attivata\n
+Nessun comando logon precedente\n
+Impossibile creare %s: %s\n
+Impossibile aggiungere a %s: %s\n
+Riga troppo lunga\n
+\"%s\" è un nome alias\n
+\"%s\" è un nome di comando predefinito\n
+Parentesi quadra non bilanciata\n
+Parentesi tonda non bilanciata\n
+Parentesi graffa non bilanciata\n
+Lista processi mal strutturata\n
+%s: Alias inesistente\n
+E\' ammesso un solo oggetto vivo con l'opzione -l\n
+Nessun comando precedente da sostituire a !\n
+Comando di shell fallito con il segnale %d\n
+Comando di shell fallito con il segnale %d - generato core\n
+La variabile utente %s è non definita\n
+L'opzione -i non è ammessa con comando associato\n
+Carattere non riconosciuto a %s\n
+Apice non bilanciato a %s\n
+Costante numerica mal strutturata a %s\n
+Costante carattere mal strutturata a %s\n
+Nome file nullo a %s\n
+Previsto comando di shell a %s\n
+Ridirezione di I/O multipla a %s\n
+Opzione duplicata a %s\n
+Opzione %s non valida a %s\n
+Opzione prevista a %s\n
+Le opzioni %s e %s sono mutuamente esclusive\n
+L'opzione %s non è ammessa con %s\n
+Argomento non valido per -f\n
+Nome processo previsto a %s\n
+Stringa prevista a %s\n
+Numero decimale previsto a %s\n
+Posizione prevista a %s\n
+Argomento previsto a %s\n
+Nome file previsto a %s\n
+Comando previsto a %s\n
+Segnale previsto a %s\n
+Espressione prevista a %s\n
+Espressione con parentesi prevista a %s\n
+Comando o blocco previsto a %s\n
+Numero di evento previsto a %s\n
+Numero di evento o comando previsto a %s\n
+Identificatore previsto a %s\n
+I nomi di utenti del debugger devono iniziare con '$'\n
+Troppi argomenti a %s\n
+Errore sintattico di ubicazione a %s\n
+Segnale duplicato a %s\n
+Indicazione di chiamata di sistema non valida a %s\n
+Argomento imprevisto a %s\n
+Argomento non valido a %s\n
+Espressione di evento prevista a %s\n
+Stato incoerente nel parser a %s\n
+Comando non finito\n
+Ricorsione di alias a %s\n
+Errore sintattico a %s\n
+Parola chiave non riconosciuta a %s\n
+'}' imprevista\n
+Nessun evento attivo con l'id specificata\n
+Calcolo ignorato per gli eventi onstop e segnale\n
+Impossibile determinare la directory di lavoro corrente: %s\n
+Impossibile selezionare %s come directory di lavoro: %s\n
+Nessuna directory indicata e HOME non impostato\n
+Impossibile aprire il file di alias di default %s: %s\n
+Specificate opzioni %s multiple; viene usata la prima\n
+debug: errore interno - recupero impossibile\n
+%s: l'opzione %s non è ammessa con %s\n
+%s: l'opzione -l non è ammessa con una riga di comando\n
+%s: l'opzione -r non è ammessa con un processo vivo\n
+%s: argomento non valido per l'opzione %s\n
+Impossibile aprire %s: %s\n
+Impossibile tenere sotto controllo %s\n
+Impossibile modificare l'evento %d; uno dei suoi processi non è attivo\n
+L'opzione %s non è ammessa per questo tipo di evento\n
+Nessun comando create precedente\n
+Impossibile creare sequenza pipe: %s\n
+Create fallito: uccisi tutti i processi risultanti\n
+Impossibile determinare l'ordine dei byte della macchina host\n
+Pseudoterminale inesistente: %s\n
+Non esiste alcun oggetto di nome %s\n
+Al programma non è associato nessuno pseudoterminale\n
+File sorgente %s non trovato\n
+Indicazione della posizione non valida per il comando list\n
+Nessun file sorgente attuale\n
+Nessuna riga in %s\n
+Solo %d righe in %s\n
+Nessuna corrispondenza per l'espressione regolare\n
+Espressione regolare non valida\n
+Nessuna espressione regolare precedente\n
+Numero di frame %d fuori intervallo per il processo %s\n
+Impossibile uccidere il processo %s: %s\n
+Non esiste la voce \"%s\"\n
+Viene usato %s per %s: possono esserci altre istanze con overload\n
+Nessuna informazione di sorgente per %s\n
+Linguaggio sorgente sconosciuto: %s\n
+Il nome di programma \"%s\" è già in uso\n
+Nessun processo attivo per il programma %s\n
+esito negativo della valutazione
+Riferimento simbolico %d inatteso\n
+Impossibile acquisire informazioni simboliche per il processo %s\n
+Esito negativo della valutazione di %s\n
+Numero non valido per l'espressione set\n
+La variabile di debugger %s è a sola lettura\n
+Valore non valido per la variabile di debugger %s\n
+Le informazioni di linea non hanno indirizzo per il file %s linea %d\n
+Impossibile acquisire l'indirizzo del simbolo %s\n
+Variabile di debugger %s non valida nell'indicazione di posizione\n
+Nessuna funzione attiva con nome %s\n
+Operazione non valida sull'oggetto in esecuzione %s\n
+Operazione non valida sul processo morto %s\n
+Operazione non valida sul file core %s\n
+Non si può usare la concatenazione in questa assegnazione\n
+Richiesta stringa in questo contesto\n
+La posizione data per %s è fuori dalla funzione corrente.\n
+Stringa di formato non valida per il comando print: %s\n
+Ampiezza di campo troppo grande richiesta nel comando print: %d\n
+Indirizzo di testo non valido: %#x\n
+Codice operativo sconosciuto all'indirizzo %#x\n
+Problema di disassemblaggio, probabilmente non sezione testo\n
+L'espressione a sinistra dell'operatore %s non ha un valore\n
+L'espressione a destra dell'operatore %s non ha un valore\n
+L'operando dell'operatore %s non ha un valore\n
+L'espressione a sinistra dell'operatore %s non è di tipo intero\n
+L'espressione a destra dell'operatore %s non è di tipo intero\n
+L'operando dell'operatore %s non è di tipo intero\n
+L'espressione a sinistra dell'operatore %s non è di tipo aritmetico\n
+L'espressione a destra dell'operatore %s non è di tipo aritmetico\n
+L'operando dell'operatore %s non è di tipo aritmetico\n
+L'espressione a sinistra dell'operatore %s non è di tipo scalare\n
+L'espressione a destra dell'operatore %s non è di tipo scalare\n
+L'operando dell'operatore %s non è di tipo scalare\n
+L'espressione a sinistra dell'operatore %s non è un lvalue\n
+L'espressione a sinistra dell'operatore %s non è un puntatore\n
+L'espr. a sinistra dell'operatore %s non fa riferimento a un tipo structure\n
+L'operando dell'operatore %s è di tipo non valido\n
+L'operando dell'operatore %s non è un puntatore\n
+Impossibile determinare l'indirizzo dell'operando dell'operatore %s\n
+L'espressione a sinistra dell'operatore %s non è un puntatore o un array\n
+L'espressione a sinistra dell'operatore binario %s è di tipo non valido\n
+L'espressione a destra dell'operatore binario %s è di tipo non valido\n
+Gli operandi dell'operatore %s sono puntatori a tipi incompatibili\n
+Sottrazione di puntatori non ammessa\n
+Gli operandi dell'operatore %s sono di tipi incompatibili\n
+Operatore %s: l'operando destinazione di assegnazione non è un lvalue modificabile\n
+Nessuna informazione di tipo per '%s'\n
+Espressione condizionale in '?:' l'operatore non è un tipo scalare\n
+'condizione ? a : b', i tipi di a e b sono incompatibili\n
+L'espressione a sinistra del cast non specifica un tipo valido\n
+L'espressione a destra del cast non ha un lvalue\n
+Impossibile cast dell'operando a destra al tipo dell'operando a sinistra\n
+Tipo non valido\n
+'%s' non è una funzione, non si può chiamare\n
+Gli argomenti passati a %s non corrispondono ai tipi di parametri formali\n
+Troppi argomenti nella chiamata a %s\n
+Argomenti insufficienti nella chiamata a %s\n
+Variabile di debugger sconosciuta: %s\n
+Nessun'informazione di simbolo per '%s'\n
+'%s' non è il nome di una structure o union\n
+'%s' non è il nome di una enumerazione\n
+L'operatore %s non è supportato\n
+Conversione di tipo non ammessa in C ANSI/ISO\n
+Impossibile valutare argomento della chiamata di funzione\n
+Problema nella preparazione dello stack per chiamata di funzione in %s\n
+Impossibile ripristinare correttamente lo stack dopo chiamata di funzione in %s\n
+Specificatore di formato %s non valido\n
+Stringa di stampa formattata troppo lunga, troncata\n
+Incontrato errore di virgola mobile; impossibile valutare\n
+Costante stringa o carattere senza fine\n
+Sequenza di escape \\%s non standard\n
+Trovato ritorno a capo in costante stringa\n
+Costante in virgola mobile mal strutturata\n
+%s a ^\n
+L'operatore %s non è ammesso in espressione di stop\n
+Costante indirizzo di funzione; non ammessa in questo tipo di espressione di stop\n
+Impossibile esportare %s; non è una variabile definita dall'utente\n
+Impossibile aggiungere %s all'ambiente\n
+Eccedenza di costante intero: %s\n
+Commento mal strutturato\n
+Formato non valido per variabile di debugger\n
+Notazione di ellissi \'..\' non valida - usare \'...\'\n
+Trovate cifre non valide in costante ottale\n
+Carattere %s non valido\n
+Nessuna informazione di tipo per i parametri di %s\n
+Operatore %s non supportato; operatore ignorato\n
+Prototipo di funzione non valido\n
+L'espr. a sinistra dell'operatore %s non fa riferimento a un ogg. di classe\n
+L'espr. a destra dell'operatore %s non è un puntatore\n
+Espressione a->*b; impossibile valutare b\n
+Qualifica di identificatore non valida\n
+Funzione %s in qualificatore non è attiva\n
+Qualificatore di frame %d fuori intervallo per stack frame attivi\n
+Nessuna informazione sorgente per il blocco alla linea %d\n
+Il numero di riga %d non specifica un blocco\n
+Il numero di riga %d non specifica un blocco nella funzione corrente\n
+L'identificatore %s non è un typedef\n
+Chiamata ambigua alla funzione con overload %s\n
+Ignorata classe di memorizzazione dell'oggetto\n
+Impossibile effettuare conversione di tipo\n
+Indice di array %d supera limite superiore per l'array (%d)\n
+Nessun valore per la costante di enumerazione %s\n
+Impossibile determinare l'indirizzo o il tipo di %s\n
+Impossibile acquisire il valore per l'espressione a sinistra dell'assegnazione\n
+Impossibile acquisire il valore per l'espressione a destra dell'assegnazione\n
+Esito negativo della dereferenza di puntatore\n
+Impossibile determinare la posizione dell'oggetto racchiuso nella selezione di membro\n
+Impossibile gestire strutture o unioni in registro\n
+Impossibile determinare la posizione del membro %s\n
+Il membro selezionato non rappresenta un campo valido nella struttura, classe o unione\n
+Dimensione dell'elemento di array sconosciuta\n
+Impossibile acquisire il valore dell'indice di array\n
+Impossibile calcolare la dimensione dell'oggetto\n
+Impossibile definire l'indirizzo di un registro\n
+Impossibile acquisire il valore per l'operando a sinistra di %s\n
+Impossibile acquisire il valore per l'operando a destra di %s\n
+Impossibile acquisire il valore per l'operando di %s\n
+Impossibile effettuare aritmetica di puntatori su operando di dimensioni sconosciute\n
+Impossibile determinare dimensione dell'oggetto, presunta %d\n
+Sintassi non valida per il comando fc\n
+Numero fuori intervallo per il comando fc\n
+Comando precedente non trovato\n
+Comandi di debugger:\n
+Altri argomenti:\n
+Segnali validi:\n
+Nomi validi di chiamate di sistema:\n
+Digitare \'alias\' per esaminare gli alias correnti.\n
+Digitare \'guida <argomento>\' per dettagli su un comando o un argomento.\n
+Non esiste questo comando o argomento: %s\n
+Non è disponibile la guida per %s\n
+Creata immagine core (%2$s) di sottoprocesso %1$d\n
+Creato nuovo sottoprocesso %d (%s)\n
+Uscita da sottoprocesso %s\n
+Il sottoprocesso %s ha creato un nuovo sottoprocesso %s\n
+Creati sottoprocessi %d per il processo %s\n
+Creata immagine core dei sottoprocessi %d per il processo %s\n
+Il sottoprocesso corrente è %s, programma %s\n
+Il sottoprocesso multiplex %s ha abbandonato il suo LWP\n
+Il sottoprocesso %s è stato preso da un LWP\n
+Il sottoprocesso %s è stato sospeso\n
+Il sottoprocesso %s è stato continuato\n
+Il sottoprocesso %s è stato continuato\n
+ARRESTATO %s
+Fork processo %s (sottoprocesso %s); nuovo processo %s controllato\n
+Problema nell'accedere ai dati del sottoprocesso nel file core, processo %s\n
+Problema nell'accedere ai dati del sottoprocesso nel processo %s\n
+Impossibile controllare il processo leggero %d per il processo %s\n
+Operazione non valida sul sottoprocesso inattivo %s\n
+Problema nel configurare il sottoprocesso dell'inseguitore\n
+Impossibile trovare informazioni sul file core per LWP %d\n
+Incoerenza nell'interfaccia con libreria dei sottoprocessi per il processo %s\n
+Problema nella lettura dei segnali in attesa di %s\n
+Problema nell'annullare i segnali in %s\n
+Impossibile trovare LWP specificato dal descrittore dei sottoprocessi: %s\n
+Impossibile controllare il sottoprocesso %d per il processo %s\n
+Impossibile controllare il nuovo sottoprocesso creato nel processo %s\n
+Indirizzo non ammesso per funz. di avvio sottoprocesso creato per processo %s\n
+Modulo non ammesso per il nome di processo: %s\n
+Modulo non ammesso per il nome di sottoprocesso: %s\n
+Errore di sistema in seguito al tentativo di controllare processo leggero %d\n
+Operazione non valida su sottoprocesso sospeso %s\n
+Incoerenza nel contenuto del registro: sottoprocesso %s in commutaz. contesto\n
+Scrittura registri impossibile: il sottoprocesso %s in commutaz. contesto\n
+Impossibile controllare processo di debugger\n
+Espressione: %s non produce un lvalue\n
+flag -s su release ignorato dal sottoprocesso: %s\n
+Il processo %s contiene sottoprocessi: id. sottoproc. richiesta nel contesto\n
+Errore LWP perché %s non collegato al sottoprocesso utente\n
+%4d\tsig%-7s\tintercettato\t%#x\n
+%4d\tsig%-7s\tignorato\t%#x\n
+ARRESTATO (fuori LWP) %s
+'%s' non fa parte delle scelte valide\n
+%s è in overload. Digitare il numero della funzione da usare, o 0 (zero) per annullare:\n%s
+%s è in overload. Digitare il numero della funzione da usare, o 0 (zero) per annullare:\n%s%d\tTutte le precedenti\n
+Chiamata in corso %s\n
+%s (o %s)\n
+%sstatico %s=%s\n
+Deferenza void * impossibile\n
+Impossibile ripristinare correttamente registri dopo la chiamata di funzione in %s\n
+costante in virgola mobile: %s\n
+Superato limite inferiore costante in virgola mobile: %s\n
+La funzione %s non ha il puntatore \"this\"; arresto su tutte le chiamate\n
+Disposizione tabella funzione virtuale sconosciuta\n
+L'operando di %s non può essere un'enumerazione\n
+Nessuna informazione simbolica per '%s' in '%s'\n
+L'operando di sizeof non può essere una funzione né un campobit\n
+L'operatore %s non è supportato nelle espressioni C\n
+Manca l'oggetto o il puntatore dell'oggetto per il membro %s\n
+%s non è una classe di base di %s\n
+Le funzioni di conversione non sono ancora supportate\n
+L'argomento della funzione non ha valore\n
+Non c'è file sorgente per %s\n
+Il numero di linea deve essere un valore positivo\n
+Progr.     ID         Pid Sottopr. Stato        Funzione   Posizione      Comando\n
+%s%-9.9s %-7.7s %6d %6d Nucleo           %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d In esecuzione                                  %s\n
+%s%-9.9s %-7.7s %6d %6d Esec. passo-passo                   %s\n
+%s%-9.9s %-7.7s %6d %6d Sconosciuto                        %s\n
+%s%-9.9s %-7.7s %6d %6d Fermato        %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Fuori dall'LWP        %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Nucleo fuori dall'LWP   %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Nucleo sospeso %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Sospeso      %-10.10s %-14.14s %s\n
+Uso:\n%s [opzioni_comuni] [[-f all|none|procs] [-r] [-l avvia_loc] riga_cmd]\n
+       opzioni_comuni: [-V] [-i c|x] [-X opz] [-d default] [-s percorso] [-Ya|g,dir]\n
+***** Errore - codice op. errato\n
+Numero esadecimale previsto su %s\n
+Elenco sorgenti per %s, Programma %s\n
+%4d\tsig%-7s\tintercettato\t%s\n
+%4d\tsig%-7s\tignorato\t%s\n
+Rilascio ed esecuzione di %s\n
+Rilascio e sospensione di %s\n
+Impossibile trovare indirizzo di ritorno per la funzione %s\n
+Impossibile copiare l'evento %d su %s\n
+Impossibile azzerare l'evento %d in %s\n
+Impossibile modificare l'evento %d; uno dei suoi oggetti non è attivo\n
+Numero di frame %d fuori intervallo per %s\n
+Operazione non valida su oggetto morto %s\n
+Chiamata ambigua a funzione in overload. Le scelte sono:\n%s
+Impossibile acquisire indirizzo per il simbolo %s: allocato ad un registro\n
+Il numero di riga %d non specifica un blocco nello scopo attuale\n
+Espressione regolare non valida %s\n
+Espressione di posizione non valida\n
+ARRESTATO %s
+Comando non supportato dall'interfaccia grafica\n
+Impossibile trattare modifiche allo stato di sottoproc. durante avvio processo: %s\n
+Costante intera richiesta per limite array\n

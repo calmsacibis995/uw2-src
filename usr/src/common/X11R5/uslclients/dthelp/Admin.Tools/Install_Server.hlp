@@ -1,0 +1,164 @@
+#ident\t"@(#)dthelp:Admin.Tools/Install_Server.hlp	1.11"
+^*version^1
+^*title^Install Server
+^:Install_Server
+^*width^70
+^+DesktopMgr/help.defs
+^?Loading and configuring UnixWare packages
+^0^Install Server
+^$10
+Install Server
+
+Use Install Server to load software packages (both system and add-on) onto
+your system and enable your system as a Network Install Server to other
+systems. That is, set up your system so that other users will be able to
+load these packages across the network and onto their systems. 
+
+You must have \k(Setup Network Installation permission^dtadmin/user.hlp^Understanding Permissions) to use Install Server.
+
+You can load software from CD-ROM, cartridge tape drives or floppy disk drives
+that are local to your system. You can copy the software to a spooling
+area on your hard disk, or, if you are using a CD-ROM, \d(advertise)
+directly from the CD. Note that if you choose to advertise directly
+from CD-ROM, you must leave the CD in the CD-ROM drive.
+
+You can do the following with Install Server:
+
+\to\t\k(Load UnixWare and add-on software packages^^Loading Software Packages)
+\to\t\k(Enable the Network Installation Service^^Enabling the Network Installation Service)
+\to\t\k(Disable the Network Installation Service^^Disabling the Network Installation Service)
+\to\t\k(View the properties of software that has been loaded for Network Installation^^Viewing Software Properties)
+\to\t\k(Remove software loaded for network installation^^Removing Software)
+
+See also:
+"Setting Up and Administering an Install Server" in the Installation Handbook
+\s{Using the Install Server (Application Server Only)^dhelp "" ownerhb "Installing and Sharing Applications" "Using the Install Server (Application Server Only)" || helpLinkErr}
+
+
+^1^Loading Software Packages
+^$20
+Loading Software Packages
+
+To load UnixWare software packages or add-on software packages, do the
+following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. 
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Install_Server. The "Network Install Server Setup" window
+  \tappears.
+
+3.\tClick on Package. A pop-up window appears.
+
+4.\tClick on one of the following:
+
+  \to\tLoad System - If you are installing UnixWare system software packages.
+
+  \to\tLoad Add-on Package - If you are installing add-on packages.
+
+  \tThe "Load Package" window appears with the following fields:
+
+  \to\tAccess Package From: - Click on the rectangle in the right-most portion
+  \t \tof the box next to this field to pull down a menu of devices configured
+  \t \ton your system. Click on the appropriate device from which you will be
+  \t \taccessing the software packages (for example, CD-ROM, cartridge tape,
+  \t \tor another network install server).
+
+  \t \tNote: Selecting another network install server lets you download
+  \t \tthe software from that server across the network on onto your
+  \t \thard disk.
+
+  \to\tPackage Name - Double-click on the packages you want to install.
+
+  \to\tCopy to system - To copy the software package to your hard disk. 
+
+  \t \tNote: If you are installing from another network install server,
+  \t \tyou must select this option and copy the software package to your
+  \t \tlocal system.
+
+  \to\tLeave on device - To leave the package on the device. Remember
+  \t \tto keep the media in the device, or you will not be able to access
+  \t \tthe software package.
+
+
+^1^Enabling the Network Installation Service
+^$30
+Enabling the Network Installation Service
+
+To enable the network installation service, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. 
+
+1.  \d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Install_Server. The "Network Install Server Setup"
+  \twindow appears.
+
+3.  Click on Actions=>Enable. The network installation service is now enabled.
+
+^1^Disabling the Network Installation Service
+^$40
+Disabling the Network Installation Service
+
+To disable the network installation service, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. 
+
+1.  \d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Install_Server. The "Network Install Server Setup"
+  \twindow appears.
+
+3.  Click on Actions=>Disable. The network installation service is now
+  \tdisabled.
+
+^1^Viewing Software Properties
+^$50
+Viewing Software Properties
+
+To view the properties of a software package that has been loaded for
+network installation, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. 
+
+1.  \d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Install_Server. The "Network Install Server Setup" window
+  \tappears.
+
+3.\tClick on the icon that represents the software package you want to view.
+
+4.\tClick on Package=>Info. The "Package Information" window appears, 
+  \tdisplaying the following information about the package:
+
+  \to\tThe version number.
+
+  \to\tThe vendor name.
+
+  \to\tThe type of architecture that the package can run on.
+
+  \to\tA count of files.
+
+^1^Removing Software
+^$60
+Removing Software
+
+To remove software that has been loaded for network installation, do the
+following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. 
+
+1.  \d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Install_Server. The "Network Install Server Setup"
+  \twindow appears.
+
+3.\tClick on the icon that represents the package you want to remove.
+
+4.\tClick on Package=>Remove. The package is now deleted.

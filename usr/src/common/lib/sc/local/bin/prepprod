@@ -1,0 +1,227 @@
+#!/bin/sh 
+#ident	"@(#)sc:local/bin/prepprod	3.14" 
+###############################################################################
+#
+# C++ Standard Components, Release 3.0.
+#
+# Copyright (c) 1991, 1992 AT&T and Unix System Laboratories, Inc.
+# Copyright (c) 1988, 1989, 1990 AT&T.  All Rights Reserved.
+#
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T and Unix System
+# Laboratories, Inc.  The copyright notice above does not evidence
+# any actual or intended publication of such source code.
+#
+###############################################################################
+
+# preprod: prepares an SLE gotten by either qgetprod or getsle for building
+# with buildprod
+
+# the following variable should be a list of *all* the components in the library,
+# in the order in which they should be built by buildprod.  remember that tools 
+# should be built after all components.
+#
+allcomps="local Pool String CC ipc Args Array_alg Bits Block Fsm Graph Graph_alg List List_old Map Objection Path Regex Set Stopwatch Strstream Symbol Time G2++ demangle aoutdem fs hier incl publik hyman"
+
+################################################################
+# You shouldn't have to change anything below this line
+################################################################
+#set -x
+badargs=0
+distribution=0
+set -- `getopt dx $*`
+if [ $? -ne 0 ]; then
+ 	badargs=1
+fi
+here=`pwd`
+for i in $*
+do
+	case $i in
+	-x)	set -x
+		shift;;
+	-d)	distribution=1
+		shift;;
+	--)	shift; break;;
+	-*)	shift;;
+	esac
+done
+if [ $badargs -eq 1 ]; then
+ 	echo
+	echo "usage: prepprod [-d]" 1>&2
+	echo "-d = prepare for distribution (delete tutorials, tests, and local component)" 1>&2
+	exit 2
+fi
+
+root=`pwd`
+
+if [ ! -d $root/src/local ]; then
+	echo "prepprod: cannot prepare this product: local component is missing" 1>&2
+	exit 2
+fi
+
+# first check to see that there isn't a component here i don't know about
+knowncomps=/usr/tmp/$$
+echo "" >$knowncomps
+for comp in $allcomps; do
+	echo $comp >>$knowncomps
+done
+cd $root/src
+for i in `ls -d * 2>/dev/null`
+do
+	# silently search for exact match among list of known components
+	fgrep -s -x $i $knowncomps 
+	if [ $? -ne 0 ]; then
+		echo "prepprod: you've got a component (src/$i) i don't know about." 1>&2
+		echo "Please add it to the list of known components at the top of the" 1>&2
+		echo "prepprod shell script (local:bin/prepprod)." 1>&2
+		rm $knowncomps
+		exit 2
+	fi
+done
+rm $knowncomps
+
+# remove redundant files pulled from qstar
+if [ -d $root/src/Path/demos ]; then
+	cd $root/src/Path/demos
+	rm -rf explode.V explode.c wild.V wild.c
+fi
+if [ -d $root/src/Path/tests ]; then
+	cd $root/src/Path/tests
+	rm -rf canon.V canon.c complete.V complete.c search.V search.c
+	rm -rf prefix.V prefix.c tilde.V tilde.c wild.V wild.c
+fi
+
+cd $root
+
+for dir in incl bin lib man aux; do
+	if [ ! -d $root/$dir ]; then
+		mkdir $root/$dir
+	fi
+done
+
+copy() {
+	for i in $*
+	do
+		dir=$i
+	done
+	while [ "$2" != "" ]; do
+		if [ ! -f $1 ]; then
+			echo "preprod: cannot prepare this product: file `pwd`/$1 missing" 1>&2
+	#		exit 2
+		else
+			rm -f $dir/`basename $1`
+			cp $1 $dir
+		fi
+		shift
+	done
+}
+
+# first copy needed local stuff into $root and $root/aux
+cd $root/src/local
+mv README $root
+cd $root/src/local/lib
+copy makefile $root
+if [ $distribution -eq 1 ]; then
+	# get rid of tests target in makefile
+	rm -f $root/makefile
+	sed -e '/^tests:/d' -e '/domake.*-T/d' makefile >$root/makefile 
+fi
+chmod +w $root/makefile
+copy manmacros $root/man
+copy demorules domake fnewer.c testrules $root/aux
+chmod +x $root/aux/domake
+chmod +x $root/src/Args/demos/example.sh
+cd $root/src/local/bin
+copy buildprod checkios linkspace regress fix_man $root/aux
+chmod +x $root/aux/fix_man
+cd ..
+for i in 1 3 4; do
+ 	secdir=$root/man/man${i}C++
+	# number of manpages for section i
+	n=`ls -1 man/intro.$i 2>/dev/null | wc -l` 
+	if [ $n -ne 0 ]; then
+		if [ ! -d $secdir ]; then
+		    mkdir $secdir
+		fi
+		mv man/intro.$i $secdir
+	fi
+done
+
+if [ $distribution -eq 1 ]; then
+	rm -rf $root/src/local
+fi
+
+# now invert the man and incl directories
+cd $root/src
+for comp in `ls -d * | fgrep -v local`; do
+	#echo $root/src/$comp 1>&2
+	cd $root/src/$comp
+
+	if [ $comp = "aoutdem" ]; then
+		chmod +w makefile
+	fi
+	if [ $distribution -eq 1 ]; then
+		rm -rf tests tut local
+		if [ $comp = "G2++" ]; then
+			rm -rf */tests */tut
+		fi
+	fi
+
+	echo "inverting man pages for $comp" 1>&2
+	for i in 1 3 4 5; do
+	 	secdir=$root/man/man${i}C++
+		MAN="man"
+		if [ $comp = "G2++" ]; then
+			MAN="./*/man"
+		fi
+		# number of manpages for section i
+		n=`ls -1 $MAN/*.$i 2>/dev/null | wc -l` 
+		if [ $n -ne 0 ]; then
+			if [ ! -d $secdir ]; then
+			    mkdir $secdir
+			fi
+			if [ $comp = "CC" ]; then
+				n=1
+			fi
+		fi
+		if [ $n -gt 1 ]; then
+		 	if [ ! -d $secdir/$comp ]; then
+				mkdir $secdir/$comp
+			fi
+			mv $MAN/*.$i $secdir/$comp 
+		elif [ $n -eq 1 ]; then
+			mv $MAN/*.$i $secdir
+		fi
+	done
+	if [ -d incl ]; then
+		if [ "`ls incl/* 2>/dev/null`" != "" ]; then
+			echo "inverting header files for $comp" 1>&2
+			mv incl/* $root/incl
+		fi
+		# have to leave incl alone because some components
+		# want to generate more header files during the build
+		# rmdir incl
+	fi
+done
+
+cd $root
+
+# write the complist for buildprod.
+clist=$root/aux/complist
+if [ -f $clist ]; then
+	#echo "prepprod: overwriting ./complist" 1>&2
+	rm -f $clist
+fi
+echo "" >$clist
+for comp in $allcomps; do
+	if [ -d $root/src/$comp ]; then
+		echo $comp >>$clist
+	fi
+done
+
+echo -n "prepprod: recording file names..." 1>&2
+find . -print | sed '/\.\/complist/d' >files
+echo "done" 1>&2
+
+echo "prepprod: remember to edit the README file with whatever message you want." 1>&2
+
+exit 0

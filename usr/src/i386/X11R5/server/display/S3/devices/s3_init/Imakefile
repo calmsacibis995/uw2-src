@@ -1,0 +1,81 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)S3:S3/devices/s3_init/Imakefile	1.11"
+
+/**/#
+/**/# If the Makefile is lost or corrupted, to generate a new Makefile:
+/**/# 
+/**/#  /usr/X/bin/imake -DUseInstalled -DTOPDIR=. -DCURDIR=. -I/usr/X/lib/config
+/**/#
+/**/# change SRCFILE to your file name
+/**/#
+
+/**/# Please see ../../Imakefile for more information on compile time
+/**/# options.
+
+S3_REVISION = 1
+
+CDEBUGFLAGS=-O -v
+EXTRA_DEFINES=-DPUBLIC= -DATBUS -DUSE_KD_GRAPHICS_MODE\
+	  -DUSE_SYSI86 -DLIBRARY__NAME=\"LIBS3\" -DLIBRARY_VERSION='"1.04"'\
+	  -DCHIPSET_NAME=\"S3\" -DSTATIC=static
+
+#define VendorDisplayModuleRule()			@@\
+.c.o:							@@\
+	$(CC) -c $(CDEBUGFLAGS) $(EXTRA_DEFINES) -Xa -Dix86 $(ALLINCLUDES) $<; @@\
+							@@\
+all:: $(VENDORLIB) 					@@\
+$(VENDORLIB):: $(OBJS)					@@\
+	$(CC) $(YFLAGS) -G $(OBJS) -o $(VENDORLIB) $(CORELIB) @@\
+	@echo $(VENDORLIB) generated. 			@@\
+							@@\
+install:: all						@@\
+	$(INSTALL) $(INSTLIBFLAGS) $(VENDORLIB) $(DISPLIBDIR)
+
+
+       BASE = S3_init
+       SRCS = s3_init.c debug.c
+       OBJS = s3_init.o debug.o
+  VENDORLIB = S3_init.so.1
+    ARCHLIB = S3_init.a
+
+   MODE_FILES = 9GXE.dat \
+		stealthpro.dat \
+		actixGE.dat \
+		elsaWinner.dat \
+		premier.dat \
+		fahrenheit.dat \
+		stb_x24.dat \
+		Nth.dat \
+		miscS3.dat
+
+
+#if UseInstalled
+    CORELIB = /usr/X/lib/libS3.so.$(S3_REVISION)
+   INCLUDES = -I.. -I../../include -I/usr/X/include/X11
+#else
+    CORELIB = ../../libS3.so.$(S3_REVISION)
+   INCLUDES = -I./ -I../.. -I$(TOP)/server/ddx/si -I$(TOP)/X11
+#endif
+     LFLAGS = -buxz
+
+
+#if XWINSharedDisplayLibrary
+VendorDisplayModuleRule()
+#else
+NormalLibraryObjectRule()
+NormalLibraryTarget (ultra, $(OBJS))
+#endif /* XWINSharedDisplayLibrary */
+
+InstallMultipleDestFlags(install,$(MODE_FILES),$(DISPLIBDIR),$(INSTDATFLAGS))
+
+clean::
+	$(RM) *.so
+
+DependTarget()

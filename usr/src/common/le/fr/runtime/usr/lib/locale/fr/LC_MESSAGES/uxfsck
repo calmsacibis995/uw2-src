@@ -1,0 +1,409 @@
+Syntaxe :\n%s [-F %s] [options_génériques] [-y | -n] spécial\n
+%s : impossible d'exécuter stat\n
+%s : système de fichiers monté\n
+le système de fichiers %s est monté en tant que périphérique de bloc ; il est ignoré\n
+%s n'est pas un périphérique de bloc ou de caractère\n
+impossible d'ouvrir le fichier spécial %s\n
+%s n'est pas un système de fichiers %s\n
+Vérification de %s :\n
+%s est incorrect\n
+%s est correct\n
+Le système de fichiers a été modifié.\n
+Le système de fichiers n'a pas été modifié.\n
+Le compactage du système de fichiers était en cours.\n
+Compactage terminé ? 
+Achèvement du compactage du fichier (inode %ld)\n
+%ld blocs au total\n%ld blocs libres\n%ld inodes au total\n
+%ld inodes libres\n
+Syntaxe :\n%s [-F %s] [options_génériques] [spécial ...]\n%s [-F %s] [options_génériques] [-y] [-n] [-p] [-sX] [-SX] [-t fichier] [-l] [-q] [-D] [-f] [spécial ...]\n
+Impossible d'affecter de l'espace pour le nom de chemin\n
+%c Option -t incorrecte\n
+%c fichier de travail <%s> non autorisé\n
+%c Options incompatibles : -n et -s\n
+%c Options incompatibles : -n et -q\n
+Options incompatibles : impossible d'utiliser -m avec d'autres options\n
+%s n'est pas un système de fichiers s5\n
+sortie de fsck\n
+%c Impossible d'obtenir de la mémoire\n
+%c Impossible d'exécuter fstat sur l'entrée standard\n
+%c %s** Phase 1 - Vérifier les blocs et les tailles\n
+%c %sTYPE DE FICHIER INCONNU I=%u
+ (NON VIDE)
+EFFACER
+EFFACE
+%c %sDEPASSEMENT DE LA CAPACITE DE LA TABLE DE COMPTAGE DES LIENS
+CONTINUER
+SORTIE EN COURS, EXECUTER FSCK MANUELLEMENT
+%c %sINODE PARTIELLEMENT AFFECTE I=%u
+%c %s** Phase 1b - Rechercher d'autres DOUBLONS\n
+%c %s** Phase 2 - Vérifier les noms de chemins\n
+%c %sINODE RACINE NON AFFECTE. FIN DU PROCESSUS.\n
+%c %sL'INODE RACINE N'EST PAS UN REPERTOIRE
+CORRIGER
+%c %sEN DOUBLE/INCORRECT DANS L'INODE RACINE\n
+%c %s** Phase 3 - Vérifier la connectivité\n
+%c %s** Phase 4 - Vérifier le nombre de références\n
+SANS REF
+INCORRECT/EN DOUBLE
+%c %sNOMBRE D'INODES LIBRES INCORRECT DANS LE SUPERBLOC
+\n%c %sCORRIGE\n
+CORRIGE
+%c %s** Phase 5 - Vérifier la liste des blocs libres 
+(Ignoré)\n
+%c %s%d BLOCS INCORRECTS DANS LA LISTE DE BLOCS LIBRES\n
+%c %s%d BLOCS EN DOUBLE DANS LA LISTE DE BLOCS LIBRES\n
+%c %s%ld  BLOC(S) MANQUANT(S)\n
+%c %sNOMBRE DE BLOCS LIBRES INCORRECT DANS LE SUPERBLOC
+%c %sLISTE DE BLOCS LIBRES INCORRECTE
+\n%c %sRECUPERE\n
+RECUPERATION
+RECUPERE
+%c %s** Phase 6 - Liste de blocs libres de récupération\n
+DEFINIR L'ETAT SU SYSTEME DE FICHIERS SUR OK
+ETAT DU SYSTEME DE FICHIERS DEFINI SUR OK
+%c %sETAT DU SYSTEME DE FICHIERS NON DEFINI SUR OK\n
+%c %sETAT DU SYSTEME DE FICHIERS DEFINI SUR OK\n
+%c %s%ld fichiers %ld blocs %ld libres\n
+\n%c %s*** LE SYSTEME DE FICHIERS RACINE A ETE MODIFIE ***\n
+%c %s*** LE SYSTEME DE FICHIERS A ETE MODIFIE ***\n
+%c %sPAS DE '.' CORRECT dans REP I = %u\n
+%c %sPAS DE '..' CORRECT dans REP I = %u\n
+%c %s'.' MANQUANT ou '..' dans REP I = %u\n
+%c %sBLOC %ld 
+\n%c %sREP=%s\n\n
+%c %sENTREE REP INCORRECTE I = %u\n
+INCORRECT
+%c %sTROP DE BLOCS INCORRECTS I=%u
+EN DOUBLE
+%c %sTROP DE BLOCS EN DOUBLE I=%u
+%c %sDEPASSEMENT DE LA CAPACITE DE LA TABLE DES DOUBLONS.
+I HORS LIMITES
+NON AFFECTE
+EN DOUBLE/INCORRECT
+%c %sTROP DE BLOCS INCORRECTS DANS LA LISTE DE BLOCS LIBRES.
+%c %sTROP DE BLOCS EN DOUBLE DANS LA LISTE DE BLOCS LIBRES.
+\n%c %sNOM=%s\n
+SUPPRIMER
+SUPPRIME
+REP
+FICHIER
+ (NON VIDE)\n
+ (VIDE)
+ -- SUPPRIME\n
+\n%c %sNOM=%s
+%c %sNOMBRE DE LIENS %s
+\n%c %sLE NOMBRE %d DEVRAIT ETRE DEFINI SUR %d
+AJUSTER
+REGLE
+ -- EFFACE
+chkempt : bloc %d hors limites\n
+chkempt : bloc %d introuvable\n
+%c %sImpossible d'exécuter stat sur la racine\n
+%c %sImpossible d'exécuter stat sur %s\n
+%c %s%s est un système de fichiers monté ; il est ignoré\n
+%c %s%s est un périphérique comportant un canal ; il est ignoré
+%c %s%s n'est pas un périphérique de bloc ou de caractère\n
+ (PAS D'OPERATION D'ECRITURE)
+%c %sVérification de la taille : fsize %ld isize %d\n
+%c %sSystème de fichiers : %.6s Volume : %.6s\n\n
+\n%c %sFICHIER DE TRAVAIL REQUIS (%ld BLOCS)\n
+%c %sENTREZ UN NOM DE FICHIER :\n
+%c %sImpossible de créer %s\n
+%c %sImpossible d'ouvrir %s\n
+\n%c %s%s ? 
+ non\n\n
+ oui\n\n
+%c %sRépondez 'o' ou 'n' (oui ou non)\n
+%c %sArgument -s incorrect, utilisation des paramètres par défaut\n
+%c %sErreur d'E/S bloquante\n
+RECHERCHER
+LIRE
+ECRIRE
+\n%c %sIMPOSSIBLE D'EXECUTER %s : BLOC %ld
+SORTIE
+%c %s Programme terminé\n
+ PROPRIETAIRE=
+MODE=%o\n
+%c %sTAILLE=%ld 
+%b %e %H : %M %Y
+MTIME=%s\n
+%c %sNOMBRE DE BLOCS LIBRES INCORRECT\n
+%c %sUtilisation de l'interlignage par défaut dans la liste de blocs libres\n
+%c %sSANS REF %s 
+ Reconnexion OBLIGATOIRE\n
+  Effacé\n
+RECONNECTER
+RECONNECTE
+%c %sDESOLE. PAS DE REPERTOIRE lost+found\n\n
+%c %sDESOLE. PAS D'ESPACE DANS LE REPERTOIRE lost+found\n\n
+%c %sREP I=%u CONNECTE. 
+%c %sLE PARENT ETAIT I=%u\n\n
+%c %sDEFAUT D'ALIGNEMENT DU REPERTOIRE I=%u\n
+RECUPERER
+RECUPERE
+%s TAILLE INCORRECTE I=%u\n
+SUPPRIMER OU RECUPERER LES DONNEES SUPPLEMENTAIRES\n
+RECUPERER LES BLOCS SUPPLEMENTAIRES\n
+BLOCS SUPPLEMENTAIRES RECUPERES\n
+SUPPRIMER LES BLOCS SUPPLEMENTAIRES
+BLOCS SUPPLEMENTAIRES SUPPRIMES
+%c %s LE SUPERBLOC, L'INODE RACINE OU LE REPERTOIRE\n%c %sRACINE EST PEUT-ETRE ALTERE.\n
+fsck IMPOSSIBLE DE\nDETERMINER %c %sLA TAILLE DU BLOC LOGIQUE DE %s.\n
+%c %sLA TAILLE DES BLOCS PEUT ETRE 512, 1 024 OU 2 048 OCTETS.\n
+%c %sREEXECUTEZ fsck SANS L'OPTION -y OU -n ; VOUS\n%c %s DEVREZ ALORS INDIQUER LA TAILLE DES BLOCS.\n
+%c %s LE SUPERBLOC, L'INODE RACINE OU LE REPERTOIRE\n%d %sRACINE EST PEUT-ETRE ALTERE.
+%c %sREEXECUTEZ fsck POUR %s SANS \n%c %sL'APPELER VIA dfsck ; VOUS DEVREZ ALORS INDIQUER\n%c %sLA TAILLE DES BLOCS.\n
+LE SUPERBLOC, L'INODE RACINE OU LE REPERTOIRE RACINE\nDE %s EST PEUT-ETRE ALTERE.\n
+fsck IMPOSSIBLE DE DETERMINER LA TAILLE DES BLOCS LOGIQUES DE %s\nLA TAILLE DES BLOCS PEUT ETRE 512, 1 024 OU 2 048 OCTETS. \n\n
+ENTREZ LA TAILLE DES BLOCS LOGIQUES DE %s EN OCTETS (\nREMARQUE : UNE REPONSE INCORRECTE RISQUE DE CORROMPRE LE SYSTEME DE FICHIERS DEFINITIVEMENT !)\n
+ENTREZ 512, 1 024 OU 2 048 OU TAPEZ s POUR IGNORER CE SYSTEME DE FICHIERS :  
+\nENTREZ 512, 1 024, 2 048 OU s : 
+échec du contrôle de validité ; impossible d'exécuter stat sur %s\n
+contrôle de validité : vérification nécessaire du système de fichiers racine\n
+échec du contrôle de validité : système de fichiers racine correct\n
+contrôle de validité : %s déjà monté\n
+contrôle de validité : %s doit être vérifié\n
+contrôle de validité : %s correct\n
+%c : option incorrecte\n
+cette option requiert un argument -- %c\n
+L'affectation d'un nouveau noeud dans fcorr_path a échoué\n
+L'affectation d'un nouveau nom de chemin a échoué\n
+Des fichiers qui sont peut-être altérés ont été détectés par fsck\n
+%c %sNom de chemin REP trop long\n
+%c %sLe nom de chemin REP est <%s>\n
+INODE %d INCORRECT ; IMPOSSIBLE DE PARCOURIR LA CHAINE DES POINTEURS
+REPERTOIRE DE LONGUEUR NULLE
+REPERTOIRE TROP COURT
+REPERTOIRE %d : LA LONGUEUR %d NE CORRESPOND PAS A UN MULTIPLE DE %d\n
+  (REGLE)\n
+type incorrect associé à dirscan %d\n
+REPERTOIRE ALTERE
+NOM=%s\n
+NOMBRE DE LIENS %s
+LE NOMBRE %d DEVRAIT ETRE DEFINI SUR %d\n
+AUGMENTATION DU NOMBRE DE LIENS\n
+SANS REF %s 
+  (RECONNECTE)\n
+PAS DE REPERTOIRE lost+found\n
+CREER
+  (CREE)\n
+DESOLE. IMPOSSIBLE DE CREER LE REPERTOIRE lost+found\n\n
+lost+found N'EST PAS UN REPERTOIRE\n
+REAFFECTER
+DESOLE. PAS DE REPERTOIRE lost+found\n\n
+DESOLE. PAS D'ESPACE DANS LE REPERTOIRE lost+found\n\n
+REP I=%u CONNECTE. 
+LE PARENT ETAIT I=%u\n
+PLUS D'ESPACE DANS %s
+ (ETENDU)\n
+ETENDRE
+INODE PARTIELLEMENT TRONQUE I=%d
+Numéro d'inode %d incorrect pour ginode\n
+  (EFFACE)\n
+TAILLE=%ld
+%b %d %H : %M
+%Y
+MTIME=%s %s
+ETAT %d INCORRECT ASSOCIE A BLKERR\n
+Autre emplacement du superbloc : %d\n
+'%s' non inscriptible\n
+Impossible d'ouvrir le fichier des listes de contrôle : %s\n
+fork : %s\n
+IMPOSSIBLE DE VERIFIER LE SYSTEME DE FICHIERS.
+** Actuellement monté sur %s\n
+**Monté sur %s en dernier\n
+** Phase 1 - Contrôle de validité uniquement\n
+** Phase 1 - Vérifier les blocs et les tailles\n
+ERREUR INTERNE : doublons associés à -p
+** Phase 1b - Rechercher d'autres DOUBLONS\n
+** Phase 2 - Vérifier les noms de chemins\n
+** Phase 3 - Contrôler la connectivité\n
+** Phase 4 - Vérifier le nombre de références\n
+** Phase 5 - Vérifier les groupes de cylindres\n
+%d fichiers, %d utilisés, %d libres 
+(%d drapeaux, %d blocs, %.1f%% fragmentation)\n
+%d fichiers manquants\n
+%d blocs manquants\n
+Les blocs en double suivants sont conservés :
+Les inodes suivants qui correspondent à un nombre de liens nuls sont conservés :
+%s ETAT DU SYSTEME DE FICHIERS NON DEFINI SUR OK\n
+%s ETAT DU SYSTEME DE FICHIERS DEFINI SUR OK\n
+***** LE SYSTEME DE FICHIERS A ETE MODIFIE *****\n
+Impossible d'exécuter stat sur la racine\n
+Impossible d'exécuter stat sur %s\n
+%s n'est pas un périphérique de caractère\n
+Le nom %s n'a pas de sens\n
+heure=%x, état=%x\n
+Syntaxe : %s [-F %s] [options_génériques] [-o p,b=#,w] [spécial ....]\n
+INODE PARTIELLEMENT AFFECTE I=%u\n
+taille %d incorrecte :
+MODE INCORRECT : TRANSFORMEZ-LE EN FICHIER
+adresse directe incorrecte : %d\n
+adresse indirecte incorrecte : %d\n
+DEPASSEMENT DE LA CAPACITE DE LA TABLE DE COMPTAGE DES LIENS\n
+NOMBRE DE BLOCS INCORRECT I=%u (%ld devrait être %ld)\n
+  (CORRIGE)\n
+CORRECT
+TYPE DE FICHIER INCONNU I=%u\n
+TROP DE BLOCS INCORRECTS I=%u\n
+  (NON PRISE EN COMPTE)\n
+TROP DE BLOCS EN DOUBLE I=%u\n
+DEPASSEMENT DE LA CAPACITE DE LA TABLE DES DOUBLONS.\n
+%ld ACL INCORRECT I=%u\n
+%ld ACL EN DOUBLE I=%u\n
+INODE RACINE NON AFFECTE\n
+AFFECTER
+IMPOSSIBLE D'AFFECTER L'INODE RACINE\n
+DOUBLONS/ELEMENTS INCORRECTS DANS L'INODE RACINE\n
+%s : DCLEAR\n
+l'INODE RACINE N'EST PAS UN REPERTOIRE\n
+%s : FSTATE/FCLEAR\n
+ETAT %d INCORRECT POUR L'INODE RACINE\n
+NUMERO D'INODE INCORRECT POUR '.'
+'.' MANQUANT
+CORRECTION IMPOSSIBLE, LA PREMIERE ENTREE DU REPERTOIRE CONTIENT %s\n
+CORRECTION IMPOSSIBLE, ESPACE INSUFFISANT POUR AJOUTER '.'\n
+NUMERO D'INODE INCORRECT POUR '..'
+'..' MANQUANT
+CORRECTION IMPOSSIBLE, LA DEUXIEME ENTREE DU REPERTOIRE CONTIENT %s\n
+CORRECTION IMPOSSIBLE, ESPACE INSUFFISANT POUR AJOUTER '..'\n
+ENTREE '.' SUPPLEMENTAIRE
+ENTREE '..' SUPPLEMENTAIRE
+NOM TROP LONG %s%s\n
+%s EST UN LIEN PHYSIQUE PARASITE DU REPERTOIRE %s\n
+ (IGNORE)\n
+ETAT DE RETOUR %d INCORRECT GENERE PAR DESCEND
+ETAT %d INCORRECT ASSOCIE A L'INODE I=%d\n
+LISTE DE CONTROLE D'ACCES EN DOUBLE/INCORRECTE/ERRONEE
+CG %d : NOMBRE MAGIQUE INCORRECT\n
+BLOC(S) MANQUANT(S) DANS LES TABLES ADRESSABLES PAR BIT\n
+INFORMATIONS DE SYNTHESE INCORRECTES\n
+NOMBRE DE BLOCS LIBRES INCORRECT DANS LE SUPERBLOC\n
+le fichier n'est pas un périphérique de bloc ou de caractère ; OK
+%s est monté, fsck du périphérique de BLOC ignoré\n
+Impossible d'ouvrir %s\n
+PAS D'ACCES EN ECRITURE\n
+NUMERO MAGIQUE ERRONE
+NCG HORS LIMITES
+CPG HORS LIMITES
+NCYL EN DESACCORD AVEC NCG*CPG
+TAILLE BEAUCOUP TROP IMPORTANTE
+OPTIMISATION INDEFINIE DANS LE SUPER-BLOC
+LA VALEUR PAR DEFAUT EST PRISE EN COMPTE
+MINFREE=%d IMPOSSIBLE DANS LE SUPER-BLOC
+VALEURS REJETEES DANS LE SUPER-BLOC
+allocation de %d octets impossible pour blockmap\n
+allocation de %d octets impossible pour statemap\n
+allocation de %d octets impossible pour Incntp\n
+allocation de %d octets impossible pour secstatemap\n
+SUPER-BLOC INCORRECT : %s\nUTILISEZ L'OPTION -b DE FSCK POUR INDIQUER L'EMPLACEMENT D'UN\nSUPER-BLOC DE REMPLACEMENT POUR FOURNIR LES INFORMATIONS\nNECESSAIRES ; VOIR fsck(1M)\n
+type de fichier incorrect 0%o\n
+ERREUR INTERNE : reply() OBLIGATOIRE
+%s ? 
+ECRITURE DU BLOC %d MIS A ZERO SUR DISQUE\n
+%s IMPOSSIBLE : BLK %ld
+Programme terminé\n
+LES SECTEURS SUIVANTS N'ONT PAS PU ETRE LUS :
+LES SECTEURS SUIVANTS N'ONT PAS PU ETRE ECRITS :
+retour au mode mono-utilisateur après vérification du système de fichier\n
+ (RECUPERE)\n
+MODE FIX INODESC INCONNU %d\n
+%s : INCOHERENCE INATTENDUE ; LANCEZ fsck MANUELLEMENT.\n
+INCOHERENCE INTERNE :
+impossible d'ouvrir %s\n
+%s est monté au format nfs : ignoré\n
+mémoire insuffisante !\n
+%s est un système de fichiers monté, ignoré\n
+trop d'arguments\n
+plusieurs fstype définis\n
+Le fstype %s a plus de %d caractères\n
+ouverture de vfstab impossible\n
+Impossible d'identifier le type du système de fichiers\n
+fork impossible. Ré-essayez plus tard\n
+état d'attente incorrect\n
+la commande suivante (processus %d) a été arrêtée par le signal %d\n
+la commande suivante (processus %d) a été arrêtée par le signal %d\n\t\t et a vidé la mémoire\n
+la commande suivante (processus %d) a été arrêtée par le signal %d\n
+impossible d'exécuter %s - autorisation refusée\n
+opération non applicable au FSType %s\n
+une ligne de vfstab comprend plus de %d caractères\n
+une ligne de vfstab comprend un nombre insuffisant d'entrées\n
+une ligne de vfstab comprend trop d'entrées\n
+Syntaxe :\n%s [-P] [-m] [-b] [-L] [-F type_fichiers_système] [-V] [-m] [spécial ...]\n%s [-P] [-m] [-b] [-L] [-F type_système_fichiers] [-V] [options_actuelles] [-o\noptions_spéciales] [spécial ...]\n
+ETAT INCORRECT %d DU REPERTOIRE INODE\n
+INCOHERENCE INATTENDUE ; LANCEZ fsck MANUELLEMENT.\n
+AUCUN ESPACE LIBRE DANS LE REPERTOIRE lost+found\n
+%s A UN LIEN PHYSIQUE HORS CONTEXTE EN DIRECTION DU REPERTOIRE INODE %d\n
+FIX '.'
+FIX '..'
+Impossible de lire le bloc de données\n
+Pas d'espace\n
+blk %d < cgdmin %d;
+ blk+cnt%d > cgsbase %d\n
+blk %d >= cgdmin %d;
+ blk+cnt %d > sblock.fs_fpg %d\n
+ I=%u PROPRIETAIRE= %s MODE=%o\n
+%s: 
+TAILLE=%ld MTIME=%s %s\n
+ I=%u PROPRIETAIRE= %d MODE=%o\n
+%ld %s |=%u\n
+ %d,
+Impossible d'allouer dirmap\n
+Impossible d'allouer dblist\n
+** %s : PAS D'ECRITURE\n
+Impossible d'obtenir la touche sémaphore=%d\n
+Impossible d'obtenir l'identificateur de sémaphore\n
+Impossible d'obtenir le sémaphore\n
+Impossible de libérer le sémaphore
+ETAT %d INCORRECT POUR LE REPERTOIRE INODE %d\n
+Taille du fichier incorrecte %d :
+%s : COMPTAGE DE BLOC INCORRECT=%u (%ld devrait etre %ld) (CORRIGE)\n
+TYPE DE FICHIER INCONNU OU TAILLE INCORRECTE I=%u\n
+%s ? 
+Impossible d'ouvrir un fichier sémaphore\n
+Impossible d'obtenir une touche pour sémaphore\n
+Impossible de créer le sémaphore\n
+Impossible d'initialiser le sémaphore\n
+dlistp NULL alors qu'elle ne devrait pas l'être\n
+Processus orphelin\n
+Pas d'option -w. Environnement altéré\n
+Impossible de lire %s\n
+Impossible d'écrire %s\n
+Syntaxe :\n%s [-F %s] [-m] [-y | -n] spécial\n
+échec de calloc\n
+\n%s ** Phase 1 - Vérification des FAT\n
+\n%s ** Phase 2 - Vérification des entrées de répertoire (passage 1)\n
+\n%s ** Phase 3 - Vérification des références croisées\n
+\n%s ** Phase 4 - Vérification des entrées de répertoire (passage 2)\n
+msync a échoué avec code de renvoi d'erreur %d\n
+\n%s *** LE SYSTEME DE FICHIERS A ETE MODIFIE ***\n
+mmap msync a échoué avec code retour erreur %d\n
+%s IMPOSSIBLE D'ACCEDER A BLK %ld\n
+%s IMPOSSIBLE DE RECHERCHER BLK %ld\n
+malloc a échoué\n
+%s ERREUR lecture FAT %d blk %ld\n
+%s Tous les FAT sont partiellement impossible à lire
+%s Les FAT sont désynchronisés\n
+Unité d'affectation perdue rencontrée\n
+'..' le numéro de cluster ne correspond pas au répertoire parent\n
+'.' le numéro de cluster ne correspond pas au répertoire courant\n
+Taille de fichier pour %s incorrecte\n
+Début de cluster pour %s hors registre\n
+Entrée FAT pour %s hors registre\n
+Réparer ? Veuillez entrer 'o' ou 'n' (oui ou non) :
+\n
+Volume %s   Créé %s-%.2d-%.4d  %2d:%.2d\n\n
+Volume sur lecteur %s n'a pas d'étiquette\n\n
+\n%ld unité(s) d'affectation perdue(s)\n\n
+Espace système de fichiers % 10lu octets\n
+% 10ld octets dans % 4ld fichier(s) caché(s)\n
+% 10ld octets dans % 4ld sous-répertoire(s)\n
+% 10ld octets dans % 4ld fichier(s) régulier(s)\n
+% 10lu octets disponibles dans le système de fichiers\n\n
+% 10d octets dans chaque unité d'affectation\n
+% 10ld unités d'affectation dans le système de fichiers\n
+% 10ld unités d'affectation disponibles dans le système de fichiers\n
+\n%ld unité(s) d'affectation réservée(s)\n\n
+\n%ld mauvaise(s) unité(s) d'affectation\n\n
+%s: %d entrées de répertoire nécessitant une unité d'affectation %d\n
+%s IMPOSSIBLE DE LIRE BLK %ld\n

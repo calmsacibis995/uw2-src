@@ -1,0 +1,95 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)systuner:Imakefile	1.17"
+#ident "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/System_Tuner/Imakefile,v 1.22 1994/08/09 22:07:20 tarre Exp $"
+
+/**/#	Copyright (c) 1993 Univel
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+/**/#	Univel.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#include    <Motif.tmpl>
+#include    <Motif.rules>
+#include    <C++.tmpl>
+#include    <C++.rules>
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+XLIBDIR     =  $(ROOT)/$(MACH)/usr/X/lib
+
+LD_RUN_PATH =  /usr/X/lib
+
+          DEBUG = -O
+    CDEBUGFLAGS = -O
+
+
+SRCS =		link.C \
+		l_func.C \
+		callbacks.C \
+		dialogs.C \
+		caw.C \
+		systuner.C
+
+HDRS =		link.h \
+		dtFuncs.h \
+		systuner_txt.h \
+		caw.h \
+		systuner.h
+
+OBJS =		link.o \
+		l_func.o \
+		callbacks.o \
+		dialogs.o \
+		caw.o \
+		systuner.o
+
+          PROGS = systuner
+
+
+     MDTILIBSRC = $(USLCLIENTSRC)/libMDtI
+     MDTILIB = $(MDTILIBSRC)/libMDtI.so
+       DTLIBSRC = $(LIBSRC)/Dt
+          DTLIB = $(DTLIBSRC)/libDt.so
+
+       INCLUDES = -I../include -I$(LIBSRC) -I$(LIBSRC)/Dt 
+
+          XLIBS = XmClientLibs $(XMULIB) $(DTLIB) $(MDTILIB)
+  SYS_LIBRARIES = ../libcomponents/libuwc.a -lgen -lm
+       C++FLAGS = $(DEBUG) -DX_WCHAR -DXTFUNCPROTO $(ALLDEFINES) $(ALLINCLUDES)
+           C++C = LD_RUN_PATH=/usr/X/lib $(PFX)CC
+      LDOPTIONS = $(CDEBUGFLAGS) $(CCOPTIONS) $(LOCAL_LDFLAGS)
+
+all:: $(PROGS)
+
+NormalCPlusPlusProgramTarget($(PROGS),$(OBJS),$(LLIBS),$(XLIBS),$(SYS_LIBS))
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 4555)
+
+InstallNonExecFile(pixmaps/systuner32,$(USRLIBDIR)/pixmaps)
+InstallNonExecFile(pixmaps/systuner48,$(USRLIBDIR)/pixmaps)
+InstallNonExecFile(pixmasks/systuner32,$(USRLIBDIR)/pixmasks)
+InstallNonExecFile(pixmasks/systuner48,$(USRLIBDIR)/pixmasks)
+InstallNonExecFile(bitmaps/systuner32,$(USRLIBDIR)/bitmaps)
+InstallNonExecFile(bitmaps/systuner48,$(USRLIBDIR)/bitmaps)
+InstallNonExecFile(bitmasks/systuner32,$(USRLIBDIR)/bitmasks)
+InstallNonExecFile(bitmasks/systuner48,$(USRLIBDIR)/bitmasks)
+
+InstallMsgCatalog(systuner)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()

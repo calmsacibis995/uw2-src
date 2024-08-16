@@ -1,0 +1,850 @@
+
+
+$quote "
+
+
+
+$
+$ Copyright 1991, 1992 Novell, Inc.
+$ All Rights Reserved.
+$
+$ This work is subject to U.S. and International copyright laws and
+$ treaties.  No part of this work may be used, practiced, performed,
+$ copied, distributed, revised, modified, translated, abridged,
+$ condensed, expanded, collected, compiled, linked, recast,
+$ transformed or adapted without the prior written consent
+$ of Novell.  Any use or exploitation of this work without
+$ authorization could subject the perpetrator to criminal and
+$ civil liability.
+$
+
+$  DEVELOPERS:  Do NOT add messages or constants to this file
+$
+$  You must go to file "nls/English/npsmsg.m4" and make additions there.
+$
+$
+$ The text in this file may be translated and the
+$ corresponding catalog file rebuilt for other languages.
+$ Rebuilding a catalog file is done with the following:
+$  % gencat nvtmsgs.cat nvtmsgs.msg
+$        where nvtmsgs.cat is the new catalog file.
+$
+$set 1  MSG_NPS_REV_SET
+$ Do NOT touch the following REV string. (MUST match msgtable.h)
+1 "@(#)$Header: /SRCS/esmp/usr/src/nw/lib/libnutil/nls/English/nwnet/npsmsg.m4,v 1.68 1994/09/23 18:03:24 vtag Exp $"
+
+$
+$	Messages for NPSD
+$
+$set 2  MSG_NPSD_SET
+
+
+$
+$	In the following text the initial %s: is replaced by the name of
+$	the process being run, i.e. NPSD:
+$
+$	The following are messages displayed when the verbose option is set
+$
+9 "La rete interna IPX è stata configurata, impostazione di tipo router su COMPLETO\n"
+10 "Novell Protocol Suite Streams Architecture Daemon\n"
+11 "Lettura della configurazione da \"%s\"\n"
+12 "Generazione dinamica del daemon SAP \"%s\" \n"
+13 "Generazione dinamica del daemon NWDIAG \"%s\" \n"
+14 "Inclusione di SPXII, Copyright Novell Inc.\n"
+15 "Inclusione di NetBIOS, Copyright Novell Inc.\n"
+16 "Rete interna IPX: 0x%X \n"
+17 "Rete interna IPX: non configurata\n"
+18 "Abilitazione del login remoto di rete SPX (NVT)\n"
+19 "Generazione dinamica del daemon dello stack del protocollo di gestione della rete \"%s\" \n"
+20 "NPSD-2.0-20: L'esecuzione del daemon di gestione di rete non è riuscita\n"
+21 "Tipo di router impostato su CLIENT, daemon SAP non avviato\n"
+22 "LAN %d  %08X  %s  %s "
+23 "PPA %d"
+24 " %s"
+25 "NPSD-2.0-25: L'esecuzione del daemon diagnostico non è riuscita\n"
+$
+$	The following two lines are headings to columnar data
+$	and must be aligned and not exceed the column limits indicated
+$	by the dashed lines.  If you need to change the column lengths,
+$	the format is designated on the third line.  The last two column
+$	lengths are determined by the space filled length of the message
+$	text in messages 30-34
+$
+26 "\n"
+27 "  LAN      RETE        NODO       ID MUX       Stato         Flusso\n"
+28 "-------  --------  ------------  --------  -------------  ------------\n"
+29 "%7d  %8.8X  %2.2X%2.2X%2.2X%2.2X%2.2X%2.2X  %8.8X  "
+$
+$	The following are displayed in the State column (see HEADING_TEXT)
+$	when the verbose option is set
+$
+30 "   NON ASSOCIATO   "
+31 "   COLLEGATO    "
+32 "   RETE $set      "
+33 "    INATTIVO     "
+34 "   SCONOSCIUTO   "
+$
+$	The following are displayed in the Stream Status column
+$	(see HEADING_TEXT) when the verbose option is set
+$
+40 "     ERRORE\n"
+41 "       OK\n"
+$
+$	The following are error messages
+$
+50 "NPSD-2.0-50: Uso: npsd <-%s>\n"
+58 "NPSD-2.0-58: Nessun router di socket in IPX, impossibile configurare %s\n"
+60 "NPSD-2.0-60: Nessuno shim di NetBIOS specificato\n"
+61 "NPSD-2.0-61: ConfigureLan: funzione adattatore tipo %s non riuscita\n"
+62 "NPSD-2.0-62: Errore di configurazione su %s%d%s: "
+63 "NPSD-2.0-63: Errore di configurazione su %s: "
+66 "NPSD-2.0-66: Errore di configurazione su %s%d%s, tipo di frame Ethernet %s non valido\n"
+67 "NPSD-2.0-67: Errore di configurazione su %s%d%s, tipo di adattatore \"%s\" non valido\n"
+68 "NPSD-2.0-68: Errore di configurazione su %s%d%s, adattatore \"%s\" non valido\n"
+69 "Impossibile allocare %d byte per l'array di informazioni LAN\n"
+70 "NPSD-2.0-70: Impossibile allocare %d byte per il buffer dei descrittori di file\n"
+71 "NPSD-2.0-71: Impossibile creare file di log per il processo.\n"
+72 "NPSD-2.0-72: Il file di configurazione non è stato inizializzato\n"
+73 "Uscita\n"
+74 "Impossibile configurare il login remoto di rete SPX (NVT) a meno che SPX non sia configurato\n"
+75 "NPSD-2.0-75: La chiamata di sistema fork del daemon di login remoto della rete SPX (nvts) non è riuscita\n"
+76 "NPSD-2.0-76: NVT ATTIVO; avviamento del server di rlogin remoto della rete SPX (NVT)\n"
+77 "NPSD-2.0-77: NVT INATTIVO; annullamento del server di rlogin della rete SPX (NVT)\n"
+78 "NPSD-2.0-78: L'esecuzione del daemon di login remoto della rete SPX (NVT) non è riuscita\n"
+87 "NPSD-2.0-87: Annullamento di NPSD\n"
+88 "NPSD-2.0-88: La rete interna deve essere configurata\n"
+89 "NPSD-2.0-89: Impossibile mappare %s dalla configurazione: "
+90 "NPSD-2.0-90: configurazione LAN non valida, il numero di rete per la lan %d e la lan %d sono duplicati\n"
+$
+$	The following error messages are followed by a system error message
+$	(output of perror) on the same line.  These messages require a
+$	trailing space and do not have an ending newline (\n).
+$
+100 "NPSD-2.0-100: EthernetDLPI (Rich Info): putmsg: "
+101 "NPSD-2.0-101: EthernetDLPI (Rich Info): getmsg: "
+102 "NPSD-2.0-102: EthernetDLPI (Rich Info): "
+103 "NPSD-2.0-103: EthernetDLPI (Collega): "
+104 "NPSD-2.0-104: EthernetDLPI (Collega): putmsg: "
+105 "NPSD-2.0-105: EthernetDLPI (Collega): getmsg: "
+106 "NPSD-2.0-106: GetDlInfo (Rich Info): getmsg: "
+107 "NPSD-2.0-107: EthernetDLPI (Associa): putmsg: "
+108 "NPSD-2.0-108: EthernetDLPI (Associa): getmsg: "
+109 "NPSD-2.0-109: EthernetDLPI (Associa): "
+110 "NPSD-2.0-110: EthernetDLPI (Associa successivo) putmsg: "
+111 "NPSD-2.0-111: EthernetDLPI (Associa successivo): getmsg: "
+112 "NPSD-2.0-112: EthernetDLPI (Associa successivo): "
+119 "NPSD-2.0-119: L'esecuzione del daemon SAP non è riuscita: "
+121 "NPSD-2.0-121: Apertura di %s non riuscita: "
+122 "NPSD-2.0-122: Impossibile collegare %s a %s: "
+123 "NPSD-2.0-123: La chiamata di sistema ioctl (%s) a %s non è riuscita a impostare il valore 0x%X: "
+125 "NPSD-2.0-125: Push dei flussi di %s su %s non riuscita: "
+129 "NPSD-2.0-129: La chiamata di sistema ioctl (%s) a %s non è riuscita: "
+130 "NPSD-2.0-130: Impostazione di \"close-on-exec\" non riuscita per %s: "
+$
+$	The following are DLPI error messages.  These may trail the above
+$	messages as in the output of perror.
+$
+150 "Risposta DLPI inaspettata (tipo 0x%02X)\n"
+151 "Errore DLPI sconosciuto Ox%02X\n"
+$
+$	This first message is the basis for all the messages below.
+$	The messages below are included where the second %s is placed.
+$
+160 "NPSD-2.0-160: Errore DLPI: %s\n"
+$
+$	These messages are part of the above message, see comments above
+$
+170 "Permessi impropri per la richiesta"
+171 "Indirizzo DLSAP in formato improprio o non valido"
+172 "Il numero di sequenza non proviene da DL_CONN_IND eccezionale"
+173 "I dati dell'utente hanno superato il limite del fornitore"
+174 "PPA specificato non valido"
+175 "La primitiva ricevuta non è conosciuta dal fornitore DLS"
+176 "I parametri QOS contengono valori non validi"
+177 "Tipo di struttura QOS sconosciuto o non supportato"
+178 "Selettore LSAP non valido, compatibilità LLI"
+179 "Il token non è associato ad un flusso attivo"
+180 "Seconda associazione tentata con \"dl_max_conind\" o \"dl_conn_mgmt\" maggiore di zero sullo stesso DLSAP o PPA"
+181 "Inizializzazione del collegamento fisico non riuscita"
+182 "Il fornitore non ha potuto allocare l'indirizzo alternativo"
+183 "Collegamento fisico non inizializzato"
+184 "Primitiva emessa in uno stato improprio, compatibilità LLI"
+185 "DLPI: Si è verificato un errrore di sistema"
+186 "Servizio richiesto non prestato dal fornitore"
+187 "Impossibile consegnare l'unità dati precedente"
+188 "La primitiva è nota ma non supportata dal fornitore DLS"
+189 "Limite superato"
+190 "Modo promiscuo non abilitato"
+191 "Altri flussi per un PPA particolare nello stato post-attached"
+192 "Gestione automatica delle risposte XID & TEST non supportata"
+193 "Gestione automatica di XID non supportata"
+194 "Gestione automatica di TEST non supportata"
+195 "Gestione automatica della risposta XID"
+196 "Gestione automatica della risposta TEST"
+197 "Indicazioni di connessione eccezionale in sospeso"
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for NWDIAGD
+$
+$set 3  MSG_DIAG_SET
+
+
+$
+$	Most messages start with %s
+$		%s is usually "nwdiagd: date time:"
+$	if the time can be determined, the format of messages is:
+$		sapd: 10:31:93 13:56:21: message
+$			(date & time printed in locale equivalent)
+$	If the time cannot be determined, the format is:
+$		sapd: [unknown time]: message
+$
+1 "[ora sconosciuta]"
+$
+$	The following messages are followed by perror output and require
+$	a trailing space and no newline (\n).
+$
+11 "NWDIAGD-2.0-11: La chiamata di sistema fork non è riuscita: "
+12 "NWDIAGD-2.0-12: Impossibile diventare leader di sessione (setpgrp): "
+13 "NWDIAGD-2.0-13: La chiamata di sistema ioctl (%s) per la rete 0x%08X non è riuscita: "
+14 "NWDIAGD-2.0-14: La chiamata di sistema ioctl (%s) non è riuscita: "
+15 "NWDIAGD-2.0-15: Chiamata di libreria t_rcvudata non riuscita: "
+16 "NWDIAGD-2.0-16: Apertura di %s non riuscita: "
+17 "NWDIAGD-2.0-17: Chiamata di libreria t_open di %s non riuscita: "
+18 "NWDIAGD-2.0-18: Chiamata di libreria t_bind a %s non riuscita: "
+19 "NWDIAGD-2.0-19: Chiamata di libreria t_alloc di %s non riuscita: "
+20 "NWDIAGD-2.0-20: La chiamata di libreria t_snd della domanda SAP non è riuscita: "
+21 "NWDIAGD-2.0-21: La chiamata di libreria t_rcvudata alla domanda SAP non è riuscita: "
+22 "NWDIAGD-2.0-22: %s non riuscita: "
+23 "NWDIAGD-2.0-23: Impossibile mappare %s dalla configurazione: "
+24 "NWDIAGD-2.0-24: La chiamata di libreria t_rcvdis non è riuscita per %s: "
+25 "NWDIAGD-2.0-25: La chiamata di libreria t_listen su %s non è riuscita: "
+$
+$	The following are error messages
+$
+30 "NWDIAGD-2.0-30: La chiamata di sistema poll non è riuscita. errno: %d\n"
+31 "NWDIAGD-2.0-31: Impossibile ricevere - t_look %d, t_errno = %d, errno %d\n"
+32 "NWDIAGD-2.0-32: Dimensione pacchetto ipxDiagReq non valida %d\n"
+34 "NWDIAGD-2.0-34: Impossibile allocare %d byte per informazioni LAN.\n"
+35 "NWDIAGD-2.0-35: Impossibile riallocare %d byte per la struttura di poll.\n"
+36 "NWDIAGD-2.0-36: Impossibile trovare informazioni sulla rete in netsTbl.\n"
+37 "NWDIAGD-2.0-37: Errore di GetNetEntry()\n"
+38 "NWDIAGD-2.0-38: Impossibile trovare informazioni sul server in serversTbl.\n"
+40 "NWDIAGD-2.0-40: Manca la tabella dei server\n"
+41 "NWDIAGD-2.0-41: Errore restituito da InitServersTbl\n"
+42 "NWDIAGD-2.0-42: Le dim. della tabella %d non sono un multiplo di routeInfo_t\n"
+43 "NWDIAGD-2.0-43: IpxSpxCountPkts: t_look() %d\n"
+44 "NWDIAGD-2.0-44: IpxSpxCountPkts: Azione non valida %d\n"
+45 "NWDIAGD-2.0-45: Impossibile mappare %s dalla configurazione\n"
+$
+$	The following are informational messages
+$
+50 "NWDIAGD Avviato\n"
+51 "Uscita anomala\n"
+52 "NWDIAGD: Uscita regolare\n"
+54 "NWDIAGD: Annullamento di NPSD\n"
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for SAPD
+$
+$set 4  MSG_SAPD_SET
+
+
+$
+$	Most messages start with %s
+$		%s is usually "sapd: date time:"
+$	if the time can be determined, the format of messages is:
+$		sapd: 10:31:93 13:56:21: message
+$			(date & time printed in locale equivalent)
+$	If the time cannot be determined, the format is:
+$		sapd: [unknown time]: message
+$
+1 "[ora sconosciuta]"
+2 "SAPD-2.0-2: Il daemon di pubblicizzazione del server è già attivo\n"
+$
+$	The following messages are followed by perror output and require
+$	a trailing space and no newline (\n).
+$
+10 "SAPD-2.0-10: %s: ReadSapPacket non riuscita: "
+11 "SAPD-2.0-11: %s: putmsg WriteSapPacket non riuscita: "
+12 "SAPD-2.0-12: %s: Il controllo IPX dell'origine sap non è riuscito: "
+13 "SAPD-2.0-13: %s: Apertura di %s non riuscita: "
+14 "SAPD-2.0-14: %s: Ioctl per acquisire informazioni LAN non riuscita: "
+15 "SAPD-2.0-15: %s: Ioctl per acquisire il numero max di LAN non riuscita: "
+16 "SAPD-2.0-16: %s: L'elencazione delle reti per la rete 0x%08X non è riuscita: "
+17 "SAPD-2.0-17: %s: Impossibile impostare priorità (nice) a %d: "
+18 "SAPD-2.0-18: %s: La chiamata di sistema fork non è riuscita: "
+21 "SAPD-2.0-21: %s: Impossibile diventare leader di sessione (setpgrp): "
+22 "SAPD-2.0-22: %s: Impossibile mappare %s dalla configurazione: "
+23 "SAPD-2.0-23: %s: Ioctl per impostare la coda RIP non riuscita: "
+24 "SAPD-2.0-24: %s: Impossibile mappare sap_fast_init dalla configurazione, uso del default=attivo"
+$
+$	The following are informational messages
+$
+30 "SAPD-2.0-30: %s: Zero byte restituiti da getmsg(), interpretato come HANGUP\n"
+31 "SAPD-2.0-31: %s: Ricevuto segnale di aggancio\n"
+32 "SAPD-2.0-32: %s: Ricevuto segnale di terminazione\n"
+33 "SAPD-2.0-33: %s: I restanti dati IPX sono di %d byte, dimensioni non valide per l'operazione SAP %s\n"
+34 "SAPD-2.0-34: %s: L'allocazione del buffer SAP di ricezione o di invio non è riuscita\n"
+35 "SAPD-2.0-35: %s: Nessuna struttura di rete per la LAN %d connessa\n"
+36 "SAPD-2.0-36: %s: È stato rilevato un cambiamento d'indirizzo di rete per %s\n"
+37 "SAPD-2.0-37: %s: L'allocazione dell'array della rete locale non è riuscita\n"
+38 "SAPD-2.0-38: %s: Rilevato un errore di configurazione del router\n%s sta rivendicando questo stesso indirizzo internet\n"
+39 "SAPD-2.0-39: %s: Allocazione di ServerEntry non riuscita\n"
+40 "SAPD-2.0-40: %s: Allocazione per InfoSource non riuscita\n"
+41 "SAPD-2.0-41: %s: Allarme perso. Secondi trascorsi %d Intervallo %d Fattore di riavviamento %d - riavviamento \n"
+42 "SAPD-2.0-42: %s: Impossibile risolvere il numero di rete per la LAN %d connessa\n"
+43 "SAPD-2.0-43: %s: La dimensione massima di pacchetto SAP è stata modificata a maxSDU %d per la LAN %d\n"
+44 "SAPD-2.0-44: %s: Codice di ritorno non valido da interrogazione errno= %d\n"
+45 "SAPD-2.0-45: %s: Impossibile allocare spazio per elenco delle reti\n"
+47 "SAPD-2.0-47: %s: Priorita SAPD %d supera il massimo %d regolazione a %d\n"
+48 "SAPD-2.0-48: %s: Priorità %d inferiore al minimo %d, regolata a %d\n"
+50 "SAPD-2.0-50: %s: %d server in tabella, %d tipi di server\n"
+51 "SAPD-2.0-51: %s: %d tipi di server non calcolati, tabella troppo piccola\n"
+54 "SAPD-2.0-54: %s: Il pool di server è vuoto\n"
+55 "SAPD-2.0-55: %s: Pool di server non valido -1 di %d\n"
+57 "SAPD-2.0-57: %s: Lettura del pacchetto SAP non riuscita, pacchetto di dimensioni sbagliate di %d byte, indirizzo %s\n"
+58 "SAPD-2.0-58: %s: Dati IPX ricevuti, %d byte, non coincide con dimensioni pacchetto ipx %d\n"
+61 "SAPD-2.0-61: %s: Ricevuto pacchetto da LAN non connessa, risposta del servizio generale, indirizzo %s\n"
+62 "SAPD-2.0-62: %s: Ricevuto pacchetto da LAN non connessa, domanda del servizio generale, indirizzo %s\n"
+63 "SAPD-2.0-63: %s: Ricevuto pacchetto da LAN non connessa, domanda del servizio più vicino, indirizzo %s\n"
+64 "SAPD-2.0-64: %s: Ricevuto pacchetto da LAN non connessa, tipo 0x%X, indirizzo %s\n"
+65 "SAPD-2.0-65: %s: Il pacchetto di destinazione a LAN non connessa è stato rilasciato, risposta del servizio generale, indirizzo %s\n"
+66 "SAPD-2.0-66: %s: Il pacchetto di destinazione a LAN non connessa è stato rilasciato, domanda del servizio generale, indirizzo %s\n"
+67 "SAPD-2.0-67: %s: Il pacchetto di destinazione a LAN non connessa è stato rilasciato, domanda del servizio più vicino, indirizzo %s\n"
+68 "SAPD-2.0-68: %s: Il pacchetto di destinazione a LAN non connessa è stato rilasciato, risposta del servizio più vicino, indirizzo %s\n"
+69 "SAPD-2.0-69: %s: Il pacchetto di destinazione a LAN non connessa è stato rilasciato, tipo 0x%X, indirizzo %s\n"
+70 "SAPD-2.0-70: %s: La risposta del server più vicino è stata rilasciata, origine %s\n"
+71 "SAPD-2.0-71: %s: Il tipo di pacchetto %d sconosciuto è stato rilasciato, origine %s\n"
+72 "SAPD-2.0-72: %s: Superato il massimo messaggi %d, registrazione SAP arrestata\n        Per riavviare rimuovere file di log SAP %s\n"
+80 "SAPD-2.0-80: %s: Avviato\n"
+81 "SAPD-2.0-81: %s: Uscita anomala\n"
+82 "SAPD-2.0-82: %s: Uscita regolare\n"
+83 "SAPD-2.0-83: %s: Daemon SAP inizializzato\n"
+84 "SAPD-2.0-84: %s: Impossibile creare file di log per il processo\n"
+85 "SAPD-2.0-85: %s: Impossibile inizializzare il file di configurazione\n"
+86 "SAPD-2.0-86: %s: errore %s: "
+87 "SAPD-2.0-87: %s: Annullamento di NPSD\n"
+90 "SAPD-2.0-90:         Tipo server 0x%X, Pid locale %d, Nome server %s\n"
+91 "SAPD-2.0-91: %s: Aggiunta server locale:\n"
+92 "SAPD-2.0-92: %s: Cancella server locale:\n"
+93 "SAPD-2.0-93: %s: Rip cancella server locale:\n"
+94 "SAPD-2.0-94: %s: Server locale superato:\n"
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for NVTD
+$
+$set 5  MSG_NVTD_SET
+
+
+1 "NVTD-2.0-1: Errore di configurazione su %s: "
+2 "NVTD-2.0-2: La chiamata di sistema mkdir di %s non è riuscita.\n"
+3 "NVTD-2.0-3: La chiamata di sistema fstat non è riuscita.\n"
+4 "NVTD-2.0-4: Errore creando il nodo %s del file system NVT\n"
+5 "NVTD-2.0-5: Errore modificando il proprietario di %s\n"
+6 "NVTD-2.0-6: Errore modificando il modo di %s\n"
+7 "NVTD-2.0-7: Apertura di %s non riuscita.\n"
+8 "NVTD-2.0-8: Errore riassegnando stdin, stdout e stderr a %s.\n"
+9 "NVTD-2.0-9: La chiamata di sistema stty non è riuscita.\n"
+10 "NVTD-2.0-10: Errore nella chiamata di sistema makeutx per %s.\n"
+11 "NVTD-2.0-11: La chiamata di sistema execl per avviare ttymon non è riuscita.\n"
+
+$ ------------------------------------------------------------------
+$
+$	Messages for IPXINFO
+$
+$set 6  MSG_IPXI_SET
+
+
+1 "\n"
+2 "IPXINFO-2.0-2: Apertura di %s non riuscita"
+3 "IPXINFO-2.0-3: La chiamata di sistema ioctl (IPX_STATS) a %s non è riuscita"
+4 "%4d:%02d:%02d Tempo di attività del driver IPX\n"
+5 "IPX Socket Multiplexor (ISM) Versione: %2d.%02d%c%c\n"
+6 "IPX LAN Router versione: %2d.%02d%c%c\n"
+8 "Statistiche di IPX LAN Router:\n"
+9 "Statistiche IPX Socket Multiplexor (ISM):\n"
+10 "        Informazioni sui pacchetti ricevuti da LAN\n"
+11 "%10u Pacchetti con intestazione DLPI troppo corta, rilasciati\n"
+12 "%10u Pacchetti con tipo di dati non DLPI, rilasciati\n"
+13 "%10u Pacchetti di dati IPX fusi\n"
+14 "%10u Pacchetti IPX/NetBIOS instradati verso altre LAN\n"
+15 "%10u I pacchetti IPX/NetBIOS hanno raggiunto il limite di instradamento, non instradati\n"
+20 "%10u Pacchetti di dati IPX totali ricevuti dalle LAN\n"
+21 "  %10u +Pacchetti minori delle dimensioni di intestazione IPX, rilasciati\n"
+30 "  %10u +Pacchetti di diffusione ritrasmessi al mittente dal driver DLPI, rilasciati\n"
+31 "  %10u +Pacchetti IPX/RIP\n"
+32 "     %10u +IPX/RIP elaborati dal router e rilasciati\n"
+33 "      %10u +IPX/RIP elaborati dal router e instradati verso l'ISM\n"
+40 "  %10u +Pacchetti IPX/SAP\n"
+41 "     %10u +Pacchetti IPX/SAP non validi, rilasciati\n"
+42 "     %10u +Pacchetti IPX/SAP instradati verso l'ISM\n"
+43 "     %10u +Pacchetti IPX/SAP non ISM, instradati verso sapd\n"
+44 "     %10u +Pacchetti IPX/SAP non ISM, non sapd, rilasciati\n"
+50 "  %10u +Pacchetti IPX/DIAGNOSTIC\n"
+51 "     %10u +Pacchetti IPX/DIAGNOSTIC indirizzati a questa rete, instradati verso l'ISM\n"
+52 "     %10u +Pacchetti IPX/DIAGNOSTIC indirizzati a NIC\n"
+53 "       %10u +Pacchetti IPX/DIAGNOSTIC instradati verso l'ISM\n"
+54 "       %10u +Pacchetti IPX/DIAGNOSTIC, non ISM, ha risposto il router LAN\n"
+55 "  %10u +Pacchetti, indirizzati a NIC, non IPX/DIAGNOSTIC, rilasciati\n"
+60 "  %10u +Pacchetti di diffusione\n"
+61 "     %10u +Pacchetti di diffusione indirizzati a questa rete\n"
+62 "     %10u +Pacchetti di diffusione indirizzati a NIC\n"
+63 "        %10u +Pacchetti di diffusione IPX/DIAGNOSTIC indirizzati a NIC\n"
+64 "           %10u  Pacchetti IPX/DIAGNOSTIC inoltrati alle LAN\n"
+65 "           %10u +Pacchetti IPX/DIAGNOSTIC instradati verso l'ISM\n"
+66 "           %10u +pacchetti IPX/DIAGNOSTIC ISM non presente, ha risposto il router LAN\n"
+67 "        %10u +Pacchetti Broadcast indirizzati a NIC, instradati\n"
+70 "  %10u +La destinazione dei pacchetti non è questa rete, inoltrati al router successivo\n"
+71 "  %10u +Pacchetti instradati verso un nodo di una rete connessa\n"
+72 "  %10u +Pacchetti instradati verso l'ISM\n"
+80 "        Informazioni sui pacchetti inviati al router della LAN\n"
+81 "%10u  Pacchetti IPX/NetBIOS da un'applicazione instradati verso LAN\n"
+82 "%10u  Pacchetti di dati IPX totali ricevuti dall'ISM\n"
+83 "%10u  Pacchetti di dati IPX totali inviati a una LAN o all'ISM\n"
+100 "  %10u  Rete/nodo di destinazione pacchetti riempito con questa rete/nodo\n"
+101 "  %10u +Pacchetti dai socket di destinazione/origine ISM uguali, rilasciati\n"
+102 "  %10u +Errore router pacchetti, LAN non valida, rilasciati\n"
+103 "  %10u +Pacchetti con dimensioni superiori alle dimensioni massime SDU della LAN, rilasciati\n"
+104 "  %10u +Pacchetti inviati a una LAN non più connessa, rilasciati\n"
+105 "  %10u +Pacchetti instradati verso l'ISM\n"
+106 "  %10u +Pacchetti instradatti verso LAN\n"
+107 "  %10u +Pacchetti accodati alla LAN\n"
+108 "  %10u +Pacchetti accodati in una coda di pacchetti sincronizzata di una LAN\n"
+120 "%10u  Totale pacchetti Ioctl\n"
+121 "  %10u +Imposta LAN configurate\n"
+122 "  %10u +Acquisisci LAN configurate\n"
+123 "  %10u +Acquisisci coda SAP\n"
+124 "  %10u +Imposta informazioni LAN\n"
+125 "  %10u +Acquisisci informazioni LAN\n"
+126 "  %10u +Acquisizione indirizzo nodo\n"
+127 "  %10u +Acquisizione indirizzo di rete\n"
+128 "  %10u +Acquisisci statistiche\n"
+129 "  %10u +Concatena\n"
+130 "  %10u +Rimuovi concatenamento\n"
+131 "  %10u +Tipo sconosciuto\n"
+140 "%10u  Socket associati\n"
+141 "%10u  Richieste di associazione di socket non TLI\n"
+142 "%10u  Richieste di associazione di socket TLI\n"
+143 "%10u  Richieste di gestione di opzioni TLI\n"
+144 "%10u  Richieste TLI sconosciute\n"
+150 "%10u  Totale pacchetti di dati IPX ricevuti da applicazioni\n"
+151 "   %10u  Somma di controllo generata\n"
+152 "   %10u +Generazione della somma di controllo non riuscita, pacchetto rilasciato\n"
+153 "   %10u  Pacchetti riempiti fino ad un numero pari di byte\n"
+154 "   %10u  Pacchetti riempiti allocando più spazio\n"
+155 "   %10u +Impossibile allocare blocco per riempimento, pacchetto rilasciato\n"
+156 "   %10u +Utente di BIND_SOCKET ha inviato un pacchetto con socket di valore zero, rilasciato\n"
+160 "   %10u +Pacchetti di dati non TLI\n"
+161 "      %10u +Pacchetti con lunghezza inferiore alle dimensioni di intestazione IPX, rilasciati\n"
+162 "      %10u +Pacchetti inviati al router della LAN\n"
+164 "   %10u +Pacchetti di dati TLI\n"
+165 "      %10u +Stato TLI non valido, pacchetto rilasciato\n"
+166 "      %10u +Dimensioni indirizzo IPX non valide, pacchetto rilasciato\n"
+167 "      %10u +Dimensioni opzione TLI non valide, pacchetto rilasciato\n"
+168 "      %10u +Allocazione dell'intestazione IPX non riuscita, pacchetto rilasciato\n"
+169 "      %10u +Inviato al router della LAN\n"
+200 "%10u  Totale pacchetti ricevuti dall'ISM\n"
+201 "   %10u  Dimensioni dei dati tagliate per corrispondere alla dimensioni dei dati IPX\n"
+202 "   %10u +Lunghezza del pacchetto inferiore alla lunghezza IPX, rilasciato\n"
+203 "   %10u +Somma di controllo IPX non valida, rilascia pacchetto\n"
+204 "   %10u +Pacchetti rilasciati per flusso superiore pieno\n"
+205 "   %10u +Pacchetti rilasciati, socket di destinazione non associato\n"
+206 "   %10u +Allocazione dell'intestazione TLI non riuscita, pacchetto rilasciato\n"
+210 "   %10u +Totale pacchetti di dati instradati dall'ISM\n"
+211 "      %10u +Pacchetti inviati a socket non TLI\n"
+212 "      %10u +Pacchetti inviati a socket TLI\n"
+220 "%10u  Totale Ioctl elaborati\n"
+221 "   %10u +Richieste Ioctl SET_WATER\n"
+222 "   %10u +Richieste Ioctl SET_SOCKET o BIND_SOCKET\n"
+223 "   %10u +Richieste Ioctl UNBIND_SOCKET\n"
+224 "   %10u +Richieste Ioctl STATS\n"
+227 "   %10u +Richieste Ioctl sconosciute, inviate al router della LAN\n"
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for RIPINFO
+$
+$set 7  MSG_RIPI_SET
+
+
+1 "\n"
+2 "RIPINFO-2.0-2: Apertura di %s non riuscita"
+3 "RIPINFO-2.0-3: La chiamata di sistema ioctl (RIPX_STATS) a %s non è riuscita"
+4 "%4d:%02d:%02d Tempo di attività del driver RIP\n"
+5 "RIPX Versione: %2d.%02d%c%c\n"
+10 "%10u Totale pacchetti del router ricevuti\n"
+11 "  %10u +Impossibile generare chiave LAN, rilasciato\n"
+12 "  %10u +Dimensioni struttura router non valide, rilasciato\n"
+13 "  %10u  Blocchi di messaggi multipli fusi\n"
+14 "  %10u +Fusione non riuscita, rilasciato\n"
+15 "  %10u +Pacchetti di richiesta router\n"
+16 "  %10u +Pacchetti di risposta router\n"
+17 "  %10u +Pacchetti di richiesta sconosciuti\n"
+20 "%10u Totale pacchetti del router inviati\n"
+21 "  %10u +Impossibile allocare il buffer per il pacchetto, ignorato\n"
+22 "  %10u +Impossibile far corrispondere la destinazione con una rete, ignorato\n"
+23 "  %10u +Pacchetti di richiesta del router inviati\n"
+24 "  %10u +Pacchetti di risposta del router inviati\n"
+30 "%10u Totale richieste di costruzione pacchetti per la rete locale, ignorato\n"
+31 "%10u Totale pacchetti del router costruiti per la rete locale, instradati verso IPX\n"
+40 "%10u Richieste Ioctl elaborate\n"
+41 "  %10u +Ioctl RIPX_INITIALIZE\n"
+42 "  %10u +Ioctl RIPX_GET_HASH_SIZE\n"
+43 "  %10u +Ioctl RIPX_GET_HASH_STATS\n"
+44 "  %10u +Ioctl RIPX_DUMP_HASH_TABLE\n"
+45 "  %10u +Ioctl RIPX_GET_ROUTER_TABLE\n"
+46 "  %10u +Ioctl RIPX_GET_NET_INFO\n"
+47 "  %10u +Ioctl RIPX_CHECK_SAP_SOURCE\n"
+48 "  %10u +Ioctl RIPX_RESET_ROUTER\n"
+49 "  %10u +Ioctl RIPX_DOWN_ROUTER\n"
+50 "  %10u +Ioctl RIPX_STATS\n"
+51 "  %10u +Ioctl sconosciute\n"
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for NWSAPINFO
+$
+$set 8  MSG_SAPI_SET
+
+
+1 "\n"
+2 "NWSAPINFO-2.0-2: Valore numerico non valido \"%s\"\n"
+3 "NWSAPINFO-2.0-3: Valore numerico %d > %d\n"
+4 "NWSAPINFO-2.0-4: Argomento sconosciuto \"%s\"\n"
+5 "Uso: nwsapinfo [-adfFilLtxz] [-c num] [-C num] [-n num] [-s \"nome\"] [-T num]\n"
+6 "        opzione -a - uguale alle opzioni -dfLstx\n"
+7 "        opzione -d - copia delle tabelle SAP\n"
+8 "        opzione -f - stampa iniziale del nome a 12 car\n"
+9 "        opzione -F - stampa il finale del nome completo\n"
+10 "        opzione -i - visualizza informazioni SAP (default)\n"
+11 "        opzione -l - visualizza i server locali di questo computer\n"
+12 "        opzione -L - visualizza informazioni LAN\n"
+13 "        opzione -t - visualizza il riepilogo dei tipi\n"
+14 "        opzione -x - visualizza l'indirizzo IPX del SAP\n"
+15 "        opzione -z - non stampare testo, solo valori\n"
+16 "        -c num - visualizza server cambiati a partire dal timbro di revisione\n"
+17 "        -C num - visualizza i server cambiati a partire dal timbro di revisione\n"
+18 "                 Attendi revisioni aggiuntivei\n"
+19 "        -n num - visualizza il server più vicino del tipo num\n"
+20 "        -s \"nome\" - visualizza informazioni del server su nome\n"
+21 "                 Può essere seguita dall'opzione -T\n"
+22 "        -T num - Tipo del set di server opzionale\n"
+23 "                 Può essere usata con una o più delle opzioni -d, -t, -c, -C, -s\n"
+30 "Statistiche SAP non disponibili\n"
+31 "%3d:%02d:%02d Tempo di attività del daemon SAP\n"
+32 "%6d è il PID SAP, SAP è attivo\n"
+33 "%6d è il PID SAP, SAP NON è attivo\n"
+34 "%6d Totale server conosciuti\n"
+35 "%6d Totale voci di server inutilizzate\n"
+36 "%6x Totale LAN note al SAP\n"
+37 "%6u Valore timbro di revisione attuale\n"
+38 "%6d Totale pacchetti SAP ricevuti\n"
+39 "    %6d Pacchetti GSQ ricevuti\n"
+40 "    %6d Pacchetti GSR ricevuti\n"
+41 "    %6d Pacchetti NSQ ricevuti\n"
+42 "    %6d Ricevute richieste locali di pubblicizzare un server\n"
+43 "    %6d Ricevute richieste locali di notificare cambiamenti\n"
+44 "    %6d Ricevute richieste locali di acquisire ID della memoria condivisa\n"
+45 "    %6d Pacchetti ricevuti, origine non su questa LAN\n"
+46 "    %6d Pacchetti ricevuti e rilasciati, ritrasmissione del pacchetto inviato dal daemon SAP\n"
+47 "    %6d Pacchetti ricevuti, pacchetti SAP di dimensioni non valide\n"
+48 "    %6d Rilevata origine SAP non valida\n"
+49 "%6d Totale pacchetti SAP inviati\n"
+50 "    %6d Risposte del server più vicino inviate\n"
+51 "    %6d Risposte del server generale inviate\n"
+52 "    %6d Domande del server generale inviate\n"
+53 "    %6d Risposte ACK inviate per pubblicizzare un server locale\n"
+54 "    %6d risposte NAK per pubblicizzare un server locale inviato\n"
+55 "    %6d Risposte ACK inviate per notificare processi locali di cambiamento\n"
+56 "    %6d riposte NAK per notificare il processo di modifiche locale inviato\n"
+57 "    %6d Risposte ACK inviate per acquisire ID della memoria condivisa\n"
+58 "    %6d Pacchetti in cui la rete di destinazione non è una rete locale\n"
+59 "    %6d Errori della richiesta di allocazione della struttura del server (memoria condivisa)\n"
+60 "    %6d Errori della richiesta di allocazione della struttura dell'origine (malloc)\n"
+61 "%6d Totale pacchetti con la rete fuori servizio ricevuti da RIP\n"
+62 "    %6d Pacchetti non validi ricevuti da RIP\n"
+63 "    %6d Servizi impostati a DOWN (interrotti) dai pacchetti RIP ricevuti\n"
+64 "%6d Processi locali che richiedono la notifica di cambiamenti\n"
+65 "    %6d Notifiche di cambiamento inviate ai processi locali\n"
+70 "%-12s "
+71 "Tipo: 0x%04X"
+72 " Salti: %2d"
+73 "Indirizzo: "
+74 " 0x"
+75 "%02X"
+76 " "
+77 " %s"
+80 "SAPGetAllServers non riuscita"
+90 " Numero totale di server locali %d\n"
+91 " Numero totale di server %d\n"
+100 " Conteggio %d\n"
+101 " Numero totale di server %d, tipi di server %d\n"
+110 "Impossibile attivare meccanismo di notifica\n"
+111 "SAPGetChangedServers non riuscita"
+112 " Il numero totale di server cambiati dalla revisione %u alla revisione %u è %d\n"
+113 "SAPGetNearestServers non riuscita"
+114 "Tipo: 0x%04X non trovato\n"
+115 "SAPGetServerByName non riuscita"
+116 " Indirizzo IPX del daemon SAP\n"
+140 "0x%08X ID di rete\n"
+141 "%6d Indice LAN\n"
+142 "%6d Intervallo di aggiornamento periodico in secondi\n"
+143 "%6d Intervalli periodici prima del timeout di un server\n"
+144 "%6d Tempo minimo in millisecondi tra i pacchetti\n"
+145 "%6d Dimensioni massime pacchetto SAP\n"
+146 "%6d Pacchetti inviati\n"
+147 "%6d Pacchetti ricevuti\n"
+148 "%6d Pacchetti alterati ricevuti\n"
+150 "SAPGetLanData ha restituito %d\n"
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for SPXINFO
+$
+$set 9  MSG_SPXI_SET
+
+
+1 "\n"
+2 "SPXINFO-2.0-2: Apertura di %s non riuscita"
+3 "SPXINFO-2.0-3: La chiamata di sistema ioctl (SPX_GET_STATS) a %s non è riuscita"
+4 "SPXINFO-2.0-4: La chiamata di sistema ioctl (SPX_GET_CON_STATS) a %s non è riuscita"
+5 "Statistiche generali SPXII:\n"
+6 " Versione SPXII: %2d.%02d%c%c\n"
+10 "%4d:%02d:%02d Tempo di attività del driver SPX\n"
+11 "      %6u Massimo connessioni SPX configurate\n"
+12 "      %6u Connessioni SPX attuali\n"
+13 "      %6u Massimo connessioni SPX simultanee\n"
+14 "      %6u Errori di allocazione del messaggio di flusso\n"
+15 "      %6u Aperture di SPX non riuscite\n"
+16 "      %6u Ioctl ricevute da applicazioni\n"
+20 "          %6u Richieste di connessione ricevute da applicazioni\n"
+21 "              %6u Richieste di connessione da applicazioni non riuscite\n"
+22 "          %6u Ascolti annunciati da applicazioni\n"
+23 "              %6u Ascolti annunciati da applicazioni non riusciti\n"
+24 "  %10u Messaggi di flusso inviati a SPX da applicazioni\n"
+25 "          %6u Messaggi sconosciuti inviati a SPX da applicazioni\n"
+26 "          %6u Messaggi alterati inviati a SPX da applicazioni\n"
+27 "      %10u Pacchetti di dati SPX inviati a IPX\n"
+28 "              %6u Pacchetti SPX ritrasmessi a causa di timeout\n"
+29 "              %6u Pacchetti SPX ritrasmessi a causa di NAK ricevuti\n"
+40 "  %10u Pacchetti ricevuti da IPX\n"
+41 "          %6u Pacchetti SPX rovinati ricevuti da IPX\n"
+42 "          %6u Pacchetti di dati SPX alterati ricevuti da IPX\n"
+43 "          %6u Pacchetti di dati SPX duplicati ricevuti\n"
+44 "      %10u Pacchetti ricevuti che sono stati inviati ad applicazioni\n"
+45 "          %6u Pacchetti di richiesta di connessione ricevuti da IPX\n"
+46 "              %6u Connessioni interrotte\n"
+47 "              %6u Connessioni interrotte a causa di superamento del massimo di tentativi\n"
+48 "              %6u Richiesta di connessione ricevuta da IPX senza ascoltatori\n"
+60 "La connessione SPX per secondario n. %d è inattiva\n"
+61 "Statistiche di connessione SPX per num. minore %d:\n"
+62 "%4d:%02d:%02d Tempo di attività della connessione SPX\n"
+70 "         Indirizzo di questo punto finale:\n"
+71 "             0x%02X%02X%02X%02X      RETE\n"
+72 "             0x%02X%02X%02X%02X%02X%02X  NODO\n"
+73 "             0x%02X%02X          SOCKET\n"
+74 "             %-5d           Numero connessione SPX\n"
+75 "         Indirizzo di un altro punto finale:\n"
+80 "      %6u Stato TLI della connessione SPX\n"
+81 "      %6u Massimo tentativi prima di disconnettere\n"
+82 "      %6u Minimo millisecondi tra i tentativi\n"
+90 "             La connessione è in uno stato DATA TRANSFER\n"
+91 "             Connesso con un punto finale SPXII\n"
+92 "             Connesso con un punto finale SPX\n"
+93 "             Connesso con un punto finale SCONOSCIUTO\n"
+94 "             La connessione sta usando somme di controllo IPX\n"
+95 "             La connessione NON sta usando SOMME DI CONTROLLO IPX\n"
+100 "                 %2u Dimensioni attuali finestra di ricezione\n"
+101 "                 %2u Dimensioni attuali finestra di trasmissione\n"
+102 "             %6u Dimensioni attuali pacchetto di trasmissione\n"
+103 "             %6u Dimensioni attuali pacchetto di ricezione\n"
+104 "         %10u Millisecondi è il tempo dell'ultimo giro completo\n"
+105 "         %10u Volte in cui la finestra di trasmissione è stata chiusa\n"
+106 "         %10u Volte in cui SPX non ha potuto trasmettere dati a causa di un controllo di flusso\n"
+110 "  %10u Messaggi inviati a SPX da applicazione\n"
+111 "          %6u Messaggi sconosciuti inviati a SPX da applicazione\n"
+112 "          %6u Messaggi alterati inviati a SPX da applicazione\n"
+113 "  %10u Pacchetti di dati inviati a IPX da SPX\n"
+114 "          %6u Pacchetti di dati reinviati a IPX a causa di timeout\n"
+115 "          %6u Pacchetti di dati reinviati a IPX a causa di NAK ricevuto\n"
+116 "  %10u Pacchetti ACK inviati a IPX\n"
+117 "      %6u Pacchetti NAK inviati a IPX\n"
+118 "      %6u Pacchetti watchdog inviati a IPX\n"
+130 "  %10u Pacchetti SPX ricevuti da IPX\n"
+131 "          %6u Pacchetti SPX rovinati ricevuti da IPX\n"
+132 "          %6u Pacchetti di DATI SPX alterati ricevuti da IPX\n"
+133 "          %6u Pacchetti SPX duplicati ricevuti\n"
+134 "          %6u Pacchetti fuori sequenza ricevuti\n"
+135 "      %10u Pacchetti SPX inviati all'applicazione\n"
+136 "              %6u Pacchetti accodati a causa di un controllo di flusso a monte\n"
+137 "      %10u ACK SPX ricevuti da IPX\n"
+138 "      %10u NAK SPX ricevuti da IPX\n"
+139 "          %6u Pacchetti watchdog ricevuti da IPX\n"
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for NWDISCOVER
+$
+$set 10  MSG_NWD_SET
+
+
+1 "NWDISCOVER-2.0-1: Deve essere privilegiato\n"
+2 "NWDISCOVER-2.0-2: Il conteggio dei tentativi deve essere >= 1\n"
+3 "NWDISCOVER-2.0-3: Il valore di timeout deve essere >= 1\n"
+4 "NWDISCOVER-2.0-4: ipx_auto_discovery inattivo, configurazione non aggiornata\n"
+5 "NWDISCOVER-2.0-5: Errore di configurazione su %s: "
+6 "NWDISCOVER-2.0-6: Tipo di frame non valido specificato per l'opzione -f\n"
+7 "NWDISCOVER-2.0-7: Scegliere uno tra: ETHERNET_802.2, ETHERNET_II, ETHERNET_SNAP o ETHERNET_802.3\n"
+10 "Uso: nwdiscover < opzioni >\n"
+11 "        -c               - Modalità stampa concisa\n"
+12 "        -a               - Controlla tutti i tipi di frame e di dispositivo\n"
+13 "        -d <dispositivo> - Controlla i tipi di frame solo su questo dispositivo\n"
+14 "        -D               - Attiva stampa debug\n"
+15 "        -b               - Attiva stampa debug output collegamento dati\n"
+16 "        -B               - Attiva stampa debug input collegamento dati\n"
+17 "        -P               - Attiva stampa debug pacchetto di output\n"
+18 "        -p               - Attiva stampa debug pacchetto di input\n"
+19 "        -e <tipo_frame>  - Escludi controllo per questo tipo di frame\n"
+20 "        -f <tipo_frame>  - Controlla solo questo tipo di frame\n"
+21 "        -r <numero_tentativi> - Numero di tentativi del controllo del tipo di frame\n"
+22 "        -t <timeout>     - Tempo in millisecondi tra i tentativi\n"
+23 "        -v               - Modo di stampa prolisso\n"
+24 "        -u               - Aggiorna file di configurazione NetWare\n"
+25 "NWDISCOVER-2.0-25: Rete interna configurata, impostare opzioni -au per aggiornare la configurazione\n"
+26 "NWDISCOVER-2.0-26: Tipo di frame non ammesso nella configurazione per LAN 1\n"
+27 "NWDISCOVER-2.0-27: lan_1: Nessuna rete trovata, invento numero di rete 0x%X, per frame tipo %s, adattatore di rete %s\n"
+29 "NWDISCOVER-2.0-29: lan_%d: %s dispositivo %s ha trovato l'indirizzo di rete %.8x\n"
+30 "NWDISCOVER-2.0-30: lan_%d: rete duplicata %.8x su dispositivo %s con tipo di frame %s ignorato.\n\n"
+31 "Aggiornamento file di config.:\n        Lan %d, Dispositivo %s, Rete %.8x, Tipo di frame %s\n"
+32 "Prova di %s dispositivo %s...\n"
+33 "NWDISCOVER-2.0-33: Risposta sbagliata da bindSap\n"
+34 "NWDISCOVER-2.0-34: Risposta sbagliata da bindSap subsBind\n"
+35 "NWDISCOVER-2.0-35: Risposta sbagliata alla richiesta di informazioni DLPI\n"
+40 "NWDISCOVER-2.0-40: Impossibile aprire file tmp /tmp/frame.dev: "
+41 "NWDISCOVER-2.0-41: Scanf per dispositivo di rete non riuscita: "
+42 "NWDISCOVER-2.0-42: Apertura di %s non riuscita: "
+43 "NWDISCOVER-2.0-43: putmsg RIP terminato in errore:"
+44 "NWDISCOVER-2.0-44: bindSap putmsg (request) non riuscita: "
+45 "NWDISCOVER-2.0-45: bindSap getmsg (bindack) non riuscita: "
+46 "NWDISCOVER-2.0-46: bindSap subsBind putmsg (request) non riuscita: "
+47 "NWDISCOVER-2.0-47: bindSap gemtsg (subsBindack) non riuscita: "
+49 "NWDISCOVER-2.0-49: GNS putmsg non riuscita: "
+50 "NWDISCOVER-2.0-50: putmsg di richiesta di informazioni DLPI terminato in errore: "
+51 "NWDISCOVER-2.0-51: getmsg (info_ack) informazioni DLPI terminato in errore: "
+52 "NWDISCOVER-2.0-52: disassociazione EthernetDLPI putmsg (request) non riuscita: "
+53 "NWDISCOVER-2.0-53: EthernetDLPI getmsg (unbindack) non riuscita: "
+54 "NWDISCOVER-2.0-54: risposta di disassociazione EthernetDLPI sbagliata: "
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for NWSAPUTIL
+$
+$set 11  MSG_SUTIL_SET
+
+
+1 "NWSAPUTIL-2.0-1: Le opzioni \"a\", \"d\", e \"q\" sono mutuamente esclusive"
+2 "NWSAPUTIL-2.0-2: Opzione sconosciuta \"%s\"\n"
+10 "Uso: nwsaputil <-nts [a | d | q]>\n"
+11 "           n <nome>   : Nome del server\n"
+12 "           t <tipo>   : Tipo di server\n"
+13 "           s <socket> : Socket del server\n"
+14 "           a          : Aggiungi server a lista permanente\n"
+15 "           d          : Cancella server da lista permanente\n"
+16 "           q          : Consulta lista di server permanente\n"
+17 "NWSAPUTIL-2.0-17: Sono richieste le opzioni \"s\" e \"t\" con l'opzione di aggiunta\n"
+18 "NWSAPUTIL-2.0-18: L'opzione \"t\" è richiesta con l'opzione di cancellazione\n"
+20 "NWSAPUTIL-2.0-20: Informazioni server non disponibili\n"
+21 "NWSAPUTIL-2.0-21: Nessuna azione specificata\n"
+22 "NWSAPUTIL-2.0-22: Si deve essere utente root per eseguire questo comando\n"
+23 "NWSAPUTIL-2.0-23: Funzione delete terminata in errore: "
+24 "NWSAPUTIL-2.0-24: Funzione add terminata in errore: "
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for RROUTER
+$
+$set 12  MSG_RROUTER_SET
+
+
+1 "RROUTER-2.0-1: Apertura di %s non riuscita: "
+2 "RROUTER-2.0-2: Ripristino router non riuscito\n"
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for DROUTER
+$
+$set 13  MSG_DROUTER_SET
+
+
+1 "Uso: %s [opzioni]\n"
+2 "       opzioni: -1        modo a una colonna\n"
+3 "                -C        modo multicolonna con intestazione\n"
+4 "                -? o -h  stampa questo messaggio\n"
+$
+$	The following is data is colums with the format indicated and
+$	the column header as given below.
+$
+10 "\n"
+11 "RETE   SALTI  TEMPO  NODO        "
+12 "--------  ----  ----  ------------"
+13 "%08.8lX%6.4hu%6.4hu  %02.2X%02.2X%02.2X%02.2X%02.2X%02.2X"
+14 "FINE TABELLA      %d reti conosciute\n"
+$
+$	When two columns are printed, this is the space between columns
+$
+15 "    "
+16 "DROUTER-2.0-16: Allocazione di %d byte non riuscita\n"
+$
+$	The following error messages are followed by a system error message
+$	(output of perror) on the same line.  These messages require a
+$	trailing space and do not have an ending newline (\n).
+$
+20 "DROUTER-2.0-20: Apertura di %s non riuscita: "
+21 "DROUTER-2.0-21: La chiamata di sistema ioctl (%s) non è riuscita: "
+23 "DROUTER-2.0-23: La chiamata di sistema getmsg non è riuscita: "
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for STARTNPS
+$
+$set 14  MSG_STRT_SET
+
+
+1 "STARTNPS-2.0-1: Errore di configurazione su %s: "
+2 "STARTNPS-2.0-2: La chiamata di sistema execl per avviare NPSD non è riuscita: "
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for STATNPS
+$
+$set 15  MSG_STAT_SET
+
+
+1 "STATNPS-2.0-1: Impossibile inizializzare il file di configurazione\n"
+
+$
+$ ------------------------------------------------------------------
+$
+$	Messages for STOPNPS
+$
+$set 16  MSG_STOP_SET
+
+
+1 "STOPNPS-2.0-1: Impossibile inizializzare il file di configurazione\n"
+2 "STOPNPS-2.0-2: Impossibile arrestare lo stack del protocollo IPX in modo multiutente.\n"
+
+$ ************************* end of file *********************

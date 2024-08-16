@@ -1,0 +1,21 @@
+#!	/bin/ksh -e
+#
+#ident	"@(#)ktool:common/ktool/kstuff/kstuff	1.3"
+#ident  "$Header:"
+#
+# kstuff: Command to stuff a kernel onto a remote machine via rcp/rsh.
+#
+#	The default targets of this activity on the remote machine are:
+#	
+#		config tree:	/etc/conf.unix.<login-id>
+#		kernel:		/stand/unix.<login-id>
+#	
+#	This command supports both interactive and batch modes.
+#	
+#	In interactive mode, the user selects among pre-build bundles, and
+#	kernel trees from which bundles can be built.
+#	
+#	In batch mode, $ROOT/$MACH is used to select a kernel.
+ 
+ENV= export ENV
+exec kstuff2 "$@"

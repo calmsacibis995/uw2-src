@@ -1,0 +1,19 @@
+#ident	"@(#)kern:io/pt/ptm.cf/Mtune	1.6"
+
+# The default number of Pseudo terminals depends on whether
+# the AS or PE set is installed. If the PE set is installed,
+# the nsu package postinstall script will comment the lines
+# for AS and uncomment those for PE.
+
+# To change the defaults and max, change them here and in the 
+# nsu and acp pkginfo files. 
+
+# number of regular Pseudo terminal devices for AS set.
+NUMREGPT     256    1    5120
+# number of regular Pseudo terminal devices for PE set.
+#PE NUMREGPT     64    1    5120
+
+# number of SCO compatible Pseudo terminal devices for AS set.
+NUMSCOPT     32    0    1024
+# number of SCO compatible Pseudo terminal devices for PE set.
+#PE NUMSCOPT     32    0    1024

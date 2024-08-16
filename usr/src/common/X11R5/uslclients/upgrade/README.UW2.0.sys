@@ -1,0 +1,101 @@
+
+
+
+	UnixWare 2 Upgrade: The New & Improved UnixWare Desktop!
+
+
+
+Welcome to UnixWare 2 !  You may have noticed a few changes from
+the UnixWare 1.1 Desktop.  You'll find answers to the following
+questions in this document:
+
+  * The UnixWare Desktop appears to have changed.  What's new?
+
+  * Will graphical applications I installed under UnixWare 1.1 continue 
+  to work after upgrade?
+
+  * Have customizations to UnixWare 1.1 app-defaults files been preserved?
+
+  * Have customizations to the UnixWare 1.1 class database been preserved?
+
+  * Where are the Backdrop_Library and Font_Setup?
+	
+  * Where is the Fingertip Librarian?
+
+  * I installed a custom video driver in UnixWare 1.1.  Will it 
+  continue to work?
+
+  * Where is setvideomode?
+
+  * I appear to have lost important customizations to the UnixWare
+  Desktop during upgrade.  How can I recover them?
+
+
+For general information about the UnixWare Desktop, refer to the
+Desktop User Handbook, the System Owner's Handbook or the Help_Desk.
+For information about upgrade changes to individual user logins, refer
+to the file README.UW2.0 under user home directories.
+
+
+Q: The UnixWare Desktop appears to have changed.  What's new?
+A: A new directory, Admin_Tools, has been added to the UnixWare Desktop.
+It contains desktop tools which used to be stored under System_Setup
+and Utilities.  A separate directory, Admin_Tools/Networking, has been
+created for networking related tools.  Tools installed in the
+Accessories directory have been moved to the Applications directory.
+For each existing user account, if these directories were empty
+after installing UnixWare 2, they were removed.  New user accounts 
+created will not get directories for System_Setup, Utilities, or
+Accessories.
+
+Q: Will graphical applications I installed under UnixWare 1.1 continue to 
+work after upgrade?
+A: Yes.  They were left untouched by upgrade installation.
+Any class database additions made by applications were also copied
+into the new class database.  (Your UnixWare 1.1 class database
+has been saved under /usr/X/.SAV2.0/classdb for the C locale and
+/usr/X/.SAV2.0/locale/<locale_name>/classdb for non-C locales.)
+
+Q: Have customizations to UnixWare 1.1 app-defaults files been preserved?
+A: In most cases, Yes.  In some cases, changes for UnixWare 2
+required that the app-defaults file be updated.  For those
+app-defaults files that have been updated, the UnixWare 1.1 versions
+have been saved in /usr/X/.SAV2.0/app-defaults (for C-locale versions)
+and /usr/X/.SAV2.0/locale/<locale_name>/app-defaults (for non-C-locale
+versions).
+
+Q: Have customizations to the UnixWare 1.1 class database been preserved?
+A: Yes.  After the UnixWare 2 class database was installed, your
+customizations to the UnixWare 1.1 class database were merged
+into the new database.  Your UnixWare 1.1 class database files
+have been saved under /usr/X/.SAV2.0/classdb (for the C-locale)
+and /usr/X/.SAV2.0/locale/<locale_name>/classdb (for non-C locales).
+
+Q: Where are the Backdrop_Library and Font_Setup?
+A: The Backdrop_Library has been renamed to Wallpaper.  The Font_Setup
+tool has been renamed to Fonts and moved to the Preferences directory.
+
+Q: Where is the Fingertip Librarian?
+A: The Fingertip Librarian has been replaced by the Dynatext Document Browser.
+It can be found in the UnixWare Desktop under Applications/Online_Docs.
+
+Q: I installed a custom video driver in UnixWare 1.1.  Will it continue 
+to work?
+A: Maybe.  It depends on the driver.   To be safe, UnixWare 2 will
+come up in VGA mode the first time the UnixWare Desktop is started.  The
+Display_Setup client (under Admin_Tools) can be used to change
+video resolution.  Check Display_Setup for the list of video
+boards supported by UnixWare 2.  Because UnixWare 2 supports
+more boards than UnixWare 1.1, you may find that your board is now 
+supported by the base system.  If that is not the case, you will
+need to re-install your video driver.
+
+Q: Where is setvideomode?
+A: setvideomode has been replaced by a graphical Display_Setup tool
+(under Admin_Tools).  setvideomode is still available under 
+/usr/X/lib/display.
+
+Q: I appear to have lost important customizations to the UnixWare Desktop 
+during upgrade.  How can I recover them?
+A: Your UnixWare 1.1 system files that were replaced or merged with 
+UnixWare 2 versions during upgrade have been saved under /usr/X/.SAV2.0.  

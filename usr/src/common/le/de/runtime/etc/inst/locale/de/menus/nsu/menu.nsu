@@ -1,0 +1,70 @@
+.ul
+NSU (Netzwerkunterstützungsdienstprogramme)
+.ur
+NSU-Konfiguration
+.lr
+Entf=Abbrechen  F1=Hilfe
+.top
+Geben Sie die Anzahl der Pseudo-Terminals an, für die Ihr System
+konfiguriert werden soll.
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "\nAußerdem müssen Sie angeben, ob Sie möchten, daß die ursprünglichen \nKonfigurationsdateien"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "der Network Support Utilities mit den neuen Dateien kombiniert werden sollen."`
+.form
+#
+3 0 64 1024//Anzahl der Pseudo-Terminals://NREG//
+// Anzahl der Pseudo-Terminals eingeben (64-1024) //
+#
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "2 2//Yes::Ja//No::Nein//Konfigurationdateien automatisch kombinieren?://AUTOMERGE//"`
+# field options
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "// Links/Rechts-Pfeiltasten für nächste Option (2 Optionen)//"`
+#
+.button
+Anwenden
+Zurücksetzen
+.bottom
+Drücken Sie 'TAB', um den Cursor zwischen den Feldern zu bewegen. Nach 
+Beendigung der Eingaben bewegen Sie den Cursor auf "Anwenden" und 
+drücken anschließend 'ENTER', um fortzufahren.
+.hhelp_ban
+Anweisungen
+.helpbanner
+Hilfe: NSU-Konfiguration
+.help
+Wenn Sie detaillierte Anweisungen benötigen, können Sie jederzeit die 
+'F1' (oder '?') -Taste drücken.
+
+NETZWERKUNTERSTÜTZUNGSDIENSTPROGRAMME (NSU)
+
+Das NSU-Paket enthält mehrere Dateien und Programme, die von Ihrem 
+UNIX-System zur Kommunikation mit intelligenten Terminals und anderen 
+Computern verwendet werden. Die Installation dieses Pakets kann für 
+andere Netzwerkpakete, die Sie installieren möchten, Voraussetzung sein.
+
+ANZAHL DER PSEUDO-TERMINALS
+
+Pseudo-Terminals werden benutzt, wenn ein Benutzer versucht, sich auf 
+Ihrem Computer über ein Netzwerk anzumelden, oder wenn er bestimmte
+Desktop-Anwendungen ausführen möchte. Die von Ihnen auf diesem 
+Bildschirm angegebene Anzahl an Pseudo-Terminals (ttys) begrenzt die 
+Anzahl der Anwendungen, die Sie gleichzeitig auf Ihrem Computer 
+ausführen können. Falls Sie sich nicht sicher sind, welche Antwort 
+diese Frage erfordert, wählen Sie die Standardvorgabe aus.
+
+Die eingegebene Nummer muß zwischen 64 und 1024 liegen.
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo ""`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "KONFIGURATIONSDATEIEN AUTOMATISCH MISCHEN"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo ""`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "Wenn Sie diese Frage mit Ja beantworten, versucht das Installationsprogramm,"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "etwaige Änderungen an Ihren vorhandenen NSU-Konfigurationsdateien"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "mit den neuen Konfigurationsdateien zu kombinieren."`
+.pageno
+Seite %d von %d
+.optstring
+Sie haben folgende Optionen:
+.helpinst
+ESC=Hilfe verlassen  F1=Anweisungen  Entf=Abbrechen  1=Vor  2=Zurück
+.hhelpinst
+ESC=Anweisungen verlassen  Entf=Abbrechen  1=Vor  2=Zurück
+.end

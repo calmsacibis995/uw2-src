@@ -1,0 +1,48 @@
+.bottom
+Drücken Sie 'ENTER', um fortzufahren:
+#.form
+#ENTER
+.pageno
+Seite %d von %d
+.ul
+Installation des Sets
+.hhelp_ban
+Hilfe zur Hilfe und zur Verwendung dieses Programms
+.helpbanner
+Hilfe zur Set-Installation
+.ur
+Ergebnisse der Installation
+.ll
+#Please make a selection.  Press F1 for Help.
+.lr
+F1=Hilfe
+.help
+Wenn Sie detaillierte Informationen benötigen, können Sie 
+jederzeit die 'F1'- (oder '?') drücken.
+
+Die vorhergehenden Bildschirme zeigten den Installationstatus aller
+Pakete an, die Sie in diesem Satz ausgewählt haben.  
+
+Detaillierte Informationen über eine gescheiterte Installation werden 
+mit der elektronischen Post zum Login-Namen "root" gesendet.
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && echo "System Setup Dateien für die folgenden Pakete konnten nicht kombiniert werden:"`
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && echo "    "${MRGFAILLIST}`
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && cat $MRGFAILMSG`
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && cat $MRGFAILFILES`
+`[ "${NOMRGLIST}" ] && echo " "`
+`[ "${NOMRGLIST}" ] && echo "System-Setup-Dateien wurden für die folgenden Pakete nicht zusammengestellt:"`
+`[ "${NOMRGLIST}" ] && echo " "`
+`[ "${NOMRGLIST}" ] && echo "    "${NOMRGLIST}`
+`[ "${NOMRGLIST}" ] && echo " "`
+`[ "${NOMRGLIST}" ] && cat $NOMRGMSG`
+.helpinst
+ESC=Hilfe verlassen  F1=Anweisungen  1=Vor  2=Zurück
+.hhelpinst
+ESC=Anweisungen verlassen  1=Vor  2=Zurück
+.working
+Wird bearbeitet...
+.top

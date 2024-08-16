@@ -1,0 +1,82 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/Prototype	1.1.8.2"
+#ident  "$Header: Prototype 2.0 91/07/12 $"
+# Prototype file for auditing files
+!OAMBASE=/usr/sadm/sysadm
+!PKGSAV=/var/sadm/pkg/audit/save
+!PKGINST=audit
+!default 0644 root sys
+# audit menu files here
+d OAMmif $PKGSAV/intf_install 0755 root sys
+f OAMmif $PKGSAV/intf_install/audit.mi 0644 root sys
+# audit validation programs here
+f OAMadmin $OAMBASE/bin/valforloop 0755 root sys
+f OAMadmin $OAMBASE/bin/valevt 0755 root sys
+# now text and forms files for auditing
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security 0755 root sys
+f OAMadmin $OAMBASE/menu/security/Help 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/Help 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/Help 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/set 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/set/Text.setok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/set/Help 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/set/Form.log 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/set/Text.setnok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/set/Form.set 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/set/Text.setwok 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/list 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/list/Help 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/parameters/list/Text.paramlst 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Form.rep2 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Form.report 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Help 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Menu.events 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Menu.logfs 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Menu.obtypes 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Menu.privs 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Text.repnok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Text.repok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/report/Text.repwok 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/Help 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/Help 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/object 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/object/Form.objaud 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/object/Text.objok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/object/Help 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/object/Menu.events 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/object/Text.objnok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/object/Text.objwok 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/system 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/system/Form.sysaud 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/system/Text.sysok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/system/Help 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/system/Text.sysnok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/system/Text.syswok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/system/Menu.events 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/user 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/user/Menu.logins 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/user/Text.userok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/user/Help 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/user/Menu.events 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/user/Form.useraud 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/user/Text.usernok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/set/user/Text.userwok 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/list 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/list/Text.audlst 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/criteria/list/Help 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/enable 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/enable/Form.enable 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/enable/Text.onnok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/enable/Text.onok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/enable/Text.onwok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/enable/Help 0644 root sys
+x OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/disable 0755 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/disable/Form.disable 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/disable/Help 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/disable/Text.offok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/disable/Text.offnok 0644 root sys
+f OAMadmin $OAMBASE/add-ons/$PKGINST/security/auditing/disable/Text.offwok 0644 root sys

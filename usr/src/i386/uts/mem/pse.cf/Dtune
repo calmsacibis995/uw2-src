@@ -1,0 +1,23 @@
+%% Virtual Memory (VM) Parameters
+%%% Page Size Extension Parameters
+% PSE_PHYSMEM
+Specifies an amount of physical memory to reserve for
+use by large shared memory segments.
+Setting aside memory for this purpose can provide a performance benefit
+to applications that create large shared memory segments
+using the shared memory primitives described in shmget(2), shmctl(2),
+and shmop(2).
+The physical memory is reserved for use in shared memory segments and
+cannot be used for anything else,
+so PSE_PHYSMEM should be set to 0 unless applications
+using large segments (greater than 4MB of memory) are going to be run,
+and there is enough memory on the system remaining for other uses.
+% PSE_VMEMSIZE
+Specifies the amount of device memory that can be mapped by
+drivers using page size extension.
+Device drivers that map more than 1MB of memory
+can obtain a performance benefit.
+PSE_VMEMSIZE
+can be set by taking all device mappings that are greater than
+1MB, rounding each such mapping up to the next 4MB boundary, and
+taking the sum of all these roundings.

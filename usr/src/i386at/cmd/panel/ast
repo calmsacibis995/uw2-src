@@ -1,0 +1,46 @@
+#ident	"@(#)front_panel:ast	1.4"
+
+if [ -z "$LC_ALL" -a -z "$LC_MESSAGES" ]
+then
+	if [ -z "$LANG" ]
+	then
+		LNG=`defadm locale LANG 2>/dev/null`
+		if [ "$?" != 0 ]
+		then LANG=C
+		else eval $LNG
+		fi
+	fi
+	export LANG
+fi
+LABEL="UX:$0"
+CAT=uxrc
+
+case "$1" in
+'start')
+	# run panel to invoke astmonitor (must be on search path)
+	if [ -x /sbin/panel -a -x /sbin/astmonitor ]
+	then
+		if [ -f /etc/default/panel.cfg ]
+		then
+			/sbin/panel -c /etc/default/panel.cfg < /dev/console >/dev/console 2>&1 &
+		else
+			/sbin/panel -m < /dev/console >/dev/console 2>&1 &
+		fi
+	fi
+	;;
+'stop')
+	#stop the astm daemon
+	kill -9 `/usr/bin/ps -ef \
+	|/usr/bin/egrep ' astmonitor' \
+	|/usr/bin/awk '{print $2}'` 2>/dev/null
+	# remove lock file(s)
+	if [ -d /etc/panel ]
+	then
+		rm -f /etc/panel/* 2>/dev/null
+	fi
+	;;
+*)
+	USAGE="/etc/init.d/ast.rc { start | stop }"
+	pfmt -l $LABEL -s action -g $CAT:4 "Usage: %s\n" "$USAGE"
+	;;
+esac

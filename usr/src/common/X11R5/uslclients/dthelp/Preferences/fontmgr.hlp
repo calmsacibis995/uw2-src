@@ -1,0 +1,635 @@
+#ident\t"@(#)dthelp:Preferences/fontmgr.hlp	1.20"
+^*version^1
+^*title^Using Fonts in UnixWare
+^:Fonts
+^*width^70
+^+DesktopMgr/help.defs
+^?Using Fonts in UnixWare
+^0^Fonts
+^$10
+Fonts
+
+Use Fonts to view all fonts on your system, install \d(Type 1^Adobe Type 1 fonts) fonts from
+DOS/Windows diskettes, delete unneeded fonts, and change the default font
+used on the Desktop.
+
+Once installed, you can use Type 1 fonts in any UnixWare Desktop
+application that uses the X Windows font mechanism, and your application
+can download these fonts to Postscript printers. 
+
+You can do the following with Fonts:
+
+\to\t\k(View installed fonts^^Viewing Installed Fonts)
+\to\t\k(Install Type 1 fonts from diskette^^Installing Type 1 Fonts)
+\to\t\k(Delete fonts^^Deleting Fonts)
+\to\t\k(Change fonts used for text in your "Desktop" and "Terminal" windows^^Changing Fonts)
+\to\t\k(Restore "Desktop" and "Terminal" window fonts to their default fonts^^Restoring the Default Fonts)
+
+For background information on fonts, see the following:
+
+\k(Type Families, Typefaces, and Fonts)
+\k(Bitmapped and Outline Fonts)
+\k(Font Resolution Examples)
+
+
+^1^Type Families, Typefaces, and Fonts
+^$20
+Type Families, Typefaces, and Fonts
+
+A typeface family describes the basic design of a group of fonts 
+without being specific about a particular style (for example, Helvetica).
+
+A typeface is a member of a type family with a particular style,
+such as Helvetica Bold.
+
+A font is a typeface at a particular point size, for example, Helvetica
+Bold 11 point. However, the word "font" is typically used to refer to any
+of these terms.
+
+^2^Bitmapped and Outline Fonts
+^$30
+Bitmapped and Outline Fonts
+
+The system stores fonts on disk as either one of the following:
+
+\to\t\d(Bitmapped fonts^bitmapped font)
+\to\t\d(Outline fonts^outline font) (also called scalable fonts)
+
+The system stores a bitmapped font as a set of dots that forms each
+character. Each bitmapped font is created for a specific point
+size and resolution. In UnixWare, most bitmapped fonts were created
+for 75 and 100 dpi (dots per inch), which are common monitor
+resolutions.
+
+If displayed at a different resolution than it was created for,
+a bitmapped font appears smaller or larger, and may be somewhat distorted. 
+
+Although bitmapped fonts can be scaled to a larger point size,
+the dots will look unnaturally big and the letters will appear ragged.
+
+The system stores outline fonts as instructions. When a particular
+point size is needed, the system dynamically creates a bitmapped font for
+that point size and for the resolution of your display. It does this
+using an \d(outline font renderer).  In UnixWare, this renderer is
+\d(Adobe Type Manager), and it can process any Type 1 font, even ones 
+that you can install yourself from DOS/Windows diskettes
+(see \k(Installing Type 1 Fonts)).
+
+Following are some important notes about outline fonts:
+
+\to\tBecause the system must interpret instructions, outline fonts
+\t \tmay take more time to display than bitmapped fonts.
+\t \tHowever, once rendered, the system stores them in memory
+\t \tso they come up faster the next time.
+
+\to\tBecause each font size does not need to be stored on disk
+\t \tseparately, outline fonts require less disk storage space
+ \t \tthan bitmapped fonts.
+
+\to\tSome older applications may not be able to take advantage of
+\t \tthe outline fonts.  
+
+See also:
+\k(Font Resolution Examples)
+
+^2^Font Resolution Examples
+^$35
+Font Resolution Examples
+
+The "Show Resolution" pop-up window demonstrates how \d(bitmapped fonts^bitmapped font)
+can appear to you to be different sizes when developed for different 
+resolutions. To see these examples, do the following:
+
+Note: If you are already in the Preferences folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Preferences in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Preferences" window appears.
+
+2.\tDouble-click on Fonts. The "Fonts" window appears.
+
+3.\tClick on Action=>Show Resolution. The "Show Resolution" window
+  \tappears.
+
+  \tNote that the first two lines give you information specifically for your
+  \tdisplay (dots-per-inch resolution and dimensions). The system computes
+  \tdots-per-inch by using the monitor dimensions (for example, 640x480) and
+  \tthe monitor size, which you set up in either during initial UnixWare
+  \tinstallation, or by using \k(Display Setup^dtadmin/video.hlp^Display Setup).
+
+  \tIf your monitor size is not entered correctly and does not reflect the
+  \ttrue physical size of your monitor, the DPI resolution numbers could be
+  \twrong, and may affect the usability of some fonts.
+
+   
+^1^Viewing Installed Fonts
+^$40
+Viewing Installed Fonts
+
+The UnixWare Desktop includes numerous \d(bitmapped fonts^bitmapped font) and 13 Adobe Type 1
+\d(outline fonts^outline font).
+
+You can also install as many Type 1 fonts from diskette as you would like.
+Type 1 fonts are widely available from retail and mail order font suppliers.
+(Also, additional bitmapped fonts are available in the Graphics
+Supplemental Fonts package, which is not installed by default in the
+Personal Edition).
+
+To view the fonts that are installed on your system, do the following:
+
+Note: If you are already in the Preferences folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Preferences in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Preferences" window appears.
+
+2.\tDouble-click on Fonts. The "Fonts" window appears.
+
+3.\tView a font as follows:
+
+  \to\tScroll through the different \d(families^typeface family) and click on the
+  \t \tone you want to see. The styles available for that family appear in the
+  \t \tStyle list.
+
+  \to\tScroll through the \d(Styles^typeface) available for the family and
+  \t \tclick on the one you want to see.
+
+  \to\tSelect the \d(point size) you want to see from the Point Size control.
+
+  \t \tIf the typeface you selected is a bitmapped font, a scrollable list
+  \t \tdisplaying the available sizes appears. Click on the desired size.
+
+  \t \tNote: The same point size may appear in the list more than once. This
+  \t \tcan occur if the average width of two fonts is different, or if the two
+  \t \tfonts have different character sets. To see the font differences, click
+  \t \ton View=>Character Set. Duplicate point sizes can also occur because a
+  \t \tfont created for 14 points at 75dpi may look exactly the same as a font
+  \t \tcreated for 10 points at 100dpi.
+
+  \t \tIf the typeface you selected is an outline font, a numeric field
+  \t \tappears. Type in the point size you want to see (from 6 to 100 points)
+  \t \tor click on the up and down arrows to change this value.
+
+  \t \tAfter each selection, the system displays the selected font in the 
+  \t \twindow pane.  Note that outline fonts may take a few moments to be
+  \t \trendered the first time.
+
+4.\tChange the text displayed in the window pane as follows:
+ 
+  \to\tTo allow you to type any characters you want to see in the selected
+  \t \tfont, click on View=>Phrase.  You can then type in the window pane,
+  \t \twhere the phrase "Type in here" appears.
+ 
+  \to\tTo display the complete set of printable characters in the selected
+  \t \tfont, click on View=>Character Set.  The name of this character set,
+  \t \tif different from the usual ISO8859-1 character set, appears in the
+  \t \twindow footer when the View=>Short Font Name option is in effect.
+
+5.\tChange the font name displayed in the window footer as follows:
+ 
+  \to\tTo display the short name that identifies the font, click on
+  \t \tView=>Short Font Name.
+
+  \t \tThe information provided in the footer for outline fonts includes the
+  \t \tfollowing:
+
+  \t \t-\tThe name of the font as known by PostScript printers, which is
+  \t \t \tdifferent than the name UnixWare uses (this PostScript name usually
+  \t \t \tincludes the family and style).
+
+  \t \t-\tThe point size of the font on your display.
+
+  \t \t-\tIf it is a monospaced (fixed width) font.
+
+  \t \t-\tThe character set contained in the font (if it is not ISO8859-1).
+
+  \t \tThe information provided in the footer for bitmapped fonts includes
+  \t \tthe following:
+
+  \t \t-\tThe family name.
+
+   \t\t-\tOther attributes of the family (if any).
+
+   \t\t-\tThe weight of the typeface.
+
+   \t\t-\tThe slant of the typeface, if other than Roman.
+
+   \t\t-\tThe point size of the font on your display.
+
+  \t \t-\tThe resolution of display the font was designed for, usually 75 or
+  \t \t \t100 dpi (dots per inch).
+
+  \t \t-\tIf it is a monospaced (fixed width) font or a cell-spaced font.
+
+  \t \t-\tThe average with of all characters in the font.
+   
+  \t \t-\tThe character set contained in the font (if it is not ISO8859-1).
+
+  \to\tTo display the long, internal X Windows \d(XLFD) name that identifies
+  \t \tthe font, click on View=>XLFD Name.  For bitmapped fonts, this name
+  \t \tshows the resolution (usually "-75-75-" or "-100-100-") that the font
+  \t \twas originally created for.
+
+Note: If you think you may have a problem with your fonts (for example,
+you get a message like "Can't display font ..." in the footer), you should
+check the integrity of your font libraries.  For more information, see
+\k(Checking Font Integrity).
+
+  
+^1^Installing Type 1 Fonts
+^$50
+Installing Type 1 Fonts
+
+Many popular word processing and graphics applications use scalable
+\d(Type 1 fonts^Adobe Type 1 fonts).  Although most applications that use these Type 1
+fonts come with a standard set of fonts, you can enhance your selection of
+fonts by installing additional Type 1 fonts from DOS diskettes. Type 1 fonts
+are widely available from retail and mail order font suppliers.
+
+To install additional Type 1 fonts from a diskette, do the following:
+
+1.\tLog in as a user with \k(Add/Remove Fonts permission^dtadmin/user.hlp^Understanding Permissions).
+
+2.\t\d(Double-click^double-click) on Preferences in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Preferences" window appears.
+
+3.\tDouble-click on Fonts. The "Fonts" window appears.
+
+4.\tInsert the DOS Type 1 diskette into the disk drive.
+
+  \tNote: You can use either 3.5" or 5.25" diskettes, depending on the type
+  \tof disk drive(s) your system supports (for more information on disks,
+  \tdisk drives, and so forth, see \k(Disks-etc^dtadmin/disk.hlp^Overview of the Disks-etc Folder)).
+
+5.\tClick on Actions=>Install. The "Install Type 1 Fonts from Diskette"
+  \twindow appears.
+
+6.\tDo one of the following:
+
+  \to\tClick on each font you want, then click on Install.
+
+   \t\tNote: If you do not select any fonts for installation before you click
+  \t \ton Install, you will get an error notice and you can try again.
+
+  \to\tClick on Install All to install all of the fonts that are on the
+   \t\tdiskette.
+
+Note: You can also install fonts using \d(drag-and-drop). For example, if your
+font diskette is in disk drive A, press on the Disk A icon (in the
+\k(Disk-etc folder^dtadmin/disk.hlp^Overview of the Disks-etc Folder)), drag the Disk A icon to the Fonts icon (or window),
+and then release it. The "Install Type 1 Fonts from Diskette" window appears.
+
+^2^Notice - Insert a DOS Diskette
+^$60
+Notice - Insert a DOS Diskette
+
+You get this error notice if the system cannot detect a diskette in a disk
+drive. Insert the DOS diskette that contains the Type 1 fonts into the
+appropriate drive. You can use either 3.5" or 5.25" diskettes. If necessary,
+the system checks both drives for a diskette.
+
+^2^Notice - Not a DOS Diskette
+^$70
+Notice - Not a DOS Diskette
+
+You get this error notice if the diskette you inserted is not a DOS-formatted
+diskette (for example, it might be a UnixWare diskette). Replace this diskette
+with the DOS diskette that contains Type 1 fonts and click on Continue.
+
+If you cannot find a DOS diskette and want to exit from the installation
+process, click on Cancel.
+
+
+^2^Notice - No Recognizable Type 1 Fonts
+^$80
+Notice - No Recognizable Type 1 Fonts
+
+You get this error notice if the system cannot find any Type 1 fonts on the
+diskette that you inserted. Check to make sure you installed a Type 1 DOS
+diskette.
+
+Sometimes font vendors ship DOS software with their fonts, and these diskettes
+do not contain any fonts. Insert only the diskettes labeled "Fonts" and do
+not use other diskettes, such as the "Foundry Disk" or the "Program Disk."
+
+After you insert the correct diskette into the drive, click on Continue.
+
+If you cannot find the DOS diskette and want to exit from the installation
+process, click on Cancel.
+
+^2^Notice - Installed Fonts Missing AFM Files
+^$85
+Notice - Installed Fonts Missing AFM Files
+
+You get this warning notice if some of the Type 1 fonts you just installed
+did not have a corresponding Adobe Font Metrics (AFM) file on the diskette.
+Although these fonts were installed and will still work, some applications
+that need the detailed metrics available in the AFM files may not work as well
+as they should.
+
+^2^Notice - Insert Supplemental Fonts
+^$87
+Notice - Insert Supplemental Fonts
+
+You get this notice if the fonts you have selected are on a second or
+subsequent diskette in a multi-diskette font set.
+
+Insert the next diskette from your multi-diskette set, then click on
+Continue.
+
+If you cannot find the DOS diskette and want to exit from the installation
+process, click on Cancel.
+
+^1^Deleting Fonts
+^$90
+Deleting Fonts
+
+Fonts can take up significant amounts of space on your system's
+hard disk. This is especially true of bitmapped fonts. If disk space 
+becomes a problem, you may want to remove fonts that you do not use
+regularly.
+
+To delete individual bitmapped or outline fonts from your system, do
+the following:
+
+1.\tLog in as a user with \k(Add/Remove Fonts permission^dtadmin/user.hlp^Understanding Permissions).
+
+2.\t\d(Double-click^double-click) on Preferences in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Preferences" window appears.
+
+3.\tDouble-click on Fonts. The "Fonts" window appears.
+
+4.\tClick on Actions=>Delete.
+
+5.\tClick on either \d(Bitmapped^bitmapped font) or \d(Outline^outline font).
+  \tNote: If you delete a bitmapped font, you delete a single font: one size,
+  \tone style, one family. However, if you delete an outline font, you delete
+  \tan entire typeface (all point sizes of a family/style combination).
+
+6.\tClick on the font you want to delete. The system highlights each font as
+  \tyou click on it.
+
+7.\tClick on Delete. The \k("Notice - Confirm Deletion of Fonts" window^^Notice - Confirm Deletion of Fonts) appears.
+
+  \tNote: If you do not select any fonts for deletion before you click on
+  \tDelete, you will get an error notice and you can try again.
+
+8.\tClick on Continue to remove the font or Cancel to end this operation
+  \twithout removing the fonts.
+
+^2^Notice - Confirm Deletion of Fonts
+^$92
+Notice - Confirm Deletion of Fonts
+
+You get this warning notice to allow your to reconsider deleting fonts. Click
+on Continue if you really want to remove the fonts.
+
+Click on Cancel to end this operation without removing fonts.
+
+^2^Notice - No Fonts Can Be Deleted
+^$94
+No Fonts Can Be Deleted
+
+You get this error notice if no fonts (bitmapped or outline, depending on
+what fonts you are trying to delete) are available to be deleted. This occurs
+if you have not installed the fonts on your system, or if you previously
+deleted them all.
+
+Note: Some bitmapped fonts are crucial to the operation of your Desktop
+and cannot be deleted.
+
+^1^Changing Fonts
+^$95
+Changing Fonts
+
+You can change the default font used for the text in your Desktop windows,
+and you can also change the font used for the text in your "Terminal"
+windows.
+
+See the following:
+
+\to\t\k(Changing Your Desktop Font)
+\to\t\k(Changing Your Terminal Font)
+
+^2^Changing Your Desktop Font
+^$96
+Changing Your Desktop Font
+
+The Desktop uses a default font for text in the windows (the window title,
+menu text, icon labels, and so forth). This font is Helvetica Medium,
+usually at 12 points. However, you can change the default font used on
+your Desktop to a different one, provided the font is no larger than 20
+points.
+
+When you first open the Fonts application, the font shown in the Family,
+Style, and Point Size scrolling lists, and shown in the text pane of sample
+text, is your Desktop font.
+
+Note: If you change the default font to a fairly large font (for example,
+14-20 points), some Desktop programs may appear slightly distorted until
+the next time that you log in.
+
+You may also want to change the font on your "Terminal" window to make it
+more comfortable for reading. See \k(Changing Your Terminal Font).
+
+If you decide you want to go back to the default fonts, see the procedure
+\k(Restoring the Default Fonts).
+
+Note: Whenever you change a font (that is, you select Apply to Windows,
+Change Terminal Font, or Restore Defaults), the system checks to ensure that
+you can change fonts in your current locale. If you cannot, a pop-up window
+appears with an error message.
+
+If the locale allows you to change fonts, the system then checks to make sure
+the font contains the correct character set. If it does not contain the
+correct character set, another pop-up window appears with an error message.
+
+Note: Not all locales have the ability to change fonts. This facility is only
+available for Western European and English language locales. 
+
+To change the default "Desktop" window name font, do the following:
+
+1.\t\d(Double-click^double-click) on Preferences in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Preferences" window appears.
+
+2.\tDouble-click on Fonts. The "Fonts" window appears.
+
+3.\tSelect the desired fonts (see \k(Viewing Installed Fonts)).
+
+4.\tClick on Font=>Apply to Windows.  All Desktop labels, titles, and other
+  \ttext change dynamically to the new font. These changes remain in effect
+  \tthe next time you log in.
+
+Note: If you change the default font to a fairly large font (for example,
+14-20 points), some Desktop programs may appear slightly distorted. For
+example, the placement of the window title text, window buttons, and
+footer text may be slight out of alignment, and the labels on the
+Desktop icons may get truncated on the bottom and on the right, and may
+overlap. Most of these problems go away when you restart either the
+application or the Desktop. You can fix the problem of overlapping
+file icon labels by using \k(Desktop Preferences^DesktopMgr/dskpref.hlp^Changing Basic Desktop Properties) to change the grid size
+for file folders.
+
+You may also want to change the font on your "Terminal" window to make it
+more comfortable for reading. The default terminal font for the "Desktop"
+window is Lucidatypewriter Medium, usually at 12 points. See
+\k(Changing Your Terminal Font).
+
+If you decide you want to go back to the default fonts, see the procedure
+\k(Restoring the Default Fonts).
+
+Note: Whenever you change a font (that is, you select Apply to Windows,
+Change Terminal Font, or Restore Defaults), the system checks to ensure that
+you can change fonts in your current locale. If you cannot, a pop-up window
+appears with an error message.
+
+If the locale allows you to change fonts, the system then checks to make sure
+the font contains the correct character set. If it does not contain the
+correct character set, another pop-up window appears with an error message.
+
+
+^2^Changing Your Terminal Font
+^$102
+Changing Your Terminal Font
+
+You can change the terminal font for your Desktop to any monospaced (fixed
+width) font (such as Courier) available on your system. This font is used in
+"Terminal" windows and in any Desktop application that needs a monospaced
+font for proper alignment of output. 
+
+To see if a font is a monospaced font, look at the short name in the
+window footer (using the View=>Short Font Name option). See
+\k(Viewing Installed Fonts).
+
+To change your "Terminal" window font, do the following:
+
+1.\t\d(Double-click^double-click) on Preferences in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Preferences" window appears.
+
+2.\tDouble-click on Fonts. The "Fonts" window appears.
+
+3.\tClick on the desired monospaced font.
+
+4.\tClick on Font=>Change Terminal Font. All new "Terminal" windows that
+  \tyou open up use the new default font.
+
+  \tNote: The Terminal application may not be the only application on your
+  \tsystem that uses a monospaced font. For example, Mail and Debug also
+  \tuse monospaced fonts. When you select Change Terminal Font, the other
+  \tapplication windows on your system that use monospaced fonts will
+  \talso change to the font you requested.
+
+If you decide you want to go back to the default fonts, see the procedure
+\k(Restoring the Default Fonts).
+
+Note: Whenever you change a font (that is, you select Apply to Windows,
+Change Terminal Font, or Restore Defaults), the system checks to ensure that
+you can change fonts in your current locale. If you cannot, a pop-up window
+appears with an error message.
+
+If the locale allows you to change fonts, the system then checks to make sure
+the font contains the correct character set. If it does not contain the
+correct character set, another pop-up window appears with an error message.
+
+
+^2^Restoring the Default Fonts
+^$103
+Restoring the Default Fonts
+
+To restore your windows (including "Terminal" windows) to the default fonts,
+do the following:
+
+1.\t\d(Double-click^double-click) on Preferences in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Preferences" window appears.
+
+2.\tDouble-click on Fonts. The "Fonts" window appears.
+
+3.\tClick on Font=>Restore Defaults. The system restores all window fonts to
+  \tthe default fonts (that is, the fonts the system used when you first
+  \tinstalled your system).
+
+  \tHowever, the fonts in "Terminal" windows currently opened on your
+  \tDesktop do not change. Only new "Terminal" windows that you open will
+  \tuse the default font. 
+
+Note: Whenever you change a font (that is, you select Apply to Windows,
+Change Terminal Font, or Restore Defaults), the system checks to ensure that
+you can change fonts in your current locale. If you cannot, a pop-up window
+appears with an error message.
+
+^2^Notice - Terminal Font Must Be Monospaced
+^$104
+Notice - Terminal Font Must Be Monospaced
+
+You get this error notice if you try to change your terminal font to a
+font that is proportionally spaced.  The terminal font must be a
+monospaced font (that is, a font with characters that all all have the
+same character width).
+
+You can tell if a font is monospaced by looking at the short name in the
+window footer (using the View=>Short Font Name option). See
+\k(Viewing Installed Fonts).
+
+Monospaced fonts shipped with UnixWare include Courier, Fixed, and
+LucidaTypewriter.
+
+^2^Notice - Unsupported Locale
+^$106
+Notice - Unsupported Locale
+
+You get this error notice if you try to change your font for either the
+"Desktop" or "Terminal" windows when you are in a locale for which this
+capability is not supported.
+
+You can change your font only in Western European and English language
+locales.
+
+^2^Notice - Point Size is too large to use on Desktop
+^$107
+Notice - Point Size is too large to use on Desktop
+
+You get this error notice if you try to change your Desktop or terminal
+font to a \d(point size) exceeding 20 points. Point sizes that exceed 20 points
+will distort the appearance of the Desktop, making it unusable. Use a point
+size in the range of 10 to 14 points for this function. If you select a
+smaller point size of the same font and try again, the change will take effect.
+
+^2^Notice - Mismatched Character Set
+^$108
+Notice - Mismatched Character Set
+
+You get this error notice if you try to change your font to one that contains
+a character set that does not match the one needed for your locale. For
+example, some fonts contain only the ASCII character set (known officially
+as ISO646.1991-IRV), but Western European locales need the ISO8859-1 character
+set, which contains ASCII characters and the accented letters needed in
+Western Europe.
+
+You can tell which character set a font contains by looking at the short name
+in the window footer (using the View=>Short Font Name option). See
+\k(Viewing Installed Fonts).
+
+^1^Checking Font Integrity
+^$110
+Checking Font Integrity
+
+When you add or delete fonts, the system automatically updates the font 
+libraries. However, if you suspect a problem with your fonts, you may
+be able to fix the problem by forcing the system to check the font
+libraries.
+
+To force your system to check the font libraries, do the following:
+
+1.\tLog in as a user with \k(Add/Remove Fonts permission^dtadmin/user.hlp^Understanding Permissions).
+
+2.\t\d(Double-click^double-click) on Preferences in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Preferences" window appears.
+
+3.\tDouble-click on Fonts. The "Fonts" window appears.
+
+4.\tClick on Action=>Integrity Check.  A pop-up notice appears asking if
+  \tyou want to proceed (this process takes a few moments).  
+
+  \tA pop-up notice also appears to tell you when the checking is complete.
+
+This checking of the font libraries may not resolve all types of font
+problems. If you still think there is a problem with your fonts, contact
+your system administrator.

@@ -1,0 +1,18 @@
+#ident	"@(#)kern-i386at:interface.d/merge.2	1.1"
+#ident	"$Header: $"
+#
+# merge.2 -- Merge hooks interface version 2 (UnixWare 2.0)
+# This is used by drivers which need to call into the Merge code.
+#
+$replace 1
+#
+# New interfaces:
+com_ppi_strioctl
+
+# Drop old interfaces:
+asy_is_assigned	$dropped
+com_ppi_ioctl	$dropped
+com_ppiioctl	$dropped
+floppy_free	$dropped
+flp_for_dos	$dropped
+mrg_in_use	$dropped

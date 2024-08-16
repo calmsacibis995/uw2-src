@@ -1,0 +1,54 @@
+UNIX Post-Setup
+Post-Setup
+Eine Zeile \'Datum:\' hinzufügen?
+Nein
+Ja
+Sollte eine vom lokalen Rechner stammende Nachricht über keine RFC822-Kopfzeile \'Datum:\' verfügen und diese Variable auf Ja eingestellt sein, wird eine RFC822-Kopfzeile \'Datum:\' hinzugefügt.
+Eine Zeile \'Von:\' hinzufügen?
+Sollte eine vom lokalen Rechner stammende Nachricht über keine RFC822-Kopfzeile \'Von:\' verfügen und diese Variable auf Ja eingestellt sein, wird eine RFC822-Kopfzeile \'Von:\' hinzugefügt.
+Eine Zeile \'Empfangen:\' hinzufügen?
+Sollte eine Nachricht empfangen werden, die über keine RFC822-Kopfzeile \'Empfangen:\' verfügt und diese Variable auf Ja eingestellt sein, wird eine RFC822-Kopfzeile \'Empfangen:\' hinzugefügt.
+
+
+Gruppenname:
+Um eine eng miteinander verbundene Reihe von Systemen von allen anderen Systemen bei einem Namen zu identifizieren, stellen Sie dieses Feld auf den Gruppennamen ein.  Diese Zeichenkette wird anstatt des von uname(2) zurückgegebenen Knotennamens des lokalen Systems verwendet, um Postnachrichten zu verarbeiten.
+Mailsurr Mailcnfg Var's:
+Eine durch Kommata getrennte Liste von Postkonfigurationsvariablen, die als Umgebungsvariablen an die mailsurr-Befehle durchgegeben werden sollen.
+Debug-Stufe:
+Diese Variable nimmt dieselben Werte an wie die Option \-x command\-line der Post. Auf diese Weise kann eine systemweite Debugging-/Fehlersuchstufe einstellt werden. Während des Debugging ist dies normalerweise auf 2 eingestellt, wodurch minimale Diagnosen geboten werden, die für das Debugging von  mail- und rmail-Versagen nützlich sind.  Der Wert der Option \-x mail command-line übersteuert jegliche hier eingegebene Werte.
+Leere Postdateien löschen?
+Wenn diese Variable auf Standard eingestellt ist, werden leere Postdateien von mail und rmail gelöscht, falls die Dateiberechtigungen 0660 sind. Ansonsten werden die Dateien behalten. Wenn Sie Ja wählen, werden leere Postdateien ohne Berücksichtung der Dateiberechtigungen immer gelöscht. Wenn Sie Nein wählen, werden leere Postdateien nie gelöscht.
+Domainname:
+Mit dieser Zeichenkette kann der  Domainname des Systems mit einem Domainnamen speziell für Post übersteuert werden. Dieser Domainname wird für Postzwecke als der Systemdomainname verwendet.
+Gesichertes Nachsendesystem:
+Sollte auf das Verzeichnis /var/mail via NFS zugegriffen werden, und es bei Zulieferung von Post nicht zugreifbar sein, wird die Post an das gesicherte Nachsendesystem weitergeleitet. Diese Variable sollte auf den Namen des Systems eingestelllt sein, von dem das Verzeichnis /var/mail montiert ist. Wenn Sie das Verzeichnis /var/mail nicht via NFS montieren, lassen Sie dieses Feld leer.
+Mailsurr-Datei kompilieren?
+Normalerweise erstellt die Post eine kompilierte Version der Routing-Konfigurationsdatei, um so die Initialisierungszeit für künftige Postaufrufe zu reduzieren, jedesmal wenn sich die Konfigurationsdatei verändert. Wenn Sie Nein wählen, wird die Post die kompilierte Datei ignorieren.
+Zeichenkette \'Fern von:\':
+Diese Zeichenkette kann eingestellt werden, wenn Sie in den ...fern von...Informationen in der Kopfzeile des UNIX Poststempels eine etwa andere Zeichenkette verwenden möchten als entweder Gruppen- oder Systemnamen.
+Intelligenter Host:
+Für diese Zeichenkette kann der Name eines Systems eingegeben werden, das über bessere Alias- und Routing-Informationen verfügt als das lokale System. Jegliche Post, die vom lokalen System nicht weitergeleitet werden kann, wird dann an den intelligenten Host gesendet.
+Mailsurr Umgeb.-Var.:
+Eine durch Kommata getrennte Liste von Umgebungsvariablen, die an mailsurr-Befehle weitergegeben werden sollen. Dies wird geöhnlich leer gelassen.
+
+
+
+
+Alle Nachr. an 'Intelligenten Host' routen?
+Wenn Ja ausgewählt ist, werden alle nicht-lokalen Nachrichten über den den 'Intelligenter Host' geroutet.
+Nachrichten protokollieren?
+Wenn Ja ausgewählt ist, wird für jede Nachricht, die durch das lokale System durchlaufen, ein Protokolleintrag in entweder /var/mail/:log/<Wochentag> oder /var/mail/:errors/<Wochentag> geschrieben.
+Eine Zeile \'Nachricht-ID:\' hinzufügen?
+Wenn eine vom lokalen Rechner stammende Nachricht nicht über eine RFC822 \Nachricht-ID:\' Kopfzeile verfügt und Ja ausgewählt ist, dann wird eine solche Kopfzeile hinzugefügt.
+Zu 7-Bit-Kopfzeilen konvertieren?
+Wenn Ja ausgewählt ist, wird die Post jegliche 8-Bit-Kopfzeilen in ein 7-Bit-Format konvertieren. Da 8-Bit-Zeichen nur in den Kommentarabschnitten der \'An:\'-, \'Cc:\'- und \'Bcc:\'-Kopfzeilen erlaubt sind, werden alle Kopfzeilen mit 8-Bit-Zeichen in Nicht-Kommentarabschnitten verändert in \'Unzulässig-An:\', \'Unzulässig-Cc:\' und \'Unzulässig-Bcc:\'.
+Zu 7-Bit-MIME konvertieren?
+Sollte Ja ausgewählt sein, wenn eine nicht-MIME (Multi-Purpose Internet Message Extensions)-Postnachricht in das MIME-Format konvertiert wird, wird ein Nachrichtenformat von 8-Bit unter Verwendung von 'quoted-printable'- oder 'base64'-Übertragungscodierung in ein 7-Bit-Format umgewandelt.
+Nicht-MIME in MIME konvertieren?
+Wenn Ja ausgewählt ist, wird jede empfangene Nachricht, die nicht im MIME-Format ist, in dieses umgewandelt.
+Eine Zeile \'An:\' hinzufügen?
+Wenn Ja ausgewählt ist, wird jeder Nachricht, die von einem Benutzer auf dem lokalen Rechner ohne eine RFC822-Kopfzeile \'An:\' gesendet wird, eine solche Zeile hinzugefügt.
+An die Domain adressierte Post annehmen?
+Wenn Ja ausgewählt ist, werden Nachrichten, die an die lokale Domain ohne einen Systemnamen adressiert sind, als an das lokale System adressierte Nachrichten angesehen.
+Lokale Nachrichten durch MHS leiten?
+Wenn Ja ausgewählt ist, wird Post, die an einen Benutzer adressiert ist, der angeblich auf dem System ist, jedoch nicht existiert, durch den MHS-Gateway geleitet, vorausgesetzt dieser ist konfiguriert. Wenn der Gateway nicht konfiguriert ist, wird die Post durch den intelligenteren Host geleitet, wenn dieser konfiguriert ist, ansonsten wird die Post zurückgeschickt.

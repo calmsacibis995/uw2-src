@@ -1,0 +1,27 @@
+#ident	"@(#)pkg.nuc:preremove	1.5"
+#!/bin/sh
+
+PFMT1="The NetWare Protocol Stack is running.\nYou must run stopnps before removing this package!\n"
+
+PKGMSG=uvlnuc
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]; then
+	if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	     -d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]; then
+		cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+		   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+	fi
+fi
+
+if [ -x /usr/sbin/statnps ]
+then
+	if /usr/sbin/statnps
+	then
+		pfmt -s error -g ${PKGMSG}:367 "$PFMT1"
+		exit 1
+	fi
+fi
+
+
+exit 0

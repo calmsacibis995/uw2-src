@@ -1,0 +1,47 @@
+.bottom
+Premere <Invio> per continuare:
+#.form
+#ENTER
+.pageno
+Pagina %d di %d
+.ul
+Installazione dei set
+.hhelp_ban
+Guida sulla guida e sull'uso di questo programma
+.helpbanner
+Guida sull'installazione dei set
+.ur
+Risultati dell'installazione
+.ll
+#Please make a selection.  Press F1 for Help.
+.lr
+F1=Guida
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+Gli schermi precedenti mostravano lo stato dell'installazione di tutti i
+pacchetti selezionati in questo set.  
+
+I dettagli sulle installazioni fallite si trovano nei messaggi di posta
+elettronica inviati all'utente "root".
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && echo "Combinazione dei file di configurazione del sistema non riuscita per i seguenti pacchetti:"`
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && echo "    "${MRGFAILLIST}`
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && cat $MRGFAILMSG`
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && cat $MRGFAILFILES`
+`[ "${NOMRGLIST}" ] && echo " "`
+`[ "${NOMRGLIST}" ] && echo "File di configurazione di sistema non combinati per i seguenti pacchetti:"`
+`[ "${NOMRGLIST}" ] && echo " "`
+`[ "${NOMRGLIST}" ] && echo "    "${NOMRGLIST}`
+`[ "${NOMRGLIST}" ] && echo " "`
+`[ "${NOMRGLIST}" ] && cat $NOMRGMSG`
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.working
+Attendere...
+.top

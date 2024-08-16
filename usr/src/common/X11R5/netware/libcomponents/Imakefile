@@ -1,0 +1,39 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)libcomps:Imakefile	1.6"
+
+#if Release5
+#define DoNormalLib	YES
+#include <Library.tmpl>
+#include <sv4Lib.tmpl>
+#endif
+#include        <Motif.tmpl>
+#include        <Motif.rules>
+
+     MDTILIBSRC = $(USLCLIENTSRC)/libMDtI
+
+       INCLUDES = -I../include -I$(LIBSRC) -I$(MDTILIBSRC) -I$(LIBSRC)/Xm  -I$(MDTILIBSRC)
+   INSTALLFLAGS = $(INSTINCFLAGS)
+        LIBNAME = uwc
+            LIB = lib$(LIBNAME).a
+
+SRCS = \ 
+	RootWindow.c \
+	mnem.c \
+	metrics.c \
+	dtFuncs.c
+		
+OBJS = $(SRCS:.c=.o)
+
+LibraryObjectRule()
+NormalLibraryTarget($(LIBNAME),$(OBJS))
+
+install::	all
+
+DependTarget()

@@ -1,0 +1,217 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#pragma ident	"@(#)mach64:mach64/Imakefile	1.10"
+
+/***
+ ***	NAME
+ ***	
+ ***		Imakefile : Makefile generation template for the MACH64
+ ***					display library.
+ ***	
+ ***	SYNOPSIS
+ ***
+ ***		make Makefile 	: if in the X build environment.
+ ***
+ ***		imake -DUseInstalled  : if building outside the X
+ ***								environment.
+ ***	
+ ***	DESCRIPTION
+ ***
+ ***		The following options are available of customization at
+ ***	library build time.  These options are turned on or off using
+ ***	compile time flags.  This Imakefile contains only a summary of
+ ***	the available options.  Please read the documentation in the
+ ***	associated module for further caveats.
+ ***	
+ ***	RETURNS
+ ***
+ ***		Not Applicable.
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		OPTION			MODULE		DESCRIPTION
+ ***		~~~~~~			~~~~~~		~~~~~~~~~~~
+ ***		__DEBUG__   	*All* 		enable debugging and assertion
+ ***									checking.
+ ***		LIBRARY_NAME	global.h	prefix for library's messages.
+ ***		CHIPSET_NAME	global.h	name of the chipset
+ ***		LIBRARY_VERSION global.h 	library version
+ ***		USE_KD_GRAPHICS_MODE		Use KD driver ioctl's to switch
+ ***						m64.c		console modes.
+ ***		USE_SYSI86		m64.c		Use sysi86() for IOPL's
+ ***		PUBLIC			*All*		Marker for interface generation
+ ***									tools.
+ ***		STATIC			*All*		Define to "" for profiling.
+ ***		PROFILING		*All*		Defined on a profiling run.
+ ***
+ ***	FILES
+ ***
+ ***		Source for the M64 display library.
+ ***
+ ***	SEE ALSO
+ ***
+ ***		imake(1).
+ ***	
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	
+ ***	HISTORY
+ ***
+ ***	
+ ***/
+
+/*
+ * Bring in the rules for Imake.
+ */
+#include <sv4Lib.rules>
+
+
+/*
+ * Debugging the server with dynamically linked library is sometimes painful
+ * To statically link libvga256.a or libmach64.a into the server:
+ *
+ * #undef XWINSharedDisplayLibrary
+ * and define a VENDOR_DIR; this can be any one of the directories under
+ * devices
+ *
+ * and do:
+ *	make clean
+ *	make Makefile
+ *	make
+ *	cd ../../.. (ie: to the server dir)
+ *	make Xwin_a (make sure SDD=.....libmach64.a in the server/Makefile)
+ */
+
+/** #undef XWINSharedDisplayLibrary
+**/
+
+/*
+ * for archive, we have to include the objects from one of the directories
+ * under "devices", so that these objects are archived into libvga256.a
+ */ 
+#if XWINSharedDisplayLibrary
+VENDOROBJS =
+#else
+VENDOROBJS = ./devices/actix/?*.o
+DEF_VENDORDIR = ./devices/actix
+#endif
+
+/*
+ * Subdirectory control.
+ */
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS) M64_REVISION=$(M64_REVISION)'
+
+SUBDIRS = devices
+
+CDEBUGFLAGS=-O -v
+
+#ifdef SIRevision2_0
+SIFLAGS = -DSI_2_0
+#else
+SIFLAGS =
+#endif
+
+M64_REVISION = 1
+
+EXTRA_DEFINES=-DPUBLIC=  -DLIBRARY_NAME=\"LIBM64\"\
+			  -DLIBRARY_VERSION='"1.02"'\
+              -DCHIPSET_NAME=\"M64\" -DUSE_KD_GRAPHICS_MODE\
+              -DUSE_SYSI86 -DSTATIC=static $(SIFLAGS)
+
+
+#define VendorDisplayModuleRule()			@@\
+all:: $(VENDORLIB) 					@@\
+$(VENDORLIB):: $(OBJS)					@@\
+	$(CC) $(YFLAGS) -G $(OBJS) -o $(VENDORLIB) -h $(VENDORLIB) -lm @@\
+	@echo $(VENDORLIB) generated. 			@@\
+							@@\
+install:: all						@@\
+	$(INSTALL) $(INSTLIBFLAGS) $(VENDORLIB) $(DISPLIBDIR)
+
+/*
+ * We need EXTRA_LIBS to link certain libraries with libmach.so. The
+ * current rule for SharedLibraryTarget1/NormalLibraryTarget does not 
+ * allow this.
+ */
+EXTRA_LIBS=-lc
+
+/*
+ * Instructions for profiling:
+ *
+ * define -DPROFILING in the EXTRA_DEFINES line.
+ * set ASM_PROFILING_OPTIONS to "-- -DPROFILING".
+ * Build the Archive library, if your CCS does not handle profiled
+ * shared objects.
+ */ 
+
+XCOMM	Include "m64_debug.[co]" if you wish to look at registers from a
+XCOMM 	debugger. 
+
+SRCS = 	debug.c stdenv.c	\
+	g__init__.c g_colormap.c g_gs.c g_omm.c g_regs.c g_state.c generic.c\
+	m64.c m64__gs__.c m64__init__.c m64__vtin__.c m64__vtout__.c\
+	m64_arc.c m64_asm.c m64_bitblt.c m64_cmap.c m64_cursor.c\
+	m64_debug.c m64_fill.c m64_font.c m64_gbls.c m64_gs.c\
+	m64_line.c m64_mischw.c m64_opt.c m64_points.c m64_regs.c\
+	m64_sline.c m64_spans.c m64_state.c 
+
+OBJS = 	debug.o stdenv.o	\
+	g__init__.o g_colormap.o g_gs.o g_omm.o g_regs.o g_state.o generic.o\
+	m64.o m64__gs__.o m64__init__.o m64__vtin__.o m64__vtout__.o\
+	m64_arc.o m64_asm.o m64_bitblt.o m64_cmap.o m64_cursor.o\
+	m64_debug.o m64_fill.o m64_font.o m64_gbls.o m64_gs.o\
+	m64_line.o m64_mischw.o m64_opt.o m64_points.o m64_regs.o\
+	m64_sline.o m64_spans.o m64_state.o 
+	
+     LFLAGS = -buxz
+  VENDORLIB = libmach64.so.$(M64_REVISION)
+#ifndef SIRevision2_0
+   INCLUDES = -I.  -I../../ddx/si -I../../../X11 -I../../include -I../os_lfb
+#else /* SIRevision2_0 */
+   INCLUDES = -I.  -I../../si -I$(TOP)/X11 -I$(TOP)/programs/Xserver/include -I../os_lfb
+#endif
+
+#if XWINSharedDisplayLibrary
+VendorDisplayModuleRule()
+#else /* XWINSharedDisplayLibrary */
+CDEBUGFLAGS = ServerCDebugFlags
+NormalLibraryObjectRule()
+NormalLibraryTarget(M64,$(OBJS) $(VENDOROBJS))
+#endif /* XWINSharedDisplayLibrary */
+
+MakeSubdirs($(SUBDIRS))
+ForceSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+clean::
+	$(RM) *.so *.so.*
+
+DependTarget()
+
+InstallMultipleDestFlags(install,README.mach64 MACH64_OPTIONS,$(DISPLIBDIR),$(INSTDATFLAGS))
+
+/*
+ * We use the std XC macro to install the library, which creates the *.so
+ * link; this file (ex: libM64.so) is needed only if you link something with
+ * this library. We don't need this, so remove it
+ */
+install::
+	$(RM) $(DISPLIBDIR)/libmach64.so
+
+.s.o:
+	$(AS)  -o $(@) -m $(ASM_PROFILING_OPTIONS) $(<)
+
+lint: ${CFILES} ${LIBCFILES}
+	$(LINT) $(LFLAGS) -Cm64 $(INCLUDES) $(SRCS) >lint.out 2>&1

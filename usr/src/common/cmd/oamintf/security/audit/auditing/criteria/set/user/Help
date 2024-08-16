@@ -1,0 +1,37 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/criteria/set/user/Help	1.1.4.2"
+#ident  "$Header: Help 2.0 91/07/12 $"
+ABSTRACT:Set User Level Audit Criteria 
+	The "user" task allows you to modify the auditable events 
+	for users currently logged on, the new/updated events will take
+	effect immediately for any process owned by the user.  Only users
+	that are currently active (have processes in the process table)
+	will be affected.
+
+	Auditing MUST be enabled when updating user audit masks.
+
+Form.useraud:users
+	Enter valid user logins or uids currently active on the system, 
+	separating multiple entries by a comma, or press CHOICES.  The 
+	keyword "all" may be entered to specify all of the users on
+	the system.
+	
+	The user(s) must be active.  
+
+Form.useraud:operation
+	Enter one of the following keywords available by pressing CHOICES.
+
+	addition - the events specified will be added to the current 
+	auditable events.  
+
+	deletion - the events specified will be deleted from the current 
+	auditable events.  
+
+	replacement - the events specified will replace the current 
+	auditable events.  
+
+	exception - all events except those specified replace the current 
+	auditable events.
+
+Form.useraud:event
+	Enter one or more valid event types or classes, separating 
+	multiple entries by a comma, or press CHOICES.

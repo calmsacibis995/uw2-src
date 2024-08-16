@@ -1,0 +1,9 @@
+#ident	"@(#)ihvkit:display/lfb256/devices/ati/README	1.1"
+To generate a Makefile use:
+	/usr/X/bin/imake -DTOPDIR=. -DCURDIR=. -I/usr/X/lib/config
+this will use the header files and libraries provided with this package, don't
+use -DUseInstalled, as indicated in Imakefile, since that will try to use the
+existing headers and libraries, which might not work if you have an older
+version of the X server.  When you are ready to do a make you must set
+DISPLIBREV, e.g.:
+	make DISPLIBREV=1

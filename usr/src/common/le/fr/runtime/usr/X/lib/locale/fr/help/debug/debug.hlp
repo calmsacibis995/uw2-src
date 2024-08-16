@@ -1,0 +1,3347 @@
+^*version^1
+^*title^Débogage
+^:Débogueur
+^+/usr/X/lib/locale/fr/help/debug/debug.defs
+^?Débogueur multi-traitement au niveau source
+
+^1^Présentation du débogage
+^$1
+Présentation du débogage
+
+Le débogueur est un programme symbolique au niveau source, qui
+permet d'effectuer de nombreuses opérations : contrôle de plusieurs
+\k(processus et chemins d'exécution), évaluation d'expressions complexes en C ou
+C++, etc. Le débogueur affiche les informations dans
+différentes fenêtres. Chaque fenêtre comporte un ou plusieurs
+ panneaux, chacun affichant tel ou tel type
+d'informations. L'utilisateur peut configurer les panneaux dont il
+souhaite disposer dans chaque fenêtre (see \k(Configuration)). Il
+existe neuf types de panneaux.
+
+    Le panneau \k(Panneau des processus) affiche les
+    processus et les chemins d'exécution gérés par le débogueur et indique
+    les processus/chemins d'exécution en cours.
+
+    Le panneau \k(Panneau des piles) affiche la trace
+    de la pile correspondant à
+    \d(processus ou chemin d'exécution actuel). Il est mis à jour lors de chaque arrêt d'un
+    processus/chemin d'exécution en cours.
+
+    Le panneau \k(Panneau des symboles) affiche les
+    symboles correspondant au processus/chemin d'exécution en
+    cours. Il est mis à jour lors de chaque arrêt du processus/chemin
+    d'exécution en cours.
+
+    Le panneau \k(Panneau des sources) affiche le code
+    source du programme. Lorsque le processus/chemin d'exécution
+    est interrompu, la fenêtre contenant le code source est mise à jour
+    de façon à afficher la ligne actuelle du fichier actuel. Vous pouvez
+    également examiner d'autres fichiers et définir/supprimer des points
+    de rupture.
+
+    Le panneau \k(Panneau de désassemblage) permet de visualiser le
+    désassemblage de la fonction en cours. Ce panneau est mis à jour dès
+    l'arrêt d'un processus ou d'un chemin d'exécution.
+
+    Le panneau \k(Panneau des registres) affiche les valeurs des
+    registres de la machine correspondant au processus/chemin
+    d'exécution en cours. Il est mis à jour dès l'arrêt d'un
+    processus/chemin d'exécution.
+
+    Le panneau \k(Panneau des événements) affiche différents types
+    d'événements : points de rupture, point de surveillance, appels
+    système, etc.). La suppression, la désactivation, l'activation et
+    l'édition sont effectuées depuis la fenêtre contenant ce panneau.
+
+    Le panneau \k(Panneau des commandes) consigne le journal de tous les
+    événements au fur et à mesure qu'ils interviennent. Les E/S
+    processus sont également affichées dans ce panneau. Il vous permet
+    d'entrer les commandes comme si vous vous trouviez au niveau de la
+    ligne de commande du débogueur.
+
+   Le panneau \k(Panneau des statuts) établit le suivi du processus/chemin
+    d'exécution en cours, quelle que soit la fenêtre de rattachement.
+    Il affiche l'état du processus/chemin d'exécution, ainsi que son
+    emplacement, en cas d'arrêt.
+
+Le \k(configuration) fourni par l'utilisateur décrit un
+\d(groupe de fenêtres). Chaque groupe de fenêtres contient au moins un
+exemplaire de chacun des neuf panneaux du débogueur (sauf pour le
+ panneau \k(Panneau des statuts), qui n'est pas obligatoire). Si aucune
+configuration n'est fournie par l'utilisateur, le débogueur organise
+les panneaux en un groupe de six fenêtres.
+
+Chaque groupe de fenêtres gère un sous-groupe de processus et
+de chemins d'exécution en cours de débogage, et chaque
+chemin/processus est rattaché de façon précise à un groupe de
+fenêtres. Si vous ne déboguez qu'un seul processus ne comportant qu'un
+seul chemin d'exécution, vous n'avez besoin que d'un seul groupe de
+fenêtres ; en revanche, si vous déboguez plusieurs processus/chemins
+d'exécution, vous préférerez peut-être affecter un groupe de fenêtres
+particulier par processus/chemin d'exécution. Les groupes de fenêtres
+sont créés à l'aide de l'option \k(Nouveau groupe de fenêtres) du menu
+\k(Fichier) de toute fenêtre contenant \k(Panneau des processus).
+
+Chaque fenêtre comporte une partie ou l'ensemble des boutons
+suivants (selon le type de panneau affiché) :
+
+\t\k(Bouton Fichier)
+\t\k(Bouton Editer)
+\t\k(Bouton Visualiser)
+\t\k(Bouton Contrôle)
+\t\k(Bouton Evénement)
+\t\k(Bouton Caractéristiques)
+\tbouton Aide
+
+Les menus qui s'affichent lorsque vous sélectionnez ces boutons
+présentent des commandes permettant de contrôler l'état de
+\k(processus et chemins d'exécution), des options permettant de modifier les
+informations affichées, etc. Pour plus de détails, consultez les
+sections d'aide correspondant à chaque bouton.
+
+Chaque fenêtre peut aussi contenir une \d(Barre de boutons). La
+barre de boutons peut être située dans la partie supérieure de la
+fenêtre (au dessous des boutons d'accès aux menus, dans le cas de
+fenêtres ne disposant pas de \k(Panneau des statuts) ou sous le panneau
+ Statut dans le cas inverse) ou dans la partie inférieure. Cette barre
+ comporte une série de boutons que vous pouvez sélectionner depuis les
+autres menus déroulants, et permet d'accéder rapidement aux commandes
+de débogage les plus fréquemment utilisées (voir \k(Configuration)).
+
+Vous pouvez redimensionner n'importe quelle fenêtre. Vous
+pouvez également redistribuer l'espace au sein d'une fenêtre. Pour
+cela, cliquez sur la bordure de n'importe quel panneau. Vous pouvez
+faire glisser vers le haut ou vers le bas la poignée qui s'affiche,
+afin d'augmenter ou de réduire la taille du panneau par rapport aux
+autres panneaux.
+
+Les options du menu \k(Caractéristiques) vous permettent de
+personnaliser la présentation et le fonctionnement du débogueur. Un
+certain nombre de ces propriétés peuvent également être définies comme
+des ressources d'applications dans les fichiers de ressources système
+de la fenêtre X standard, tels que le fichier .Xdefaults du répertoire
+privé HOME. Voir \k(Personnalisation) pour plus de détails. Un grand
+nombre de ressources peuvent également être personnalisées à l'aide
+des options disponibles depuis la ligne de commande (voir
+\k(Appel du débogueur).
+
+^2^Appel du débogueur
+^$11
+\k(Présentation du débogage)
+Appel du débogueur
+
+Le débogueur peut être appelé à partir du Bureau de trois façons
+différentes :
+
+1) En faisant glisser un fichier objet contenu dans un dossier vers
+   l'icône du débogueur figurant dans le dossier Applications. Cette
+   opération a pour effet de démarrer le débogueur, qui considère
+   alors le fichier objet comme un nouveau processus. Cette méthode
+   présente l'avantage suivant : le répertoire de travail du débogueur
+   est identique à celui du dossier contenant le fichier objet.
+   L'inconvénient réside dans le fait que vous ne pouvez associer
+   aucune option au débogueur ni au processus créé. Vous ne pouvez pas
+   non plus faire glisser un fichier image mémoire sur l'icône du
+   débogueur.
+
+2) En cliquant deux fois sur l'icône du débogueur dans le dossier
+   Applications. Cette opération a pour effet de démarrer le débogueur
+   en ouvrant une fenêtre Contexte vide. Depuis cette fenêtre vous
+   pouvez créer ou saisir des processus à l'aide des options du menu
+   Fichier. Vous pouvez transmettre les options aux processus
+   débogués, mais pas au débogueur lui-même. L'autre inconvénient
+   réside dans le fait que le répertoire de travail du débogueur n'est
+   pas nécessairement lié au répertoire du fichier que vous souhaitez
+   déboguer. Pour modifier le répertoire de travail, utilisez l'option
+   Changer de répertoire située dans le menu Fichier de la fenêtre
+   Contexte.
+
+3) En entrant les "options debug" dans une fenêtre xterm. Même si vous
+   tapez une commande pour démarrer le débogueur, cela a pour effet
+   d'appeler l'interface graphique. Vous pouvez toutefois utiliser
+   l'interface via la ligne de commande en entrant debug -ic (ic
+   correspondant à interface et caractère).
+
+   Bien que cette méthode soit plus complexe que le simple fait de
+   cliquer sur une icône, elle présente une plus grande souplesse, car
+   elle vous permet de créer des processus en leur associant des
+   options, de saisir des processus en cours ou de saisir des fichiers
+   image mémoire depuis la ligne de commande. Pour connaître les
+   options disponibles, voir debug(1).
+
+   L'option -X, qui vous permet de transmettre des options au serveur
+   X, est la seule qui soit propre à l'interface utilisateur
+   graphique. L'option -X permet d'indiquer des paramètres tels que
+   les polices et les couleurs utilisées. Ainsi, 
+\tdebug -X"-background green"
+   permet d'afficher en vert le fond de toutes les fenêtres du
+   débogueur;
+\tdebug -X '-xrm "debug*Context*background: green"'
+   permet d'affecter cette couleur uniquement à la fenêtre Contexte. L'option
+   -X n'acceptant qu'un seul argument, n'oubliez pas de mettre entre
+   guillemets toutes les options comportant un espace.
+
+   Avec cette méthode, le répertoire de travail du débogueur est le
+   même que celui de la fenêtre xterm.
+
+   Une partie des propriétés définies à l'aide des options du
+   menu \k(Caractéristiques) ou comme des \k(ressources) personnalisables
+   peuvent également être définies depuis la ligne de commande.
+   Les options de la ligne de commande sont les suivantes :
+
+   o -config nom_fichier - nom_fichier correspond au nom du fichier
+      utilisé par le débogueur comme les spécifications relatives à la
+      configuration (voir \k(Configuration).
+
+   o -output_action action - action peut correspondre à BEEP, MESSAGE,
+     RAISE ou NONE (majuscules non obligatoires). Ces précisions
+     indiquent le mode de fonctionnement du débogueur lorsqu'un
+     processus sujet génère une sortie. Voir \k(Opération de sortie).
+
+   o -event_action action - action peut correspondre à BEEP, MESSAGE,
+     RAISE, ou NONE (majuscules non obligatoires). Ces précisions
+     indiquent le mode de fonctionnement du débogueur lors du
+     déclenchement d'un événement dans un processus sujet. Voir
+     \k(Opération de sortie).
+
+   o -command_level niveau - niveau peut correspondre à PROGRAM,
+     PROCESS ou THREAD (majuscules non obligatoires). Ces précisions
+     indiquent si les commandes du débogueur s'appliquent par défaut
+     au chemin d'exécution actuel, à tous les chemins d'exécution du
+     processus actuel ou à tous les chemins d'exécution du programme actuel.
+     Voir \k(Granularité).
+
+   o -event_level niveau - niveau peut correspondre à PROGRAM, PROCESS
+     ou THREAD (majuscules non obligatoires). Ces précisions indiquent
+     si les événements du débogueur s'appliquent par défaut au chemin
+     d'exécution actuel, à tous les chemins d'exécution du processus
+     actuel ou à tous les chemins d'exécution du programme actuel.
+     Voir \k(Granularité).
+
+   o -thread_action action[,action] - action peut correspondre à NONE,
+     STOP, BEEP ou à la fois à STOP et BEEP (dans ce cas indiquez les
+     deux actions en les séparant par une virgule ; les majuscules ne
+     sont pas obligatoires). Ces précisions indiquent le mode de
+     fonctionnement du débogueur lorsqu'un chemin d'exécution change
+     d'état. Voir \k(Opération de sortie).
+
+   o -symbols type[,type..] - type peut correspondre à LOCAL, FILE,
+     GLOBAL, DEBUGGER, USER (séparés par une virgule ; les majuscules
+     ne sont pas obligatoires). Ces précisions indiquent le type de
+     symbole à afficher dans \k(Panneau des symboles).  Voir
+     \k(Symboles).
+
+Si vous utilisez les trois méthodes d'appel disponibles, vous pouvez
+créer ou saisir des processus supplémentaires en leur associant les
+options du menu \k(Fichier) de n'importe quelle fenêtre
+contenant \k(Panneau des processus) ou s'affichant automatiquement lors du
+lancement du débogueur (voir \k(Configuration).  Voir
+\k(Créer), \k(Contrôler processus) et \k(Contrôler image mémoire) pour
+de plus amples informations. Veuillez noter que les threads ne
+peuvent être créés que sous contrôle programmatique, et ne peuvent pas
+non plus être attrapé individuellement
+
+
+^2^Personnalisation=ressources
+^$12
+
+\k(Présentation du débogage)
+Personnalisation
+
+Différents points concernant l'organisation, le mode de fonctionnement
+et la présentation du débogueur peuvent être définis comme des
+ressources de fenêtres X ; vous devez pour cela placer les définitions
+des ressources dans des fichiers de ressources de fenêtres X, tels que
+le fichier .Xdefaults dans le répertoire privé de l'utilisateur. Le
+nom de classe des ressources du débogueur correspond à Debug. Les
+ressources propres à debug sont :
+
+config_file:\tnom_fichier
+\tIndique le chemin d'accès au fichier de configuration du débogueur.
+\tVoir \k(Configuration).
+
+config_desc:\tconfiguration
+\tIndique directement la configuration relative au débogueur.
+\tLa configuration doit respecter la forme indiquée sous
+\t\k(Configuration). Une ressource X doit comporter une chaîne unique
+\tsans interligne ; si la configuration comporte plusieurs lignes,
+\tchaque ligne doit par conséquent être suivie d'une barre oblique
+\tinverse (\\).
+
+output_action: action
+     action peut correspondre à BEEP, MESSAGE, RAISE ou NONE
+     (majuscules non obligatoies). Ces précisions
+     indiquent le mode de fonctionnement du débogueur lorsqu'un
+     processus sujet génère une sortie. Voir \k(Opération de sortie).
+
+event_action: action
+     action peut correspondre à BEEP, MESSAGE, RAISE ou NONE
+     (majuscules non obligatoires). Ces précisions indiquent le mode de 
+     fonctionnement du débogueur lors du déclenchement d'un événement
+     dans un processus sujet. Voir \k(Opération de sortie).
+
+command_level: niveau
+     niveau peut correspondre à PROGRAM, PROCESS,
+     THREAD (majuscules non obligatoires). Ces précisions indiquent si les
+     commandes du débogueur s'appliquent par défaut au chemin d'exécution
+     actuel, à tous les chemins d'exécution du processus actuel ou à tous
+     les chemins d'exécution du programme actuel. Voir
+     \k(Granularité).
+
+event_level: level
+     niveau peut correspondre à PROGRAM, PROCESS ou
+     THREAD (majuscules non obligatoires). Ces précisions indiquent si les
+     événements du débogueur s'appliquent par défaut au chemin d'exécution
+     actuel, à tous les chemins d'exécution du processus actuel ou à tous
+     les chemins d'exécution du programme actuel. 
+     Voir \k(Granularité).
+
+thread_action: action[,action]
+     action peut correspondre à NONE, STOP, BEEP à la fois à STOP et
+     BEEP (dans ce cas indiquez les deux actions en les séparant par
+     une virgule ; les majuscules ne sont pas obligatoires). Ces
+     précisions indiquent le mode de fonctionnement du débogueur
+     lorsqu'un chemin d'exécution change d'état. Voir
+     \k(Opération de sortie).
+
+symbols type[,type..]
+     type peut correspondre à LOCAL, FILE, GLOBAL, DEBUGGER, USER
+     (séparés par une virgule ; les majuscules ne sont pas
+     obligatoires). Ces précisions indiquent le type de symbole à
+     afficher dans \k(Panneau des symboles).  Voir
+     \k(Symboles).
+
+^2^Configuration=configuration
+^$13
+
+\k(Présentation du débogage)
+Configuration
+
+La disposition du débogueur graphique peut être configurée par
+l'utilisateur. Ce dernier peut définir les points suivants :
+\t
+\to Panneaux contenus dans les fenêtres de chaque groupe de fenêtres.
+\t
+\to Nombre de lignes de chaque panneau, et pour\t certains panneaux,
+\t  nombre de colonnes également.
+\to Contenu et position (supérieure ou inférieure) du
+\t  \d(Barre de boutons) pour chaque fenêtre.
+
+La configuration est définie dans un fichier de configuration ou
+directement dans un fichier de ressources de fenêtres X. Si elle est
+définie dans un fichier distinct, le chemin d'accès correspondant est
+fourni comme la ressource debug.config_file du fichier de fenêtres X
+ou à l'aide de l'option -config au niveau de la ligne de commande. Si
+elle est définie directement dans un fichier de ressources de fenêtres
+X, la configuration correspond à la valeur de la ressource
+debug.config_desc. Voir \k(Appel du débogueur) et \k(Personnalisation).
+
+Le répertoire /usr/ccs/lib/config comporte plusieurs exemples de
+configuration types.
+
+Si le fichier de configuration est absent, illisible ou vide, ou si la
+configuration indiquée est incorrecte, c'est la configuration par
+défaut associée au débogueur qui est alors utilisée.
+
+La configuration comprend des mots clés et des noms définis par
+l'utilisateur. Le système lit les mots clés sans faire la différence
+entre majuscules et minuscules. Les noms se rapportent aux titres des
+fenêtre et aux libellés des boutons de \d(Barre de boutons). Chaque
+nom doit être placé entre guillemets (les guillemets simples ou
+doubles peuvent être utilisées indifféremment) et doit tenir sur une
+seule ligne.
+
+Les espaces ne sont pas pris en compte, sauf s'ils sont insérés dans
+des noms entre guillemets. Les commentaires sont précédés du caractère
+# et vont jusqu'en fin de ligne. Les commentaires sont également
+ignorés.
+
+La configuration comprend plusieurs descriptions de fenêtres. Pour
+chaque description d'une fenêtre, on trouve d'abord le mot clé
+FENETRE, suivi d'un nom défini par l'utilisateur, qui correspond au
+titre de la fenêtre. Si ce nom est suivi du mot clé AUTO, la fenêtre
+s'affiche automatiquement lors de chaque appel du débogueur or lors de
+la création d'un nouveau \d(groupe de fenêtres).
+
+La description de la fenêtre se divise en une série de descriptions
+portant sur un ou plusieurs panneaux. Chaque description inclut le
+type du panneau, suivi d'un nombre décimal facultatif indiquant le
+nombre de lignes du panneau. Si le nombre de lignes est indiqué, il
+peut être éventuellement suivi d'un autre nombre décimal précisant le
+nombre de colonnes du panneau.
+
+Les types de panneaux autorisés sont les suivants :
+COMMAND\t\k(Panneau des commandes)
+DISASSEMBLY\t\k(Panneau de désassemblage)
+EVENT\t\t\k(Panneau des événements)
+PROCESS\t\k(Panneau des processus)
+REGISTER\t\k(Panneau des registres)
+SOURCE\t\t\k(Panneau des sources)
+STACK\t\t\k(Panneau des piles)
+STATUS\t\t\k(Panneau des statuts)
+SYMBOLS\t\k(Panneau des symboles)
+
+Le nombre de lignes n'a aucune incidence sur le panneau Statut (ce
+dernier n'a toujours qu'une seule ligne). Le nombre de colonnes n'a
+aucune incidence sur le panneau Evénement, Processus, Pile, Statut ou
+Symbole. Une fenêtre est aussi large que son élément le plus large,
+même si elle contient un panneau indiquant un nombre de colonnes
+inférieur.
+
+Un panneau ne peut être défini qu'une seule fois au sein d'une même
+fenêtre, mais le même panneau peut apparaître dans plusieurs fenêtres.
+Si un panneau (autre que le panneau \k(Panneau des statuts) n'est pas
+défini dans une fenêtre, le débogueur se charge de créer une fenêtre
+contenant ce panneau.
+
+La liste de boutons constitue le dernier élément figurant dans une
+description de fenêtre. Cette liste est facultative et peut être
+située avant ou après l'ensemble des descriptions de panneaux
+correspondant à la fenêtre en question. S'il n'existe aucune liste de
+boutons, la fenêtre ne contient pas de \d(Barre de boutons). Si la
+liste est placée avant les descriptions de panneaux, la barre de
+boutons s'affiche dans la partie supérieure de la fenêtre. Si la liste
+est située après ces descriptions, la barre de boutons s'affiche dans
+la partie inférieure de la fenêtre.
+
+Au début d'une liste de boutons, on trouve le mot clé BOUTONS, suivi
+de diverses descriptions.
+
+Chaque description comprend le type du bouton, suivi d'un nom
+facultatif, qui constitue le libellé de ce bouton. Si aucun nom n'est
+précisé, le débogueur indique un nom par défaut. Les types de boutons
+autorisés sont les suivants :
+
+ANIMER_DES\t\k(Animer désassemblage)
+ANIMER_SOURCE\t\k(Animer source)
+SUPPRIMER\t\t\k(Supprimer)
+DETRUIRE\t\k(Détruire)
+DESACTIVER\t\t\k(Désactiver)
+ACTIVER\t\t\k(Activer)
+ETENDRE\t\t\k(Agrandir)
+EXPORTER\t\t\k(Exporter)
+ARRETER\t\t\k(Interrompre)
+ENTRER\t\t\k(Entrée)
+INTERROMPRE\t\k(Interrompre)
+INSTRUCTION_SUIVANTE\t\k(Instruction suivante)
+COMMENTAIRE_SUIVANT\t\k(Commentaire suivant)
+FIXER_SYM\t\t\k(Fixer)
+AFFICHAGE_INSTANTANE\t\t\k(Bouton de fenêtre à affichage instantané)
+RETOUR\t\t\k(Renvoyer)
+EXECUTER\t\t\k(Exécuter)
+DEFINIR_ACTUEL\t\k(Activer)
+DEFINIR_POINT_DE_SURVEILLANCE\t\k(Définir point de surveillance)
+INSTRUCTION_PAS_A_PAS\t\k(Instruction step)
+COMMENTAIRE_PAS_A_PAS\t\k(Commande d'exécution pas à pas)
+DECROCHER_SYM\t\k(Décrocher)
+
+Le bouton POPUP est particulier. Il peut en exister plusieurs
+occurrences dans une barre de boutons. Ce bouton permet d'afficher
+rapidement une autre fenêtre. Le champ indiquant le libellé doit être
+obligatoirement rempli dans le cas de ce type de bouton et doit
+correspondre exactement au libellé d'une des fenêtres de la
+configuration. Le fait de cliquer sur SELECT au niveau du bouton
+revient à afficher instantanément la fenêtre associée. La description
+du bouton POPUP peut inclure un troisième champ facultatif, ainsi
+qu'un nom défini par l'utilisateur, qui constitue le véritable libellé
+de ce bouton. Il peut être différent du libellé de la fenêtre
+correspondant au bouton. Si aucun nom n'est indiqué par l'utilisateur,
+le système reprend le libellé de la fenêtre.
+
+Parmi les types de boutons disponibles, certains ne sont autorisés que
+si la fenêtre comprend un panneau correspondant à un type particulier.
+
+ANIMATE_DIS n'est autorisé que si la fenêtre comprend le panneau
+\k(Panneau de désassemblage).
+
+ANIMATE_SOURCE n'est autorisé que si la fenêtre comprend le panneau
+\k(Panneau des sources).
+
+DELETE, DISABLE et ENABLE ne sont autorisés que si la fenêtre comprend
+le panneau \k(Panneau des événements).
+
+INPUT et INTERRUPT ne sont autorisés que si la fenêtre comprend le
+panneau \k(Panneau des commandes).
+
+SET_CURRENT n'est autorisé que si la fenêtre comprend le panneau
+\k(Panneau des processus) ou \k(Panneau des piles).
+
+Les options ETENDRE, EXPORTER, DEFINIR_POINT_DE_SURVEILLANCE,
+FIXER_SYM et DECROCHER_SYM sont autorisées uniquement si la fenêtre
+comprend un \k(Panneau des symboles).
+
+Tous les autres types de boutons sont autorisés dans l'ensemble des
+fenêtres.
+
+Voici un exemple de configuration définissant la configuration par
+défaut du débogueur.
+
+WINDOW "Source" AUTO
+\tBUTTONS
+\t\tSET_CURRENT\t"Définir actuel"
+\t\tRUN\t\t"Exécuter"
+\t\tRETURN \t\t"Retourner"
+\t\tSTEP_STMT\t"Exécution pas à pas"
+\t\tNEXT_STMT\t"Commentaire suivant"
+\t\tHALT\t\t"Arrêter"
+\t\tDESTROY\t\t"Détruire"
+\t\tPOPUP\t\t"Symboles"
+\tSTATUS
+\tSTACK\t4
+\tSOURCE\t10 60
+WINDOW "Processus"
+\tBUTTONS
+\t\tSET_CURRENT\t"Définir actuel"
+\t\tPOPUP\t\t"Commande" "Cmd"
+\t\tPOPUP\t\t"Désassemblage" "Dés
+\t\tPOPUP\t\t"Evénement"
+\t\tPOPUP\t\t"Source"
+\t\tPOPUP\t\t"Symboles"
+\tPROCESS\t5
+WINDOW "Symboles"
+\tBUTTONS
+\t\tEXPORT\t\t"Exporter"
+\t\tPIN_SYM\t\t"Fixer"
+\t\tUNPIN_SYM\t"Décrocher"
+\t\tSET_WATCHPOINT\t"Définir Pt de surveillance"
+\t\tPOPUP\t\t"Commande" "Cmd"
+\t\tPOPUP\t\t"désassemblage" "Dés"
+\t\tPOPUP\t\t"Evénement"
+\t\tPOPUP\t\t"Processus"
+\t\tPOPUP\t\t"Source"
+\tSTATUS
+\tSYMBOLS\t5
+WINDOW "Désassemblage"
+\tBUTTONS
+\t\tSET_CURRENT\t"Définir actuel"
+\t\tRUN\t\t"Exécuter"
+\t\tRETURN \t\t"Retourner"
+\t\tSTEP_INST\t"Instruction pas à pas"
+\t\tNEXT_INST\t"Instruction suivante"
+\t\tHALT\t\t"Arrêter"
+\t\tDESTROY\t\t"Détruire"
+\t\tPOPUP\t\t"Commande" "Cmd"
+\t\tPOPUP\t\t"Processus"
+\t\tPOPUP\t\t"Source"
+\tSTATUS
+\tREGISTER 6 70
+\tDISASSEMBLY 10 70
+WINDOW "Evénement"
+\tBUTTONS
+\t\tDISABLE\t"Désactiver"
+\t\tENABLE\t"Activer"
+\t\tDELETE\t"Supprimer"
+\t\tPOPUP\t"Commande" "Cmd"
+\t\tPOPUP\t"Désassemblage" "Dés
+\t\tPOPUP\t"Processus"
+\t\tPOPUP\t"Source"
+\t\tPOPUP\t"Symboles"
+\tSTATUS
+\tEVENT 8
+WINDOW "Commande"
+\tBUTTONS
+\t\tINPUT\t\t"Entrée..."
+\t\tINTERRUPT\t"Interrompre"
+\t\tPOPUP\t\t"désassemblage" "Dés"
+\t\tPOPUP\t\t"Evénement"
+\t\tPOPUP\t\t"Processus"
+\t\tPOPUP\t\t"Source"
+\t\tPOPUP\t\t"Symboles"
+\tSTATUS
+\tCOMMAND 10 60
+
+^1^Panneau des processus
+^$2
+Panneau des processus
+
+Le panneau Processus répertorie les \k(processus et chemins d'exécution) gérés par le
+\d(groupe de fenêtres) en question. Les informations concernant chaque
+processus ou chemin d'exécution sont les suivantes :
+
+   Nom de programme\tIl s'agit généralement du nom du fichier
+   exécutable Si un processus se divise en fourche, les processus
+\t\t parent et enfant (et le cas échéant, leurs chemins d'exécution
+\t\trespectifs) appartiennent alors au même \k(programme^^processus et chemins d'exécution)
+
+    ID\t\tIdentificateur unique généré par le débogueur
+
+    Etat\t\tEtat actuel du processus ou du chemin d'exécution
+
+    Fonction\tSi le processus ou le chemin d'exécution est actif ou en
+    cours de déroulement pas à pas, ce champ est vierge. Sinon, il
+    indique le nom de la fonction au niveau de laquelle le
+    processus/chemin d'exécution a été interrompu.
+
+    Emplacement\tSi le processus ou le chemin d'exécution est actif ou
+\t\ten cours de déroulement pas à pas, ce champ est vierge. Si l'un ou
+\t\tl'autre est interrompu au niveau d'une fonction compilée à l'aide
+\t\tdes informations de débogage, ce champ indique le nom de fichier
+\t\tet le numéro de ligne (fichier@ligne) au niveau duquel le
+\t\tprocessus/chemin d'exécution a été interrompu. Si la fonction n'a
+\t\tpas été compilée à l'aide des informations de débogage, ce champ
+\t\tindique l'adresse hexadécimale au niveau de laquelle
+\t\tl'interruption s'est produite.
+
+    Commande\tLigne de commande utilisée pour lancer le programme.
+
+Le paramètre Etat peut correspondre à :
+
+    Actif\tLe processus/chemin d'exécution est en train
+    d'être exécuté suite à un
+\t\t\k(Exécuter) ou à une commande \k(Etape).
+
+    Déroulement pas à pas\tCet état s'affiche lorsque le débogueur doit
+    exécuter un processus/chemin d'exécution une instruction à la
+    fois, généralement parce qu'il doit évaluer continuellement une
+    condition liée à un événement.
+
+    Interrompu\tLe processus ou chemin d'exécution est arrêté.
+
+    Oté du processus lwp\t\tIl s'agit de l'état d'un chemin
+\t\td'exécution multiplexé lorsqu'il n'est pas en cours d'exécution
+\t\tsur un \d(LWP). Il a été programmé en dehors d'un LWP
+\t\tpar la bibliothèque de chemins d'exécution, probablement en raison
+\t\td'un blocage sur E/S ou d'une opération fondamentale de
+\t\tsynchronisation. Lorsque l'exécution peut reprendre, le chemin
+\t\tsera de nouveau sélectionné par un LWP.
+
+    Suspendu\t\tIl s'agit de l'état d'un chemin d'exécution
+    constituant la destination d'un appel thr_suspend(). L'exécution
+    reprendra lorsqu'un autre chemin prendra la suite.
+
+    Image mémoire\t\tLe processus ou chemin d'exécution est une image
+    mémoire ; vous pouvez donc le consulter, mais vous ne pouvez le
+    modifier ni l'exécuter.
+
+    Oté du processus lwp par l'image mémoire\tIl s'agit de l'état d'un
+    chemin d'exécution qui se trouvait ôté du processus lwp lorsque
+    l'image mémoire a été générée.
+
+    Suspendue par l'image mémoire\tIl s'agit de l'état d'un chemin
+    d'exécution mis en attente lorsque l'image mémoire a été générée.
+
+Vous pouvez sélectionner une ou plusieurs entrées du panneau
+Processus. Ces choix ont une incidence sur le fonctionnement de
+plusieurs commandes des menus de la fenêtre contenant le panneau. Si
+par exemple vous sélectionnez une entrée puis cliquez sur SELECT au
+niveau de l'option \k(Exécuter) du menu \k(Contrôle),
+les objets sélectionnés sont définis comme actifs. Si vous n'aviez pas
+sélectionné de processus ni de chemin d'exécution avant de
+sélectionner \k(Exécuter), le \d(processus ou chemin d'exécution actuel) aurait été
+défini comme actif. Lorsque vous sélectionnez un objet, vous
+sélectionnez à la fois le chemin d'exécution/processus et le
+\k(programme^^processus et chemins d'exécution). La plupart des options s'appliquent à l'objet sélectionné,
+mais les commandes créant les événements (\k(Arrêter),
+\k(Signal), \k(Syscall) et \k(A l'arrêt) dans
+le menu \k(Evénement)) s'appliquent par défaut au programme
+sélectionné. Pour modifier cette situation, utilisez l'option
+\k(Granularité) du menu \k(Caractéristiques).
+
+Le processus/chemin d'exécution actuel est indiqué à l'aide d'une
+manette de pointage située à gauche du nom de programme. Ce
+processus/chemin détermine les éléments affichés dans les autres
+panneaux du groupe de fenêtres. Pour changer de processus/chemin,
+cliquez d'abord sur SELECT au niveau d'un processus ou d'un chemin
+dans le panneau Processus, puis cliquez sur SELECT au niveau de
+l'option \k(Activer) du menu \k(Editer).
+
+Vous pouvez également déplacer un chemin d'exécution ou un processus
+d'un groupe de fenêtres vers un autre. Pour cela, sélectionnez
+l'option Déplacer du menu \k(Fichier) (voir
+\k(Déplacer)), ou sélectionnez le chemin d'exécution ou le
+processus concerné et faites-le glisser sur un panneau Processus de
+l'autre groupe de fenêtres. Il devient alors le processus ou le chemin
+actuel du nouveau groupe de fenêtres.
+
+Si la ligne de commande ne tient pas dans la colonne qui lui est
+réservée, elle est tronquée par défaut. L'option
+\k(Panneaux) du menu \k(Caractéristiques) vous
+permet d'imposer le passage automatique à la ligne suivante.
+
+^2^Programmes, processus et chemins d'exécution=processus et chemins d'exécution
+^$21
+\k(Panneau des processus)
+Programmes, processus et chemins d'exécution
+
+Un programme est un objet exécutable se présentant sous n'importe quel
+format de fichier objet identifié par le débogueur, auquel sont
+associées les bibliothèques partagées chargées si besoin est par
+l'objet exécutable pendant la durée de l'exécution. L'image exécutable
+d'un programme est appelée processus. Etant donné qu'un processus peut
+se diviser en fourches, un seul programme peut engendrer de nombreux
+processus.
+
+Un processus comprend un ou plusieurs chemins d'exécution chargés du
+contrôle. Tous les chemins faisant partie d'un processus ont en commun
+les points suivants : espace d'adresse, identificateurs des processus
+et des processus parent, privilèges, répertoires de travail et
+répertoires racine, descripteurs de fichiers, verrous
+d'enregistrements et de fichiers, limites en terme de ressources, et
+contexte de traitement des signaux (hormis en ce qui concerne le
+masque d'interprétation du signal et la pile de consignation du
+signal).
+
+Un chemin d'exécution correspond à un contexte d'exécution unique au
+sein d'un processus. Chaque chemin possède son propre groupe de
+registres, son masque et sa pile relatifs au signal. Dans le contexte
+du débogueur, un "chemin d'exécution" fait référence aux entités mises
+en oeuvre au niveau utilisateur par les interfaces figurant dans
+<thread.h>. Ces chemins d'exécution sont différents du processus LWP
+(processus léger) supporté par le noyau et sont créés au-dessus de ce
+processus.
+
+Un chemin d'exécution peut tourner sur un processus LWP ou être
+inactif. S'il est inactif, il ne peut être lancé par le débogueur,
+mais il est possible d'examiner son état et de le modifier.
+
+^1^Panneau des piles
+^$3
+Panneau des piles
+
+Le panneau Pile affiche la trace de la pile correspondant à
+\d(processus ou chemin d'exécution actuel). Les informations relatives à chaque trame de la
+pile sont les suivantes :
+
+    Numéro de trame\tLes trames sont numérotées à partir de 0, ce qui
+    correspond au bas de la pile (trame initiale)
+
+    Fonction\tCorrespond au nom de la fonction. Le débogueur affiche
+\t\tun point d'interrogation (?) s'il ne trouve pas le nom de
+\t\tl'adresse indiquée, soit parce que les informations symboliques
+\t\tsont insuffisantes, soit parce que le compteur du programme de la
+\t\ttrame pointe en dehors de l'espace d'adresse du processus.
+
+    Paramètres\tCorrespond aux valeurs et aux noms des arguments. Les
+    noms d'arguments risquent de ne pas être disponibles si les
+    informations symboliques sont insuffisantes.
+
+    Emplacement\tCorrespond au point d'exécution actuel de la trame.
+    Cette donnée se présente sous la forme fichier@ligne, si la
+    fonction a été compilée à l'aide des informations de débogage ;
+    dans le cas inverse, elle correspond à une adresse hexadécimale.
+
+La trame indiquée à l'aide de la manette correspond à
+\d(trame actuelle). La trame actuelle a une incidence sur les
+éléments affichés dans les autres fenêtres du \d(groupe de fenêtres).
+Pour changer de trame, cliquez sur SELECT au niveau d'une autre trame,
+puis cliquez sur SELECT au niveau de l'option \k(Activer) du
+menu \k(Editer).
+
+Si les informations sont trop nombreuses pour tenir dans cette
+colonne, elles sont tronquées. Vous pouvez forcer le bouclage
+automatique des colonnes Paramètres et Emplacement au moyen des
+options \k(Panneaux) du menu \k(Caractéristiques).
+
+^1^Panneau des symboles
+^$4
+Panneau des symboles
+
+Le panneau Symbole affiche les valeurs des variables visibles depuis
+\d(contexte actuel). Voici la liste des symboles qui peuvent être
+affichés :
+
+\tvariables locales visibles depuis \d(trame actuelle), variables
+\tstatiques des fichiers visibles depuis la trame actuelle, variables
+\tglobales visibles dans l'objet actuel, variables définies par le
+\tdébogueur, ou variables définies par l'utilisateur et gérées par le
+\tdébogueur.
+
+Par défaut, le panneau Symbole n'affiche que les variables locales.
+Pour afficher d'autres types de variables, utilisez l'option
+\k(Symboles) du menu \k(Caractéristiques).
+
+Les informations affichées pour chaque symbole sont les suivantes :
+nom, emplacement, type et valeur. Dans le cas des variables locales,
+l'emplacement correspond à la fonction et au numéro de ligne de la
+zone de visibilité contenant les variables. Dans le cas des symboles
+statiques des fichiers et des symboles globaux, il correspond
+respectivement au nom du fichier et au nom du fichier objet.
+
+Si certaines informations ne tiennent pas dans la colonne prévue,
+elles sont tronquées. Les options \k(Panneaux) du menu
+\k(Caractéristiques) vous permettent d'imposer le passage
+automatique à la ligne suivante, en ce qui concerne les colonnes
+Type et Valeur.
+
+Vous remarquerez que lorsqu'un objet de la classe C++ s'affiche dans
+le panneau Symbole, les membres statiques de cette classe ne sont pas
+répertoriés dans la colonne Valeur, qui dresse la liste des valeurs
+affectées aux membres. Pour les visualiser, affichez l'objet de la
+classe concernée dans la fenêtre à affichage instantané
+\k(Agrandir) ou \k(Afficher valeur) disponible dans le menu
+\k(Afficher) de n'importe quelle fenêtre contenant
+le panneau Symbole ou \k(Panneau des sources).
+
+^1^Panneau des registres
+^$5
+Panneau des registres
+
+Le panneau Registres affiche les valeurs des registres de machine
+concernant \d(processus ou chemin d'exécution actuel). Les valeurs sont affichées sous forme
+hexadécimale (et de virgule flottante, pour les registres en virgule
+flottante) et sont mises à jour dès que le processus ou le chemin
+d'exécution est interrompu.
+
+^1^Panneau de désassemblage
+^$6
+Panneau de désassemblage
+
+Le panneau Désassemblage affiche le désassemblage de la fonction
+actuelle. Vous pouvez également visualiser le désassemblage
+d'autres fonctions à l'aide de l'option \k(Afficher fonction désassemblée) du
+menu \k(Afficher).
+
+Le panneau Désassemblage affiche un signal d'arrêt dans la marge
+gauche de chaque instruction pour laquelle un point de rupture est
+défini. Pour paramétrer ou supprimer un point de rupture au niveau
+d'une instruction, cliquez deux fois sur le bouton SELECT dans la
+marge gauche.
+
+^1^Panneau des sources
+^$7
+Panneau des sources
+
+Le panneau Source affiche le fichier source actif. Dès que
+\d(processus ou chemin d'exécution actuel) est interrompu, le fichier est positionné de façon
+à afficher la ligne active de la fonction active. Cette ligne est mise
+en surbrillance et est identifiée à l'aide d'une flèche située dans la
+marge gauche. S'il n'existe pas de fichier actif, ou si le fichier n'a
+pas été compilé à l'aide des informations de débogage, le panneau
+Source reste vide. Ce panneau est également vide si le débogueur ne
+trouve pas de fichier actif ; dans ce cas, vous pouvez utiliser la
+fenêtre à affichage instantané \k(Chemin d'accès source) disponible dans le
+menu \k(Caractéristiques) de n'importe quelle fenêtre contenant un
+panneau Source.
+
+Un signe d'arrêt s'affiche dans la marge gauche de chaque ligne pour
+laquelle un point de rupture est défini. Vous pouvez paramétrer ou
+supprimer un point de rupture en cliquant deux fois sur le bouton
+SELECT dans la marge gauche de la ligne sélectionnée. Si le débogueur
+ne peut définir de point de rupture sur la ligne sélectionnée, il
+affiche alors un message. L'impossibilité de définir un point de
+rupture peut être due à plusieurs raisons :
+
+    o La ligne source ne contient aucune donnée permettant de générer
+      un code exécutable. C'est le cas des lignes vierges et des
+      lignes contenant uniquement des commentaires et des déclarations
+      de variables.
+
+    o La ligne fait partie d'un commentaire comprenant plusieurs
+      lignes. Vous ne pouvez placer un point de rupture que sur une
+      seule ligne d'un commentaire ou d'une condition énoncée sur
+      plusieurs lignes.
+
+    o La ligne marque le début d'une définition de fonction. Placez
+      plutôt le point de rupture sur le premier commentaire de la
+      fonction.
+
+Vous pouvez également visualiser d'autres fichiers du panneau Source,
+soit en ouvrant un autre fichier figurant dans la liste de la fenêtre
+à affichage instantané \k(Ouvrir), soit en visualisant
+une autre fonction figurant dans la liste de la fenêtre à affichage
+instantané \k(Afficher code source de la fonction).
+
+Vous pouvez examiner d'autres fichiers source tout en visualisant le
+fichier figurant dans le panneau Source ; vous devez pour cela créer
+une fenêtre source secondaire. Pour créer ces fenêtres, vous devez
+sélectionner l'option \k(Nouvelle source) du menu \k(Fichier)
+; un astérisque ('*') situé dans l'en-tête de la fenêtre permet de les
+identifier. Chaque fenêtre source secondaire comprend un
+\k(Panneau des statuts) et un panneau Source. Le panneau source d'une
+fenêtre secondaire n'est pas mis à jour lorsque le processus ou le
+chemin d'exécution en cours est interrompu.
+
+^1^Panneau des événements
+^$8
+Panneau des événements
+
+Le panneau Evénement est divisé en deux parties : le panneau Evénement
+principal et le panneau On Stop event. Le premier panneau affiche les
+d(événement stop)s, \d(événement signal)s et \d(événement syscall)s
+relatifs au \d(processus ou chemin d'exécution actuel). Le second panneau affiche les
+d(événement onstop) relatifs au processus/chemin d'exécution en
+cours. Les informations qui s'affichent pour chaque événement sont les
+suivantes :
+
+    ID\t\tNuméro d'événement. Si l'événement a été \k(désactivé^^Désactiver)\t\t, le
+    caractère 'D' est inscrit à côté du numéro.
+
+    Type\t\tSTOP, SIGNAL ou SYSCALL. Le type associé à un appel
+\t\tsystème inclut également les caractères 'E' ou 'X', qui
+\t\tcorrespondent respectivement à l'entrée ou à la sortie.
+
+    Processus\tProcessus et chemins d'exécution pour lesquels
+    \tl'événement est défini.
+
+    Condition\tDans le cas des événements de type arrêt, la condition
+    correspond à \k(Expression d'arrêt). Dans le cas des événements de
+\t\ttype signal, il s'agit de la liste des signaux auxquels
+\t\ts'appliquent les événements. Dans le cas des événements de type
+\t\tsyscall, il s'agit de la liste des appels systèmes concernés.
+
+    Nombre\t\tDans le cas des événements de type stop et syscall,
+\t\tcorrespond au nombre d'occurrences de la condition avant que
+\t\tl'événement soit déclenché.
+
+    Liste des commandes\t\tCorrespond aux commandes devant être
+    exécutées par le débogueur lorsque l'événement se déclenche.
+
+Si la condition, la liste de processus ou la liste de commandes ne
+tiennent pas dans la colonne prévue, elles sont tronquées. L'option
+\k(Panneaux) du menu \k(Caractéristiques) vous permet
+d'imposer le passage automatique à la ligne suivante.
+
+^1^Panneau des commandes
+^$9
+Panneau des commandes
+
+Le panneau Commande est divisé en deux parties :
+
+\t\k(Panneau des transcriptions) et
+\t\k(Ligne de commande).
+
+Le panneau Commande affiche une transcription de la session de
+débogage (débogueur et entrée/sortie du processus) dans
+\k(Panneau des transcriptions). \k(Ligne de commande) permet d'entrer les commandes
+du débogueur comme vous si vous utilisiez l'interface via la ligne de
+commande.
+
+^2^Panneau des transcriptions
+^$91
+\k(Panneau des commandes)
+Panneau des transcriptions
+
+Le panneau Transcription affiche l'historique de la session de
+débogage, telle qu'elle affecte \k(Panneau des commandes)'s
+\d(groupe de fenêtres). Ce panneau comprend les éléments suivants :
+
+    o Annonce d'événements relatifs aux processus/chemins d'exécution
+      appartenant à ce groupe de fenêtres,
+
+    o Sortie des commandes associées à ces événements,
+
+    o Sortie des processus, si celle-ci est collectée, (voir
+      \k(Créer)), et
+
+    o Sortie des commandes entrées dans \k(Ligne de commande).
+
+^2^Ligne de commande
+^$92
+\k(Panneau des commandes)
+Ligne de commande
+
+Vous pouvez taper les commandes sur la ligne de commande, comme si
+vous utilisiez l'interface du débogueur via la ligne de commande. Si
+vous appuyez sur la touche Entrée, la ligne de commande sera exécutée.
+La commande ainsi que son résultat s'affichent dans
+\k(Panneau des transcriptions). Voir les pages d'aide (debug(1)) pour une
+description détaillée des commandes disponibles.
+
+Toute commande ou tout bloc de commandes peut être suivi du suffixe
+'>' et d'un nom de fichier. Cette option permet de rediriger la sortie
+de la commande dans le fichier indiqué, au lieu de l'afficher dans le
+panneau Transcription. Vous pouvez également utiliser ">> nom_fichier"
+si vous voulez ajouter la sortie à la suite sans remplacer le contenu
+du fichier. Le débogueur ne permet pas cependant d'introduire la
+sortie de la commande dans une autre commande shell du système
+UNIX(r).
+
+^1^Panneau des statuts
+^$10
+Panneau des statuts
+
+Le panneau Statut figure généralement dans les fenêtres qui ne
+contiennent pas de \k(Panneau des processus).
+
+Le panneau Statut indique le \d(contexte actuel), qui correspond au
+\d(processus ou chemin d'exécution actuel) de \d(groupe de fenêtres), à l'état du processus ou
+du chemin d'exécution indiqué, et en cas d'interruption, au nom de la
+fonction et au numéro de ligne ou adresse de \d(trame actuelle).
+
+^1^Bouton Fichier=Fichier
+^$110
+Bouton Fichier
+
+Le bouton Fichier vous permet d'accéder aux fichiers et aux fenêtres
+du débogueur, ainsi que de créer, de saisir et de libérer des
+processus. Si vous cliquez sur MENU au niveau du bouton fichier, vous
+affichez un menu comportant différentes options, selon le type de
+panneau figurant dans la fenêtre. Chaque fenêtre offre un menu Fichier
+comportant au minimum les options suivantes :
+
+\t\k(Fenêtres)
+\t\k(Fenêtre Fermer)
+\t\k(Quitter)
+
+Si, par ailleurs, la fenêtre fait partie des fenêtres qui s'affichent
+automatiquement lorsque le débogueur est appelé (voir
+\k(Configuration)), le menu Fichier comporte les options suivantes :
+
+\t\k(Créer)
+\t\k(Contrôler image mémoire)
+\t\k(Contrôler processus)
+\t\k(Libération)
+\t\k(Changer répertoire)
+
+Si la fenêtre contient un \k(Panneau des processus), le menu Fichier comprend
+alors les options suivantes :
+
+\t\k(Créer)
+\t\k(Contrôler image mémoire)
+\t\k(Contrôler processus)
+t\k(Libération)
+\t\k(Changer répertoire)
+\t\k(Nouveau groupe de fenêtres)
+\t\k(Déplacer)
+
+Si la fenêtre contient un \k(Panneau des sources), le menu Fichier
+comprend alors les options suivantes :
+
+\t\k(Ouvrir)
+\t\k(Nouvelle source)
+
+Enfin, si la fenêtre contient un \k(Panneau des commandes), le menu Fichier
+comprend les options suivantes :
+
+\t\k(Changer répertoire)
+\t\k(Script)
+
+Le groupe d'options figurant dans le menu Fichier de n'importe quelle
+fenêtre résulte de la fusion entre les options par défaut et les
+options provenant de chaque panneau de cette fenêtre.
+
+^2^Créer
+^$111
+\k(Bouton Fichier)
+Créer
+
+La fenêtre à affichage instantané nommée Créer vous permet de créer un
+ou plusieurs processus. Pour désigner le fichier que vous souhaitez
+créer, vous pouvez faire glisser un fichier objet situé dans un
+dossier du Bureau et le déposer dans la fenêtre Créer, ou vous pouvez
+entrez le chemin d'accès au fichier objet dans le champ réservé à la
+ligne de commande. La ligne de commande shell peut inclure une
+redirection d'entrée et/ou de sortie, ainsi qu'un canal shell. Tous
+les processus résultants sont interrompus au niveau du
+\k(emplacement) indiqué dans le champ Emplacement initial. Si vous
+indiquez une fonction différente de "main" et ne figurant pas dans
+l'espace d'adresse d'un processus, ce dernier est interrompu au niveau
+de "main". Si "main" est introuvable, le processus est interrompu au
+niveau de l'adresse indiquée dans l'en-tête du fichier objet.
+Lorsqu'un processus comportant plusieurs chemins d'exécution est créé,
+il dispose d'un chemin initial "main". Ce dernier est interrompu au
+niveau de l'emplacement indiqué.
+
+Lorsque les processus/chemins d'exécution sont arrêtés après avoir été
+créés, vous devez utiliser une des commandes du menu
+\k(Contrôle) pour les relancer.
+
+Si l'option Collecter E/S est sélectionnée, les entrées et les sorties
+du processus sont collectées et affichées dans \k(Panneau des transcriptions);
+les entrées doivent être effectuées à l'aide de la fenêtre à affichage
+instantané \k(Entrée). Si l'option Collecter E/S
+n'est pas sélectionnée, la sortie du processus est dirigée vers la
+fenêtre xterm parent du débogueur, et les entrées sont effectuées en
+tapant les données depuis cette fenêtre. Cette méthode est
+particulièrement appréciable lorsque vous déboguez un programme à
+base de curses ou impliquant un grand nombre d'interactions.
+L'option Collecter E/S doit être systématiquement sélectionnée si
+le débogueur a été appelé depuis l'icône qui lui est associée et non
+depuis une fenêtre xterm.
+
+L'option Contrôler Enfant permet de suivre le mode de fonctionnement
+du débogueur dans le cas où les processus/chemins d'exécution créés
+ont engendré un processus enfant. Si cette option n'est pas
+sélectionnée, le débogueur ne contrôle pas le processus enfant. Si
+elle est sélectionnée, le débogueur contrôle le processus enfant et
+tous les chemins d'exécution qui lui sont associés (la commande
+\k(Libération) permet de libérer le processus du contrôle assuré
+par le débogueur). Tous les chemins d'exécution créés par un processus
+sujet seront suivis par le débogueur (le bouton \k(Libération)
+permet toutefois de les libérer). La fenêtre à affichage instantané
+\k(Opération de sortie) vous permet de gérer la façon dont le débogueur
+fonctionne par rapport aux nouveaux chemins d'exécution.
+
+Si l'option Détruire Processus créés précédemment est sélectionnée,
+tous les processus générés grâce à la commande Create sont alors
+détruits. Vous pouvez ainsi relancer les processus sans être obligé de
+rechercher chacun des processus restants afin de les détruire.
+
+Si l'option Nouveau groupe de fenêtres n'est pas sélectionnée, les
+processus créés sont tous ajoutés dans \d(groupe de fenêtres) de la
+fenêtre Créer. Si cette option est sélectionnée, le système crée un
+nouveau groupe de fenêtres, qui assurera le contrôle de tous les
+nouveaux processus. Dans les deux cas, le premier programme situé dans
+le pipeline devient le processus actuel du groupe de fenêtres chargées
+du contrôle.
+
+Si vous créez des processus à l'aide de \k(Script) ou de
+\k(Ligne de commande), la ligne de commande de la fenêtre Créer
+reflétera la dernière opération effectuée via la commande create.
+
+La fenêtre Créer est toujours accessible depuis le menu
+\k(Fichier) de toute fenêtre contenant un \k(Panneau des processus)
+ou s'affichant automatiquement lorsque le débogueur est appelé. Pour
+l'appeler, cliquez sur SELECT au niveau de l'option Créer du menu
+\k(Fichier).
+
+^2^Contrôler image mémoire
+^$112
+\k(Bouton Fichier)
+Contrôler image mémoire
+
+La fenêtre à affichage instantané Saisir image mémoire vous permet
+d'ouvrir un fichier image mémoire ainsi que le fichier objet
+correspondant, à des fins de consultation. Entrez les noms des
+fichiers image mémoire et objet sur les lignes prévues à cet effet
+dans la fenêtre. Vous pouvez également faire glisser un fichier image
+mémoire situé dans un dossier du Bureau et le faire glisser sur la
+fenêtre Saisir image mémoire. Les champs Fichier image mémoire et
+Fichier objet seront alors complétés tous deux automatiquement.
+
+Si l'option Nouveau groupe de fenêtres est sélectionnée, le système
+crée un nouveau \d(groupe de fenêtres) affichant l'image mémoire saisie
+; dans le cas inverse, l'image mémoire s'affiche dans le groupe de
+fenêtres parent de la fenêtre à affichage instantané. Dans les deux
+cas, l'image mémoire saisie devient le processus actif du groupe de
+fenêtres correspondant, et le chemin d'exécution ayant détecté
+l'anomalie devient le chemin actif, si cela est possible.
+
+Les images mémoire saisies peuvent être consultées à l'aide des
+commandes permettant d'examiner les processus réels, mais ne peuvent
+être ni modifiées ni exécutées.
+
+La fenêtre Saisir image mémoire est toujours accessible depuis le menu
+\k(Fichier) de toute fenêtre contenant un \k(Panneau des processus)
+ou s'affichant automatiquement lorsque le débogueur est appelé. Pour
+l'appeler, cliquez sur SELECT au niveau de l'option Saisir image
+mémoire du menu \k(Fichier).
+
+^2^Contrôler processus
+^$113
+\k(Bouton Fichier)
+Contrôler processus
+
+La fenêtre à affichage instantané Saisir processus vous permet de
+contrôler un processus réel. Elle comprend une liste déroulante
+répertoriant les processus que vous pouvez saisir (processus
+disponibles via le même ID utilisateur, à l'exception du débogueur).
+Vous pouvez sélectionner plusieurs processus dans cette liste.
+
+Par défaut, debug charge les informations symboliques relatives au
+processus depuis le fichier objet ayant servi à créer le processus.
+Sur la ligne Fichier objet, vous pouvez entrer le nom d'un autre
+fichier objet à partir duquel vous souhaitez charger les informations
+symboliques. Cette fonction est utile si vous déboguez des
+applications dont la durée d'exécution est longue et qui ne disposent
+d'aucune information symbolique. Si vous entrez un nom de fichier sur
+la ligne Fichier objet, vous ne devez sélectionner qu'un seul
+processus figurant dans la liste.
+
+Si l'option Nouveau groupe de fenêtres n'est pas sélectionnée, les
+processus saisis sont tous ajoutés dans \d(groupe de fenêtres) de la
+fenêtre Saisir processus. Si elle est sélectionnée, le système crée un
+nouveau groupe de fenêtres servant à contrôler tous les processus
+saisis. Dans les deux cas, l'élément sélectionné situé en première
+position de la liste devient le processus actif du groupe de fenêtres.
+Si ce processus utilise les interfaces via les chemins d'exécution, le
+débogueur sélectionne de façon aléatoire un chemin associé à ce
+processus, qui devient alors le chemin actif.
+
+L'option Contrôler Enfant permet de suivre le mode de fonctionnement
+du débogueur dans le cas où les processus saisis ont engendré un
+processus enfant. Si cette option n'est pas sélectionnée, le débogueur
+ne contrôle pas le processus enfant. Si elle est sélectionnée, le
+débogueur contrôle le processus enfant (le bouton \k(Libération)
+permet de libérer le processus du contrôle assuré par le débogueur).
+Tous les chemins d'exécution créés par un processus sujet seront
+suivis par le débogueur (le bouton \k(Libération) permet
+toutefois de les libérer). La fenêtre à affichage instantané
+\k(Opération de sortie) vous permet de gérer la façon dont le débogueur
+fonctionne par rapport aux nouveaux chemins d'exécution.
+
+La fenêtre Saisir processus est toujours accessible depuis le menu
+\k(Fichier) de toute fenêtre contenant un \k(Panneau des processus)
+ou s'affichant automatiquement lorsque le débogueur est appelé. Pour
+l'appeler, cliquez sur SELECT au niveau de l'option Saisir processus
+du menu \k(Fichier).
+
+^2^Libération
+^$114
+\k(Bouton Fichier)
+Libération
+
+L'option de menu Libérer vous permet de libérer un ou plusieurs
+processus/chemins d'exécution du contrôle assuré par le débogueur. Si
+vous cliquez sur SELECT au niveau de l'option Libérer, vous déroulez
+un menu offrant deux options : En cours d'exécution et Suspendu. Si
+vous choisissez la première option, les processus/chemins sont libérés
+de façon à pouvoir être exécutés. Si des chemins sont sélectionnés, le
+menu Libérer/Suspendu n'est pas accessible, car il est impossible de
+libérer des chemins individuels afin de les arrêter. Si vous
+sélectionnez l'option Suspendu en l'associant dans le cas de
+processus, ces derniers sont libérés et arrêtés, et pourront être de
+nouveau saisis ultérieurement. Pour libérer un processus comportant
+plusieurs chemins et l'arrêter, vous pouvez soit sélectionner tous les
+chemins du processus puis l'option Libérer/Suspendu, soit sélectionner
+un des chemins enfant, définir l'option "Appliquer autres commandes à
+:" associée à la propriété Granularité sur "Processus parent", puis
+sélectionner Libérer/Suspendu. Si avez recours à la seconde solution,
+toutes les commandes ultérieures continueront à s'appliquer au
+processus parent tant que vous ne réinitialisez pas la propriété
+Granularité.
+
+Si des processus ou des chemins d'exécution figurant dans
+\k(Panneau des processus) sont sélectionnés, ils seront libérés ; sinon,
+\d(processus ou chemin d'exécution actuel) sera libéré.
+
+L'option Libérer est accessible depuis le menu \k(Fichier) de
+toute fenêtre contenant un \k(Panneau des processus) ou s'affichant
+automatiquement lorsque le débogueur est appelé. Pour l'appeler,
+cliquez sur SELECT au niveau de l'option Libérer du menu
+\k(Fichier). Cette option n'est pas accessible si aucun
+processus/chemin d'exécution n'est sélectionné dans
+\d(groupe de fenêtres).
+
+Les processus saisis et créés (voir \k(Contrôler processus) et
+\k(Créer)) peuvent être libérés.
+
+^2^Ouvrir
+^$115
+\k(Bouton Fichier)
+Ouvrir
+
+La fenêtre à affichage instantané Ouvrir vous permet de choisir le
+fichier à afficher dans \k(Panneau des sources). La fenêtre affiche la
+liste des fichiers composant le programme et compilés à l'aide des
+informations de débogage. Pour visualiser un fichier particulier,
+sélectionnez-le et cliquez sur SELECT au niveau du bouton Ouvrir, ou
+faites-le glisser sur la fenêtre Source. Si vous faites glisser le
+fichier sur l'espace de travail, le débogueur ouvrira une nouvelle
+\d(fenêtre source secondaire).
+
+Vous remarquerez que la liste des fichiers source provient du fichier
+objet lui-même et non du répertoire actuel. Le débogueur ne recherche
+aucun fichier tant que vous n'avez rien sélectionné. Si le fichier
+sélectionné est introuvable, utilisez l'option \k(Chemin d'accès source) du
+menu \k(Caractéristiques) afin d'indiquer au débogueur l'emplacement de
+la source.
+
+La fenêtre Ouvrir est toujours accessible depuis le menu
+\k(Fichier) de toute fenêtre contenant un \k(Panneau des sources).
+Pour l'appeler, cliquez sur SELECT au niveau de l'option Ouvrir du
+menu \k(Fichier).
+
+^2^Nouvelle source
+^$116
+\k(Bouton Fichier)
+Nouvelle source
+
+L'option Nouvelle source permet de créer une \d(fenêtre source secondaire). Les
+fenêtres de sources secondaires servent à visualiser plusieurs
+fichiers ou fonctions simultanément. Lors de sa création initiale, la
+fenêtre source secondaire affiche le même fichier que le
+\k(Panneau des sources) de la fenêtre à partir de laquelle l'option
+Nouvelle source a été appelée ; vous pouvez toutefois modifier son
+contenu à l'aide des options \k(Ouvrir) ou
+\k(Afficher code source de la fonction)
+
+La fenêtre Ouvrir est toujours accessible depuis le menu
+\k(Fichier) de toute fenêtre contenant un \k(Panneau des sources).
+Pour l'appeler, cliquez sur SELECT au niveau de l'option Nouvelle
+source du menu \k(Fichier).
+
+^2^Déplacer
+^$1161
+\k(Bouton Fichier)
+Déplacer
+
+La fenêtre à affichage instantané Déplacer vous permet de déplacer un
+processus ou un chemin d'exécution d'un \d(groupe de fenêtres) vers un
+autre. Tout processus ou chemin sélectionné dans le \k(Panneau des processus)
+est déplacé. Si aucune sélection n'est effectuée, le
+\d(processus ou chemin d'exécution actuel) est déplacé. Ces éléments peuvent être placés dans
+un nouveau groupe de fenêtres ou dans un groupe existant. Les groupes
+de fenêtres sont identifiables grâce à un id de type entier, numéroté
+à partir de 1. Cet id s'affiche également dans le titre de toutes les
+fenêtres du groupe. Le premier groupe de fenêtres est associé par
+défaut à l'id 1.
+
+Si vous choisissez l'option Groupe de fenêtres existant, la liste
+Groupe(s) de fenêtres existant(s) indique tous les groupes de ce type.
+Si vous cliquez sur un élément de cette liste, puis sur le bouton
+Déplacer ou si vous vous contentez de cliquer deux fois sur un
+élément, le processus ou le chemin d'exécution correspondant est placé
+dans le groupe choisi.
+
+Pour déplacer un processus ou un chemin vers un nouveau groupe
+de fenêtres, vous pouvez également le sélectionner dans le
+\k(Panneau des processus), puis cliquer sur \k(Nouveau groupe de fenêtres) dans le menu
+\k(Fichier). Vous pouvez aussi déplacer un processus ou un
+chemin situé dans un panneau Processus d'un groupe de fenêtres vers un
+panneau Processus d'un autre groupe.
+
+L'option Déplacer est accessible via le menu \k(Fichier) de
+toute fenêtre comportant un \k(Panneau des processus). Pour l'appeler,
+cliquez SELECT sur l'option Déplacer du menu \k(Fichier).
+L'option Déplacer n'est pas accessible si le groupe de fenêtres ne
+comporte pas de processus ni de chemin d'exécution.
+
+^2^Script
+^$117
+\k(Bouton Fichier)
+Script
+
+La fenêtre à affichage instantané Script vous permet d'exécuter les
+commandes du débogueur depuis un fichier. Entrez le nom de ce dernier
+au niveau de la ligne Fichier script ou faites glisser le fichier
+depuis le dossier du Bureau auquel il est associé et déposez-le sur la
+fenêtre Script. Vous pouvez indiquer si vous voulez effectuer echo sur
+les commandes au fur et à mesure qu'elles sont lues à l'aide de
+l'option Echo Commandes. Les commandes et leur sortie s'affichent dans
+\k(Panneau des transcriptions).
+
+La plupart des autres commandes de débogage ne sont pas accessibles
+lorsque le débogueur est en train d'exécuter un script. Les seules qui
+soient disponibles sont celles qui permettent de refermer des
+fenêtres, de consulter l'aide et d'interrompre le script (à l'aide du
+bouton \k(Interrompre) du menu \k(Editer) situé dans
+toute fenêtre contenant un \k(Panneau des commandes)).
+
+La fenêtre Script est toujours accessible depuis le menu
+\k(Fichier) de toute fenêtre contenant un \k(Panneau des commandes).
+Pour l'appeler, cliquez sur SELECT au niveau de l'option Script du
+menu \k(Fichier).
+
+^2^Changer répertoire
+^$118
+\k(Bouton Fichier)
+Changer répertoire
+
+La fenêtre à affichage instantané Modifier répertoire vous permet de
+modifier le répertoire de travail actuel du débogueur. Ce dernier est
+affiché dans la partie supérieure de la fenêtre. Entrez le chemin
+d'accès correspondant au nouveau répertoire actuel dans le chemin
+Nouveau répertoire. Si vous n'entrez aucun nom de chemin, le
+répertoire utilisé sera celui indiqué dans la variable d'environnement
+HOME.
+
+La fenêtre Modifier répertoire est toujours accessible depuis le menu
+\k(Fichier) de toute fenêtre contenant un \k(Panneau des commandes)
+ou un \k(Panneau des processus), ou s'affichant automatiquement lorsque le
+débogueur est appelé. Pour l'appeler, cliquez sur SELECT au niveau de
+l'option Modifier répertoire du menu \k(Fichier).
+
+^2^Nouveau groupe de fenêtres
+^$119
+\k(Bouton Fichier)
+Nouveau groupe de fenêtres
+
+Si vous cliquez sur SELECT au niveau de l'option Nouveau groupe de
+fenêtres, vous créez un nouveau \d(groupe de fenêtres). Toutes les
+fenêtres configurées en mode d'affichage automatique apparaissent
+alors à l'écran (voir \k(Configuration). Si des processus ou des
+chemins d'exécution étaient sélectionnés dans \k(Panneau des processus) du
+groupe de fenêtres précédent, ils sont alors déplacés dans le nouveau
+groupe ; dans le cas inverse, le nouveau groupe de fenêtres est vide.
+
+L'option Nouveau groupe de fenêtres est toujours accessible depuis le
+menu \k(Fichier) de toute fenêtre contenant un
+\k(Panneau des processus).
+
+^2^Fenêtres
+^$1110
+\k(Bouton Fichier)
+Fenêtres
+
+Si vous cliquez sur SELECT au niveau de l'option Fenêtres, vous
+affichez un menu déroulant comportant une option correspondant à
+chaque fenêtre du groupe \d(groupe de fenêtres). Si vous sélectionnez
+une des options de ce menu déroulant, vous ouvrirez la fenêtre
+associée.
+
+Si la session du débogueur a activé plusieurs groupes de fenêtres, le
+menu déroulant comporte également une entrée correspondant à chacun
+des autres groupes de fenêtres. Chaque entrée sera indiquée sous la
+forme "ID groupe de fenêtres", où ID représente le numéro figurant
+également dans l'en-tête de la fenêtre et dans les titres de menu. Si
+vous sélectionnez une de ces entrées, vous affichez une fenêtre
+configurée en mode d'affichage automatique dans ce groupe (voir
+\k(Configuration)).
+
+Le menu Fenêtres est accessible depuis le menu \k(Fichier) de
+chaque fenêtre du débogueur.
+
+^3^Bouton de fenêtre à affichage instantané
+^$11101
+\k(Bouton Fichier)
+\k(Fenêtres)
+Bouton de fenêtre à affichage instantané
+
+Le bouton Fenêtre à affichage instantané n'est accessible que dans le
+\d(Barre de boutons) d'une fenêtre. Le libellé du bouton décrit la
+fenêtre qui doit être affichée. Si vous cliquez sur SELECT au niveau
+du bouton, vous affichez la fenêtre associée à ce bouton dans le même
+groupe que celui de la fenêtre contenant le bouton. Une barre de
+boutons peut comprendre plusieurs boutons Fenêtre à affichage
+instantané.
+
+^2^Fenêtre Fermer
+^$1111
+\k(Bouton Fichier)
+Fenêtre Fermer
+
+Si vous cliquez sur SELECT au niveau de l'option Fermer la fenêtre,
+celle-ci sera refermée. Pour l'ouvrir de nouveau, sélectionnez
+l'option \k(Fenêtres) du bouton d'accès au menu Fichier de
+n'importe quelle autre fenêtre comprise dans le groupe.
+
+Si la fenêtre est la seule qui soit ouverte dans le groupe
+\d(groupe de fenêtres), vous refermez alors le groupe complet en
+refermant cette fenêtre. Si un groupe de fenêtres comporte des
+processus ou des chemins d'exécution, vous ne pourrez pas refermer la
+dernière fenêtre ouverte dans ce groupe.
+
+Si la fenêtre est la seule fenêtre de débogage qui soit ouverte,
+l'option Fermer la fenêtre revient à \k(Quitter). Si d'autres
+processus ou chemins d'exécution se trouvent encore sous le contrôle
+du débogueur, le système vous demande de confirmer que vous voulez
+véritablement refermer la fenêtre avant de procéder à l'opération.
+
+L'option Fermer la fenêtre est accessible depuis le menu
+\k(Fichier) de n'importe quelle fenêtre du débogueur.
+
+^2^Quitter
+^$1112
+\k(Bouton Fichier)
+Quitter
+
+Si vous cliquez SELECT sur l'option Quitter, vous quittez le
+débogueur. Si des processus ou des chemins d'exécution sont
+actuellement contrôlés par le débogueur, le système vous demande une
+confirmation. Lorsque vous quittez le débogueur, tous les processus ou
+chemins sous contrôle sont détruits, s'ils ont été créés (voir
+ \k(Créer)), ou libérés puis exécutés, s'ils ont été saisis
+(voir \k(Contrôler processus) or \k(Libération)).
+
+L'option Quitter est accessible via le menu \k(Fichier) de
+chaque fenêtre de débogueur.
+
+^1^Bouton Editer=Editer
+^$120
+Bouton Editer
+
+Si vous cliquez sur MENU au niveau du bouton Editer, vous affichez un
+menu comportant différentes options, en fonction du type de panneaux
+figurant dans la fenêtre.
+
+Si la fenêtre comporte un \k(Panneau des processus) ou un
+\k(Panneau des piles), le menu Editer comprend alors l'option suivante :
+
+\t\k(Activer)
+
+Si la fenêtre comporte un \k(Panneau des symboles), le menu Editer comprend
+les options suivantes :
+
+\t\k(Exporter)
+\t\k(Fixer)
+\t\k(Décrocher)
+
+Si la fenêtre comporte un \k(Panneau des sources), un \k(Panneau de désassemblage)
+ou un \k(Panneau des registres), le menu Editer comprend alors l'option
+suivante :
+
+\t\k(Copier)
+
+Si la fenêtre comporte un \k(Panneau des événements), le menu Editer comprend
+alors les options suivantes :
+
+\t\k(Désactiver)
+\t\k(Activer)
+\t\k(Supprimer)
+
+Si enfin la fenêtre comprend un \k(Panneau des commandes), le menu Editer
+comprend alors les options suivantes :
+
+\t\k(Copier)
+\t\k(Entrée)
+\t\k(Interrompre)
+
+Le groupe d'options faisant partie du menu Editer de n'importe quelle
+fenêtre résulte de la fusion des options provenant de chaque panneau
+de cette fenêtre.
+
+^2^Copier
+^$121
+\k(Bouton Editer)
+Copier
+
+Si vous cliquez sur SELECT au niveau du bouton Copier du menu Editer,
+vous copiez dans le presse-papiers le texte sélectionné dans
+\k(Panneau des transcriptions), \k(Panneau des sources), \k(Panneau des registres) ou
+\k(Panneau de désassemblage). La fonction Copier n'est accessible que si vous
+avez sélectionné une portion de texte.
+
+L'option Copier est accessible depuis le menu Editer de n'importe
+quelle fenêtre contenant un \k(Panneau des commandes), \k(Panneau des sources),
+\k(Panneau de désassemblage) ou \k(Panneau des registres).
+
+^2^Activer
+^$122
+\k(Bouton Editer)
+Activer
+
+L'option Définir actuel vous permet de modifier le
+\d(contexte actuel). Si un processus ou un chemin d'exécution est
+sélectionné, l'option Définir actuel permet de faire de
+\d(processus ou chemin d'exécution actuel) l'objet sélectionné. Si une trame de piles est
+sélectionnée, cette option permet de faire de \d(trame actuelle) la
+trame sélectionnée. Les informations contenues dans toutes les
+fenêtres du \d(groupe de fenêtres) seront mises à jour de façon à
+refléter le nouveau contexte.
+
+L'option Définir actuel n'est accessible que si vous avez sélectionné
+un seul processus ou chemin d'exécution dans \k(Panneau des processus) ou une
+seule trame dans \k(Panneau des piles). Cette option est accessible
+depuis le menu Editer de n'importe quelle fenêtre contenant un
+\k(Panneau des processus) ou un \k(Panneau des piles).
+
+^2^Exporter
+^$123
+\k(Bouton Editer)
+Exporter
+
+L'option de menu Exporter vous permet d'exporter une variable définie
+par l'utilisateur et gérée par le débogueur vers l'environnement. Une
+fois exportées, les variables font partie intégrante de
+l'environnement reçu par les processus créés par le débogueur. Si vous
+modifiez les valeurs affectées à ces variables, vous devez réexporter
+ces dernières de façon à ce que les nouvelles valeurs soient prises en
+compte dans l'environnement. Remarque : les variables sont exportées
+sans le préfixe '$'.
+
+L'option Exporter n'est accessible que si vous affichez des variables
+définies par l'utilisateur dans \k(Panneau des symboles) et si vous avez
+sélectionné une ou plusieurs d'entre elles. La fenêtre à affichage
+instantané \k(Symboles) vous permet de choisir les éléments
+affichés dans \k(Panneau des symboles).
+
+L'option Exporter est accessible uniquement depuis le menu Editer des
+fenêtres contenant un \k(Panneau des symboles).
+
+^2^Désactiver
+^$124
+\k(Bouton Editer)
+Désactiver
+
+Si vous cliquez sur SELECT au niveau du bouton Désactiver, vous
+désactivez les événements sélectionnés dans l'un des sous-panneaux de
+\k(Panneau des événements) (Panneau Evénement principal ou panneau On Stop
+Event). Les événements désactivés n'ont aucune incidence sur les
+processus et chemins d'exécution auxquels ils s'appliquent, mais ne
+sont pas supprimés. Vous pouvez les réinstaller à l'aide de
+\k(Activer).
+
+Vous pouvez sélectionner un ou plusieurs événements figurant dans les
+deux panneaux. Cette option n'est pas accessible si les événements
+sélectionnés sont déjà désactivés.
+
+L'option Désactiver est accessible uniquement depuis le menu Editer
+des fenêtres contenant un \k(Panneau des événements).
+
+^2^Activer
+^$125
+\k(Bouton Editer)
+Activer
+
+Si vous cliquez sur SELECT au niveau du bouton Activer, vous activez
+les événements sélectionnés dans l'un des sous-panneaux de
+\k(Panneau des événements) (Panneau Evénement principal ou panneau Evénement
+sur arrêt). Vous pouvez sélectionner un ou plusieurs événements
+\k(désactivés^^Désactiver) dans les deux panneaux. Cette option
+n'est pas accessible si les événements sélectionnés sont activés. Une
+fois activé, l'événement affecte de nouveau le fonctionnement
+du processus ou du chemin d'exécution auquel il est associé.
+
+L'option Activer est accessible uniquement depuis le menu Editer des
+fenêtres contenant un \k(Panneau des événements).
+
+^2^Supprimer
+^$126
+\k(Bouton Editer)
+Supprimer
+
+Si vous cliquez sur SELECT au niveau du bouton Supprimer, vous effacez
+tous les événements sélectionnés dans \k(Panneau des événements). Cette
+option n'est disponible que si vous avez sélectionné des événements.
+
+L'option Supprimer est accessible uniquement depuis le menu Editer des
+fenêtres contenant un \k(Panneau des événements).
+
+^2^Entrée
+^$127
+\k(Bouton Editer)
+Entrée
+
+La fenêtre à affichage instantané Entrée vous permet d'envoyer des
+entrées vers un processus dont les E/S sont collectées (voir
+\k(Créer)). Entrez la chaîne dans le champ Entrée. Si
+l'option Ajouter interligne est paramétrée, un caractère d'interligne
+est alors ajouté à la fin de la chaîne. Cette chaîne sera répercutée
+dans \k(Panneau des transcriptions).
+
+Pour afficher la fenêtre Entrée, cliquez sur SELECT au niveau de
+l'option Entrée du menu Editer de n'importe quelle fenêtre contenant
+un \k(Panneau des commandes). Cette option n'est disponible que si les E/S
+de \d(processus ou chemin d'exécution actuel) sont collectées.
+
+^2^Interrompre
+^$128
+\k(Bouton Editer)
+Interrompre
+
+Si vous cliquez sur SELECT au niveau de l'option Interrompre, vous
+interrompez un script ou une commande de \k(Ligne de commande). Cette
+option est utile si le script ou la commande en question tournent
+perpétuellement en boucle ou ont généré de nombreuses sorties.
+
+L'option Interrompre est accessible uniquement depuis le menu Editer
+des fenêtres contenant un \k(Panneau des commandes).
+
+^2^Fixer
+^$129
+\k(Bouton Editer)
+Fixer
+
+L'option Fixer est accessible depuis le menu \k(Afficher)
+de n'importe quelle fenêtre contenant un \k(Panneau des symboles). Si
+vous cliquez sur SELECT au niveau de l'option Fixer, vous fixez toutes
+les variables sélectionnées. Cette option n'est accessible que si vous
+avez sélectionné une ou plusieurs variables non fixées dans
+\k(Panneau des symboles).
+
+Lorsqu'une variable est fixée, elle reste dans le \k(Panneau des symboles)
+tant que le processus ou le chemin d'exécution dans lequel elle figure
+constitue le \d(processus ou chemin d'exécution actuel), ou tant qu'elle n'est pas décrochée.
+N'importe quelle variable associée à un utilisateur, un programme ou
+un débogueur peut être fixée. Les variables fixées filtrent en tête de
+liste au fur et à mesure que le \k(Panneau des symboles) est mis à jour.
+Lorsqu'une variable d'un programme dépasse les limites autorisées,
+elle prend la valeur "??".
+
+^2^Décrocher
+^$1210
+\k(Bouton Editer)
+Décrocher
+
+L'option Décrocher est accessible depuis le menu \k(Afficher)
+de n'importe quelle fenêtre contenant un \k(Panneau des symboles).
+Si vous cliquez sur SELECT au niveau de l'option Décrocher, vous
+décrochez toutes les variables sélectionnées que vous aviez fixées
+précédemment. Cette option n'est disponible que si vous avez
+sélectionné une ou ou plusieurs variables fixées dans le
+\k(Panneau des symboles).
+
+Lorsqu'une variable est décrochée, elle disparaît de
+\k(Panneau des symboles) si elle ne fait plus partie de la liste des
+symboles qui s'affichent généralement en fonction des propriétés
+paramétrés dans \k(Symboles).
+
+^1^Bouton Visualiser=Afficher
+^$130
+Bouton Visualiser
+
+Le bouton Visualiser permet de contrôler l'état des chemins
+d'exécution et des processus débogués. Si vous cliquez sur MENU au
+niveau du bouton Visualiser, vous affichez un menu présentant
+différentes options, selon le type de panneaux figurant dans la
+fenêtre. Chaque fenêtre contient un menu Visualiser.
+
+Si la fenêtre contient un \k(Panneau des processus), le menu Visualiser
+comprend l'option suivante :
+
+\t\k(Assignation)
+
+Si la fenêtre comprend un \k(Panneau des symboles), le menu Visualiser
+comporte les options suivantes :
+
+\t\k(Agrandir)
+\t\k(Afficher valeur)
+\t\k(Définir valeur)
+\t\k(Afficher type)
+\t\k(Vidage)
+
+Si la fenêtre comprend un \k(Panneau des sources), le menu Visualiser
+comporte les options suivantes :
+
+\t\k(Afficher ligne)
+\t\k(Afficher code source de la fonction)
+\t\k(Rechercher)
+\t\k(Agrandir)
+\t\k(Afficher valeur)
+\t\k(Définir valeur)
+\t\k(Afficher type)
+
+Si enfin la fenêtre comprend un \k(Panneau de désassemblage), le menu
+Visualiser comporte les options suivantes :
+
+\t\k(Afficher emplacement)
+\t\k(Afficher fonction désassemblée)
+\t\k(Rechercher)
+\t\k(Afficher valeur)
+\t\k(Définir valeur)
+\t\k(Vidage)
+\t\k(Assignation)
+
+Le groupe d'options figurant dans le menu Visualiser de n'importe
+quelle fenêtre résulte de la fusion des options provenant de chaque
+panneau de cette fenêtre.
+
+^2^Agrandir
+^$131
+\k(Bouton Visualiser)
+Agrandir
+
+La fenêtre à affichage instantané Agrandir vous permet de visualiser
+le contenu d'une structure vers laquelle pointe une variable de type
+pointeur, de suivre une chaîne de pointeurs ou d'afficher le contenu
+d'une matrice. Pour afficher cette fenêtre, cliquez sur le bouton
+SELECT au niveau de l'option Agrandir du menu \k(Afficher) de
+n'importe quelle fenêtre contenant un \k(Panneau des symboles) ou un
+\k(Panneau des sources). Cette option est disponible à condition que vous
+ayez sélectionné un seul symbole dans \k(Panneau des symboles) ou une
+expression dans \k(Panneau des sources).
+
+Si le symbole sélectionné est un pointeur, le champ Expression sera
+initialisé à l'aide de l'expression requise pour supprimer la
+référence au pointeur. (Dans le cas des programmes en C ou C++, cette
+expression correspond au symbole *). Si le symbole sélectionné n'est
+pas un pointeur, le champ Expression affiche le nom du symbole. Dans
+les deux cas, le champ Résultat affiche la valeur de l'expression.
+
+Si le champ Résultat affiche une structure, une classe ou les éléments
+d'un vecteur constituant des pointeurs, vous pouvez supprimer la
+référence à l'un de ces pointeurs en sélectionnant l'élément en
+question dans le champ Résultat et en cliquant sur SELECT au niveau du
+bouton Agrandir. Les champs Expression et Résultat seront mis à jour
+de façon à afficher la chaîne de pointeurs actuelle. Vous pouvez
+également entrer l'expression dans le champ Expression de la fenêtre
+\k(Afficher valeur). Le nombre de pointeurs dont vous pouvez supprimer
+ainsi la référence est illimité ; toutefois vous ne pouvez supprimer
+la référence à des pointeurs nuls (c'est-à-dire dont la valeur
+correspond à 0), à des pointeurs de type vide * ou à des pointeurs ne
+comportant aucune information relative au type pointé. Le cas se
+produit si l'unité compilée n'incluait qu'une déclaration non encore
+définie du nom correspondant au type sans inclure la définition de la
+classe ou de la structure pointée.
+
+Lorsque vous suivez une chaîne de pointeurs, vous pouvez à tout moment
+effectuer un retour en arrière en cliquant sur SELECT au niveau du
+bouton Réduire. Vous remontez d'un lien dans la chaîne, ou d'un niveau
+en ce qui concerne la suppression de la référence. Vous pouvez cliquer
+sur SELECT au niveau du bouton Réduire autant de fois que vous avez
+cliqué sur SELECT au niveau du bouton Agrandir.
+
+^2^Afficher valeur
+^$132
+\k(Bouton Visualiser)
+Afficher valeur
+
+La fenêtre à affichage instantané Afficher valeur vous permet de
+visualiser la valeur d'une expression dans le langage actuel. Entrez
+dans le champ Expression l'expression que vous souhaitez évaluer. Vous
+pouvez aussi entrer une liste d'expressions en les séparant par une
+virgule. Les expressions peuvent inclure des variables de programmes,
+des variables de débogueur intégrées, ainsi que des variables définies
+par l'utilisateur. Si vous cliquez sur SELECT au niveau du bouton
+Afficher valeur, le système procède à l'évaluation des expressions et
+affiche les résultats dans la zone Résultat. Pour plus de détails sur
+les expressions acceptées par le système, consultez la section
+correspondant au langage spécifique :
+
+        \k(Support du langage C)
+        \k(Support du langage C++)
+
+La fenêtre à affichage instantané Afficher valeur est accessible
+depuis le menu Visualiser de n'importe quelle fenêtre contenant un
+\k(Panneau des symboles), \k(Panneau des sources) ou \k(Panneau de désassemblage). Si
+vous avez sélectionné une variable dans l'un de ces panneaux lorsque
+la fenêtre Afficher valeur est affichée, le nom de cette variable sert
+à initialiser le champ Expression. Si vous avez sélectionné des
+processus ou des chemins d'exécution dans le \k(Panneau des processus),
+l,expression sera evalué dans le contexte de chacun des processus et
+chemins d,exécution. Si vous n,avez pas sélectionné des processus ou
+des chemins d,exécution, le \d(processus ou chemin d'exécution actuel) est utilisé.
+
+Pour le format du résultat, vous pouvez sélectionner l'une des options
+disponibles dans la colonne Format. Si vous sélectionnez l'option
+"Valeur par défaut", c'est le débogueur qui choisira le format
+d'impression du résultat, en fonction du type de résultat concerné. Il
+existe différentes options, telles que "Octal", "Décimal" et
+"Caractère". Si vous choisissez "Autre", vous pouvez entrer une chaîne
+de format de type printf(3C) dans le champ Spécifier format. Vous ne
+pouvez entrer aucune autre donnée dans ce champ si vous n'avez pas
+sélectionné préalablement l'option Autre.
+
+Lors de l'évaluation d'un appel de fonction, le débogueur crée une
+trame de pile associée à cette fonction et l'exécute. Les événements
+liés au débogueur sont désactivés lors de l'exécution de cette
+fonction.
+
+L'option \k(Agrandir) s'apparente à l'option Montrer valeur,
+mais permet en plus d'exécuter des opérations spécialisées servant
+à supprimer la référence aux pointeurs.
+
+^2^Définir valeur
+^$133
+\k(Bouton Visualiser)
+Définir valeur
+
+La fenêtre à affichage instantané Définir valeur vous permet de
+définir une variable intégrée au débogueur ou une variable utilisateur
+gérée par le débogueur, ou encore d'évaluer une expression quelconque
+propre à tel langage. Pour définir une variable débogueur ou
+utilisateur, entrez une expression de la forme :
+         variable = expression[,expression ...] dans le champ
+Expression. Les valeurs autorisées pour les expressions
+dépendent de la variable. Si vous entrez une liste de chaînes et de
+variables utilisateur séparées par une virgule, les valeurs des
+chaînes correspondant à ces expressions sont concaténées.
+
+Vous pouvez également entrer dans le champ Expression n'importe quelle
+expression correspondant au langage actuel, bien qu'en général ce
+champ serve à évaluer une expression d'affectation. Pour plus de
+détails sur le type d'expressions acceptées, voir la section sur le
+langage spécifique :
+
+        \k(Support du langage C)
+        \k(Support du langage C++)
+
+La fenêtre à affichage instantané Définir valeur est accessible depuis
+le menu Visualiser de n'importe quelle fenêtre contenant un panneau
+\k(Panneau des symboles), \k(Panneau des sources) ou \k(Panneau de désassemblage). Si
+vous avez sélectionné une variable dans l'un de ces panneaux lorsque
+la fenêtre Définir valeur s'affiche, le nom de cette variable est
+utilisé pour initialiser le champ Expression. Si vous avez sélectionné
+des processus ou des chemins d'exécution dans \k(Panneau des processus),
+l'expression sera évaluée tour à tour d'après le contexte de chacun de
+ces processus et chemins d'exécution. Si vous n'avez sélectionné aucun
+processus ou chemin d'exécution, le \d(processus ou chemin d'exécution actuel) est alors
+utilisé.
+
+^2^Afficher type
+^$134
+\k(Bouton Visualiser)
+Afficher type
+
+La fenêtre à affichage instantané Afficher type vous permet de
+visualiser le type d'une expression dans le langage actuel. Entrez
+l'expression dans le champ du même nom. Si vous cliquez sur SELECT au
+niveau du bouton Afficher type, le type s'affiche dans la zone Type.
+Pour plus de détails sur le type d'expressions acceptées, voir la
+section sur le langage spécifique :
+
+        \k(Support du langage C)
+        \k(Support du langage C++)
+
+Vous pouvez également entrer un nom de type dans le champ Expression.
+Le débogueur affiche alors ensuite la définition du type nommé, et
+inclut les éléments constitutifs si le type correspond à une classe, à
+une structure, à une union ou à une énumération.
+
+La fenêtre à affichage instantané Afficher type est accessible depuis
+le menu Visualiser de n'importe quelle fenêtre contenant un
+\k(Panneau des symboles) ou un \k(Panneau des sources). Si vous avez
+sélectionné une variable dans l'un de ces panneaux lorsque la fenêtre
+Afficher type s'affiche, le nom de cette variable est utilisé pour
+initialiser le champ Expression. Si vous avez sélectionné des
+processus ou des chemins d'exécution dans \k(Panneau des processus), le type
+s'affichera tour à tour d'après le contexte de chacun de ces processus
+et chemins d'exécution. Si vous n'avez sélectionné aucun processus ou
+chemin d'exécution, le \d(processus ou chemin d'exécution actuel) est alors utilisé.
+
+^2^Afficher ligne
+^$135
+\k(Bouton Visualiser)
+Afficher ligne
+
+L'option Afficher ligne affiche une fenêtre vous permettant de
+positionner le fichier affiché dans le panneau Source sur une ligne
+spécifique. Entrez dans le champ Ligne le numéro de ligne adéquat.
+Pour afficher la fenêtre Afficher ligne, cliquez sur SELECT au niveau
+de l'option Afficher ligne du menu \k(Afficher) de n'importe
+quelle fenêtre contenant un \k(Panneau des sources).
+
+^2^Afficher code source de la fonction
+^$136
+\k(Bouton Visualiser)
+Afficher code source de la fonction
+
+La fenêtre à affichage instantané Afficher source de la fonction vous
+permet d'afficher la source de n'importe quelle fonction de
+\k(processus ou chemin d'exécution actuel), dont la compilation a été effectuée à l'aide des
+informations de débogage. Pour afficher cette fenêtre, cliquez sur
+SELECT au niveau de l'option Afficher source de la fonction, située
+dans le menu \k(Afficher) de n'importe quelle fenêtre contenant
+un \k(Panneau des sources).
+
+Cette fenêtre affiche deux listes déroulantes. La première affiche les
+objets composant le processus sélectionné ou le processus parent du
+chemin sélectionné ; parmi ces objets figurent le fichier exécutable
+et toute bibliothèque partagée dont il dépend. La seconde affiche une
+liste de fonctions. Si l'option "Afficher fonctions du fichier actuel"
+est définie, la liste déroulante intitulée Objets n'est pas prise en
+compte, et seules les fonctions définies dans le fichier actuellement
+affiché dans le panneau Source figurent dans la liste Fonctions. Si
+l'option "Afficher fonctions de l'objet sélectionné" est définie, les
+fonctions répertoriées dépendent des éléments sélectionnés dans la
+liste Objets. Si cet objet ne contient aucune fonction compilée à
+l'aide des informations de débogage, la liste de fonctions est alors
+vide.
+
+Vous ne pouvez sélectionner qu'une seule fonction dans la liste
+Fonctions. Si vous cliquez sur SELECT au niveau du bouton Afficher
+Fonction, cette dernière s'affiche dans le panneau \k(Panneau des sources)
+de la fenêtre parent. Vous pouvez également faire glisser la fonction
+sélectionnée et la déposer sur \k(Panneau des sources) de l'espace de
+travail. En effectuant cette opération, vous ouvrez une nouvelle
+\d(fenêtre source secondaire) affichant la fonction sélectionnée.
+
+^2^Afficher fonction désassemblée
+^$137
+\k(Bouton Visualiser)
+Afficher fonction désassemblée
+
+La fenêtre à affichage instantané Montrer désassemblage fonction vous
+permet de visualiser le désassemblage de n'importe quelle fonction du
+\d(processus ou chemin d'exécution actuel). Pour dérouler cette fenêtre, cliquez sur SELECT
+au niveau de l'option Montrer désassemblage fonction du menu
+\k(Afficher) figurant dans n'importe quelle fenêtre contenant
+un \k(Panneau de désassemblage).
+
+Cette fenêtre affiche deux listes déroulantes. La première liste
+affiche les objets composant le processus sélectionné ou le processus
+parent du chemin d'exécution sélectionné ; parmi ces objets figurent
+le fichier exécutable et toute bibliothèque partagée dont il dépend.
+Les fonctions répertoriées dans la seconde liste dépendent des
+éléments sélectionnés dans cette liste.
+
+Vous ne pouvez sélectionner qu'une seule fonction dans la liste
+Fonctions. Si vous cliquez sur SELECT au niveau du bouton Afficher
+fonction, cette fonction s'affiche dans le panneau Désassemblage
+correspondant à la fenêtre Désassemblage parent. Vous pouvez aussi
+faire glisser la fonction sélectionnée et la déposer sur
+\k(Panneau de désassemblage).
+
+^2^Afficher emplacement
+^$138
+\k(Bouton Visualiser)
+Afficher emplacement
+
+L'option Afficher emplacement affiche une fenêtre qui vous permet de
+positionner le \k(Panneau de désassemblage) de façon à visualiser une adresse
+spécifique. Entrez l'adresse hexadécimale dans le champ Emplacement.
+Pour afficher la fenêtre Afficher emplacement, cliquez sur SELECT au
+niveau de l'option Afficher emplacement du menu \k(Afficher) de
+n'importe quelle fenêtre contenant un \k(Panneau de désassemblage).
+
+^2^Rechercher
+^$139
+\k(Bouton Visualiser)
+Rechercher
+
+
+La fenêtre à affichage instantané Chercher vous permet d'entrer
+une expression régulière du style ed(1), que vous pourrez
+rechercher dans les panneaux Source ou Désassemblage.
+Entrez l'expression recherchée dans le champ Texte.
+L'expression peut contenir toute combinaison des éléments suivants :
+\t.\tCorrespond à n'importe quel caractère hormis un interligne
+\t[...]\tCorrespond à n'importe lequel des caractères délimités,
+\t\t\tles intervalles sont autorisés, et ^ est le signe de la négation
+\t*\tIndique zéro ou plusieurs RE précédents
+\t^\tCorrespond à la chaîne nulle située en début de ligne
+\t$\tCorrespond à la chaîne nulle située en fin de ligne
+\t\{m\}\tIndique exactement m occurrences du RE précédent
+\t\{m,\}\tIndique au moins m occurrences de RE précédent
+\t\{m,n\}\tIndique les occurrences allant de m à n inclus
+\t\(...\)\tCorrespond aux mêmes données que celles correspondant à ...
+\t\digit\tCorrespond au énième RE entre parenthèses dans la même
+\t\t\texpression
+\<\tCorrespond à la chaîne nulle située en début d'un mot
+\t\>\tCorrespond à la chaîne nulle située à la fin d'un mot
+
+Vous pouvez accéder à la fenêtre Cherche depuis le menu
+\k(Afficher) de n'importe quelle fenêtre contenant un
+\k(Panneau des sources) ou un \k(Panneau de désassemblage). Si du texte est
+sélectionné dans l'un de ces panneaux, il sert à initialiser le champ
+Texte. Si la fenêtre parent comporte à la fois les panneaux Source et
+Désassemblage, vous pouvez sélectionner le panneau sur lequel vous
+souhaitez effectuer la recherche.
+
+Vous pouvez effectuer une recherche vers le haut ou vers le bas. Si
+vous avez sélectionné une portion de texte, la recherche débute avant
+(ou après) la chaîne sélectionné ; dans le cas inverse, la recherche
+débute à partir de la position actuelle du curseur.
+
+^2^Vidage
+^$1310
+\k(Bouton Visualiser)
+Vidage
+
+La fenêtre à affichage instantané Vidage mémoire vous permet de
+visualiser le contenu de la mémoire à un \k(emplacement) donné du
+processus ou du chemin d'exécution sélectionné. Entrez l'emplacement
+souhaité dans le champ du même nom.
+
+Vous pouvez entrez dans le champ Nombre le nombre d'octets que vous
+souhaitez afficher. Si vous n'indiquez aucune valeur dans ce champ, le
+programme debug affiche alors 256 octets, à raison de 16 octets par
+ligne. Les octets s'affichent à la fois en mode hexadécimal et mode
+ASCII.
+
+La fenêtre Vidage mémoire est accessible depuis le menu
+\k(Afficher) de n'importe quelle fenêtre contenant un
+\k(Panneau des symboles) ou un \k(Panneau des processus). Si une variable est
+sélectionnée dans l'un de ces panneaux, son nom est utilisé pour
+initialiser le champ Emplacement. Si vous avez sélectionné un
+processus ou un chemin d'exécution dans le panneau \k(Panneau des processus),
+vous affichez le contenu de l'emplacement dans ce processus ou chemin
+d'exécution. Si vous n'avez pas sélectionné de processus ou de chemin
+d'exécution, \d(processus ou chemin d'exécution actuel) est utilisé.
+
+Les fenêtres \k(Afficher valeur) et \k(Agrandir) offrent
+d'autres solutions pour consulter l'espace d'adresse d'un processus
+ou d'un chemin d'exécution.
+
+^2^Assignation
+^$1311
+\k(Bouton Visualiser)
+Assignation
+
+La fenêtre à affichage instantané Table affiche la table d'adresse
+virtuelle correspondant au processus sélectionné ou au processus
+parent du chemin sélectionné. Les informations affichées comprennent
+les adresses de début et de fin, la taille et les autorisations
+d'accès correspondant à chaque segment.
+
+La fenêtre Table est accessible depuis le menu \k(Afficher)
+de n'importe quelle fenêtre contenant un \k(Panneau des processus)
+ou un \k(Panneau de désassemblage). Si un processus est sélectionné dans
+\k(Panneau des processus), la table d'adresse associée à ce dernier
+s'affiche. Vous ne pouvez sélectionner qu'un seul processus. Si aucun
+processus n'est sélectionné, la table d'adresse associée au processus
+actuel s'affiche.
+
+^1^Bouton Contrôle=Contrôle
+^$14
+Bouton Contrôle
+
+Le bouton Contrôler permet d'accéder à l'espace d'adresse d'un
+processus contrôlé. Si vous cliquez sur MENU au niveau du bouton
+Contrôler, vous affichez un menu comportant différentes options, selon
+le type de panneaux figurant dans la fenêtre. Chaque fenêtre offre un
+menu Contrôler présentant au minimum les options suivantes :
+
+\t\k(Exécuter)
+\t\k(Renvoyer)
+\t\k(Exécuter jusqu'à)
+\t\k(Commande d'exécution pas à pas)
+\t\k(Instruction step)
+\t\k(Commentaire suivant)
+\t\k(Instruction suivante)
+\t\k(Etape)
+\t\k(Passer d'un point à un autre)
+\t\k(Interrompre)
+
+Par ailleurs, si la fenêtre comprend un \k(Panneau des sources), le menu
+Contrôler inclut également l'option suivante :
+
+\t\k(Animer source)
+
+Si enfin la fenêtre comprend un \k(Panneau de désassemblage), le menu Contrôler
+comporte les options suivantes :
+
+\t\k(Animer désassemblage)
+
+Le groupe d'options figurant dans le menu Contrôler de n'importe
+quelle fenêtre résulte de la fusion entre les options par défaut et
+les options provenant de chaque panneau de cette fenêtre.
+
+^2^Exécuter
+^$141
+\k(Bouton Contrôle)
+Exécuter
+
+Pour appeler l'option Exécuter, cliquez sur SELECT au niveau du bouton
+Exécuter du menu \k(Contrôle) de n'importe quelle fenêtre.
+Si la fenêtre comporte un panneau \k(Panneau des processus) dans lequel des
+processus et des chemins d'exécution sont sélectionnés, le fait
+d'appeler l'option Exécuter permet de démarrer ces processus/chemins.
+Si aucun processus/chemin n'est sélectionné ou si l'option Exécuter
+est appelée depuis une fenêtre ne comportant pas de panneau
+\k(Panneau des processus), \d(processus ou chemin d'exécution actuel) est alors activé. Cette option
+n'est disponible que si tous les processus et chemins sélectionnés
+sont arrêtés.
+
+^2^Renvoyer
+^$142
+\k(Bouton Contrôle)
+Renvoyer
+
+Pour appeler l'option Retourner, cliquez sur SELECT au niveau de
+l'option Retourner du menu \d(Contrôle) de n'importe quelle
+fenêtre. Si la fenêtre comporte un panneau \k(Panneau des processus) dans
+lequel des processus et des chemins d'exécution sont sélectionnés, le
+fait d'appeler l'option Retourner permet de démarrer ces
+processus/chemins. Si aucun processus/chemin n'est sélectionné ou si
+l'option Retourner est appelée depuis une fenêtre ne comportant pas de
+panneau \k(Panneau des processus), \d(processus ou chemin d'exécution actuel) est alors activé.
+Chaque processus ou chemin activé sera exécuté tant qu'il n'y a pas de
+retour de la part de la fonction actuelle.
+
+Remarque : le processus ou le chemin d'exécution risque d'être
+interrompu avant le retour vers la fonction actuelle, en cas de
+déclenchement d'un événement alors que l'exécution n'était pas encore
+terminée.
+
+Cette option n'est disponible que si tous les processus et chemins
+d'exécution sélectionnés sont arrêtés.
+
+^2^Exécuter jusqu'à
+^$143
+\k(Bouton Contrôle)
+Exécuter jusqu'à
+
+La fenêtre à affichage instantané Exécuter jusqu'à vous permet
+d'indiquer l'endroit \k(emplacement) jusqu'où l'exécution doit se
+faire. Entrez cet emplacement sur la ligne intitulée Emplacement.
+
+Pour appeler cette fonction, cliquez sur SELECT au niveau de l'option
+Exécuter jusqu'à figurant dans le menu \k(Contrôle) de
+n'importe quelle fenêtre. Si vous affichez la fenêtre Exécuter jusqu'à
+depuis une fenêtre comportant un \k(Panneau des processus), les processus et
+chemins d'exécution éventuels sélectionnés dans le panneau
+\k(Panneau des processus) sont alors affectés. Dans le cas inverse,
+\d(processus ou chemin d'exécution actuel) est affecté.
+
+Remarque : l'option Exécuter jusqu'à ne garantit pas que le processus
+ou le chemin d'exécution concerné atteindra l'emplacement indiqué. Si
+votre programme utilise un chemin d'exécution imprévu, il risque de
+suivre une autre voie ou de contourner l'emplacement prévu. De même,
+en cas de déclenchement d'un événement, le processus ou le chemin
+d'exécution sera interrompu avant même d'atteindre l'emplacement
+indiqué.
+
+^2^Commande d'exécution pas à pas
+^$144
+\k(Bouton Contrôle)
+Commande d'exécution pas à pas
+
+Si vous cliquez sur SELECT au niveau de l'option Commentaire pas à pas
+(Step), les processus et chemins d'exécution concernés sont traités
+via un seul commentaire source, se déroulant pas à pas en appels de
+fonction.
+
+Si la fenêtre comporte un panneau \k(Panneau des processus) dans lequel sont
+sélectionnés des chemins d'exécution ou des processus, l'option
+Commentaire pas à pas (Step) a une incidence sur les chemins/processus
+sélectionnés. Si aucun processus ou chemin n'est sélectionné, ou si
+l'option Commentaire pas à pas (Step) est appelée depuis une fenêtre
+ne contenant pas de panneau \k(Panneau des processus), \d(processus ou chemin d'exécution actuel)
+est affecté.
+
+Cette option n'est disponible que si tous les processus et chemins
+d'exécution sélectionnés sont arrêtés.
+
+^2^Instruction step
+^$145
+\k(Bouton Contrôle)
+Instruction step
+
+Si vous cliquez sur SELECT au niveau de l'option Instruction pas à
+pas, les processus et chemins d'exécution concernés sont traités via
+une seule instruction machine, se déroulant pas à pas en appels de
+fonction.
+
+Si la fenêtre comporte un panneau \k(Panneau des processus) dans lequel des
+processus ou des chemins d'exécution sont sélectionnés, l'option
+Instruction pas à pas (Step) a une incidence sur les chemins/processus
+sélectionnés. Si aucun processus ou chemin n'est sélectionné, ou si
+l'option Instruction pas à pas est appelée depuis une fenêtre ne
+contenant pas de panneau \k(Panneau des processus), \d(processus ou chemin d'exécution actuel) est
+affecté.
+
+Cette option n'est disponible que si tous les processus et chemins
+d'exécution sélectionnés sont arrêtés.
+
+^2^Commentaire suivant
+^$146
+\k(Bouton Contrôle)
+Commentaire suivant
+
+Si vous cliquez sur SELECT au niveau de l'option Commentaire suivant,
+les processus et chemins d'exécution concernés sont traités via un
+seul commentaire source. Les appels de fonction sont exécutés en bloc
+(c'est-à-dire qu'ils sont traités comme un seul commentaire). Remarque
+: les processus ou chemins d'exécution risquent toujours d'être
+arrêtés en cas de déclenchement d'un événement alors que le processus
+ou le chemin se trouve dans la sous-routine appelée.
+
+Si la fenêtre comporte un panneau \k(Panneau des processus) dans lequel des
+processus ou des chemins d'exécution sont sélectionnés, l'option
+Commentaire suivant a une incidence sur les chemins/processus
+sélectionnés. Si aucun processus ou chemin n'est sélectionné, ou si
+l'option Commentaire suivant est appelée depuis une fenêtre ne
+contenant pas de panneau \k(Panneau des processus), \d(processus ou chemin d'exécution actuel) est
+affecté.
+
+Cette option n'est disponible que si tous les processus et chemins
+d'exécution sélectionnés sont arrêtés.
+
+^2^Instruction suivante
+^$147
+\k(Bouton Contrôle)
+Instruction suivante
+
+Si vous cliquez sur SELECT au niveau de l'option Instruction suivante,
+les processus et chemins d'exécution concernés sont traités via une
+seule instruction machine. Les appels de fonction sont exécutés en
+bloc (c'est-à-dire qu'ils sont traités comme une seule instruction).
+Remarque : les processus ou chemins d'exécution risquent toujours
+d'être arrêtés en cas de déclenchement d'un événement alors que le
+processus ou le chemin se trouve dans la sous-routine appelée.
+
+Si la fenêtre comporte un panneau \k(Panneau des processus) dans lequel des
+processus ou des chemins d'exécution sont sélectionnés, l'option
+Instruction suivante a une incidence sur les chemins/processus
+sélectionnés. Si aucun processus ou chemin n'est sélectionné, ou si
+l'option Instruction suivante est appelée depuis une fenêtre ne
+contenant pas de panneau \k(Panneau des processus), \d(processus ou chemin d'exécution actuel) est
+affecté.
+
+Cette option n'est disponible que si tous les processus et chemins
+d'exécution sélectionnés sont arrêtés.
+
+^2^Etape
+^$148
+\k(Bouton Contrôle)
+Etape
+
+La fenêtre à affichage instantané Déroulement pas à pas (Step) vous
+permet de contrôler plus efficacement les opérations pas à pas, par
+rapport aux options du menu \k(Contrôle).
+
+Le premier groupe d'options vous permet de contrôler le nombre
+d'exécutions d'un processus ou d'un chemin. Si vous sélectionnez
+l'option Exécution unitaire, le processus ou chemin ne sera exécuté
+qu'une seule fois. Si vous sélectionnez l'option Nombre d'exécutions,
+vous devez indiquer dans le champ Nombre le nombre de fois où le
+processus/chemin doit être exécuté.
+
+Les options Commentaire et Instruction indiquent à quel niveau
+l'exécution doit se dérouler.
+
+L'option Appels excédentaires vous permet de préciser si les appels de
+fonction doivent être exécutés en bloc ou pas à pas.
+
+Si vous affichez la fenêtre Déroulement pas à pas depuis une fenêtre
+contenant un panneau \k(Panneau des processus), les processus et chemins
+d'exécution éventuels sélectionnés sont affectés. Dans le cas inverse,
+\d(processus ou chemin d'exécution actuel) est affecté.
+
+Les options \k(Commande d'exécution pas à pas), \k(Instruction step),
+\k(Commentaire suivant) et \k(Instruction suivante) du menu \k(Contrôle)
+permettent d'exécuter plus simplement un processus ou un chemin
+d'exécution. \k(Instruction suivante), par exemple, revient à sélectionner
+dans la fenêtre Déroulement pas à pas (Step) les options Exécution
+unitaire, Instruction et Appels excédentaires. Par ailleurs, les
+boutons \k(Animer source) et \k(Animer désassemblage) permettent
+d'exécuter le processus/chemin de façon continue jusqu'à ce qu'il soit
+arrêté.
+
+^2^Animer source
+^$149
+\k(Bouton Contrôle)
+Animer source
+
+Pour appeler la fonction Animer source, cliquez sur SELECT au niveau
+de 'option Animer source du menu \k(Contrôle) de n'importe
+quelle fenêtre contenant un \k(Panneau des sources). Cette option lance
+l'exécution de \d(processus ou chemin d'exécution actuel), qui se poursuit tant qu'un
+événement n'est pas déclenché ou que vous n'y mettez pas fin. Un
+message situé dans la partie inférieure de la fenêtre vous indique si
+le processus ou chemin d'exécution est animé. Pour arrêter
+l'animation, sélectionnez le bouton \k(Interrompre) du menu
+\k(Contrôle). Hormis dans le cas de \k(Détruire) et
+\k(Entrée), aucune opération affectant l'état du processus ou
+du chemin d'exécution n'est autorisée lorsque celui-ci est animé.
+
+Lorsque le processus/chemin d'exécution est animé, le débogueur met en
+surbrillance chaque commentaire de \k(Panneau des sources) au fur et à
+mesure qu'il est exécuté. Il exécute pas à pas tous les appels de
+fonction rencontrés. Les informations situées dans les autres fenêtres
+sont mises à jour uniquement lorsque l'animation s'arrête. L'animation
+s'arrête si le processus ou le chemin d'exécution prend fin, si le
+chemin d'exécution est suspendu ou ôté du processus LWP, ou en cas de
+déclenchement d'un événement.
+
+Si l'exécution est trop rapide et que vous ne pouvez suivre facilement
+son déroulement, vous pouvez ralentir son rythme grâce à l'option
+\k(Animation) du menu \k(Caractéristiques).
+
+Si vous sélectionnez l'option Animer source, vous spécifiez
+l'exécution au niveau du commentaire. L'option \k(Animer désassemblage) du
+menu \k(Contrôle) de n'importe quelle fenêtre contenant un
+\k(Panneau de désassemblage) vous permet d'animer le processus/chemin
+d'exécution au niveau de l'instruction.
+
+^2^Animer désassemblage
+^$1410
+\k(Bouton Contrôle)
+Animer désassemblage
+
+Pour appeler la fonction Animer désassemblage, cliquez sur SELECT au
+niveau de l'option Animer désassemblage du menu \k(Contrôle)
+de n'importe quelle fenêtre contenant un panneau \k(Panneau de désassemblage).
+Cette option lance l'exécution de \k(processus ou chemin d'exécution actuel),
+qui se poursuit tant qu'un événement n'est pas déclenché ou que vous
+n'y mettez pas fin. Un message situé dans la partie inférieure de la
+fenêtre vous indique si le processus ou chemin d'exécution est animé.
+Pour arrêter l'animation, sélectionnez le bouton \k(Interrompre)
+du menu \k(Contrôle). Hormis dans le cas de \k(Détruire)
+et \k(Entrée), aucune opération affectant l'état du
+processus ou du chemin d'exécution n'est autorisée lorsque celui-ci
+est animé.
+
+Lorsque le processus/chemin d'exécution est animé, le débogueur met en
+surbrillance chaque instruction de \k(Panneau de désassemblage) au fur et à
+mesure qu'elle est exécutée. Il exécute pas à pas tous les appels de
+fonction rencontrés. Les informations situées dans les autres fenêtres
+sont mises à jour uniquement lorsque l'animation s'arrête. L'animation
+s'arrête si le processus ou le chemin d'exécution prend fin, si le
+chemin d'exécution est suspendu ou ôté du processus LWP, ou en cas de
+déclenchement d'un événement.
+
+Si l'exécution est trop rapide et que vous ne pouvez suivre facilement
+son déroulement, vous pouvez ralentir son rythme grâce à l'option
+\k(Animation) du menu \k(Caractéristiques).
+
+Si vous sélectionnez l'option Animer désassemblage, vous spécifiez
+l'exécution au niveau de l'instruction. L'option
+\k(Animer source) du menu \k(Contrôle) de n'importe
+quelle fenêtre contenant un \k(Panneau des sources) vous permet
+d'animer le processus/chemin d'exécution au niveau du commentaire.
+
+^2^Passer d'un point à un autre
+^$1411
+\k(Bouton Contrôle)
+Passer d'un point à un autre
+
+La fenêtre à affichage instantané Reprendre à vous permet d'indiquer
+le point \k(emplacement) à partir duquel vous devez reprendre
+l'exécution des processus/chemins d'exécution concernés. Entrez
+l'emplacement adéquat sur la ligne Emplacement.
+
+Cette option ne se charge pas de relancer l'exécution des processus ou
+chemins sélectionnés. La prochaine fois où vous sélectionnerez l'une
+des autres options du menu \k(Contrôle), l'exécution reprendra
+à l'endroit que vous avez indiqué.
+
+L'emplacement peut correspondre à n'importe quelle adresse figurant
+dans le texte des processus sélectionnés ; vous devez toutefois être
+très vigilant. La fonction Reprendre à ne se charge pas d'ajuster la
+pile de processus ou de chemins d'exécution si l'adresse ne fait pas
+partie de la fonction actuelle. Vous devez également être
+particulièrement vigilant lorsque vous manipulez du code susceptible
+d'avoir des effets secondaires sérieux.
+
+Si la fenêtre contient un panneau \k(Panneau des processus) dans lequel sont
+sélectionnés des chemins d'exécution ou des processus, l'option
+Reprendre à a une incidence sur ces derniers. Si aucun
+processus/chemin n'a été sélectionné, ou si l'option Reprendre à est
+appelée depuis une fenêtre ne contenant pas de panneau
+\k(Panneau des processus), \d(processus ou chemin d'exécution actuel) est affecté.
+
+Cette option n'est disponible que si tous les processus et chemins
+d'exécution sélectionnés sont arrêtés.
+
+^2^Interrompre
+^$1412
+\k(Bouton Contrôle)
+Interrompre
+
+Si vous cliquez sur SELECT au niveau de l'option Arrêter, l'exécution
+des processus/chemins concernés est immédiatement suspendue. Cette
+option n'est disponible que si les processus/chemins sélectionnés
+correspondent à l'état Actif ou Déroulement pas à pas.
+
+Si la fenêtre comporte un panneau \k(Panneau des processus) dans lequel des
+processus ou chemins d'exécution sont sélectionnés, l'option Arrêter a
+une incidence sur ces derniers. Si aucun processus/chemin d'exécution
+n'est sélectionné, ou si l'option Arrêter est appelée depuis une
+fenêtre ne contenant pas de panneau \k(Panneau des processus),
+\d(processus ou chemin d'exécution actuel) est affecté.
+
+Remarque : la demande d'arrêt risque de ne pas avoir un effet
+immédiat, en raison du délai d'inertie du système et des variations au
+niveau de la programmation.
+
+^1^Bouton Evénement=Evénement
+^$15
+Bouton Evénement
+
+Le bouton Evénement permet à l'utilisateur de créer des événements qui
+modifieront le flux de contrôle d'un chemin d'exécution ou d'un
+processus. Si vous cliquez sur MENU au niveau du bouton Evénement,
+vous affichez un menu offrant différentes options, selon le type de
+panneaux figurant dans cette fenêtre. Chaque fenêtre dispose d'un menu
+Evénement comportant au minimum les options suivantes :
+
+\t\k(Arrêt sur fonction)
+\t\k(Arrêter)
+\t\k(Signal)
+\t\k(Syscall)
+\t\k(A l'arrêt)
+\t\k(Annuler)
+\t\k(Détruire)
+\t\k(Tuer)
+\t\k(Ignorer signaux)
+
+Par ailleurs, si la fenêtre comporte un \k(Panneau des symboles), le menu
+Evénement comprend alors l'option suivante :
+
+\t\k(Définir point de surveillance)
+
+Si la fenêtre comporte un \k(Panneau des sources) ou un
+\k(Panneau de désassemblage), le menu Evénement comprend alors les options
+suivantes :
+
+\t\k(Définir point de rupture)
+\t\k(Supprimer point de rupture)
+
+Si enfin la fenêtre comporte un \k(Panneau des événements), le menu Evénement
+comprend alors l'option suivante :
+
+\t\k(Changer)
+
+Le groupe d'options figurant dans le menu Evénement de n'importe
+quelle fenêtre résulte de la fusion entre les options par défaut et
+les options provenant de chaque panneau de cette fenêtre.
+
+^2^Définir point de rupture
+^$151
+\k(Bouton Evénement)
+Définir point de rupture
+
+L'option Définir point de rupture est disponible si vous avez
+préalablement sélectionné une ligne dans \k(Panneau des sources) ou une
+instruction dans \k(Panneau de désassemblage), et si \k(processus ou chemin d'exécution actuel) est
+arrêté. Si vous cliquez sur SELECT au niveau de cette option, vous
+créez un point de rupture (c'est-à-dire un type de
+\d(événement stop)) dans \d(programme actuel) ou \d(processus ou chemin d'exécution actuel).
+L'événement sera indiqué par un signal d'arrêt au niveau de la ligne
+ou de l'instruction sélectionnée. L'événement s'affiche également dans
+le panneau Evénement principal de \k(Panneau des événements). Vous pouvez
+également définir un point de rupture en cliquant deux fois sur le
+bouton SELECT dans la marge gauche de la ligne ou de l'instruction
+sélectionnée.
+
+Lorsque vous voulez définir un point de rupture sur une ligne source,
+le débogueur affiche un message en cas d'impossibilité de définir ce
+point de rupture sur la ligne séléctionnée. Les raisons pour
+lesquelles le débogueur ne peut effectuer cette opération sont
+multiples :
+
+    o La ligne source ne contient aucune donnée permettant de générer
+      un code exécutable. C'est le cas des lignes vierges et des
+      lignes contenant uniquement des commentaires et des déclarations
+      de variables.
+
+    o La ligne fait partie d'un commentaire comprenant plusieurs
+      lignes. Vous ne pouvez placer un point de rupture que sur une
+      seule ligne d'un commentaire ou d'une condition énoncée sur
+      plusieurs lignes.
+
+    o La ligne marque le début d'une définition de fonction. Placez
+      plutôt le point de rupture sur le premier commentaire de la
+      fonction.
+
+^2^Supprimer point de rupture
+^$152
+\k(Bouton Evénement)
+Supprimer point de rupture
+
+L'option Supprimer point de rupture est disponible si vous avez
+préalablement sélectionné une ligne source comportant un signal
+d'arrêt dans \k(Panneau des sources) ou une instruction comportant un
+signal d'arrêt dans \k(Panneau de désassemblage). Le signal d'arrêt indique la
+présence d'un point de rupture (un type de \d(événement stop)) au
+niveau de la ligne ou de l'instruction. Si vous cliquez sur SELECT au
+niveau de l'option Supprimer point de rupture, vous effacez à la fois
+le point de rupture et l'événement associé. Pour supprimer un point de
+rupture, vous pouvez également cliquez sur le bouton SELECT dans la
+marge gauche de la ligne comportant le point de rupture.
+
+^2^Définir point de surveillance
+^$153
+\k(Bouton Evénement)
+Définir point de surveillance
+
+L'option Définir point de surveillance est accessible depuis le menu
+\k(Contrôle) de n'importe quelle fenêtre comportant un
+\k(Panneau des symboles). Si vous cliquez sur SELECT au niveau de l'option
+Définir point de surveillance, vous définissez ce type de paramètres
+pour les variables sélectionnées. Cette option est disponible
+uniquement si vous avez sélectionné une ou plusieurs variables
+de programmes dans \k(Panneau des symboles).
+
+Un point de surveillance est un type de \d(événement stop) ordonnant
+au débogueur d'interrompre l'exécution du programme dès que la valeur
+de la variable est modifiée. Le débogueur crée un événement d'arrêt
+propre à chaque variable. Les nouveaux événements s'affichent, et
+peuvent être supprimés ou désactivés, dans \k(Panneau des événements).
+
+^2^Arrêt sur fonction
+^$154
+\k(Bouton Evénement)
+Arrêt sur fonction
+
+La fenêtre à affichage instantané Arrêt sur fonction vous permet de
+définir un point de rupture sur une fonction. Cette fenêtre est
+accessible depuis le menu \k(Evénement) de n'importe quelle
+fenêtre.
+
+Cette fenêtre affiche deux listes déroulantes. La première affiche les
+objets (fichier exécutable et bibliothèques partagées) composant le
+processus sélectionné ou le processus parent du chemin d'exécution
+sélectionné. Les fonctions répertoriées dans la seconde liste
+dépendent des éléments sélectionnés dans cette liste.
+
+Vous pouvez sélectionner dans la seconde liste une fonction au niveau
+de laquelle vous pouvez définir un point de rupture. Lorsque vous
+effectuez cette opération, vous créez un \d(événement stop). Par
+défaut , les événements s'appliquent à tous les processus et chemins
+provenant du \k(programme^^processus et chemins d'exécution) sélectionné, et non uniquement au processus ou
+chemin sélectionné. Si vous voulez modifier cette configuration par
+défaut, utilisez l'option \k(Granularité) du menu
+\k(Caractéristiques). Si vous n'avez sélectionné aucun programme dans
+\k(Panneau des processus), ou si vous appelez l'option Arrêt sur fonction à
+partir d'une fenêtre ne comportant pas de panneau Processus, le
+\d(programme actuel) est appliqué par défaut. Les programmes concernés
+sont énumérés sur la ligne Programmes, située dans la partie
+supérieure de la fenêtre. L'événement généré lors de l'exécution de
+cette commande s'affiche dans le panneau Evénement Principal de
+\k(Panneau des événements).
+
+^2^Arrêter
+^$155
+\k(Bouton Evénement)
+Arrêter
+
+La fenêtre à affichage instantané Stop vous permet de créer un
+\d(événement stop). Un événement d'arrêt précise les conditions
+situées dans l'espace d'adresse du programme, qui obligeront le
+débogueur à mettre fin à l'exécution du programme.
+
+Entrez une \k(Expression d'arrêt) sur la ligne Expression. Le débogueur
+évalue en permanence si l'expression d'arrêt est rencontrée, tant que
+le chemin d'exécution ou le processus sujet est actif. Le débogueur
+met fin au processus/chemin d'exécution dès que la condition est
+vérifiée.
+
+Dans le champ Commandes, vous devez entrer l'action que le débogueur
+doit exécuter à tout moment en cas de déclenchement de l'événement.
+Cette action doit correspondre à une ou plusieurs commandes
+accessibles via l'interface de la ligne de commande du débogueur. Le
+résultat de l'exécution de ces commandes s'affiche dans
+\k(Panneau des commandes).
+
+Vous pouvez entrer dans le champ Nombre une valeur correspondant au
+nombre de déclenchements de l'événement autorisés avant que le
+débogueur n'arrête le processus/chemin d'exécution. Au-delà, le
+processus/chemin est arrêté à chaque occurrence de l'événement.
+
+La fenêtre à affichage instantané Stop est accessible via le menu
+\k(Evénement)de n'importe quelle fenêtre. Si vous affichez cette
+fenêtre à partir d'une fenêtre comportant un \k(Panneau des processus), le
+nouvel événement s'appliquera aux \k(programmes^^processus et chemins d'exécution) éventuellement
+sélectionnés dans \k(Panneau des processus). Dans le cas inverse, l'événement
+s'appliquera au \d(programme actuel) ou au \d(processus ou chemin d'exécution actuel).
+
+Par défaut, les événements s'appliquent à l'ensemble des processsus et
+des chemins d'exécution résultant d'un programme, et non uniquement au
+processus/chemin sélectionné. Si vous voulez modifier cette situation,
+utilisez la fenêtre \k(Granularité). Les programmes ou processus
+concernés sont répertoriés sur la ligne Programmes située dans la
+partie supérieure de la fenêtre.
+
+L'événement généré lors de l'exécution de cette commande s'affiche
+dans le panneau Evénement principal de \k(Panneau des événements).
+
+^3^Expression d'arrêt
+^$1551
+\k(Bouton Evénement)
+\k(Arrêter)
+Expression d'arrêt
+
+Les expressions d'arrêt sont des expressions spéciales acceptées par
+la commande \k(Arrêter). Une expression d'arrêt comprend un ou
+plusieurs événements d'arrêt, reliés entre eux par les opérateurs &&
+(et) ou || (ou). Ces opérateurs sont associatifs à gauche, mais le
+débogueur ne garantit pas l'ordre d'évaluation des opérandes. Chaque
+événement d'arrêt peut correspondre à :
+\templacement
+\t(expr)
+\t*valeur gauche
+
+Chaque type d'événement d'arrêt génère une action qui informe le
+débogueur de la présence de l'événement en question. Lorsque ce type
+d'action intervient, l'expression d'arrêt globale est évaluée de façon
+à déterminer si la condition est "vérifiée". Si c'est le cas,
+l'événement se déclenche normalement (le débogueur vous informe de la
+présence de l'événement et exécute les commandes associées).
+
+\k(emplacement) correspond à une adresse située dans le texte du
+processus ou du chemin d'exécution, où le débogueur peut définir un
+point de rupture. Lorsque le processus/chemin atteint l'emplacement
+indiqué, le débogueur est informé de l'événement. Lorsque les
+événements d'arrêt par rapport à un emplacement donné se rapportent à
+des noms de fonctions, l'expression est vérifiée si cette fonction est
+active. Lorsqu'ils s'appliquent à une adresse particulière ou à un
+numéro de ligne, l'expression est vérifiée uniquement si le processus
+ou le chemin figure à cette adresse ou au niveau de cette ligne.
+Lorsque le langage actuel est C++, les événements d'arrêt par rapport
+à un emplacement peuvent également utiliser les fonctions propres à
+C++. Pour plus de détails, voir la section portant sur
+\k(Support de C++).
+
+"expr" peut correspondre à n'importe quelle expression autorisée
+figurant dans le \k(Langage) actuel. Le débogueur est
+informé de l'événement lorsque l'un des identificateurs impliqués dans
+l'expression change de valeur. L'expression globale est ensuite
+évaluée par rapport au contexte du langage actuel.
+
+"valeur gauche" peut correspondre à n'importe quelle expression dans
+le langage actuel, que vous pouvez placer à gauche d'une instruction
+d'affectation dans ce langage. Le débogueur est informé de l'événement
+lorsque le contenu de l'emplacement est modifié. L'événement d'arrêt
+est une condition vérifiée dès que cette modification intervient.
+
+Pour créer des expressions d'arrêt plus performantes, combinez les
+événements d'arrêt à l'aide de l'opérateur spécial && (et). Par
+exemple, pour arrêter la fonction a uniquement une fois que la
+fonction b est également active, entrez "stop a &&b" dans le champ
+Expression de la fenêtre \k(Arrêter). Pour l'arrêter une fois
+que la valeur de l'expression x est vérifiée au sein de la fonction y,
+entrez "stop y && (x)".
+
+^3^Emplacement=emplacement
+^$1552
+\k(Bouton Evénement)
+\k(Arrêter)
+Emplacement
+
+La syntaxe associée à un emplacement est la suivante :
+\t[process/thread name@][filename@]line
+\tou [process/thread name@][filename@]symbol[+-constant]
+\tou address[+-constant]
+\tou register_name,
+où "address" correspond à l'adresse octale ou hexadécimale
+du programme et ou "constant" correspond à un nombre entier.
+
+Voici des exemples d'emplacements :
+    17\t\tnuméro de ligne dans le fichier actuel (%file)
+    foo.c@17\tnuméro de ligne dans un autre fichier
+    0x80801234\tadresse
+    main\t\tnom ou libellé d'une fonction
+    main+3\ttrois octets après le libellé
+    p1@main\tnom d'une fonction d'un processus donné
+    %loc\t\templacement actuel    %line\t\tfichier actuel et numéro de ligne
+    %r0\t\tregistre    %r0+80\tregistre plus offset
+    %pc-4\tregistre moins offset
+    $myvar\tvariable définie par l'utilisateur
+
+^2^Signal
+^$156
+\k(Bouton Evénement)
+Signal
+
+La fenêtre à affichage instantané Signal vous permet de créer un
+\d(événement signal). Un événement de type signal entraîne l'exécution
+d'une opération donnée dès que les processus ou chemins associés à un
+\k(programme^^processus et chemins d'exécution) sélectionné reçoivent un signal particulier.
+
+Vous n'avez pas besoin de créer d'événement uniquement pour arrêter le
+processus/chemin une fois le signal reçu ; le débogueur s'en charge
+par défaut. Pour plus de détails sur l'activation ou la désactivation
+de cette fonctionnalité, voir \k(Ignorer signaux).
+
+Les signaux sont affichés dans une liste déroulante. Vous pouvez
+sélectionner un ou plusieurs signaux. Ces derniers sont classés par
+défaut par numéro. Pour classer la liste par ordre alphabétique,
+sélectionnez l'option Trier liste par nom.
+
+Dans le champ Commandes, vous devez entrez l'action que le débogueur
+doit exécuter en cas de déclenchement de l'événement.  Cette action
+doit correspondre à une ou plusieurs commandes accessibles via
+l'interface de la ligne de commande du débogueur. Le résultat de
+l'exécution de ces commandes s'affiche dans \k(Panneau des commandes).
+
+La fenêtre à affichage instantané Signal est accessible via le menu
+\k(Evénement) de n'importe quelle fenêtre. Si vous affichez
+cette fenêtre à partir d'une fenêtre contenant un \k(Panneau des processus),
+le nouvel événement s'appliquera alors aux \k(programmes^^processus et chemins d'exécution) éventuellement
+sélectionnés dans \k(Panneau des processus). Dans le cas inverse, l'événement
+s'appliquera au \d(programme actuel) ou au \d(processus ou chemin d'exécution actuel).
+
+Par défaut, les événements s'appliquent à l'ensemble des processsus et
+des chemins d'exécution résultant d'un programme, et non uniquement au
+processus/chemin sélectionné. Si vous voulez modifier cette
+situation, utilisez la fenêtre \k(Granularité). Les
+programmes ou processus concernés sont répertoriés sur la ligne
+Programmes située dans la partie supérieure de la fenêtre.
+
+L'événement généré lors de l'exécution de cette commande s'affiche
+dans le panneau Evénement principal de \k(Panneau des événements).
+
+^2^Syscall
+^$157
+\k(Bouton Evénement)
+Syscall
+
+La fenêtre à affichage instantané Appel système vous permet de créer
+un \d(événement syscall). Un événement de type appel système entraîne
+l'exécution d'une opération donnée dès que les processus associés au
+\k(programme^^processus et chemins d'exécution) sélectionné son intégrés à un appel système ou quittent ce
+dernier.
+
+Les appels système autorisés sont affichés dans une liste déroulante.
+Vous pouvez sélectionner un ou plusieurs appels système. Ces derniers
+sont classés par défaut dans l'ordre alphabétique, mais vous pouvez
+les classer par numéro en sélectionnant l'option Trier liste par
+numéro. Le débogueur arrête les processus et les chemins concernés
+lorsqu'ils entrent dans les appels système sélectionnés ou en sortent,
+selon que, respectivement, les options Entrée ou Sortie sont définies.
+
+Dans le champ Commandes, vous devez entrer l'action que le débogueur
+doit exécuter à tout moment en cas de déclenchement de l'événement.
+Cette action doit correspondre à une ou plusieurs commandes
+accessibles via l'interface de la ligne de commande du débogueur. Le
+résultat de l'exécution de ces commandes s'affiche dans
+\k(Panneau des commandes).
+
+Vous pouvez entrer dans le champ Nombre une valeur correspondant au
+nombre de déclenchements de l'événement autorisés avant que le
+débogueur n'arrête le processus/chemin d'exécution. Au-delà, le
+processus/chemin est arrêté à chaque occurrence de l'événement.
+
+La fenêtre à affichage instantané Appel système est accessible via le
+menu \k(Evénement) de n'importe quelle fenêtre. Si vous
+l'affichez à partir d'une fenêtre contenant un \k(Panneau des processus), le
+nouvel événement s'appliquera alors aux \k(programmes^^processus et chemins d'exécution) éventuellement
+sélectionnés dans \k(Panneau des processus). Dans le cas inverse, l'événement
+s'appliquera au \d(programme actuel) ou au \d(processus ou chemin d'exécution actuel).
+
+Par défaut, les événements s'appliquent à l'ensemble des processsus et
+des chemins d'exécution résultant d'un programme, et non uniquement au
+processus/chemin sélectionné. Si vous voulez modifier cette
+situation, utilisez la fenêtre \k(Granularité). Les
+programmes, processus ou chemins concernés sont répertoriés sur la
+ligne Programmes située dans la partie supérieure de la fenêtre.
+
+L'événement généré lors de l'exécution de cette commande s'affiche
+dans le panneau Evénement principal de \k(Panneau des événements).
+
+^2^A l'arrêt
+^$158
+\k(Bouton Evénement)
+A l'arrêt
+
+La fenêtre à affichage instantané On Stop vous permet de créer un
+\d(événement onstop). Un événement onstop indique l'action à
+entreprendre dès l'arrêt d'un processus ou d'un chemin concerné.
+Entrez cette action dans le champ intitulé Commandes. Cette action
+doit correspondre à une ou plusieurs commandes accessibles via
+l'interface de la ligne de commande du débogueur. A chaque arrêt d'un
+processus ou d'un chemin, les commandes sont exécutées et le résultat
+s'affiche dans \k(Panneau des commandes). L'arrêt se fait en plusieurs
+étapes et suppose l'arrêt d'un autre événement du débogueur
+(\k(Signal), \k(Syscall) ou \k(Arrêter)).
+
+La fenêtre à affichage instantané On stop est accessible via le menu
+\k(Evénement) de n'importe quelle fenêtre. Si vous l'affichez à
+partir d'une fenêtre contenant un \k(Panneau des processus), le nouvel
+événement s'appliquera alors aux \k(programmes^^processus et chemins d'exécution) éventuellement
+sélectionnés dans \k(Panneau des processus). Dans le cas inverse,
+l'événement s'appliquera au \d(programme actuel) ou au
+\d(processus ou chemin d'exécution actuel).
+
+Par défaut, les événements s'appliquent à l'ensemble des processsus et
+des chemins d'exécution résultant d'un programme, et non uniquement au
+processus/chemin sélectionné. Si vous voulez modifier cette
+situation, utilisez la fenêtre \k(Granularité). Les
+programmes, processus ou chemins concernés sont répertoriés sur la
+ligne Programmes située dans la partie supérieure de la fenêtre.
+
+L'événement généré lors de l'exécution de cette commande s'affiche
+dans le panneau On Stop de \k(Panneau des événements).
+
+^2^Annuler
+^$159
+\k(Bouton Evénement)
+Annuler
+
+La fenêtre à affichage instantané Annuler vous permet d'annuler tous
+les signaux captés par le débogueur. Lorsqu'un signal est envoyé à un
+processus ou à un chemin d'exécution, le débogueur en est informé
+avant même que le processus/chemin ne le reçoive. L'option Annuler
+vous permet de supprimer le signal, de façon à ce qu'il ne soit jamais
+transmis au processus ou au chemin.
+
+Cette fenêtre affiche une liste déroulante indiquant les signaux en
+attente au niveau du processus ou du chemin sélectionné. Lors de la
+prochaine exécution du processus/chemin, ce dernier ne recevra pas les
+signaux sélectionnés dans cette liste.
+
+Les signaux sont classés par défaut par numéro. L'option Trier liste
+par nom vous permet de rétablir un classement par ordre alphabétique.
+
+La fenêtre Annuler est accessible depuis le menu \k(Evénement)
+de n'importe quelle fenêtre. Si vous l'affichez depuis une fenêtre
+contenant un \k(Panneau des processus), les signaux affichés resteront en
+attente au niveau du processus ou chemin sélectionné éventuellement
+dans \k(Panneau des processus). Dans le cas inverse, \d(processus ou chemin d'exécution actuel) est
+utilisé.
+
+^2^Détruire
+^$1510
+\k(Bouton Evénement)
+Détruire
+
+L'option Tuer permet d'envoyer le signal SIGKILL aux processus
+concernés. Ce signal ne peut être intercepté et met fin aux processus
+en question.
+
+L'option Détruire est accessible depuis le menu \k(Evénement) de
+n'importe quelle fenêtre. Si vous avez sélectionné cette option depuis
+une fenêtre contenant un \k(Panneau des processus), les processus
+sélectionnés éventuellement dans \k(Panneau des processus) seront affectés.
+Si aucun processus n'est sélectionné, ou si l'option Détruire a été
+sélectionnée depuis une fenêtre ne comportant pas de panneau
+Processus, seul le processus actuel sera affecté.
+
+^2^Tuer
+^$1511
+\k(Bouton Evénement)
+Tuer
+
+La fenêtre à affichage instantané Tuer vous permet d'envoyer un
+signal à un processus ou à un chemin d'exécution. Cette fenêtre
+affiche une liste déroulante comportant des signaux. Ces derniers sont
+classés par défaut par numéro. L'option Trier liste par nom vous
+permet de rétablir un classement par ordre alphabétique.
+
+La fenêtreTuer est accessible depuis le menu \k(Evénement)
+de n'importe quelle fenêtre. Si vous l'affichez depuis une fenêtre
+contenant un \k(Panneau des processus), le signal sera envoyé aux processus
+et chemins sélectionnés éventuellement dans \k(Panneau des processus). Si
+tous les chemins d'un processus sont sélectionnés, le système vous
+demande de préciser si le signal doit être envoyé au processus parent
+ou à chaque chemin enfant. Si aucun élément n'est sélectionné, ou si
+la fenêtre Détruire a été affichée depuis une fenêtre ne contenant pas
+de panneau Processus, le signal est envoyé au processus ou au chemin
+actuel. Remarque : les signaux ne peuvent être transmis aux chemins
+suspendus ou ôtés du processus lwp.
+
+^2^Ignorer signaux
+^$1512
+\k(Bouton Evénement)
+Ignorer signaux
+
+Par défaut, lorsqu'un signal est envoyé à un processus ou à un chemin
+d'exécution, le débogueur l'intercepte (le capte) et vous informe de
+la présence de ce signal. Vous pouvez alors annuler le signal (à
+l'aide de la fenêtre \k(Annuler)) ou exécuter le processus
+sans bloquer la réception du signal. Si vous ne voulez pas que le
+débogueur intercepte un signal particulier, vous pouvez lui ordonner
+d'ignorer ce signal.
+
+La fenêtre à affichage instantané Ignorer signaux vous permet
+d'indiquer si le débogueur doit intercepter ou ignorer chaque signal.
+Cette fenêtre affiche une liste déroulante comportant des signaux
+ainsi que l'action actuellement associée au processus/chemin
+d'exécution. Vous pouvez modifier cette action en sélectionnant dans
+la liste un ou plusieurs signaux. Ces derniers sont classés par défaut
+par ordre numérique, mais vous pouvez rétablir un classement par ordre
+alphabétique grâce à l'option Trier liste par nom. La liste inclut
+également le nom du gestionnaire de signaux enregistré par le
+programme pour chaque signal.
+
+La fenêtre Ignorer signaux est accessible depuis le menu
+\k(Evénement) de n'importe quelle fenêtre. Si vous l'affichez
+depuis une fenêtre contenant un \k(Panneau des processus), le processus ou
+chemin sélectionné éventuellement dans \k(Panneau des processus) est affecté.
+Dans le cas inverse, \d(processus ou chemin d'exécution actuel) est affecté.
+
+L'option Ignorer signaux est disponible uniquement si le processus ou
+chemin sélectionné est arrêté.
+
+^2^Changer
+^$1513
+\k(Bouton Evénement)
+Changer
+
+L'option Modifier est accessible depuis le menu \k(Evénement) de
+n'importe quelle fenêtre contenant un \k(Panneau des événements). L'option
+Modifier présente une fenêtre qui vous permet d'éditer un événement
+existant. Cette option est disponible uniquement si vous avez
+sélectionné un seul événement, que ce soit dans le panneau Evénement
+principal ou Onstop. Cette fenêtre ressemble à l'une des fenêtres
+\k(Arrêter), \k(Signal), \k(Syscall) ou
+\k(A l'arrêt), selon le type d'événements sélectionnés. Les
+champs de cette fenêtre sont initialisés à l'aide des valeurs
+provenant de l'événement sélectionné. Vous pouvez ensuite modifier
+l'un de ces champs. Une fois les modifications effectuées, elles sont
+prises en compte dans la fenêtre Evénement.
+
+^1^Bouton Caractéristiques=Caractéristiques
+^$16
+Bouton Caractéristiques
+
+Le bouton Propriétés vous permet de modifier certaines propriétés
+associées aux différents panneaux du débogueur. Si vous cliquez sur
+MENU au niveau du bouton Propriétés, vous affichez un menu offrant
+différentes options, selon le type de panneaux figurant dans cette
+fenêtre.
+
+S'il s'agit d'une fenêtre s'affichant automatiquement lors de l'appel
+du débogueur, le menu Propriétés comprend alors les options suivantes :
+
+\t\k(Langage)
+\t\k(Granularité)
+\t\k(Opération de sortie)
+\t\k(Chemin d'accès source)
+
+Si elle comporte un \k(Panneau des processus), le menu Propriétés comprend
+alors les options suivantes :
+
+\t\k(Panneaux)
+\t\k(Granularité)
+
+Si la fenêtre comporte un \k(Panneau des piles), le menu Propriétés
+comprend alors l'option suivante :
+
+\t\k(Panneaux)
+
+Si elle comporte un \k(Panneau des symboles), le menu Propriétés comprend
+alors les options suivantes :
+
+\t\k(Panneaux)
+\t\k(Symboles)
+
+Si elle comporte un \k(Panneau des commandes), le menu Propriétés comprend
+alors les options suivantes :
+
+\t\k(Opération de sortie)
+\t\k(Chemin d'accès source)
+\t\k(Langage)
+
+Si elle comporte un \k(Panneau des sources), le menu Propriétés comprend
+alors les options suivantes :
+
+\t\k(Chemin d'accès source)
+\t\k(Langage)
+\t\k(Granularité)
+\t\k(Animation)
+
+Si la fenêtre comporte un \k(Panneau de désassemblage), le menu Propriétés
+comprend alors l'option suivante :
+
+\t\k(Animation)
+
+Si enfin elle comporte un \k(Panneau des événements), le menu Propriétés
+comprend alors les options suivantes :
+
+\t\k(Panneaux)
+\t\k(Granularité)
+
+Le groupe d'options figurant dans le menu Propriétés de n'importe
+quelle fenêtre résulte de la fusion des options provenant de chaque
+panneau de cette fenêtre.
+
+Plusieurs options du menu Propriétés peuvent également être définies
+comme des ressources de fenêtres X dans un fichier de ressources de
+fenêtres X (ex : .Xdefaults) ou sur la ligne de commande du débogueur.
+Voir \k(Personnalisation) et \k(Appel du débogueur).
+
+^2^Panneaux
+^$161
+\k(Bouton Caractéristiques)
+Panneaux
+
+Grâce à la fenêtre à affichage instantané Panneaux, vous pouvez
+indiquer si vous préférez tronquer les colonnes des panneaux
+\k(Panneau des processus), \k(Panneau des piles), \k(Panneau des symboles) et
+\k(Panneau des événements) ou effectuer un retour automatique à la ligne,
+lorsque les informations contenues dépassent la largeur des colonnes.
+Par défaut, toutes ces colonnes sont tronquées.
+
+Les colonnes concernées sont la colonne Commande, figurant dans
+\k(Panneau des processus), les colonnes Paramètres et Emplacement figurant
+dans \k(Panneau des piles), les colonnes Nom, Type et Valeur figurant
+dans \k(Panneau des symboles) et les colonnes Processus et Liste de
+commandes figurant dans les deux parties de \k(Panneau des événements),
+
+Cette option est accessible systématiquement depuis le menu
+\k(Caractéristiques) de n'importe quelle fenêtre comprenant l'un
+des panneaux concernés.
+
+^2^Symboles
+^$162
+\k(Bouton Caractéristiques)
+Symboles
+
+La fenêtre à affichage instantané Symboles vous permet de définir le
+type de symboles que vous souhaitez afficher dans \k(Panneau des symboles).
+Voici les différents choix possibles :
+
+\tGlobal\tAffiche les symboles globaux définis dans l'objet
+\tactuel\t\t(fichier exécutable ou bibliothèque partagée).
+
+\tFichier\tAffiche les symboles statiques définis dans le\t\tfichier
+\tactuel.
+
+\tLocal\tAffiche les variables locales définies dans la fonction
+\t\tactuelle.
+
+\tDébogueur\tAffiche les variables intégrées du débogueur.
+
+\tUtilisateur\tAffiche les variables utilisateur gérées par le
+\t\tdébogueur.
+
+Vous pouvez combiner ces différentes catégories. Par défaut, les
+symboles locaux sont affichés.
+
+La fenêtre à affichage instantané Symboles est accessible
+systématiquement depuis le menu \k(Caractéristiques) de n'importe
+quelle fenêtre contenant un \k(Panneau des symboles). Les choix effectués
+n'affectent que le \k(groupe de fenêtres) parent.
+
+^2^Chemin d'accès source
+^$163
+\k(Bouton Caractéristiques)
+Chemin d'accès source
+
+La fenêtre à affichage instantané Chemin source vous permet de définir
+le chemin utilisé par le débogueur pour rechercher les fichiers
+source.
+
+Vous pouvez entrer plusieurs répertoires, à raison d'un par ligne.
+Vous pouvez aussi éditer un groupe de répertoires existants. La
+recherche est effectuée dans l'ordre de présentation des répertoires.
+
+Si vous choisissez l'option "Chemin propre au programme", ce chemin
+est utilisé uniquement dans le cadre du \k(programme^^processus et chemins d'exécution) sélectionné. Si
+vous choisissez l'option "Chemin global", le débogueur recherche
+le programme dans la liste des répertoires, s'il ne trouve pas le
+fichier dans le chemin propre au programme.
+
+Pour appeler la fenêtre Chemin source, cliquez sur SELECT au niveau de
+l'option Chemin source du menu \k(Caractéristiques) de n'importe quelle
+fenêtre contenant un \k(Panneau des commandes) ou un \k(Panneau des sources)
+ou configurée de façon à s'afficher automatiquement dès l'appel du
+débogueur (voir \k(Configuration)). Si vous avez affiché la fenêtre
+Chemin source depuis une fenêtre contenant un \k(Panneau des processus), les
+programmes sélectionnés éventuellement dans \k(Panneau des processus) sont
+affectés par l'option "Chemin propre au programme". Dans le cas
+inverse, le programme actuel est affecté.
+
+^2^Langage
+^$164
+\k(Bouton Caractéristiques)
+Langage
+
+La fenêtre à affichage instantané Langage vous permet de remplacer le
+langage par défaut utilisé pour l'évaluation des expressions. Le
+langage par défaut s'affiche dans la ligne intitulée "Langage source
+actuel". Pour connaître le langage par défaut, le débogueur consulte
+les informations figurant dans le fichier objet débogué. Si ce fichier
+ne fournit pas les informations requises, le langage C est pris par
+défaut.
+
+Lorsque vous choisissez de ne pas remplacer le langage (en
+sélectionnant l'option Aucun), le langage source actuel est utilisé
+pour l'évaluation des expressions. Lorsque vous choisissez d'utiliser
+le langage prioritaire C ou C++, ce dernier devient le langage actuel.
+
+Le langage actuel a une incidence sur l'évaluation des expressions
+figurant dans les fenêtres à affichage instantané \k(Agrandir),
+\k(Définir valeur), \k(Afficher valeur), \k(Afficher type) et
+\k(Arrêter), ainsi que sur les commandes entrées dans
+\k(Panneau des commandes). Pour plus d'informations sur le type d'incidence
+du langage, consultez la section correspondant à ce dernier :
+        \k(Support du langage C)
+        \k(Support du langage C++)
+
+Pour appeler l'option Langage, cliquez sur SELECT au niveau de
+l'option Langage du menu \k(Caractéristiques) de n'importe quelle
+fenêtre contenant un \k(Panneau des commandes) ou un \k(Panneau des sources) ou
+configurée de façon à être affichée automatiquement lors de l'appel du
+débogueur (voir \k(Configuration)). Le langage est une propriété
+globale et affecte l'ensemble des \d(groupe de fenêtres)s.
+
+^3^Support du langage C=Support de C
+^$1641
+\k(Bouton Caractéristiques)
+\k(Langage)
+Support du langage C
+
+Si C constitue le langage actuel, le programme debug assure
+l'évaluation de toutes les expressions légales en C ANSI, à
+l'exception de celles impliquant une expansion de macro-expressions,
+ou des déclarations de type structure, union ou énumération. Voici un
+exemple de déclaration dans une expression :
+\t((struct { int i; char c; } *)p)->c = 'a';
+
+^3^Support du langage C++=Support de C++
+^$1642
+\k(Bouton Caractéristiques)
+\k(Langage)
+Support du langage C++
+
+Le débogueur est capable de déterminer si un fichier objet a été
+compilé à l'aide de C++ Compilation System 2.0 ou d'un traducteur C++,
+cfront (version 2.1 ou 3.0), et de définir le langage actuel (affiché
+dans la fenêtre \k(Langage) sur C++. Les noms sont visualisés
+dans le langage source C++, et non pas tels qu'ils apparaissent dans
+le fichier objet.
+
+Si C++ constitue le langage actuel, le programme debug accepte un
+sous-groupe d'expressions en C++, parmi lesquelles :
+
+     o  Toutes les expressions acceptées lorsque C constitue le langage actuel,
+     o  Appels adressés à des fonctions membre, dont font partie les fonctions membre virtuelles
+        et les fonctions membre statiques,
+     o  Appels adressés à des fonctions surchargées,
+     o  Expressions utilisant des noms de types comme typedefs,
+     o  Expressions utilisant des fonctions opérateur surchargées et
+     o  Expressions accédant aux membres des classes grâce au pointeur
+ \timplicite "this", lorsque le processus ou le chemin d'exécution
+\test tarrêté dans une fonction associée aux membres des classes.
+
+Les expressions peuvent être entrées dans les fenêtres
+\k(Définir valeur), \k(Afficher valeur), \k(Afficher type) et
+\k(Arrêter), ainsi que dans les \k(Panneau des commandes).
+
+Si un pointeur désigne un objet correspondant à une classe de base et
+doté de fonctions virtuelles, et si le débogueur peut déterminer que
+le type de l'objet désigné correspond à une classe résultant de la
+classe de base, la fenêtre \k(Afficher type) affiche à la fois la
+classe de base et la classe dérivée. Les fenêtres \k(Afficher valeur)
+et \k(Agrandir) affichent également l'objet par rapport au type
+dérivé.
+
+Lors de l'impression du contenu d'une structure, \k(Afficher valeur)
+et \k(Agrandir) affichent les membres de classes statiques, en
+mentionnant bien ce statut. Remarque : \k(Panneau des symboles) n'affiche
+pas les membres de classes statiques.
+
+Si les fenêtres \k(Arrêter) ou \k(Arrêt sur fonction) sont
+utilisées, les points de rupture peuvent être définis sur :
+
+     o  Fonctions associées aux membres des classes, telles que les fonctions
+\tconstructrices ou destructrices et les fonctions de conversion,
+     o  Fonctions opérateur surchargées, et
+     o  Fonctions surchargées, utilisant le prototype complet, ou
+     o  Fonctions surchargées, sans les informations sur le prototype.
+\tDans ce cas, le débogueur affiche une liste de fonctions,
+\tet vous demande de sélectionner l'un ou l'ensemble de ces
+\téléments.
+
+Un \d(événement stop) peut également être créé sur une combinaison
+associant un objet spécifique et une fonction membre, en utilisant la
+syntaxe "pointeur->fonction" ou "objet.fonction". Le débogueur arrête
+le processus ou chemin d'exécution dès son entrée dans la fonction
+uniquement si le pointeur "this" correspond à l'objet indiqué. Si la
+fonction est une fonction virtuelle, debug définit le point de rupture
+au niveau de la fonction prioritaire adéquate. Voici des exemples
+d'expressions pouvant être entrées dans la fenêtre \k(Arrêter):
+        C::f(int)
+        C::C
+        C::~C
+        C::operator int()
+        C::operator+
+        ptr->f(char *)
+
+^2^Granularité
+^$165
+\k(Bouton Caractéristiques)
+Granularité
+
+La fenêtre à affichage instantané Granularité vous permet d'indiquer
+le mode de fonctionnement du débogueur par rapport aux programmes, aux
+processus et aux chemins d'exécution.
+
+Un \d(groupe de fenêtres) dispose à la fois d'un \d(processus ou chemin d'exécution actuel) et
+d'un \d(programme actuel)(le programme actuel correspond toujours au
+programme parent du processus ou du chemin d'exécution actuel). Le
+programme que vous exécutez à un moment donné dépend de l'option
+sélectionnée : "Chemin uniquement", "Processus parent" ou "Programme
+parent". Par défaut, la plupart des commandes
+(\k(Etape),\k(Afficher valeur), etc.) s'appliquent au chemin
+d'exécution, ou bien au processus si ce dernier n'offre aucun chemin
+d'éxécution ; en revanche, les commandes chargées de créer les
+événements s'appliquent au programme. La raison pour laquelle les
+événements sont définis dans le programme et non dans le processus ou
+dans le chemin d'exécution est la suivante : si vous devez recréer le
+programme, ou si le processus se divise en fourches (fork), le nouveau
+processus héritera de tous les événements précédemment définis dans
+l'ancien processus. Si vous définissez un événement uniquement dans le
+processus, tous les chemins d'exécution générés par ce processus
+hériteront de l'événement ; si en revanche le processus se divise en
+fourches (fork), cet événement ne sera pas transmis au nouveau
+processus et disparaîtra dès la fin du processus. Si vous définissez
+un événement dans un chemin spécifique, il ne sera reporté dans aucun
+autre processus ou chemin, et disparaîtra dès la fin de l'exécution de
+ce chemin. Vous pouvez définir pour les commandes associées aux
+événements une granularité différente de celles des autres commandes.
+La granularité définie pour les commandes ne correpondant pas à des
+événements s'applique également aux éléments sélectionnés dans
+\k(Panneau des processus).
+
+Les commandes permettant de créer des événements sont les suivantes :
+\k(Arrêter), \k(Arrêt sur fonction), \k(Définir point de surveillance),
+\k(Définir point de rupture), \k(Supprimer point de rupture), \k(Signal),
+\k(Syscall) et \k(A l'arrêt).
+
+Pour appeler l'option Granularité, cliquez sur SELECT au niveau de
+l'option Granularité du menu \k(Caractéristiques) de n'importe quelle
+fenêtre contenant un (Panneau des processus),
+\k(Panneau des sources) ou \k(Panneau des événements) ou
+configurée de façon à s'afficher automatiquement lors de
+l'appel du débogueur (voir \k(Configuration)).
+La granularité sélectionnée n'affecte que le \d(groupe de fenêtres)
+parent.
+
+^2^Opération de sortie
+^$166
+\k(Bouton Caractéristiques)
+Opération de sortie
+
+La fenêtre à affichage instantané Action de sortie vous permet
+d'indiquer les actions que le débogueur doit exécuter lorsqu'un
+événement survient, lorsqu'un chemin d'exécution change d'état ou
+lorsqu'un processus/chemin contrôlé génère un résultat. La fenêtre
+comprend trois séries de boutons, correspondant respectivement aux
+événements liés au processus et aux utilisateurs, aux changements
+d'état du chemin d'exécution et aux E/S de processus.
+
+Les options possibles en ce qui concerne les événements et les E/S de
+processus sont les suivantes :
+
+    o Ouvrir et afficher : le débogueur affiche une fenêtre
+      contenant\tun \k(Panneau des commandes), où la notification de
+      l'événement ou la sortie du processus s'affiche dans le
+      \k(Panneau des transcriptions).
+
+    o Bip
+
+    o Champ d'alerte : le débogueur affiche un message précisant les
+      raisons de l'incident.
+
+    o Aucune action : le débogueur n'entreprend aucune action
+      particulière.
+
+Par défaut, le débogueur émet un signal sonore dès qu'un événement
+survient, car la notification de l'événement s'affiche également dans
+la partie inférieure des fenêtres principales.
+
+Lorsqu'un processus dont la sortie est collectée (voir
+\k(Créer)) génère un résultat, Le système effectue par
+défaut l'action "Ouvrir et afficher" (le débogueur affiche le panneau
+Commande de façon à vous indiquer le résultat obtenu). Remarque : ce
+cas ne s'applique pas aux processus dont la sortie n'est pas collectée
+; le débogueur n'est pas en mesure d'indiquer à quel moment ces
+processus génèrent un résultat.
+
+Un chemin d'exécution peut changer plusieurs fois d'état au cours de
+son cycle de vie. Ainsi, un chemin multiplexé peut être déprogrammé
+d'un \d(LWP), et peut être sélectionné ultérieurement par
+un autre \d(LWP), ou peut être mis en suspens par un
+autre chemin, puis être repris par un chemin encore différent.
+
+Les différentes actions possibles en cas de changement d'état d'un
+chemin d'exécution sont les suivantes :
+
+    o Bip
+
+    o Arrêter : les chemins concernés sont interrompus et doivent être
+      relancés expressément.
+
+A l'inverse de celles associées aux événements et aux E/S de
+processus, ces actions peuvent être cumulées. En d'autres termes, vous
+pouvez sélectionner à la fois Bip et Arrêter. Par défaut, les deux
+options sont sélectionnées, et les actions suivantes sont entreprises
+dans les cas mentionnés ci-après :
+
+    o Un chemin est créé : émission d'un signal sonore, affichage d'un
+      message indiquant la création du chemin, arrêt du chemin à
+      l'origine de la création, ainsi que du nouveau chemin, s'il n'a
+      pas été créé avec le drapeau THR_SUSPENDED ; dans le cas
+      inverse, le chemin suspendu ne peut être exécuté qu'après avoir
+      été relancé expressément.
+
+    o Un chemin est ôté du processus LWP : émission d'un signal
+      sonore, le message "ôté du processus LWP" s'affiche.
+
+    o Un chemin ôté du processus LWP sélectionne un processus LWP :
+      émission d'un signal sonore, le message "sélection d'un
+      processus LWP" s'affiche, et le chemin est arrêté.
+
+    o Un chemin est suspendu : émission d'un signal sonore, le message
+      "suspendu" s'affiche.
+
+    o Un chemin suspendu est relancé : émission d'un signal sonore, le
+      message "relancer" s'affiche, et le chemin est arrêté.
+
+    o Sortie du chemin d'exécution : émission d'un signal sonore, le
+      message "sortie" s'affiche.
+
+Pour appeler l'option Action de sortie, cliquez sur SELECT au niveau
+de l'option Action de sortie du menu \k(Caractéristiques) de n'importe
+quelle fenêtre contenant un \k(Panneau des commandes) ou configurée de façon
+à s'afficher automatiquement lors de l'appel du débogueur (voir
+\k(Configuration).
+
+^2^Animation
+^$167
+\k(Bouton Caractéristiques)
+Animation
+
+La fenêtre à affichage instantané Animation vous permet de gérer le
+délai s'écoulant entre chaque étape de l'exécution, lorsque le
+processus ou le chemin est animé. Pour animer un processus ou un
+chemin, sélectionnez l'option \k(Animer source) du menu
+\k(Contrôle) d'une fenêtre contenant un \k(Panneau des sources) ou
+l'option \k(Animer désassemblage) du menu \k(Contrôle) d'une fenêtre
+contenant un \k(Panneau de désassemblage). Lorsque le processus ou le chemin
+est animé, le débogueur exécute chaque étape du processus ou du chemin
+de façon continue, en mettant en surbrillance chaque instruction
+exécutée au fur et à mesure. Si vous jugez que le rythme d'exécution
+est trop rapide et ne permet pas de suivre facilement les opérations,
+vous pouvez le ralentir en paramétrant un délai entre chaque étape.
+
+Cette fenêtre affiche une barre de défilement dont les deux valeurs
+extrêmes correspondent à "délai nul" et "délai d'une seconde". Lorsque
+vous positionnez le curseur de défilement entre ces deux extrémités,
+vous paramétrez un délai correspondant à une fraction de seconde.
+
+Remarque : le délai nécessaire au débogueur pour éxécuter chaque étape
+du processus ou du chemin et mettre à jour l'affichage est
+relativement long. Selon les caractéristiques de votre système, la
+durée totale de cette opération peut être considérable, même si aucun
+délai n'a été paramétré. Ce délai correspond uniquement à un délai
+minimal entre chaque étape. Si le temps d'exécution est supérieur au
+délai spécifié, le débogueur n'ajoute aucun délai supplémentaire.
+

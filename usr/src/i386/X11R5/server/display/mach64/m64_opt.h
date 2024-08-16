@@ -1,0 +1,370 @@
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1993 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+#pragma ident	"@(#)mach64:mach64/m64_opt.h	1.11"
+
+#if (! defined(__M64_OPT_INCLUDED__))
+
+#define __M64_OPT_INCLUDED__
+
+
+
+#include "stdenv.h"
+#include "global.h"
+
+
+enum m64_options_si_interface_version
+{
+	M64_OPTIONS_SI_INTERFACE_VERSION_1_0,
+	M64_OPTIONS_SI_INTERFACE_VERSION_1_1,
+	M64_OPTIONS_SI_INTERFACE_VERSION_AUTO_CONFIGURE,
+	m64_options_si_interface_version_end_enumeration
+};
+
+enum m64_options_framebuffer_access_for_core_server
+{
+	M64_OPTIONS_FRAMEBUFFER_ACCESS_FOR_CORE_SERVER_YES,
+	M64_OPTIONS_FRAMEBUFFER_ACCESS_FOR_CORE_SERVER_NO,
+	m64_options_framebuffer_access_for_core_server_end_enumeration
+};
+
+enum m64_options_cursor_type
+{
+	M64_OPTIONS_CURSOR_TYPE_HARDWARE_CURSOR,
+	M64_OPTIONS_CURSOR_TYPE_SOFTWARE_CURSOR,
+	m64_options_cursor_type_end_enumeration
+};
+
+enum m64_options_monitor_sync_type
+{
+	M64_OPTIONS_MONITOR_SYNC_TYPE_COMPOSITE_SYNC,
+	M64_OPTIONS_MONITOR_SYNC_TYPE_SYNC_ON_GREEN,
+	M64_OPTIONS_MONITOR_SYNC_TYPE_SEPARATE_SYNC,
+	m64_options_monitor_sync_type_end_enumeration
+};
+
+enum m64_options_vsync_polarity
+{
+	M64_OPTIONS_VSYNC_POLARITY_POSITIVE,
+	M64_OPTIONS_VSYNC_POLARITY_NEGATIVE,
+	M64_OPTIONS_VSYNC_POLARITY_DEFAULT,
+	m64_options_vsync_polarity_end_enumeration
+};
+
+enum m64_options_hsync_polarity
+{
+	M64_OPTIONS_HSYNC_POLARITY_POSITIVE,
+	M64_OPTIONS_HSYNC_POLARITY_NEGATIVE,
+	M64_OPTIONS_HSYNC_POLARITY_DEFAULT,
+	m64_options_hsync_polarity_end_enumeration
+};
+
+enum m64_options_revision_number
+{
+	M64_OPTIONS_REVISION_NUMBER_AUTO_DETECT,
+	M64_OPTIONS_REVISION_NUMBER_0,
+	M64_OPTIONS_REVISION_NUMBER_1,
+	M64_OPTIONS_REVISION_NUMBER_2,
+	m64_options_revision_number_end_enumeration
+};
+
+enum m64_options_enable_blocked_memory_write
+{
+	M64_OPTIONS_ENABLE_BLOCKED_MEMORY_WRITE_YES,
+	M64_OPTIONS_ENABLE_BLOCKED_MEMORY_WRITE_NO,
+	M64_OPTIONS_ENABLE_BLOCKED_MEMORY_WRITE_DEFAULT,
+	m64_options_enable_blocked_memory_write_end_enumeration
+};
+
+enum m64_options_clock_chip_name
+{
+	M64_OPTIONS_CLOCK_CHIP_NAME_USE_BUILTIN_DEFAULT,
+	m64_options_clock_chip_name_end_enumeration
+};
+
+enum m64_options_memory_aperture_type
+{
+	M64_OPTIONS_MEMORY_APERTURE_TYPE_USE_BUILTIN_DEFAULT,
+	M64_OPTIONS_MEMORY_APERTURE_TYPE_SMALL_DUAL_PAGED,
+	M64_OPTIONS_MEMORY_APERTURE_TYPE_BIG_LINEAR,
+	m64_options_memory_aperture_type_end_enumeration
+};
+
+enum m64_options_memory_aperture_size
+{
+	M64_OPTIONS_MEMORY_APERTURE_SIZE_USE_4MB_APERTURE,
+	M64_OPTIONS_MEMORY_APERTURE_SIZE_USE_8MB_APERTURE,
+	m64_options_memory_aperture_size_end_enumeration
+};
+
+enum m64_options_dac_name
+{
+	M64_OPTIONS_DAC_NAME_AUTO_DETECT,
+	M64_OPTIONS_DAC_NAME_ATI68875,
+	M64_OPTIONS_DAC_NAME_BT476,
+	M64_OPTIONS_DAC_NAME_BT481,
+	M64_OPTIONS_DAC_NAME_ATI68860,
+	M64_OPTIONS_DAC_NAME_STG1700,
+	M64_OPTIONS_DAC_NAME_SC15021,
+	M64_OPTIONS_DAC_NAME_STG1702,
+	m64_options_dac_name_end_enumeration
+};
+
+enum m64_options_dac_rgb_width
+{
+	M64_OPTIONS_DAC_RGB_WIDTH_6,
+	M64_OPTIONS_DAC_RGB_WIDTH_8,
+	M64_OPTIONS_DAC_RGB_WIDTH_DEFAULT,
+	m64_options_dac_rgb_width_end_enumeration
+};
+
+enum m64_options_dac_32_bit_color_mode
+{
+	M64_OPTIONS_DAC_32_BIT_COLOR_MODE_RGBA,
+	M64_OPTIONS_DAC_32_BIT_COLOR_MODE_ABGR,
+	M64_OPTIONS_DAC_32_BIT_COLOR_MODE_ARGB,
+	M64_OPTIONS_DAC_32_BIT_COLOR_MODE_DEFAULT,
+	m64_options_dac_32_bit_color_mode_end_enumeration
+};
+
+enum m64_options_dac_16_bit_color_mode
+{
+	M64_OPTIONS_DAC_16_BIT_COLOR_MODE_555,
+	M64_OPTIONS_DAC_16_BIT_COLOR_MODE_565,
+	m64_options_dac_16_bit_color_mode_end_enumeration
+};
+
+
+#define	M64_OPTIONS_SCREEN_VISUAL_LIST_STATIC_GRAY	1
+#define	M64_OPTIONS_SCREEN_VISUAL_LIST_GRAY_SCALE	2
+#define	M64_OPTIONS_SCREEN_VISUAL_LIST_STATIC_COLOR	4
+#define	M64_OPTIONS_SCREEN_VISUAL_LIST_PSEUDO_COLOR	8
+#define	M64_OPTIONS_SCREEN_VISUAL_LIST_TRUE_COLOR	16
+#define	M64_OPTIONS_SCREEN_VISUAL_LIST_DIRECT_COLOR	32
+
+
+#define	M64_OPTIONS_RECTFILL_OPTIONS_USE_SOLID_FILL_RECT	1
+#define	M64_OPTIONS_RECTFILL_OPTIONS_USE_TILE_FILL_RECT	2
+#define	M64_OPTIONS_RECTFILL_OPTIONS_USE_TILE_SHRINK	4
+#define	M64_OPTIONS_RECTFILL_OPTIONS_USE_STIPPLE_FILL_RECT	8
+#define	M64_OPTIONS_RECTFILL_OPTIONS_USE_MONO_PATTERN	16
+#define	M64_OPTIONS_RECTFILL_OPTIONS_USE_OFFSCREEN_MEMORY	32
+
+
+#define	M64_OPTIONS_BITBLT_OPTIONS_USE_SS_BITBLT	1
+#define	M64_OPTIONS_BITBLT_OPTIONS_USE_MS_BITBLT	2
+#define	M64_OPTIONS_BITBLT_OPTIONS_USE_SM_BITBLT	4
+#define	M64_OPTIONS_BITBLT_OPTIONS_USE_MS_STPLBLT	8
+
+
+#define	M64_OPTIONS_LINEDRAW_OPTIONS_USE_LINE_DRAW	1
+#define	M64_OPTIONS_LINEDRAW_OPTIONS_USE_LINE_RECTANGLES	2
+#define	M64_OPTIONS_LINEDRAW_OPTIONS_USE_SEGMENT_DRAW	4
+#define	M64_OPTIONS_LINEDRAW_OPTIONS_USE_DASHED_LINE	8
+
+
+#define	M64_OPTIONS_SPANSFILL_OPTIONS_USE_SOLID_FILL	1
+#define	M64_OPTIONS_SPANSFILL_OPTIONS_USE_TILE_FILL	2
+#define	M64_OPTIONS_SPANSFILL_OPTIONS_USE_STIPPLE_FILL	4
+
+
+#define	M64_OPTIONS_POINTDRAW_OPTIONS_USE_PLOT_POINT	1
+
+
+#define	M64_OPTIONS_FONTDRAW_OPTIONS_DRAW_NON_TERMINAL_FONTS	1
+#define	M64_OPTIONS_FONTDRAW_OPTIONS_DRAW_TERMINAL_FONTS	2
+#define	M64_OPTIONS_FONTDRAW_OPTIONS_DRAW_PACKED_TERMINAL_FONTS	4
+#define	M64_OPTIONS_FONTDRAW_OPTIONS_USE_OFFSCREEN_MEMORY	8
+
+
+#define	M64_OPTIONS_ARCDRAW_OPTIONS_DRAW_ONE_BIT_ARCS	1
+
+
+
+
+struct m64_options_structure
+{
+	int arc_cache_size;
+	unsigned int arcdraw_options;
+	unsigned int bitblt_options;
+	enum m64_options_clock_chip_name clock_chip_name;
+	int crtc_display_fifo_low_watermark;
+	char *crtc_parameters;
+	int crtc_start_offset;
+	char *cursor_max_size;
+	enum m64_options_cursor_type cursor_type;
+	enum m64_options_dac_16_bit_color_mode dac_16_bit_color_mode;
+	enum m64_options_dac_32_bit_color_mode dac_32_bit_color_mode;
+	int dac_access_delay_count;
+	int dac_max_frequency;
+	enum m64_options_dac_name dac_name;
+	enum m64_options_dac_rgb_width dac_rgb_width;
+	enum m64_options_enable_blocked_memory_write enable_blocked_memory_write;
+	unsigned int fontdraw_options;
+	enum m64_options_framebuffer_access_for_core_server framebuffer_access_for_core_server;
+	char *glyph_cache_size;
+	int graphics_engine_loop_timeout_count;
+	int graphics_engine_micro_delay_count;
+	int host_data_transfer_blocking_factor;
+	enum m64_options_hsync_polarity hsync_polarity;
+	unsigned int linedraw_options;
+	int max_number_of_glyphs_in_downloadable_font;
+	int maximum_offscreen_downloadable_bitmap_height;
+	int maximum_offscreen_downloadable_bitmap_width;
+	enum m64_options_memory_aperture_size memory_aperture_size;
+	enum m64_options_memory_aperture_type memory_aperture_type;
+	enum m64_options_monitor_sync_type monitor_sync_type;
+	int number_of_downloadable_cursors;
+	int number_of_downloadable_fonts;
+	int number_of_graphics_states;
+	int offscreen_tile_padded_height;
+	int offscreen_tile_padded_width;
+	int omm_full_coalesce_watermark;
+	int omm_hash_list_size;
+	int omm_horizontal_constraint;
+	char *omm_named_allocation_list;
+	int omm_neighbour_list_increment;
+	int omm_vertical_constraint;
+	unsigned int pointdraw_options;
+	unsigned int rectfill_options;
+	enum m64_options_revision_number revision_number;
+	unsigned int screen_visual_list;
+	enum m64_options_si_interface_version si_interface_version;
+	int small_stipple_conversion_threshold;
+	unsigned int spansfill_options;
+	char *static_colormap_description_file;
+	char *stipple_best_size;
+	char *tile_best_size;
+	int verbose_startup;
+	enum m64_options_vsync_polarity vsync_polarity;
+	int vt_switch_save_lines;
+
+};
+
+/*
+ * Names of the option defaults
+ */
+
+#define M64_OPTIONS_ARC_CACHE_SIZE_DEFAULT\
+	16
+#define M64_OPTIONS_ARCDRAW_OPTIONS_DEFAULT\
+	( M64_OPTIONS_ARCDRAW_OPTIONS_DRAW_ONE_BIT_ARCS )
+#define M64_OPTIONS_BITBLT_OPTIONS_DEFAULT\
+	( M64_OPTIONS_BITBLT_OPTIONS_USE_SS_BITBLT |M64_OPTIONS_BITBLT_OPTIONS_USE_MS_BITBLT |M64_OPTIONS_BITBLT_OPTIONS_USE_SM_BITBLT |M64_OPTIONS_BITBLT_OPTIONS_USE_MS_STPLBLT )
+#define M64_OPTIONS_CLOCK_CHIP_NAME_DEFAULT\
+	M64_OPTIONS_CLOCK_CHIP_NAME_USE_BUILTIN_DEFAULT
+#define M64_OPTIONS_CRTC_DISPLAY_FIFO_LOW_WATERMARK_DEFAULT\
+	0
+#define M64_OPTIONS_CRTC_PARAMETERS_DEFAULT 0
+#define M64_OPTIONS_CRTC_START_OFFSET_DEFAULT\
+	0
+#define M64_OPTIONS_CURSOR_MAX_SIZE_DEFAULT 0
+#define M64_OPTIONS_CURSOR_TYPE_DEFAULT\
+	M64_OPTIONS_CURSOR_TYPE_HARDWARE_CURSOR
+#define M64_OPTIONS_DAC_16_BIT_COLOR_MODE_DEFAULT\
+	M64_OPTIONS_DAC_16_BIT_COLOR_MODE_565
+#define M64_OPTIONS_DAC_32_BIT_COLOR_MODE_DEFAULT\
+	M64_OPTIONS_DAC_32_BIT_COLOR_MODE_DEFAULT
+#define M64_OPTIONS_DAC_ACCESS_DELAY_COUNT_DEFAULT\
+	10000
+#define M64_OPTIONS_DAC_MAX_FREQUENCY_DEFAULT\
+	0
+#define M64_OPTIONS_DAC_NAME_DEFAULT\
+	M64_OPTIONS_DAC_NAME_AUTO_DETECT
+#define M64_OPTIONS_DAC_RGB_WIDTH_DEFAULT\
+	M64_OPTIONS_DAC_RGB_WIDTH_6
+#define M64_OPTIONS_ENABLE_BLOCKED_MEMORY_WRITE_DEFAULT\
+	M64_OPTIONS_ENABLE_BLOCKED_MEMORY_WRITE_DEFAULT
+#define M64_OPTIONS_FONTDRAW_OPTIONS_DEFAULT\
+	( M64_OPTIONS_FONTDRAW_OPTIONS_DRAW_NON_TERMINAL_FONTS |M64_OPTIONS_FONTDRAW_OPTIONS_DRAW_TERMINAL_FONTS |M64_OPTIONS_FONTDRAW_OPTIONS_DRAW_PACKED_TERMINAL_FONTS |M64_OPTIONS_FONTDRAW_OPTIONS_USE_OFFSCREEN_MEMORY )
+#define M64_OPTIONS_FRAMEBUFFER_ACCESS_FOR_CORE_SERVER_DEFAULT\
+	M64_OPTIONS_FRAMEBUFFER_ACCESS_FOR_CORE_SERVER_NO
+#define M64_OPTIONS_GLYPH_CACHE_SIZE_DEFAULT\
+	"64X64"
+#define M64_OPTIONS_GRAPHICS_ENGINE_LOOP_TIMEOUT_COUNT_DEFAULT\
+	200000
+#define M64_OPTIONS_GRAPHICS_ENGINE_MICRO_DELAY_COUNT_DEFAULT\
+	40
+#define M64_OPTIONS_HOST_DATA_TRANSFER_BLOCKING_FACTOR_DEFAULT\
+	16
+#define M64_OPTIONS_HSYNC_POLARITY_DEFAULT\
+	M64_OPTIONS_HSYNC_POLARITY_DEFAULT
+#define M64_OPTIONS_LINEDRAW_OPTIONS_DEFAULT\
+	( M64_OPTIONS_LINEDRAW_OPTIONS_USE_LINE_DRAW |M64_OPTIONS_LINEDRAW_OPTIONS_USE_SEGMENT_DRAW |M64_OPTIONS_LINEDRAW_OPTIONS_USE_LINE_RECTANGLES |M64_OPTIONS_LINEDRAW_OPTIONS_USE_DASHED_LINE )
+#define M64_OPTIONS_MAX_NUMBER_OF_GLYPHS_IN_DOWNLOADABLE_FONT_DEFAULT\
+	256
+#define M64_OPTIONS_MAXIMUM_OFFSCREEN_DOWNLOADABLE_BITMAP_HEIGHT_DEFAULT\
+	256
+#define M64_OPTIONS_MAXIMUM_OFFSCREEN_DOWNLOADABLE_BITMAP_WIDTH_DEFAULT\
+	256
+#define M64_OPTIONS_MEMORY_APERTURE_SIZE_DEFAULT\
+	M64_OPTIONS_MEMORY_APERTURE_SIZE_USE_4MB_APERTURE
+#define M64_OPTIONS_MEMORY_APERTURE_TYPE_DEFAULT\
+	M64_OPTIONS_MEMORY_APERTURE_TYPE_USE_BUILTIN_DEFAULT
+#define M64_OPTIONS_MONITOR_SYNC_TYPE_DEFAULT\
+	M64_OPTIONS_MONITOR_SYNC_TYPE_COMPOSITE_SYNC
+#define M64_OPTIONS_NUMBER_OF_DOWNLOADABLE_CURSORS_DEFAULT\
+	1
+#define M64_OPTIONS_NUMBER_OF_DOWNLOADABLE_FONTS_DEFAULT\
+	17
+#define M64_OPTIONS_NUMBER_OF_GRAPHICS_STATES_DEFAULT\
+	4
+#define M64_OPTIONS_OFFSCREEN_TILE_PADDED_HEIGHT_DEFAULT\
+	32
+#define M64_OPTIONS_OFFSCREEN_TILE_PADDED_WIDTH_DEFAULT\
+	128
+#define M64_OPTIONS_OMM_FULL_COALESCE_WATERMARK_DEFAULT\
+	2
+#define M64_OPTIONS_OMM_HASH_LIST_SIZE_DEFAULT\
+	512
+#define M64_OPTIONS_OMM_HORIZONTAL_CONSTRAINT_DEFAULT\
+	0
+#define M64_OPTIONS_OMM_NAMED_ALLOCATION_LIST_DEFAULT\
+	""
+#define M64_OPTIONS_OMM_NEIGHBOUR_LIST_INCREMENT_DEFAULT\
+	20
+#define M64_OPTIONS_OMM_VERTICAL_CONSTRAINT_DEFAULT\
+	0
+#define M64_OPTIONS_POINTDRAW_OPTIONS_DEFAULT\
+	( M64_OPTIONS_POINTDRAW_OPTIONS_USE_PLOT_POINT )
+#define M64_OPTIONS_RECTFILL_OPTIONS_DEFAULT\
+	( M64_OPTIONS_RECTFILL_OPTIONS_USE_SOLID_FILL_RECT |M64_OPTIONS_RECTFILL_OPTIONS_USE_TILE_FILL_RECT |M64_OPTIONS_RECTFILL_OPTIONS_USE_OFFSCREEN_MEMORY |M64_OPTIONS_RECTFILL_OPTIONS_USE_STIPPLE_FILL_RECT |M64_OPTIONS_RECTFILL_OPTIONS_USE_MONO_PATTERN |M64_OPTIONS_RECTFILL_OPTIONS_USE_TILE_SHRINK )
+#define M64_OPTIONS_REVISION_NUMBER_DEFAULT\
+	M64_OPTIONS_REVISION_NUMBER_AUTO_DETECT
+#define M64_OPTIONS_SCREEN_VISUAL_LIST_DEFAULT 0
+#define M64_OPTIONS_SI_INTERFACE_VERSION_DEFAULT\
+	M64_OPTIONS_SI_INTERFACE_VERSION_AUTO_CONFIGURE
+#define M64_OPTIONS_SMALL_STIPPLE_CONVERSION_THRESHOLD_DEFAULT\
+	32
+#define M64_OPTIONS_SPANSFILL_OPTIONS_DEFAULT\
+	( M64_OPTIONS_SPANSFILL_OPTIONS_USE_SOLID_FILL )
+#define M64_OPTIONS_STATIC_COLORMAP_DESCRIPTION_FILE_DEFAULT 0
+#define M64_OPTIONS_STIPPLE_BEST_SIZE_DEFAULT\
+	"64X64"
+#define M64_OPTIONS_TILE_BEST_SIZE_DEFAULT\
+	"64X64"
+#define M64_OPTIONS_VERBOSE_STARTUP_DEFAULT\
+	0
+#define M64_OPTIONS_VSYNC_POLARITY_DEFAULT\
+	M64_OPTIONS_VSYNC_POLARITY_DEFAULT
+#define M64_OPTIONS_VT_SWITCH_SAVE_LINES_DEFAULT\
+	0
+
+
+#if (defined(__DEBUG__))
+extern boolean	m64_options_debug ;
+#endif
+
+
+extern struct m64_options_structure *
+m64_options_parse (struct m64_options_structure *option_struct_p,
+			   const char *option_string_p)
+;
+
+
+#endif

@@ -1,0 +1,49 @@
+.bottom
+Appuyez sur "ENTREE" pour continuer :
+#.form
+#ENTER
+.pageno
+Page %d de %d
+.ul
+Installation du Set
+.hhelp_ban
+Aide sur l'aide et sur l'emploi de ce programme
+.helpbanner
+Aide sur l'installation du set
+.ur
+Résultats de l'installation
+.ll
+#Please make a selection.  Press F1 for Help.
+.lr
+F1=Aide
+.help
+Pour obtenir des instructions détaillées, vous pouvez à tout moment
+appuyer sur la touche F1 (ou sur "?").
+
+Les écrans précédents affichaient le statut de l'installation de tous
+les paquets sélectionnés dans ce set.  
+
+Les informations relatives aux installations incorrectes figurent dans
+les messages adressés par courrier électronique à l'ID d'ouverture de
+session "racine".
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && echo "Les fichiers de configuration système n'ont pu être combinés pour\nles paquets suivants :"`
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && echo "    "${MRGFAILLIST}`
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && cat $MRGFAILMSG`
+`[ "${MRGFAILLIST}" ] && echo " "`
+`[ "${MRGFAILLIST}" ] && cat $MRGFAILFILES`
+`[ "${NOMRGLIST}" ] && echo " "`
+`[ "${NOMRGLIST}" ] && echo "Les fichiers de configuration système correspondant aux paquets\nsuivants n'ont pu être combinés :"`
+`[ "${NOMRGLIST}" ] && echo " "`
+`[ "${NOMRGLIST}" ] && echo "    "${NOMRGLIST}`
+`[ "${NOMRGLIST}" ] && echo " "`
+`[ "${NOMRGLIST}" ] && cat $NOMRGMSG`
+.helpinst
+ECHAP=Quitter l'aide F1=Instructions 1=Page suiv. 2=Page préc.
+.hhelpinst
+ECHAP=Quitter les instructions 1=Page suiv. 2=Page préc.
+.working
+Opération en cours...
+.top

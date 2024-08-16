@@ -1,0 +1,1383 @@
+REM
+REM	  		 Compaq Insight Base System Agent
+REM		    EISA Product Database File (CPQBSSA.TXT)
+REM		    ----------------------------------------
+REM
+REM
+REM		Copyright 1992, 1993 Compaq Computer Corporation. 
+REM				All rights reserved.
+REM
+REM		The information in this file is subject to change
+REM		without notice.
+REM		
+REM		COMPAQ COMPUTER CORPORATION SHALL NOT BE LIABLE
+REM		FOR TECHNICAL OR EDITORIAL ERRORS OR OMISSIONS 
+REM		CONTAINED HEREIN; NOR FOR INCIDENTAL OR
+REM		CONSEQUENTIAL DAMAGES RESULTING FROM THE FURNISHING,
+REM		PERFORMANCE, OR USE OF THIS MATERIAL.
+REM
+REM		Product names mentioned herein are for identification
+REM		purposes only and may be trademarks and/or registered
+REM		trademarks of their respective companies.
+REM
+
+REM
+REM	Introduction
+REM	---------------
+REM
+REM	This file contains a list of EISA board names and Compaq product
+REM	names to be used with the Compaq Insight Base System Agent.  
+REM	While this file is not required for the Agent to operate, management 
+REM	consoles (such as Compaq Insight Manager) depend on the information 
+REM	provided by this file to provide an accurate view of the server.
+REM	
+REM	The information in this file is divided into three sections:
+REM	
+REM	1.  Section 1 contains a list of EISA system or expansion board
+REM	    manufacturers.  This list is used to match EISA components
+REM	    found in a system with the manufacturer.  If there is no entry 
+REM	    for a particular EISA product (for instance, a new product), 
+REM	    the Agent will only be able to identify the product's manufacturer
+REM	    and EISA product ID.
+REM	
+REM	    NOTE: If the Agent does not find a manufacturer entry, it will
+REM	          not search for more information about that product.
+REM		  Therefore, any "BOARD" entry must have a corresponding
+REM		  "COMPANY" entry.
+REM	
+REM	2.  Section 2 contains a list of EISA system or expansion board 
+REM	    product names.  This list is used to identify specific ISA or 
+REM	    EISA products installed in the server.  Once the Agent
+REM	    has identified the product's manufacturer (from section 1), 
+REM	    it will search this section looking for a product name whose 
+REM	    EISA ID matches the one found in the server.
+REM	
+REM	3.  Section 3 contains a list of Compaq system names.  Using the 
+REM	    EISA ID of the Compaq system board, and the Compaq processor 
+REM	    board, the Agent will identify the Compaq system name for the 
+REM	    NetWare server.  For non-EISA Compaq machines, a value 
+REM	    retrieved from the PC's configuration memory is used to 
+REM	    identify the machine.
+REM	
+REM	Instructions for adding your own entries to this file are
+REM	given at the beginning of each section.  You can add comments
+REM	to this file by using the "REM" statement at the beginning
+REM	of any line.  The rest of the line will be treated as a comment
+REM	(or REMark), and will not interfere with the processing of 
+REM	the file.
+REM	
+
+REM
+REM	Section 1: EISA Product Manufacturers
+REM	----------------------------------------
+REM 	
+REM	The following is a list of EISA product manufacturers.  
+REM	New entries may be added anywhere in the list, but it
+REM	is recommended that you add entries alphabetically.
+REM
+REM	Each entry must be contained on a single line, and must 
+REM	be in the following format:
+REM
+REM	COMPANY	xxx	<Company name>
+REM
+REM	Where "COMPANY" is the statement keyword, "xxx" is the
+REM	three-character company ID, and "<Company Name>" is the
+REM	name of the company, as it should appear on the management
+REM	console.  The company ID can be found by reading the 
+REM	three letters from the EISA configuration filename for that
+REM	company's product.  For instance, the EISA configuration
+REM	filename for a COMPAQ QVision 1024/E Video Controller is
+REM	!CPQ3011.CFG.  Therefore, the company ID for Compaq is CPQ,
+REM	and the entry would be:
+REM
+REM		COMPANY	CPQ	Compaq
+REM	
+REM
+REM	NOTE:  Non-EISA products (8 or 16-bit ISA boards) can also
+REM	       be assigned EISA product IDs.  The company ID for
+REM	       non-EISA products is ISA.  The EISA product ID for
+REM            for these products is in the format ISAxxxx, where
+REM	       xxxx is a four digit number assigned to that product.
+REM
+
+COMPANY	ACC	ACCTON TECHNOLOGY CORPORATION
+COMPANY	ACK	ACKSYS
+COMPANY	ACN	ACON
+COMPANY	ACR	Acer Technologies Corp.
+COMPANY	ACS	Altos Computer Systems
+COMPANY	ADI	ADI Systems, Inc.
+COMPANY	ADP	Adaptec, Inc.
+COMPANY	ADT	ADTEK
+COMPANY	ADV	Advanced Micro Devices, Inc.
+COMPANY	ADX	ADAX, Inc.
+COMPANY	AEM	AEM
+COMPANY	AGI	Artish Graphics Inc
+COMPANY	AIC	Arnos Instruments
+COMPANY	AIR	Advanced Integ. Research, Inc
+COMPANY	AKB	Akebia Ltd      
+COMPANY	ALA	Alacron, Inc
+COMPANY	ALR	Advanced Logic Research
+COMPANY	AMC	Attachmate Corp.
+COMPANY	AMD	Amdek Corporation
+COMPANY	AMI	American Megatrends Inc.
+COMPANY	AMP	AMP Incorporated
+COMPANY	ANC	Ancot
+COMPANY	ANI	Anigma, Inc.
+COMPANY	APD	AppliÄdata
+COMPANY	APS	Autologic, Inc
+COMPANY	ASE	ASEM S.p.A.
+COMPANY	ASI	Ahead Systems
+COMPANY	AST	AST Research Inc.
+COMPANY	ATI	Allied Telesis K.K.
+COMPANY	ATT	AT&T
+COMPANY	ATX	Athenix Corp
+COMPANY	BAN	Banyan
+COMPANY	BCC	Beaver Computer Corporation
+COMPANY	BEO	Bang & Olufsen
+COMPANY	BGT	Budzetron, Inc.
+COMPANY	BTC	Bit 3
+COMPANY	BTE	Brilliant Technology
+COMPANY	BUS	BusTek
+COMPANY	CCI	Cache
+COMPANY	CDP	CalComp
+COMPANY	CFG	Atlantis
+COMPANY	CHA	Chase Research PLC
+COMPANY	CIP	Ciprico Inc
+COMPANY	CLO	Clone Computers A Division of Analogy Corp. 
+COMPANY	CNI	Connect Int'l A/S
+COMPANY	CNT	CNet Tehnology
+COMPANY	COM	Comtrol Corp.
+COMPANY	CPC	Ciprico Inc.
+COMPANY	CPD	CompuAdd
+COMPANY	CPG	DFI
+COMPANY	CPQ	Compaq
+COMPANY	CPX	Powermatic Data Systems PTE
+COMPANY	CSI	Cabletron Syst.
+COMPANY	CSS	CSS Laboratories
+COMPANY	CTN	Computone Corporation
+COMPANY	CUB	Cubix Corp
+COMPANY	DBI	DigiBoard Inc.
+COMPANY	DBL	Doble Engineering
+COMPANY	DCC	Dale Computer Corp.
+COMPANY	DCM	DCM Data Prods.
+COMPANY	DEC	Digital Equipment Corp.
+COMPANY	DEI	Deico Electronics
+COMPANY	DEL	Dell Computer Corp.
+COMPANY	DFI	DFI
+COMPANY	DGC	Data General Corp.
+COMPANY	DGS	Diagsoft Inc
+COMPANY	DIA	Diadem
+COMPANY	DIO	DIO
+COMPANY	DIS	Diseda S.A.
+COMPANY	DIT	Dragon Info. Tech.
+COMPANY	DLK	D-Link Systems, Inc.
+COMPANY	DOM	Dome Imaging Systems
+COMPANY	DPI	DocuPoint
+COMPANY	DPT	DPT
+COMPANY	DSM	DSM Digial Services
+COMPANY	DTC	Data Technology
+COMPANY	DTI	Diversified Tech.
+COMPANY	DTK	DTK Computer Inc.
+COMPANY	DTX	Data Translation    
+COMPANY	ECS	Elitegroup Computer  
+COMPANY	EGO	Ergo Electronics    
+COMPANY	EKC	Eastman Kodak Co.   
+COMPANY	ELI	Edsun Laboratories   
+COMPANY	ELS	ELSA                
+COMPANY	ELX	Elonex plc          
+COMPANY	EQX	Equinox Systems Inc    
+COMPANY	ERG	ERGO System         
+COMPANY	ERP	EURAPLAN GmbH       
+COMPANY	ESI	Extended Systems    
+COMPANY	EVX	Everex              
+COMPANY	EXP	Data Export         
+COMPANY	FCB	Furukawa Electric  
+COMPANY	FCT	Free Computer Technology
+COMPANY	FDC	Future Domain      
+COMPANY	FRC	FORCE Computers     
+COMPANY	FRI	Fibernet Research Inc.             
+COMPANY	FTN	Fountain Technologies, Inc. 
+COMPANY	FUJ	Fujitsu Limited   
+COMPANY	GAG	Gage Applied Sciences Inc.
+COMPANY	GCI	Gateway Communications Inc.   
+COMPANY	GEN	Genesys ATE, Inc.   
+COMPANY	GMX	GMX Inc.            
+COMPANY	GRA	Graphica Comp.     
+COMPANY	HCP	Hitachi Computer Products (America) Inc. 
+COMPANY	HCL	HCL America Inc.    
+COMPANY	HCW	Hauppauge Computer Works, Inc.   
+COMPANY	HTC	Hitachi, Ltd. (Japan)
+COMPANY	HWD	HighWater Designs Ltd.         
+COMPANY	HWP	Hewlett-Packard Co.
+COMPANY	HYP	Hyphen Limited      
+COMPANY	IBC	Integrated Business Systems
+COMPANY	ICC	BICC Data Networks Ltd.
+COMPANY	ICN	Sanyo Icon           
+COMPANY	IFT	Informtech           
+COMPANY	IGM	IGM Communications  
+COMPANY	III	Intelligent Instrumentation
+COMPANY	IMA	Imagraph            
+COMPANY	IMC	IMC Networks        
+COMPANY	INF	Inframetrics Inc    
+COMPANY	INP	Interphase Corp.    
+COMPANY	INS	Ines GmbH           
+COMPANY	INT	Intel Corp.
+COMPANY	ISA	ISA adapter 
+COMPANY	ISI	Interface Solutions 
+COMPANY	ISL	Isolation Systems   
+COMPANY	ITA	Itausa Export North America 
+COMPANY	ITN	The NTI Group 
+COMPANY	KDK	Kodiak Tech.  
+COMPANY	KES	Kesa Crop     
+COMPANY	KPC	King Phoenix Co. 
+COMPANY	KSC	Kinetic Systems Corporation
+COMPANY	KTG	KayserÄThrede GmbH 
+COMPANY	KYC	Kyocera Corporation 
+COMPANY	LAG	Laguna Systems      
+COMPANY	LCS	Longshine Electronics Co.
+COMPANY	LTI	Longshine Tech. Inc
+COMPANY	MAX	RogenTech Distrubution Inc. 
+COMPANY	MAY	Maynard Electronics 
+COMPANY	MBC	MBC                   
+COMPANY	MCD	McDATA Corporation   
+COMPANY	MCI	Micronics Computers 
+COMPANY	MCR	Marina Communications
+COMPANY	MCS	Micro Computer Systems
+COMPANY	MCT	microtec       
+COMPANY	MDG	Madge Networks      
+COMPANY	MDS	Micro Display Systems, Inc. 
+COMPANY	MDT	Magus Data Tech.    
+COMPANY	MEL	Mitsubishi Electric Corp
+COMPANY	MET	Metheus Corp.       
+COMPANY	MFG	Microfield Graphics 
+COMPANY	MGC	CompuAdd
+COMPANY	MGT	Megatech R & D Co.  
+COMPANY	MLX	Mylex Corporation   
+COMPANY	MOR	Morse Technology
+COMPANY	MSI	Microstep           
+COMPANY	MSV	Mosgi Corp.         
+COMPANY	MTC	MarsÄTech Corp. 
+COMPANY	MTI	Morse Technology    
+COMPANY	MTQ	Mountain Computer
+COMPANY	MTX	Matrox              
+COMPANY	MWY	Microway, Inc.      
+COMPANY	MYA	Monydata            
+COMPANY	MYL	Mylex Corporation   
+COMPANY	MYX	Micronyx, Inc.      
+COMPANY	NCA	Nixdorf Comp.        
+COMPANY	NCS	Northgate Computer Systems
+COMPANY	NDC	National DataComm Corp.
+COMPANY	NDS	Nokia Data          
+COMPANY	NEC	NEC
+COMPANY	NIC	National Instruments
+COMPANY	NIT	Network Info Technology
+COMPANY	NPI	Network Peripherals Inc.
+COMPANY	NSC	National Semiconductor (UK) Ltd.   
+COMPANY	NSS	Newport Systems 
+COMPANY	NTI	New Tech Int'l Co. 
+COMPANY	NVL	Novell, Inc. 
+COMPANY	NXG	Nexgen               
+COMPANY	OAS	OAsys Technology Company 
+COMPANY	OCN	Olfan               
+COMPANY	OKI	OKI Electric Ind. Co., Ltd.
+COMPANY	OLC	Olicom A/S          
+COMPANY	OLI	Olivetti      
+COMPANY	OPT	OPTi Inc.
+COMPANY	OTI	Orchid Technology
+COMPANY	PBI	Pitney Bowes        
+COMPANY	PCI	Pioneer Computer Inc
+COMPANY	PCP	Procomp USA, Inc.   
+COMPANY	PDR	Pure Data Inc.      
+COMPANY	PHI	Phillips
+COMPANY	PRO	Proteon            
+COMPANY	PSI	PSI Ä Perceptive Solutions, Inc.
+COMPANY	PTS	Plain Tree Systems Inc.
+COMPANY	QDM	Quadram
+COMPANY	QTM	Quantum
+COMPANY	RAC	Racore Computer Products Inc.
+COMPANY	RCI	RC International Denmark
+COMPANY	RCE	RCE
+COMPANY	RII	Racal Interlan Inc.
+COMPANY	RMP	Research Machines Plc
+COMPANY	RTI	Rancho Tech.
+COMPANY	SCC	SORD Computer Corporation
+COMPANY	SCD	Sanyo Electric Co.
+COMPANY	SDI	Sigma Designs, Inc.
+COMPANY	SEA	Segate
+COMPANY	SEC	Epson America, Inc.
+COMPANY	SGT	Stargate Technology 
+COMPANY	SIE	Siemens
+COMPANY	SIT	Sitintel
+COMPANY	SIX	Zuniq Data Corp.
+COMPANY	SKD	Schneider & Koch
+COMPANY	SLX	Specialix
+COMPANY	SMC	Standard Microsystems Corp.
+COMPANY	SNY	Sony Corp.
+COMPANY	SPE	SPEA Software AG
+COMPANY	SSS	S3, Incorporated
+COMPANY	STB	STB Systems, Inc.
+COMPANY	STC	STAC Electronics
+COMPANY	STR	Starlight Networks, Inc.
+COMPANY	SUR	Surenam Computer Corp.
+COMPANY	TAI	Toshiba America
+COMPANY	TCC	Tandon Corp.
+COMPANY	TCI	Tulip Computers Int'l B.V.
+COMPANY	TCO	ThomasÄConrad Corp.
+COMPANY	TCL	Tech. Concepts Ltd
+COMPANY	TCM	3Com Corporation
+COMPANY	TCS	Tatung Co. 
+COMPANY	TDS	TriÄData Systems, Inc.
+COMPANY	TDT	TDT
+COMPANY	TDY	Tandy Electronics
+COMPANY	TEC	Tecmar, Inc.
+COMPANY	TGI	TriGem Computer, Inc.
+COMPANY	TGS	Torus
+COMPANY	TOS	Toshiba
+COMPANY	TRI	Tricord Systems
+COMPANY	TRM	Tekram Technology
+COMPANY	TRS	Torus Systems Ltd.
+COMPANY	TRU	Truevision
+COMPANY	TSC	Sanyo Electric Co.
+COMPANY	TSI	TeleVideo Systems
+COMPANY	TTC	Telecommunications Techniques Corp.
+COMPANY	TVI	Truevision
+COMPANY	TWA	Tidewater Assoc.
+COMPANY	TWE	Kontron Electronik
+COMPANY	TXN	Texas Instruments
+COMPANY	UBI	UngermannÄBass, Inc.
+COMPANY	UFO	UFO Systems Inc.
+COMPANY	UNA	Unisys DSD
+COMPANY	UNI	Unisys            
+COMPANY	UNO	Unisys Corporation
+COMPANY	UNS	Unisys Corporation
+COMPANY	UNT	Unisys (Tredyffrin)
+COMPANY	USC	UltraStor Corp.
+COMPANY	VIK	Viking Connectors
+COMPANY	VMI	Vermont MicroSystems
+COMPANY	WDC	Western Digital
+COMPANY	WIL	WIPRO Information
+COMPANY	WYS	Wyse Technology
+COMPANY	YHQ	Yokogawa Elec. Corp
+COMPANY	ZDS	Zenith Data Sys.
+COMPANY	ZYT	Zytex Computers
+
+
+REM
+REM	Section 2: EISA Product Names
+REM	-------------------------------
+REM 	
+REM	The following is a list of EISA products.  
+REM	New entries may be added anywhere in the list, but it
+REM	is recommended that you add entries only to the end of
+REM	the list.
+REM
+REM	Each entry must be contained on a single line, and must 
+REM	be in the following format:
+REM
+REM	BOARD	xxxxxx	<Product name>
+REM
+REM	Where "BOARD" is the statement keyword, "xxxxxxx" is the
+REM	seven-character EISA product ID, and "<Product Name>" is the
+REM	name of the product, as it should appear on the management
+REM	console.  The EISA ID can be found by reading the EISA 
+REM	Configuration filename for that product.  For instance, 
+REM	the EISA configuration filename for a Novell NE3200
+REM	Bus Master Ethernet board is !NVL0701.CFG.  Therefore, the
+REM	product ID is NVL0701, and its entry would be:
+REM	
+REM	    BOARD  NVL0701  Novell NE3200 Bus Master Ethernet
+REM	
+REM	
+REM	NOTE:  Non-EISA products (8 or 16-bit ISA boards) can also
+REM	       be assigned EISA product IDs.  The company ID for
+REM	       non-EISA products is ISA.  The EISA product ID for
+REM            for these products is in the format ISAxxxx, where
+REM	       xxxx is a four digit number assigned to that product.
+REM
+
+BOARD	ACC1200	ACCTON EtherCombo-32 Ethernet Adapter
+BOARD	ADI0001	ADI Systems ETHER-EISA Ethernet LAN Adapter
+BOARD	ADP0000	Adaptec 32-bit EISA SCSI Host Adapter
+BOARD	ADP0100	Adaptec AHA-1540/1542 ISA SCSI Host Adapter
+BOARD	ADP1540	Adaptec AHA-1540/1542 ISA SCSI Host Adapter
+BOARD	AMI15C1	AMI SCSI Host Adapter
+BOARD	AMI15D1	AMI SCSI Host Adapter - Rev 2
+BOARD	AMI16B1	AMI ENTERPRISE II
+BOARD	AMI2509	AMI ENTERPRISE EISA system board
+BOARD	AMI25B1	AMI ENTERPRISE EISA system board
+BOARD	AMI28A1	AMI EZ-FLEX EISA System Board
+BOARD	AST0081	AST Premium EISA System Board
+BOARD	AST0101	AST Premium TE or SE System Board
+BOARD	AST8100	AST Processor Board
+BOARD	AST8200	AST Cupid-32 Memory Expansion Board
+BOARD	AST8210	AST Cupid Memory Expansion Board
+BOARD	AST8300	AST SixPak 286 Memory Board
+BOARD	AST8310	AST RampagePlus 286 Memory Board
+BOARD	AST8400	AST-VGA Plus
+BOARD	AST8410	AST-3G Plus II
+BOARD	ATT2402	AT&T SCSI Host Adapter A (StarServer E)
+BOARD	ATT2404	DPT SCSI Host Bus Adapter (PM2012B/9X)
+BOARD	BUS4201	BusTek 32 Bit Bus Master EISA-to-SCSI Host Adapter
+BOARD	BUS4281	Storage Dimensions SDC3222B 32 Bit EISA SCSI Host Adapter
+BOARD	BUS4781	Storage Dimensions SDC3222F 32 Bit EISA FAST SCSI Host Adapter
+BOARD	BUS6001	BusTek 32 Bit Bus Master EISA-to-Ethernet Controller (v1.1)
+BOARD	CHAA041	Chase Research AT4 Intelligent Serial Controller
+BOARD	CHAA081	Chase Research AT8 Intelligent Serial Controller
+BOARD	CHAA091	Chase Research AT8+ Intelligent Serial Controller
+BOARD	CHAA161	Chase Research AT16 Intelligent Serial Controller
+BOARD	CHAA171	Chase Research AT16+ Intelligent Serial Controller
+BOARD	CNT2000	CNet 950E EISA Bus 32-bit Ethernet LAN Adapter
+BOARD	CPD0001	CompuAdd 433E
+BOARD	CPD0002	CompuAdd Hi-Rez 16-bit VGA
+BOARD	CPD0301	CompuAdd HardCache/ESDI Caching ISA ESDI Disk Controller
+BOARD	CPD0401	CompuAdd HardCache/SCSI Caching ISA SCSI Host Adapter
+BOARD	CPG0400	CPG-400 CGA CARD
+BOARD	CPQ0101	Compaq Systempro System Board
+BOARD	CPQ0109	Compaq Systempro System Board
+BOARD	CPQ0401	Compaq Deskpro 486/33L or 386/33L System Board
+BOARD	CPQ0501	Compaq Deskpro/M System Board
+BOARD	CPQ0509	Compaq Deskpro/M System Board with Audio
+BOARD	CPQ0511	Compaq Systempro/LT System Board
+BOARD	CPQ0521	Compaq Deskpro XL System Board
+BOARD	CPQ0601	Compaq ProSignia Server
+BOARD	CPQ0609	Compaq ProSignia Server
+BOARD	CPQ0611	Compaq ProSignia 5/60 Server
+BOARD	CPQ0621	Compaq ProSignia Server
+BOARD	CPQ0629	Compaq ProSignia Server
+BOARD	CPQ0631	Compaq ProLiant 1000 5/60 
+BOARD	CPQ0639	Compaq ProLiant 1000 486/66
+BOARD	CPQ0701	Compaq ProSignia VS Server
+BOARD	CPQ0711	Compaq ProSignia VS Server
+BOARD	CPQ1001	Compaq Portable 486
+BOARD	CPQ1009	Compaq Portable 486/66
+BOARD	CPQ1201	Compaq Deskpro 486/25
+BOARD	CPQ1301	Compaq Deskpro 486/50L
+BOARD	CPQ1401	Compaq Portable 486c
+BOARD	CPQ1409	Compaq Portable 486c/66
+BOARD	CPQ1501	Compaq Systempro/XL Server
+BOARD	CPQ1509	Compaq ProLiant 4000 Server
+BOARD	CPQ1519	Compaq ProLiant 2000 Server
+BOARD	CPQ1589	Compaq ProLiant 4000 (Rack) Server
+BOARD	CPQ1599	Compaq ProLiant 2000 (Rack) Server
+BOARD	CPQ3001	Compaq Advanced VGA
+BOARD	CPQ3011	Compaq QVision 1024/E Video Controller
+BOARD	CPQ3021	Compaq QVision 1024/I Video Controller
+BOARD	CPQ3111	Compaq QVision 1024/E Graphics Controller
+BOARD	CPQ3112	Compaq QVision 1280/E Graphics Controller
+BOARD	CPQ3121	Compaq QVision 1024/I Graphics Controller
+BOARD	CPQ3122	Compaq QVision 1280/I Graphics Controller
+BOARD	CPQ4001	Compaq 32-Bit Intelligent Drive Array Controller
+BOARD	CPQ4002	Compaq Intelligent Drive Array Controller-2
+BOARD	CPQ4010	Compaq 32-Bit Intelligent Drive Array Expansion Controller
+BOARD	CPQ4020	Compaq SMART SCSI Array Controller
+BOARD	CPQ4300	Compaq Advanced ESDI Fixed Disk Controller
+BOARD	CPQ4401	Compaq Integrated SCSI-2 Options Port
+BOARD	CPQ4410	Compaq Integrated 32-Bit Fast-SCSI-2 Controller
+BOARD	CPQ4411	Compaq 32-Bit Fast-SCSI-2 Controller
+BOARD	CPQ4420	Compaq 6260 SCSI-2 Controller
+BOARD	CPQ5000	Compaq 386/33 System Processor Board used as Secondary
+BOARD	CPQ5281	Compaq 486/50 System Processor Board used as Secondary
+BOARD	CPQ5282	Compaq 486/50 System Processor Board used as Secondary
+BOARD	CPQ5287	Compaq Pentium System Processor Board used as Secondary
+BOARD	CPQ528F	Compaq 486DX2/66 System Processor Board used as Secondary
+BOARD	CPQ5900	Compaq 486/33 System Processor Board used as Secondary
+BOARD	CPQ5A00	Compaq 486/33 System Processor Board (ASSY # 002013) used as Secondary
+BOARD	CPQ5B00	Compaq 486DX2/66 System Processor Board used as Secondary
+BOARD	CPQ5C00	Compaq 486/33 System Processor Board used as Secondary
+BOARD	CPQ6000	Compaq 32-Bit DualSpeed Token Ring Controller
+BOARD	CPQ6001	Compaq 32-Bit DualSpeed Token Ring Controller
+BOARD	CPQ6002	Compaq NetFlex-2 TR         
+BOARD	CPQ6100	Compaq NetFlex ENET-TR
+BOARD	CPQ6101 Compaq NetFlex-2 ENET-TR
+BOARD	CPQ6200	Compaq NetFlex-2 DualPort ENET
+BOARD	CPQ6300	Compaq NetFlex-2 DualPort TR
+BOARD	CPQ7000	Compaq Server Manager/R
+BOARD	CPQ7001	Compaq Server Manager/R
+BOARD	CPQ9004	Compaq 386/33 Processor Board
+BOARD	CPQ9005	Compaq 386/25 Processor Board 
+BOARD	CPQ9013	Compaq 486DX2/66 System Processor Board used as Primary
+BOARD	CPQ9014	Compaq 486/33 System Processor Board used as Primary
+BOARD	CPQ9015	Compaq 486/33 Processor Board
+BOARD	CPQ9016	Compaq 486DX2/66 Processor Board
+BOARD	CPQ9017	Compaq 486DX2/50 Processor Board
+BOARD	CPQ9018	Compaq 486/33 Processor Board (8 MB)
+BOARD	CPQ9034	Compaq 486SX/25 Processor Board
+BOARD	CPQ9035	Compaq 486SX/16 Processor Board
+BOARD	CPQ9036	Compaq 486SX/25 Processor Board (8 MB)
+BOARD	CPQ9037	Compaq 486SX/16 Processor Board (8 MB)
+BOARD	CPQ9038	Compaq 486SX/33 Processor Board (8 MB)
+BOARD	CPQ903C	Compaq 486SX/33 Processor Board (4 MB)
+BOARD	CPQ9040	Compaq 5/66 Processor Board
+BOARD	CPQ9041	Compaq 5/66 Processor Board
+BOARD	CPQ9042	Compaq 5/66 Processor Board
+BOARD	CPQ9043	Compaq 5/66 Processor Board
+BOARD	CPQ9044	Compaq 5/60 Processor Board
+BOARD	CPQ9045	Compaq 5/60 Processor Board
+BOARD	CPQ9046	Compaq 5/60 Processor Board
+BOARD	CPQ9047	Compaq 5/60 Processor Board
+BOARD	CPQ9281	Compaq 486/50 System Processor Board used as Primary
+BOARD	CPQ9282	Compaq 486/50 System Processor Board used as Primary
+BOARD	CPQ9287	Compaq 5/66 System Processor Board used as Primary
+BOARD   CPQ928A Compaq 5/100 System Processor Board 
+BOARD   CPQ928B Compaq 5/100 System Processor Board
+BOARD	CPQ928F	Compaq 486DX2/66 System Processor Board used as Primary
+BOARD	CPQ9381	Compaq 486/50 System Processor Board
+BOARD	CPQ9382	Compaq 486/50 System Processor Board
+BOARD	CPQ9387	Compaq 5/66 System Processor Board
+BOARD	CPQ9481	Compaq 486/50 System Processor Board
+BOARD	CPQ9482	Compaq 486/50 System Processor Board
+BOARD	CPQ9487	Compaq 5/66 System Processor Board
+BOARD	CPQ9901	Compaq 486SX/16 Processor Board
+BOARD	CPQ9902	Compaq 486SX/16 Processor Board
+BOARD	CPQ9903	Compaq 486SX/25 Processor Board
+BOARD	CPQ9904	Compaq 486SX/25 Processor Board
+BOARD	CPQ9905	Compaq 486SX/25 Processor Board
+BOARD	CPQ9906	Compaq 486/33 Processor Board
+BOARD	CPQ9907	Compaq 486DX2/66 Processor Board
+BOARD	CPQ9908	Compaq 486SX/16 Processor Board
+BOARD	CPQ9909	Compaq 486SX/16 Processor Board
+BOARD	CPQ990A	Compaq 486SX/25 Processor Board
+BOARD	CPQ990B	Compaq 486SX/25 Processor Board
+BOARD	CPQ990C	Compaq 486SX/25 Processor Board
+BOARD	CPQ990D	Compaq 486/33 Processor Board
+BOARD	CPQ990E	Compaq 486SX/33 Processor Board (8 MB)
+BOARD	CPQ990F	Compaq 486SX/33 Processor Board (8 MB)
+BOARD	CPQ9990	Compaq 386/33 System Processor Board used as Primary
+BOARD	CPQ9991	Compaq 386/33 Desktop Processor Board
+BOARD	CPQ9999	Compaq 486/33 System Processor Board used as Primary
+BOARD	CPQ999A	Compaq 486/33 Desktop Processor Board
+BOARD	CPQA000	Compaq Enhanced Option Slot Serial Board
+BOARD	CPQA010	Compaq Enhanced Option Slot Modem Board
+BOARD	CPQA020	Compaq Integrated CD Rom Adapter
+BOARD	CPQA030	Compaq Integrated CD Rom Adapter
+BOARD	CPQF000	Compaq Fixed Disk Drive Feature
+BOARD	CPQF100	Compaq NetFlex ENET/ISA
+BOARD	CPQF110	Compaq NetFlex TR/ISA
+BOARD	CPQFA0D	Compaq Systempro 4-Socket System Memory Board
+BOARD	CPQFA0E	Compaq Systempro 6-Socket Memory Expansion Board
+BOARD	CPQFA0F	Compaq Deskpro 486/25 System Memory Board
+BOARD	CPQFA1A	Compaq Deskpro 3-Socket System Memory Board
+BOARD	CPQFA1B	Compaq Deskpro 486/50 System Memory Board
+BOARD	CPQFA1C	Compaq System Memory Expansion Board
+BOARD	CPQFA1D	Compaq Memory Expansion Board
+BOARD	CPQFB01	Compaq Asynchronous Communications / Clock Board
+BOARD	CPQFB02	Compaq Async Comm / Parallel Printer Board 000570
+BOARD	CPQFB03	Compaq Async Comm / Parallel Printer Board 000990
+BOARD	CPQFB07	Compaq Deskpro 2400 Baud Modem
+BOARD	CPQFC02	Compaq Enhanced Color Graphics Board
+BOARD	CPQFC06	Compaq Video Display Boards 000031, 000160, 000345
+BOARD	CPQFC08	Compaq Video Display Controller Board 000525
+BOARD	CPQFC0A	Compaq Video Graphics Controller Board
+BOARD	CPQFC0B	Compaq Advanced Graphics 1024 Board
+BOARD	CPQFD01	Compaq Multipurpose Controller Board 000181-011
+BOARD	CPQFD02	Compaq ESDI 3:1 Fixed Disk Controller WD1005WAH
+BOARD	CPQFD03	Compaq ESDI 1:1 Fixed Disk Controller WD1007AWAH
+BOARD	CPQFD06	Compaq 70Mb Fixed Disk Controller WD1002WAH
+BOARD	CPQFD07	Compaq Fixed Disk Controller WD1002HX4, WD1002WX2
+BOARD	CPQFD08	Compaq 135Mb, 150/250Mb Tape Adapter
+BOARD	CPQFD09	Compaq Fixed Disk Controller WD1002SWX2
+BOARD	CPQFD0B	Compaq Multipurpose Controller Board 000181-001/021
+BOARD	CPQFD0C	Compaq Multipurpose Fixed Disk Controller 000336
+BOARD	CPQFD0D	Compaq Multipurpose ESDI Fixed Disk Controller 000996
+BOARD	CPQFD0E	Compaq Multipurpose Fixed Disk Controller 000519, 000815, 000957
+BOARD	CPQFD12	Compaq ESDI External Fixed Disk Controller 001091
+BOARD	CPQFD13	Compaq 15MHz ESDI Fixed Disk Controller 001283
+BOARD	CPQFD14	Compaq 15Mhz ESDI Fixed Disk/Diskette Controller 001472
+BOARD	CPQFD16	Compaq Diskette Controller 001475
+BOARD	CPQFD17	Compaq SCSI Tape Adapter
+BOARD	CPQFD42	Compaq Multipurpose Controller Board 000142
+BOARD	CPQFD43	Compaq Diskette/Printer Controller 000043
+BOARD	CTN0021	Computone IntelliPort ATCC Cluster Controller
+BOARD	CTN0031	Computone IntelliPort AT6/AT8/AT16
+BOARD	CTN0036	Computone IntelliPort AT6-SE
+BOARD	CTN0041	Computone ATvantage-4/8/8$
+BOARD	CTN0051	Computone Half $
+BOARD	CTN0101	Computone ALC Controller (manual cfg)
+BOARD	CTN0110	Computone ALC Controller (auto cfg)
+BOARD	CTN0204	Computone IntelliPort-II (ISA-4)
+BOARD	CTN0208	Computone IntelliPort-II (ISA-8)
+BOARD	CTN0218	Computone IntelliPort-II (EISA-8)
+BOARD	CTN0263	Computone IntelliPort-IIEX (ISA-CEX)  (8-bit slot)
+BOARD	CTN0264	Computone IntelliPort-IIEX (ISA-CEX)
+BOARD	DBI0101	DigiBoard C/X Host Adapter
+BOARD	DEL0001	Dell System(R) 425E(TM) System Board
+BOARD	DEL0002	Dell System(R) 433E(TM) System Board
+BOARD	DEL0003	Dell System(R) 425TE(TM) System Board
+BOARD	DEL0004	Dell System(R) 433TE(TM) System Board
+BOARD	DEL0005	Dell Powerline(TM) Workstation 433DE(TM) System Board
+BOARD	DEL0006	Dell Powerline(TM) Workstation 420DE(TM) System Board
+BOARD	DEL0007	Dell Powerline(TM) Workstation 450DE(TM) System Board
+BOARD	DEL0008	Dell Powerline(TM) Server 433SE(TM) System Board
+BOARD	DEL0009	Dell Powerline(TM) Server 420SE(TM) System Board
+BOARD	DEL000A	Dell Powerline(TM) Server 450SE(TM) System Board
+BOARD	DEL000B	Dell PowerLine(TM) Workstation 425DE(TM) System Board
+BOARD	DEL000C	Dell PowerLine(TM) Server 425SE(TM) System Board
+BOARD	DEL0011	Dell Powerline(TM) Server 450SE/2(TM) System Board
+BOARD	DEL0019	Dell Powerline(TM) Server 466SE(TM) System Board
+BOARD	DEL0021	Dell Powerline(TM) Workstation 450DE/2(TM) System Board
+BOARD	DEL0029	Dell Powerline(TM) Workstation 466DE(TM) System Board
+BOARD	DEL4001	Dell Drive Array (DDA) Host Adapter
+BOARD	DELFB00	OmniTel 2400 Baud Internal Modem
+BOARD	DELFB01	OmniTel 1200 Baud Internal Modem
+BOARD	DELFB02	Dataflex Design `Quadcom' / `Biscom' Modem
+BOARD	DELFC00	Dell GPX-1024 Graphics Performance Accelerator
+BOARD	DELFC01	Dell VGA Professional 16-bit
+BOARD	DELFC02	Paradise Hi-Res Graphics Adapter
+BOARD	DELFC03	Paradise Hi-Res Graphics Card
+BOARD	DELFD00	UltraStor 12F ESDI/Diskette Controller
+BOARD	DELFD01	Dell IDE Hard-Disk/Diskette Drive Controller
+BOARD	DELFD02	Archive XL Tape Host Adapter
+BOARD	DELFD03	Wangtek Tape Host Adapter
+BOARD	DIO0000	DIO-500 MULTI-I/O CARD
+BOARD	DPT2402	DPT SCSI Host Bus Adapter (PM2012A/9X)
+BOARD	DPTA401	DPT SCSI Host Bus Adapter (PM2012B/9X)
+BOARD	DPTA502	DPT SCSI Host Bus Adapter (PM2012BX/9X)
+BOARD	DPTBC01	DPT ESDI Caching Hard Disk Controller (PM3011/7X)
+BOARD	DTC0101	Data Technology EISA Disk Controller
+BOARD	DTC0102	Data Technology DTC6290E EISA Disk Controller
+BOARD	DTC0180	Data Technology DTC6295 EISA Disk Controller
+BOARD	DTC3101	Data Technology DTC3290 Host Adapter
+BOARD	EVX8120	Everex 16-bit Floppy/Hard Disk Adapter
+BOARD	FCT0001	Free Computer Technology 486 EISA SYSTEM BOARD
+BOARD	FCT0002	Free Computer Technology 386 EISA SYSTEM BOARD
+BOARD	GCI0000	Gateway G/Ethernet AT
+BOARD	GCI0001	Gateway G/Ethernet AT
+BOARD	GCI0002	Gateway G/Ethernet AT
+BOARD	GCI0009	Gateway G/Ethernet PC
+BOARD	GCI0101	Gateway G/Ethernet 32EB
+BOARD	GCI0102	Gateway G/Ethernet 32EB
+BOARD	HWP0000	HP Monochrome Plus Video Board (35732A)
+BOARD	HWP0010	HP Multimode Video Adapter (45981A)
+BOARD	HWP0020	HP Multimode Color Adapter Board (45984A)
+BOARD	HWP0030	HP Enhanced Graphics Adapter Board (45983A)
+BOARD	HWP0040	HP VGA Adapter Board (D1180A)
+BOARD	HWP0060	HP Intelligent Graphics Controller 10 (A1086A)
+BOARD	HWP0090	HP Super VGA Board (D2382A)
+BOARD	HWP0800	HP Vectra 486 Memory Board
+BOARD	HWP0C40	HP ESDI High-Performance Controller (D1664A)
+BOARD	HWP0C60	HP Vectra 486 Embedded Hard Disk Controller
+BOARD	HWP1400	HP Dual Serial Interface Board (24541B)
+BOARD	HWP1410	HP Internal 2400 Baud Modem (24551A)
+BOARD	HWP1420	HP HP-IB Interface (82335A)
+BOARD	HWP1440	HP Terminal Multiplexor Board (D2040A)
+BOARD	HWP1450	HP HP-IB Interface (82335A)
+BOARD	HWP1460	HP ScanJet Plus Interface (88290A)
+BOARD	HWP1810	HP ThinLAN Interface Card (27210B)
+BOARD	HWP1C00	HP Serial/Parallel Interface Board (24540B)
+BOARD	HWP1C10	HP Vectra 486 Serial Port and Parallel Port
+BOARD	INP0010	Interphase Barracuda SCSI Host Adapter
+BOARD	INT0701	Intel TokenExpress(tm) 16/4 ISA Network Adapter
+BOARD	INT0902	Intel TokenExpress(tm) 16/4 EISA Network Adapter
+BOARD	ISA8100	Attachmate 3270 COAX Adapter (Long Board)
+BOARD	ISA8101	Attachmate Advanced 3270 COAX Adapter (Short Board)
+BOARD	ISA8102	Attachmate SDLC/Autolink Adapter
+BOARD	ISA8103	Attachmate SDLC Adapter
+BOARD	ISA8200	AST 3270/COAX II Rev. X4 
+BOARD	ISA8201	AST 5251/11 Enhanced Plus
+BOARD	ISA8202	AST SixPakPlus Version A 
+BOARD	ISA8203	AST Rampage 286 (Rev.X2) 
+BOARD	ISA8204	AST RAMvantage
+BOARD	ISA8300	IBM Enhanced 5250 Emulator
+BOARD	ISA8301	IBM Enhanced 5250 Emulator Rev B
+BOARD	ISA8302	IBM SDLC (3270 or 5250 Remote)
+BOARD	ISA8303	IBM Advanced 3278/79 Adapter
+BOARD	ISA8304	IBM Serial/Parallel Adapter
+BOARD	ISA8305	IBM PC Network
+BOARD	ISA8306	IBM TOKEN RING Adapter I 
+BOARD	ISA8307	IBM TOKEN RING Adapter II
+BOARD	ISA8308	IBM Monochrome Adapter
+BOARD	ISA8309	IBM VGA Display Adapter
+BOARD	ISA830A	IBM Token Ring II Short Adapter
+BOARD	ISA830B	IBM Token Ring 16/4 Adapter
+BOARD	ISA830C	IBM Enhanced Graphics Adapter
+BOARD	ISA830D	IBM PGA
+BOARD	ISA830E	IBM Realtime Interface Co-Processor Multiport Adapter, Model 2
+BOARD	ISA8400	IDEAssociates IDEAcomm 5250/Remote
+BOARD	ISA8401	IDEAssociates IDEAcomm 5251 Twinax Plus Rev D
+BOARD	ISA8402	IDEAssociates IDEAcomm 5251 Twinax Plus Rev C
+BOARD	ISA8403	IDEAssociates IDEAcomm 5251 Twinax Rev A,B,C
+BOARD	ISA8500	DCA IRMA2 Adapter
+BOARD	ISA8501	DCA IRMA 3278 Emulation
+BOARD	ISA8502	DCA IRMA 3279 Graphics Adapter
+BOARD	ISA8503	DCA IRMA3 Convertible 
+BOARD	ISA8505	DCA Smart Alec 5250
+BOARD	ISA8506	DCA IRMA Remote SDLC Adapter
+BOARD	ISA8507	DCA 10-NET Adapter
+BOARD	ISA8508	DCA IRMA2 3279 Graphics Adapter
+BOARD	ISA8509	DCA Intelligent Serial PC Adapter (Long SDLC)
+BOARD	ISA8601	HAYES Smartmodem 1200B
+BOARD	ISA8602	HAYES Smartmodem 2400B
+BOARD	ISA8700	Novell Coax Adapter 3270 Connection
+BOARD	ISA8701	Novell COAX GRAPHICS Rev. A
+BOARD	ISA8702	Novell TWINAX 5250
+BOARD	ISA8711	Novell NE1000 Ethernet Adapter
+BOARD	ISA8712	Novell NE2000 Ethernet Adapter
+BOARD	ISA8713	Novell RX-Net REV B,C,D NIC
+BOARD	ISA8714	Novell RX-Net REV E,F,G NIC
+BOARD	ISA8804	Tecmar EGA Master 480/800
+BOARD	ISA8805	Tecmar Maestro AT
+BOARD	ISA8900	SMC Arcnet PC
+BOARD	ISA8901	SMC Arcnet PC100
+BOARD	ISA8902	SMC Arcnet PC110
+BOARD	ISA8903	SMC Arcnet PC130/E
+BOARD	ISA8904	SMC Arcnet PC220/120
+BOARD	ISA8905	SMC Arcnet PC270/E
+BOARD	ISA8906	SMC Arcnet PC500
+BOARD	ISA8907	SMC Ethernet PC510
+BOARD	ISA8A00	NESTAR ARCNET PLAN 2000
+BOARD	ISA8B00	DEC DEPCA EtherLink Adapter, Rev D1
+BOARD	ISA8B01	DEC DEPCA EtherLink Adapter, Rev E or F
+BOARD	ISA8C00	3COM 3C505-2012 EtherLink Plus 16bit Mode
+BOARD	ISA8C01	3COM EtherLink 3C501 ASM 1221
+BOARD	ISA8C02	3COM EtherLink 3C500B ASM 34-0780
+BOARD	ISA8C03	3COM 3C503 EtherLink II
+BOARD	ISA8C04	3COM 3C603 Tokenlink 16bit
+BOARD	ISA8C05	3COM 3C605-2065 Tokenlink Plus 8bit
+BOARD	ISA8C06	3COM 3C505-2012 EtherLink Plus 8bit Mode
+BOARD	ISA8C07	3COM 3C605-2065 Tokenlink Plus 16bit Mode
+BOARD	ISA8C08	3COM 3C603 Tokenlink 8bit Mode
+BOARD	ISA8C09	3COM 3C507 Etherlink 16
+BOARD	ISA8C10	3COM 3C507TP Etherlink 16
+BOARD	ISA8D00	Tiara LANCARD/A REV B 
+BOARD	ISA8D01	Tiara LANCard/E * PC 16
+BOARD	ISA8E00	Microsoft Mouse Controller
+BOARD	ISA8E01	Logitech Bus Mouse
+BOARD	ISA8F00	AT&T STARLAN Network Adapter
+BOARD	ISA8F01	AT&T Truevision Image Capture Board
+BOARD	ISA9000	Hercules GB222 InColor Card
+BOARD	ISA9001	Hercules Graphics Card Plus (Rev.D)
+BOARD	ISA9002	Hercules VGA Card 
+BOARD	ISA9100	Quadram QuadEGA+
+BOARD	ISA9101	Quadram QuadVGA Video Adapter
+BOARD	ISA9102	Quadram QUADMEG-AT
+BOARD	ISA9103	Quadram QUADEMS+ W/IO
+BOARD	ISA9200	Intel Above Board/AT (no Piggyback)
+BOARD	ISA9201	Intel Above Board/AT With 2MB Piggyback
+BOARD	ISA9202	Intel Above Board 286 (no Piggyback)
+BOARD	ISA9203	Intel Above Board 286 With 2MB Piggyback
+BOARD	ISA9204	Intel Above Board PS/286 (no Piggyback)
+BOARD	ISA9205	Intel Above Board PS/286 With 2MB Piggyback
+BOARD	ISA9206	Intel Above Board Plus 8 (6Mb Piggyback)
+BOARD	ISA9207	Intel Visual Edge printing enhancement system
+BOARD	ISA9208	Intel iMX-LAN/586 
+BOARD	ISA9209	Intel PC586E
+BOARD	ISA9210	Intel EtherExpress 16 and 16TP Ethernet/Cheapernet Adapter
+BOARD	ISA9300	MICOM-Interlan NP600A Ethernet 16bit
+BOARD	ISA9302	MICOM-Interlan NI5210/8 Ethernet
+BOARD	ISA9303	MICOM-Interlan NI5210/16 Ethernet
+BOARD	ISA9400	Gateway G/Ethernet AT 
+BOARD	ISA9401	Gateway G/Ethernet 8-bit PC
+BOARD	ISA9402	Gateway G/Token Ring 8-bit
+BOARD	ISA9403	Gateway G/Token Ring AT
+BOARD	ISA9404	Gateway G/Net VS
+BOARD	ISA9405	Gateway G/Net LNIM
+BOARD	ISA9500	Proteon ProNET-4/AT P1344
+BOARD	ISA9600	Madge AT Ring Node
+BOARD	ISA9601	Madge Smart ISA Ringnode
+BOARD	ISA9700	IMC PCnic 16bit NIC
+BOARD	ISA9800	Video Seven V-RAM VGA 
+BOARD	ISA9801	Video Seven Vega Deluxe EGA Adapter
+BOARD	ISA9802	Video Seven FastWrite VGA Video Adapter
+BOARD	ISA9900	Sigma Designs VGA-PC-HP160/162
+BOARD	ISA9901	Sigma Designs VGA or VGA/HP8
+BOARD	ISA9A00	Verticom M16/M256E
+BOARD	ISA9A01	Verticom MX16/AT & MX256/AT
+BOARD	ISA9B00	HP 82328A Intelligent Graphics Controller
+BOARD	ISA9C01	Matrox PG-1281
+BOARD	ISA9C02	Matrox PG-1024
+BOARD	ISA9C03	Matrox PG-641
+BOARD	ISA9D00	Renaissance GRX Rendition I
+BOARD	ISA9D01	Rendition II Intelligent Graphics Controller
+BOARD	ISA9E00	Pixelworks Micro Clipper Graphics
+BOARD	ISA9E01	Pixelworks Ultra Clipper Graphics
+BOARD	ISA9F00	Genoa Systems Super VGA 16-Bit
+BOARD	ISA9F02	Genoa Systems SuperVGA
+BOARD	ISA9F03	Genoa Systems SuperEGA HiRes+ 
+BOARD	ISA9F04	Genoa Systems SuperSpectrum Model 4650
+BOARD	ISA9F05	Genoa Systems SuperSpectrum Model 4640
+BOARD	ISA9F07	Genoa Systems Systems QIC-02 Tape Controller
+BOARD	ISAA000	Vermont Page Manager 100(FW 01.27)
+BOARD	ISAA100	Orchid Technology TurboPGA
+BOARD	ISAA101	Orchid Technology ProDesigner VGA/VGA+
+BOARD	ISAA102	Orchid Technology Enhanced Board OM 
+BOARD	ISAA103	Orchid Technology Enhanced Board w/IO
+BOARD	ISAA104	Orchid ProDesigner II VGA
+BOARD	ISAA200	Paradise VGA Professional (Rev.X4)
+BOARD	ISAA201	Paradise VGA Plus 8-bit
+BOARD	ISAA202	Paradise Autoswitch EGA (Rev. 2)
+BOARD	ISAA300	Truevision ATVista ICB
+BOARD	ISAA400	Excelan EXOS 205E 
+BOARD	ISAA401	Excelan EXOS 205T 16-Bit 
+BOARD	ISAA500	Pure Data PDI8025 Token Ring
+BOARD	ISAA501	Pure Data PDI508 ArcNet
+BOARD	ISAA600	BICC ISOLAN Ethernet
+BOARD	ISAA700	Control Systems Artist 10
+BOARD	ISAA701	Control Systems Artist XJ10
+BOARD	ISAA800	Codenoll Codenet3051
+BOARD	ISAAB00	Hayes Smartmodem 1200B
+BOARD	ISAAB01	Hayes Smartmodem 1200B
+BOARD	ISAAB02	Hayes Smartmodem 2400B
+BOARD	ISAAB03	Hayes Smartmodem 2400Q
+BOARD	ISAAC00	ATI EGA WONDER
+BOARD	ISAAC01	ATI VGA WONDER
+BOARD	ISAAD00	TOPS/Sun Microsystems FlashCard
+BOARD	ISAAE01	Arnet Corp. SMARTPORT Card
+BOARD	ISAAE02	Arnet Corp. MODULAR SMARTPORT Card
+BOARD	ISAAE03	Arnet Corp. SMARTPORT 16 Card
+BOARD	ISAAF00	Computone INTELLIPORT Multiport Serial Card
+BOARD	ISAAF01	Computone INTELLIPORT ATCC Cluster Controller
+BOARD	ISAB000	Anvil Designs Stallion Intelligent I/O Controller
+BOARD	ISAB100	Emerald 3XTwin 5250 Twinax
+BOARD	ISAB101	Emerald 3XPlus 5250 Remote
+BOARD	ISAB200	EVEREX Evercom 24 2400 baud modem
+BOARD	ISAB300	Practical Modem 2400
+BOARD	ISAB401	STB EGA Plus
+BOARD	ISAB402	STB Chauffeur HT
+BOARD	ISAB403	STB VGA Extra
+BOARD	ISAB404	STB EGA MultiRes
+BOARD	ISAB500	Banyan Intelligent Communications Adapter
+BOARD	ISAB600	Computer Peripherals Monographic Video
+BOARD	ISAB601	Computer Peripherals VisionMaster VGA 
+BOARD	ISAB602	Computer Peripherals Graphmaster Plus EGA Video Adapter
+BOARD	ISAB700	Iomega Corp. Bernoulli PC3B/50 Board
+BOARD	ISAB701	Iomega Corp. Bernoulli PC2/50, PC2B/50 Boards
+BOARD	ISAB702	Iomega Corp. Bernoulli II Combo Adapter Board
+BOARD	ISAB800	Archive Corp. SC499R Tape Controller
+BOARD	ISAB801	Archive Corp. VP402 Tape Adapter
+BOARD	ISAB900	DigiBoard DigiCHANNEL PC/Xe
+BOARD	ISAB901	DigiBoard DigiCHANNEL PC/8i
+BOARD	ISAB903	Digiboard Digichannel PC/8e
+BOARD	ISAB904	Digiboard Com/8s
+BOARD	ISAB905	DigiBoard DigiCHANNEL PC/8
+BOARD	ISABA00	Alloy IMP2 Multiuser Port Controller
+BOARD	ISABA01	Alloy IMP8 Multiuser Port Controller
+BOARD	ISABA02	Alloy PC-HIA XBUS Controller
+BOARD	ISABA03	Alloy FTFA Tape & Floppy Controller
+BOARD	ISABB00	BIT3 403/404/405 Bus Communications Adaptors
+BOARD	ISABC00	Boca Research BOCARAM/AT Plus
+BOARD	ISABC01	Boca Research I/O Master AT
+BOARD	ISABD00	Racal-Interlan NP600A Ethernet 16bit
+BOARD	ISABD02	Racal-Interlan NI5210/8 Ethernet
+BOARD	ISABD03	Racal-Interlan NI5210/16 Ethernet
+BOARD	ISABE00	Qua Tech PXB-1608 Parallel Expansion Board
+BOARD	ISABE01	Qua Tech ES-100 8 Channel Asyncronous 
+BOARD	ISABE02	Qua Tech QS-100M 4 Channel Asyncronous
+BOARD	ISABE03	Qua Tech MXI-100 IEEE 488 GPIB
+BOARD	ISABE04	Qua Tech DS-201 Dual Channel RS-422
+BOARD	ISABE05	Qua Tech PXB-721 Parallel Expansion
+BOARD	ISABE06	Qua Tech DSDP-402 Dual Serial/Dual Parallel
+BOARD	ISABE07	Qua Tech WSB-10 Waveform Synthesizer
+BOARD	ISABE08	Qua Tech SmartLynx Multiport Adapter
+BOARD	ISABF00	Eotron Corp. EOgraph Plus
+BOARD	ISAC000	Corollary 8x4 Mux (Jumpers)
+BOARD	ISAC001	Corollary 8x4 Mux (Rotary Switches)
+BOARD	ISAC100	Bell Technologies ACE Multiport Serial Card
+BOARD	ISAC200	Micro-Integration PC-STWINAX
+BOARD	ISAC201	Micro-Integration PC-MICOAX
+BOARD	ISAC300	BlueLynx 5251-12
+BOARD	ISAC301	BlueLynx 5250
+BOARD	ISAC302	BlueLynx 3270 Remote
+BOARD	ISAC303	BlueLynx Enhanced 5251-11
+BOARD	ISAC304	BlueLynx 3270 Enhanced Coax
+BOARD	ISAC400	Core International CNT-ATP ESDI Internal FD Ctrl
+BOARD	ISAC431	Chinon CD-ROM CDS-431 Controller
+BOARD	ISAC500	Capital Equipment Corp PC 488 IEEE Printer Controller
+BOARD	ISAC600	Vector International SCC Async/BSC/SDLC
+BOARD	ISAC700	LSE Electronic YC808 Color Graphics Printer Adapter
+BOARD	ISAC701	LSE Electronic Platinum VGA16 Card
+BOARD	ISAC800	Street Electronics ECHO PC+ Speech Synthesizer
+BOARD	ISAC900	SIIG ARCLAN-100 Arcnet Network Board
+BOARD	ISACA00	National Instruments GPIB-PCIIA
+BOARD	ISACA01	National Instruments AT-GPIB
+BOARD	ISACA02	National Instruments GPIB-PC
+BOARD	ISACB00	Konan TNT-1050 Caching Disk Controller
+BOARD	ISACC00	Packard Bell PB 3270 Coax
+BOARD	ISACD00	Digital Storage Systems ARC6000
+BOARD	ISACE00	Ideatech, Inc. Ideaphone Input Device
+BOARD	ISACF00	Atronics Professional Image Board Plus
+BOARD	ISAD000	Bi-Tech Enterprises SCSI 2110 HD/TAPE Controller
+BOARD	ISAD001	Bi-Tech Enterprises SCSI 2200 Controller
+BOARD	ISAD100	Equinox System Megaport Board
+BOARD	ISAD200	Comtrol Corp. SMART HOSTESS Multiport Serial Card
+BOARD	ISAD300	Emulex Corp. MPC-II Comm Controller
+BOARD	ISAD400	Western Digital WD1004A-WX1 Controller
+BOARD	ISAD401	Western Digital WD1006V-MM2 Winchester/Floppy Controller
+BOARD	ISAD402	Western Digital WD1006V-SR2 Winchester/Floppy Controller
+BOARD	ISAD403	Western Digital WD1007A-WAH Winchester Controller
+BOARD	ISAD404	Western Digital WD1007V-SE1 Winchester Controller
+BOARD	ISAD500	GammaLink GammaFax NA 
+BOARD	ISAD501	GammaLink GammaFax CP 
+BOARD	ISAD600	The Complete FAX/9600 
+BOARD	ISAD700	Hughes Lan Systems 4140 Ethernet Board
+BOARD	ISAD701	Hughes Lan Systems 6130 Broadband Network Card
+BOARD	ISAD702	Hughes(Sytek) 6140 Token Ring Net. Board 
+BOARD	ISAD800	AMI SMART PACK 2 W/ PAL 5.1
+BOARD	ISAD801	AMI SMART PACK 2 W/ PAL 6.1
+BOARD	ISAD802	AMI SMART PACK 2 W/ PAL 6.2
+BOARD	ISAD900	NEC Multisync Graphics Board GB-1
+BOARD	ISADA00	Torus Systems Ethernet Adapter
+BOARD	ISADA01	Torus Systems Ethernet Adapter/SB
+BOARD	ISADB00	Rabbit Software RB14 X.25 Adapter
+BOARD	ISADB01	Rabbit Software RB24 Multi-Protocol Comm
+BOARD	ISADC00	Nth Graphics Nth Engine
+BOARD	ISADD00	Chase AT4/AT8/AT16
+BOARD	ISADE00	QMS JetScript
+BOARD	ISADF00	Overland Data 9-Track Tape TX-8 Controller
+BOARD	ISADF01	Creative Labs,Inc SoundBlaster 
+BOARD	ISADF02	Emerald Systems SCSI Tape Adapter     
+BOARD	ISADF03	Weitek Array Processor, Brd #3002-0046-01
+BOARD	ISAE000	DIO-500 Multi-I/O card
+BOARD	ISAE300	Overland Data 9-Track Tape TX-8 Controller
+BOARD	ISAE401	Microfield Graphics V8 Color Graphics Controller
+BOARD	ISAE402	Microfield Graphics T8 Color Graphics Controller
+BOARD	ISAEA00	Cheetah Card
+BOARD	MDG0001	Madge Smart 16/4 EISA Ringnode
+BOARD	MDG0002	Madge Smart 16/4 EISA Ringnode
+BOARD	MDG0010	Madge Smart 16/4 AT Ringnode
+BOARD	MET1104	Metheus UGA 1104 Graphics Controller
+BOARD	MET1128	Metheus UGA 1124/1128 Graphics Ctlr.
+BOARD	MGC0160	MG-160 MONO Card
+BOARD	MLX0010	Mylex LNE390A EISA 32-bit Ethernet LAN Adapter
+BOARD	MLX0011	Mylex LNE390B EISA 32-bit Ethernet LAN Adapter
+BOARD	MLX0030	Mylex LNI390A ISA 16-Bit Ethernet LAN Adapter
+BOARD	MLXFF01	Mylex Corporation MAE486 EISA 32-Bit 486 System Board
+BOARD	MLXFF02	Mylex Corporation MNE486 EISA 32-Bit 486 System Board
+BOARD	MOR8050	Morse Technology KP8050 EISA/IDE Controller
+BOARD	MTI9010	Morse Technology KP9000 EISA/ESDI Controller
+BOARD	MTQ0002	Mountain Filesafe
+BOARD	MYL0101	Mylex LNE390A EISA bus 32-bit Ethernet Adapter
+BOARD	NEC8201	DPT SCSI Host Bus Adapter w/ Cache (PM2012B/90)
+BOARD	NIC0101	National Instruments EISA A2000
+BOARD	NPI0110	Network Peripherals Inc. NP-EISA FDDI Interface
+BOARD	NPI0120	Network Peripherals Inc. NP-EISA FDDI Interface
+BOARD	NVL0201	Novell NE2000 Ethernet/Cheapernet Adapter
+BOARD	NVL0701	Novell NE3200 Bus Master Ethernet
+BOARD	NVL0901	Novell NE2100 Ethernet/Cheapernet Adapter
+BOARD	NVL1001	Novell NMSL (Netware Mirrored Server Link)
+BOARD	NVL1101	Novell NE1500T Ethernet/Twisted Pair Adapter
+BOARD	NVL1201	Novell NE32HUB 32-bit Base EISA Adapter
+BOARD	NVL1301	Novell NE32HUB 32-bit TPE EISA Adapter
+BOARD	NVL1401	Novell NE32HUB PME ISA Adapter
+BOARD	NVL1501	Novell NE2000PLUS Ethernet Adapter
+BOARD	NVL1601	Novell NTR2000 Token-Ring Adapter
+BOARD	OLC0701	Olicom ISA 16/4 Token-Ring Network Adapter
+BOARD	OLC0901	Olicom EISA 16/4 Token-Ring Network Adapter
+BOARD	OLC0902	Olicom EISA 16/4 Token-Ring Network Adapter
+BOARD	OLI0109	Olivetti CP486 / M486 EISA Model 1, EISA Bus Rev. 1
+BOARD	OLI0169	Olivetti CP486 / M486 EISA Model 2, EISA Bus Rev. 1
+BOARD	OLI0309	Olivetti LSX5030 System Board, Rev. 1.1
+BOARD	OLI0311	Olivetti LSX5030 System Board, Rev. 1.2
+BOARD	OLI0409	Olivetti LSX5015 System Board
+BOARD	OLI0449	Olivetti LSX5025 System Board
+BOARD	OLI0509	Olivetti M700-10 (PWS4010) System Board Rev.1.0
+BOARD	OLI1011	Olivetti EISA Video Controller (EVC-1)
+BOARD	OLI1021	Olivetti EISA SCSI Controller (ESC-1)
+BOARD	OLI1022	Olivetti EISA SCSI Controller (ESC-2)
+BOARD	OLI1023	Olivetti EISA SCSI Controller (ESC-2P)
+BOARD	OLI1024	Olivetti EISA SCSI Controller (ESC-2P/FDU)
+BOARD	OLI1031	Olivetti NCU9180 EISA 10base5/2 LAN Bus Master Controller
+BOARD	OLI1041	Olivetti NCU9181/S EISA 10baseT LAN Bus Master Controller
+BOARD	OLI1051	Olivetti EISA Dual SCSI Disk Controller (EFP2)
+BOARD	OLI1061	Olivetti NCU9195 (10BaseF A/FOIRL for CSMA/CD) LAN Adapter
+BOARD	OLI1071	Olivetti OGA EISA Video Adapter (TI34020 + C&T452)
+BOARD	OLI10B1	Olivetti ECC Memory Adapter
+BOARD	OLI10B2	Olivetti ECC Memory Adapter with 512 Mb, 16 Mb SIMM's
+BOARD	OLI10C1	Olivetti 486/33 Secondary CPU-1 Board, Rev. 1.1 
+BOARD	OLI1201	Olivetti Audio Controller
+BOARD	OLI90C1	Olivetti 486/33 Primary CPU Board Rev. 1.1
+BOARD	OLI90D1	Olivetti 486/33 Primary CPU Board Rev. 2.0
+BOARD	OLIF011	Olivetti NCU 9141 Ethernet, Non-intelligent LAN Adapter
+BOARD	OLIF012	Olivetti NCU 9141/C Ethernet LAN Adapter
+BOARD	OLIF021	Olivetti NCU 9142 3COM Ethernet LAN Adapter
+BOARD	OLIF031	Olivetti NPU 9145 Retix/Ethernet LAN Adapter
+BOARD	OLIF041	Olivetti NPU 9127 Retix 1Base5 (Starlan) LAN Adapter
+BOARD	OLIF051	Olivetti NCU 9143 10Base2/UTP, Non-intelligent LAN Adapter
+BOARD	OLIF052	Olivetti NCU 9143/S 10BaseT / UTP LAN Adapter
+BOARD	OLIF061	Olivetti NPU 9147 Retix 10Base2 Intelligent LAN Adapter
+BOARD	OLIF071	Olivetti NCU 9162 Olicom Token-Ring, Non-intelligent LAN Adapter
+BOARD	OLIF081	Olivetti NPU 9126 Intelligent Starlan Adapter
+BOARD	OLIF091	Olivetti NPU 9133 Intelligent Starlan Adapter
+BOARD	OLIF0A1	Olivetti NPU 9144 Intelligent Ethernet/Cheapernet LAN Adapter
+BOARD	OLIF0B1	Olivetti LPU 2-v224 Intelligent Communication Controller Adapter
+BOARD	OLIF0C1	Olivetti LPU x24-v24 Adapter
+BOARD	OLIF0D1	Olivetti LCU 3174 (3270 dumb coax, Attachmate)
+BOARD	OLIF0E1	Olivetti LCU 3280 (Dumb Coax Lee Data)
+BOARD	OLIF0F1	Olivetti PU 25-374 (SNA Intelligent)
+BOARD	OLIF101	Olivetti U 3299
+BOARD	OLIF111	Olivetti/Matrox C 1281CV Video Controller
+BOARD	OLIF121	Olivetti PCT 2647 (Intelligent pin pad badge reader)
+BOARD	OLIF131	Olivetti PU 2559
+BOARD	OLIF141	Olivetti PU 2646 (Intelligent PB)
+BOARD	OLIF151	Olivetti CT 2547 (Non-intelligent pin badge reader)
+BOARD	OLIF161	Olivetti PEC 25286 (Intelligent Data encription)
+BOARD	OLIF171	Olivetti SIC 2635 (Non-intelligent RS-232)
+BOARD	OLIF181	Olivetti SIC 2636 BUF (Non-intelligent 4 RS-232)
+BOARD	OLIF191	Olivetti SIC 2636 (Non-intelligent 2 RS-232)
+BOARD	OLIF1A1	Olivetti Video Controller (OVC)
+BOARD	OLIF1B1	Olivetti/Matrox HGC 1281 Video Controller
+BOARD	OLIF1C1	Olivetti NCU9172 adapter - MAC level Token-Ring
+BOARD	OLIF1D1	Olivetti GO 555 High speed Laser Printer Controller
+BOARD	OLIF1E1	Olivetti GE 014 Compression/Expansion board
+BOARD	OLIF1F1	Olivetti NCU 9191 Ethernet Fiber optic
+BOARD	OLIF201	Olivetti DSM adapter
+BOARD	OLIF211	Olivetti MUX1708 / MUX1716 Multiport Serial Card
+BOARD	OLIF221	Olivetti LPU 24 Monochannel V24
+BOARD	OLIF231	Olivetti LPU 2400 dual channel V24
+BOARD	OLIF241	Olivetti LPU 2100 X21
+BOARD	OLIF251	Olivetti LPU 3500 V35
+BOARD	OLIF261	Olivetti LPU 3600 V36
+BOARD	PRO0101	PROTEON Dual Speed Token-Ring Controller
+BOARD	PRO6000	Proteon ProNET 4/16 Token Ring Adapter
+BOARD	PRO6001	Proteon ProNET 4/16 Token Ring Adapter
+BOARD	PTS002A	PlainTree EISA WaveBus Adapter Card
+BOARD	PTS401A	PlainTree ISA WaveBus Adapter Card
+BOARD	RII0101	Racal-Datacom ES3210 Ethernet Controller
+BOARD	SEA0007	SEAGATE 16-bit Floppy/Hard Disk Adapter
+BOARD	SMC0000	STANDARD MICROSYSTEMS CORP. ARCNET-EISA3200
+BOARD	SMC0110	STANDARD MICROSYSTEMS CORP. ETHERNET-3032/EISA
+BOARD	TCC010C	Thomas-Conrad TC6045 ARC-Card/AT
+BOARD	TCC030D	Thomas-Conrad TC6042 ARC-Card/CE
+BOARD	TCC040B	Thomas-Conrad TC6142 ARC-Card/CE
+BOARD	TCC3047	Thomas-Conrad TC3047 TCNS Adapter/EISA
+BOARD	TCC4035	Thomas-Conrad TC4035 Token Ring Adapter/AT
+BOARD	TCC4045	Thomas-Conrad TC4045 Token Ring Adapter/AT
+BOARD	TCC5045	Thomas-Conrad TC5045 EtherNet Adapter/AT
+BOARD	TCC6042	Thomas-Conrad TC6042 ARC-CARD/CE
+BOARD	TCC6045	Thomas-Conrad TC6045 ARC-CARD/AT
+BOARD	TCC6142	Thomas-Conrad TC6142 ARC-CARD/CE
+BOARD	TCC6242	Thomas-Conrad TC6242 ARC-CARD/CE
+BOARD	TCC6245	Thomas-Conrad TC6245 ARC-CARD/AT
+BOARD	TCM5030	3COM EtherLink II Family
+BOARD	TCM5070	3COM 3C507 Etherlink 16 or TP v2.0
+BOARD	TCM5090	3Com 3C509-TP Network Adapter
+BOARD	TCM5091	3Com 3C509 Network Adapter
+BOARD	TCM5092	3Com 3C579-TP EISA Network Adapter
+BOARD	TCM5093	3Com 3C579 EISA Network Adapter
+BOARD	TCM5094	3Com 3C509-Combo Network Adapter
+BOARD	TCM5095	3Com 3C509-TPO Network Adapter
+BOARD	TCO010C	Thomas-Conrad TC6045 ARC-Card/AT
+BOARD	TCO030D	Thomas-Conrad TC6042 ARC-Card/CE
+BOARD	TCO040B	Thomas-Conrad TC6142 ARC-Card/CE
+BOARD	TCO050D	Thomas-Conrad TC4035 TOKEN RING Adapter/AT (Rev D)
+BOARD	TEC8000	Tecmar QIC60 HOST Adapter
+BOARD	TEC8001	Tecmar QIC PC36 TAPE Controller
+BOARD	TEC8002	Tecmar QT HOST Adapter
+BOARD	TEC8003	Tecmar QT PC36 TAPE Controller
+BOARD	TRU0210	Truevision Truevision Image Capture Board
+BOARD	TRU0520	Truevision ATVista ICB
+BOARD	UBIA100	Ungermann-Bass Personal NIU
+BOARD	UBIA200	Ungermann-Bass Personal NIU/ex
+BOARD	UBIB100	Ungermann-Bass NIUpc
+BOARD	UBIB200	Ungermann-Bass 3270 NIUpc
+BOARD	UBIC100	Ungermann-Bass NIC
+BOARD	UBID100	Ungermann-Bass NIUpc/Token Ring
+BOARD	USC0120	UltraStor - ULTRA 12F ESDI Hard Disk Controller
+BOARD	USC0125	UltraStor - ULTRA 12C ESDI Hard Disk Controller
+BOARD	USC0140	UltraStor - ULTRA 14F SCSI Host Adapter
+BOARD	USC0220	UltraStor - ULTRA 22C ESDI Hard Disk Controller
+BOARD	USC0221	UltraStor - ULTRA 22CA ESDI Hard Disk Controller
+BOARD	USC0225	UltraStor - ULTRA 22F ESDI Hard Disk Controller
+BOARD	USC0240	UltraStor - ULTRA 24F ISA SCSI Host Adapter
+BOARD	USC0250	UltraStor - ULTRA 15C IDE Hard Disk Controller
+BOARD	VMI0201	Vermont Image Manager 1024
+BOARD	VMI0211	Vermont Cobra
+BOARD	VMI0601	Vermont Image Manager 640
+BOARD	VMI0E01	Vermont Cobra Plus
+BOARD	WDC0240	Western Digital WDAT-240 IDE Card
+BOARD	WDC0300	Western Digital EtherCard PLUS 8003S
+BOARD	WDC0301	Western Digital EtherCard PLUS 8003SH
+BOARD	WDC03E0	Western Digital EtherCard PLUS 8003E
+BOARD	WDC03E1	Western Digital EtherCard PLUS w/Boot 8003EBT
+BOARD	WDC03E2	Western Digital EtherCard PLUS 8003EB 61-600245-02
+BOARD	WDC03E3	Western Digital EtherCard PLUS TP 8003WT
+BOARD	WDC03E4	Western Digital EtherCard PLUS 8003EB 61-600090-00
+BOARD	WDC0510	Western Digital TokenCard 8005TR/8005TRWS
+BOARD	WDC1007	Western Digital WD1007V-SE2
+BOARD	WDC13E0	Western Digital EtherCard PLUS 16 8013EBT
+BOARD	ZDS0009	Zenith Data Systems Z 386 / 33E system board
+BOARD	ZDS0011	Zenith Data Systems Z 486 / 25E system board
+BOARD	ZDS0021	Zenith Data Systems Z 486 / 33E system board
+BOARD	ZDS0029	Zenith Data Systems Z 486 System Board
+BOARD	ZDS2000	SCSI/IDE/Floppy Controller Board
+BOARD	ZDS2010	IDE/Floppy Controller Board
+BOARD	ZDSF010	ZDS Video Card
+BOARD	ZDSF028	Z-649 Video
+BOARD	ZDSF030	Adaptec 1540/42B SCSI
+BOARD	ZDSF038	ZDS VGA Video
+BOARD	ZDSF040	ZDS SCSI/FLOPPY
+BOARD	ZDSF048	ZDS Parallel Adaptor
+
+
+
+REM
+REM	Section 3: Compaq System Names
+REM	-------------------------------
+REM 	
+REM	The following is a list of Compaq System names.  
+REM	While new entries may be added to the list, it is recommended
+REM	that you obtain updates to this section from Compaq.
+REM
+REM	Each entry must be contained on a single line, and must 
+REM	be in the following format:
+REM
+REM	For Compaq EISA-based machines:
+REM
+REM	  MACHINE	EISA	CPQxxxx	CPQyyyy	<Compaq system name>
+REM
+REM	  Where "MACHINE" is the statement keyword, "EISA" identifies
+REM	  this as an EISA-based machine, the "CPQxxxx" is the
+REM	  seven-character EISA product ID of the system board, 
+REM	  the "CPQyyyy" is the seven-character EISA product ID
+REM	  of the processor board, and "<Compaq system name>" is the
+REM	  name of the system, as it should appear on the management
+REM	  console.
+REM
+REM	  Since the system board determines the base name of the
+REM	  server, such as "Compaq Systempro", additional entries
+REM	  have been added with the processor board's EISA product
+REM	  ID set to "CPQ????".  The Agent will interpret this 
+REM	  entry as a wildcard, and will use it as a default name
+REM	  for any machine which matches the system board ID.  This
+REM	  default name will be used if no "MACHINE" entry matches
+REM	  both the system board and processor board IDs.
+REM	  
+
+REM	For Compaq ISA-based machines:
+REM
+REM	  MACHINE	ISA	xx	<Compaq system name>
+REM
+REM	  Where "MACHINE" is the statement keyword, "ISA" identifies
+REM	  this as an ISA-based machine, the "xx" is the hexadecimal
+REM	  ID of the system board stored in configuration memory,
+REM	  and "<Compaq system name>" is the name of the system, as 
+REM	  it should appear on the management console.
+REM
+
+MACHINE	EISA	CPQ1589	CPQ9287	Compaq ProLiant 4000 (Rack) 5/66
+MACHINE	EISA	CPQ1589	CPQ9282	Compaq ProLiant 4000 (Rack) 486/50
+MACHINE	EISA	CPQ1589	CPQ9281	Compaq ProLiant 4000 (Rack) 486/50
+MACHINE	EISA	CPQ1589	CPQ????	Compaq ProLiant 4000 (Rack) 
+MACHINE	EISA	CPQ1599	CPQ9287	Compaq ProLiant 2000 (Rack) 5/66
+MACHINE	EISA	CPQ1599	CPQ9281	Compaq ProLiant 2000 (Rack) 486/50
+MACHINE	EISA	CPQ1599	CPQ9282	Compaq ProLiant 2000 (Rack) 486/50
+MACHINE	EISA	CPQ1599	CPQ????	Compaq ProLiant 2000 (Rack) 
+MACHINE	EISA	CPQ1509	CPQ9287	Compaq ProLiant 4000 5/66
+MACHINE	EISA	CPQ1509	CPQ9282	Compaq ProLiant 4000 486/50
+MACHINE	EISA	CPQ1509	CPQ9281	Compaq ProLiant 4000 486/50
+MACHINE	EISA	CPQ1509	CPQ????	Compaq ProLiant 4000
+MACHINE	EISA	CPQ1519	CPQ9287	Compaq ProLiant 2000 5/66
+MACHINE	EISA	CPQ1519	CPQ9281	Compaq ProLiant 2000 486/50
+MACHINE	EISA	CPQ1519	CPQ9282	Compaq ProLiant 2000 486/50
+MACHINE	EISA	CPQ1519	CPQ????	Compaq ProLiant 2000 
+MACHINE	EISA	CPQ0631	CPQ0631	Compaq ProLiant 1000 5/60
+MACHINE	EISA	CPQ0639	CPQ0639	Compaq ProLiant 1000 486/66
+MACHINE	EISA	CPQ1501	CPQ9287	Compaq Systempro/XL 5/66
+MACHINE	EISA	CPQ1501	CPQ9281	Compaq Systempro/XL 486/50
+MACHINE	EISA	CPQ1501	CPQ9282	Compaq Systempro/XL 486/50
+MACHINE	EISA	CPQ1501	CPQ????	Compaq Systempro/XL
+MACHINE	EISA	CPQ0611	CPQ0611	Compaq ProSignia 5/60
+MACHINE	EISA	CPQ0601	CPQ0601	Compaq ProSignia
+MACHINE	EISA	CPQ0609	CPQ0609	Compaq ProSignia
+MACHINE	EISA	CPQ0621	CPQ0621	Compaq ProSignia
+MACHINE	EISA	CPQ0629	CPQ0629	Compaq ProSignia
+MACHINE	EISA	CPQ0701	CPQ0701	Compaq ProSignia VS
+MACHINE	EISA	CPQ0711	CPQ0711	Compaq ProSignia VS
+MACHINE	EISA	CPQ0101	CPQ9013	Compaq Systempro 486DX2/66
+MACHINE	EISA	CPQ0109	CPQ9013	Compaq Systempro 486DX2/66
+MACHINE	EISA	CPQ0101	CPQ9014	Compaq Systempro 486/33
+MACHINE	EISA	CPQ0109	CPQ9014	Compaq Systempro 486/33
+MACHINE	EISA	CPQ0101	CPQ9999	Compaq Systempro 486/33
+MACHINE	EISA	CPQ0109	CPQ9999	Compaq Systempro 486/33
+MACHINE	EISA	CPQ0101	CPQ9990	Compaq Systempro 386/33
+MACHINE	EISA	CPQ0109	CPQ9990	Compaq Systempro 386/33
+MACHINE	EISA	CPQ0101	CPQ????	Compaq Systempro
+MACHINE	EISA	CPQ0109	CPQ????	Compaq Systempro
+MACHINE	EISA	CPQ0511	CPQ9040	Compaq Systempro/LT 5/66
+MACHINE	EISA	CPQ0511	CPQ9041	Compaq Systempro/LT 5/66
+MACHINE	EISA	CPQ0511	CPQ9042	Compaq Systempro/LT 5/66
+MACHINE	EISA	CPQ0511	CPQ9043	Compaq Systempro/LT 5/66
+MACHINE	EISA	CPQ0511	CPQ9044	Compaq Systempro/LT 5/60
+MACHINE	EISA	CPQ0511	CPQ9045	Compaq Systempro/LT 5/60
+MACHINE	EISA	CPQ0511	CPQ9046	Compaq Systempro/LT 5/60
+MACHINE	EISA	CPQ0511	CPQ9047	Compaq Systempro/LT 5/60
+MACHINE	EISA	CPQ0511	CPQ9016	Compaq Systempro/LT 486DX2/66
+MACHINE	EISA	CPQ0511	CPQ9017	Compaq Systempro/LT 486DX2/50
+MACHINE	EISA	CPQ0511	CPQ9015	Compaq Systempro/LT 486/33
+MACHINE	EISA	CPQ0511	CPQ9018	Compaq Systempro/LT 486/33
+MACHINE	EISA	CPQ0511	CPQ9906	Compaq Systempro/LT 486/33
+MACHINE	EISA	CPQ0511	CPQ990D	Compaq Systempro/LT 486/33
+MACHINE	EISA	CPQ0511	CPQ9038	Compaq Systempro/LT 486SX/33
+MACHINE	EISA	CPQ0511	CPQ903C	Compaq Systempro/LT 486SX/33
+MACHINE	EISA	CPQ0511	CPQ9034	Compaq Systempro/LT 486SX/25
+MACHINE	EISA	CPQ0511	CPQ9036	Compaq Systempro/LT 486SX/25
+MACHINE	EISA	CPQ0511	CPQ9903	Compaq Systempro/LT 486SX/25
+MACHINE	EISA	CPQ0511	CPQ9904	Compaq Systempro/LT 486SX/25
+MACHINE	EISA	CPQ0511	CPQ9905	Compaq Systempro/LT 486SX/25
+MACHINE	EISA	CPQ0511	CPQ990A	Compaq Systempro/LT 486SX/25
+MACHINE	EISA	CPQ0511	CPQ990B	Compaq Systempro/LT 486SX/25
+MACHINE	EISA	CPQ0511	CPQ990C	Compaq Systempro/LT 486SX/25
+MACHINE	EISA	CPQ0511	CPQ9004	Compaq Systempro/LT 386/33
+MACHINE	EISA	CPQ0511	CPQ9005	Compaq Systempro/LT 386/25
+MACHINE	EISA	CPQ0511	CPQ????	Compaq Systempro/LT
+MACHINE	EISA	CPQ1301	CPQ1301	Compaq Deskpro 486/50L
+MACHINE	EISA	CPQ0401	CPQ999A	Compaq Deskpro 486/33L
+MACHINE	EISA	CPQ0401	CPQ9991	Compaq Deskpro 386/33L
+MACHINE	EISA	CPQ0401	CPQ????	Compaq Deskpro/L
+MACHINE	EISA	CPQ1201	CPQ1201	Compaq Deskpro 486/25
+MACHINE	EISA	CPQ0501	CPQ9040	Compaq Deskpro 5/66M
+MACHINE	EISA	CPQ0509	CPQ9040	Compaq Deskpro 5/66M
+MACHINE	EISA	CPQ0501	CPQ9041	Compaq Deskpro 5/66M
+MACHINE	EISA	CPQ0509	CPQ9041	Compaq Deskpro 5/66M
+MACHINE	EISA	CPQ0501	CPQ9042	Compaq Deskpro 5/66M
+MACHINE	EISA	CPQ0509	CPQ9042	Compaq Deskpro 5/66M
+MACHINE	EISA	CPQ0501	CPQ9043	Compaq Deskpro 5/66M
+MACHINE	EISA	CPQ0509	CPQ9043	Compaq Deskpro 5/66M
+MACHINE	EISA	CPQ0501	CPQ9044	Compaq Deskpro 5/60M
+MACHINE	EISA	CPQ0509	CPQ9044	Compaq Deskpro 5/60M
+MACHINE	EISA	CPQ0501	CPQ9045	Compaq Deskpro 5/60M
+MACHINE	EISA	CPQ0509	CPQ9045	Compaq Deskpro 5/60M
+MACHINE	EISA	CPQ0501	CPQ9046	Compaq Deskpro 5/60M
+MACHINE	EISA	CPQ0509	CPQ9046	Compaq Deskpro 5/60M
+MACHINE	EISA	CPQ0501	CPQ9047	Compaq Deskpro 5/60M
+MACHINE	EISA	CPQ0509	CPQ9047	Compaq Deskpro 5/60M
+MACHINE	EISA	CPQ0501	CPQ9016	Compaq Deskpro 66M
+MACHINE	EISA	CPQ0509	CPQ9016	Compaq Deskpro 66M
+MACHINE	EISA	CPQ0501	CPQ9017	Compaq Deskpro 50M
+MACHINE	EISA	CPQ0509	CPQ9017	Compaq Deskpro 50M
+MACHINE	EISA	CPQ0501	CPQ9015	Compaq Deskpro 486/33M
+MACHINE	EISA	CPQ0509	CPQ9015	Compaq Deskpro 486/33M
+MACHINE	EISA	CPQ0501	CPQ9018	Compaq Deskpro 486/33M
+MACHINE	EISA	CPQ0509	CPQ9018	Compaq Deskpro 486/33M
+MACHINE	EISA	CPQ0501	CPQ9906	Compaq Deskpro 486/33M
+MACHINE	EISA	CPQ0509	CPQ9906	Compaq Deskpro 486/33M
+MACHINE	EISA	CPQ0501	CPQ990D	Compaq Deskpro 486/33M
+MACHINE	EISA	CPQ0509	CPQ990D	Compaq Deskpro 486/33M
+MACHINE	EISA	CPQ0501	CPQ9038	Compaq Deskpro 486s/33M
+MACHINE	EISA	CPQ0509	CPQ9038	Compaq Deskpro 486s/33M
+MACHINE	EISA	CPQ0501	CPQ903C	Compaq Deskpro 486s/33M
+MACHINE	EISA	CPQ0509	CPQ903C	Compaq Deskpro 486s/33M
+MACHINE	EISA	CPQ0501	CPQ9034	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0509	CPQ9034	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0501	CPQ9036	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0509	CPQ9036	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0501	CPQ9903	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0509	CPQ9903	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0501	CPQ9904	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0509	CPQ9904	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0501	CPQ9905	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0509	CPQ9905	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0501	CPQ990A	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0509	CPQ990A	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0501	CPQ990B	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0509	CPQ990B	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0501	CPQ990C	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0509	CPQ990C	Compaq Deskpro 486s/25M 
+MACHINE	EISA	CPQ0501	CPQ9035	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0509	CPQ9035	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0501	CPQ9037	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0509	CPQ9037	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0501	CPQ9901	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0509	CPQ9901	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0501	CPQ9902	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0509	CPQ9902	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0501	CPQ9908	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0509	CPQ9908	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0501	CPQ9909	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0509	CPQ9909	Compaq Deskpro 486s/16M 
+MACHINE	EISA	CPQ0501	CPQ9004	Compaq Deskpro 386/33M 
+MACHINE	EISA	CPQ0509	CPQ9004	Compaq Deskpro 386/33M 
+MACHINE	EISA	CPQ0501	CPQ9005	Compaq Deskpro 386/25M 
+MACHINE	EISA	CPQ0509	CPQ9005	Compaq Deskpro 386/25M 
+MACHINE	EISA	CPQ0501	CPQ????	Compaq Deskpro/M
+MACHINE	EISA	CPQ0509	CPQ????	Compaq Deskpro/M
+MACHINE EISA    CPQ0521 CPQ9A83	Compaq Deskpro XL
+MACHINE EISA    CPQ0521 CPQ????	Compaq Deskpro XL
+MACHINE	EISA	CPQ1409	CPQ1409	Compaq Portable 486c/66
+MACHINE	EISA	CPQ1401	CPQ1401	Compaq Portable 486c
+MACHINE	EISA	CPQ1009	CPQ1009	Compaq Portable 486/66
+MACHINE	EISA	CPQ1001	CPQ1001	Compaq Portable 486
+MACHINE	CPQ	0020	0510	Compaq Deskpro XE 560
+MACHINE	CPQ	0044	0430	Compaq Deskpro XE 466
+MACHINE	CPQ	0040	0430	Compaq Deskpro XE 450
+MACHINE	CPQ	0044	0420	Compaq Deskpro XE 433s
+MACHINE	CPQ	0020	????	Compaq Deskpro XE
+MACHINE	CPQ	0040	????	Compaq Deskpro XE
+MACHINE	CPQ	0044	????	Compaq Deskpro XE
+MACHINE	CPQ	0110	0430	Compaq ProLinea MT 4/66
+MACHINE	CPQ	0111	0430	Compaq ProLinea MT 4/50
+MACHINE	CPQ	0110	0420	Compaq ProLinea MT 4/33s
+MACHINE	CPQ	0110	????	Compaq ProLinea MT
+MACHINE	CPQ	0111	????	Compaq ProLinea MT
+MACHINE	CPQ	0125	0420	Compaq ProLinea Net1/25s
+MACHINE	CPQ	0124	????	Compaq ProLinea Net1
+MACHINE	CPQ	0125	????	Compaq ProLinea Net1
+MACHINE	CPQ	0104	0300	Compaq ProLinea 3/25s
+MACHINE	CPQ	0109	0420	Compaq ProLinea 4/25s
+MACHINE	CPQ	010D	0420	Compaq ProLinea 4/25s
+MACHINE	CPQ	010F	0420	Compaq ProLinea 4/25s
+MACHINE	CPQ	010E	0420	Compaq ProLinea 4/33s
+MACHINE	CPQ	0108	0400	Compaq ProLinea 4/33
+MACHINE	CPQ	010C	0400	Compaq ProLinea 4/33
+MACHINE	CPQ	010E	0400	Compaq ProLinea 4/33
+MACHINE	CPQ	0109	0430	Compaq ProLinea 4/50
+MACHINE	CPQ	010F	0430	Compaq ProLinea 4/50
+MACHINE	CPQ	010C	0430	Compaq ProLinea 4/66
+MACHINE	CPQ	010E	0430	Compaq ProLinea 4/66
+MACHINE	CPQ	0010	0300	Compaq Deskpro 3/25i
+MACHINE	CPQ	0014	0300	Compaq Deskpro 3/33i
+MACHINE	CPQ	0010	0420	Compaq Deskpro 4/25is
+MACHINE	CPQ	0018	0420	Compaq Deskpro 4/25is
+MACHINE	CPQ	0030	0420	Compaq Deskpro 4/25is
+MACHINE	CPQ	0038	0420	Compaq Deskpro 4/25is
+MACHINE	CPQ	0014	0400	Compaq Deskpro 4/33i
+MACHINE	CPQ	001C	0400	Compaq Deskpro 4/33i
+MACHINE	CPQ	0034	0400	Compaq Deskpro 4/33i
+MACHINE	CPQ	003C	0400	Compaq Deskpro 4/33i
+MACHINE	CPQ	0014	0430	Compaq Deskpro 4/66i
+MACHINE	CPQ	001C	0430	Compaq Deskpro 4/66i
+MACHINE	CPQ	0034	0430	Compaq Deskpro 4/66i
+MACHINE	CPQ	003C	0430	Compaq Deskpro 4/66i
+MACHINE	CPQ	0010	????	Compaq Deskpro/i
+MACHINE	CPQ	0014	????	Compaq Deskpro/i
+MACHINE	CPQ	0018	????	Compaq Deskpro/i
+MACHINE	CPQ	001C	????	Compaq Deskpro/i
+MACHINE	CPQ	0030	????	Compaq Deskpro/i
+MACHINE	CPQ	0034	????	Compaq Deskpro/i
+MACHINE	CPQ	0038	????	Compaq Deskpro/i
+MACHINE	CPQ	003C	????	Compaq Deskpro/i
+MACHINE	CPQ	0121	0420	Compaq Presario 425
+MACHINE	CPQ	0121	????	Compaq Presario
+MACHINE	CPQ	00EA	0420	Compaq LTE Lite 4/33c
+MACHINE	CPQ	00E8	0420	Compaq LTE Lite 4/25c
+MACHINE	CPQ	00EC	0420	Compaq LTE Lite 4/25E
+MACHINE	CPQ	00E9	0420	Compaq LTE Lite 4/25
+MACHINE	CPQ	00FC	0300	Compaq LTE Lite/25E
+MACHINE	CPQ	00D0	0300	Compaq LTE Lite/25
+MACHINE	CPQ	00D8	0300	Compaq LTE Lite/20
+MACHINE	CPQ	00DC	0300	Compaq LTE Lite/25c
+MACHINE	CPQ	00E1	0300	Compaq Contura 3/25c
+MACHINE	CPQ	00E0	0300	Compaq Contura 3/25
+MACHINE	CPQ	00E4	0300	Compaq Contura 3/20
+MACHINE	CPQ	00F4	0420	Compaq Contura 4/25
+MACHINE	CPQ	0204	0420	Compaq Contura 4/25C
+MACHINE	CPQ	0208	0420	Compaq Contura 4/25CX
+MACHINE	ISA	37	Compaq Deskpro 386/33
+MACHINE	ISA	39	Compaq Deskpro 386/25e
+MACHINE	ISA	3D	Compaq Deskpro 386/25e
+MACHINE	ISA	35	Compaq Deskpro 386/25
+MACHINE	ISA	36	Compaq Deskpro 386/20e
+MACHINE	ISA	3A	Compaq Deskpro 386/20e
+MACHINE	ISA	3C	Compaq Deskpro 386/20e
+MACHINE	ISA	54	Compaq Deskpro 386s/20
+MACHINE	ISA	57	Compaq Deskpro 386s/20
+MACHINE	ISA	59	Compaq Deskpro 386N/20
+MACHINE	ISA	32	Compaq Deskpro 386/20
+MACHINE	ISA	51	Compaq Deskpro 386s
+MACHINE	ISA	56	Compaq Deskpro 386s
+MACHINE	ISA	53	Compaq Deskpro 386N
+MACHINE	ISA	58	Compaq Deskpro 386N
+MACHINE	ISA	31	Compaq Deskpro 386
+MACHINE	ISA	33	Compaq Portable 386
+MACHINE	ISA	55	Compaq LTE 386s/20
+MACHINE	ISA	52	Compaq SLT 386s/20
+

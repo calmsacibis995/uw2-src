@@ -1,0 +1,81 @@
+#ident\t"@(#)dthelp:Applications/debug.defs     1.3"
+^=contesto corrente
+Il contesto attuale per un Set di Finestre determina quello che viene
+visualizzato in ciascuna finestra. Il contesto attuale viene
+determinato dal frame attuale del processo o sottoprocesso attuale.
+^=
+
+^=frame corrente
+Il frame attuale, insieme al processo o sottoprocesso attuale,
+determina il contesto attuale.  Il frame attuale è mostrato con una
+mano indicante alla sua sinistra nella Sottofinestra Stack della
+Finestra Contesto.
+^=
+
+^=processo o sottoprocesso corrente
+Il processo o sottoprocesso attuale, insieme al frame attuale,
+determina il contesto attuale. Il processo o sottoprocesso attuale è
+mostrato con una mano indicante alla sua sinistra nella Sottofinestra
+Processi della Finestra Contesto.
+^=
+
+^=programma corrente
+Il programma attuale è il programma che contiene il processo o
+sottoprocesso attuale. Il programma attuale può anche contenere altri
+processi e sottoprocessi derivati dallo stesso file eseguibile.
+^=
+
+^=evento onstop
+Un evento All'Arresto specifica un'azione che il debugger deve
+eseguire quando un sottoprocesso o processo si arresta per qualsiasi
+motivo. L'azione può essere uno o più comandi tra quelli disponibili
+tramite l'interfaccia a riga di comando del debugger.
+^=
+
+^=finestra sorgente secondaria
+Le finestre sorgenti secondarie sono indicate da un asterisco ('*')
+nell'intestazione della finestra e non vengono aggiornate quando il
+processo o sottoprocesso attuale si arresta. Vengono create con
+l'opzione Nuova Sorgente e contengono una Sottofinestra Stato e una
+Sottofinestra Sorgente.
+^=
+
+^=evento segnale
+Un evento di segnale arresta il sottoprocesso o processo ed esegue i
+comandi associati quando è stato inviato un segnale al processo. Per
+lo stesso segnale possono essere creati più eventi.
+^=
+
+^=evento stop
+Un evento di arresto arresta il sottoprocesso o processo ed esegue i
+comandi associati, se ce ne sono, quando diventa vera la condizione
+specificata nello spazio di indirizzi del programma.
+^=
+
+^=evento syscall
+Un evento chiamata di sistema arresta il sottoprocesso o processo ed
+esegue i comandi associati quando il sottoprocesso o processo entra o
+esce dalla chiamata di sistema specificata. Per la stessa chiamata di
+sistema possono essere creati più eventi.
+^=
+
+^=set di finestre
+Un Set di Finestre consiste in una singola istanza di ciascuna
+finestra configurata nel debugger grafico. Ciascuna finestra contiene
+una o più sottofinestre. Le finestre di un set operano sullo stesso
+processo o sottoprocesso attuale.
+^=
+
+^=Barra pulsanti
+Ciascuna finestra puo contenere opzionalmente una Barra di Pulsanti.
+La Barra di Pulsanti può apparire in alto o in basso nella finestra.
+La Barra di Pulsanti contiene una selezione dei pulsanti che esistono
+anche in uno dei menu a tendina di quella finestra.
+^=
+
+^=LWP
+Un processo leggero o LWP è l'oggetto del kernel sottostante su cui
+sono implementati i sottoprocessi. Il debugger sa quale sottoprocesso
+è in esecuzione e su quale LWP e controlla il sottoprocesso
+controllando l'LWP associato.
+^=

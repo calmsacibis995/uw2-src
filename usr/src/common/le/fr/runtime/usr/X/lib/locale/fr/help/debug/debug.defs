@@ -1,0 +1,87 @@
+#ident\t"@(#)dthelp:Applications/debug.defs     1.3"
+^=contexte actuel
+La nature des éléments affichés dans chaque fenêtre d'un groupe de
+fenêtres dépend du contexte actuel associé. Ce dernier est déterminé
+en fonction de la trame actuelle du processus ou du chemin actuel.
+^=
+
+^=trame actuelle
+La trame actuelle, ainsi que le processus/chemin actuel, détermine le
+contexte actuel. Cette trame est désignée dans le panneau Pile de la
+fenêtre Contexte par une manette de pointage située à gauche.
+^=
+
+^=processus ou chemin d'exécution actuel
+Le processus/chemin actuel, ainsi que la trame actuelle, détermine le
+contexte actuel. Ce processus/chemin est désigné dans le panneau
+Processus de la fenêtre Contexte à l'aide d'ne manette de pointage
+située à gauche.
+^=
+
+^=programme actuel
+Le programme actuel correspond au programme
+contenant le processus/chemin actuel. Le programme actuel peut
+également contenir d'autres processus et chemins provenant du même
+fichier exécutable.
+^=
+
+^=événement onstop
+Un événement onstop indique l'action que le débogueur
+doit exécuter lorsqu'un chemin ou un processus est arrêté pour
+une raison quelconque. Cette action peut
+correspondre à une ou plusieurs commandes accessibles via l'interface
+de la ligne de commande du débogueur.
+^=
+
+^=fenêtre source secondaire
+Les fenêtres source secondaires sont
+désignées par un astérisque ('*') figurant dans
+l'en-tête, et ne sont pas mises à jour lorsque le processus ou le
+chemin actuel est interrompu. Elles sont créées à l'aide de l'option
+Nouvelle source et contiennent un panneau Statut et un panneau Source.
+^=
+
+^=événement signal
+Un événement de type signal interrompt le processus ou
+le chemin et exécute les commandes associées
+dès que le signal est envoyé au processus. Il
+est possible de créer plusieurs événements pour le même signal.
+^=
+
+^=événement stop
+Un événement de type arrêt interrompt le chemin ou le
+ processus et exécute les commandes
+ éventuellement associées dès que la condition
+indiquée dans l'espace d'adresse du programme est vérifiée.
+^=
+
+^=événement syscall
+Un événement de type appel système interrompt le chemin
+ou le processus et exécute les commandes associées dès que le
+ chemin ou le processus entrent dans les appels
+systèmes spécifiés ou en sortent. Il est possible de créer plusieurs
+événements pour le même appel système.
+^=
+
+^=groupe de fenêtres
+Un groupe de fenêtres comprend un exemplaire de chaque
+fenêtre configurée dans le débogueur graphique. Chaque
+fenêtre comporte un ou plusieurs panneaux. Les
+fenêtres figurant dans un groupe donné s'appliquent toutes au même
+processus/chemin actuel.
+^=
+
+^=Barre de boutons
+Chaque fenêtre peut inclure en option une barre de boutons.
+Celle-ci peut être située dans la partie supérieure ou inférieure de
+la fenêtre. Elle comprend un choix de boutons qui se trouvent
+également dans l'un des menus déroulants de cetfe fenêtre.
+^=
+
+^=LWP
+Un processus léger (LWP) constitue l'objet sous-jacent du noyau
+ à partir duquel les chemins d'exécution sont mis en
+oeuvre. Le débogueur sait exactement quel est le chemin en cours
+d'exécution sur tel processus LWP et contrôle ce chemin en contrôlant
+le processus LWP associé.
+^=

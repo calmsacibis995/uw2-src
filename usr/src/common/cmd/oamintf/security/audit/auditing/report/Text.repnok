@@ -1,0 +1,24 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/report/Text.repnok	1.1.2.2"
+#ident  "$Header: Text.repnok 2.0 91/07/12 $"
+#	Module Name: Text.repnok
+
+title="Error Displaying Event Log"
+framemsg=`readfile $INTFBASE/conf.msg`
+lifetime=shortterm
+
+rows=6
+columns=60
+
+text="
+An error occured in trying to display the event log.
+
+`readfile $REPERR`"
+
+altslks
+name=CONT
+button=11
+action=CLOSE
+
+name=CANCEL
+button=14
+action=CLEANUP

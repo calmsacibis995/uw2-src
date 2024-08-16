@@ -1,0 +1,34 @@
+This directory contains the sample UIL/Xm program hellomotif,
+a simple program with a label and a push button.
+
+With this version, you can choose a kanji, hebrew, french,
+or english interface at run time. 
+
+To locate the UID files, the demo is using the $UIDPATH environment
+variable, which requires you to set $XAPPLRESDIR to ., and the $LANG
+or the xnlLanguage resource to one of the following:
+
+	$LANG		Type of Interface
+	-----		-----------------
+	japan		kanji interface 
+	hebrew		hebrew interface 
+	french		a french interface
+	english		standard english interface
+
+(use *xnlLanguage:$LANG	in your .Xdefaults if your shell doesn't let you
+set $LANG directly).
+
+The fonts needed for the demos are:
+
+    french: -adobe-helvetica-medium-r-normal--12-120-75-75-p-67-iso8859-1
+    english: -adobe-times-medium-r-normal--14-100-100-100-p-74-iso8859-1
+    hebrew: -Misc-Fixed-Medium-R-Normal--13-120-75-75-C-80-ISO8859-8
+    japan: -*-JISX0208.1983-1
+       &   -*-JISX0201.1976-0
+
+If you don't have those fonts installed on your system, you can either
+change the uil files to reference other fonts or install the
+fonts provided in ./bdf for your server (using bdftosnf, bdftopcs or
+whatever font compiler your X server is using).
+
+

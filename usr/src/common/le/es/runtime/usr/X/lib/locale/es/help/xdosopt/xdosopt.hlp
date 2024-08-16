@@ -1,0 +1,302 @@
+^*version^1
+^*title^DOS y Win
+^*width^70
+^+DesktopMgr/help.defs
+^?Ejecución de aplicaciones DOS y Windows.
+^0^DOS y Win
+^$10
+DOS y Win
+
+  Propósito: Ejecutar aplicaciones DOS y Windows.
+
+  Se proporcionan las siguientes ventanas:
+
+        \k(Ventana Opciones)
+        \k(Ventana DOS o Windows)
+        \k(Ventana Información de dispositivos)
+^1^Ventana Opciones
+^$20
+\k{DOS y Win}
+Ventana Opciones
+
+La ventana Opciones le permite definir el modo de vídeo, la cantidad
+de memoria Estándar y EMS, la asignación para las unidades E, F, G, H
+e I, y los puertos COM activos para el entorno DOS o Windows. El acceso
+a la ventana Opciones desde DOS se realiza mediante el menú de icono DOS
+y desde Windows mediante menú de icono Win.  Para mostrar este menú, haga
+clic con el botón derecho del ratón, sobre el icono, el cual se encuentra
+en la carpeta Aplicaciones.
+
+
+En la ventana Opciones se pueden definir las siguientes opciones:
+
+   o Video: seleccione el tipo de modo de vídeo en el que desea
+     ejecutar esta sesión o en futuras sesiones DOS. Haga clic en VGA,
+     CGA, MDA o Hércules.
+
+   o Unidades: si su computador tiene más de una partición DOS, podrá
+     asignar dichas particiones a una de las letras de unidad mostradas.
+
+Nota: las particiones DOS son secciones del disco duro reservadas para 
+ejecutar DOS; el DOS en una partición DOS no se ejecuta bajo UnixWare.
+
+Para ver el menú de letras de unidad, haga clic en el botón situado 
+junto a la letra de unidad. En este menú, seleccione Ninguno o la 
+partición DOS que desea asignar a dicha letra de unidad.
+
+Nota: No se debe asignar la misma partición DOS a más de una
+letra de unidad a la vez.
+
+   o Puertos COM: seleccione los puertos COM necesarios para la
+     sesión DOS.  Por ejemplo, un programa de comunicaciones necesita
+     un puerto COM para acceder a un módem interno o externo.
+
+Nota: sólo puede utilizar puertos COM con DOS cuando no los están
+utilizando otros usuarios del sistema, incluidos los usuarios del
+sistema UNIX. Evite seleccionar un puerto COM a menos que esté
+ejecutando una aplicación que requiera un puerto COM.
+
+
+   o Memoria: Seleccione la cantidad de memoria Estándar o EMS 
+     (Expanded Memory Specification) que necesita para esta sesión o
+     sesiones futuras de DOS o Windows. Generalmente, la memoria EMS
+     se usa sólo en entornos DOS y los valores de memoria estándar
+     encima de 1MB se usan sólo en entornos Windows.
+
+Visualice el menú de selección de memoria haciendo clic sobre el
+botón de flecha situado junto al tipo de memoria que desee cambiar.
+En este menú, seleccione la cantidad de MB (Mega Bytes) desesada.
+
+Nota: Si selecciona una cantidad mayor de memoria que la que se
+encuentra disponible actualmente, puede que no sea posible ejecutar la
+sesión DOS o Windows. En dicho caso, cierre algunas de las ventanas
+abiertas o bien seleccione una cantidad menor de memoria. De igual
+manera, una selección excesiva de memoria puede afectar al
+funcionamiento del computador.
+
+Todas las peticiones de impresión se dirigen al gestor de cola lp
+del sistema UNIX. Dichas peticiones se manipulan como si
+estuviera imprimiento a través del sistema UNIX.
+Nota: Para imprimir a través del gestor de cola
+lp del sistema UNIX, debe definir una impresora con
+el nombre "doslp".
+
+Los \d(buttons^botón) disponibles en la ventana Opciones de DOS son:
+
+        \k(Botón Arrancar)
+        \k(Botón Aplicar)
+        \k(Botón Por defecto)
+        \k(Botón Ayuda)
+        \k(Botón Cancelar)
+^2^Botón Arrancar
+^$30
+\k{Ventana Opciones}
+    Botón Arrancar
+
+El botón Arrancar abre una ventana DOS o Windows. Si ha hecho algún
+cambio en la ventana Opciones, dichos cambios sólo afectarán a esta
+sesión.
+
+Mas informacion: \k(Ventana DOS o Windows)
+^2^Botón Aplicar
+^$40
+\k{Ventana Opciones}
+   Botón Aplicar
+
+El botón Aplicar aplica a todas las sesiones futuras de DOS o Windows.
+Si desea que estos cambios sólo afecten a la próxima sesión, haga clic
+en el botón Arrancar en vez de en el botón Aplicar.
+
+Nota: los cambios realizados no afectarán a las ventanas DOS o Windows ya
+abiertas.
+
+Se debe evitar que los cambios realizados afecten a todas las sesiones
+futuras a menos que se utilicen las mismas opciones para cada
+aplicación de DOS o Windows. En su lugar, asigne opciones para
+aplicaciones específicas de DOS{pero no Windows}. Por ejemplo, si está
+utilizando una aplicación de comunicaciones, necesitará asignar un
+puerto COM a DOS de manera que la aplicación pueda establecerse
+mediante un módem. Para establecer la aplicación de comunicaciones de
+modo que el puerto COM se encuentre únicamente asignado a DOS cuando
+se ejecute dicha aplicación, haga un clic MENU sobre el icono de
+aplicación de comunicaciones(fichero .exe, .com, o .bat) a fin de
+visualizar la ventana Opciones de DOS. Ahora defina las opciones
+deseadas. Estos parámetros afectarán sólamente la aplicación de
+comunicaciones. De igual manera, se pueden establecer opciones
+específicas para otro tipo de aplicaciones.
+^2^Botón Por defecto
+^$50
+\k{Ventana Opciones}
+    Botón Por defecto
+
+El botón Opción por defecto devuelve los parámetros de la opción a las 
+configuraciones por defecto.
+^2^Botón Ayuda
+^$60
+\k{Ventana Opciones}
+    Botón Ayuda
+
+El botón Ayuda muestra ayuda en línea para la ventana Opciones de DOS.
+^2^Botón Cancelar
+^$70
+\k{Ventana Opciones}
+    Botón Cancelar
+
+El botón Cancelar cierra la ventana Opciones de DOS, sin guardar ningún
+cambio realizado.
+^1^Ventana DOS o Windows
+^$80
+\k{DOS y Win}
+Ventana DOS o Windows
+
+Puede abrir una ventana de Windows. También puede abrir múltiples
+ventanas DOS simultáneamente, dependiendo de los recursos
+disponibles en el sistema. Con una ventana DOS o Windows abierta, puede
+acceder al menú DOS pulsando la tecla <Bloq Despl>.
+
+El menú DOS contiene las siguientes opciones:
+
+        \k(Ampliar)
+        \k(Centrar/Descentrar)
+        \k(Renovar)
+        \k(Colores de DOS/Colores X)
+        \k(Teclas del Escritorio/Teclas de DOS)
+        \k(Autocongelación activa/Autocongelación inactiva)
+        \k(Salir)
+
+En una ventana de DOS (pero no de Windows) se puede acceder a la ventana
+Información de dispositivo pulsando Ctrl-Esc seguido de Ctrl-I
+
+Mas informacion: \k(Ventana Información de dispositivos)
+^2^Ampliar
+^$90
+\k{Ventana DOS o Windows}
+    Ampliar
+
+La opción Zoom muestra la ventana DOS o Windows ocupando toda la
+pantalla, lo cual convierte a su sistema UnixWare en un sistema DOS o
+Windows convencional. Para volver a ver la ventana DOS original bajo
+UnixWare, pulse la tecla <Bloq Despl>.
+
+NOTA:  La ampliación no está disponible cuando se ejecuta Windows con
+el controlador Windows/X. Tampoco está disponible
+en estaciones X remotas. Para poder efectuar la ampliación,
+debe ejecutarla desde la consola.
+^2^Centrar/Descentrar
+^$100
+\k{Ventana DOS o Windows}
+    Centrar/Descentrar
+
+La opción Centrar le permite utilizar el ratón en la ventana DOS o
+Windows. Esta opción, no obstante, desactiva el ratón para el resto
+del Escritorio. Si desea utilizar el ratón en otras ventanas, deberá
+descentrar el ratón pulsando la tecla <Bloq Despl> a fin de hacer
+aparecer el menú DOS y seleccionar Descentrar.
+
+Cuando se utiliza MS-Windows 3.1 en una ventana, no es
+necesario utilizar la opción Centrar. El ratón se usa automáticamente
+en la ventana.
+
+Nota: cuando utilice la opción Zoom, no tendrá que usar la
+opción Centrar para usar un ratón en la ventana de pantalla
+completa.
+^2^Renovar
+^$110
+\k{Ventana DOS o Windows}
+    Renovar
+
+La opción Renovar vuelve a dibujar la ventana DOS o Windows. Utilice
+esta opción si la ventana DOS o Windows es ilegible.
+^2^Colores de DOS/Colores X
+^$120
+\k{Ventana DOS o Windows}
+    Colores de DOS/Colores X
+
+Dependiendo del hardware del sistema, al mostrar la ventana DOS o
+Windows se utilizan los colores UnixWare o los colores de DOS. Si se
+usan los colores UnixWare, la opción Colores de DOS le permitirá usar
+como alternativa los colores DOS. Si su sistema utiliza
+automáticamente los colores DOS, esta opción estará inactiva
+(aparecerá en color gris). Cuando se utiliza este botón para usar los
+colores de DOS, el nombre de esta opción se transforma en "Colores X".
+Seleccionese a fin de volver a los colores de UnixWare.
+^2^Teclas del Escritorio/Teclas de DOS
+^$130
+\k{Ventana DOS o Windows}
+    Teclas del Escritorio/Teclas de DOS
+
+La selección de la opción "Teclas de DOS" permite a la aplicación DOS
+y Windows recibir todo tipo de operaciones ejecutadas mediante teclado
+(incluídos los aceleradores del Escritorio) La selección de la opción
+"Teclas del Escritorio" da lugar a la interpretación por parte del
+Escritorio de todos los aceleradores (y al no envío a la aplicación
+DOS o Windows).
+
+^2^Autocongelación activa/Autocongelación inactiva
+^$140
+\k{Ventana DOS o Windows}
+    Autocongelación activa/Autocongelación inactiva
+
+La selección de la opción "Autocongelación activa" da lugar a la
+ejecución de la aplicación DOS o Windows únicamente si ésta es la
+ventana activa. De este modo, la Unidad Central queda disponible para
+ser utilizada en otros programas siempre que la ventana DOS o Windows
+esté en segundo plano o convertida en icono. Si no se desea realizar
+dicha operación, seleccione "Autocongelación inactiva".
+
+^2^Salir
+^$150
+\k{Ventana DOS o Windows}
+    Salir
+
+La opción Salir cierra la ventana DOS o Windows. Antes de cerrarse la
+ventana aparecerá un aviso Salir DOS. Este aviso tiene dos botones:
+
+   o Botón Sí: este botón cierra la ventana.
+
+   o Botón No: este botón cancela la petición para cerrar la
+     ventana.
+^1^Ventana Información de dispositivos
+^$160
+\k{DOS y Win}
+Ventana Información de dispositivos
+
+Utilice la ventana Información de dispositivos para ver los
+dispositivos disponibles para DOS. Para acceder a esta ventana,
+pulse Ctrl-Esc seguido de Ctrl-I en la ventana DOS.
+No podrá visualizar esta ventana cuando ejecute
+Windows o cuando su aplicación DOS esté en modo gráfico.
+
+
+La ventana Información de dispositivos DOS muestra la siguiente
+información:
+
+   o Video: el adaptador de vídeo que utiliza el DOS.
+
+   o COM1 y COM2: si el puerto COM está disponible para DOS,
+     se mostrará el dispositivo del sistema UNIX, como /dev/tty00.
+     Si el puerto COM no está disponible para el DOS, se mostrará
+     la palabra "Ninguno".
+
+   o LPT1, LPT2 y LPT3: se muestra el destino de las peticiones
+     de impresión para cada dispositivo.
+
+   o RAM: muestra la cantidad de memoria Estándar que se está utilizando.
+
+   o EMS: muestra la cantidad de memoria EMS que se está utilizando.
+
+   o Raton: muestra el tipo de ratón que se está utilizando.
+
+   o Unidades de disco flexible: muestra cómo accede DOS a las unidades
+     de diskette.
+
+   o UNIX/DOS compartidos: muestra las unidades a las que tiene
+     acceso tanto el sistema UNIX como el DOS.
+
+   o Particiones de DOS: muestra las unidades que representan
+     particiones de DOS.
+
+Para retirar la ventana Información de dispositivos DOS y seguir
+utilizando DOS, pulse la barra espaciadora.
+
+

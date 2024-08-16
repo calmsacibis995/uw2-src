@@ -1,0 +1,28 @@
+#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#	Copyright (c) 1988, 1990 Novell, Inc. All Rights Reserved.
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+#ident	"@(#)debugger:libdbgen/i386/makefile	1.1"
+
+include $(CMDRULES)
+
+TARGET = $(PRODLIB)/libdbgen.a
+
+include ../../util/common/std.make
+
+CCSOURCES = \
+	$(COMMON)/Buffer.C \
+	$(COMMON)/Link.C \
+	$(COMMON)/List.C \
+	$(COMMON)/Rbtree.C \
+	$(COMMON)/Vector.C \
+	$(COMMON)/Wordstack.C \
+	$(COMMON)/str.C
+
+include DEPEND
+
+include ../../util/common/lib.make

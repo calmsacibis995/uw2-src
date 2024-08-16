@@ -1,0 +1,82 @@
+#ident	"@(#)kern-i386at:interface.d/ddi.3	1.3"
+#ident	"$Header: $"
+# ddi.3 -- DDI/DKI version 3 (SVR4.0MP + non-DDI/DKI extensions)
+$replace 2
+#
+# New interfaces in SVR4.0MP:
+bcanputnext
+bioerror
+canputnext
+drv_lock		lock_nodbg
+drv_lock_alloc		lock_alloc
+drv_lock_dealloc	lock_dealloc
+drv_rw_alloc		rw_alloc
+drv_rw_dealloc		rw_dealloc
+drv_rw_rdlock		rw_rdlock
+drv_rw_tryrdlock	rw_tryrdlock
+drv_rw_trywrlock	rw_trywrlock
+drv_rw_unlock		rw_unlock
+drv_rw_wrlock		rw_wrlock
+drv_sleep_alloc		sleep_alloc
+drv_sleep_dealloc	sleep_dealloc
+drv_sleep_lock		sleep_lock
+drv_sleep_lockavail	SLEEP_LOCKAVAIL
+drv_sleep_lockowned	SLEEP_LOCKOWNED
+drv_sleep_lock_sig	sleep_lock_sig
+drv_sleep_trylock	sleep_trylock
+drv_sleep_unlock	sleep_unlock
+drv_sv_alloc		sv_alloc
+drv_sv_broadcast	sv_broadcast
+drv_sv_dealloc		sv_dealloc
+drv_sv_signal		sv_signal
+drv_sv_wait		sv_wait
+drv_sv_wait_sig		sv_wait_sig
+drv_trylock		trylock_nodbg
+drv_unlock		unlock_nodbg
+dtimeout
+freezestr
+getnextpg
+itimeout		itimeout_u
+kvtoppid
+msgpullup		_Compat_msgpullup
+pcmsg
+phalloc
+phfree
+phystoppid
+proc_ref
+proc_signal
+proc_unref
+put
+putnextctl
+putnextctl1
+qprocsoff
+qprocson
+rmallocmap
+rmalloc_wait
+rmfreemap
+unfreezestr
+# New spl variants in SVR4.0MP:
+splbase
+spltimeout
+spldisk
+# New global variables in SVR4.0MP:
+invpl
+plbase
+pltimeout
+pldisk
+plstr
+plhi
+pridisk
+prihi
+prilo
+primed
+prinet
+pritape
+# Drop old interfaces
+dma_pageio		$dropped
+hat_getkpfnum		$dropped
+hat_getppfnum		$dropped
+rdma_filter		$dropped
+rminit			$dropped
+rmsetwant		$dropped
+timeout			$dropped

@@ -1,0 +1,34 @@
+#!/bin/sh
+#ident	"@(#)langsup:common/ls/:mkcodesets	1.3"
+#
+
+echo "Compiling code set maps"
+if [ ! -d $PKGDIR/usr/lib/iconv ] ; then
+	mkdir -p $PKGDIR/usr/lib/iconv
+fi
+
+cd codesets
+HERE=`pwd`
+
+/bin/ls . >/tmp/iconv.$$
+
+for i in `cat /tmp/iconv.$$`
+	do
+	echo ======= $i =======
+	if [ "$i" = "iconv_data.ls" ]
+	then
+		cp $i $PKGDIR/var/opt/ls/$i
+	elif [ -d "$i" ]
+	then
+		cd $i
+		${TOOLS}/usr/ccs/bin/${CPU}env i386make install
+		${TOOLS}/usr/ccs/bin/${CPU}env i386make clobber
+		cd $HERE
+	else
+		kbdcomp -o $PKGDIR/usr/lib/iconv/$i $i;
+	fi
+done
+
+
+echo "Complete"
+echo ""

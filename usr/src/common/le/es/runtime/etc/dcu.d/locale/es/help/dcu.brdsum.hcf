@@ -1,0 +1,110 @@
+.ident	"@(#)dcu:locale/C/help/dcu.brdsum	1.8"
+.related kbhelp dcu.whatis
+.title Ayuda: Configuración de dispositivos de hardware
+ACERCA DE ESTE MENU
+La pantalla Configuración de dispositivos de hardware enumera todos los
+controladores (dispositivos de hardware) configurados en el sistema.
+Desde esta pantalla, usted puede:
+   --- Ver todos los dispositivos de hardware configurados en el sistema
+       y los valores actuales de los parámetros de los controladores de
+       dispositivos
+   --- Obtener información ampliada que enumere los valores válidos para
+       cada parámetro de los controladores de dispositivos
+   --- Cambiar los parámetros de los controladores de dispositivos de
+       los dispositivos de hardware (CONTINUACIÓN)
+.page
+INFORMACION DE DISPOSITIVOS DE HARDWARE
+Se proporciona una fila independiente para cada
+dispositivo de hardware.  El segundo campo lista el
+nombre del dispositivo de hardware.
+
+Si en el campo del nombre del dispositivo aparece "sin usar",
+el dispositivo de hardware estará temporalmente
+inactivo; es decir, puede asignar más tarde (activar)
+un dispositivo de hardware con los valores del controlador de
+dispositivo listados (los datos de configuración permanecen
+en el archivo de datos de recursos del sistema).
+
+NOTA:  Si un dispositivo de hardware detectable automáticamente
+       por UnixWare (por ejemplo, los dispositivos EISA,
+       MCA o PCI soportados) se elimina del sistema,
+       las entradas de los parámetros del controlador
+       de dispositivos correspondientes al mismo
+       se suprimirán del archivo de datos de recursos del
+       sistema.
+                                   (CONTINUACIÓN)
+.page
+INFORMACIÓN DE DISPOSITIVOS DE HARDWARE (CONTINUACIÓN)
+A la izquierda del nombre del dispositivo de hardware
+es posible que aparezcan los valores S o N.  S indica que
+el dispositivo de hardware está en uso en el sistema;
+N indica que el dispositivo de hardware está inactivo y
+que sus datos se suprimirán del archivo de datos de
+recursos del sistema cuando usted aplique los cambios
+de DCU.
+
+A la derecha del nombre del dispositivo aparecen los siguientes
+valores para los parámetros de configuración:
+  - IRQ
+  - Dirección inicial para el rango de direcciones de E/S
+  - Dirección final para el rango de direcciones de E/S
+  - Dirección inicial para el rango de direcciones de memoria
+  - Dirección final para el rango de direcciones de memoria
+  - Canal DMA
+                                  (CONTINUACIÓN)
+.page
+COMO CAMBIAR LOS VALORES
+Los valores de hardware que se pueden cambiar están
+resaltados.  Para cambiar estos valores, haga lo siguiente:
+    1.  Use <Tab> o las teclas de flecha arriba/abajo para desplazarse
+        hasta el campo deseado.
+    2.  Pulse la tecla <F2> para ver las opciones.
+    3.  Use <Tab> o las teclas de flecha arriba/abajo para desplazar
+        el asterisco (*) hasta la opción.
+    4.  Después de introducir la selección, pulse <Intro> para
+        volver a la pantalla Configuración de dispositivos de hardware.
+    5.  Si ha cambiado un valor, pulse <F4> para verificar
+        los nuevos valores de los parámetros de controladores de
+        dispositivos. NOTA: Algunos valores de hardware no se pueden
+        cambiar porque son necesarios, o porque se deben ejecutar
+        utilidades/procedimientos de configuración específicos del
+        hardware.  Para obtener más detalles, consulte la documentación
+        del hardware.             (CONTINUACIÓN)
+.page
+INFORMACION ADICIONAL DE DISPOSITIVOS DE HARDWARE
+La siguiente información adicional está disponible pulsando <F6>:
+   --- El nombre del controlador de hardware
+   --- El nombre del dispositivo de hardware
+   --- Valores válidos para el número de unidad
+   --- Valores válidos para el IPL
+   --- Valores válidos para el ITYPE
+   --- Valores válidos para el IRQ
+   --- Valores válidos para el rango de direcciones de E/S
+   --- Valores válidos para el rango de dirección de memoria
+   --- Valores válidos para el canal DMA
+   --- Valores válidos para la CPU asociada
+   --- El identificador de placa
+   --- El tipo de bus de la placa
+Tras revisar la información adicional de dispositivos de hardware, pulse
+<Intro> para volver a la pantalla de Configuración de dispositivos de
+hardware.
+                                   (CONTINUACIÓN)
+.page
+EDICION AVANZADA DE PARAMETROS
+Pulse <F7> para editar otros parámetros (BINDCPU. Número de unidad,
+IPL, ITYPE), así como parámetros específicos de la placa (si los hay).
+
+CONFLICTOS
+Algunos dispoositivos de hardware soportan valores de IRQ
+compartidos.  Excepto en este caso, es vital que seleccione
+valores de hardware únicos para cada uno de los restantes
+componentes de hardware.
+
+Si la pantalla Configuración de dispositivos de hardware indica que
+dos dispositivos tienen el mismo IRQ, solapan los rangos de direcciones
+de E/S o de memoria, y/o tienen el mismo canal DMA, actualice los datos
+de configuración y resuelva el conflicto.
+
+SALIDA DE AYUDA
+Pulse <Esc> para volver a la pantalla Configuración de
+dispositivos de hardware. Pulse <F1> para obtener más ayuda.

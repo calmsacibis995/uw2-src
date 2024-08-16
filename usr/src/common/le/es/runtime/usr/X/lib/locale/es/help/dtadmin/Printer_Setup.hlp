@@ -1,0 +1,854 @@
+#ident\t"@(#)dthelp:Admin.Tools/Printer_Setup.hlp       1.21"
+^*version^1
+^*title^Configuración de impresoras
+^:Config_Impresoras
+^*width^70
+^+DesktopMgr/help.defs
+^?Configuración de impresoras
+^0^Configuración de impresoras
+^$10
+Configuración de impresoras
+
+Use Configuración de impresoras para añadir, borrar, compartir,
+controla o cambiar propiedades de impresoras.
+
+\to\t\k(Añadir una impresora local^^Adición de una impresora local) (\d(en serie^impresora en serie) o \d(en paralelo^impresora en paralelo))
+\to\t\k(Añadir una impresora de sistema UNIX remota^^Adición de una impresora UNIX remota)
+\to\t\k(Añadir una impresora NetWare remota^^Adición de una impresora NetWare remota)
+\to\t\k(Asignar una impresora por defecto^^Asignación de una impresora por defecto)
+\to\t\k(Cambiar las propiedades de una impresora^^Modificación de propiedades de impresoras)
+\to\t\k(Conectar una impresora local a un servidor de impresión NetWare^^Conexión de una impresora local a un servidor de impresión NetWare)
+\to\t\k(Controlar impresoras locales y remotas^^Control de una impresora)
+
+\to\t\k(Borrar una impresora^^Supresión de una impresora)
+\to\t\k(Desconectar una impresora local de un servidor de impresión NetWare^^Desconexión de una impresora local de un servidor de impresión NetWare)
+\to\t\k(Copiar un icono de impresora a una carpeta^^Copiado de un icono de impresora en una carpeta)
+\to\t\k(Definir acceso para usuarios locales^^Definición del acceso para usuarios locales)
+\to\t\k(Definir acceso para usuarios remotos^^Definición del acceso para sistemas remotos)
+\to\t\k(Visualizar propiedades de impresoras^^Visualización de propiedades de impresoras)
+
+Para más información sobre la impresión de un archivo, comprobación
+de peticiones de impresión y cambio de peticiones de impresión, véase
+\k(Uso de su impresora^dtadmin/printuse.hlp^Uso de la impresora).
+
+Véase también:
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+\s(Uso de Configuración de impresoras^dhelp "pe.es" ownerhb "Configuración y definición de impresoras" "Uso de Configuración de impresoras" || helpLinkErr)
+\s(¿Qué es el servicio de impresión LP?^dhelp as sysag "Providing Print Services" "" || helpLinkErr)
+
+^1^Adición de una impresora local
+^$20
+Adición de una impresora local
+
+Deberá tener \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) para
+añadir una impresora local al sistema.
+
+Para añadir una impresora local a su sistema, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en Impresora=>Añadir impresora local. Aparece la
+  \tventana "Configuración de impresoras: Añadir impresora local" con
+  \tlos campos siguientes:
+
+  \to\tNombre de impresora: - Teclee el nombre que desee para la
+  \t \timpresora local conectada a su sistema.
+
+  \to\tImpresora: - Use la barra de desplazamiento para subir y bajar
+  \t \tpor la lista de tipos de impresora; haga clic en el tipo de
+  \t \timpresora que corresponda con la suya.
+
+  \to\tTipo de conexión: - Haga clic en \d(En serie^impresora en serie) o
+  \t \t\d(En paralelo^impresora en paralelo) según a qué tipo de puerto está
+  \t \tconectada la impresora.
+
+  \t \tNota: Cuando conecte una impresora directamente a su ordenador,
+  \t \tlos cables y conectores usan una interfaz en serie
+  \t \to en paralelo. Si no está seguro de si su impresora es en
+  \t \tserie o en paralelo, compruebe el manual de la impresora.
+
+  \t \tSi selecciona En serie, haga clic en Configuración en serie
+  \t \tpara definir las opciones para lo siguiente:
+
+  \t \t- Velocidad en baudios - Haga clic en la velocidad que coincida
+  \t \t  con la velocidad de su impresora. Por defecto, este campo
+  \t \t  tiene el valor 9600.
+
+  \t \t-\tParidad - Haga clic en la paridad apropiada. El sistema usa
+  \t \t \t\d(paridad) para comprobación de errores. Por defecto
+  \t \t \teste campo tiene el valor Ninguno.
+
+  \t \t-\tBits de parada - Haga clic en los bits de parada deseados.
+  \t \t \tPor defecto, este campo tiene el valor 1.
+
+  \t \t-\tTamaño del carácter - Haga clic en el tamaño de carácter
+  \t \t \tapropiado. Por defecto, este campo tiene el valor 8.
+
+  \to\tPuerto: - Si va a añadir una impresora en serie, haga clic en
+  \t \tCOM1, COM2 u Otra. Si va a añadir una impresora en paralelo,
+  \t \tHaga clic en LPT1,
+  \t \tLPT2 u Otros.
+
+  \t \tSi selecciona Otros, aparece el cuadro de texto Dispositivo.
+  \t \tTeclee el \d(vía de acceso) del dispositivo al que está
+  \t \tconectada la impresora.
+
+  \to\tEnviar correo si falla la impresora: - Haga clic en Sí si desea
+  \t \trecibir un mensaje de correo electrónico si falla la impresora
+  \t \to en No si no lo desea.
+
+  \to\tImprimir portada por defecto: - Haga clic en Sí si desea que
+  \t \tel sistema imprima una portada por defecto, o en No
+  \t \tsi no lo desea.
+
+  \to\tPermitir prevalecer portada: - Haga clic en Sí si desea que
+  \t \totros usuarios puedan contar con la portada por defecto, o en No
+  \t \tsi no lo desea.
+
+  \to\tConfiguración opcional: - Haga clic en este botón si desea
+  \t \tdefinir estas opciones adicionales para su impresora:
+
+  \t \t-\tLongitud de página
+
+  \t \t-\tAnchura de página
+
+  \t \t-\tDensidad de caracteres
+
+  \t \t-\tDensidad de línea
+
+  \t \tCada una de estas opciones tiene un valor numérico y un valor
+  \t \tde unidad. Puede seleccionar un valor de unidad en pulgadas,
+  \t \tcentímetros o caracteres.
+
+4.\tHacer clic en Añadir. Aparece un icono para la impresora en la
+  \tventana "Configuración de impresoras".
+
+  \tNota: También puede hacer clic en Redefinir para devolver a todas
+  \tlas opciones sus parámetros originales, o en Cancelar para
+  \tcerrar esta ventana sin añadir la impresora.
+
+Véase también:
+\k(Copiado de un icono de impresora en una carpeta)
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^1^Adición de una impresora UNIX remota
+^$30
+Adición de una impresora UNIX remota
+
+Deberá tener \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) para añadir una
+impresora local al sistema.  Para configurar el acceso a una impresora
+UNIX remota, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en Impresora=>Añadir impresora UNIX. Aparece la ventana
+  \t"Configuración de impresoras: Añadir impresora remota".
+
+  \to\tNombre de impresora: - Teclee el nombre que desee para
+  \t \tla impresora UNIX remota en su sistema local.
+
+  \to\tTipo: - Haga clic en el rectángulo del cuadro situado junto
+  \t \tal campo Tipo para que aparezca un menú de tipos
+  \t \tde impresoras. Después, haga clic en el tipo apropiado.
+
+  \to\tTipo de sistema operativo remoto: - Haga clic en System V o BSD
+  \t \t(si no está seguro, pregunte al administrador del sistema
+  \t \tremoto).
+
+  \to\tSistema remoto: - Si su sistema no está configurado para \k(DNS^dtadmin/inet.hlp^Acceso a DNS) y
+  \t \t\k(NIS^dtadmin/inet.hlp^Acceso a NIS), esta opción muestra sólo la Lista de sistemas (/etc/hosts).
+
+  \t \tSi su sistema está configurado para DNS y NIS, el cuadro
+  \t \tdel vértice izquierdo lista los dominios disponibles (servidor
+  \t \tdel Servicio de Redes de Dominios, servidor del Servicio de
+  \t \tInformación de Redes y Lista de sistemas).
+
+  \t \tHaga clic en el sistema deseado.
+
+  \t \tNota: Cuando haga clic en un dominio, cualquier subdomino bajo
+  \t \tese dominio aparecerá en el cuadro a su derecha. Desde aquí,
+  \t \tpuede Haga clic en el subdominio deseado, y si este subdominio
+  \t \ttiene subdominios, aparecerán en el cuadro a su derecha Siga
+  \t \thaciendo clic en los subdominios hasta que localice el nombre
+  \t \tdel sistema deseado.
+
+  \t \tEl sistema muestra sólo dos columnas, o cuadros, a un mismo
+  \t \ttiempo. Para ver cuadros adicionales, use la barra de
+  \t \tdesplazamiento para ir a la izquierda o derecha.
+
+  \to\tNombre de impresora remota: - Teclee el nombre de la impresora
+  \t \ten el sistema remoto.
+
+  \to\tImprimir portada por defecto: - Haga clic en Sí si desea que
+  \t \tel sistema imprima una portada por defecto, o en No
+  \t \tsi no lo desea.
+
+  \to\tPermitir prevalecer portada: - Haga clic en Sí si desea que
+  \t \totros usuarios puedan contar con la portada por defecto, o en No
+  \t \tsi no lo desea.
+
+4.\tHacer clic en Añadir. Aparece un icono para la impresora en la
+  \tventana Configuración de impresoras.
+
+  \tNota: También puede hacer clic en Redefinir para devolver a todas
+  \tlas opciones sus parámetros originales, o en Cancelar para
+  \tcerrar esta ventana sin añadir la impresora.
+
+Véase también:
+\k(Copiado de un icono de impresora en una carpeta)
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^1^Adición de una impresora NetWare remota
+^$40
+Adición de una impresora NetWare remota
+
+Deberá tener \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) para añadir una
+impresora NetWare remota al sistema.
+
+Para configurar una cola para acceder a una impresora NetWare, haga lo
+siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en Impresora=>Añadir impresora NetWare. Aparece la
+  \tventana "Configuración de impresoras: Añadir impresora NetWare"
+  \tcon los campos siguientes:
+
+  \to\tNombre de impresora: - Teclee el nombre que desea usar
+  \t \tlocalmente para acceder a la impresora NetWare remota.
+
+  \to\tTipo: - Haga clic en el tipo de impresora apropiado.
+
+  \to\tServidor de NetWare: - Haga clic en el servidor deseado en la
+  \t \tlista Servidor de archivos. El nombre del servidor aparece en
+  \t \teste campo, así como una lista de las impresoras disponibles
+  \t \tpara ese servidor en la lista Impresoras a la derecha.
+
+  \to\tImpresoras: - Haga clic en la impresora a la que quiere acceder.
+  \t \tEl nombre de la impresora aparece en el campo Impresora NetWare.
+
+  \to\tImprimir portada por defecto: - Haga clic en Sí si desea que
+  \t \tel sistema imprima una portada por defecto, o en No
+  \t \tsi no lo desea.
+
+  \to\tPermitir prevalecer portada: - Haga clic en Sí si desea que
+  \t \totros usuarios puedan contar con la portada por defecto, o en No
+  \t \tsi no lo desea.
+
+  \to\tEnviar avance de página por defecto: - Haga clic en Sí si desea
+  \t \tactivar el avance de página al final de una tarea de impresión,
+  \t \to en No si no lo desea.
+
+  \t \tLa activación de un avance de página asegura que la tarea
+  \t \tsiguiente empiece en la parte superior de la página.
+
+  \t \tNota: Si una aplicación activa automáticamente el avance de
+  \t \tpágina al final de un archivo, la adición de esta opción hará
+  \t \tque la impresora deje una página en blanco antes de empezar a
+  \t \timprimir la siguiente tarea.
+
+  \to\tPermitir prevalecer avance de página: - Haga clic en Sí si desea
+  \t \tque los usuarios hagan prevalecer el avance de página por
+  \t \tdefecto, o en No si no lo desea.
+
+4.\tHacer clic en Añadir para añadir la impresora y aplicar las
+  \topciones seleccionadas.
+
+  \tNota: También puede hacer clic en Redefinir para devolver a todas
+  \tlas opciones sus parámetros originales, o en Cancelar para
+  \tcerrar esta ventana sin añadir la impresora.
+
+Véase también:
+\k(Copiado de un icono de impresora en una carpeta)
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^1^Supresión de una impresora
+^$50
+Supresión de una impresora
+
+Deberá tener \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) para suprimir una
+impresora del sistema.
+
+Para borrar una impresora, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en la impresora que desea borrar.
+
+4.\tHacer clic en Impresora=>Borrar. El sistema elimina el icono de la
+  \timpresora de la ventana "Configuración de impresoras".
+
+Véase también:
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^1^Visualización de propiedades de impresoras
+^$60
+^1^Visualización de propiedades de impresoras
+
+Para ver las propiedades de una impresora, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en la impresora que quiere visualizar.
+
+4.\tHacer clic en Impresora=>Propiedades. Aparece la ventana
+  \t"Configuración de impresoras: Propiedades".
+
+5.\tVéase lo siguiente para una descripción de los campos y
+  \topciones de cada tipo de impresora:
+
+    o\tPara una impresora local (en serie o paralelo) véase el paso 3
+     \tde \k(Adición de una impresora local).
+
+  \to\tPara una impresora UNIX remota, véase el paso 3 de
+  \t \t\k(Adición de una impresora UNIX remota).
+
+  \to\tPara una impresora NetWare remota, véase
+  \t \t\kel paso 3 de (Adición de una impresora NetWare remota).
+
+5.  Hacer clic en Cancelar para cerrar la ventana.
+
+^1^Modificación de propiedades de impresoras
+^$70
+Modificación de propiedades de impresoras
+
+Deberá tener \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) para
+cambiar las propiedades de las impresoras.
+
+Para cambiar las propiedades de una impresora, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en la impresora en la que quiere hacer los cambios.
+
+4.\tHacer clic en Impresora=>Propiedades. Aparece la ventana
+  \t"Configuración de impresoras: Propiedades".
+
+5.\tHacer los cambios deseados. Véase lo siguiente para más
+  \tinformación sobre los campos y opciones disponibles para cada tipo
+  \tde impresora:
+
+    o\tPara una impresora local (en serie o paralelo) véase el paso 3
+     \tde \k(Adición de una impresora local).
+
+  \to\tPara una impresora UNIX remota, véase el paso 3 de
+  \t \t\k(Adición de una impresora UNIX remota).
+
+  \to\tPara una impresora NetWare remota, véase
+  \t \t\kel paso 3 de (Adición de una impresora NetWare remota).
+
+  \tNota: No puede cambiar el nombre de una impresora.
+
+6.\tHacer clic en OK para aplicar los cambios.
+
+  \tNota: También puede hacer clic en Redefinir para volver a las
+  \tcambios previos, o en Cancelar para cerrar la ventana sin realizar
+  \tcambios.
+
+Véase también:
+\k(Asignación de una impresora por defecto)
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^1^Asignación de una impresora por defecto
+^$80
+Asignación de una impresora por defecto
+
+Puede convertir una de sus impresoras en la impresora por defecto, es
+decir, las tareas de impresión irán automáticamente a esta impresora
+si selecciona la opción de impresión dentro de una aplicación y no
+especifica la impresora, o si elige Archivo=>Imprimir desde dentro
+de una ventana de carpeta.
+
+Para asignar una impresora por defecto, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en la impresora que quiera convertir en impresora por
+  \tdefecto.
+
+4.\tHacer clic en Impresora=>Definir por defecto. La impresora
+  \tactualmente seleccionada es la impresora por defecto.
+
+Véase también:
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^1^Conexión de una impresora local a un servidor de impresión NetWare
+^$90
+Conexión de una impresora local a un servidor de impresión NetWare
+
+Si tiene \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) puede conectar una impresora 
+local a un servidor de impresión NetWare.
+
+Para conectar una impresora local a un servidor de impresión NetWare,
+haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en la impresora con la que se vaya a conectar.
+
+4.\tHacer clic en Impresora=>ImpresoraN.  Aparece la ventana
+  \t"Configuración de impresoras: Estado de
+  \tconexiones con servidor de impresión NetWare" con el mensaje
+  \tsiguiente:
+
+    <Nombre de impresora> no está conectada. ¿Desea conectarse?
+
+5.\tHacer clic en Sí. Aparece la ventana "Configuración de
+  \timpresoras: Conectar impresora local a servidor de
+  \timpresión NetWare".
+
+  \tNota: Si cambia de intención y decide conectarse a la
+  \timpresora, haga clic en No para cerrar la ventana sin
+  \tllevar a cabo la conexión.
+
+6.\tHacer clic en el sistema deseado de la lista Servidores de
+  \tarchivos.  Los servidores de impresión disponibles para ese
+  \tsistema aparecen a la derecha en la lista Servidor de impresión.
+
+7.\tHacer clic en el servidor de impresión deseado.  Las impresoras
+  \tdisponibles en ese servidor aparecen en el cuadro Nombre de
+  \timpresora a la derecha.
+
+8.\tHacer clic en el nombre de impresora deseado.
+
+9.\tHaga clic en Conectar.  Desde este momento, la impresora podrá
+  \tdar servicio a las peticiones de impresión de la cola de impresión
+  \tNetWare.
+
+  \tNota: También puede hacer clic en Cancelar para cerrar la ventana
+  \tsin conectar la impresora.
+
+Véase también:
+\k(Desconexión de una impresora local de un servidor de impresión NetWare)
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^1^Desconexión de una impresora local de un servidor de impresión NetWare
+^$100
+Desconexión de una impresora local de un servidor de impresión NetWare
+
+Si tiene \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) puede desconectar una
+impresora local de un servidor de impresión NetWare.
+
+Para desconectar una impresora local de un servidor de impresión
+NetWare, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en la impresora que desee desconectar.
+
+4.\tHacer clic en ImpresoraN. Aparece la ventana "Configuración de
+  \timpresoras: Conexiones de servidores de impresión NetWare" con
+  \tlos mensajes siguientes:
+
+  \t<NombreImpresora> está conectada al servidor de impresión NetWaret
+  \t<NombreServidor> como impresora remota <NombreImpresoraNetWare>
+
+  \t¿Desea desconectarse?
+
+5.\tHacer clic en Sí.  La impresora ahora está desconectada.
+
+  \tNota: También puede hacer clic en No para cerrar la ventana
+  \tsin desconectar la impresora.
+
+Véase también:
+\k(Conexión de una impresora local a un servidor de impresión NetWare)
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^2^Ventana Configuración de impresoras: Estado de conexiones con servidor de impresión NetWare
+^$110
+Ventana Configuración de impresoras: Estado de conexiones con servidor de impresión NetWare
+
+Si su impresora local está conectada a un servidor NetWare, esta
+ventana muestra mensajes similares al siguiente:
+
+\t\t\t<NombreImpresora> está conectada al servidor
+\t\t\tde impresión NetWare <NombreServidor> como impresora remotar
+\t\t\t<NombreImpresoraNW>
+
+\t\t\t¿Desea desconectarse?
+
+Haga clic en Sí si desea desconectar la impresora, o en No si
+no desea hacerlo.
+
+Si su impresora local no está conectada a un servidor NetWare, esta
+ventana muestra mensajes similares al siguiente:
+
+\t\t\t<NombreImpresora> no está conectado a un servidor de impresión
+\t\t\tNetWare.
+
+\t\t\t¿Desea conectarse?
+
+Haga clic en Sí si desea conectar la impresora, o en No si no desea
+hacerlo.
+
+Véase también:
+\k(Conexión de una impresora local a un servidor de impresión NetWare)
+\k(Desconexión de una impresora local de un servidor de impresión NetWare)
+
+^1^Definición del acceso para sistemas remotos
+^$120
+Definición del acceso para sistemas remotos
+
+Deberá ttener \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) para 
+configurar el acceso a impresoras locales para los sistemas remotos.
+
+Nota: Si no tiene el permiso de administración de impresoras, puede
+usar el procedimiento siguiente para ver qué sistemas tienen permitido
+o denegado el acceso, si bien no puede realizar cambios.
+
+Cuando configure por vez primera una impresora, todos los sistemas
+remotos tendrán denegado el acceso a la misma. Puede configurar el
+acceso a impresoras locales para sistemas remotos haciendo lo
+siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHaga clic en la impresora que desee configurar para el acceso
+  \tdesde sistemas remotos.
+
+4.\tHacer clic en Impresora=>Definir acceso remoto. Aparece la ventana
+  \t"Configuración de impresoras: Definir acceso remoto". El
+  \tcuadro del vértice izquierdo muestra los dominios disponibles.
+
+  \tNota: Cuando haga clic en un dominio, cualquier subdomino bajo ese
+  \tdominio aparecerá en el cuadro a su derecha. Desde aquí, puede
+  \thacer clic en el subdominio deseado, y si este subdominio
+  \ttiene subdominios, aparecerán en el cuadro a su derecha. Siga
+  \thaciendo clic en los subdominios hasta que localice el nombre
+  \tdel sistema deseado.
+
+  \tEl sistema muestra sólo dos columnas, o cuadros, al mismo tiempo.
+  \tPara ver los cuadros adicionales, use la barra de
+  \tdesplazamiento situada sobre los cuadros para ir a
+  \tla izquierda o derecha.
+
+5.\tDefinir o denegar el acceso a la impresora remota del modo
+  \tsiguiente:
+
+  \tNota: Para seleccionar sistemas múltiples, mantenga pulsada <Ctrl>
+  \tmientras hace clic en el botón izquierdo del ratón.
+
+  \to\tHaga clic en Permitir todos los sistemas excepto, en los
+  \t \tsistemas deseados de la utilidad de consulta de columnas
+  \t \tmúltiples, y finalmente en Añadir. Los sistemas seleccionados
+  \t \tpasan a la lista del cuadro situado a la derecha.
+
+  \t \tTodos los sistemas excepto los añadidos a la lista tienen
+  \t \tacceso a la impresora remota.
+
+  \to\tHaga clic en Denegar todos los sistemas excetp, en los sistemas
+  \t \tdeseados de la utilidad de consulta, y finalmente
+  \t \ten Añadir. Los sistemas seleccionados pasan a la lista del
+  \t \tcuadro situado a la derecha.
+
+  \t \tTodos los sistemas excepto los añadidos a la lista tienen
+  \t \tdenegado el acceso a la impresora remota.
+
+  \tSistemas remotos del modo siguiente:
+
+  \to\tHaga clic en el sistema o sistemas deseados, y después en
+  \t \tSuprimir (para borrar el sistema o sistemas seleccionados o
+  \t \tSuprimir todos (para borrar todos los sistemas).
+
+6.\tHacer clic en OK. La impresora está configurada para su acceso
+  \tpor parte de usuarios remotos.
+
+  \tNota: También puede hacer clic en Cancelar si decide no
+  \tdefinir acceso remoto.
+
+Véase también:
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^1^Definición del acceso para usuarios locales
+^$130
+Definición del acceso para usuarios locales
+
+Deberá ttener \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) para
+configurar el acceso para usuarios locales.
+
+Nota: Si no tiene el permiso Administrar impresoras, pueden usar
+el procedimiento siguiente para ver qué usuarios tienen permitido o
+denegado el acceso, si bien no puede realizar cambios.
+
+Cuando configure por vez primera una impresora, todos los usuarios
+tendrán acceso a esa impresora. Puede controlar el acceso mediante
+usuarios locales a impresoras locales o remotas
+del modo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en la impresora cuyo acceso desea permitir o denegar.
+
+4.\tHacer clic en Impresora=>Definir acceso de usuarios. Aparece la
+  \tventana Configuración de impresoras: Definir acceso de usuarios.
+
+5.\tPermitir o denegar acceso del modo siguiente:
+
+  \tNota: Para seleccionar usuarios múltiples, mantenga pulsada <Ctrl>
+  \tmientras hace clic en el botón izquierdo del ratón.
+
+  \to\tPara permitir el acceso, haga clic en el usuario o usuarios
+  \t \tdeseados y haga clic en Permitir.  El usuario o usuarios pasan a
+  \t \tla lista de permisos.
+
+  \to\tPara denegar el acceso, haga clic en el usuario o usuarios
+  \t \tdeseados y haga clic en Denegar.  El usuario o usuarios pasan a
+  \t \tla lista de denegaciones.
+
+  \to\tPara eliminar todos los usuarios de la lista de permisos, haga
+  \t \tclic en Denegar todo.  Todos los usuarios pasarán de la lista de
+  \t \tpermisos a la de denegaciones.
+
+6.\tHacer clic en OK.
+
+  \tNota: También puede hacer clic en Cancelar si decide no configurar
+  \to denegar el acceso a usuarios locales.
+
+Véase también:
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+
+^1^Control de una impresora
+^$140
+Control de una impresora
+
+Si tiene \k(permiso para administrar impresoras^dtadmin/user.hlp^Comprensión de los permisos) para
+activar y desconectar impresoras locales y remotas, así como
+determinar si una impresora aceptará o no nuevas peticiones de
+impresión.
+
+Nota: Si tiene permiso para administrar impresoras, puede usar el
+siguiente procedimiento para ver si una impresoras está activa o
+desactivada, o si está recibiendo peticiones de impresión, pero
+no puede realizar cambios.
+
+Para definir los controles de una impresora, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHacer clic en la impresora cuyos controles desea definir.
+
+4.\tHacer clic en Impresora=>Control.  Aparece la ventana
+  \t"Configuración de impresoras: Controlar impresora" con los
+  \tsiguientes campos y opciones:
+
+  \to\t<Nombre de impresora activado/desactivado>: - Muestra el
+  \t \tnombre de la impresora actualmente seleccionada, y si esa
+  \t \timpresora está activada o desactivada.
+
+  \to\tNuevas peticiones: - Haga clic en Aceptar si desea que la
+  \t \timpresora acepte nuevas peticiones en la cola de impresión, o
+  \t \tRechazar si no quiere que la impresora acepte nuevas peticiones
+  \t \ten la cola de impresión.
+
+  \to\tEstado de impresora: - Haga clic en Activada si quiere que la
+  \t \timpresora imprima las tareas de la cola, o Desactivar si desea
+  \t \tque la impresora deje de imprimir tareas de la cola.
+
+5.\tHacer clic en Aplicar para guardar los cambios.
+
+  \tNota: También puede hacer clic en Redefinir para volver a las
+  \tcambios previos, o en Cancelar para cerrar la ventana sin realizar
+  \tcambios.
+
+Véase también
+\k(Uso de la barra de herramientas de Configuración de impresoras)
+\s(Control de impresoras y impresión de archivos desde la línea de comandos^dhelp "pe.es" ownerhb "Configuración y definición de impresoras" "Control de impresoras y impresión de archivos desde la línea de comandos" || helpLinkErr)
+
+^1^Copiado de un icono de impresora en una carpeta
+^$150
+Copiado de un icono de impresora en una carpeta
+
+Después de haber añadido una impresora al sistema, es posible que
+desee copiar el icono de la impresora en una carpeta para acceder
+fácilmente a la misma.
+
+Para copiar el icono de una impresora en una carpeta, haga lo
+siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHacer doble clic en Configuración_Impresora. Aparece la ventana
+  \t"Configuración de impresoras".
+
+3.\tHaga clic en el icono de impresora que desee copiar en otra
+  \tcarpeta.
+
+4.\tAbra la carpeta en la que desee copiar el icono de impresora.
+
+5.\t\d(Arrastre y suelte^arrastrar y soltar) el icono de impresora en la
+  \tcarpeta.
+
+También puede usar las opciones de menú para copiar un icono
+de impresora en otra carpeta.
+Véase \k(Ventana Configuración de impresoras: Copiar en carpeta).
+
+
+^2^Ventana Configuración de impresoras: Copiar en carpeta
+^$160
+Ventana Configuración de impresoras: Copiar en carpeta
+
+Para copiar un icono de impresora usando las opciones de
+menú, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Config_impresora.  Aparecerá la ventana
+  \tConfiguración de impresoras.
+
+3.\tHaga clic en el icono de impresora que desee copiar en otra
+  \tcarpeta.
+
+4.\tHaga clic en Impresora=>Copiar a carpeta.  Aparecerá la ventana
+  \t"Configuración de impresoras: Copiar a carpeta" con los siguientes
+  \tcampos.
+
+  \tCopiar: - Muestra el nombre de la impresora seleccionada.
+
+  \tEn: - Seleccione el \d(vía de acceso) para la carpeta deseada
+  \thaciendo clic en los nombres de carpetas del módulo de consultas
+  \tmulticolumna. Si una carpeta seleccionada tiene carpetas
+  \tadicionales, estas aparecerán en la columna de la derecha. A
+  \tcontinuación puede hacer clic en una carpeta de este cuadro. Si
+  \thace clic en una carpeta que tiene carpetas adicionales, aparecerá
+  \tun tercer cuadro a la derecha de esta columna.
+
+  \tPuede continuar haciendo clic en las carpetas hasta que llegue
+  \tal \d(vía de acceso) deseado.  Para ver múltiples
+  \tcolumnas, use la barra de desplazamiento para desplazar los
+  \tcuadros a derecha e izquierda.
+
+  \tNota: También puede teclear la \d(vía de acceso) completa de
+  \tla carpeta deseada en el cuadro de selección.
+
+5.\tHaga clic en OK.  El sistema copiará el icono de impresora en la
+  \tcarpeta.
+
+^1^Uso de la barra de herramientas de Configuración de impresoras
+^$170
+Uso de la barra de herramientas de Configuración de impresoras
+
+La ventana "Configuración de impresoras" tiene una barra de
+herramientas que proporciona un acceso más sencillo a determinadas
+funciones.  En lugar de acceder a la función, puede hacer clic en el
+icono, correspondiente a la función, de la barra de herramientas.
+
+Por ejemplo, si desea suprimir la impresora seleccionada actualmente,
+en lugar de hacer clic en Impresora=>Suprimir, puede simplemente
+hacer clic en el icono de la barra de herramienta para borrarla.
+
+La barra de herramientas está ubicada debajo de la barra de menús.  Si
+coloca el puntero del ratón sobre un icono de la barra de
+herramientas, el sistema mostrará una descripción breve de dicho
+icono en la zona de pié de página situada bajo el icono.
+
+Puede acceder a las siguientes funciones haciendo clic en los
+iconos de la barra de herramientas de la ventana "Configuración de
+impresoras":
+
+\to  \k(Adición de impresora local^^Adición de una impresora local)
+\to  \k(Adición de una impresora UNIX remota^^Adición de una impresora UNIX remota)
+\to  \k(Adición de una impresora NetWare remota^^Adición de una impresora NetWare remota)
+\to  \k(Supresión de una impresora^^Supresión de una impresora)
+\to  \k(Modificación de propiedades de impresora^^Modificación de propiedades de impresoras)
+\to  \k(Copiado de un icono de impresora en una carpeta^^Copiado de un icono de impresora en una carpeta)
+\to  \k(Asignación de una impresora por defecto^^Asignación de una impresora por defecto)
+
+\to  \k(Control de una impresora^^Control de una impresora)
+\to  \k(Definición de acceso de usuario^^Definición del acceso para usuarios locales)
+\to  \k(Definición de acceso remoto^^Definición del acceso para sistemas remotos)
+\to  \k(Conexión y desconexión de una impresora NetWare^^Conexión de una impresora local a un servidor de impresión NetWare)
+\to  \k(Ayuda^DesktopMgr/help.hlp^Utilización de la ayuda)
+\to  Salir (igual que Archivo=>Salir)
+

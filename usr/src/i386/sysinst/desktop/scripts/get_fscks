@@ -1,0 +1,23 @@
+#ident	"@(#)proto:desktop/scripts/get_fscks	1.7"
+
+function get_fscks
+{
+	typeset i root_dir
+
+	case $SEC_MEDIUM_TYPE in
+	cdrom)
+		root_dir=/cd-rom/.extra.d
+		;;
+	tape|diskette|tcp|spx)
+		get_tools '*extra.d/etc/fs/*/fsck *extra.d/etc/pkg.LIST'
+		root_dir=/.extra.d
+		;;
+	esac
+	call symlink $root_dir/etc/pkg.LIST /etc/pkg.LIST
+	cd $root_dir/etc/fs
+	for i in *
+	do
+		call symlink $root_dir/etc/fs/$i/fsck /etc/fs/$i/fsck
+	done
+	cd /
+}

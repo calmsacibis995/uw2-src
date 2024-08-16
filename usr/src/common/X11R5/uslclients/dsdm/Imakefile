@@ -1,0 +1,48 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)oldsdm:Imakefile	1.13"
+
+SRCS = dsdm.c proxy.c
+OBJS = $(SRCS:.c=.o)
+
+LOCAL_LIBRARIES = $(XLIB) -lsocket
+
+#if HasBuiltinExtension
+        CCOPTIONS = DefaultCCOptions $(PICFLAGS)
+ EXTRA_LOAD_FLAGS = -G -lc -Wl,-Bexport=main -Bsymbolic
+
+all:: dsdm
+
+install:: dsdm
+	$(RM) $(BINDIR)/dsdm
+#else
+# if UslLocalityTuning
+        CCOPTIONS = $(FURCCOPTIONS)
+# endif
+#endif
+
+ComplexProgramTarget(dsdm)
+#if UslLocalityTuning
+FurComplexProgramTarget(dsdm)
+install:: dsdm
+	$(MV) $(BINDIR)/dsdm $(BINDIR)/dsdm.nf
+	$(MV) $(BINDIR)/dsdm.F $(BINDIR)/dsdm
+
+clean::
+	$(RM) dsdm
+#endif
+
+
+#if HasBuiltinExtension
+install:: dsdm
+	$(MV) -f $(BINDIR)/dsdm $(USRLIBDIR)/dsdm.so
+	ln $(BINDIR)/dtbuiltin $(BINDIR)/dsdm
+#else
+SpecialObjectRule(dsdm.o,,-DNOT_BUILTIN)
+#endif

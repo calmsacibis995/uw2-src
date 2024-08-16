@@ -1,0 +1,98 @@
+#ident	"@(#)kern-i386at:interface.d/psm.1	1.9"
+#ident	"$Header: $"
+# psm.1 -- Platform Support Module Interface version 1 (UnixWare 2.0)
+
+# Global Variables
+bootinfo
+corollary
+default_bindcpu
+engine
+engine_evtflags
+fpu_external
+intcpu
+intmp
+intpri
+intr_count
+ipl
+ivect
+kvpage0
+level_intr_mask
+microdata
+mod_iv_lock
+myengnum
+Nengine
+nintr
+nonline
+picdeferred
+picdeferndx
+picipl
+plocal_intr_depth
+plsti
+prf_pending
+prfstat
+prmpt_state
+soft_sysdump
+shadow_if
+svcpri
+ueng
+upointer
+upyet
+xclock_pending
+
+# Clock interrupt handlers
+lclclock
+todclock
+
+# H3 kernel functions
+begin_intprocess
+calloc
+dma_intr
+end_intprocess
+engine_state
+fpu_error
+intr_return
+oem_fclex
+prfintr
+printf
+reboot_prompt
+s_assfail
+softint_hdlr
+xcall
+xcall_all
+xcall_intr
+
+# ksynch primitives
+DISABLE
+ENABLE
+FSPIN_INIT
+FSPIN_LOCK
+FSPIN_UNLOCK
+
+# Miscellaneous
+at_phys_puts
+clkstart
+debug_printf
+loadegafonts
+
+# 8042 toolkit
+i8042_write
+
+# PIT toolkit
+pit_usec_time
+ulbolt
+
+# EISA toolkit
+eisa_uncompress
+eisa_boardid
+eisa_clear_nvm
+eisa_write_slot
+eisa_read_slot
+eisa_read_func
+eisa_rom_call
+eisa_parse_devconfig
+eisa_read_nvm
+_eisa_read_nvram
+eisa_sanity_init
+eisa_sanity_check
+eisa_sanity_halt
+eisa_set_elt

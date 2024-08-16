@@ -1,0 +1,15 @@
+#ident	"@(#)pkg.nics:scripts/TCM509_E.upg	1.1"
+
+# make sure that this script is being run by ksh
+[[ "$RANDOM" = "$RANDOM" ]] && exec /usr/bin/xksh $0 $*
+
+exec 2>>/tmp/509_E.err
+echo ############################# Starting Fresh ##########################
+set -x
+
+BOARD_ID=TCM5094
+
+# If the Board ID is set in the resource manager, then the 3C509 network card
+# is installed in Eisa Mode.  The script that calls this function checks
+# the output to be either 1 (for true) or 0 (for false).
+resmgr -p BRDID | grep "^$BOARD_ID$" && exit 1 || exit 0

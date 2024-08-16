@@ -1,0 +1,98 @@
+#ident	"@(#)p9k:p9k/p9k_dacs.def	1.1"
+/***
+ ***	NAME
+ ***
+ ***		p9k_dacs.def : DAC's supported by the P9000 chipset.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***		#include "p9000_dacs.def"
+ ***
+ ***	DEFINE_DAC(DAC_NAME, ID, DESCRIPTION, VISUALS_4_BIT,VISUALS_8_BIT,
+ ***		VISUALS_16_BIT, VISUALS_24_BIT,
+ ***		MODES_16_BIT, MODES_24_BIT,
+ ***		BITS_PER_RGB,
+ ***		MAXCLOCK,
+ ***		DELAY_COUNT,
+ ***		INIT_FUNC, UNINIT_FUNC,
+ ***		PSEUDOCOLOR_SET_COLORMAP_FUNC, PSEUDOCOLOR_GET_COLORMAP_FUNC,
+ ***		DIRECTCOLOR_SET_COLORMAP_FUNC, DIRECTCOLOR_GET_COLORMAP_FUNC,
+ ***		TRUECOLOR_GET_COLORMAP_FUNC,
+ ***		GET_DAC_MODE_FUNC, GET_BITS_PER_RGB_FUNC,
+ ***		CAN_SUPPORT_VISUAL_FUNC, CAN_SUPPORT_FREQUENCY_FUNC,
+ ***		CAN_SUPPORT_BITS_PER_RGB_FUNC)
+ ***		
+ ***	
+ ***		
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		__DEBUG__ : Enable debugging and assertion checking.
+ ***
+ ***	FILES
+ ***
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	HISTORY
+ ***
+ ***/
+
+
+ DEFINE_DAC(P9000_DAC_NULL, 0, "",
+	0,
+	0, 0, 0,
+ 	0, 0,
+ 	0,
+ 	0,
+	0,
+ 	NULL, NULL,
+ 	NULL, NULL,
+ 	NULL, NULL,
+	NULL,
+	NULL,NULL,
+ 	NULL, NULL,
+ 	NULL),
+
+ DEFINE_DAC(P9000_DAC_BT485, 1,"Brooktree Bt485",
+	0,
+	(P9000_DAC_PSEUDOCOLOR | P9000_DAC_STATICCOLOR),
+ 	P9000_DAC_TRUECOLOR,
+	P9000_DAC_TRUECOLOR,
+    (P9000_DAC_16_BIT_5_5_5_SUPPORTED|P9000_DAC_16_BIT_5_6_5_SUPPORTED),
+ 	0,
+ 	(P9000_DAC_BITS_PER_RGB_6 | P9000_DAC_BITS_PER_RGB_8),
+ 	110000,
+	0,
+ 	p9000_dac_initialize_bt485, p9000_dac_uninitialize_bt485,
+ 	p9000_dac_pseudocolor_set_color, p9000_dac_pseudocolor_get_color,
+ 	p9000_dac_directcolor_set_color, p9000_dac_directcolor_get_color,
+ 	p9000_dac_truecolor_get_color,
+	p9000_dac_get_dac_mode, p9000_dac_get_bits_per_rgb,
+ 	p9000_dac_query_visual_support, p9000_dac_query_frequency_support,
+ 	p9000_dac_query_bits_per_rgb_support),
+
+ DEFINE_DAC(P9000_DAC_COUNT, 2, NULL,
+	0,
+	0, 0, 0,
+ 	0, 0,
+ 	0,
+ 	0,
+	0,
+ 	NULL, NULL,
+ 	NULL, NULL,
+ 	NULL, NULL,
+	NULL,
+	NULL,NULL,
+ 	NULL, NULL,
+ 	NULL)

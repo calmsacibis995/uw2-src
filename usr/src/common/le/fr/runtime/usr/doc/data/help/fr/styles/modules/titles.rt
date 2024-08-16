@@ -1,0 +1,128 @@
+<!-- /lfs/doc/DMG/Projects/sgml/sccs/styles/modules/s.titles.rt 1.4 94/08/08 -->
+<style name="#ROOT">
+   <hide>	text </>
+</style>
+
+<group name="show">
+   <hide>	off </>
+</group>
+
+<group name="bodytype">
+   <font-family>        &bodfam; </>
+   <font-size>          &bodsize; </>
+   <line-spacing>       &bodspac; </>
+   <font-weight>        medium </>
+   <font-slant>         roman </>
+</group>
+
+<style name="BOOK" group="bodytype">
+   <left-indent>	&textlt; </>
+   <right-indent>	&textrt; </>
+</style>
+
+<style name="BOOK,TITLE" group="show">
+   <font-family>	&ttlfam; </>
+   <font-size>		&tbsize; </>
+   <line-spacing>	&tbspac; </>
+   <font-weight>	bold </>
+   <foreground>		&bigtclr; </>
+   <break-before>	line </>
+   <space-before>	&lead3; </>
+   <space-after>        &lead4; </>
+   <justification>	center </>
+   <hide>		off </>
+</style>
+
+<!-- bookcontent.gp -->
+
+<group name="chtitle">
+   <hide>		off </>
+   <font-family>        &ttlfam; </>
+   <font-size>          &s2size; </>
+   <line-spacing>       &s2spac; </>
+   <space-before>       &s2fore; </>
+   <space-after>        div(&s2aft;,2) </>
+   <left-indent>	&ctin; </>
+   <font-weight>        bold </>
+   <break-before>	line </>
+</group>
+
+
+<style name="BIBLIOGRAPHY,TITLE" group="chtitle"> </style>
+<style name="GLOSSARY,TITLE" group="chtitle"> </style>
+<style name="PREFACE,TITLE" group="chtitle"> </style>
+<style name="REFERENCE,TITLE" group="chtitle"> </style>
+
+<style name="PART,TITLE" group="chtitle">
+   <break-before>	page </>
+   <text-before>&sptnum;</>
+</style>
+<style name="PART,TITLE,#text-before" group="show"></style>
+
+<style name="CHAPTER,TITLE" group="chtitle">
+   <text-before>&schnum;</>
+</style>
+<style name="CHAPTER,TITLE,#text-before" group="show"></style>
+
+<style name="APPENDIX,TITLE" group="chtitle">
+   <text-before>&sapnum;</>
+</style>
+<style name="APPENDIX,TITLE,#text-before" group="show"></style>
+
+<style name="REFMETA" group="chtitle"></style>
+
+<!-- Elements below the chapter level -->
+
+<group name="t1">
+   <hide>		off </>
+   <font-family>        &ttlfam; </>
+   <font-size>          &s3size; </>
+   <line-spacing>       &s3spac; </>
+   <space-before>       div(&s3fore;,2) </>
+   <space-after>        div(&s3aft;,2) </>
+   <left-indent>        &in4; </>
+   <font-weight>        bold </>
+   <hide>		off </>
+</group>
+
+<style name="SECT1,TITLE" group="t1"> </style>
+<style name="REFERENCE,REFENTRY,REFMETA" group="t1"></style>
+<style name="CHAPTER,REFENTRY,REFMETA" group="t1"></style>
+<style name="APPENDIX,REFENTRY,REFMETA" group="t1"></style>
+
+<style name="#HEADER" group="bodytype">
+   <hide>		off </>
+   <text-before>content(typechild(TITLE,ancestor(BOOK)))</>
+   <justification>	left </>
+   <font-slant>		&bodslan; </>
+   <left-indent>	&ctin; </>
+   <space-after>	&lead3; </>
+   <hide>		off </>
+</style>
+
+<style name="#FOOTER" group="bodytype">
+   <hide>		off </>
+   <text-before>&pgwd; pagenum() &prtref;</>
+   <justification>	right </>
+   <font-slant>		&bodslan; </>
+   <space-before>	&lead3; </>
+   <hide>		off </>
+</style>
+
+<style name="#ANNOT">
+   <hide>		off </>
+   <font-family>        &annfam; </>
+   <font-size>          &bodsize; </>
+   <line-spacing>       &bodspac; </>
+   <font-weight>        medium </>
+   <font-slant>         &annslan; </>
+   <right-indent>	240 </>
+   <break-before>	line </>
+   <space-before>	&lead3; </>
+   <break-after>	line </>
+   <space-after>	&lead3; </>
+   <text-before>*** </>
+   <text-after> ***</>
+   <hide>		off </>
+</style>
+

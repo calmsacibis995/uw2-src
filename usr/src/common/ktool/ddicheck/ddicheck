@@ -1,0 +1,120 @@
+#!/bin/sh
+#ident	"@(#)ktool:common/ktool/ddicheck/ddicheck	1.4"
+
+# Set defaults
+prefix=`pwd`
+prefix=`basename $prefix`
+makefile=$prefix.mk
+target=lintit
+insert=
+install=n
+version=UW20
+
+# set _PFX to access correct version of executables
+
+_PFX=`basename $0 | sed -n 's/ddicheck$//p'`
+_PFX=${_PFX:-$PFX}
+
+# strip /etc/conf/bin off $KTOOL to get root directory.
+# KTOOL is set in the cross environment, but no equivalent
+# variable is set to find the root.
+
+_ROOT=
+if [ "$KTOOL" != "" ]
+then
+	_ROOT=`dirname $KTOOL`
+	_ROOT=`dirname $_ROOT`
+	_ROOT=`dirname $_ROOT`
+fi 
+LIB=$_ROOT/usr/lib
+if [ ! -f $LIB/ddilint.data ]
+then
+	echo "$0: Cannot access needed files in $LIB"
+	exit 1
+fi
+
+help() {
+echo "usage: ddicheck [-v version ] [-p prefix] [-f makefile] [-t target]";
+echo;
+echo "-v:	version of ddi to check against (default: UW20)"
+echo "		choices are UW20, SVR42MP or SVR42"
+echo "-p:	driver prefix (default: directory name)";
+echo "-f:	makefile name (default directory.mk)";
+echo "-t:	target to create .ln\'s in current directory (default: lintit)";
+}
+
+ARGLIST="\?v:p:f:t:"
+
+while getopts $ARGLIST OPT "$@"
+do
+	case $OPT in
+	  v)	version=$OPTARG ;;
+	  p)	prefix=$OPTARG ;;
+	  f)	makefile=$OPTARG ;;
+	  t)	target=$OPTARG ;;
+	  \?) 	help ; exit ;;
+	esac
+done
+
+if [ "$version" != "UW20" -a "$version" != "SVR42MP" -a "$version" != "SVR42" ]
+then
+	echo "incorrect version: specify SVR42, SVR42MP or UW20"
+	exit 1
+fi
+
+cp $LIB/ddilint.data .
+[ -f $prefix.ddi.ok ] && cat $prefix.ddi.ok >> ddilint.data
+echo >> ddilint.data
+echo "msg:	name used but not defined" >> ddilint.data
+echo "id:	" $prefix".* in.*" >> ddilint.data
+echo >> ddilint.data
+
+entry_points="devflag info chpoll close halt init intr ioctl _load mmap
+	open print put read size srv start strategy _unload write _wrapper"
+
+for entry in $entry_points
+do
+	echo "msg:	name defined but never used" >> ddilint.data
+	echo "id:	" ${prefix}${entry}".* in.*" >> ddilint.data
+	echo >> ddilint.data
+done
+
+lnd=/tmp/ln.backup$$
+mkdir $lnd
+cp *.ln *.L $lnd 2> /dev/null
+rm -f *.ln  2> /dev/null
+make -f $makefile STATIC=static DDEBUG= DEVDEF="-DDDICHECK -DDDI_$version" $target > /dev/null
+if [ $? != 0 ]
+then 
+	exit 1
+fi
+${_PFX}lint -n -m -s -x *.ln -L $LIB -lddi > lint.out
+if [ $? != 0 ]
+then 
+	exit 1
+fi
+rm -f *.ln 2> /dev/null
+cp $lnd/* . 2> /dev/null
+rm -rf $lnd
+$LIB/${_PFX}flint ./ddilint.data lint.out | sort -u | \
+nawk -F: 'BEGIN {
+	m = 0
+}
+{
+	msg[m] = $1
+	messages[$1] = 1
+	sub($1, "")
+	id[m] = substr($0, 2)
+	m++
+}
+END {
+	for (message in messages) {
+		print message
+		for (i=0; i<=m; i++)
+			if (msg[i] == message)
+				print "	" id[i]
+		print ""
+	}
+}'
+rm lint.out
+rm ddilint.data

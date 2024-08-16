@@ -1,0 +1,152 @@
+#pragma ident	"@(#)mach64:mach64/m64_dacs.def	1.6"
+
+/***
+ ***	NAME
+ ***
+ ***		m64_dacs.def : DAC's supported by the Mach64 controller.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***		#define DEFINE_DAC(NAME, ENUMVALUE, MAXCLOCK, DELAY_COUNT, ID,
+ ***				INITFUNC, UNINITFUNC,
+ ***				GETCOLORMETHOD_PSEUDOCOLOR, SETCOLORMETHOD_PSEUDOCOLOR,
+ ***				GETCOLORMETHOD_DIRECTCOLOR, SETCOLORMETHOD_DIRECTCOLOR,
+ ***				SUPPORTED_VISUALS, FLAGS16, FLAGS24, FLAGS32, FLAGSRGB,
+ ***				HW_CURSOR_ENABLE_FN, HW_CURSOR_DISABLE_FN, 
+ ***				HW_CURSOR_COLOR_SET_FN, HW_VIDEO_BLANK_FN, DESCRIPTION)
+ ***		#include "m64_dacs.def"
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	This file contains definitions for the various DAC's known to
+ ***	the Mach64 display library, and their various properties.  Each
+ ***	DAC is associated with an enumeration name, a value for this
+ ***	enumeration, pointers to functions handling initialization and
+ ***	de-initialization, get- and set- colormap functions, the
+ ***	maximum clock frequency that the DAC can safely handle, bits
+ ***	fields specifying the kinds of the 16 bit support, kinds of 24
+ ***	bit pixel support, RGB wieghtage.  The last field of the DAC
+ ***	description is a string suitable for printing out when the SDD
+ ***	initializes giving the DAC's `name'.
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***	FILES
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	HISTORY
+ ***	
+ ***/
+
+DEFINE_DAC(M64_DAC_UNKNOWN, 0, 					/* Name , value */
+	0,		 									/* Max clock */
+	0,											/* Register access delay */
+	0,											/* dac id as in configstat0 */
+	0, 											/* init func */
+	0, 											/* uninit func */
+	0, 											/* get pseudocolor method */
+	0, 											/* set pseudocolor method */
+	0, 											/* get directcolor method */
+	0,											/* set directcolor method */
+	0,											/* supported visuals */
+	0,											/* Flags 16 */
+	0,											/* Flags 24 */
+	0,											/* Flags 32 */
+	0,											/* Flags RGB */
+	0,											/* HW cursor enable fn */
+	0,											/* HW cursor disable fn */
+	0,											/* HW cursor set color fn	*/
+	0,											/* HW video blank fn	*/
+	"unknown_dac"),
+
+/* 
+ * ATI's ATI-68860 DAC.
+ */
+DEFINE_DAC(M64_DAC_ATI68860, 1,  			
+	135000, 100, 5,
+	m64_dac_initialize_ati68860, 				
+	m64_dac_uninitialize_ati68860, 				
+	m64_dac_ati68860_pseudocolor_get_color, 	
+	m64_dac_ati68860_pseudocolor_set_color, 	
+	m64_dac_ati68860_directcolor_get_color, 	
+	m64_dac_ati68860_directcolor_set_color, 	
+	(M64_DAC_4_BIT_PSEUDO_COLOR_SUPPORTED |
+		M64_DAC_8_BIT_PSEUDO_COLOR_SUPPORTED |
+		M64_DAC_16_BIT_TRUE_COLOR_SUPPORTED |
+		M64_DAC_16_BIT_DIRECT_COLOR_SUPPORTED |
+		M64_DAC_32_BIT_TRUE_COLOR_SUPPORTED |
+		M64_DAC_32_BIT_DIRECT_COLOR_SUPPORTED), 
+	(M64_DAC_16_BIT_5_5_5_SUPPORTED | 
+		M64_DAC_16_BIT_5_6_5_SUPPORTED | 
+		M64_DAC_16_BIT_6_5_5_SUPPORTED | 
+		M64_DAC_16_BIT_6_6_4_SUPPORTED),
+	0,
+	M64_DAC_32_BIT_R_G_B_A_SUPPORTED |
+	M64_DAC_32_BIT_A_B_G_R_SUPPORTED,
+	(M64_DAC_BITS_PER_RGB_6 | M64_DAC_BITS_PER_RGB_8),
+	m64_dac_ati68860_enable_hardware_cursor,
+	m64_dac_ati68860_disable_hardware_cursor,
+	m64_dac_ati68860_set_hardware_cursor_color,
+	m64_dac_ati68860_video_blank,
+	"ATI68860"),
+
+/* 
+ * SGS Thompson STG 1702. Does not support h/w cursor and Direct Color.
+ */
+												/* 
+												 * "M64_DAC_STG1702" dac name 
+												 * shouldn't be changed
+												 * as it is being string
+												 * compared in the code.
+												 */
+DEFINE_DAC(M64_DAC_STG1702, 2,  			
+	110000, 100, 7,
+	m64_dac_initialize_stg1702, 				
+	m64_dac_uninitialize_stg1702, 				
+	m64_dac_stg1702_pseudocolor_get_color, 	
+	m64_dac_stg1702_pseudocolor_set_color, 	
+	m64_dac_stg1702_directcolor_get_color, 	
+	m64_dac_stg1702_directcolor_set_color, 	
+	( M64_DAC_8_BIT_PSEUDO_COLOR_SUPPORTED |
+		M64_DAC_16_BIT_TRUE_COLOR_SUPPORTED |
+		M64_DAC_32_BIT_TRUE_COLOR_SUPPORTED), 
+	(M64_DAC_16_BIT_5_5_5_SUPPORTED | 
+		M64_DAC_16_BIT_5_6_5_SUPPORTED),
+	0,											/* 24 bit flags */
+	M64_DAC_32_BIT_A_R_G_B_SUPPORTED,
+	(M64_DAC_BITS_PER_RGB_6 |
+		M64_DAC_BITS_PER_RGB_8),
+	m64_no_operation_void,						/* h/w cursor routines */
+	m64_no_operation_void,
+	m64_no_operation_void,
+	m64_dac_stg1702_video_blank,
+	"STG1702"),									
+
+
+DEFINE_DAC(M64_DAC_COUNT, 3, 					/* Name , value */
+	0,		 									/* Max clock */
+	0,											/* Register access delay */
+	0,											/* dac id as in configstat0 */
+	0, 											/* init func */
+	0, 											/* uninit func */
+	0, 											/* get pseudocolor method */
+	0, 											/* set pseudocolor method */
+	0, 											/* get directcolor method */
+	0,											/* set directcolor method */
+	0,											/* supported visuals */
+	0,											/* Flags 16 */
+	0,											/* Flags 24 */
+	0,											/* Flags 32 */
+	0,											/* Flags RGB */
+	0,											/* HW cursor enable fn */
+	0,											/* HW cursor disable fn */
+	0,											/* HW cursor set color fn	*/
+	0,											/* HW video blank fn	*/
+	"dac_count")

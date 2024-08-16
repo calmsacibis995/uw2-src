@@ -1,0 +1,94 @@
+#ident	"@(#)libthread:common/lib/libthread/libthread.rules	1.4"
+
+# This file defines macros and rules for subcomponents of libthread.  It assumes
+# that the only targets in the subcomponents are "object files" suffixed by
+# .$(O), where O can take different values for different compilers.  For
+# example, the lint compiler produces ".ln" objects.
+#
+# To use this file, makefiles need only define
+#	MAKEFILE = name of the makefile
+#	O = P, the default object suffix (see below).
+#	CSRCS = the list of C source files, file1.c, ..., filen.c
+#	COBJS = the list of object files, file1.$O, ..., filen.$O
+#	Dependencies for each file.$O
+
+DEBUG =
+THR_DEBUG =
+
+MAKEFLAGS =
+
+LOCAL_CFLAGS =	$(CFLAGS) -D__MP__ $(DEBUG) $(THR_DEBUG) -D_REENTRANT \
+		-DNO_NCEG_FPE -DDSHLIB
+
+MASK = umask 002;
+
+COMMINC = ../inc
+ARCHINC = ../archinc
+ADDINCDIR=
+INCDIR = -I$(COMMINC) -I$(ARCHINC) $(ADDINCDIR) $(GLOBALINC)
+
+ALLFLAGS = $(INCDIR) $(LOCAL_CFLAGS) $(TRACE) $(DEFLIST)
+
+LINT = $(PFX)lint
+
+# Default is to make shared object
+O = P
+
+# By convention, the suffix$O determines compilation options, and can be
+# passed on the make command line or in the environment.  Individual makefiles
+# must default to P for vanilla, Position-independent code, by convention.  It
+# would be nice to have this in the include file,  but we need it earlier,
+# to be able to $COBJS for the targets here.
+#
+# P is suffix for object compiled for shared object lib (-KPIC)
+# T is suffix for object compiled shared object lib and TRACE=-DTRACE
+# O is suffix for object compiled for archive lib
+# ln is suffix for object compiled for lint
+
+.SUFFIXES: .c .O .P .T .ln
+
+.c.P:
+	$(MASK)\
+	$(CC) $(ALLFLAGS) -KPIC -c $*.c && mv $*.o $*.P
+
+.c.T:
+	$(MASK)\
+	$(CC) $(ALLFLAGS) -KPIC -c $*.c && mv $*.o $*.T
+
+.c.O:
+	$(MASK)\
+	$(CC) $(ALLFLAGS) -c $*.c && mv $*.o $*.O
+
+.c.ln:
+	$(MASK)\
+	$(LINT) $(ALLFLAGS) -c $*.c
+
+# Default target is non-trace and trace shared object
+
+all::	dotso dott
+
+dotso::	cobjs
+
+dott::
+	$(MAKE) -f $(MAKEFILE) cobjs MAKEFLAGS="$(MAKEFLAGS)" \
+		INCDIR="$(INCDIR)" \
+		LIBRULES="$(LIBRULES)" LIBTHREADRULES="$(LIBTHREADRULES)" O=T
+
+dotln::
+	$(MAKE) -f $(MAKEFILE) cobjs MAKEFLAGS="$(MAKEFLAGS)" \
+		INCDIR="$(INCDIR)" \
+		LIBRULES="$(LIBRULES)" LIBTHREADRULES="$(LIBTHREADRULES)" O=ln
+
+dota::
+	$(MAKE) -f $(MAKEFILE) cobjs MAKEFLAGS="$(MAKEFLAGS)" \
+		INCDIR="$(INCDIR)" \
+		LIBRULES="$(LIBRULES)" LIBTHREADRULES="$(LIBTHREADRULES)" O=O
+
+cobjs::	$(COBJS)
+
+install:: all
+
+clean::
+	-rm -f *.o *.O *.P *.T *.ln
+
+clobber::	clean

@@ -1,0 +1,42 @@
+#ident	"@(#)cpq.cmds:wellness/agent/cpqwell.etc	1.7"
+#
+# wellness agent start/stop script
+#
+umask 022
+
+#
+# LOGFILE is where all the messages from the UPS agent will go.
+#
+LOGFILE=/var/spool/compaq/wellness/wellness.log
+
+if [ ! -d /var/spool/compaq/wellness ]
+then
+	mkdir -p /var/spool/compaq/wellness
+fi
+
+PATH=/etc:/bin:/usr/bin:/usr/sbin:/usr/bin/compaq/wellness; export PATH 
+
+case "$1" in
+'start')
+	ps -ef | grep wellness_agent | grep -v grep > /dev/null 2>&1
+	if [ $? -eq 0 ]
+	then
+		exit 0
+	fi
+	cd /usr/bin/compaq/wellness
+	wellness_agent -p 30 -s OK -t OK -i > ${LOGFILE} 2>&1 &
+	echo ""
+	;;
+
+'stop')
+	kill `/usr/bin/ps -ef | /usr/bin/sed -n \
+		-e'/ wellness_agent$/s/[^0-9 \t].*//p'` 2>/dev/null
+	;;
+
+*)
+	echo "Usage: $0 [ start | stop ]"
+	exit 1
+	;;
+esac
+
+exit 0

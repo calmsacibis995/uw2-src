@@ -1,0 +1,49 @@
+#ident	"@(#)sc:local/lib/testrules	3.3" 
+###############################################################################
+#
+# C++ Standard Components, Release 3.0.
+#
+# Copyright (c) 1991, 1992 AT&T and Unix System Laboratories, Inc.
+# Copyright (c) 1988, 1989, 1990 AT&T.  All Rights Reserved.
+#
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T and Unix System
+# Laboratories, Inc.  The copyright notice above does not evidence
+# any actual or intended publication of such source code.
+#
+###############################################################################
+
+CC=CC
+G=
+LDFLAGS=$(G)
+
+# When the regression is being run under $LBASE/tests, these
+# flags should look like this:
+#	CCFLAGS=+w
+#	LIBS=-l++
+# On the other hand, when the programmer has qgotten this
+# component and is regression testing his private copy,
+# these flags should look like this:
+#	CCFLAGS=+w -I../incl
+#	LIBS=../componentname.a -l++ 
+# The following works pretty well for both situations:
+#
+CCFLAGS=$(G) +w -I../incl
+LIBS=../*.a -l++ 
+
+# The default way to generate the .r and .V files
+# is simply to compile and run the .c file of the same name.
+# Change these rules, or add special cases, as your
+# component requires.
+
+.SUFFIXES: .r .E
+ 
+.c.r:
+	$(CC) $(CCFLAGS) $(LDFLAGS) -o $*.E $< $(LIBS)
+	-./$*.E > $@
+
+.c.E:
+	$(CC) $(CCFLAGS) $(LDFLAGS) -o $*.E $< $(LIBS)
+
+.c.o:
+	$(CC) $(CCFLAGS) -c $<
+

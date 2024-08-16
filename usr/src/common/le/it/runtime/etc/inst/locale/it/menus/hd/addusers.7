@@ -1,0 +1,50 @@
+.pageno
+Pagina %d di %d
+.ul
+Installazione sistema operativo UNIX
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Input non ammesso
+.ur
+Input non ammesso
+.ll
+.lr
+F1=Guida
+.top
+`[ "$ERRSCREEN" = "ERROR1" ] && echo "AVVISO: login dell'utente già in uso."`
+`[ "$ERRSCREEN" = "ERROR2" ] && echo "AVVISO: Numero di utente già in uso."`
+`[ "$ERRSCREEN" = "ERROR3" ] && echo "AVVISO: login dell'utente e numero di ID dell'utente già in uso."`
+
+Per creare correttamente un nuovo conto utente, occorre specificare un
+numero di ID dell'utente e un login dell'utente che non siano già
+presenti nel sistema. Le scelte appena effettuate si sovrappongono ad
+altre già presenti nel sistema: occorre quindi effettuare delle scelte
+diverse.
+.form
+ENTER
+.selection
+Premere <Invio> per continuare.
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+Quando nel sistema viene definito un nuovo login dell'utente, ad esso
+viene assegnato un numero di utente univoco. Tale numero non può essere
+successivamente assegnato a un altro login di utente, e non è nemmeno
+possibile assegnare un secondo numero allo stesso login. Poiché è in
+corso un'installazione non distruttiva, nel computer sono già presenti
+alcuni login di utente. I nuovi login dell'utente che sono stati
+specificati sono in conflitto con uno dei login esistenti.
+
+Nella precedente versione di UNIX, il login dell'utente "`echo $ERRUID`" era
+associato con il numero di ID dell'utente "`echo $ERRUNUM\". Selezionare \"$ERRUID\"` 
+e `echo \"$ERRUNUM\"` in modo da ricreare il vecchio login dell'utente.
+
+In alternativa, selezionare un login dell'utente e un numero di utente
+diversi.
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.working
+.end

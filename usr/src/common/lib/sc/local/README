@@ -1,0 +1,345 @@
+#ident	"@(#)sc:local/README	3.7"
+###########################################################################
+#
+# C++ Standard Components, Release 3.0.
+#
+# Copyright (c) 1991, 1992 AT&T and UNIX System Laboratories, Inc.
+# Copyright (c) 1988, 1989, 1990 AT&T.  All Rights Reserved.
+#
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T and UNIX System
+# Laboratories, Inc.  The copyright notice above does not evidence
+# any actual or intended publication of such source code.
+#
+###########################################################################
+
+This file describes the contents of the C++ Standard Components
+Release 3.0 source distribution.  It gives an overview of the
+compilation process and the major changes from the previous release.
+A list of known problems is also attached.  For more details, see
+the Release Notes.
+
+Contents of the distribution
+----------------------------
+Library components:
+   Args - UNIX command line arguments
+   Array_alg - Operations on contiguously stored data
+   Bits - Variable-length bit strings
+   Block - Parameterized variable-size arrays
+   Fsm - Simple deterministic finite state machines
+   G2++ - Records for interprocess communication
+   Graph - Entities and relationships
+   Graph_alg - Operations on Graphs
+   List - Parameterized variable-length sequences
+   List_old - Parameterized variable-length sequences (previous release)
+   Map - Parameterized variable-size associative arrays
+   Objection - Rudimentary error-handling 
+   Path - UNIX pathnames and search paths
+   Pool - Special-purpose memory allocators
+   Regex - Regular expressions
+   Set - Parameterized unordered collections 
+   Stopwatch - Program execution time measurement
+   String - Variable-length character strings
+   Strstream - iostream specialized to String
+   Symbol - Unique identifiers based on character strings
+   Time - Absolute time, timezone, and duration
+   ipcstream - iostream and streambuf for inter-process communications
+
+Tools components:
+   aoutdem, c++filt, dem - Tools for demangling C++ symbols
+   fs - A tool and library to help find freestore bugs
+   hier - A tool that displays the inheritance hierarchy in a program
+   incl - A tool that displays the hierarchy include files used in a program
+   publik - A tool that displays the public interface of a class
+
+All of the source code for these components can be found in the
+directories "src" and "incl".
+
+The "bin" and "lib" directories are initially empty.  The build
+process will put the binaries, shell scripts, and libraries there.
+
+The "aux" directory contains the programs that run the build
+process.  The build process uses ordinary UNIX "sh" and "make".
+
+The "man" directory contains UNIX-style manual pages for all of
+the components. Its directory structure can be converted into the
+man(1) style by running a tool "fix_man" in the aux directory.
+
+The "doc-postscript" directory contains Postscript files for the
+manual pages and tutorials.  The files are in "large" (8.5x11) size.
+This directory will be on reseller release only.
+
+
+Compilation instructions
+------------------------
+To successfully build this library, you should have a USL C++ Language
+System Release 3.0.1 or compatible compiler on your system. This library
+will not build with C++ releases earlier than Release 3.0.1.
+
+To build the library, you must perform the following steps in order.
+If at any time you wish to completely clean up what you have done and
+start afresh, do the following:
+
+       $ make clobber
+
+You will be able to perform all these steps - except possibly the
+last - without being logged in as root.  For the last step, you will
+need write permission to your public installation directories.
+
+    1.  Edit the following makefiles
+
+	- makefile
+
+	    Before you	build the library, you need to edit the
+	    makefile to make sure the variables are set correctly
+	    for your system.  These variables are described at	the
+	    top of the	makefile.
+
+	- src/aoutdem/makefile
+
+	    The library comes with a tool, ``demangle,'' for
+	    modifying the symbol table	of a C++ executable program
+	    for easier	debugging.  Because this tool is so
+	    system-specific, its makefile must	also be	edited.
+	    Edit the file src/aoutdem/makefile, and set the
+	    variables at the top as directed.
+
+    2.  Read section 4 of the Release Notes
+
+        Read section 4 of the Release Notes, "System specific problems",
+	to see if there is anything you need to do for your machine.
+
+    3.  Build the library components and tools
+
+        The next step is to issue the following command:
+
+	    $ make sc3.0
+
+        After the build has completed, the following files should be
+        in the bin directory:
+
+            c++filt     demangle    hier         publik
+            dem         g2++comp    incl
+
+        Also, the following files should be in the lib directory:
+
+            fscpp       incl2       libGraph.a   publik2  
+            fsipp       lib++.a     libfs.a
+            hier2       libGA.a     libg2++.a
+
+        If the build was not completely successful, some of these
+        files may be missing.
+
+	NOTES: To build SC 3.0 using a C++ compiler for an ANSI C
+	       environment, an environment variable ccC can be used
+	       to pass the path for the ANSI C compiler.
+
+	       EXAMPLE:
+			ccC=/my/ANSI/cc make sc3.0
+
+    4.  (Optional) Build the demo programs.
+
+        If you wish to make sure the build was successful before you
+        install the library, you can do this as follows:
+
+            $ make demos
+
+        It will compile and run a number of demo programs, and also
+        check that their output is correct.  If any of the demos
+        fails, then something went wrong in the building of the
+        library.  Demo failure is indicated by printing a ``FAILED''
+        message to the terminal, and writing a demo.r file to the
+        directory containing the demo.  Executing
+
+            $ diff demo.V demo.r
+
+        will display the difference between the ``expected output''
+        (demo.V) and actual output (demo.r) of the demo.  If the
+        difference is obviously due to a system idiosyncrasy rather
+        than actual program failure, the ``failure'' can be ignored.
+
+        Any apparent error during the execution of a demo, such as a
+        core dump, that is not accompanied by a ``FAILED'' message,
+        indicates a successful demo.  The set of demos, if any, that
+        failed, can be listed by saying:
+
+            $ ls src/*/demos/*.r
+
+        Many of the examples contained in the tutorials which come
+        as part of the library documentation can be found in the
+        library demos.  Library users should feel free to borrow
+        code from the demos for use in their own programs.
+
+	NOTES: To build and test the demo programs in a subset of
+	       the components and tools, the environment variables
+	       SC_COMPLIST and SC_COMPLISTFILE can be used. These
+	       allow easy overriding of the complist in aux.
+
+               Example:
+        		SC_COMPLIST="Args Map Set" make demos
+        		SC_COMPLISTFILE=/tmp/complist make demos
+
+
+    5.  Install the library components and tools.
+
+        The final step is to install the library.  First do the
+        following:
+
+            # cp lib/* libdir    //  on BSD style machines, use "cp -p"
+            # cp bin/* bindir
+            # cp incl/* incldir
+
+        The directory libdir is where you want auxiliary programs
+        installed.  The directory bindir is where you want publicly
+        executable programs installed (typically /usr/bin).  The
+        directory incldir is where you keep your standard C++
+        include files (typically /usr/include/CC).  It is
+        recommended you use cp rather than mv to do the
+        installation, since using mv will make it difficult to re-
+        make any part of the library.  (The build process is
+        entirely self-contained for safety.)  Notice that you may
+        need to login as root to be able to write to these public
+        directories.
+
+        Next, edit the following shell scripts:
+
+            # cd bindir
+            # vi hier incl publik
+            # cd libdir
+            # vi fscpp
+
+        In each of these files, there are environment variables at
+        the top which you must set.  The details of how to set them
+        are explained in the shell scripts.
+
+        Finally,the last step is an optional step for installing
+        "fsipp" into your C++ compilation system in order to use the
+        Free Store (fs) tool.
+
+        If your compiler recognizes cppC, edit your CC driver, setting
+	the value of the cppC environment variable to libdir/fscpp.
+	The fscpp command is a ``preprocessor'' which first runs your
+        native preprocessor, and then runs "fsipp" on the result.
+
+        Instead of editing the CC driver, you can set cppC before
+        running CC:
+
+            $ cppC=libdir/fscpp CC ...
+
+        If your compiler does not recognize cppC, you will have to
+        install fsipp into your compilation system by some other means.
+        The easiest way to do this may be to edit your actual C++ driver,
+	changing it to invoke fsipp between preprocessing and compiling.
+	An alternative is to write a "wrapper" driver which does
+	preprocessing followed by fsipp, and then invokes your driver
+	on the result.  The latter option may be the easier choice for
+	C++ compilers that incorporate the preprocessing into the compiler.
+
+
+The library components and tools are now ready for use.
+
+
+Changes from the previous release 
+---------------------------------
+The following list contains the new Release 3.0 features which are different
+from Release 2.0. To upgrade applications based on Release 2.0 to the
+current release, please read the Upgrading Guide found in the "Getting Started"
+manual.
+
+    1.  Syntactically, the major difference between this release and
+        the previous release is the replacement of simulated
+        parameterized types with template classes. Most container
+        components such as Block, List, Map, and Set have been
+ 	"templatized".
+
+    2.  The List component has been revised in the following two
+        ways: (1). there is no more built-in iterator within List, and
+        (2). a pointer is now returned from the next() and its companions
+        (i.e., prev(), peek_next(), peek_prev(), head(), and tail()).
+	With the change, the behaviors of List iterators is more consistent
+        with the Set iterators.
+
+    3.  In order for applications which relied heavily on the old
+        List to avoid a potential implementation revision, the
+        old List component from Release 2.0 is also included in this
+        release.  To use the old List instead of the new one, the
+        only source change would be to change
+
+               #include <List.h>
+        to
+               #include <List_old.h>
+
+        Note, however, that the old List is also templatized.
+
+    4.  In the previous release, a used-defined hash function for
+        the Set and Bag classes can be specified as a parameterized
+        type argument in Setimplement and Bagimplement statements.
+        In the current template version, a hash function will be
+        provided as an instantiated hash() member function.  If
+        there is no user-provided hash() instance, a default hash
+        function which always returns zero will be instantiated.
+
+        The guideline for converting the hash function specification
+        is:
+
+          - Assume that Setimplement(T,MyHash) was used to specify
+            the user-defined hash function MyHash. Change the hash
+            function header for MyHash from
+
+                Set_or_Bag_hashval MyHash(const T&) { ... }
+            to
+                Set_or_Bag_hashval Set<T>::hash(const T&) { ... }
+
+    5.  All the functions in the Array_alg component are template
+	functions.  Due to strict matching rules imposed on template
+	functions, using these functions with Block arguments cannot
+	rely on implicit type conversion as was normally done in the
+	previous releases.  For example, calling the bin_search function
+	should pass arguments in the same types as in the signature,
+	namely, &b[0] and &b[n] instead of b and b+n.
+
+    6.  The Graph and Graph_alg components are the only container
+        classes which are not templatized in the current release.
+        Simulated parameterized types using preprocessor macros
+        are still used in the implementation.  However, the
+        Graphimplement macro is no longer necessary in the new
+        release and it is optional to delete it from the source
+        code.
+
+    7.  The isset function in the Args component has been renamed
+	to isoptset to avoid potential naming conflict with some
+	header files.
+
+Known Problems
+--------------
+    1.  When building SC 3.0 using cfron 3.0.1 with +a1 mode (ANSI
+	C code generation), the G2++ component and its associated demos
+	may not be successfully built due to a known cfront +a1 bug.
+	The known cfront problem has been fixed in the 3.0.2 release.
+	Therefore, to build SC 3.0 under an ANSI C environment, it is
+	recommended to use cfront 3.0.2 or a compatible C++ compiler.
+
+    2.  Similarly, cfront 3.0.2 should be used if building SC 3.0 under
+	an ANSI C environment with +d and/or +p options turned on.
+
+    3.  When building SC 3.0 using a non-cfront-based C++ compiler,
+	if there is any compilation error in matching operator[](unsigned)
+	in some of the components, an option can be specified in the
+	CCFLAGS of the makefile at the SC3.0 root directory; e.g.,
+
+		CCFLAGS=-DINT_INDEXING
+
+    4. Due to the common usage of such names as "String", "Set", etc., it
+       is possible that there may be naming conflicts if this library
+       product is used in combination with other library products. This
+       is known to be the case with the X toolkit libraries, such as
+       Openlook and Motif. It is not a problem with our specific product.
+
+
+Customer Support
+----------------
+Should there be any question, please contact us at the following 
+address:
+
+	C++ Standard Components, Release 3.0
+	USL C++ Language Department
+ 	scsup@usl.com

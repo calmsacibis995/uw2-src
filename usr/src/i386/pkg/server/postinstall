@@ -1,0 +1,44 @@
+#ident	"@(#)pkg.inetinst:postinstall	1.5"
+GT=/usr/bin/gettxt
+
+# add Install_Server to class database
+if [ -d /usr/X/lib/classdb ]
+then
+    grep "INCLUDE instsvr\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+	echo "INCLUDE instsvr.cdb;" >> /usr/X/lib/classdb/dtadmin
+    fi
+fi
+
+# put icon in existing users Admin_Tools
+DAYONEDIR=/usr/X/desktop/LoginMgr/DayOne
+USERDIR=/usr/X/desktop/LoginMgr/Users
+if [ -d /usr/X/lib/classdb -a -d $DAYONEDIR -a -d $USERDIR ]
+then	
+    IFS=":"
+    ls /usr/X/desktop/LoginMgr/Users |
+    while read Login
+    do
+	Home=`/usr/X/adm/upgrade/dtlogindir $Login`
+	[ -d "$Home" ] || continue
+	if [ -f $DAYONEDIR/$Login ]
+	then
+	    locale=`cat $DAYONEDIR/$Login`
+	else
+	    locale="C"
+	fi
+	admdir=`LC_ALL=$locale $GT 'dayone:2' Admin_Tools`
+	if [ -d $Home/$admdir ]
+	then
+	    iserver=`LC_ALL=$locale $GT 'dayone:59' Install_Server`
+	    if [ -s $Home/$admdir/$iserver -o -f $Home/$admdir/$iserver -o -h $Home/$admdir/$iserver ]
+	    then
+		# remove old link
+		rm -f $Home/$admdir/$iserver
+	    fi
+	    ln -s /usr/X/bin/Install_Server $Home/$admdir/$iserver
+	    installf $PKGINST $Home/$admdir/$iserver=/usr/X/bin/Install_Server s
+	fi
+    done 
+fi

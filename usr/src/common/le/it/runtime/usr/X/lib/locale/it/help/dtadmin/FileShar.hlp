@@ -1,0 +1,724 @@
+#ident\t"@(#)dthelp:Admin.Tools/FileShar.hlp    1.26"
+^*version^1
+^*title^Condivisione file
+^:Condiv_file
+^*width^70
+^+DesktopMgr/help.defs
+^?Accesso ai file da sistemi remoti
+^0^Condivisione file
+^$10
+Condivisione file
+
+Usare Condivisione File per accedere ai file da sistemi remoti come se
+fossero il proprio sistema e per configurare il sistema in modo che
+altri sistemi possano accedere ai propri file e cartelle.
+
+Una volta impostata la condivisione di file, non è necessario fare
+niente di particolare per usarei file remoti. Basta aprire le cartelle
+remote, avviare le applicazioni remote e usare i dati remoti come se
+fossero locali.
+
+Con Condivisione di File è possibile:
+
+\to\t\k(Accedere a voci condivise remote^^Accesso agli elementi condivisi remoti) da un altro sistema
+\to\t\k(Creare voci condivise remote^^Creazione elementi condivisi locali) per l'uso da parte di altri sistemi
+\to\t\k(Mostrare emodificare le proprietà di voci condivise remote^^Visualizzazione e modifica delle proprietà dell'elemento condiviso remoto)
+\to\t\k(Mostrare e modificare le proprietà di voci condivise locali^^Visualizzazione e modifica delle proprietà dell'elemento condiviso locale)
+\to\t\k(Sconnettere o cancellare voci condivise remote^^Disconnessione e cancellazione degli elementi condivisi remoti) dal proprio sistema
+\to\t\k(Non pubblicizzare o cancellare voci condivise locali^^Non dichiarazione e cancellazione degli elementi condivisi locali) dal proprio
+\t \tsistema
+
+Vedi anche:
+\s(Condivisione remota di file e cartelle^dhelp "pe.it" ownerhb "Condivisione remota di file e cartelle" "" || helpLinkErr)
+
+^1^Accesso agli elementi condivisi remoti
+^$20
+Accesso agli elementi condivisi remoti
+
+Nota: Bisogna avere il \k(permesso di connessione a cartelle/file remote^dtadmin/user.hlp^Comprensione dei permessi) per
+poter configurare l'accesso a voci condivise remote.
+Per configurare il proprio sistema per accedere a \d(voci condivise^elemento condiviso),
+procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Condivisione File. Appare la finestra
+  \t"Configurazione Condivisione File" (per voci condivise remote o
+  \tvoci condivise locali, a seconda di quale vista era stata
+  \tselezionata per ultima).
+
+4.\tFare clic su Azioni=>Stato. Appare la
+  \t\k(Finestra "Condivisione File: Stato"^^Condivisione file: Finestra di Stato)
+
+5.\tVerificare che NFS sia in esecuzione. Se non è in esecuzione,
+  \tfare clic su Avvia NFS. Quando NFS si avvia, appare un messaggio e
+  \til pulsante Avvia NFS diventa grigio.
+
+  \tNota: Ci vogliono alcuni minuti per avviare NFS.
+
+6.\tFare clic su Annulla nella finestra "Condivisione File: Stato".
+
+7.\tFare clic su Mostra=>Remote. Appare la finestra "Configurazione
+  \tCondivisione File: Voci condivise Remote".
+
+  \tNota: La finestra Voci condivise Remote potrebbe già essere
+  \tvisualizzata, dato che questa è la vista di default.
+
+8.\tFare clic su Voce Condivisa=>Nuova. Appare la finestra
+  \t"Condivisione File: Aggiungi nuova voce condivisa - Remota"
+  \tcon i seguenti campi:
+
+  \to\tNome Sistema Remoto: - Immettere il nome del sistema che ha la
+  \t \tvoce condivisa a cui si vuole accedere o fare clic su Ricerca
+  \t \tper far apparire la \k(Finestra "Ricerca Sistema Remoto"^^Finestra Consultazione sistema remoto) per
+  \t \tscegliere da una lista di sistemi disponibili e fare clic su OK
+  \t \t(potrebbero essere necessari parecchi secondi al sistema per
+  \t \tvisualizzare la lista se il sistema è configurato per il \k(DNS^dtadmin/inet.hlp^Accesso a DNS)).
+
+  \to\tMostra Voci condivise Disponibili: - Fare clic sulpulsante
+  \t \tMostra Voci condivise Disponibili per far apparire una lista di
+  \t \tvoci condivise disponibili per il sistema selezionato (se ,si è
+  \t \tselezionato Ricerca per Nome di Sistema Remoto, il sistema
+  \t \tvisualizza automaticamente questa lista).
+
+  \t \tFare clic sulla voce condivisa che si desidera usare.
+
+  \to\tNome Icona: - Visualizza il nome dell'icona che rappresenta la
+  \t \tvoce condivisa selezionata (nella finestra
+  \t \t"Condivisione File" principale).
+
+  \to\tVoce condivisa da connettere: - Visualizza il
+  \t \t\d(nome di percorso^percorso) completo della voce
+  \t \tcondivisa.
+
+  \to\tCartella locale a cui connettersi: - Immettere il nome della cartella nel
+  \t \tproprio sistema da cui si vuole accedere alla voce
+  \t \tcondivisa, o fare clic su Trova cartella per far apparire la \k(finestra "Condivisione file: Cartelle"^^Finestra Condivisione di file: Cartelle).
+
+  \t \tNota: Se si immette il nome di una cartella che non esiste, il
+  \t \tsistema chiede se si desidera creare la cartella quando si fa
+  \t \tclic su Aggiungi. Vedi \k(Messaggio Crea cartella). Se si digita il
+  \t \tnome di una cartella che non è vuota, il sistema visualizza un
+  \t \tmessaggio di avviso. Vedi \k(Messaggio Cartella non vuota).
+
+  \to\tConnetti Voce condivisa come: - Fare clic su Sola Lettura se
+  \t \tsi desidera poter usare, ma non cambiare, i file e le cartelle
+  \t \tdella voce condivisa; fare clic su Lettura e Scrittura se si
+  \t \tdesidera poter usare e modificare i file e le cartelle della
+  \t \tvoce condivisa.
+
+  \t \tNota:Se si seleziona Lettura e Scrittura, ma il sistema
+  \t \tremoto pubblicizza la voce condivisa come in Sola Lettura, non
+  \t \tsi potrà scrivere in quella voce condivisa.
+
+  \to\tConnettere all'avviamento di NFS? - Fare clic su Sì per
+  \t \tconnettere la voce condivisa ora e ogni volta che si avvia NFS;
+  \t \tfare clic su No per connettere la voce condivisa solo ora.
+
+  \to\tOpzioni Estese: - Fare clic su questa opzione per far apparire
+  \t \tqueste opzioni aggiuntive:
+
+  \t \t-\tLa Connessione è: - Fare clic su \k(Connessione Soft o Hard^^Connessione soft e hard).
+
+  \t \t-\tAltre opzioni della riga di comando: - Immettere le opzioni della
+  \t \t \triga di comando per il comando mount.
+  \t \t \tVedi l'opzione mount(1M) nel \s(Riferimento dei comandi^dhelp refman uarm "" "" || helpLinkErr).
+
+9.\tFare clic su Aggiungi. Nella finestra "Configurazione Condivisione
+  \tFile: Voci condivise remote" appare un'icona che rappresenta la
+  \tvoce condivisa remota.
+
+  \tNota: Se si decide di non aggiungere questa voce condivisa,
+  \tfare clic su Annulla.
+
+Vedi anche:
+\s(Uso della condivisione di file^dhelp "pe.it" ownerhb "Condivisione remota di file e cartelle" "Uso di Condivisione di file" || helpLinkErr)
+\s{Introduzione all'amministrazione di NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Messaggio Crea cartella
+^$24
+Messaggio Crea cartella
+
+Il nome della cartella immesso nella casella di testo "Cartella Locale
+a cui connettere:" non esiste. Fare clic su:
+
+\to\tCrea - Per creare la cartella.
+
+\to\tAnnulla - Per annullare la richiesta di creazione della cartella.
+\t \tPoi bisogna specificare una cartella locale diversa a cui
+\t \tconnettere la voce condivisa remota.
+
+^2^Messaggio Cartella non vuota
+^$25
+Messaggio Cartella non vuota
+
+Il nome della cartella immesso nella casella di testo "Cartella Locale
+a cui connettere:" contiene già file o file e cartelle. Questi file e
+cartelle non saranno disponibili quando la \d(elemento condiviso) è
+connessa. Questo può impedire il funzionamento di applicazioni sul
+sistema o di parti del sistema stesso.
+
+Fare clic su:
+
+\to\tAggiungi - Per proseguire e aggiungere la nuova voce condivisa,
+\t \tanche se i file e le cartelle contenute in questa cartella non
+\t \tsaranno disponibili dopo l'aggiunta di questa voce condivisa.
+
+\to\tAnnulla - Per annullare la richiesta di creazione della cartella.
+\t \tPoi bisogna specificare una cartella diversa a cui connettere la
+\t \tvoce condivisa remota.
+
+^2^Finestra Consultazione sistema remoto
+^$30
+Finestra Consultazione sistema remoto
+
+Da questa finestra è possibile scorrere lungo i sistemi e sceglierne
+uno da una delle due viste seguenti:
+
+\to\t\k(Lista dei Domini^^Elencazione dei domini)- Questa è la lista di default se sul
+\t \tproprio sistema è configurato DNS.
+
+\to\t\k(Lista dei sistemi) - Questa è la vista di default se non si è
+\t \tconfigurato DNS sul proprio sistema. Visualizza il contenuto del
+\t \tfile /etc/hosts.
+
+Se si ha una Lista DNS e la propria Lista dei sistemi contiene voci
+deiverse oltree al nome del proprio sistema locale, si può passare da
+una vista all'altra facendo clic su Mostra=>Lista Domini o
+Mostra=>Lista sistemi.
+
+Vedi anche:
+\k(Accesso a DNS^dtadmin/inet.hlp^Accesso a DNS)
+\s(Directory e File^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^3^Elencazione dei domini
+^$40
+Elencazione dei domini
+
+Per visualizzare la Lista dei domini, fare clic su Mostra=>Lista
+Domini.
+
+Per default, la Lista dei domini visualizza i sistemi del proprio
+dominio locale.
+
+Per visualizzare e selezionare altri domini (e sottodomini), procedere
+come segue:
+
+1.\tImmettere il nome di dominio desiderato (cioè il nome del dominio
+  \tin cui risiede il sistema che si sta cercando) nella casella
+  \tdi testo Nome Dominio.
+
+2.\tFare clic su Aggiorna Lista.
+
+  \tSe esistono dei sottodomini sotto il dominio specificato, appaiono
+  \tall'inizio della Lista dei domini.
+
+3.\tVisualizzare il contenuto di un sottodominio facendo
+  \t\d(doppio clic^doppio clic) sulla voce del sottodominio. A
+  \tdestra appare una nuova lista che mostra il contenuto di quel
+  \tsottodominio.
+
+  \tÈ possibile continuare a fare doppio clic sui sottodomini per
+  \tfarne apparire sempre di più fino a quando non esistono più
+  \tsottodomini. Tuttavia, sullo schermo possono apparire solo tre
+  \tlivelli di sottodomini alla volta. Se si hanno più di tre livelli,
+  \tusare le frecce destra e sinistra al centro dello schermo per
+  \tspostarsi avanti e indietro lungo le liste.
+
+4.\tCercare nelle liste fino a quando si trova il sistema desiderato.
+  \tPoi fare clic sulla voce del sistema.
+
+5.\tFare clic su OK.
+
+^3^Lista dei sistemi
+^$50
+Lista dei sistemi
+
+Per visualizzare la Lista dei Sistemi, fare clic su Mostra=>Lista
+sistemi.
+
+Nota: Se /etc/hosts contiene solo una voce per il proprio sistema e
+nessun'altro, questa vista non è disponibile.
+
+La Lista dei sistemi visualizza i sistemi nel proprio file /etc/hosts.
+Fare clic sul sistema desiderato, poi fare clci su OK.
+
+Vedi anche:
+\s(Directory e File^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^2^Finestra Condivisione di file: Cartelle
+^$60
+Finestra Condivisione di file: Cartelle
+
+È possibile:
+
+\to\tFare clic sul nome di una cartella o sulla cartella di livello
+\t \tsuperiore nella lista Cartelle fino a individuare la cartella
+\t \tdesiderata.
+
+\to\tImmettere il \d(percorso) nella cartella desiderata.
+
+^1^Creazione elementi condivisi locali
+^$70
+Creazione elementi condivisi locali
+
+Nota: Per poter creare voci condivise locali bisogna avere
+il\k(Permesso di Pubblicizzazione di Cartelle/File locali^dtadmin/user.hlp^Comprensione dei permessi).
+
+Creare una voce condivisa locale quando si desidera consentire a
+utenti e sistemi remoti di accedere ai file e alle cartelle del
+proprio sistema.
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Condivisione File. Appare la finestra
+  \t"Configurazione Condivisione File" (per voci condivise remote o
+  \tvoci condivise locali, a seconda di quale vista era stata
+  \tselezionata per ultima).
+
+4.\tFare clic su Azioni=>Stato. Appare la
+  \t\k(Finestra "Condivisione File: Stato"^^Condivisione file: Finestra di Stato)
+
+5.\tVerificare che NFS sia in esecuzione. Se non è in esecuzione, fare
+  \tclic su Avvia NFS. Quando NFS si avvia, appare un messaggio e il
+  \tpulsante Avvia NFS diventa grigio.
+
+  \tNota: Ci vogliono alcuni minuti per avviare NFS.
+
+6.\tFare clic su Annulla nella finestra "Condivisione File: Stato".
+
+7.\tFare clic su Mostra=>Locali per visualizzare le voci condivise
+  \tlocali. (Prima di poter \d(pubblicizza) una voce condivisa
+  \tbisogna visualizzare una vista locale.
+
+8.\tFare clic su Voce Condivisa=>Nuova. Appare la finestra
+  \t"Condivisione File: Aggiungi nuova voce condivisa - Remota" con i
+  \tseguenti campi:
+
+  \to\tCartella/File da condividere: - Fare clic su Trova.
+  \t \tAppare la \k(Finestra "Condivisione File: Voce condivisa"^^Condivisione file: Finestra Elemento condiviso),
+  \t \tche visualizza i file e le cartelle nella propria
+  \t \t\d(cartella home^home directory).
+
+  \t \tÈ possibile:
+
+  \t \t-\tFare clic sul nome di una cartella o sulla cartella di livello
+  \t \t \tsuperiore nella lista Cartelle fino a individuare la cartella
+  \t \t \tdesiderata.
+
+  \t \t-\tImmettere il \d(percorso) nella cartella desiderata.
+
+  \to\tNome Icona: - Digitare un nome che identifichi la voce
+  \t \tcondivisa. Per default il sistema usa il nome del file o della
+  \t \tcartella immesso in Cartella/File da condividere.
+
+  \to\tPubblicizzare all'avviamento di NFS? - Fare clic su Sì per
+  \t \tpubblicizzare la voce condivisa ora e ogni volta che si avvia
+  \t \tNFS; fare clic su No per pubblicizzare la voce condivisa solo
+  \t \tora (automaticamente solo quando si riavvia il sistema).
+
+  \to\tPer Pubblicizza come: - Fare clic su una delle opzioni che
+  \t \tseguono:
+
+  \t \t-\tSola Lettura: - Per consentire ad altri sistemi di usare, ma
+  \t \t \tnon cambiare, la voce condivisa.
+
+  \t \t-\tLettura e Scrittura - Per consentire l'accesso completo alle
+  \t \t \tvoci condivise.
+
+  \t \t-\tNessun Accesso: Per limitare l'accesso solo ai sistemi
+  \t \t \tnella Lista delle Eccezioni.
+
+  \t \t \tImmettere nel campo Eccezioni: Nome Sistema i nome dei sistemi
+  \t \t \tcon cui volete condividere i file (potete anche fare clic su
+  \t \t \tConsultazione per far apparire la
+  \t \t \t\k(finestra "Condivisione file: Sistemi remoti"^^Finestra Consultazione sistema remoto).
+
+  \t \t \tPoi fare clic su Inserisci Sola Lettura o Inserisci Lettura e
+  \t \t \tScrittura per aggiungere alla Lista delle Eccezioni.
+
+  \t \t \tNota: Per cancellare un sistema dalla lista delle Eccezioni,
+  \t \t \tfare clic su quel sistema e fare clic su Cancella. Per
+  \t \t \tcancellare tutti i sistemi dalla lista delle Eccezioni, fare
+  \t \t \tclic su Cancella Tutti.
+
+  \to\tOpzioni Estese: - Fare clic su questa casella per far apparire
+  \t \tqueste opzioni aggiuntive:
+
+  \t \t-\tAltre opzioni della riga di comando: - Immettere le opzioni
+  \t \t \tdella riga di comando per il comando share.  Vedi il
+  \t \t \t\s(Riferimento dei comandi^dhelp refman uarm "" "" || helpLinkErr) per informazioni sulle opzioni della
+  \t \t \triga di comando.
+
+9.\tFare clic su Aggiungi. Nella finestra "Configurazione Condivisione
+  \tFile: Voci condivise locali" appare un'icona che rappresenta la
+  \tvoce condivisa locale.
+
+  \tNota: Se si decide di non aggiungere questa voce condivisa,
+  \tfare clic su Annulla.
+
+Vedi anche:
+\s(Uso della condivisione di file^dhelp "pe.it" ownerhb "Condivisione remota di file e cartelle" "Uso di Condivisione di file" || helpLinkErr)
+\s{Introduzione all'amministrazione di NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Condivisione file: Finestra di Stato
+^$80
+Condivisione file: Finestra di Stato
+
+Le informazioni nella finestra "Condivisione File: Stato" sono:
+
+\to\tSe NFS è attualmente in esecuzione.
+
+\to\tSe il sistema è pronto a \d(pubblicizza) o a
+\t \t\d(connetti) file
+
+\to\tSe una qualsiasi delle \d(voci condivise^elemento condiviso) locali
+\t \tsono in uso da parte di sistemi remoti (sel ci sono voci condivise
+\t \tin uso, il Desktop le visualizza nella casella di lista
+\t \tCartelle/File Locali nella finestra).
+
+Per avviare NFS, fare clic su Avvia NFS.
+
+Per arrestare NFS, fare clic su \k(Arresta NFS^^Finestra Arresto NFS).
+
+See also:
+\s{Introduzione all'amministrazione di NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Finestra Arresto NFS
+^$85
+Finestra Arresto NFS
+
+Assicurarsi di voler veramente arrestare NFS sul proprio sistema.
+
+Quando si arresta NFS, il sistema sconnette tutte le voci condivise
+remote e tutte le \d(voci condivise^elemento condiviso) locali non sono
+più disponibili per i sistemi remoti. Questa operazione può richiedere
+diversi minuti.
+
+Se si decide di arrestare NFS, fare clic su Arresta NFS nella finestra
+a comparsa del messaggio. Se si decide di non arrestare NFS, fare clic
+su Annulla nella finestra a comparsa del messaggio.
+
+See also:
+\s{Introduzione all'amministrazione di NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+
+^2^Connessione soft e hard
+^$90
+Connessione soft e hard
+
+Usare una connessione hard solo se è essenziale che le informazioni
+che si stanno scrivendo sul sistema remoto non vadano perse.
+
+Una connessione hard forza il proprio sistema ad attendere che la voce
+condivisa remota si riconnetta nel caso si verificasse una
+disconnessione. In sostanza il sistema resta bloccato e non è
+utilizzabile. Con una connessione soft, comunque, se dopo breve tempo
+il sistema remoto non risponde, la scrittura fallisce e il proprio
+sistema torna a essere utilizzabile. Sarà necessario salvare
+localmente i dati e tentare di inviarli al sistema remoto più tardi.
+
+^2^Condivisione file: Finestra Elemento condiviso
+^$100
+Condivisione file: Finestra Elemento condiviso
+
+Questa finestra visualizza una lista di
+\d(voci condivise^elemento condiviso) disponibili. Usare la barra di
+scorrimento per spostarsi su e giù nella lista. Fare clic sulla voce
+condivisa desiderata. Il sistema riempie il campo Cartella/File da
+condividere: nella finestra "Condivisione File: Aggiungi Nuova Voce
+condivisa".
+
+
+^1^Visualizzazione e modifica delle proprietà dell'elemento condiviso remoto
+^$120
+Visualizzazione e modifica delle proprietà dell'elemento condiviso remoto
+
+Per mostrare o modificare le proprietà del \d(elemento condiviso) remoto,
+procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Condivisione File. Appare la finestra
+  \t"Configurazione Condivisione File" (per voci condivise remote o
+  \tvoci condivise locali, a seconda di quale vista era stata
+  \tselezionata per ultima).
+
+  \tSe la vista è impostata per le voci condivise remote, passare alla
+  \tFase 5. Se la vista è impostata per le voci condivise locali,
+  \tpassare alla fase successiva.
+
+4.\tFare clic su Mostra=>Remote. Appare la finestra "Configurazione
+  \tCondivisione File: Voci Condivise Remote".
+
+5.\tFare clic sulla voce condivisa desiderata.
+
+6.\tFare clic su Voce condivisa=>Proprietà. Appare la finestra
+  \t"Condivisione File: Proprietà Voce condivisa - Remota" con i
+  \tseguenti campi:
+
+  \to\tNome Sistema Remoto: - Visualizza il nome del sistema in cui si
+  \t \ttrova la voce condivisa.
+
+  \to\tNome Icona: - Visualizza il nome dell'icona che rappresenta
+  \t \tla voce condivisa selezionata.
+
+  \to\tVoce condivisa da connettere: - Visualizza il
+  \t \t\d(nome di percorso^percorso) completo della voce
+  \t \tcondivisa selezionata.
+
+  \to\tCartella Locale a cui Connettere: - Visualizza il nome della
+  \t \tcartella del proprio sistema in cui si trova la voce condivisa.
+
+  \to\tConnetti Voce condivisa come: - Se è selezionato Sola Lettura,
+  \t \tsi può usare, ma non cambiare la voce condivisa. Se è
+  \t \tselezionato Lettura e Scrittura si ha l'accesso completo alla
+  \t \tvoce condivisa e la si può modificare (a patto che il sistema
+  \t \tremoto pubblicizzi la voce condivisa come in Lettura e
+  \t \tScrittura).
+
+  \to\tConnettere all'avviamento di NFS? - Se è selezionato Sì, il
+  \t \tsistema si connette alla voce condivisa ogni volta che si avvia
+  \t \tNFS. Se è selezionato No il sistema non si connette
+  \t \tautomaticamente alla voce condivisa quando si avvia NFS.
+
+  \to\tOpzioni Estese: - Fare clic su questa opzione per far apparire
+  \t \tqueste opzioni aggiuntive:
+
+  \t \t-\tLa Connessione è: - Mostra se è una \k(Connessione Soft o Hard^^Connessione soft e hard).
+
+  \t \t-\tAltre opzioni della riga di comando: - Mostra le opzioni
+  \t \t \tdella riga di comando per il comando mount(1M).
+
+7.  Apportare i cambiamenti desiderati (se ce ne sono) e fare clic su
+    Applica, o fare clic su Annulla per tornare alla finestra
+    "Configurazione Condivisione File: Voci condivise remote" senza
+    apportare cambiamenti.
+
+
+Vedi anche:
+\s(Uso della condivisione di file^dhelp "pe.it" ownerhb "Condivisione remota di file e cartelle" "Uso di Condivisione di file" || helpLinkErr)
+\s{Introduzione all'amministrazione di NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+
+^1^Visualizzazione e modifica delle proprietà dell'elemento condiviso locale
+^$130
+Visualizzazione e modifica delle proprietà dell'elemento condiviso locale
+
+Per mostrare o modificare le proprietà della \d(elemento condiviso)
+locale, procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Condivisione File. Appare la finestra
+  \t"Configurazione Condivisione File" (per voci condivise remote o
+  \tvoci condivise locali, a seconda di quale vista era stata
+  \tselezionata per ultima).
+
+  \tSe la vista è impostata per le voci condivise locali, passare alla
+  \tFase 5. Se la vista è impostata per le voci condivise remote,
+  \tpassare alla fase successiva.
+
+4.\tFare clic su Mostra=>Locali. Appare la finestra "Configurazione
+  \tCondivisione File: Voci Condivise Locali".
+
+5.\tFare clic sulla voce condivisa desiderata.
+
+6.\tFare clic su Voce condivisa=>Proprietà. Appare la finestra
+  \t"Condivisione File: Proprietà Voce condivisa - Locale" con i
+  \tseguenti campi:
+
+  \to\tCartella/File da condividere: - Visualizza il nome del file o
+  \t \tdella cartella in condivisione con altri sistemi.
+
+  \to\tNome Icona: - Visualizza il nome dell'icona che rappresenta la
+  \t \tvocxe condivisa.
+
+  \to\tPubblicizzare all'avviamento di NFS? - Se è selezionato Sì,
+  \t \til sistema pubblicizza la voce condivisa ogni volta che si avvia
+  \t \tNFS. Se è selezionato No il sistema non pubblicizza
+  \t \tautomaticamente la voce condivisa quando si avvia NFS.
+
+  \to\tPer Pubblicizza come - Se è selezionata Sola Lettura, gli
+  \t \taltri sistemi possono usare, ma non cambiare, la voce condivisa.
+  \t \tSe è selezionata Lettura e Scrittura, gli altri sistemi hanno
+  \t \tl'accesso completo alle voci condivise. Se non è selezionato
+  \t \talcun accesso, quei sistemi che sono nella Lista delle Eccezioni
+  \t \thanno accesso alla voce condivisa.
+
+  \to\tOpzioni Estese: - Fare clic su questa opzione per far apparire
+  \t \tqueste opzioni aggiuntive:
+
+  \t \t-\tAltre opzioni della riga di comando: - Visualizza le opzioni
+  \t \t \tdella riga di comando per il comando share (1M). Vedi il \s(Riferimento dei comandi^dhelp refman uarm "" "" || helpLinkErr)
+  \t \t \tper informazioni sulle opzioni della riga di comando.
+
+7.\tApportare i cambiamenti desiderati (se ce ne sono) e fare clic su
+  \tApplica, o fare clic su Annulla per tornare alla finestra
+  \t"Configurazione Condivisione File: Voci condivise locali" senza
+  \tapportare cambiamenti.
+
+Vedi anche:
+\s(Uso della condivisione di file^dhelp "pe.it" ownerhb "Condivisione remota di file e cartelle" "Uso di Condivisione di file" || helpLinkErr)
+\s{Introduzione all'amministrazione di NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Disconnessione e cancellazione degli elementi condivisi remoti
+^$140
+Disconnessione e cancellazione degli elementi condivisi remoti
+
+Per sconnettere o cancellare un \d(elemento condiviso) remoto, procedere
+come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Condivisione File. Appare la finestra
+  \t"Configurazione Condivisione File" (per voci condivise remote o
+  \tvoci condivise locali, a seconda di quale vista era stata
+  \tselezionata per ultima).
+
+  \tSe la vista è impostata per le voci condivise remote, passare alla
+  \tFase 5. Se la vista è impostata per le voci condivise locali,
+  \tpassare alla fase successiva.
+
+4.\tFare clic su Mostra=>Remote. Appare la finestra "Configurazione
+  \tCondivisione File: Voci Condivise Remote".
+
+5.\tFare clic sulla voce condivisa connessa che si desidera
+  \tsconnettere o cancellare.
+
+6.\tÈ possibile:
+
+  \to\tSconnettere - Fare clic su Azioni=>Sconnetti.
+
+  \t \tLa voce condivisa selezionata non è più connessa. In altre
+  \t \tparole, non si possono più usare i file associati alla voce
+  \t \tcondivisa. La voce condivisa resta però nella finestra, pronta a
+  \t \triconnettersi la prossima volta che si avvia NFS.
+
+  \to\tCancellare - Fare clic su Voce condivisa=>Cancella.
+
+  \t \tAppare una \k(finestra di conferma^^Finestra di avviso di cancellazione) a comparsa. Fare clic su
+  \t \tCancella in questa finestra se si desidera non pubblicizzare e
+  \t \trimuovere in modo permanente la voce condivisa dal proprio
+  \t \tsistema. Fare clic su Annulla se si decide di non cancellare in
+  \t \tmodo permanente la voce condivisa.
+
+Vedi anche:
+\s(Uso della condivisione di file^dhelp "pe.it" ownerhb "Condivisione remota di file e cartelle" "Uso di Condivisione di file" || helpLinkErr)
+\s{Introduzione all'amministrazione di NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Non dichiarazione e cancellazione degli elementi condivisi locali
+^$150
+Non dichiarazione e cancellazione degli elementi condivisi locali
+
+Nota: Prima di non pubblicizzare o cancellare una \d(elemento condiviso) locale,
+assicurarsi che la voce condivisa non sia in uso.
+La \k(Finestra "Condivisione File: Stato"^^Condivisione file: Finestra di Stato) mostra tutti i sistemi
+remoti connessi alla voce condivisa. Se un sistema remoto sta usando la voce
+condivisa, chiamare l'amministratore o il proprietario di quel sistema e
+assicurarsi che sia possibile sconnetterlo.
+
+Per non pubblicizzare o cancellare una voce condivisa locale,
+procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Condivisione File. Appare la finestra
+  \t"Configurazione Condivisione File" (per voci condivise remote o
+  \tvoci condivise locali, a seconda di quale vista era stata
+  \tselezionata per ultima).
+
+  \tSe la vista è impostata per le voci condivise locali, passare alla
+  \tFase 5. Se la vista è impostata per le voci condivise remote,
+  \tpassare alla fase successiva.
+
+4.\tFare clic su Mostra=>Locali. Appare la finestra "Configurazione
+  \tCondivisione File: Voci Condivise Locali".
+
+5.\tFare clic sulla voce condivisa pubblicizzata che si desidera non
+  \tpubblicizzare o cancellare.
+
+6.\tÈ possibile:
+
+  \to\tPer non pubblicizzare - Fare clic su Azioni=>Non pubblicizzare.
+
+  \t \tLa voce condivisa selezionata non è più pubblicizzata. In altre
+  \t \tparole, i sistemi remoti non possono più accedere al file. La
+  \t \tvoce condivisa resta però nella finestra, pronta ad essere
+  \t \tpubblicizzata la prossima volta che si avvia NFS.
+
+  \to\tCancellare - Fare clic su Voce condivisa=>Cancella.
+
+  \t \tAppare una \k(finestra di conferma^^Finestra di avviso di cancellazione) a comparsa. Fare clic su
+  \t \tCancella in questa finestra se si desidera non pubblicizzare e
+  \t \trimuovere in modo permanente la voce condivisa dalla finestra
+  \t \t"Condivisione File". Fare clic su Annulla se si decide di non
+  \t \tcancellare in modo permanente la voce condivisa.
+
+Vedi anche:
+\s(Uso della condivisione di file^dhelp "pe.it" ownerhb "Condivisione remota di file e cartelle" "Uso di Condivisione di file" || helpLinkErr)
+\s{Introduzione all'amministrazione di NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Finestra di avviso di cancellazione
+^$160
+Finestra di avviso di cancellazione
+
+Assicurarsi di voler veramente rimuovere in modo permanente la voce
+condivisa dalla finestra "Condivisione File". Notare che il sistema
+non rimuove i file associati alla voce condivisa, ma solo la
+possibilità per i sistemi remoti di accedere ai file.
+
+Se si decide di non rimuovere la voce condivisa, fare clic su Annulla
+e non verrà cancellato niente. Altrimenti, fare clic su Cancella per
+proseguire con la rimozione.
+
+
+

@@ -1,0 +1,61 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)vtools:Imakefile	1.9.4.4"
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SUBDIRS = vprobe
+
+SHELL = /bin/sh
+
+        INCLUDES = -I./ -I../../X11 -I../../server/include -I../../server/ddx/si
+     CDEBUGFLAGS = -O -Xa -W2,-A
+          CFLAGS = $(CDEBUGFLAGS) $(DEFINES) $(INCLUDES)
+            LIBS = -ldl
+      VPROBE_LIB = ./vprobe/libvprobe.a
+
+             ALL = setvideomode setvgamode vtest
+
+            SRCS = main.c utils.c vtest.c common.c
+            OBJS = main.o utils.o vtest.o common.o
+      VTEST_OBJS = vtest_main.o utils.o
+     VPROBE_OBJS = utils.o
+ VENDOR_DATAFILE = VendorInfo 
+
+MakeSubdirs(vprobe)
+
+all:: $(ALL)
+
+setvideomode: $(OBJS) $(VPROBE_LIB)
+	LD_RUN_PATH="$(XWINLIBDIR):$(XWINLIBDIR)/display" $(CC) -o $@ $(CDEBUGFLAGS) $(OBJS) $(LIBS) $(VPROBE_LIB)
+
+setvgamode: setvideomode
+	$(RM) setvgamode
+	ln setvideomode setvgamode
+
+vtest::	vtest_main.o utils.o 
+	 LD_RUN_PATH="$(XWINLIBDIR):$(XWINLIBDIR)/display" $(CC) -o $@ $(CDEBUGFLAGS) vtest_main.o utils.o $(LIBS)
+vtest_main.o: vtest_main.c
+	LD_RUN_PATH="$(XWINLIBDIR):$(XWINLIBDIR)/display" $(CC) $(CFLAGS) -DMAIN -c vtest_main.c
+vtest_main.c:
+	ln -s vtest.c vtest_main.c
+
+InstallProgramWithFlags(setvideomode,$(DISPLIBDIR),$(INST_FLAGS))
+InstallProgramWithFlags(vtest,$(DISPLIBDIR),$(INST_FLAGS))
+InstallMultiple($(VENDOR_DATAFILE),$(DISPLIBDIR))
+
+install::
+	$(RM) $(DISPLIBDIR)/setvgamode;
+	(cd $(DISPLIBDIR); ln -s setvideomode setvgamode); 
+
+clean::
+	rm -f *.o $(ALL) *~* *# *.a *.so *.so.? vtest_main.c
+
+DependTarget()

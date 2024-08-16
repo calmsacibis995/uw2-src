@@ -1,0 +1,12 @@
+CLASS Install_Server
+BEGIN
+	_LPATTERN       Install_Server;
+	_ICONFILE       instsvr.icon;
+        _FILETYPE       EXEC;
+	MENU _Open	'(if /sbin/tfadmin -t Install_Server 2>/dev/null;\
+			then\
+				/sbin/tfadmin Install_Server;\
+			else\
+				exec "%F";\
+			fi)&';
+END

@@ -1,0 +1,741 @@
+#ident	"@(#)pkg.nics:prototype	1.77"
+
+i depend
+i copyright=../lp/copyright
+i pkginfo
+i postinstall
+i preinstall
+i preremove
+i request
+#
+# necessary winxksh files
+#
+i nic_strings
+i nic_sttyrc
+#
+# findvt - request and postinstall scripts use this command to find a free VT
+i bin/findvt=../../cmd/cmd-nics/tools/findvt
+#
+#
+# help files  - these are taken from $ROOT/usr/src/$WORK/cmd/cmd-nics/help;
+#		NOTE: since these are 'i' files, they cannot be picked up
+#		from the $ROOT/$MACH/... tree
+#
+!default 0544 bin bin
+i help/cable_type.hcf=../../cmd/cmd-nics/help/cable_type.hcf
+i help/phys_mem_type.hcf=../../cmd/cmd-nics/help/phys_mem_type.hcf
+i help/io_addr.hcf=../../cmd/cmd-nics/help/io_addr.hcf
+i help/irq_value.hcf=../../cmd/cmd-nics/help/irq_value.hcf
+i help/dma_value.hcf=../../cmd/cmd-nics/help/dma_value.hcf
+i help/mem_addr.hcf=../../cmd/cmd-nics/help/mem_addr.hcf
+i help/nic_select.hcf=../../cmd/cmd-nics/help/nic_select.hcf
+i help/slot_number.hcf=../../cmd/cmd-nics/help/slot_number.hcf
+i help/tx_buf_num.hcf=../../cmd/cmd-nics/help/tx_buf_num.hcf
+i help/rx_buf_num.hcf=../../cmd/cmd-nics/help/rx_buf_num.hcf
+#
+# supported_nics/help files - these files contain the list of all supported
+#			      NICS that do not show up on the selection screen
+#
+i supported_nics/help/Ansel_NH2100.hcf=../../cmd/cmd-nics/supported_nics/Ansel_NH2100.hcf
+i supported_nics/help/CompexEnet16.hcf=../../cmd/cmd-nics/supported_nics/CompexEnet16.hcf
+i supported_nics/help/CompexEnet16M.hcf=../../cmd/cmd-nics/supported_nics/CompexEnet16M.hcf
+i supported_nics/help/DEC203.hcf=../../cmd/cmd-nics/supported_nics/DEC203.hcf
+i supported_nics/help/IBM164.hcf=../../cmd/cmd-nics/supported_nics/IBM164.hcf
+i supported_nics/help/IBM164A.hcf=../../cmd/cmd-nics/supported_nics/IBM164A.hcf
+i supported_nics/help/IBM_AUTOLST_32.hcf=../../cmd/cmd-nics/supported_nics/IBM_AUTOLST_32.hcf
+i supported_nics/help/IBM_EST_32.hcf=../../cmd/cmd-nics/supported_nics/IBM_EST_32.hcf
+i supported_nics/help/IBM_LST_16.hcf=../../cmd/cmd-nics/supported_nics/IBM_LST_16.hcf
+i supported_nics/help/IBM_LST_32.hcf=../../cmd/cmd-nics/supported_nics/IBM_LST_32.hcf
+i supported_nics/help/INT32.hcf=../../cmd/cmd-nics/supported_nics/INT32.hcf
+i supported_nics/help/MD_NE1000BA.hcf=../../cmd/cmd-nics/supported_nics/MD_NE1000BA.hcf
+i supported_nics/help/MD_NE1500TD.hcf=../../cmd/cmd-nics/supported_nics/MD_NE1500TD.hcf
+i supported_nics/help/MD_NE2000A.hcf=../../cmd/cmd-nics/supported_nics/MD_NE2000A.hcf
+i supported_nics/help/MD_NE2100H.hcf=../../cmd/cmd-nics/supported_nics/MD_NE2100H.hcf
+i supported_nics/help/MD_NE3200H.hcf=../../cmd/cmd-nics/supported_nics/MD_NE3200H.hcf
+i supported_nics/help/MD_NTR2000G.hcf=../../cmd/cmd-nics/supported_nics/MD_NTR2000G.hcf
+i supported_nics/help/NE1000.hcf=../../cmd/cmd-nics/supported_nics/NE1000.hcf
+i supported_nics/help/NE1500T.hcf=../../cmd/cmd-nics/supported_nics/NE1500T.hcf
+i supported_nics/help/NE2.hcf=../../cmd/cmd-nics/supported_nics/NE2.hcf
+i supported_nics/help/NE2000.hcf=../../cmd/cmd-nics/supported_nics/NE2000.hcf
+i supported_nics/help/NE2000Plus.hcf=../../cmd/cmd-nics/supported_nics/NE2000Plus.hcf
+i supported_nics/help/NE2100.hcf=../../cmd/cmd-nics/supported_nics/NE2100.hcf
+i supported_nics/help/NE2_32.hcf=../../cmd/cmd-nics/supported_nics/NE2_32.hcf
+i supported_nics/help/NE3200.hcf=../../cmd/cmd-nics/supported_nics/NE3200.hcf
+i supported_nics/help/NS_NE200016AT.hcf=../../cmd/cmd-nics/supported_nics/NS_NE200016AT.hcf
+i supported_nics/help/NS_NE2000Plus.hcf=../../cmd/cmd-nics/supported_nics/NS_NE2000Plus.hcf
+i supported_nics/help/NTR2000.hcf=../../cmd/cmd-nics/supported_nics/NTR2000.hcf
+i supported_nics/help/OC_2121.hcf=../../cmd/cmd-nics/supported_nics/OC_2121.hcf
+i supported_nics/help/OC_2122.hcf=../../cmd/cmd-nics/supported_nics/OC_2122.hcf
+i supported_nics/help/OC_2123.hcf=../../cmd/cmd-nics/supported_nics/OC_2123.hcf
+i supported_nics/help/Oliv_9180.hcf=../../cmd/cmd-nics/supported_nics/Oliv_9180.hcf
+i supported_nics/help/Oliv_9181S.hcf=../../cmd/cmd-nics/supported_nics/Oliv_9181S.hcf
+i supported_nics/help/Oliv_9195.hcf=../../cmd/cmd-nics/supported_nics/Oliv_9195.hcf
+i supported_nics/help/RACAL_ES3200.hcf=../../cmd/cmd-nics/supported_nics/RACAL_ES3200.hcf
+i supported_nics/help/RACAL_ES3210TP.hcf=../../cmd/cmd-nics/supported_nics/RACAL_ES3210TP.hcf
+i supported_nics/help/RACAL_NI6510.hcf=../../cmd/cmd-nics/supported_nics/RACAL_NI6510.hcf
+i supported_nics/help/RACAL_NI9210.hcf=../../cmd/cmd-nics/supported_nics/RACAL_NI9210.hcf
+i supported_nics/help/SMC_8003_I.hcf=../../cmd/cmd-nics/supported_nics/SMC_8003_I.hcf
+i supported_nics/help/SMC_8003_M.hcf=../../cmd/cmd-nics/supported_nics/SMC_8003_M.hcf
+i supported_nics/help/SMC_8013_I.hcf=../../cmd/cmd-nics/supported_nics/SMC_8013_I.hcf
+i supported_nics/help/SMC_8013_M.hcf=../../cmd/cmd-nics/supported_nics/SMC_8013_M.hcf
+i supported_nics/help/SMC_8100.hcf=../../cmd/cmd-nics/supported_nics/SMC_8100.hcf
+i supported_nics/help/SMC_8100_A.hcf=../../cmd/cmd-nics/supported_nics/SMC_8100_A.hcf
+i supported_nics/help/SMC_8216.hcf=../../cmd/cmd-nics/supported_nics/SMC_8216.hcf
+i supported_nics/help/SMC_8232.hcf=../../cmd/cmd-nics/supported_nics/SMC_8232.hcf
+i supported_nics/help/SMC_9000.hcf=../../cmd/cmd-nics/supported_nics/SMC_9000.hcf
+i supported_nics/help/TC4045.hcf=../../cmd/cmd-nics/supported_nics/TC4045.hcf
+i supported_nics/help/TCM503.hcf=../../cmd/cmd-nics/supported_nics/TCM503.hcf
+i supported_nics/help/el16.hcf=../../cmd/cmd-nics/supported_nics/el16.hcf
+i supported_nics/help/TCM509.hcf=../../cmd/cmd-nics/supported_nics/TCM509.hcf
+i supported_nics/help/TCM509_E.hcf=../../cmd/cmd-nics/supported_nics/TCM509_E.hcf
+i supported_nics/help/TCM523.hcf=../../cmd/cmd-nics/supported_nics/TCM523.hcf
+i supported_nics/help/TCM529.hcf=../../cmd/cmd-nics/supported_nics/TCM529.hcf
+i supported_nics/help/TCM579.hcf=../../cmd/cmd-nics/supported_nics/TCM579.hcf
+i supported_nics/help/TCM619B.hcf=../../cmd/cmd-nics/supported_nics/TCM619B.hcf
+i supported_nics/help/TCM629.hcf=../../cmd/cmd-nics/supported_nics/TCM629.hcf
+i supported_nics/help/TCM679.hcf=../../cmd/cmd-nics/supported_nics/TCM679.hcf
+i supported_nics/help/co596.hcf=../../cmd/cmd-nics/supported_nics/co596.hcf
+i supported_nics/help/ee16.hcf=../../cmd/cmd-nics/supported_nics/ee16.hcf
+i supported_nics/help/ee16mca.hcf=../../cmd/cmd-nics/supported_nics/ee16mca.hcf
+i supported_nics/help/en596.hcf=../../cmd/cmd-nics/supported_nics/en596.hcf
+i supported_nics/help/en596e.hcf=../../cmd/cmd-nics/supported_nics/en596e.hcf
+i supported_nics/help/flash32.hcf=../../cmd/cmd-nics/supported_nics/flash32.hcf
+i supported_nics/help/nflxe.hcf=../../cmd/cmd-nics/supported_nics/nflxe.hcf
+i supported_nics/help/nflxe_d.hcf=../../cmd/cmd-nics/supported_nics/nflxe_d.hcf
+i supported_nics/help/nflxt.hcf=../../cmd/cmd-nics/supported_nics/nflxt.hcf
+i supported_nics/help/nflxt_d.hcf=../../cmd/cmd-nics/supported_nics/nflxt_d.hcf
+i supported_nics/help/pnt.hcf=../../cmd/cmd-nics/supported_nics/pnt.hcf
+i supported_nics/help/pnt_32.hcf=../../cmd/cmd-nics/supported_nics/pnt_32.hcf
+i supported_nics/help/pnt_ISA.hcf=../../cmd/cmd-nics/supported_nics/pnt_ISA.hcf
+i supported_nics/help/pnt_PCI.hcf=../../cmd/cmd-nics/supported_nics/pnt_PCI.hcf
+i supported_nics/help/pnt_PNP.hcf=../../cmd/cmd-nics/supported_nics/pnt_PNP.hcf
+#
+!default 0755 bin bin
+#
+# script files
+#
+i scripts/nflxe_post=scripts/nflxe_post
+i scripts/nflxt_post=scripts/nflxt_post
+i scripts/SMC8003i.upg=scripts/SMC8003i.upg
+i scripts/SMC8013i.upg=scripts/SMC8013i.upg
+i scripts/TCM509.upg=scripts/TCM509.upg
+i scripts/TCM509_E.upg=scripts/TCM509_E.upg
+i scripts/TCM579.upg=scripts/TCM579.upg
+i scripts/nflxe.upg=scripts/nflxe.upg
+i scripts/nflxe_d.upg=scripts/nflxe_d.upg
+i scripts/nflxt.upg=scripts/nflxt.upg
+i scripts/nflxt_d.upg=scripts/nflxt_d.upg
+#
+#
+# some needed directories
+#
+!default 0775 root sys 1 NULL NULL
+d none /etc ?   ?       ?
+d none /etc/rc2.d       ?       ?       ?
+#
+# config files - 1 per each network card supported
+#
+i config/Ansel_NH2100=./config/Ansel_NH2100
+i config/CNET2000T=./config/CNET2000T
+i config/CNET2000T_2=./config/CNET2000T_2
+i config/CompexEnet16=./config/CompexEnet16
+i config/CompexEnet16M=./config/CompexEnet16M
+i config/DEC203=./config/DEC203
+i config/IBM164=./config/IBM164
+i config/IBM164A=./config/IBM164A
+i config/IBM_AUTOLST_32=./config/IBM_AUTOLST_32
+i config/IBM_EST_32=./config/IBM_EST_32
+i config/IBM_LST_16=./config/IBM_LST_16
+i config/IBM_LST_32=./config/IBM_LST_32
+i config/INT32=./config/INT32
+i config/MD_NE1000BA=./config/MD_NE1000BA
+i config/MD_NE1500TD=./config/MD_NE1500TD
+i config/MD_NE2000A=./config/MD_NE2000A
+i config/MD_NE2100H=./config/MD_NE2100H
+i config/MD_NE3200H=./config/MD_NE3200H
+i config/MD_NTR2000G=./config/MD_NTR2000G
+i config/NE1000=./config/NE1000
+i config/NE1500T=./config/NE1500T
+i config/NE2=./config/NE2
+i config/NE2000=./config/NE2000
+i config/NE2000Plus=./config/NE2000Plus
+i config/NE2100=./config/NE2100
+i config/NE2_32=./config/NE2_32
+i config/NE3200=./config/NE3200
+i config/NS_NE200016AT=./config/NS_NE200016AT
+i config/NS_NE2000Plus=./config/NS_NE2000Plus
+i config/NTR2000=./config/NTR2000
+i config/OCTOK_EISA=./config/OCTOK_EISA
+i config/OCTOK_ISA=./config/OCTOK_ISA
+i config/OCTOK_MCA=./config/OCTOK_MCA
+i config/OC_2121=./config/OC_2121
+i config/OC_2122=./config/OC_2122
+i config/OC_2123=./config/OC_2123
+i config/Oliv_9180=./config/Oliv_9180
+i config/Oliv_9181S=./config/Oliv_9181S
+i config/Oliv_9195=./config/Oliv_9195
+i config/RACAL_ES3200=./config/RACAL_ES3200
+i config/RACAL_ES3210TP=./config/RACAL_ES3210TP
+i config/RACAL_NI6510=./config/RACAL_NI6510
+i config/RACAL_NI9210=./config/RACAL_NI9210
+i config/SMC_8003_I=./config/SMC_8003_I
+i config/SMC_8003_M=./config/SMC_8003_M
+i config/SMC_8013_I=./config/SMC_8013_I
+i config/SMC_8013_M=./config/SMC_8013_M
+i config/SMC_8100=./config/SMC_8100
+i config/SMC_8100_A=./config/SMC_8100_A
+i config/SMC_8216=./config/SMC_8216
+i config/SMC_8232=./config/SMC_8232
+i config/SMC_8332=./config/SMC_8332
+i config/SMC_9000=./config/SMC_9000
+i config/TC4045=./config/TC4045
+i config/TC4046=./config/TC4046
+i config/TCM503=./config/TCM503
+i config/el16=./config/el16
+i config/TCM509=./config/TCM509
+i config/TCM509_E=./config/TCM509_E
+i config/TCM523=./config/TCM523
+i config/TCM529=./config/TCM529
+i config/TCM579=./config/TCM579
+i config/TCM619B=./config/TCM619B
+i config/TCM629=./config/TCM629
+i config/TCM679=./config/TCM679
+i config/TOKENBM=./config/TOKENBM
+i config/co596=./config/co596
+i config/ee16=./config/ee16
+i config/ee16mca=./config/ee16mca
+i config/en596=./config/en596
+i config/en596e=./config/en596e
+i config/flash32=./config/flash32
+i config/nflxe=./config/nflxe
+i config/nflxe_d=./config/nflxe_d
+i config/nflxt=./config/nflxt
+i config/nflxt_d=./config/nflxt_d
+i config/pnt=./config/pnt
+i config/pnt_32=./config/pnt_32
+i config/pnt_ISA=./config/pnt_ISA
+i config/pnt_PCI=./config/pnt_PCI
+i config/pnt_PNP=./config/pnt_PNP
+#
+!OAMBASE=/usr/sadm/sysadm
+!PKGINST=nics
+!PKGSAV=/var/sadm/pkg/$PKGINST/save
+!default 0544 bin bin
+#
+# These next four lines exist so that existing applications can use the
+# pkginfo command to check whether or not needed functionality is installed.
+i dummy.pkginfo
+!DUMMY_PKGINFO=../usr/src/$WORK/pkg/nics/dummy.pkginfo
+f none /var/sadm/pkg/eth/pkginfo=$DUMMY_PKGINFO 0644 root sys
+f none /var/sadm/pkg/tok/pkginfo=$DUMMY_PKGINFO 0644 root sys
+#
+# necessary directories
+#
+d none    /tmp			?	?	?
+d none    /tmp/nics		755	bin	bin
+#
+#
+# Network Hardware Drivers
+#
+f ES3210 /tmp/nics/ES3210/Driver.o=/mp/etc/conf/pack.d/ES3210/Driver.o
+f ES3210 /tmp/nics/ES3210/RACAL_ES3200.bcfg=../usr/src/$WORK/pkg/nics/config/RACAL_ES3200
+f ES3210 /tmp/nics/ES3210/RACAL_ES3210TP.bcfg=../usr/src/$WORK/pkg/nics/config/RACAL_ES3210TP
+v ES3210 /tmp/nics/ES3210/Drvmap=/etc/conf/drvmap.d/ES3210
+v ES3210 /tmp/nics/ES3210/Master=/etc/conf/mdevice.d/ES3210
+v ES3210 /tmp/nics/ES3210/Node=/etc/conf/node.d/ES3210
+v ES3210 /tmp/nics/ES3210/Space.c=/etc/conf/pack.d/ES3210/space.c
+v ES3210 /tmp/nics/ES3210/System=/etc/conf/sdevice.d/ES3210
+#
+#
+f EWRK3 /tmp/nics/EWRK3/Driver.o=/mp/etc/conf/pack.d/EWRK3/Driver.o
+f EWRK3 /tmp/nics/EWRK3/DEC203.bcfg=../usr/src/$WORK/pkg/nics/config/DEC203
+v EWRK3 /tmp/nics/EWRK3/Drvmap=/etc/conf/drvmap.d/EWRK3
+v EWRK3 /tmp/nics/EWRK3/Master=/etc/conf/mdevice.d/EWRK3
+v EWRK3 /tmp/nics/EWRK3/Node=/etc/conf/node.d/EWRK3
+v EWRK3 /tmp/nics/EWRK3/Space.c=/etc/conf/pack.d/EWRK3/space.c
+v EWRK3 /tmp/nics/EWRK3/System=/etc/conf/sdevice.d/EWRK3
+#
+#
+f IBM164 /tmp/nics/IBM164/Driver.o=/mp/etc/conf/pack.d/IBM164/Driver.o
+f IBM164 /tmp/nics/IBM164/IBM164.bcfg=../usr/src/$WORK/pkg/nics/config/IBM164
+f IBM164 /tmp/nics/IBM164/IBM164A.bcfg=../usr/src/$WORK/pkg/nics/config/IBM164A
+f IBM164 /tmp/nics/IBM164/TCM619B.bcfg=../usr/src/$WORK/pkg/nics/config/TCM619B
+f IBM164 /tmp/nics/IBM164/TCM629.bcfg=../usr/src/$WORK/pkg/nics/config/TCM629
+f IBM164 /tmp/nics/IBM164/TCM679.bcfg=../usr/src/$WORK/pkg/nics/config/TCM679
+v IBM164 /tmp/nics/IBM164/Drvmap=/etc/conf/drvmap.d/IBM164
+v IBM164 /tmp/nics/IBM164/Master=/etc/conf/mdevice.d/IBM164
+v IBM164 /tmp/nics/IBM164/Node=/etc/conf/node.d/IBM164
+v IBM164 /tmp/nics/IBM164/Space.c=/etc/conf/pack.d/IBM164/space.c
+v IBM164 /tmp/nics/IBM164/System=/etc/conf/sdevice.d/IBM164
+#
+#
+f IBMEST /tmp/nics/IBMEST/Driver.o=/mp/etc/conf/pack.d/IBMEST/Driver.o
+f IBMEST /tmp/nics/IBMEST/IBM_EST_32.bcfg=../usr/src/$WORK/pkg/nics/config/IBM_EST_32
+v IBMEST /tmp/nics/IBMEST/Drvmap=/etc/conf/drvmap.d/IBMEST
+v IBMEST /tmp/nics/IBMEST/Master=/etc/conf/mdevice.d/IBMEST
+v IBMEST /tmp/nics/IBMEST/Node=/etc/conf/node.d/IBMEST
+v IBMEST /tmp/nics/IBMEST/Space.c=/etc/conf/pack.d/IBMEST/space.c
+v IBMEST /tmp/nics/IBMEST/System=/etc/conf/sdevice.d/IBMEST
+#
+#
+f IBMLST /tmp/nics/IBMLST/Driver.o=/mp/etc/conf/pack.d/IBMLST/Driver.o
+f IBMLST /tmp/nics/IBMLST/IBM_LST_16.bcfg=../usr/src/$WORK/pkg/nics/config/IBM_LST_16
+f IBMLST /tmp/nics/IBMLST/IBM_LST_32.bcfg=../usr/src/$WORK/pkg/nics/config/IBM_LST_32
+v IBMLST /tmp/nics/IBMLST/Drvmap=/etc/conf/drvmap.d/IBMLST
+v IBMLST /tmp/nics/IBMLST/Master=/etc/conf/mdevice.d/IBMLST
+v IBMLST /tmp/nics/IBMLST/Node=/etc/conf/node.d/IBMLST
+v IBMLST /tmp/nics/IBMLST/Space.c=/etc/conf/pack.d/IBMLST/space.c
+v IBMLST /tmp/nics/IBMLST/System=/etc/conf/sdevice.d/IBMLST
+#
+#
+d INT32 /tmp/nics/INT32	775	bin	bin
+f INT32 /tmp/nics/INT32/Driver.o=/mp/etc/conf/pack.d/INT32/Driver.o
+f INT32 /tmp/nics/INT32/INT32.bcfg=../usr/src/$WORK/pkg/nics/config/INT32
+f INT32 /tmp/nics/INT32/firmware.o=/etc/conf/pack.d/INT32/firmware.o
+v INT32 /tmp/nics/INT32/Drvmap=/etc/conf/drvmap.d/INT32
+v INT32 /tmp/nics/INT32/Master=/etc/conf/mdevice.d/INT32
+v INT32 /tmp/nics/INT32/Node=/etc/conf/node.d/INT32
+v INT32 /tmp/nics/INT32/Space.c=/etc/conf/pack.d/INT32/space.c
+v INT32 /tmp/nics/INT32/System=/etc/conf/sdevice.d/INT32
+#
+#
+f NCU9180 /tmp/nics/NCU9180/Driver.o=/mp/etc/conf/pack.d/NCU9180/Driver.o
+f NCU9180 /tmp/nics/NCU9180/Oliv_9180.bcfg=../usr/src/$WORK/pkg/nics/config/Oliv_9180
+f NCU9180 /tmp/nics/NCU9180/Oliv_9181S.bcfg=../usr/src/$WORK/pkg/nics/config/Oliv_9181S
+f NCU9180 /tmp/nics/NCU9180/Oliv_9195.bcfg=../usr/src/$WORK/pkg/nics/config/Oliv_9195
+v NCU9180 /tmp/nics/NCU9180/Drvmap=/etc/conf/drvmap.d/NCU9180
+v NCU9180 /tmp/nics/NCU9180/Master=/etc/conf/mdevice.d/NCU9180
+v NCU9180 /tmp/nics/NCU9180/Node=/etc/conf/node.d/NCU9180
+v NCU9180 /tmp/nics/NCU9180/Space.c=/etc/conf/pack.d/NCU9180/space.c
+v NCU9180 /tmp/nics/NCU9180/System=/etc/conf/sdevice.d/NCU9180
+v NCU9180 /tmp/nics/NCU9180/firmware.o=/etc/conf/pack.d/NCU9180/firmware.o
+#
+#
+d NE1000 /tmp/nics/NE1000	775	bin	bin
+f NE1000 /tmp/nics/NE1000/Driver.o=/mp/etc/conf/pack.d/NE1000/Driver.o
+f NE1000 /tmp/nics/NE1000/MD_NE1000BA.bcfg=../usr/src/$WORK/pkg/nics/config/MD_NE1000BA
+f NE1000 /tmp/nics/NE1000/NE1000.bcfg=../usr/src/$WORK/pkg/nics/config/NE1000
+v NE1000 /tmp/nics/NE1000/Drvmap=/etc/conf/drvmap.d/NE1000
+v NE1000 /tmp/nics/NE1000/Master=/etc/conf/mdevice.d/NE1000
+v NE1000 /tmp/nics/NE1000/Node=/etc/conf/node.d/NE1000
+v NE1000 /tmp/nics/NE1000/Space.c=/etc/conf/pack.d/NE1000/space.c
+v NE1000 /tmp/nics/NE1000/System=/etc/conf/sdevice.d/NE1000
+#
+#
+d NE1500T /tmp/nics/NE1500T	775	bin	bin
+f NE1500T /tmp/nics/NE1500T/Driver.o=/mp/etc/conf/pack.d/NE1500T/Driver.o
+f NE1500T /tmp/nics/NE1500T/MD_NE1500TD.bcfg=../usr/src/$WORK/pkg/nics/config/MD_NE1500TD
+f NE1500T /tmp/nics/NE1500T/NE1500T.bcfg=../usr/src/$WORK/pkg/nics/config/NE1500T
+v NE1500T /tmp/nics/NE1500T/Drvmap=/etc/conf/drvmap.d/NE1500T
+v NE1500T /tmp/nics/NE1500T/Master=/etc/conf/mdevice.d/NE1500T
+v NE1500T /tmp/nics/NE1500T/Node=/etc/conf/node.d/NE1500T
+v NE1500T /tmp/nics/NE1500T/Space.c=/etc/conf/pack.d/NE1500T/space.c
+v NE1500T /tmp/nics/NE1500T/System=/etc/conf/sdevice.d/NE1500T
+#
+#
+d NE2_32 /tmp/nics/NE2_32	775	bin	bin
+f NE2_32 /tmp/nics/NE2_32/Driver.o=/mp/etc/conf/pack.d/NE2_32/Driver.o
+f NE2_32 /tmp/nics/NE2_32/NE2_32.bcfg=../usr/src/$WORK/pkg/nics/config/NE2_32
+v NE2_32 /tmp/nics/NE2_32/Drvmap=/etc/conf/drvmap.d/NE2_32
+v NE2_32 /tmp/nics/NE2_32/Master=/etc/conf/mdevice.d/NE2_32
+v NE2_32 /tmp/nics/NE2_32/Node=/etc/conf/node.d/NE2_32
+v NE2_32 /tmp/nics/NE2_32/Space.c=/etc/conf/pack.d/NE2_32/space.c
+v NE2_32 /tmp/nics/NE2_32/System=/etc/conf/sdevice.d/NE2_32
+#
+#
+d NE2 /tmp/nics/NE2	775	bin	bin
+f NE2 /tmp/nics/NE2/Driver.o=/mp/etc/conf/pack.d/NE2/Driver.o
+f NE2 /tmp/nics/NE2/NE2.bcfg=../usr/src/$WORK/pkg/nics/config/NE2
+v NE2 /tmp/nics/NE2/Drvmap=/etc/conf/drvmap.d/NE2
+v NE2 /tmp/nics/NE2/Master=/etc/conf/mdevice.d/NE2
+v NE2 /tmp/nics/NE2/Node=/etc/conf/node.d/NE2
+v NE2 /tmp/nics/NE2/Space.c=/etc/conf/pack.d/NE2/space.c
+v NE2 /tmp/nics/NE2/System=/etc/conf/sdevice.d/NE2
+#
+#
+d NE2000 /tmp/nics/NE2000	775	bin	bin
+f NE2000 /tmp/nics/NE2000/Driver.o=/mp/etc/conf/pack.d/NE2000/Driver.o
+f NE2000 /tmp/nics/NE2000/MD_NE2000A.bcfg=../usr/src/$WORK/pkg/nics/config/MD_NE2000A
+f NE2000 /tmp/nics/NE2000/NE2000.bcfg=../usr/src/$WORK/pkg/nics/config/NE2000
+f NE2000 /tmp/nics/NE2000/NE2000Plus.bcfg=../usr/src/$WORK/pkg/nics/config/NE2000Plus
+f NE2000 /tmp/nics/NE2000/NS_NE200016AT.bcfg=../usr/src/$WORK/pkg/nics/config/NS_NE200016AT
+f NE2000 /tmp/nics/NE2000/OC_2121.bcfg=../usr/src/$WORK/pkg/nics/config/OC_2121
+f NE2000 /tmp/nics/NE2000/OC_2122.bcfg=../usr/src/$WORK/pkg/nics/config/OC_2122
+f NE2000 /tmp/nics/NE2000/OC_2123.bcfg=../usr/src/$WORK/pkg/nics/config/OC_2123
+v NE2000 /tmp/nics/NE2000/Drvmap=/etc/conf/drvmap.d/NE2000
+v NE2000 /tmp/nics/NE2000/Master=/etc/conf/mdevice.d/NE2000
+v NE2000 /tmp/nics/NE2000/Node=/etc/conf/node.d/NE2000
+v NE2000 /tmp/nics/NE2000/Space.c=/etc/conf/pack.d/NE2000/space.c
+v NE2000 /tmp/nics/NE2000/System=/etc/conf/sdevice.d/NE2000
+#
+#
+d NE2100 /tmp/nics/NE2100	775	bin	bin
+f NE2100 /tmp/nics/NE2100/Ansel_NH2100.bcfg=../usr/src/$WORK/pkg/nics/config/Ansel_NH2100
+f NE2100 /tmp/nics/NE2100/Driver.o=/mp/etc/conf/pack.d/NE2100/Driver.o
+f NE2100 /tmp/nics/NE2100/MD_NE2100H.bcfg=../usr/src/$WORK/pkg/nics/config/MD_NE2100H
+f NE2100 /tmp/nics/NE2100/NE2100.bcfg=../usr/src/$WORK/pkg/nics/config/NE2100
+f NE2100 /tmp/nics/NE2100/RACAL_NI6510.bcfg=../usr/src/$WORK/pkg/nics/config/RACAL_NI6510
+v NE2100 /tmp/nics/NE2100/Drvmap=/etc/conf/drvmap.d/NE2100
+v NE2100 /tmp/nics/NE2100/Master=/etc/conf/mdevice.d/NE2100
+v NE2100 /tmp/nics/NE2100/Node=/etc/conf/node.d/NE2100
+v NE2100 /tmp/nics/NE2100/Space.c=/etc/conf/pack.d/NE2100/space.c
+v NE2100 /tmp/nics/NE2100/System=/etc/conf/sdevice.d/NE2100
+#
+#
+d NE3200 /tmp/nics/NE3200	775	bin	bin
+f NE3200 /tmp/nics/NE3200/Driver.o=/mp/etc/conf/pack.d/NE3200/Driver.o
+f NE3200 /tmp/nics/NE3200/MD_NE3200H.bcfg=../usr/src/$WORK/pkg/nics/config/MD_NE3200H
+f NE3200 /tmp/nics/NE3200/NE3200.bcfg=../usr/src/$WORK/pkg/nics/config/NE3200
+f NE3200 /tmp/nics/NE3200/firmware.o=/etc/conf/pack.d/NE3200/firmware.o
+v NE3200 /tmp/nics/NE3200/Drvmap=/etc/conf/drvmap.d/NE3200
+v NE3200 /tmp/nics/NE3200/Master=/etc/conf/mdevice.d/NE3200
+v NE3200 /tmp/nics/NE3200/Node=/etc/conf/node.d/NE3200
+v NE3200 /tmp/nics/NE3200/Space.c=/etc/conf/pack.d/NE3200/space.c
+v NE3200 /tmp/nics/NE3200/System=/etc/conf/sdevice.d/NE3200
+#
+#
+f NI9210 /tmp/nics/NI9210/Driver.o=/mp/etc/conf/pack.d/NI9210/Driver.o
+f NI9210 /tmp/nics/NI9210/RACAL_NI9210.bcfg=../usr/src/$WORK/pkg/nics/config/RACAL_NI9210
+v NI9210 /tmp/nics/NI9210/Drvmap=/etc/conf/drvmap.d/NI9210
+v NI9210 /tmp/nics/NI9210/Master=/etc/conf/mdevice.d/NI9210
+v NI9210 /tmp/nics/NI9210/Node=/etc/conf/node.d/NI9210
+v NI9210 /tmp/nics/NI9210/Space.c=/etc/conf/pack.d/NI9210/space.c
+v NI9210 /tmp/nics/NI9210/System=/etc/conf/sdevice.d/NI9210
+#
+#
+f NTR2000 /tmp/nics/NTR2000/Driver.o=/mp/etc/conf/pack.d/NTR2000/Driver.o
+f NTR2000 /tmp/nics/NTR2000/MD_NTR2000G.bcfg=../usr/src/$WORK/pkg/nics/config/MD_NTR2000G
+f NTR2000 /tmp/nics/NTR2000/NTR2000.bcfg=../usr/src/$WORK/pkg/nics/config/NTR2000
+v NTR2000 /tmp/nics/NTR2000/Drvmap=/etc/conf/drvmap.d/NTR2000
+v NTR2000 /tmp/nics/NTR2000/Master=/etc/conf/mdevice.d/NTR2000
+v NTR2000 /tmp/nics/NTR2000/Node=/etc/conf/node.d/NTR2000
+v NTR2000 /tmp/nics/NTR2000/Space.c=/etc/conf/pack.d/NTR2000/space.c
+v NTR2000 /tmp/nics/NTR2000/System=/etc/conf/sdevice.d/NTR2000
+#
+#
+f SMC8232 /tmp/nics/SMC8232/Driver.o=/mp/etc/conf/pack.d/SMC8232/Driver.o
+f SMC8232 /tmp/nics/SMC8232/SMC_8232.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_8232
+v SMC8232 /tmp/nics/SMC8232/Drvmap=/etc/conf/drvmap.d/SMC8232
+v SMC8232 /tmp/nics/SMC8232/Master=/etc/conf/mdevice.d/SMC8232
+v SMC8232 /tmp/nics/SMC8232/Node=/etc/conf/node.d/SMC8232
+v SMC8232 /tmp/nics/SMC8232/Space.c=/etc/conf/pack.d/SMC8232/space.c
+v SMC8232 /tmp/nics/SMC8232/System=/etc/conf/sdevice.d/SMC8232
+#
+#
+f SMC8332 /tmp/nics/SMC8332/Driver.o=/mp/etc/conf/pack.d/SMC8332/Driver.o
+f SMC8332 /tmp/nics/SMC8332/SMC_8332.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_8332
+v SMC8332 /tmp/nics/SMC8332/Drvmap=/etc/conf/drvmap.d/SMC8332
+v SMC8332 /tmp/nics/SMC8332/Master=/etc/conf/mdevice.d/SMC8332
+v SMC8332 /tmp/nics/SMC8332/Node=/etc/conf/node.d/SMC8332
+v SMC8332 /tmp/nics/SMC8332/Space.c=/etc/conf/pack.d/SMC8332/space.c
+v SMC8332 /tmp/nics/SMC8332/System=/etc/conf/sdevice.d/SMC8332
+#
+#
+f SMC8100 /tmp/nics/SMC8100/Driver.o=/mp/etc/conf/pack.d/SMC8100/Driver.o
+f SMC8100 /tmp/nics/SMC8100/SMC_8100.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_8100
+f SMC8100 /tmp/nics/SMC8100/SMC_8100_A.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_8100_A
+v SMC8100 /tmp/nics/SMC8100/Drvmap=/etc/conf/drvmap.d/SMC8100
+v SMC8100 /tmp/nics/SMC8100/Master=/etc/conf/mdevice.d/SMC8100
+v SMC8100 /tmp/nics/SMC8100/Node=/etc/conf/node.d/SMC8100
+v SMC8100 /tmp/nics/SMC8100/Space.c=/etc/conf/pack.d/SMC8100/space.c
+v SMC8100 /tmp/nics/SMC8100/System=/etc/conf/sdevice.d/SMC8100
+#
+#
+d SMC8K /tmp/nics/SMC8K	775	bin	bin
+f SMC8K /tmp/nics/SMC8K/Driver.o=/mp/etc/conf/pack.d/SMC8K/Driver.o
+f SMC8K /tmp/nics/SMC8K/SMC_8003_I.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_8003_I
+f SMC8K /tmp/nics/SMC8K/SMC_8003_M.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_8003_M
+f SMC8K /tmp/nics/SMC8K/SMC_8013_I.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_8013_I
+f SMC8K /tmp/nics/SMC8K/SMC_8013_M.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_8013_M
+f SMC8K /tmp/nics/SMC8K/SMC_8216.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_8216
+v SMC8K /tmp/nics/SMC8K/Drvmap=/etc/conf/drvmap.d/SMC8K
+v SMC8K /tmp/nics/SMC8K/Master=/etc/conf/mdevice.d/SMC8K
+v SMC8K /tmp/nics/SMC8K/Node=/etc/conf/node.d/SMC8K
+v SMC8K /tmp/nics/SMC8K/Space.c=/etc/conf/pack.d/SMC8K/space.c
+v SMC8K /tmp/nics/SMC8K/System=/etc/conf/sdevice.d/SMC8K
+#
+#
+f SMC9K /tmp/nics/SMC9K/SMC_9000.bcfg=../usr/src/$WORK/pkg/nics/config/SMC_9000
+f SMC9K /tmp/nics/SMC9K/Driver.o=/mp/etc/conf/pack.d/SMC9K/Driver.o
+v SMC9K /tmp/nics/SMC9K/Drvmap=/etc/conf/drvmap.d/SMC9K
+v SMC9K /tmp/nics/SMC9K/Master=/etc/conf/mdevice.d/SMC9K
+v SMC9K /tmp/nics/SMC9K/Node=/etc/conf/node.d/SMC9K
+v SMC9K /tmp/nics/SMC9K/Space.c=/etc/conf/pack.d/SMC9K/space.c
+v SMC9K /tmp/nics/SMC9K/System=/etc/conf/sdevice.d/SMC9K
+#
+#
+d TCM503 /tmp/nics/TCM503	775	bin	bin
+f TCM503 /tmp/nics/TCM503/Driver.o=/mp/etc/conf/pack.d/TCM503/Driver.o
+f TCM503 /tmp/nics/TCM503/TCM503.bcfg=../usr/src/$WORK/pkg/nics/config/TCM503
+v TCM503 /tmp/nics/TCM503/Drvmap=/etc/conf/drvmap.d/TCM503
+v TCM503 /tmp/nics/TCM503/Master=/etc/conf/mdevice.d/TCM503
+v TCM503 /tmp/nics/TCM503/Node=/etc/conf/node.d/TCM503
+v TCM503 /tmp/nics/TCM503/Space.c=/etc/conf/pack.d/TCM503/space.c
+v TCM503 /tmp/nics/TCM503/System=/etc/conf/sdevice.d/TCM503
+#
+#
+d el16 /tmp/nics/el16	775	bin	bin
+f el16 /tmp/nics/el16/Driver.o=/mp/etc/conf/pack.d/el16/Driver.o 
+f el16 /tmp/nics/el16/el16.bcfg=../usr/src/$WORK/pkg/nics/config/el16
+v el16 /tmp/nics/el16/Drvmap=/etc/conf/drvmap.d/el16
+v el16 /tmp/nics/el16/Master=/etc/conf/mdevice.d/el16 
+v el16 /tmp/nics/el16/Node=/etc/conf/node.d/el16 
+v el16 /tmp/nics/el16/Space.c=/etc/conf/pack.d/el16/space.c 
+v el16 /tmp/nics/el16/System=/etc/conf/sdevice.d/el16 
+#
+#
+d TCM523 /tmp/nics/TCM523	775	bin	bin
+f TCM523 /tmp/nics/TCM523/Driver.o=/mp/etc/conf/pack.d/TCM523/Driver.o 
+f TCM523 /tmp/nics/TCM523/TCM523.bcfg=../usr/src/$WORK/pkg/nics/config/TCM523
+v TCM523 /tmp/nics/TCM523/Drvmap=/etc/conf/drvmap.d/TCM523
+v TCM523 /tmp/nics/TCM523/Master=/etc/conf/mdevice.d/TCM523 
+v TCM523 /tmp/nics/TCM523/Node=/etc/conf/node.d/TCM523 
+v TCM523 /tmp/nics/TCM523/Space.c=/etc/conf/pack.d/TCM523/space.c 
+v TCM523 /tmp/nics/TCM523/System=/etc/conf/sdevice.d/TCM523 
+#
+#
+d TCM5X9 /tmp/nics/TCM5X9	775	bin	bin
+f TCM5X9 /tmp/nics/TCM5X9/Driver.o=/mp/etc/conf/pack.d/TCM5X9/Driver.o
+f TCM5X9 /tmp/nics/TCM5X9/TCM509.bcfg=../usr/src/$WORK/pkg/nics/config/TCM509
+f TCM5X9 /tmp/nics/TCM5X9/TCM509_E.bcfg=../usr/src/$WORK/pkg/nics/config/TCM509_E
+f TCM5X9 /tmp/nics/TCM5X9/TCM529.bcfg=../usr/src/$WORK/pkg/nics/config/TCM529
+f TCM5X9 /tmp/nics/TCM5X9/TCM579.bcfg=../usr/src/$WORK/pkg/nics/config/TCM579
+v TCM5X9 /tmp/nics/TCM5X9/Drvmap=/etc/conf/drvmap.d/TCM5X9
+v TCM5X9 /tmp/nics/TCM5X9/Master=/etc/conf/mdevice.d/TCM5X9
+v TCM5X9 /tmp/nics/TCM5X9/Node=/etc/conf/node.d/TCM5X9
+v TCM5X9 /tmp/nics/TCM5X9/Space.c=/etc/conf/pack.d/TCM5X9/space.c
+v TCM5X9 /tmp/nics/TCM5X9/System=/etc/conf/sdevice.d/TCM5X9
+#
+d TOKENBM /tmp/nics/TOKENBM	775	bin	bin
+f TOKENBM /tmp/nics/TOKENBM/Driver.o=/mp/etc/conf/pack.d/TOKENBM/Driver.o
+f TOKENBM /tmp/nics/TOKENBM/TOKENBM.bcfg=../usr/src/$WORK/pkg/nics/config/TOKENBM
+v TOKENBM /tmp/nics/TOKENBM/Drvmap=/etc/conf/drvmap.d/TOKENBM
+v TOKENBM /tmp/nics/TOKENBM/Master=/etc/conf/mdevice.d/TOKENBM
+v TOKENBM /tmp/nics/TOKENBM/Node=/etc/conf/node.d/TOKENBM
+v TOKENBM /tmp/nics/TOKENBM/Space.c=/etc/conf/pack.d/TOKENBM/space.c
+v TOKENBM /tmp/nics/TOKENBM/System=/etc/conf/sdevice.d/TOKENBM
+#
+d TCTOKH /tmp/nics/TCTOKH	775	bin	bin
+f TCTOKH /tmp/nics/TCTOKH/Driver.o=/mp/etc/conf/pack.d/TCTOKH/Driver.o
+f TCTOKH /tmp/nics/TCTOKH/TC4045.bcfg=../usr/src/$WORK/pkg/nics/config/TC4045
+f TCTOKH /tmp/nics/TCTOKH/TC4046.bcfg=../usr/src/$WORK/pkg/nics/config/TC4046
+v TCTOKH /tmp/nics/TCTOKH/Drvmap=/etc/conf/drvmap.d/TCTOKH
+v TCTOKH /tmp/nics/TCTOKH/Master=/etc/conf/mdevice.d/TCTOKH
+v TCTOKH /tmp/nics/TCTOKH/Node=/etc/conf/node.d/TCTOKH
+v TCTOKH /tmp/nics/TCTOKH/Space.c=/etc/conf/pack.d/TCTOKH/space.c
+v TCTOKH /tmp/nics/TCTOKH/System=/etc/conf/sdevice.d/TCTOKH
+#
+d OCTOK162 /tmp/nics/OCTOK162	775	bin	bin
+f OCTOK162 /tmp/nics/OCTOK162/Driver.o=/mp/etc/conf/pack.d/OCTOK162/Driver.o
+f OCTOK162 /tmp/nics/OCTOK162/OCTOK_ISA.bcfg=../usr/src/$WORK/pkg/nics/config/OCTOK_ISA
+f OCTOK162 /tmp/nics/OCTOK162/OCTOK_EISA.bcfg=../usr/src/$WORK/pkg/nics/config/OCTOK_EISA
+f OCTOK162 /tmp/nics/OCTOK162/OCTOK_MCA.bcfg=../usr/src/$WORK/pkg/nics/config/OCTOK_MCA
+v OCTOK162 /tmp/nics/OCTOK162/Drvmap=/etc/conf/drvmap.d/OCTOK162
+v OCTOK162 /tmp/nics/OCTOK162/Master=/etc/conf/mdevice.d/OCTOK162
+v OCTOK162 /tmp/nics/OCTOK162/Node=/etc/conf/node.d/OCTOK162
+v OCTOK162 /tmp/nics/OCTOK162/Space.c=/etc/conf/pack.d/OCTOK162/space.c
+f OCTOK162 /tmp/nics/OCTOK162/firmware.o=/etc/conf/pack.d/OCTOK162/firmware.o
+v OCTOK162 /tmp/nics/OCTOK162/System=/etc/conf/sdevice.d/OCTOK162
+#
+#
+d flash32 /tmp/nics/flash32 775 bin bin
+f flash32 /tmp/nics/flash32/Driver.o=/mp/etc/conf/pack.d/flash32/Driver.o
+f flash32 /tmp/nics/flash32/flash32.bcfg=../usr/src/$WORK/pkg/nics/config/flash32
+v flash32 /tmp/nics/flash32/Drvmap=/etc/conf/drvmap.d/flash32
+v flash32 /tmp/nics/flash32/Master=/etc/conf/mdevice.d/flash32 
+v flash32 /tmp/nics/flash32/Node=/etc/conf/node.d/flash32 
+v flash32 /tmp/nics/flash32/Space.c=/etc/conf/pack.d/flash32/space.c 
+v flash32 /tmp/nics/flash32/System=/etc/conf/sdevice.d/flash32
+#
+#
+d ee16 /tmp/nics/ee16	775	bin	bin
+f ee16 /tmp/nics/ee16/Driver.o=/mp/etc/conf/pack.d/ee16/Driver.o
+f ee16 /tmp/nics/ee16/ee16.bcfg=../usr/src/$WORK/pkg/nics/config/ee16
+f ee16 /tmp/nics/ee16/ee16mca.bcfg=../usr/src/$WORK/pkg/nics/config/ee16mca
+v ee16 /tmp/nics/ee16/Drvmap=/etc/conf/drvmap.d/ee16
+v ee16 /tmp/nics/ee16/Master=/etc/conf/mdevice.d/ee16 
+v ee16 /tmp/nics/ee16/Node=/etc/conf/node.d/ee16 
+v ee16 /tmp/nics/ee16/Space.c=/etc/conf/pack.d/ee16/space.c 
+v ee16 /tmp/nics/ee16/System=/etc/conf/sdevice.d/ee16
+#
+#
+d en596 /tmp/nics/en596	775	bin	bin
+f en596 /tmp/nics/en596/Driver.o=/mp/etc/conf/pack.d/en596/Driver.o
+f en596 /tmp/nics/en596/en596.bcfg=../usr/src/$WORK/pkg/nics/config/en596
+v en596 /tmp/nics/en596/Drvmap=/etc/conf/drvmap.d/en596
+v en596 /tmp/nics/en596/Master=/etc/conf/mdevice.d/en596
+v en596 /tmp/nics/en596/Node=/etc/conf/node.d/en596
+v en596 /tmp/nics/en596/Space.c=/etc/conf/pack.d/en596/space.c
+v en596 /tmp/nics/en596/System=/etc/conf/sdevice.d/en596
+#
+#
+d nflxe /tmp/nics/nflxe	775	bin	bin
+f nflxe /tmp/nics/nflxe/Driver.o=/mp/etc/conf/pack.d/nflxe/Driver.o
+f nflxe /tmp/nics/nflxe/nflxe.bcfg=../usr/src/$WORK/pkg/nics/config/nflxe
+f nflxe /tmp/nics/nflxe/nflxe_d.bcfg=../usr/src/$WORK/pkg/nics/config/nflxe_d
+v nflxe /tmp/nics/nflxe/Drvmap=/etc/conf/drvmap.d/nflxe
+v nflxe /tmp/nics/nflxe/Master=/etc/conf/mdevice.d/nflxe
+v nflxe /tmp/nics/nflxe/Node=/etc/conf/node.d/nflxe
+v nflxe /tmp/nics/nflxe/Space.c=/etc/conf/pack.d/nflxe/space.c
+v nflxe /tmp/nics/nflxe/System=/etc/conf/sdevice.d/nflxe
+#
+#
+d nflxsr /tmp/nics/nflxsr	775	bin	bin
+f nflxsr /tmp/nics/nflxsr/Driver.o=/mp/etc/conf/pack.d/nflxsr/Driver.o
+v nflxsr /tmp/nics/nflxsr/Master=/etc/conf/mdevice.d/nflxsr
+v nflxsr /tmp/nics/nflxsr/Space.c=/etc/conf/pack.d/nflxsr/space.c
+v nflxsr /tmp/nics/nflxsr/System=/etc/conf/sdevice.d/nflxsr
+v nflxsr /tmp/nics/nflxsr/Mtune=/etc/conf/mtune.d/nflxsr
+v nflxsr /tmp/nics/nflxsr/Dtune=/etc/conf/dtune.d/nflxsr
+#
+#
+d nflxt /tmp/nics/nflxt	775	bin	bin
+f nflxt /tmp/nics/nflxt/Driver.o=/mp/etc/conf/pack.d/nflxt/Driver.o
+f nflxt /tmp/nics/nflxt/nflxt.bcfg=../usr/src/$WORK/pkg/nics/config/nflxt
+v nflxt /tmp/nics/nflxt/Drvmap=/etc/conf/drvmap.d/nflxt
+v nflxt /tmp/nics/nflxt/Master=/etc/conf/mdevice.d/nflxt
+v nflxt /tmp/nics/nflxt/Node=/etc/conf/node.d/nflxt
+v nflxt /tmp/nics/nflxt/Space.c=/etc/conf/pack.d/nflxt/space.c
+v nflxt /tmp/nics/nflxt/System=/etc/conf/sdevice.d/nflxt
+#
+#
+d pnt /tmp/nics/pnt		775	bin	bin
+f pnt /tmp/nics/pnt/Driver.o=/mp/etc/conf/pack.d/pnt/Driver.o
+f pnt /tmp/nics/pnt/pnt.bcfg=../usr/src/$WORK/pkg/nics/config/pnt
+v pnt /tmp/nics/pnt/Drvmap=/etc/conf/drvmap.d/pnt
+v pnt /tmp/nics/pnt/Master=/etc/conf/mdevice.d/pnt
+v pnt /tmp/nics/pnt/Node=/etc/conf/node.d/pnt
+v pnt /tmp/nics/pnt/Space.c=/etc/conf/pack.d/pnt/space.c
+v pnt /tmp/nics/pnt/System=/etc/conf/sdevice.d/pnt
+#
+# ODI Support Modules
+#
+d none /tmp/nics/ethtsm	775	bin	bin
+f none /tmp/nics/ethtsm/Driver.o=/mp/etc/conf/pack.d/ethtsm/Driver.o
+f none /tmp/nics/ethtsm/Master=/etc/conf/mdevice.d/ethtsm
+f none /tmp/nics/ethtsm/System=/etc/conf/sdevice.d/ethtsm
+#
+d none /tmp/nics/lsl	775	bin	bin
+f none /tmp/nics/lsl/Driver.o=/mp/etc/conf/pack.d/lsl/Driver.o
+f none /tmp/nics/lsl/Space.c=/etc/conf/pack.d/lsl/space.c
+f none /tmp/nics/lsl/Master=/etc/conf/mdevice.d/lsl
+f none /tmp/nics/lsl/Mtune=/etc/conf/mtune.d/lsl
+f none /tmp/nics/lsl/Dtune=/etc/conf/dtune.d/lsl
+f none /tmp/nics/lsl/System=/etc/conf/sdevice.d/lsl
+#
+d none /tmp/nics/msm	775	bin	bin
+f none /tmp/nics/msm/Driver.o=/mp/etc/conf/pack.d/msm/Driver.o
+f none /tmp/nics/msm/Space.c=/etc/conf/pack.d/msm/space.c
+f none /tmp/nics/msm/Master=/etc/conf/mdevice.d/msm
+f none /tmp/nics/msm/Mtune=/etc/conf/mtune.d/msm
+f none /tmp/nics/msm/Dtune=/etc/conf/dtune.d/msm
+f none /tmp/nics/msm/System=/etc/conf/sdevice.d/msm
+#
+d none /tmp/nics/toktsm	775	bin	bin
+f none /tmp/nics/toktsm/Driver.o=/mp/etc/conf/pack.d/toktsm/Driver.o
+f none /tmp/nics/toktsm/Master=/etc/conf/mdevice.d/toktsm
+f none /tmp/nics/toktsm/System=/etc/conf/sdevice.d/toktsm
+#
+# rc2.d script file for odisr
+#
+d none /etc/init.d      ?       ?       ?
+f none /etc/init.d/tokinit
+l none /etc/rc2.d/S79tok=/etc/init.d/tokinit
+#
+d none /tmp/nics/odisr	775	bin	bin
+f none /tmp/nics/odisr/Driver.o=/mp/etc/conf/pack.d/odisr/Driver.o
+f none /tmp/nics/odisr/Space.c=/etc/conf/pack.d/odisr/space.c
+f none /tmp/nics/odisr/System=/etc/conf/sdevice.d/odisr
+f none /tmp/nics/odisr/Master=/etc/conf/mdevice.d/odisr
+f none /tmp/nics/odisr/Mtune=/etc/conf/mtune.d/odisr
+f none /tmp/nics/odisr/Dtune=/etc/conf/dtune.d/odisr
+#
+# ODI & board-specific DLPI header files
+#
+d none /usr	?	?	?
+d none /usr/include	?	?	?
+d none /usr/include/sys	?	?	?
+#
+!default 0444 bin bin
+f none /usr/include/sys/dlpi_ether.h
+f none /usr/include/sys/cmsm.h
+f none /usr/include/sys/lsl.h
+f none /usr/include/sys/odi.h
+f none /usr/include/sys/odi_portable.h
+f none /usr/include/sys/tsmdef.h
+f none /usr/include/sys/msmstruc.h
+f none /usr/include/sys/cmsmglu.h
+f none /usr/include/sys/odi_nsi.h
+f none /usr/include/sys/nwctrace2.h
+#
+f ee16 /usr/include/sys/dlpi_ee16.h
+f ee16 /usr/include/sys/ee16.h
+#
+f none /usr/include/sys/tokdef.h
+f none /usr/include/sys/route.h
+#
+f nflxt /usr/include/sys/dlpi_token.h
+f nflxsr /usr/include/sys/nflxsr.h
+f nflx /usr/include/sys/cet.h
+#
+#
+#       Driver Configuration files: default owner=bin group=bin mode=0444
+#
+!default 0444 bin bin
+d none /etc/netflex 755 root sys
+#
+f nflxe /tmp/nics/nflxe/unieth.bin=/etc/netflex/unieth.bin
+f nflxe /tmp/nics/nflxe/uniethf.bin=/etc/netflex/uniethf.bin
+#
+f nflxt /tmp/nics/nflxt/unitok.bin=/etc/netflex/unitok.bin
+f nflxt /tmp/nics/nflxt/unitokf.bin=/etc/netflex/unitokf.bin
+#
+!default 0664 bin bin
+v nflxsr /tmp/nics/sr/ap.nflxsr=/etc/netflex/ap.nflxsr
+#
+#       Driver Startup Utilities: default owner=bin group=bin mode=0554
+#
+!default 0554 bin bin
+d nflx /tmp/nics/nflx	775	bin	bin
+f nflx /tmp/nics/nflx/cet_start=/etc/netflex/cet_start
+f nflx /tmp/nics/nflx/cet_stop=/etc/netflex/cet_stop
+#
+!default 0664 bin bin
+f nflxe /tmp/nics/nflxe/S02nflxe=/etc/rc2.d/S02nflxe
+f nflxt /tmp/nics/nflxt/S02nflxt=/etc/rc2.d/S02nflxt
+#
+# UW1.1 compatibility binary and scripts
+#
+d none /usr	?	?	?
+d none /usr/sbin	?	?	?
+#
+!default 0755 root sys
+f none /usr/sbin/hsmconfig=../usr/src/$WORK/pkg/nics/uw11/hsmconfig
+f none /usr/sbin/bustype=../usr/src/$WORK/pkg/nics/uw11/bustype
+d none /etc	?	?	?
+d none /etc/inst	?	?	?
+d none /etc/inst/locale	?	?	?
+d none /etc/inst/locale/C ?	?	?
+d none /etc/inst/locale/C/menus ?	?	?
+d none /etc/inst/locale/C/menus/odi
+!default 0444 root sys
+f none /etc/inst/locale/C/menus/odi/menu.drivers=../usr/src/$WORK/pkg/nics/uw11/menu.drivers
+f none /etc/inst/locale/C/menus/odi/menu.params=../usr/src/$WORK/pkg/nics/uw11/menu.params
+f none /etc/inst/locale/C/menus/odi/menu.sr=../usr/src/$WORK/pkg/nics/uw11/menu.sr
+f none /etc/inst/locale/C/menus/odi/odiinet.menu=../usr/src/$WORK/pkg/nics/uw11/odiinet.menu
+d none /var	?	?	?
+d none /var/sadm	?	?	?
+d none /var/sadm/pkg	?	?	?
+d none /var/sadm/pkg/odicore 0755 root sys
+!default 0664 root sys
+f none /var/sadm/pkg/odicore/pkginfo=../usr/src/$WORK/pkg/nics/uw11/pkginfo
+f none /var/sadm/pkg/odicore/compver=../usr/src/$WORK/pkg/nics/uw11/compver
+#
+# UW1.1 dummy header files
+#
+!default 0444 bin bin
+f none /usr/include/sys/dlpi_lsl.h
+f none /usr/include/sys/ethtsm.h
+f none /usr/include/sys/msm.h
+f none /usr/include/sys/uwodi.h
+f none /usr/include/sys/sr_route.h

@@ -1,0 +1,28 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)r5xhost:Imakefile	1.2"
+
+XCOMM $XConsortium: Imakefile,v 1.11 91/07/16 23:05:03 gildea Exp $
+#if HasSecureRPC
+RPC_DEFINES = -DSECURE_RPC
+#else
+RPC_DEFINES = 
+#endif
+#if !HasSockets
+INCLUDES = -I$(XLIBSRC)
+#else 
+EXTRA_LIBRARIES = ExtraLibraries -lsocket
+#endif
+        DEPLIBS = $(DEPXMULIB) $(DEPXLIB)
+LOCAL_LIBRARIES = $(XMULIB) $(XLIB) $(XTOOLLIB)
+           SRCS = xhost.c 
+           OBJS = xhost.o 
+        DEFINES = ConnectionFlags $(SIGNAL_DEFINES) $(RPC_DEFINES)
+
+ComplexProgramTarget(xhost)

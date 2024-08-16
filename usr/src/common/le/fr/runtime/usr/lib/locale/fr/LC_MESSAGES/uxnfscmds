@@ -1,0 +1,260 @@
+Syntaxe : mount [-r] [-o options] serveur:chemin d'accès répertoire\n
+%s ne fonctionne pas, impossible de monter %s\n
+%s : mémoire insuffisante pour %s\n
+il ne s'agit pas d'un système de fichiers nfs, utiliser le format serveur:chemin\nd'accès\n
+le serveur exporte pre-4.0 nfs, groupes limités à 8\n
+erreur de montage %s : %s\n
+option incorrecte : %s\n
+%s a échoué : %s est inconnu\n
+%s : pas de service horaire pour %s\n
+%s : (hôte %s, programme %d, version %d) introuvable sur tous les transports\n
+impossible d'établir une liaison avec le port réservé\n
+%s : %s le serveur ne répond pas pour %s\n
+accès refusé pour %s : %s\n
+%s n'est pas partagé dans %s\n
+%s : le service NFS ne répond pas\n
+montage en arrière-plan de %s\n
+nouvelle tentative de montage de %s\n
+%s monté\n
+abandon du montage sur %s\n
+%s : impossible d'ouvrir %s : %s\n
+%s : impossible de verrouiller %s : %s\n
+%s : impossible de créer %s : %s\n
+%s : impossible d'exécuter %s %s : %s\n
+Syntaxe : umount {serveur:chemin d'accès | point-montage}\n
+%s : est occupé\n
+%s : autorisation refusée\n
+%s : n'est pas monté\n
+%s : pas de mémoire\n
+%s : impossible de tronquer %s : %s
+impossible de placer l'entrée de montage dans %s : %s\n
+%s n'est pas au format serveur:chemin d'accès\n
+Syntaxe : share -F nfs [-o options] [-d description] chemin_accès\n
+%s a échoué pour %s : %s\n
+%s : n'est pas un nom de chemin complet\n
+%s : sous-répertoire (%s) déjà partagé\n
+%s : répertoire-parent (%s) déjà partagé\n
+erreur survenue lors de la lecture de %s\n
+option %s indiquée plusieurs fois\n
+share -F nfs -o %s=client[:client] ...\n
+%s a échoué : %s\n
+liste trop longue (maximum %d)\n
+%s : adresse réseau inconnue\n
+impossible d'ajouter %s dans %s\n
+Syntaxe : unshare nom_chemin\n
+%s n'est pas partagé\n
+Syntaxe : dfmounts [-h] [hôte ...]\n
+%s : le serveur ne répond pas pour %s\n
+RESSOURCE    NOM CHEMIN SERVEUR               CLIENTS\n
+dépassement de la capacité de la table : seulement %d entrées affichées\n
+Syntaxe : dfshares [-h] [hôte ...]\n
+RESSOURCE                                 ACCES SERVEUR    TRANSPORT\n
+Syntaxe : exportfs [-aviu] [-o options] répertoire\n
+pas d'entrée associée à %s dans %s\n
+options indiquées ignorées\n
+Syntaxe : nfsping [ -a ] [ -s ] [ -c ] [ -o nom-processus ]\n
+%s ne fonctionne pas\n
+%s ne fonctionne pas : %s\n
+%s en cours d'exécution\n
+nom de processus erroné associé à l'option -o\n
+%s a échoué pour %s\n
+Syntaxe : nfsstat [-cnrsz] [unix] [mémoire]\n
+le noyau n'est pas configuré avec le serveur nfs et le code rpc.\n
+le noyau n'est pas configuré avec le client nfs et le code rpc.\n
+impossible d'écrire des statistiques dans le noyau\n
+pas de nom de liste : %s\n
+\nClient rpc :\n
+appels    mauv_appels retrad     badxid     délai      attente    nouvcred\n
+\nServeur rpc :\n
+appels   mauv_appels  nullrecv   mauv_long  xdrcall\n
+\nClient nfs :\n
+calls      badcalls   nclget     nclsleep\n
+\nServeur nfs :\n
+appels    mauv_appels\n
+recherche du noyau ou erreur de lecture : %s\n
+recherche du noyau ou erreur d'écriture : %s\n
+Syntaxe : showmount [-a] [-d] [-e] [hôte]\n
+aucun système de fichiers exporté pour %s\n
+liste d'exports associée à %s :\n
+(tous)
+Syntaxe : biod\n
+Syntaxe : bootparamd [-d]\n
+impossible d'enregistrer (programme %d, version %d) sur %s\n
+svc_run généré\n
+impossible de libérer des arguments\n
+%s : impossible de lire %s : %s\n
+Syntaxe : mountd [ -p rpc-programme]\n
+numéro de programme erroné\n
+impossible d'enregistrer (programme %d, version %d) sur %s\n
+svc_run généré
+%s a échoué sur %s : %s
+impossible d'envoyer une réponse à %s
+impossible d'envoyer une réponse à %s : %m
+requête de montage : %s a échoué pour %s : %s
+%s : %s a échoué pour %s : %m
+%s : incorrect à la ligne %d
+%s : pas de mémoire
+%s : débordement récurrent\r\n
+%s : appel récurrent de netgroup %s\r\n
+%s : erreur de syntaxe dans %s\r\n
+Syntaxe : nfsd [ -a ] [ -p protocole ] [ -t transport ]\n
+édition de liens impossible\n
+%s : %s a échoué : %s\n
+impossible de trouver l'entrée netconfig NC_TPI_CLTS associée au protocole %s\n
+pas de périphérique netconfig\n
+%s : %s a échoué\n
+%s : connexion à une adresse incorrecte\n
+Syntaxe : lockd -t[délai] -g[délai_grace] -d[déboguer]\n
+%s : allocation d'espace impossible pour %s
+requête refusée en raison d'un problème de contrôle des statuts
+lockd détruite conformément à la requête
+impossible de créer le service (%s, %s) pour %s : %m
+renvoi de %s
+entrée de contrôle introuvable pour %s, requête non contrôlée.
+%s: %s a échoué
+impossible d'élever les limites associées aux descripteurs de fichiers à la valeur maximale %d (ignoré)
+longueur (%d) supérieure à la valeur maximale (%d)
+liaison interrompue avec proc_list !\n
+écran de contact (%d) inconnu\n
+incident survenu lors de la transmission de la taille des données privées (%d)\nau contrôleur des statuts\n
+le site %s n'est pas abonné au service de contrôle des statuts\n
+lockd ne peut établir le contact avec le statd local\n
+%s : %s valeur %d inconnue\n
+%s : impossible de libérer les arguments
+%s : %s a échoué : %m
+%s : impossible de supprimer un verrou.
+%s :  la demande de réclamation (%x) ne peut être envoyée ni mise en file d'attente pour être envoyée ultérieurement !
+%s : conversion impossible.
+%s : lock impossible.
+%s : impossible de définir un verrou.
+%s : impossible de déverrouiller un verrou.
+%s : rpc non supporté
+%s : impossible de tester un verrou.
+%s : valeur de retour %d inconnue
+%s : la demande de verrrouillage des réclamations (%x) est renvoyée en raison d'un délai grace, impossible !
+%s : la demande de partage de fichiers à partir de %s (mode %d,\naccès %d) est conflictuelle avec la tentative de partage de %s (mode %d,\naccès %d)\n
+%s : le serveur ne répond pas pour %s
+%s : udp ne peut effectuer aucun envoi car il ne reste plus d'espace disponible dans la mémoire cache
+%s : %s valeur (%d) supérieure à 16 !
+%s : %s valeur (%d) non supportée
+%s : connexion avec le contrôleur des statuts impossible !
+%s : %s protocole inconnu
+%s : impossible d'enregistrer (programme %d, version %d) sur %s
+%s : %s ne peut établir la connexion : %s
+%s : adresse inhabituelle pour %s sur le transport %s
+Syntaxe : statd -d[déboguer] -D\n
+%s : impossible d'ouvrir le lockd local sur la modification de statut %s,\nabandonnez !\n
+%s : %s a échoué pour %s : %s\n
+%s : %s a échoué entre %s et %s\n
+rpc.statd : impossible de communiquer avec statd au niveau de %s\n
+%s : impossible de libérer les arguments\n
+impossible de créer (%s, %s) pour %s : %s\n
+%s : %s est renvoyé\n
+Syntaxe : pcnfsd\n
+impossible de créer le service %s.
+impossible de créer un identificateur
+%s : impossible de définir le répertoire spool %s\n
+%s : le fichier spool (%s -> %s) n' a pu être renommé.\n
+rpc.pcnfsd : alerte su_pclose
+(Configuration incomplète détectée)
+rpc.pcnfsd : impossible d'exécuter popen() lpstat sur l'interrogation de la file d'attente
+rpc.pcnfsd : impossible d'exécuter popen() lp sur le statut
+Ce compte ne peut plus être utilisé.
+Le mot de passe associé à ce compte a expiré.
+Le mot de passe associé à ce compte va bientôt expirer. Veuillez le modifier.
+Impossible d'accéder à ce compte via pcnfsd.
+rpc.pcnfsd : délai su_popen - processus enfant détruit
+rpc.pcnfsd : refus de la requête émanant de l'utilisateur %s (uid %d)
+rpc.pcnfsd : impossible de créer un canal dans su_popen
+Syntaxe : automount [-nTv] [-t sous_options] [-M répertoire] [-D n=s]\n                    [-f fichier] [ assign rép  [-options_mount] ]
+nom de fichier maître incorrect\n
+répertoire de montage incorrect\n
+valeur de délai incorrecte\n
+permutation de délai incorrect\n
+assignation de variables d'environnement incorrecte\n
+impossible d'établir les montages actuels\n
+Le répertoire doit comporter un nom de chemin complet\n
+entrée de la table introuvable\n
+aucun transport n'est disponible\n
+impossible d'établir une connexion pour %s\n
+pas de mémoire\n
+impossible de créer un identificateur de serveur\n
+impossible d'enregistrer un service\n
+impossible de créer un identificateur de serveur
+impossible d'enregistrer un service
+renvoi de auto_run
+impossible de monter : %m
+Quitte
+Chemin d'exécution %d : impossible de créer le chemin d'exécution : %s
+%s : impossible de trouver devid %04x(%04x) pour %s
+trace = %d
+verbose activé
+verbose désactivé
+AVERTISSEMENT : %s ignoré pour %s dans %s
+%s : table %s, touche %s : incorrect
+%s : entrée incorrect %s dans la table %s
+%s : renouveler la connexion pour %s
+%s : AVERTISSEMENT : %s est déjà monté sur
+%s : WARNING : démontage du fs monté
+%s : ERREUR : aucun fs pour %s
+%s : ligne %d : entrée incorrecte
+%s : AVERTISSEMENT : %s : %s n'est plus monté
+%s : %s : %s est déjà monté sur %s
+%s : la mémoire cache de l'hôte actif est pleine
+%s : la mémoire cache de l'hôte inactif est pleine
+%s : les serveurs ne répondent pas : %s
+%s : %s : %s -> %s est un lien symbolique dangereux
+%s : l'hôte %s ne répond pas
+%s : pas de service NFS sur %s
+%s : pas de service horaire pour %s
+%s: montage de %s sur %s : %m
+%s : %s renvoi de NULL
+%s: %s réessayer
+%s : AVERTISSEMENT : %s est NULL
+%s : %s sur %s : le serveur %s ne répond pas
+%s : impossible d'ouvrir %s : %m
+%s : impossible de verrouiller %s : %m
+%s : option numérique incorrecte %s
+%s : %s le serveur ne répond pas pour %s
+%s : %s : impossible d'établir une connexion avec le port réservé
+%s : le point de montage %s doit commencer par /
+%s : point de montage hiérarchique : %s et %s
+%s : %s est déjà monté au niveau de %s
+%s : AVERTISSEMENT : option par défaut %s ignorée pour la table %s
+%s : table %s introuvable
+%s : %s n'est pas un répertoire
+%s : AVERTISSEMENT : %s n'est pas vide !
+%s : %s : impossible de créer le répertoire %s : %m
+%s : %s : ERREUR : rootfs n'est pas utilisée !
+%s : ERROR : pas de variable conditionnelle
+%s : échec de la consultation de %s, attribuez-lui le statut "incorrect"
+%s : ERREUR : %s libération d'une requête inconnue pour (répertoire %s, nom %s)
+%s : ERROR : %s libération de la requête inconnue %d
+%s : %s adresse inconnue
+%s : adresses introuvables
+%s : %s : débordement du tampon à partir de %s
+%s : espace principal dans l'entrée de table %s dans %s
+%s : touche incorrecte %s dans la table directe %s
+%s : touche incorrecte %s dans la table indirecte %s
+impossible de %s : %m
+impossible de créer %s : %s\n
+impossible de %s %s : %s\n
+%s : impossible de créer %s: %m
+%s : impossible d'exécuter stat sur %s : %m
+%s : lvnode ! = NULL
+%s : pas d'espace mémoire disponible pour %s
+ERREUR : aucune entrée n'est associée à la requête %d
+\n\tSyntaxe : automount [-nTv] [-t sous_options] [-M répertoire]\n\t                    [-D n=s] [-f fichier] [ assign rép [-options_mount] ]\n
+Syntaxe : lockd -t[dépassement_délai] -g[délai_grâce]\n
+Syntaxe : mountd\n
+%s : appel récurrent de %s avec %s\n
+%s : ERREUR : fs racine non utilisée
+%s : ERREUR : %s est %s
+valeur minimale des chemins d'exécution incorrecte\n
+nombre minimal de chemins d'exécution incorrect, paramétrage par défaut sur %d\n
+valeur maximale des chemins d'exécution incorrecte\n
+nombre maximal de chemins d'exécution incorrect, paramétrage par défaut sur %d\n
+%s : AVERTISSEMENT : %s n'est pas monté
+%s : zéro hors liaison (%s, %s)
+%s : liaison incorrecte (%s, %s)
+%s : ancien réutilisé = %s pour le nouveau = %s

@@ -1,0 +1,41 @@
+#ident	"@(#)mk:i386at/:mkls	1.5"	
+#ident "$Header: $"
+#		Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#		Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.
+#		  All Rights Reserved
+
+#		THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#		The copyright notice above does not evidence any
+#		actual or intended publication of such source code.
+
+#
+#	Shell script for rebuilding LS  
+#
+# 	For cross rebuilding set at least env variables MACH, ROOT, TOOLS,
+#	SYMLINK and MAKE, for native rebuilding you can use the default values.
+#
+#	MUST fill in the correct values for ROOT, MACH, CPU, WORK, and TOOLS
+
+Root=$1
+Mach=$2
+Work=$3
+Tools=$4
+Cpu=$5
+
+ROOT=${Root}
+MACH=${Mach}
+WORK=${Work}
+TOOLS=${Tools}
+CPU=${Cpu}
+
+export ROOT MACH WORK TOOLS CPU
+
+
+cd ${Root}/usr/src/${Work}/ls
+
+chmod 0755 ./:mk
+
+${Tools}/usr/ccs/bin/${Cpu}osenv ./:mk "${ROOT}" "${MACH}" "${WORK}" "${TOOLS}" "${CPU}" 
+
+
+exit 0

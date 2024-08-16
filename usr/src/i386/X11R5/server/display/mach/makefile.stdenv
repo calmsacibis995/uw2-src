@@ -1,0 +1,234 @@
+#ident	"@(#)mach:mach/makefile.stdenv	1.5"
+
+#	NAME					-*-Mode: Makefile; -*-
+#
+#		makefile : Make file.
+#
+#	SYNOPSIS
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	HISTORY
+#
+#		1.0.0 23_July_1993 Joseph Koshy : First coding.
+
+#	AM directives.
+
+# 	Release files
+..source : Imakefile mach-release README.mach
+
+#	.def files.
+..source : m_clocks.def m_modes.def m_visual.def m_dacs.def 
+
+#	included code
+..source : m_smblt.code global.h 
+
+# 	Other stuff
+..source : NEW-CONFIG OLD-CONFIG ChangeLog
+..source : LIBMACH_OPTIONS
+..source : m_arc.c 			# Extra source ...
+..special : cfg cfg.opt libmach.so 
+
+#	Option handling
+..source : option.template genoptions
+
+..include : devices
+
+# 	Special files
+
+..special : RCS
+
+#	Make variables.
+
+__cc_options__ = -DLIBRARY_NAME=\"LIBMACH\" -DCHIPSET_NAME=\"MACH\"\
+	-DLIBRARY_VERSION="\"1.03\""
+
+c_files = mach.c m_asm.c m_bitblt.c \
+	m_colormap.c \
+	m_cursor.c m_fill.c m_font.c m_globals.c m_gs.c \
+	m_line.c m_opt.c m_points.c m_regs.c \
+	m_scanline.c m_spans.c m_state.c m_debug.c \
+	stdenv.c \
+	generic.c g_colormap.c g_gs.c g_omm.c \
+	g_regs.c g_state.c
+
+m_files = debug.m m__init__.m m__gs__.m \
+	  m__vtin__.m m__vtout__.m \
+          g__init__.m 
+
+as_s_files = m_asmblr.s
+as_o_files = ${as_s_files:.s=.o}
+
+#	Different types of makes.
+
+..made_debug:		libmach_${LOGNAME}_g.so
+..made_optimized: 	libmach_${LOGNAME}_O.so
+..made_profiled: 	libmach.a 
+
+# 	Determine the appropriate flags and the target
+_cc_options_ = $(shell directory_to_make_option cc)
+_ld_options_ = $(shell directory_to_make_option ld)
+_ar_options_ = $(shell directory_to_make_option ar)
+_as_options_ = $(shell directory_to_make_option as)
+
+ld_options =
+
+..made: $(shell directory_to_make_option made)
+
+#	Standard make include file.
+
+include ${std_make_include_file}
+
+# 	Munch rules.
+$(munch_c_files) : $(non_munch_o_files)
+
+debug.c : debug.m $(non_munch_o_files)
+	$(munch) -d -i '^.*_debug$$' -f mach_debug_control $(non_munch_o_files) > $(@);
+
+m__init__.c : m__init__.m $(non_munch_o_files)
+	$(munch) -c -i '^mach_.*__initialize__$$' -f mach__initialize__ \
+	-p m__init__.m $(non_munch_o_files) > $(@)
+
+m__gs__.c : m__gs__.m $(non_munch_o_files)
+	$(munch) -c -i '^mach_.*__gs_change__$$' -f mach__gs_change__ \
+	-p m__gs__.m $(non_munch_o_files) > $(@)
+
+m__vtin__.c : m__vtin__.m $(non_munch_o_files)
+	$(munch) -c -i '^mach_.*__vt_switch_in__$$' -f mach__vt_switch_in__ \
+	-p m__vtin__.m $(non_munch_o_files) > $(@)
+
+m__vtout__.c : m__vtout__.m $(non_munch_o_files)
+	$(munch) -c -i '^mach_.*__vt_switch_out__$$' -f mach__vt_switch_out__ \
+	-p m__vtout__.m $(non_munch_o_files) > $(@)
+
+g__init__.c : g__init__.m $(non_munch_o_files)
+	$(munch) -c -i '^generic_.*__initialize__$$' -f generic__initialize__\
+	-p g__init__.m $(non_munch_o_files) > $(@)
+
+m_opt.c : m_opt.gen
+	genoptions -o $(@) -p 'mach_options_' -i $(<)
+
+libmach_${LOGNAME}_g.so: $(o_files) $(as_o_files)
+	rm -f $@ libmach.so
+	$(ld) $(LD_OPTIONS) -o $@ -h $@ $(o_files) $(as_o_files) -lm
+	ln -s $@ libmach.so
+
+libmach_${LOGNAME}_O.so: $(o_files) $(as_o_files)
+	rm -f $@ libmach.so
+	$(ld) $(LD_OPTIONS) -o $@ -h $@ $(o_files) $(as_o_files) -lm
+	ln -s $@ libmach.so
+
+libmach.a: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ar) $(AR_OPTIONS) $@ $(o_files) $(as_o_files) 
+
+# Local Variables:
+# End:
+
+
+##$(am)
+
+mach.o : mach.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h global.h generic.h g_state.h g_gs.h g_colormap.h m_bitblt.h m_globals.h m_opt.h m_colormap.h m_state.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_visual.def m_cursor.h m_fill.h m_font.h m_gs.h g_omm.h m_line.h m_points.h m_scanline.h m_spans.h m_modes.def m_asm.h
+m_asm.o : m_asm.c stdenv.h global.h m_globals.h m_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m_opt.h m_state.h m_dacs.def m_clocks.def
+m_bitblt.o : m_bitblt.c stdenv.h global.h m_globals.h m_opt.h m_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m_state.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h m_smblt.code
+m_colormap.o : m_colormap.c stdenv.h global.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_visual.def
+m_cursor.o : m_cursor.c m_opt.h stdenv.h global.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_asm.h g_omm.h
+m_fill.o : m_fill.c stdenv.h global.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h
+m_font.o : m_font.c stdenv.h global.h m_opt.h g_omm.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h
+m_globals.o : m_globals.c stdenv.h global.h
+m_gs.o : m_gs.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_omm.h m_state.h m_opt.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_globals.h m_asm.h
+m_line.o : m_line.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h
+m_opt.o : m_opt.c stdenv.h global.h
+m_points.o : m_points.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h
+m_regs.o : m_regs.c stdenv.h global.h g_regs.h g_state.h g_gs.h g_colormap.h m_opt.h
+m_scanline.o : m_scanline.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h
+m_spans.o : m_spans.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h
+m_state.o : m_state.c m_opt.h stdenv.h global.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_asm.h m_globals.h
+m_debug.o : m_debug.c
+stdenv.o : stdenv.c global.h
+generic.o : generic.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_regs.h
+g_colormap.o : g_colormap.c stdenv.h global.h
+g_gs.o : g_gs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_omm.o : g_omm.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_regs.o : g_regs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_state.o : g_state.c g_gs.h stdenv.h global.h g_colormap.h
+debug.o : debug.c
+m__init__.o : m__init__.c m_opt.h stdenv.h global.h
+m__gs__.o : m__gs__.c
+m__vtin__.o : m__vtin__.c
+m__vtout__.o : m__vtout__.c
+g__init__.o : g__init__.c
+mach.d : mach.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h global.h generic.h g_state.h g_gs.h g_colormap.h m_bitblt.h m_globals.h m_opt.h m_colormap.h m_state.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_visual.def m_cursor.h m_fill.h m_font.h m_gs.h g_omm.h m_line.h m_points.h m_scanline.h m_spans.h m_modes.def m_asm.h
+m_asm.d : m_asm.c stdenv.h global.h m_globals.h m_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m_opt.h m_state.h m_dacs.def m_clocks.def
+m_bitblt.d : m_bitblt.c stdenv.h global.h m_globals.h m_opt.h m_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m_state.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h m_smblt.code
+m_colormap.d : m_colormap.c stdenv.h global.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_visual.def
+m_cursor.d : m_cursor.c m_opt.h stdenv.h global.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_asm.h g_omm.h
+m_fill.d : m_fill.c stdenv.h global.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h
+m_font.d : m_font.c stdenv.h global.h m_opt.h g_omm.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h
+m_globals.d : m_globals.c stdenv.h global.h
+m_gs.d : m_gs.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_omm.h m_state.h m_opt.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_globals.h m_asm.h
+m_line.d : m_line.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h
+m_opt.d : m_opt.c stdenv.h global.h
+m_points.d : m_points.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h
+m_regs.d : m_regs.c stdenv.h global.h g_regs.h g_state.h g_gs.h g_colormap.h m_opt.h
+m_scanline.d : m_scanline.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h
+m_spans.d : m_spans.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h
+m_state.d : m_state.c m_opt.h stdenv.h global.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_asm.h m_globals.h
+m_debug.d : m_debug.c
+stdenv.d : stdenv.c global.h
+generic.d : generic.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_regs.h
+g_colormap.d : g_colormap.c stdenv.h global.h
+g_gs.d : g_gs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_omm.d : g_omm.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_regs.d : g_regs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_state.d : g_state.c g_gs.h stdenv.h global.h g_colormap.h
+debug.d : debug.c
+m__init__.d : m__init__.c m_opt.h stdenv.h global.h
+m__gs__.d : m__gs__.c
+m__vtin__.d : m__vtin__.c
+m__vtout__.d : m__vtout__.c
+g__init__.d : g__init__.c
+mach.ln : mach.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h global.h generic.h g_state.h g_gs.h g_colormap.h m_bitblt.h m_globals.h m_opt.h m_colormap.h m_state.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_visual.def m_cursor.h m_fill.h m_font.h m_gs.h g_omm.h m_line.h m_points.h m_scanline.h m_spans.h m_modes.def m_asm.h
+m_asm.ln : m_asm.c stdenv.h global.h m_globals.h m_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m_opt.h m_state.h m_dacs.def m_clocks.def
+m_bitblt.ln : m_bitblt.c stdenv.h global.h m_globals.h m_opt.h m_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m_state.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h m_smblt.code
+m_colormap.ln : m_colormap.c stdenv.h global.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_visual.def
+m_cursor.ln : m_cursor.c m_opt.h stdenv.h global.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_asm.h g_omm.h
+m_fill.ln : m_fill.c stdenv.h global.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h
+m_font.ln : m_font.c stdenv.h global.h m_opt.h g_omm.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h
+m_globals.ln : m_globals.c stdenv.h global.h
+m_gs.ln : m_gs.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_omm.h m_state.h m_opt.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_globals.h m_asm.h
+m_line.ln : m_line.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h
+m_opt.ln : m_opt.c stdenv.h global.h
+m_points.ln : m_points.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h
+m_regs.ln : m_regs.c stdenv.h global.h g_regs.h g_state.h g_gs.h g_colormap.h m_opt.h
+m_scanline.ln : m_scanline.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h
+m_spans.ln : m_spans.c stdenv.h global.h m_globals.h m_opt.h m_state.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_gs.h g_omm.h m_asm.h
+m_state.ln : m_state.c m_opt.h stdenv.h global.h g_state.h g_gs.h g_colormap.h m_regs.h g_regs.h m_dacs.def m_clocks.def m_asm.h m_globals.h
+m_debug.ln : m_debug.c
+stdenv.ln : stdenv.c global.h
+generic.ln : generic.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_regs.h
+g_colormap.ln : g_colormap.c stdenv.h global.h
+g_gs.ln : g_gs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_omm.ln : g_omm.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_regs.ln : g_regs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_state.ln : g_state.c g_gs.h stdenv.h global.h g_colormap.h
+debug.ln : debug.c
+m__init__.ln : m__init__.c m_opt.h stdenv.h global.h
+m__gs__.ln : m__gs__.c
+m__vtin__.ln : m__vtin__.c
+m__vtout__.ln : m__vtout__.c
+g__init__.ln : g__init__.c
+
+##$(am)

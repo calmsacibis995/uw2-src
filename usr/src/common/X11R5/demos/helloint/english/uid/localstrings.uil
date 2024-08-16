@@ -1,0 +1,28 @@
+!
+! (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+! ALL RIGHTS RESERVED 
+!
+!
+! Motif Release 1.2
+!
+
+module latin_strings
+    version = 'v1.0'
+    names = case_sensitive
+
+value
+    local_font : exported 
+        font('-adobe-times-medium-r-normal--14-100-100-100-p-74-iso8859-1');
+
+    string_direction : exported XmSTRING_DIRECTION_L_TO_R ;
+
+    hello_label : exported compound_string('Hello',separate=true) & 'World!';
+
+    bye_label : exported compound_string('Goodbye',separate=true) & 'World!';
+
+    label_label :  exported compound_string('Press button once',
+                              separate=true) &
+		            compound_string('to change label;',separate=true) &
+		                  'twice to exit.';
+    			  			  
+end module ;

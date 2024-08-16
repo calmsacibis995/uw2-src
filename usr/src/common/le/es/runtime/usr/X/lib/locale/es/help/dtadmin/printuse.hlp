@@ -1,0 +1,252 @@
+#ident\t"@(#)dthelp:Admin.Tools/printuse.hlp    1.12"
+^*version^1
+^*title^Impresora
+^:Impresora
+^*width^70
+^+DesktopMgr/help.defs
+^?Envío, verificación, supresión y modificación de peticiones de impresión
+^0^Uso de la impresora
+^$10
+Uso de la impresora
+
+Antes de poder enviar peticiones de impresión a una impresora remota o
+local, deberá configurarla.  Para obtener información detallada acerca
+de la configuración de impresoras, véase \k(Configuración de impresoras^dtadmin/Printer_Setup.hlp^Configuración de impresoras).
+
+Después de configurar la impresora, pueda hacer lo siguiente:
+
+\to\t\k(Imprimir un archivo^^Impresión de un archivo)
+\to\t\k(Visualizar las peticiones de impresión^^Visualización de peticiones de impresora)
+\to\t\k(Ver las propiedades de una petición de impresión^^Visualización de propiedades de una petición de impresión)
+\to\t\k(Cambiar las propiedades de una petición de impresión^^Modificación de propiedades de una petición de impresión)
+\to\t\k(Suprimir una petición de impresión^^Supresión de una petición de impresión)
+
+Véase también:
+\s(Impresión^dhelp "pe.es" userhb "Impresión" "" || helpLinkErr)
+
+
+^1^Impresión de un archivo
+^$20
+Impresión de un archivo
+
+Si desea imprimir un archivo creado con una aplicación de terceros
+(por ejemplo, con una aplicación de procesador de textos u hoja de
+cálculo), use el sistema de menús de dicha aplicación para imprimirlo.
+
+Si desea imprimir un archivo de texto en ASCII (o cualquier archivo
+creado en UnixWare u otro sistema UNIX), haga lo siguiente:
+
+1.\t\d(Arrastre y suelte^arrastrar y soltar) el archivo hasta el icono de
+  \tla impresora deseada.  Aparecerá la ventana "Impresora:
+  \tPropiedades de peticiones" correspondiente a dicha impresora.
+
+2.\tDefina las siguientes opciones:
+
+  \to\tTítulo de portada: - Teclee el título que desee que
+  \t \taparezca en la portada.  Por defecto, el sistema imprimirá el
+  \t \tnombre del archivo.
+
+  \to\tCopias: - Teclee el número de copias que desee imprimir.
+
+  \to\t¿Enviar correo al finalizar? - Haga clic en Sí si desea que
+  \t \tel sistema envíe correo a la \k(carpeta Buzón^DesktopMgr/Mailbox.hlp^Descripción general de la carpeta Buzón) cuando se termine
+  \t \tde imprimir el trabajo, o en No si no desea que el sistema
+  \t \tle envíe correo al terminar de imprimir el trabajo.
+
+  \to\tImprimir portada: - Haga clic en Sí si desea imprimir una
+  \t \tportada al principio del documento, y en No para omitirla.
+
+  \to\tTipo de archivo: - Por defecto, este campo está definido como
+  \t \tTexto.  Haga clic en la casilla de flecha, y luego haga clic
+  \t \ten una de las siguientes opciones:
+
+  \t \t-\tTexto: Para imprimir archivos de texto (en ocasiones llamados
+  \t \t \tASCII o sencillos).  Este tipo de archivos no contiene
+  \t \t \tinformación de formato alguna.  Son archivos que contienen
+  \t \t \tcaracteres introducidos con un teclado.  Por ejemplo, el
+  \t \t \t\k(Editor de textos^dtedit/edit.hlp^El Editor de textos) produce este tipo de archivos.
+
+  \t \t-\tTexto (sin cambio de línea) - Las líneas que no quepan en
+  \t \t \tla página se pasarán a la siguiente línea al llegar al borde
+  \t \t \tde la página, o se truncarán, según la impresora.
+
+  \t \t-\tPostScript: Para imprimir archivos en lenguaje PostScript.
+  \t \t \tPara usar esta opción la impresora deberá ser PostScript.
+  \t \t \tAlgunas aplicaciones le permiten imprimir un documento (u otro
+  \t \t \tarchivo de datos) en un archivo en formato PostScript.
+
+  \t \t-\tHP PCL:  Para imprimir archivos creados para impresoras que
+  \t \t \tusen a emulación HP PCL, como la impresora HP Laserjet.
+
+  \t \t-\tSalida Troff: Para imprimir archivos creados con el formato
+  \t \t \tdel comando troff de UNIX.
+
+  \t \t-\tOtros: Para especificar algún otro tipo de archivo que no esté
+  \t \t \tlistado en el menú, deberá estar cargado en el sistema el
+  \t \t \tfiltro necesario para este tipo de archivo.
+
+  \t \t \tSi selecciona Otros, aparecerá el cuadro de texto Especificar
+  \t \t \ttipo. Teclee el tipo de archivo.
+
+  \t \t \tPara definir opciones adicionales para una impresora
+  \t \t \tPostScript (tales como longitud y ancho de las páginas, etc),
+  \t \t \tvéase \k(Impresora: Otras opciones).
+
+3.\tHaga clic en Imprimir para enviar la petición a la impresora.
+  \tAparecerá la ventana "Impresora: Mensaje" que le informará de si
+  \tse aceptó el trabajo, y le facilitará el ID de petición
+  \tcorrespondiente al mismo.  Es conveniente que anote este ID de
+  \ttrabajo para referencias futuras.  A continuación, haga clic en
+  \tContinuar para imprimir el trabajo.
+
+  \tDesaparecerá la ventana "Configuración de impresoras:
+  \tPropiedades".
+
+  \tNota: También puede hacer clic en Redefinir para dejar las
+  \topciones como estaban anteriormente, o hacer clic en Cancelar para
+  \tcerrar la ventana sin cambiar ninguna opción y enviar la petición
+  \tde impresión.
+
+Véase también:
+\s(Impresión de archivos desde la línea de comandos^dhelp "pe.es" ownerhb "Configuración y definición de impresoras" "Impresión de archivos desde la línea de comandos" || helpLinkErr)
+
+^2^Impresora: Otras opciones
+^$30
+Impresora: Otras opciones
+
+Si está usando una impresora PostScript, y el documento requiere
+valores de configuración especiales, puede definir opciones de
+impresión dicionales.  Por ejemplo, es posible que tenga que imprimir
+un documento que contenga más caracteres por pulgada que la cantidad
+para la que esté definida la impresora por defecto.  En ese caso,
+podría definir la ventana "Densidad de caracteres de la impresora:
+Opciones de filtrado" para forzar al sistema a colocar más caracteres
+en una línea.
+
+Desde la ventana "Impresora: Otras opciones" puede escribir 
+las opciones de lo siguiente:
+
+\to\tLongitud de página: - Seleccione el valor de unidad deseado
+\t \t(pulgadas, centímetros o caracteres) y teclee (en el cuadro
+\t \tde texto) la longitud deseada para la página.
+
+\to\tAncho de página: - Seleccione el valor de unidad deseado
+\t \t(pulgadas, centímetros o caracteres) y teclee (en el cuadro
+\t \tde texto) el ancho deseado para la página.
+
+\to\tDensidad de caracteres: - Seleccione el valor de unidad deseado
+\t \t(pulgadas, centímetros o caracteres) y teclee (en el cuadro
+\t \tde texto) el ancho deseao para cada carácter.
+
+\to\tDensidad de línea: - Seleccione el valor de unidad deseado
+\t \t(pulgadas, centímetros o caracteres) y teclee (en el cuadro
+\t \tde texto) la altura deseada para cada línea.
+
+\to\tNacionalidad: - Haga clic en la nacionalidad deseada.
+
+\t \tNota: Según la nacionalidad que seleccione, es posible que la
+\t \topción Juego de caracteres no esté disponible (en tono de gris más
+\t \tclaro).
+
+\to\tJuego de caracteres: - Haga clic en la casilla de flecha para
+\t \tobtener una lista con los juegos de caracteres disponibles.  A
+\t \tcontinuación haga clic en el juego que desee configurar.
+
+\to\tVarios: - Teclee las opciones del comando lp del sistema UNIX.
+
+\t \tPara obtener más información, véase lp (1M) en la
+\t \t\s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr).
+
+Véase también:
+\s(Suministro de filtros^dhelp as sysag "Providing Print Services" "Providing Filters" || helpLinkErr)
+\s(Impresoras PostScript^dhelp as sysag "Providing Print Services" "PostScript Printers" || helpLinkErr)
+
+
+^1^Visualización de peticiones de impresora
+^$40
+Visualización de peticiones de impresora
+
+Para mostrar todas las peticiones que estén esperando a ser impresas
+en una impresora determinada, haga lo siguiente
+
+1.\t\d(Haga doble clic^hacer doble clic) el icono de la impresora.
+  \tAparecerá la ventana "Impresora: <nombre_de_impresora>", donde
+  \t<nombre_de_impresora> es el nombre de la impresora de que se
+  \ttrate.
+
+  \tCada petición de impresión viene identificada por el ID de entrada
+  \tde la persona que haya realizado la petición.
+
+2.\tHaga clic en Acciones=>Salir para cerrar la ventana.
+
+Para ver las propiedades de una petición de impresión, véase
+\k(Visualización de propiedades de una petición de impresión).
+
+Para cambiar las propiedades de una petición de impresión, véase
+\k(Modificación de propiedades de una petición de impresión).
+
+Para suprimir una petición de impresión, véase \k(Supresión de una petición de impresión).
+
+^1^Visualización de propiedades de una petición de impresión
+^$50
+Visualización de propiedades de una petición de impresión
+
+Para ver las propiedades de una petición de impresión, haga lo
+siguiente:
+
+1.\t\d(Haga doble clic^hacer doble clic) el icono de la impresora.
+  \tAparecerá la ventana "Impresora: <nombre_de_impresora>".
+
+2.\tHaga clic en la petición de impresión deseada.
+
+3.\tHaga clic en Petición de impresión=>Propiedades.  Aparecerá la
+  \tventana "Impresora: Propiedades de peticiones" correspondiente a
+  \tesa impresora.  Véase el paso 2 de \k(Impresión de un archivo) para
+  \tobtener una descripción de las opciones de esta ventana.
+
+4.\tHaga clic en OK o Cancelar para cerrar la ventana.
+
+Véase también:
+\k(Modificación de propiedades de una petición de impresión)
+
+^1^Modificación de propiedades de una petición de impresión
+^$50
+Modificación de propiedades de una petición de impresión
+
+Para cambiar las propiedades de una petición de impresión, haga lo
+siguiente:
+
+1.\t\d(Haga doble clic^hacer doble clic) el icono de la impresora.
+  \tAparecerá la ventana "Impresora: <nombre_de_impresora>".
+
+2.\tHaga clic en la petición de impresión deseada.
+
+3.\tHaga clic en Petición de impresión=>Propiedades.  Aparecerá la
+  \tventana "Impresora: Propiedades de peticiones" correspondiente a
+  \tesa impresora.
+
+4.\tHaga los cambios que desee.  Véase el paso 2 de
+  \t\k(Impresión de un archivo) para obtener una descripción de las opciones
+  \tde esta ventana.
+
+5.\tHaga clic en OK para aplicar los cambios y cerrar la ventana.
+
+  \tNota: También puede hacer clic en Redefinir para dejar las
+  \topciones como estaban anteriormente, o hacer clic en Cancelar para
+  \tcerrar la ventana sin cambiar ninguna propiedad.
+
+^1^Supresión de una petición de impresión
+^$60
+Supresión de una petición de impresión
+
+Para suprimir una petición de impresión, haga lo siguiente:
+
+1.\t\d(Haga doble clic^hacer doble clic) el icono de la impresora.
+  \tAparecerá la ventana "Impresora: <nombre_de_impresora>".
+
+2.\tHaga clic en la petición de impresión que desee suprimir.
+
+3.\tHaga clic en Petición de impresión=>Propiedades.  Aparecerá la
+  \tventana "Impresora: Suprimir" de confirmación, que le preguntará
+  \tsi desea confirmar la supresión de la petición.  Haga clic en
+  \tSuprimir si desea eliminarla, o en Cancelar si decide no hacerlo.

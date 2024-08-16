@@ -1,0 +1,79 @@
+'\"ident        "@(#)MGizmo:man/list.man	1.1"
+.TH ListGizmo 3L
+.SH NAME
+\f(CBListGizmo\f1 \- an abstract data type (ADT) that specifies an area where
+multiple, selectable lines of text may be displayed in a list (with
+scroll bars if needed).
+The \f(CBListGizmo\fP consists of a data structure and a set of
+functions that operate on this data structure.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/ListGizmo.h>
+.ft
+.fi
+.SH "DESCRIPTION"
+A \f(CBListGizmo\fP is created by populating a \f(CBListGizmo\fP data structure
+and placing it's address in a \f(CBGizmoRec\fP structure.
+Ultimately, a \f(CBGizmoRec\fP structure is placed in one of the container
+Gizmos and the display is created by making a call to
+\f(CBCreateGizmo\fP(3L).
+Following is the definition of the \f(CBListGizmo\fP data type:
+.PP
+.nf
+.ft CB
+typedef struct _ListGizmo {
+        HelpInfo *      help;
+        char *          name;
+        char **         items;
+        int             numItems;
+        int             visible;        /* XmNvisibleItemCount */
+        void            (*callback)();  /* XmNsingleSelectionCallback */
+        XtPointer       clientData;
+} ListGizmo;
+.fi
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBListGizmo\fP:
+.IP \fBGetGizmoWidget\fP 25
+Returns the list widget id.
+.IP \fBGetGizmoGizmo\fP 25
+Returns the handle to the \f(CBListGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 25
+Undefined.
+.IP \fBGetGizmoPreviousValue\fP 25
+Undefined.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the list widget.
+.SH "USAGE"
+.nf
+.ft CB
+char *          list[] = {
+        "item 1", "item 2", "item 3", "item 4", "item 5"
+};
+
+ListGizmo       list1 = {
+        NULL, "list1", list, XtNumber(list), 3, listCB, NULL
+};
+
+GizmoRec        record1[] = {
+        {ListGizmoClass, &list1}
+};
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", NULL, record1, 1
+};
+
+main()
+{
+        Gizmo   handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP

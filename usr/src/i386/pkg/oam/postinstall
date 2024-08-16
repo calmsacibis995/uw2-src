@@ -1,0 +1,320 @@
+#ident	"@(#)pkg.oam:i386/pkg/oam/postinstall	1.12.1.17"
+
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+
+
+cleanup_exit() {
+
+	# $1 is the exit code
+	# clean up any tmp files created by upnover tools and then exit.
+
+	[ "$PKGINST" ] || PKGINST=oam
+	[ "$UPDEBUG" = YES ] && goany "cleanup_exit $1 $PKGINST"
+
+	$SCRIPTS/up_cleanup "$PKGINST"
+	exit 	$1
+}
+
+############# Begin UPGRADE AND OVERLAY #######################
+
+SCRIPTS=/usr/sbin/pkginst
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = "YES" ] && set -x
+
+${SCRIPTS}/pkgmrgconf "$PKGINST" "$AUTOMERGE" "$NAME"
+############# End UPGRADE AND OVERLAY #######################
+
+#
+#  If this is not a boot-floppy install, we created the sysadm userid 
+#  in the request script without the correct shell.  Usermod it to 
+#  sysadm here, but only if sysadm installed OK.
+#  If sysadm wasn't installed, then we have sh for the shell, but we know
+#  a password was put on this account in the request script, so we're safe.
+#
+if [ -x /usr/sbin/sysadm ]
+then
+	usermod -s /usr/sbin/sysadm sysadm >/dev/null 2>&1
+fi
+
+
+# Work-around for long pathname, supported by all files systems except s5
+
+if [ -d "${MENU}/netservices" ]
+then
+	FSTYPE="`/etc/devnm ${MENU}/netservices |
+		sed -e 's/ .*//' |
+		xargs fstyp`"
+
+	if [ "${FSTYPE}" != "s5"  -a ! -d "${MENU}/netservices/basic_networking" ]
+	then
+		#echo "## Creating symbolic link for long $FSTYPE pathname."
+		ln -s ${MENU}/netservices/basic_networki ${MENU}/netservices/basic_networking >/dev/null 2>&1
+		if [ $? -ne 0 ]
+		then
+			pfmt -s warn -g ${PKGMSG}:1 " Could not create symbolic link for basic_networking!\n" 2>&1
+		fi
+	fi
+fi
+
+#
+#	Modify the OAM menu to include name to address mapping...
+#
+
+# OAM - OAM
+NSMENU=/usr/sadm/sysadm/menu/netservices/netserve.menu
+if [ -f $NSMENU -a -f /usr/sadm/sysadm/menu/netservices/name_to_addr/map.menu ]
+then
+	if fgrep 'name_to_address^Machine and Service Address Management^name_to_addr/map.menu' ${NSMENU} >/dev/null 2>&1
+	then
+		: Already there!
+	else
+		echo "name_to_address^Machine and Service Address Management^name_to_addr/map.menu" >> ${NSMENU}
+		#installf -c OAMintf $PKGINST ${NSMENU} f
+	fi
+fi
+
+#  Now, decide if we need to add the sysadm user.  If pkgadd
+#  was used to install oam in custom mode, the sysadm user will 
+#  already exist.  Otherwise, create the it. 
+
+#  When pkgadd is used to install this package, the postinstall 
+#  will be too late to ask the user to assign a sysadm password. 
+#  The password will have to be assigned later after pkgadd 
+#  completes. In the case of a boot-floppy installation the 
+#  password can be assigned at postreboot time. 
+#
+   grep sysadm /etc/passwd > /dev/null 2>&1
+   
+   if [ $? -ne 0 ]
+   then
+	   if [ -x /usr/sbin/sysadm ]
+	   then
+		   opt='-s /usr/sbin/sysadm'
+	   else
+		   opt=
+	   fi
+	   #
+	   #  Create the login
+	   #
+	   useradd -i -o $opt -u 0 -g 0 -c "general system administration" -d /usr/sadm -m sysadm >/dev/null 2>&1
+
+   fi
+	   #
+	   #  Create the home directory
+	   #
+	   mkdir /usr/sadm >/dev/null 2>&1
+	   chown sysadm /usr/sadm >/dev/null 2>&1
+	   chgrp root /usr/sadm >/dev/null 2>&1
+	   installf $PKGINST /usr/sadm d 775 sysadm root 1 NULL NULL
+
+	   # The prototypes in both base and oam install this directory. Boot-floppy
+	   # install does not update contents file for oam. Therefore we do it
+	   # manually here.
+	   installf $PKGINST /usr/sadm/sysadm/add-ons d 755 bin bin 1 NULL NULL 
+
+	   installf -f $PKGINST
+
+
+#echo "Setting up the system administration menu interface."
+/usr/sadm/install/bin/ie_build > /dev/null 2>&1
+
+## lp package's OAM objects are moved to OAM package. However, corresponding 
+## changes are not made to menu files. 
+## As a short term fix we simply link ../add-ons/lp and ../add-ons/oam.
+
+ln -s /usr/sadm/sysadm/add-ons/oam /usr/sadm/sysadm/add-ons/lp >/dev/null 2>&1
+
+######################################################
+#
+# taken from pkg.perf postinstall
+#
+######################################################
+#
+#
+#The following defines the roles for the TFM database.
+#
+#
+#
+#The following while-loop reads the commands and the roles
+#to which these commands are to be assigned.  If privileges,
+#separated by a colon, appear next to the role in the script that
+#this while-loop reads in, it means that those privileges are to
+#be shutoff for that command when it is assigned to the role.
+#
+while read cmd roles
+do
+    base=`basename $cmd`
+    privs=`
+    egrep ":${cmd}$" /etc/security/tcb/privs|	# Find command in tcb database
+    sed 's/^.*%inher,\(.*\):.*/\1/p' |          # get the set of inher privs
+    sed 's/^.*%fixed,\(.*\):.*//p' |            # delete the fixed privs
+    sed 's/,/:/gp'                              # changed ,'s to :'s
+    `
+    if [ -z "$privs" ]
+    then
+        echo $cmd $roles >> /tmp/rolelist
+	continue
+    else
+        prvd="yes"
+    fi
+    set $roles
+    save="$privs"
+    while [ $# -gt 0 ]
+    do
+        role=$1
+        if echo "$1" | grep ":" > /dev/null
+        then
+            role=`
+            echo "$1" | sed 's/:.*$//p'`
+            if [ "$prvd" = "yes" ]
+            then
+                shutoff=`
+                echo "$1" | sed 's/^[A-Z]*://p'`
+				shutoff=`echo "$shutoff"|sed 's/:/ /gp'`
+				fullset=`echo "$save"|sed 's/:/ /gp'`
+				for i in $shutoff	#check if privileges to be shut off
+				do					#are in full set of privilges
+					found="false"
+					for j in $fullset
+					do
+						if [ "$i" = "$j" ]
+						then
+							found="true"
+							break
+						fi
+					done
+					privs=""
+					if [ "$found" = "false" ]
+					then
+						pfmt -s warn -g ${PKGMSG}:3 " %s privilege specified to be shut off for %s,\n         but it is NOT in its set of privileges.\n" $i $cmd 2>&1
+						break
+					fi
+				done
+				if [ -z "$shutoff" ]
+				then
+					privs="$save"
+                else
+	                for i in $fullset
+	                do
+	                    found="false"
+		                for j in $shutoff
+		                do
+			                if [ "$i" = "$j" ]
+			                then
+				                found="true"
+				                break
+			                fi
+		                done
+		                if [ "$found" = "false" ]
+		                then
+		                    if [ -z "$privs" ]
+		                    then
+		    	                privs=$i
+		                    else
+		                        privs=$privs:$i
+                            fi
+		                fi
+	                done
+				fi
+			fi
+        else
+            privs="$save"
+        fi
+        if [ -z "$privs" ]
+        then
+            adminrole -a $base:$cmd $role >/dev/null 2>&1
+        else
+            adminrole -a $base:$cmd:$privs $role >/dev/null 2>&1
+        fi
+        shift
+    done
+done <<!
+/usr/sadm/sysadm/bin/addgrpmem	SSO
+/usr/sadm/sysadm/bin/finduid	SSO
+!
+
+#
+# Add Extra_Admin icon to all the existing users with desktop.
+#
+
+GT=/usr/bin/gettxt
+
+if [ "$INSTALL_ICONS" != "FALSE" ]
+then
+	# add links to Admin_Tools folder for all desktop users.
+
+	DAYONEDIR=/usr/X/desktop/LoginMgr/DayOne
+	DESKDIR=/usr/X/desktop/Admin_Tools
+	USERDIR=/usr/X/desktop/LoginMgr/Users
+	LOGDIRCMD=/usr/X/adm/upgrade/dtlogindir
+	if [ ! -d $DAYONEDIR -o ! -d $USERDIR -o ! -x $LOGDIRCMD ]
+	then	
+		continue
+	else
+		for login in `ls $USERDIR`
+		do
+			if [ -f $DAYONEDIR/$login ]
+			then
+				hdir=`$LOGDIRCMD $login`
+				if [ $? -ne 0 ]
+				then
+					# desktop user with no home dir
+					continue
+				fi
+				locale=`cat $DAYONEDIR/$login`
+				appdir=`LC_ALL=$locale $GT dayone:2 "Admin_Tools"`
+				if [ -d $hdir/$appdir ]
+				then
+					oam=`LC_ALL=$locale $GT dayone:16 "Extra_Admin"`
+					if [ -s $hdir/$appdir/$oam -o -f $hdir/$appdir/$oam -o -h $hdir/$appdir/$oam ]
+					then
+						# remove old link
+						rm -f $hdir/$appdir/$oam
+					fi
+					ln -s /usr/sbin/sysadm $hdir/$appdir/$oam
+				fi
+
+
+			fi
+		done
+		ln -s /usr/sbin/sysadm $DESKDIR/Extra_Admin
+	fi
+fi
+
+# If any packages installed prior to oam has .mi (menu interface)
+# files, set them up now.
+
+MI_PKGS="`ls /var/sadm/pkg/*/save/intf_install/*.mi 2>/dev/null | \
+	sed -e '/\/var\/sadm\/pkg\/'$PKGINST'\// d' \
+	    -e 's/\/var\/sadm\/pkg\/\([^\/]*\)\/.*/\1/' | \
+	sort -u`"
+
+if [ -n "$MI_PKGS" ]
+then
+	OPKGINST=$PKGINST
+	OPKGSAV=$PKGSAV
+	OAMBASE=/usr/sadm/sysadm
+	export PKGINST PKGSAV OAMBASE
+	for PKGINST in $MI_PKGS
+	do
+		PKGSAV=/var/sadm/pkg/$PKGINST/save
+		/sbin/sh /usr/sadm/install/bin/intf_inst
+	done
+	PKGINST=$OPKGINST
+	PKGSAV=$OPKGSAV
+
+fi
+		
+# clean up any tmp files created by upnover tools
+cleanup_exit 0

@@ -1,0 +1,90 @@
+#ident	"@(#)cpq.cmds:ups/cpqups.etc	1.4"
+#
+# cpqupsd start/stop script
+#
+umask 022
+
+#
+# LOGFILE is where all the messages from the UPS daemon will go.
+#
+LOGFILE=/var/spool/compaq/ups/ups.log
+
+#
+# CFGFILE is the UPS configuration file.
+#
+CFGFILE=/var/spool/compaq/ups/ups.cfg
+
+#
+# RCFILE is the UPS powerdown indicator file.
+#
+RCFILE=/etc/rc0.d/.cpq_ups_powerdown
+
+#
+# SECONDS is the amount in time the UPS will wait before turning itself off.
+#
+SECONDS=60
+
+PATH=/etc:/bin:/usr/bin:/usr/sbin:/usr/bin/compaq/ups; export PATH 
+
+if [ ! -d /var/spool/compaq/ups ]
+then
+	mkdir -p /var/spool/compaq/ups
+fi
+
+#
+# check_cfg makes sure that the SERIAL_PORT is defined in the 
+# /usr/bin/compaq/ups/ups.cfg configuration file.  We will exit
+# silently if something goes wrong, or return to caller if all is
+# well.
+#
+check_cfg() {
+	if [ -f ${CFGFILE} ] 
+	then	
+		. ${CFGFILE}
+		if  [ $? -ne 0 ] || [ "${SERIAL_PORT}" = "" ]
+		then
+			exit 1
+		fi
+	else
+		exit 1	
+	fi	
+}
+
+
+
+case "$1" in
+'start')
+	ps -e | grep cpqupsd > /dev/null 2>&1
+	if [ $? -eq 0 ]
+	then
+		exit 0
+	fi
+	cd /usr/bin/compaq/ups
+	check_cfg
+	cpqupsd -p 5 -f ${CFGFILE} > ${LOGFILE} 2>&1 &
+	echo ""
+	;;
+
+'stop')
+	kill `/usr/bin/ps -e | /usr/bin/sed -n \
+		-e'/ cpqupsd$/s/[^0-9 \t].*//p'` 2>/dev/null
+
+	[ -f $RCFILE ] || exit 0
+	[ -f $CFGFILE ] || exit 0
+
+	echo "Shutting down the UPS in $SECONDS seconds ..."
+	rm $RCFILE
+	. $CFGFILE
+	exec <$SERIAL_PORT
+	stty cs8 -echo -parenb -cstopb ixon -ocrnl 1200
+	echo "UPDA\rUPSD\r$SECONDS\rUPPF\rIJHLDMGCIU\r\c" > $SERIAL_PORT
+	exit 1
+	;;
+
+*)
+	echo "Usage: $0 [ start | stop ]"
+	exit 1
+	;;
+esac
+
+exit 0

@@ -1,0 +1,81 @@
+#ident	"@(#)winxksh:libwin/scr_init	1.7"
+
+if [ -z "$MSGWID" ]
+then
+	call int_varload WCURRENT "@longp:&Wcurrent"
+	DEFBORD=4
+	BADYELLOW=0
+	typeset bgchar=32 # default background character is "space"
+	case "$TERM" in
+	*vt*)
+		call Wsetborder_string '@string_t:!++++-|!'
+		;;
+	*386|*386-M|*386-m)
+		typeset bgchar=176 # background is stippled.
+		BADYELLOW=1
+		;;
+	*386*ie)
+		if [ "$1" = "boot" ]
+		then
+			# The computer's monitor is being used with a special version of
+			# the 8859-1 code set that contains the stipple character at
+			# location 128.
+			typeset bgchar=128 # background is stippled.
+		else
+			:
+			# The computer's monitor is being used with the 8859-1 code set,
+			# which does not contain the stipple character.  Therefore, use the
+			# default background character as assigned above.
+		fi
+		BADYELLOW=1
+		;;
+	*386*mb)
+		typeset bgchar=32 # multibyte background is space
+		BADYELLOW=1
+		;;
+	esac
+	call win_init $BLUE $WHITE $bgchar
+	cdecl longp play='&LINES'
+	cprint -v LINES play
+	cset play='&COLS'
+	cprint -v COLUMNS play >&2
+	integer HEADBOTLINE=0 FOOTBOTLINE=$LINES-1 FOOTTOPLINE=FOOTBOTLINE-FOOTER_HEIGHT+1 MSGLINE=FOOTTOPLINE-1 LASTLINE=MSGLINE-1
+	ADVANCED=:
+	NOTADVANCED=on
+	advanced() {
+		eval "$ADVANCED"
+		NOTADVANCED=
+	}
+	MENU_SELECT_FG=$WHITE
+	MENU_SELECT_BG=$RED
+	HELP_BG=$BLUE
+	HELP_FG=$WHITE
+	ERROR_BG=$RED
+	ERROR_FG=$WHITE
+	COMBO1_BG=$BLUE
+	COMBO1_FG=$WHITE
+	COMBO2_BG=$CYAN
+	COMBO2_FG=$BLACK
+	COMBO3_BG=$WHITE
+	COMBO3_FG=$BLACK
+	function stuff
+	{
+		unset -f stuff
+		open_window -noborder 0 $MSGLINE $COLUMNS-1 $MSGLINE -fg $BLACK -bg $WHITE
+		MSGWID=$CURWIN
+		open_window 0 0 $COLUMNS-1 0 -noborder -fg $WHITE -bg $BLUE
+		HEADWID=$CURWIN
+		open_window 0 $FOOTTOPLINE $COLUMNS-1 $FOOTBOTLINE -noborder -fg $WHITE -bg $BLUE
+		FOOTWID=$CURWIN
+		iscolor || {
+			wsetattr $HEADWID 01000000
+			wsetattr $FOOTWID 01000000
+		}
+		integer len="(COLUMNS-${#GENERIC_HEADER})/2" len2=COLUMNS-len
+		typeset -L$len buf=
+		typeset -L$len2 buf2="$GENERIC_HEADER"
+		wclear $HEADWID
+		wprintf $HEADWID "$buf$buf2"
+	}
+	stuff
+fi

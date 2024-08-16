@@ -1,0 +1,249 @@
+#ident	"@(#)kern-i386at:interface.d/ddi.5	1.17"
+#ident	"$Header: $"
+# ddi.5 -- DDI/DKI version 5 (SVR4.2MP,UnixWare 2.0 + a few extensions)
+#			     (kmem_[z]alloc DMAable)
+$replace 4
+#
+# Non-DDI/DKI extensions no longer allowed:
+# The extensions panic, printf, and uiophysio were officially dropped,
+# but not enforced, so we have to still allow them.
+Hz		$dropped
+btoc		$dropped
+ctob		$dropped
+dma_breakup	$dropped
+freepage	$dropped
+fuibyte		$dropped
+fuiword		$dropped
+getcpages	$dropped
+ind		$dropped
+iodone		$dropped
+ioinb		$dropped
+iooutb		$dropped
+iowait		$dropped
+kseg		$dropped
+linw		$dropped
+loutw		$dropped
+merge386enable	$dropped
+nswap		$dropped
+outd		$dropped
+physmem		$dropped
+phystokv	$dropped
+pio_breakup	$dropped
+seterror	$dropped
+spinwait	$dropped
+splbuf		$dropped
+splcli		$dropped
+sptalloc	$dropped
+sptfree		$dropped
+suibyte		$dropped
+suiword		$dropped
+swapdev		$dropped
+tenmicrosec	$dropped
+unkseg		$dropped
+v86setint	$dropped
+validproc	$dropped
+xphystokv	$dropped
+# New interfaces from SVR4.0MP:
+bcanputnext
+bioerror
+canputnext
+dtimeout
+freezestr
+getnextpg
+itimeout		itimeout_u
+kvtoppid
+msgpullup		_Compat_msgpullup
+pcmsg
+phalloc
+phfree
+phystoppid
+proc_ref
+proc_signal
+proc_unref
+put
+putnextctl
+putnextctl1
+qprocsoff
+qprocson
+rmallocmap
+rmalloc_wait
+rmfreemap
+unfreezestr
+# New interfaces from SVR4.2MP:
+bcb_alloc
+bcb_free
+bcmp
+buf_breakup
+dma_cascade
+dma_physreq
+drv_mmap
+drv_munmap
+getpl
+iobitmapctl
+kmem_alloc_physcontig	_Compat_kmem_alloc_physcontig
+kmem_free_physcontig	kmem_free
+kmem_i_alloc_physcont	_Compat_kmem_i_alloc_physcont
+kmem_i_alloc_physreq
+kmem_i_zalloc_physreq
+kmem_instr_free
+KS_HOLD0LOCKS
+lock_dbg
+lock_nodbg
+lock_alloc
+lock_alloc_dbg
+lock_dealloc
+lock_dealloc_dbg
+lock_owned
+lock_owned_dbg
+met_ds_alloc_stats
+met_ds_dealloc_stats
+met_ds_dequeued
+met_ds_hist_stats
+met_ds_iodone
+met_ds_queued
+ovbcopy
+physreq_alloc
+physreq_free
+physreq_prep
+proc_valid
+rw_alloc
+rw_alloc_dbg
+rw_dealloc
+rw_dealloc_dbg
+rw_owned
+rw_owned_dbg
+rw_rdlock
+rw_rdlock_dbg
+rw_tryrdlock
+rw_tryrdlock_dbg
+rw_trywrlock
+rw_trywrlock_dbg
+rw_unlock
+rw_unlock_dbg
+rw_wrlock
+rw_wrlock_dbg
+sleep_alloc
+sleep_dealloc
+sleep_lock
+SLEEP_LOCKAVAIL
+SLEEP_LOCKOWNED
+sleep_lock_sig
+sleep_trylock
+sleep_unlock
+strcat
+strcmp
+strcpy
+strlen
+strncat
+strncmp
+strncpy
+sv_alloc
+sv_broadcast
+sv_dealloc
+sv_dealloc_dbg
+sv_signal
+sv_wait
+sv_wait_sig
+trylock_dbg
+trylock_nodbg
+unlock_dbg
+unlock_nodbg
+# Drop all spl variants but those in SVR4.2MP DDI, which assume soft spl okay:
+# spl routines are handled specially, to reflect the shift from hard to soft
+# spl semantics by default.
+# spl1, spl2, spl3, spl4, spl5, spl6, and splvm were officially dropped,
+# but not enforced in SVR4.2MP.
+spl0
+spl0s		$dropped
+spl1
+spl1s		$dropped
+spl2
+spl2s		$dropped
+spl3
+spl3s		$dropped
+spl4
+spl4s		$dropped
+spl5
+spl5s		$dropped
+spl6
+spl6s		$dropped
+spl7
+spl7s		$dropped
+splhi
+splhis		$dropped
+splimp		$dropped
+splimps		$dropped
+splstr
+splstrs		$dropped
+spltty
+splttys		$dropped
+splvm
+splvms		$dropped
+splx
+splxs		$dropped
+# New spl variants from SVR4.0MP:
+splbase
+spltimeout
+spldisk
+# New global variables from SVR4.0MP:
+invpl
+plbase
+pltimeout
+pldisk
+plstr
+plhi
+pridisk
+prihi
+prilo
+primed
+prinet
+pritape
+# kmem_alloc behavior differs between version 4 and version 5:
+kmem_alloc		_Compat_kmem_alloc5
+kmem_instr_alloc	_Compat_kmem_instr_alloc
+kmem_instr_zalloc	_Compat_kmem_instr_zalloc
+kmem_zalloc		_Compat_kmem_zalloc5
+# New interfaces in UnixWare 2.0:
+ATOMIC_INT_ADD
+ATOMIC_INT_ALLOC
+ATOMIC_INT_DEALLOC
+ATOMIC_INT_DECR
+ATOMIC_INT_INCR
+ATOMIC_INT_INIT
+ATOMIC_INT_READ
+ATOMIC_INT_SUB
+ATOMIC_INT_WRITE
+allocb_physreq
+biowait_sig
+cm_AT_putconf
+cm_addval
+cm_delval
+cm_getbrdkey
+cm_getnbrd
+cm_getval
+cm_getversion
+cm_intr_attach
+cm_intr_detach
+cm_read_devconfig
+cm_write_devconfig
+drv_callback
+drv_shutdown
+eisa_parse_devconfig
+ifstats_attach
+ifstats_detach
+kmem_alloc_physreq
+kmem_zalloc_physreq
+msgphysreq
+msgpullup_physreq
+physmap1
+# We might see symbols remapped by an SVR4.2MP smap file, so add them here:
+itimeout_u
+# We might see symbols remapped by a UnixWare 2.0 smap file, so add them here:
+_Compat_kmem_alloc_physcontig
+_Compat_kmem_alloc5
+_Compat_kmem_i_alloc_physcont
+_Compat_kmem_instr_alloc
+_Compat_kmem_instr_zalloc
+_Compat_kmem_zalloc5
+# Obsolete header files may no longer be included:
+_Header_File_Obsolete_in_UW2_0	$dropped

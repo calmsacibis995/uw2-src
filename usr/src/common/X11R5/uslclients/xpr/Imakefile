@@ -1,0 +1,54 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)xpr:Imakefile	1.10"
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+         SUBDIRS = devices terminfo
+   LOCAL_LIBRARIES = devices/libdev.a devices/terminfo/libti.a devices/postscript/libps.a $(XLIB)
+  DEPLIBS = devices/libdev.a devices/terminfo/libti.a devices/postscript/libps.a
+   SYS_LIBRARIES = -lcurses -lm
+
+SRCS = \
+	colormap.c \
+	convert.c \
+	enlarge.c \
+	invert.c \
+	parse.c \
+	read_image.c \
+	swap.c \
+	sys_calls.c \
+	textures.c \
+	tparm.c \
+	tputs.c \
+	xgetopt.c \
+	xpr.c
+
+OBJS = \
+	colormap.o \
+	convert.o \
+	enlarge.o \
+	invert.o \
+	parse.o \
+	read_image.o \
+	swap.o \
+	sys_calls.o \
+	textures.o \
+	tparm.o \
+	tputs.o \
+	xgetopt.o \
+	xpr.o
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+ComplexProgramTarget(xpr)
+
+install:: $(SUBDIRS)

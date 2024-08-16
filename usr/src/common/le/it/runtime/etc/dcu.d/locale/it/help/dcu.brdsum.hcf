@@ -1,0 +1,108 @@
+.ident	"@(#)dcu:locale/C/help/dcu.brdsum	1.8"
+.related kbhelp dcu.whatis
+.title Guida: Configurazione dispositivi hardware
+INFORMAZIONI SU QUESTO MENU
+Lo schermo Configurazione dispositivi hardware elenca
+ciascun controller (dispositivo hardware) configurato nel
+sistema. Da questo schermo è possibile:
+   --- Vedere tutti i dispositivi hardware configurati
+       nel sistema e le attuali impostazioni dei parametri
+       dei driver di dispositivo
+   --- Ottenere ulteriori informazioni sui valori validi per
+       ciascun parametro dei driver dei dispositivi
+   --- Cambiare i parametri del driver di un dispositivo
+       hardware
+                                   (CONTINUA)
+.page
+INFORMAZIONI SUI DISPOSITIVI HARDWARE
+C'è una riga per ogni dispositivo hardware. Il secondo
+campo riporta il nome del dispositivo hardware.
+
+Se nel campo Nome dispositivo appare 'non usato', il
+dispositivo è temporaneamente inattivo, cioè è possibile
+in seguito assegnare (attivare) un dispositivo hardware
+con le impostazioni del driver di dispositivo mostrate.
+(I dati di configurazione rimangono nel file di dati
+delle risorse del sistema).
+
+NOTA: Se un dispositivo hardware che UnixWare può rilevare
+      automaticamente (ad esempio, dispositivi EISA, MCA
+      e PCI supportati) viene rimosso dal sistema, la relativa
+      voce dei parametri del driver del dispositivo viene
+      eliminata dal file dati delle risorse del sistema.
+                                   (CONTINUA)
+.page
+INFORMAZIONI SUI DISPOSITIVI HARDWARE (CONTINUA)
+A sinistra del nome del dispositivo hardware può apparire
+il valore S o N. S indica che il dispositivo è in uso nel
+sistema; N indica che il dispositivo è inattivo
+e, quando si applicheranno i cambiamenti DCU, i suoi dati
+verranno eliminati dal file dati delle risorse del sistema.
+
+A destra del nome del dispositivo appaiono i seguenti parametri di
+configurazione hardware:
+  - IRQ
+  - Indirizzo di inizio della serie di indirizzi di I/O
+  - Indirizzo di fine della serie di indirizzi di I/O
+  - Indirizzo di inizio della serie di indirizzi di memoria
+  - Indirizzo di fine della serie di indirizzi di memoria
+  - Canale DMA
+                                   (CONTINUA)
+.page
+COME CAMBIARE I VALORI
+I valori dell'hardware che possono essere cambiati sono
+evidenziati. Per cambiare i valori:
+    1. Usare i tasti <Tab> o freccia su/freccia giù per
+       spostarsi al campo desiderato.
+    2. Premere il tasto <F2> per vedere le scelte.
+    3. Usare i tasti <Tab> o freccia su/freccia giù per
+       spostare l'asterisco (*) sulla scelta.
+    4. Dopo aver immesso la scelta, premere <Invio> per
+       tornare allo schermo Configurazione dispositivi
+       hardware.
+    5. Se si è cambiato un valore, premere <F4> per
+       verificare la nuova impostazione del parametro del
+       driver del dispositivo.
+NOTA: Alcuni valori dell'hardware non possono essere
+cambiati, perché sono necessari o perché devono essere
+eseguite apposite procedure di configurazione. Per
+i particolari, consultare la documentazione dell'hardware.
+                                   (CONTINUA)
+.page
+INFORMAZIONI AGGIUNTIVE SUI DISPOSITIVI HARDWARE
+Le seguenti informazioni aggiuntive sono disponibili premendo <F6>:
+   --- Il nome del driver hardware
+   --- Il nome del dispositivo hardware
+   --- Valori validi per il numero di unità
+   --- Valori validi per IPL
+   --- Valori validi per ITYPE
+   --- Valori validi per IRQ
+   --- Valori validi per la serie di indirizzi di I/O
+   --- Valori validi per la serie di indirizzi di memoria
+   --- Valori validi per il canale DMA
+   --- Valori validi per la CPU associata
+   --- L'ID della scheda
+   --- Il tipo di bus della scheda
+Dopo aver esaminato le informazioni aggiuntive sui dispositivi
+hardware, premere <Invio> per tornare allo schermo Configurazione
+dispositivo hardware.
+                                   (CONTINUA)
+.page
+MODIFICA PARAMETRI AVANZATA
+Premere <F7> per modificare altri parametri (CPU associata, numero
+unità, IPL, ITYPE) o gli eventuali parametri specifici di una scheda.
+
+CONFLITTI
+Alcuni dispositivi hardware supportano l'IRQ condiviso.
+Tranne che per questi dispositivi, è importante selezionare
+valori unici per tutti gli altri componenti hardware.
+
+Se lo schermo Configurazione dispositivo hardware indica che
+due dispositivi hanno lo stesso IRQ, serie di indirizzi di I/O
+o di memoria che si sovrappongono e/o lo stesso canale DMA,
+aggiornare i dati di configurazione e risolvere il conflitto.
+
+USCITA DALLA GUIDA
+Premere <Esc> per tornare allo schermo Configurazione
+dispositivi hardware.
+Premere <F1> per ulteriori informazioni.

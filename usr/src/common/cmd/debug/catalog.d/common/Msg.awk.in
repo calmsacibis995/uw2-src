@@ -1,0 +1,682 @@
+#ident	"@(#)debugger:catalog.d/common/Msg.awk.in	1.66"
+
+# This file is the input to Msg.awk, the awk script that creates Msgtypes.h,
+# Mcatalog, and Mtable.c.
+
+# Msgtypes.h
+#	defines the enum Msg_id, that lists the types of message passed
+#	between the debugger engine and the user interface.  These describe the
+#	actual contents of the message, not the protocol.
+
+# Mtable.c
+#	contains the initialization code for the table used to format
+#	the messages.  Since each message is translated into a call to printf
+#	for the command line interface, the arguments must always appear in the
+#	specified order
+
+# Mcatalog
+#	contains the format strings, one per line, and is the input
+#	to mkmsgs to create a message database.
+
+# ------ WARNING -------
+# Messages in an existing catalog cannot be modified or removed,
+# because we have no control over the translated catalogs,
+# also, calls to gettxt have hard-coded numbers in them.
+# Messages MUST stay in the same order - after the first release
+# the catalog probably should not be machine generated
+
+# The format of each non-comment line in this file is:
+# msg_class	msg_id	translate?	format_string
+# 
+# The translate field is "yes" if the field must be translated,
+# the awk script supplies the index numbers
+# Note that everything on the line after the translate field is part
+# of the format string, and that the awk script supplies the quotes
+# Note also that multiple whitespace characters become one space in
+# the output - use \t or format modifiers to make things line up
+#
+# Help messages (MSGCL_help) are special.  The message here is the 
+# format string and may span multiple lines.  The format string
+# itself begins on a new line after the message identifier.  Remember
+# that since the message is a printf format strings '%' chars
+# are interpreted as format specifiers.
+
+	# syncronization messages
+MSGCL_info	MSG_sync_request	no
+MSGCL_info	MSG_sync_response	no
+MSGCL_info	MSG_cmd_complete	no
+MSGCL_info	MSG_quit		no
+MSGCL_info	MSG_script_on		no
+MSGCL_info	MSG_script_off		no
+MSGCL_info	MSG_assoc_cmd		no
+
+	# cmd message from the ui to debug
+MSGCL_info	MSG_command		no	%s
+
+	# line echoed by debug - generated while in scripts
+	# input line  args: prompt string, cmd line
+MSGCL_info	MSG_input_line		no	%s%s
+
+	# extra newline for formatting
+MSGCL_info	MSG_newline		no	\n
+
+	# print the string as is, without formatting
+MSGCL_info	MSG_asis	no	%s
+
+	# messages from the main driver
+MSGCL_info	MSG_usage_cmdline	yes	Usage:\n%s [common_options] [[-f all|none|procs] [-r] cmd_line]\n
+MSGCL_info	MSG_usage_grab	yes 	%s [common_options] [-f all|none|procs] [-l load_file] process...\n
+MSGCL_info	MSG_usage_core	yes 	%s [common_options] -c core_file object\n
+MSGCL_info	MSG_usage_common	yes 	\ \ \ \ \ \ \ common_options: [-V] [-i c|x] [-X opt] [-d defaults] [-s path] [-Ya|f|g,dir]\n
+MSGCL_info	MSG_version	no 	%s: %s%s\n
+
+	# messages for new lwp
+	# create args: program name, process name
+MSGCL_info	MSG_createp	yes	New program %s (process %s) created\n
+MSGCL_info	MSG_oldargs	no	%s\n
+MSGCL_info	MSG_proc_killed	yes	%s killed\n
+MSGCL_info	MSG_proc_exec	yes	Process %s exec'd; new executable is %s, program %s\n
+MSGCL_info	MSG_proc_fork	yes	Process %s forked; new process %s now controlled\n
+MSGCL_info	MSG_new_core	yes	Core image of %s (process %s) created\n
+MSGCL_info	MSG_grab_proc	yes	New program %s (process %s) grabbed\n
+
+MSGCL_info	MSG_new_pty	yes	Program I/O redirected to pseudo-terminal %s\n
+	# ps command: current indicator (*), program name, process, pid,
+	#		function, file, line, command
+MSGCL_info	MSG_ps_header	yes	Program \ \ \ \ ID \ \ \ \ \ \ \ \ Pid State \ \ \ Function \ \ Location \ \ \ \ \ \ \ Command\n
+MSGCL_info	MSG_ps_core	yes	%s%-10.10s %-7.7s %6d Core \ \ \ \ %-10.10s %-15.15s %s\n
+MSGCL_info	MSG_ps_dead	yes	\ %-10.10s \ \ \ \ \ \ \ \ \ \ \ \ -1 Dead \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_ps_release	yes	\ %-10.10s \ \ \ \ \ \ \ \ \ \ \ \ -1 Released \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_ps_running	yes	%s%-10.10s %-7.7s %6d Running \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_ps_stepping	yes	%s%-10.10s %-7.7s %6d Stepping \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_ps_unknown	yes	%s%-10.10s %-7.7s %6d Unknown \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_ps_stopped	yes	%s%-10.10s %-7.7s %6d Stopped \ %-10.10s %-15.15s %s\n
+
+	# map args: start addr, end addr, size, access permissions, object file
+MSGCL_info	MSG_map		no	%#.8x..%#.8x\t%#.8x\t%.6s\t%s\n
+MSGCL_info	MSG_map_header	yes	Address Map for %s\n Address Range\t\tSize\t\tAccess\tObject File\n
+
+MSGCL_info	MSG_prompt	no	%s
+
+	# events display
+MSGCL_info	MSG_events		yes	Events for %s, program %s\n
+MSGCL_info	MSG_events_proto	yes	Events for (dead) program %s\n
+MSGCL_info	MSG_event_header	yes	\ \ ID \ \ \ \ \ Type \ \ \ \ \ \ Count Condition \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Command List\n
+MSGCL_info	MSG_event_header_f	yes	\ \ ID \ \ \ \ \ Type \ \ \ \ \ \ Count Condition\n
+MSGCL_info	MSG_stop_event		yes	[%.4d]%s%s STOP \ \ \ \ \ \ %5d %-30s %s\n
+MSGCL_info	MSG_stop_event_f	yes	[%.4d]%s%s STOP \ \ \ \ \ \ %5d %s\n\tObject list:\t%s\n\tCommand:\t%s\n
+MSGCL_info	MSG_syscall_event	yes	[%.4d]%s%s SYSCALL %-2s %5d %-30s %s\n
+MSGCL_info	MSG_syscall_event_f	yes	[%.4d]%s%s SYSCALL %-2s %5d %s\n\tObject list:\t%s\n\tCommand:\t%s\n
+MSGCL_info	MSG_signal_event	yes	[%.4d]%s%s SIGNAL \ \ \ \ \ \ \ \ \ \ %-30s %s\n
+MSGCL_info	MSG_signal_event_f	yes	[%.4d]%s%s SIGNAL \ \ \ \ \ \ \ \ \ \ %s\n\tObject list:\t%s\n\tCommand:\t%s\n
+MSGCL_info	MSG_onstop_event	yes	[%.4d] %s ONSTOP \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_onstop_event_f	yes	[%.4d] %s ONSTOP\n\tObject list:\t%s\n\tCommand:\t%s\n
+MSGCL_info	MSG_signal_header	yes	Signal Disposition for %s, program %s\n
+MSGCL_info	MSG_obsolete_1		yes	%4d\tsig%-7s\tcaught\n
+MSGCL_info	MSG_obsolete_2		yes	%4d\tsig%-7s\tignored\n
+MSGCL_info	MSG_event_assigned	yes	EVENT [%d] assigned\n
+MSGCL_info	MSG_bkpt_set		no	%#x %d %s
+MSGCL_info	MSG_bkpt_set_addr	no	%#x
+MSGCL_info	MSG_event_disabled	no	%d %#x
+MSGCL_info	MSG_event_enabled	no	%d %#x
+MSGCL_info	MSG_event_deleted	no	%d %#x
+MSGCL_info	MSG_event_changed	no	%d
+
+	# process state, produced by LWP::stateinfo()
+MSGCL_info	MSG_es_stepped		yes	STEPPED %s
+MSGCL_info	MSG_step_not_done	yes	STEPPED %s
+MSGCL_info	MSG_es_suspend		yes	SUSPENDED %s
+MSGCL_info	MSG_es_signal		yes	SIGNALED %d (%s) in %s
+MSGCL_info	MSG_es_sysent		yes	SYSTEM CALL ENTRY %d (%s) in %s
+MSGCL_info	MSG_es_sysxit		yes	SYSTEM CALL EXIT %d (%s) in %s
+MSGCL_info	MSG_es_core		yes	CORE FILE
+MSGCL_info	MSG_es_stop		yes	STOP EVENT TRIGGERED: %s%sin %s
+MSGCL_info	MSG_core_state		yes	Signal: %s\n
+MSGCL_info	MSG_core_state_addr	yes	Signal: %s\tFault address: %#x\n
+
+
+	# change of current process, program, lwp
+MSGCL_info	MSG_new_context		yes	Current process is now %s, program %s\n
+MSGCL_info	MSG_no_process		yes	No more processes\n
+MSGCL_info	MSG_proc_exit		yes	Process %s has exited\n
+	# releasing a process
+MSGCL_info	MSG_obsolete_3		yes	Releasing and running process %s\n
+MSGCL_info	MSG_obsolete_4		yes	Releasing and suspending process %s\n
+MSGCL_info	MSG_release_core	yes	Releasing core image %s\n
+MSGCL_info	MSG_proc_start		no	%#x
+MSGCL_info	MSG_proc_stop_fcall	no	%#x
+MSGCL_info	MSG_rename		no	%s %s
+MSGCL_info	MSG_set_frame		no	%#x %d
+MSGCL_info	MSG_set_language	no	%s
+MSGCL_info	MSG_jump		no	%#x %#x %s %d\n
+
+	# current location, also produced by LWP::stateinfo()
+	# args: function, file
+MSGCL_info	MSG_loc_sym_file	yes	\ [%s in %s]\n
+MSGCL_info	MSG_loc_sym		no	\ [%s]\n
+MSGCL_info	MSG_loc_unknown		no	\n
+
+	# source line, args: line #, source line
+MSGCL_info	MSG_line_no_src	yes	%d:\t<no source text available>\n
+MSGCL_info	MSG_line_src	no	%d:\t%s\n
+MSGCL_info	MSG_disassembly	no	\ \ \ \ \ \ \ \ %#x%s\n
+MSGCL_info	MSG_dis_line	no	[%d]%s %#x%s\n
+MSGCL_info	MSG_dis_header	yes	Disassembly for %s, Program %s\n
+MSGCL_info	MSG_source_file	no	%s
+
+	# register contents
+MSGCL_info	MSG_int_reg_newline	no	%s\t0x%.8x\n
+MSGCL_info	MSG_int_reg		no	%s\t0x%.8x\t
+MSGCL_info	MSG_flt_reg		no	%s %s\n
+MSGCL_info	MSG_reg_header	yes	Register Contents for %s, program %s\n
+
+	# process I/O
+MSGCL_info	MSG_proc_output		no	%s> %s
+
+	# alias args: alias name, token string
+MSGCL_info	MSG_alias		no	%s => %s\n
+
+	# Raw dump
+MSGCL_info	MSG_raw_dump_header	yes	Raw Dump for %s, Program %s\n
+MSGCL_info	MSG_raw_dump		no	%s\n
+
+	# Stack trace
+MSGCL_info	MSG_stack_header	yes	Stack Trace for %s, Program %s\n
+MSGCL_info	MSG_stack_frame		no	[%d] %s(
+MSGCL_info	MSG_stack_arg		no	%s%s=%s
+MSGCL_info	MSG_stack_arg2		no	%s%#x
+MSGCL_info	MSG_stack_arg3		yes	%spresumed: %#x
+MSGCL_info	MSG_stack_frame_end_1	no	)\t[%s@%d]\n
+MSGCL_info	MSG_stack_frame_end_2	no	)\t[%#x]\n
+	# print expression
+MSGCL_info	MSG_print_header	no	%s: \ 
+MSGCL_info	MSG_print_val		no	%s
+
+	# messages from symbols
+MSGCL_info	MSG_sym_header		yes	Symbols for %s, Program %s\nName \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Location \ \ \ \ \ \ \ \ Line\n
+MSGCL_info	MSG_sym_type_header	yes	Symbols for %s, Program %s\nName \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Location \ \ \ \ \ \ \ \ Line \ Type\n
+MSGCL_info	MSG_sym_type_val_header	yes	Symbols for %s, Program %s\nName \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Location \ \ \ \ \ \ \ \ Line \ Type \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Value\n
+MSGCL_info	MSG_sym_val_header	yes	Symbols for %s, Program %s\nName \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ Location \ \ \ \ \ \ \ \ Line \ Value\n
+MSGCL_info	MSG_symbol		no	%-20.20s %-15.15s %5.5s\n
+MSGCL_info	MSG_symbol_type		no	%-20.20s %-15.15s %5.5s \ %s\n
+MSGCL_info	MSG_symbol_type_assume	yes	%-20.20s %-15.15s %5.5s \ %s (assumed)\n
+MSGCL_info	MSG_symbol_val		no	%-20.20s %-15.15s %5.5s \ %s\n
+MSGCL_info	MSG_symbol_val_assume	yes	%-20.20s %-15.15s %5.5s \ %-11s (assuming int)\n
+MSGCL_info	MSG_symbol_type_val	no	%-20.20s %-15.15s %5.5s \ %-20.20s %s\n
+MSGCL_info	MSG_symbol_type_val_assume	yes	%-20.20s %-15.15s %5.5s \ %-3.3s (assumed) \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_function		no	%s\n
+	# working directory
+MSGCL_info	MSG_pwd			no	%s\n
+MSGCL_info	MSG_cd			no	%s\n
+
+	# unclassified error messages
+MSGCL_error	ERR_asis		no	%s
+
+	# specific error messages
+MSGCL_error	ERR_internal	yes	Inconsistent state in function %s at line %d\n
+	# messages from libexecon
+MSGCL_error	ERR_step_watch		yes	Stepping %s to watch stop expression\n
+MSGCL_error	ERR_running_proc	yes	Cannot start %s, it is already executing\n
+MSGCL_error	ERR_core_cant_run	yes	Cannot start %s, it is a core file\n
+MSGCL_error	ERR_core_cant_stop	yes	Cannot stop %s, it is a core file\n
+MSGCL_error	ERR_cant_restart	yes	Cannot restart execution of %s\n
+MSGCL_error	ERR_sys_cant_stop	yes	Cannot stop %s\n
+MSGCL_error	ERR_no_signals		yes	Cannot set signal state in %s\n
+MSGCL_error	ERR_no_syscalls		yes	Cannot trace system calls in %s\n
+MSGCL_error	ERR_sys_no_faults	yes	Cannot set fault tracing in %s\n
+MSGCL_error	ERR_sys_no_breakpt	yes	Cannot set breakpoint at %#x in %s\n
+MSGCL_error	ERR_sys_breakpt		yes	Cannot remove breakpoint at %#x in %s\n
+MSGCL_error	ERR_breakpt_bad_addr	yes	Invalid address for breakpoint in %s: %#x\n
+MSGCL_error	ERR_sys_cancel_sig	yes	Cannot cancel signal in process %s\n
+MSGCL_error	ERR_no_follower		yes	Cannot run follower process (%s): %s\n
+MSGCL_error	ERR_fork_failed		yes	Fork failed in creating process: %s\n
+MSGCL_error	ERR_fork_child_lost	yes	Process %s forked: could not control child: %s\n
+MSGCL_error	ERR_vfork_restart	yes	Process has vforked; restart both parent and child to avoid deadlock\n
+MSGCL_error	ERR_proc_exec		yes	Process %s exec'd: could not control new executable\n
+MSGCL_error	ERR_used_name		yes	Program name %s already in use; using %s\n
+MSGCL_error	ERR_no_access		yes	Could not access %s\n
+MSGCL_error	ERR_no_event_id		yes	No active event with id %d\n
+MSGCL_error	ERR_bad_event_id	yes	Invalid form for event id: \"%s\"\n
+MSGCL_error	ERR_sys_pty_setup	yes	Could not set up pseudo-terminal: %s\n
+MSGCL_error	ERR_sys_pty_read	yes	Could not read from pseudo-terminal %s: %s\n
+MSGCL_error	ERR_sys_map		yes	Cannot read process memory map: %s\n
+MSGCL_error	ERR_branch_tbl		yes	Cannot find branch table in %s\n
+MSGCL_error	ERR_stop_expr		yes	Cannot evaluate stop expression in %s\n
+MSGCL_error	ERR_expr_scope		yes	Cannot find scope for stop expression in %s\n
+MSGCL_error	ERR_obsolete_5		yes	Cannot find return address for function in process %s\n
+MSGCL_error	ERR_core_format		yes	Core file format problem\n
+MSGCL_error	ERR_core_access		yes	Problem accessing core file %s\n
+MSGCL_error	ERR_core_truncated	yes	Core file truncated\n
+MSGCL_error	ERR_core_write_regs	yes	Cannot write to core file registers\n
+MSGCL_error	ERR_read_reg		yes	Cannot read registers for %s\n
+MSGCL_error	ERR_write_reg		yes	Cannot write registers for %s\n
+MSGCL_error	ERR_proc_read		yes	Problem reading from process %s, address %#x\n
+MSGCL_error	ERR_proc_write		yes	Problem writing to process %s, address %#x\n
+MSGCL_error	ERR_stop_intr		yes	Stop directive for process %d has been interrupted\nProcess is running but will be stopped\n
+MSGCL_error	ERR_no_segment		yes	Cannot find memory segment for address %#x in process %s\n
+MSGCL_error	ERR_no_match		yes	No matching object for item in process list: %s\n
+MSGCL_error	ERR_shlib_open		yes	Could not open shared library %s: %s\n
+MSGCL_error	ERR_proc_setid		yes	Cannot control process %d: it has executed a setuid or setgid program\n
+MSGCL_error	ERR_proc_io		yes	Error on I/O to process %d\n
+MSGCL_error	ERR_proc_unknown	yes	System error attempting to control process %d\n
+MSGCL_error	ERR_bkpt_data		yes	Breakpoint set on data address %#x in %s\n
+MSGCL_error	ERR_watch_text		yes	Watchpoint set on text address %#x in %s\n
+MSGCL_error	ERR_obsolete_6		yes	Could not copy event %d to process %s\n
+MSGCL_error	ERR_obsolete_7		yes	Could not reset event %d in process %s\n
+MSGCL_error	ERR_nested_variable	yes	Unsupported: debugger variable %s as value of debugger variable %s\n
+
+	# messages from libsymbol
+MSGCL_error	ERR_bad_debug_entry	yes	Unrecognized debugging information at offset %#x\n
+MSGCL_error	ERR_debug_entry		yes	Unrecognized debugging information\n
+MSGCL_error	ERR_loc_too_complex	yes	Location description too complex\n
+MSGCL_error	ERR_obj_version		yes	Unknown object file version %d\n
+MSGCL_error	ERR_obj_file_type	yes	Bad object file type %d\n
+MSGCL_error	ERR_no_dashg		yes	No debugging information in %s\n
+MSGCL_error	ERR_obj_file_read	yes	Cannot read %d bytes from object file at offset %#x\n
+MSGCL_error	ERR_assign_coercion	yes	Coercing incompatible pointer types\n
+MSGCL_error	ERR_type_assumed	yes	No type information for %s, assuming int\n
+MSGCL_error	ERR_obj_file_form	yes	Invalid object file format\n
+MSGCL_error	ERR_wrong_mach		yes	Object file for wrong machine type\n
+MSGCL_error	ERR_build_type		yes	Cannot build type description\n
+
+	# error messages from libint
+MSGCL_error	ERR_no_gui		yes	Cannot invoke %s (Window Interface)\n
+MSGCL_error	ERR_bad_dashi		yes	Illegal interface specification: -i%s\n
+MSGCL_error	ERR_newer_file		yes	%s newer than %s\n
+
+	# error messages from libcmd
+MSGCL_error	ERR_no_while		yes	No pending while loop\n
+MSGCL_error	ERR_event_op_bad_cmd	yes	Illegal command to %s\n
+MSGCL_error	ERR_event_op_list	yes	Missing event list to %s\n
+MSGCL_error	ERR_cant_eval_expr	yes	Could not evaluate expression\n
+MSGCL_error	ERR_no_proc		yes	No process\n
+MSGCL_error	ERR_already_logging	yes	Logging already enabled\n
+MSGCL_error	ERR_no_log_file		yes	No previous logon command\n
+MSGCL_error	ERR_cant_create_file	yes	Could not create %s: %s\n
+MSGCL_error	ERR_cant_append		yes	Cannot append to %s: %s\n
+MSGCL_error	ERR_line_too_long	yes	Line too long\n
+MSGCL_error	ERR_alias_name		yes	\"%s\" is an alias name\n
+MSGCL_error	ERR_cmd_name		yes	\"%s\" is a built-in command name\n
+MSGCL_error	ERR_unmatch_brack	yes	Unmatched bracket\n
+MSGCL_error	ERR_unmatch_paren	yes	Unmatched parenthesis\n
+MSGCL_error	ERR_unmatch_brace	yes	Unmatched brace\n
+MSGCL_error	ERR_bad_plist		yes	Malformed process list\n
+MSGCL_error	ERR_no_alias		yes	%s: No such alias\n
+MSGCL_error	ERR_grab_dashl		yes	Only one live object allowed with -l option\n
+MSGCL_error	ERR_no_prev_cmd		yes	No previous command to substitute for !\n
+MSGCL_error	ERR_shell_cmd		yes	Shell command failed with signal %d\n
+MSGCL_error	ERR_shell_cmd_core	yes	Shell command failed with signal %d - core dumped\n
+MSGCL_error	ERR_user_var_defined	yes	User variable %s is undefined\n
+MSGCL_error	ERR_dashi_cmd		yes	Option -i illegal with associated command\n
+
+# ^ in syntax msg
+MSGCL_error	ERR_cmd_pointer		no	%s\n
+MSGCL_error	ERR_bad_token		yes	Unrecognized character at %s\n
+MSGCL_error	ERR_bad_string		yes	Unmatched quote at %s\n
+MSGCL_error	ERR_bad_number		yes	Ill-formed numeric constant at %s\n
+MSGCL_error	ERR_bad_character	yes	Ill-formed character constant at %s\n
+MSGCL_error	ERR_null_filename	yes	Null filename at %s\n
+MSGCL_error	ERR_no_shell_cmd	yes	Shell command expected at %s\n
+MSGCL_error	ERR_multiple_io		yes	Multiple I/O redirection at %s\n
+MSGCL_error	ERR_dup_option		yes	Duplicated option at %s\n
+MSGCL_error	ERR_bad_option		yes	Invalid option %s at %s\n
+MSGCL_error	ERR_missing_option	yes	Option expected at %s\n
+MSGCL_error	ERR_option_mix		yes	Options %s and %s are mutually exclusive\n
+MSGCL_error	ERR_opt_combo_exec	yes	The %s option is illegal with %s\n
+MSGCL_error	ERR_dashf_arg		yes	Illegal argument to -f\n
+MSGCL_error	ERR_missing_proc	yes	Process name expected at %s\n
+MSGCL_error	ERR_missing_string	yes	String expected at %s\n
+MSGCL_error	ERR_missing_number	yes	Decimal number expected at %s\n
+MSGCL_error	ERR_missing_location	yes	Location expected at %s\n
+MSGCL_error	ERR_missing_arg		yes	Argument expected at %s\n
+MSGCL_error	ERR_missing_file	yes	File name expected at %s\n
+MSGCL_error	ERR_missing_cmd		yes	Command expected at %s\n
+MSGCL_error	ERR_missing_signal	yes	Signal expected at %s\n
+MSGCL_error	ERR_missing_expr	yes	Expression expected at %s\n
+MSGCL_error	ERR_missing_p_expr	yes	Parenthesized expression expected at %s\n
+MSGCL_error	ERR_missing_block	yes	Command or block expected at %s\n
+MSGCL_error	ERR_missing_event_num	yes	Event number expected at %s\n
+MSGCL_error	ERR_missing_event	yes	Event number or command expected at %s\n
+MSGCL_error	ERR_missing_id		yes	Identifier expected at %s\n
+MSGCL_error	ERR_debug_id_dollar	yes	Debugger user names must begin with '$'\n
+MSGCL_error	ERR_too_many_args	yes	Too many arguments at %s\n
+MSGCL_error	ERR_loc_syntax		yes	Location syntax error at %s\n
+MSGCL_error	ERR_dup_signal		yes	Duplicated signal at %s\n
+MSGCL_error	ERR_bad_syscall		yes	Invalid system call specification at %s\n
+MSGCL_error	ERR_unexpected_arg	yes	Unexpected argument at %s\n
+MSGCL_error	ERR_bad_arg		yes	Invalid argument at %s\n
+MSGCL_error	ERR_missing_event_exp	yes	Event expression expected at %s\n
+MSGCL_error	ERR_parser_internal	yes	Inconsistent state in parser at %s\n
+MSGCL_error	ERR_unfinished_cmd	yes	Unfinished command\n
+MSGCL_error	ERR_alias_recursion	yes	Alias recursion at %s\n
+MSGCL_error	ERR_syntax_error	yes	Syntax error at %s\n
+MSGCL_error	ERR_bad_keyword		yes	Unrecognized keyword at %s\n
+MSGCL_error	ERR_extra_curly		yes	Unexpected '}'\n
+MSGCL_error	ERR_active_event	yes	No active event with specified id\n
+MSGCL_error	ERR_change_dashc	yes	Count is ignored for onstop and signal events\n
+MSGCL_error	ERR_pwd_fail		yes	Could not determine current working directory: %s\n
+MSGCL_error	ERR_cwd_fail		yes	Could not change working directory to %s: %s\n
+MSGCL_error	ERR_no_new_dir		yes	No directory given and HOME not set\n
+
+
+	# error messages from debug.d
+MSGCL_error	ERR_sys_no_alias	yes	Could not open default alias file %s: %s\n
+MSGCL_error	ERR_multiple_opts	yes	Multiple %s options given; using first\n
+MSGCL_error	ERR_cannot_recover	yes	debug: internal error - cannot recover\n
+MSGCL_error	ERR_opt_combo	yes	%s: the %s option is illegal with %s\n
+MSGCL_error	ERR_create_dashl	yes	%s: the -l option is illegal with a command line\n
+MSGCL_error	ERR_grab_dashr	yes	%s: the -r option is illegal with a live process\n
+MSGCL_error	ERR_bad_cmd_arg	yes	%s: illegal argument to %s option\n
+
+	# error messages from libutil
+MSGCL_error	ERR_cant_open	yes	Cannot open %s: %s\n
+MSGCL_error	ERR_cant_grab	yes	Could not grab %s\n
+MSGCL_error	ERR_obsolete_8	yes	Cannot change event %d; one of its processes is not active\n
+MSGCL_error	ERR_opt_change	yes	The %s option is illegal for this type of event\n
+MSGCL_error	ERR_no_previous_create	yes	No previous create command\n
+MSGCL_error	ERR_sys_pipe	yes	Could not create pipeline: %s\n
+MSGCL_error	ERR_create_fail	yes	Create failed: all resulting processes killed\n
+MSGCL_error	ERR_byte_order	yes	Cannot determine byte order of host machine\n
+MSGCL_error	ERR_pty_exist	yes	No such pseudo-terminal: %s\n
+MSGCL_error	ERR_object_unknown	yes	No object named %s exists\n
+MSGCL_error	ERR_prog_no_pty	yes	Program has no associated pseudo-terminal\n
+MSGCL_error	ERR_no_source	yes	Source file %s not found\n
+MSGCL_error	ERR_bad_list_loc	yes	Invalid location specification for list command\n
+MSGCL_error	ERR_no_cur_src	yes	No current source file\n
+MSGCL_error	ERR_no_lines	yes	No lines in %s\n
+MSGCL_error	ERR_only_n_lines	yes	Only %d lines in %s\n
+MSGCL_error	ERR_no_re_match	yes	No match for regular expression\n
+MSGCL_error	ERR_bad_re	yes	Invalid regular expression\n
+MSGCL_error	ERR_no_previous_re	yes	No previous regular expression\n
+MSGCL_error	ERR_obsolete_9	yes	Frame number %d out of range for process %s\n
+MSGCL_error	ERR_sys_kill	yes	Could not kill process %s: %s\n
+MSGCL_error	ERR_no_entry	yes	No entry \"%s\" exists\n
+MSGCL_error	ERR_may_be_overload	yes	Using %s for %s: there may be other overloaded instances\n
+MSGCL_error	ERR_no_source_info	yes	No source information for %s\n
+MSGCL_error	ERR_unknown_language	yes	Unknown source language: %s\n
+MSGCL_error	ERR_name_in_use	yes	Program name \"%s\" already in use\n
+MSGCL_error	ERR_no_such_prog	yes	No active processes for program %s\n
+MSGCL_error	ERR_evaluation	yes	evaluation failed
+MSGCL_error	ERR_unexpected_tag	yes	Unexpected symbol tag %d\n
+MSGCL_error	ERR_no_sym_info	yes	Cannot get symbol information for process %s\n
+MSGCL_error	ERR_eval_fail_expr	yes	Evaluation of %s failed\n
+MSGCL_error	ERR_invalid_num		yes	Invalid number for set expression\n
+MSGCL_error	ERR_debug_var_set	yes	Debugger variable %s is read-only\n
+MSGCL_error	ERR_debug_var_val	yes	Invalid value for debugger variable %s\n
+MSGCL_error	ERR_no_line		yes	Line information has no address for file %s line %d\n
+MSGCL_error	ERR_get_addr		yes	Cannot get address for symbol %s\n
+MSGCL_error	ERR_loc_debug_var	yes	Invalid debugger variable %s in location specification\n
+MSGCL_error	ERR_active_func	yes	No active function named %s\n
+MSGCL_error	ERR_invalid_op_running	yes	Invalid operation on running object %s\n
+MSGCL_error	ERR_obsolete_10		yes	Invalid operation on dead process %s\n
+MSGCL_error	ERR_invalid_op_core	yes	Invalid operation on core file %s\n
+MSGCL_error	ERR_concat		yes	Cannot use concatenation in this assignment\n
+MSGCL_error	ERR_string_req		yes	String required in this context\n
+MSGCL_error	ERR_non_local_jump	yes	Location given for %s is outside the current function.\n
+MSGCL_error	ERR_print_format	yes	Illegal format string to print command: %s\n
+MSGCL_error	ERR_print_width		yes	Requested field width in print command too large: %d\n
+
+	# error messages from libmachine
+MSGCL_error	ERR_get_text	yes	Invalid text address %#x\n
+MSGCL_error	ERR_unknown_opcode	yes	Unknown opcode at address %#x\n
+MSGCL_error	ERR_dis_text	yes	Problem disassembling probably not text section\n
+        # messages from libexp
+#
+# from CCresolve.C
+#
+MSGCL_error     ERR_lhs_novalue		yes     Left side of operator %s has no value\n
+MSGCL_error     ERR_rhs_novalue		yes     Right side of operator %s has no value\n
+MSGCL_error     ERR_un_novalue		yes     Operand of %s operator has no value\n
+MSGCL_error     ERR_lhs_not_integral        yes     Left side of operator %s not integral type\n
+MSGCL_error     ERR_rhs_not_integral        yes     Right side of operator %s not integral type\n
+MSGCL_error     ERR_un_not_integral        yes     Operand of %s operator not integral type\n
+MSGCL_error     ERR_lhs_arithmetic        yes     Left side of operator %s not arithmetic type\n
+MSGCL_error     ERR_rhs_arithmetic        yes     Right side of operator %s not arithmetic type\n
+MSGCL_error     ERR_un_arithmetic        yes     Operand of %s operator not arithmetic type\n
+MSGCL_error     ERR_lhs_scalar        yes     Left side of operator %s not scalar type\n
+MSGCL_error     ERR_rhs_scalar        yes     Right side of operator %s not scalar type\n
+MSGCL_error     ERR_un_scalar        	yes     Operand of %s operator not scalar type\n
+MSGCL_error     ERR_not_lvalue      	 yes    Left side of operator %s not an lvalue\n
+MSGCL_error     ERR_non_pointer_lhs     yes     Left side of operator %s not a pointer\n
+MSGCL_error     ERR_lhs_not_struct   	yes     Left side of operator %s does not reference a structure type\n
+MSGCL_error     ERR_invalid_op_type     yes     Operand of %s operator has invalid type\n
+MSGCL_error     ERR_operand_not_ptr     yes     Operand of %s operator not a pointer\n
+MSGCL_error     ERR_no_addr             yes     Cannot determine address of operand of %s operator\n
+MSGCL_error     ERR_lhs_not_ptr    	yes     Left side of %s operator not a pointer or array\n
+MSGCL_error     ERR_lhs_binop_type	yes     Left side of binary %s operator has invalid type\n
+MSGCL_error     ERR_rhs_binop_type	yes     Right side of binary %s operator has invalid type\n
+MSGCL_error     ERR_incomp_type_ptr     yes     Operands of %s operator are pointers to incompatible types\n
+MSGCL_error     ERR_illegal_ptr_sub     yes     Illegal pointer subtraction\n
+MSGCL_error     ERR_incomp_type         yes     Operands of %s operator have incompatible types\n
+MSGCL_error     ERR_opd_not_lvalue      yes     %s operator: operand assigned to is not a modifiable lvalue\n
+MSGCL_error     ERR_no_type             yes     No type information for '%s'\n
+MSGCL_error     ERR_cond_not_scalar     yes     Conditional expression in '?:' operator is not a scalar type\n
+MSGCL_error     ERR_cond_incomp_types   yes     'condition ? a : b', types of a and b are incompatible\n
+MSGCL_error     ERR_invalid_lhs_cast    yes     Left side of cast does not specify a valid type\n
+MSGCL_error     ERR_rhs_cast_novalue    yes     Right side of cast does not have a value\n
+MSGCL_error     ERR_invalid_cast        yes     Cannot cast right side operand to type of left side operand\n
+MSGCL_error     ERR_invalid_type        yes     Invalid type\n
+#
+MSGCL_error     ERR_not_function        yes     '%s' is not a function, cannot call\n
+MSGCL_error     ERR_type_mismatch       yes     Arguments passed to %s do not match formal parameter types\n
+MSGCL_error     ERR_toomany_args        yes     Too many arguments in call to %s\n
+MSGCL_error     ERR_not_enough_args     yes     Not enough arguments in call to %s\n
+MSGCL_error     ERR_unknown_debug_var   yes     Unknown debugger variable: %s\n
+MSGCL_error     ERR_no_symbol_info      yes     No symbol information for '%s'\n
+MSGCL_error     ERR_invalid_name        yes     '%s' is not the name of a structure or union\n
+MSGCL_error     ERR_invalid_enum_name   yes     '%s' is not the name of an enumeration\n
+MSGCL_error     ERR_opr_not_supported   yes     Operator %s not supported\n
+MSGCL_error     ERR_C_conversion  	 yes    Type conversion not legal in ANSI/ISO C\n
+MSGCL_error     ERR_arg_eval  		 yes    Cannot evaluate argument to function call\n
+MSGCL_error     ERR_call_stack  	 yes    Problem setting up stack for function call in %s\n
+MSGCL_error     ERR_restore_stack  	 yes    Could not restore stack correctly after function call in %s\n
+MSGCL_error     ERR_format_spec  	 yes    Illegal format specifier%s\n
+MSGCL_error     ERR_short_read  	 yes    Formatted print string too long, truncated\n
+MSGCL_error     ERR_float_eval  	 yes    Floating point error encountered; cannot evaluate\n
+MSGCL_error     ERR_quote_match  	 yes    String or character constant does not end\n
+MSGCL_error     ERR_escape  		 yes    Non-standard escape sequence \\%s\n
+MSGCL_error     ERR_newline_string 	 yes    Newline found in string constant\n
+MSGCL_error     ERR_float_const 	 yes    Malformed floating-point constant\n
+MSGCL_error     ERR_syntax 		 yes    %s at ^\n
+MSGCL_error     ERR_syntax_loc 		 no     %s\n
+MSGCL_error     ERR_stop_operator 	 yes    Operator %s not allowed in stop expression\n
+MSGCL_error     ERR_stop_func 		 yes    Function address constant; illegal in this type of stop expression\n
+MSGCL_error     ERR_export_type		 yes    Cannot export %s; it is not a user-defined variable\n
+MSGCL_error     ERR_putenv		 yes    Could not add %s to environment\n
+MSGCL_error     ERR_int_overflow	 yes    Integer constant overflow: %s\n
+MSGCL_error     ERR_comment_form	 yes    Malformed comment\n
+MSGCL_error     ERR_debug_var_form	 yes    Illegal form for debugger variable\n
+MSGCL_error     ERR_ellipsis	 	yes    Illegal ellipsis notation \'..\' - use \'...\'\n
+MSGCL_error     ERR_octal_const	 	yes    Illegal digit(s) found in octal constant\n
+MSGCL_error     ERR_illegal_char 	yes    Illegal character %s\n
+MSGCL_error     ERR_parameter_type 	yes    No type information for parameters of %s\n
+MSGCL_error     ERR_operator_support 	yes    Operator %s not supported; operator ignored\n
+MSGCL_error     ERR_prototype 		yes    Illegal function prototype\n
+MSGCL_error     ERR_class_ref		yes    Left side of operator %s does not reference a class object\n
+MSGCL_error     ERR_rhs_not_ptr		yes    Right side of operator %s not a pointer\n
+MSGCL_error     ERR_ref_ref_val		yes    Expression a->*b; cannot evaluate b\n
+MSGCL_error     ERR_id_qualifiers	yes    Invalid identifier qualification\n
+MSGCL_error     ERR_func_qualifier	yes    Function %s in qualifier is not an active function\n
+MSGCL_error     ERR_frame_qualifier	yes    Frame qualifier %d out of range for active stack frames\n
+MSGCL_error     ERR_block_source	yes    No source information for block at line %d\n
+MSGCL_error     ERR_line_not_block	yes    Line number %d does not specify a block\n
+MSGCL_error     ERR_block_not_current	yes    Line number %d does not specify a block in the current function\n
+MSGCL_error     ERR_not_typedef		yes    Identifier %s is not a typedef\n
+MSGCL_error     ERR_obsolete_11		yes    Ambiguous call to overloaded function %s\n
+MSGCL_error     ERR_store_class		yes    Storage class of object ignored\n
+MSGCL_error     ERR_type_convert	yes    Cannot do type conversion\n
+MSGCL_error     ERR_array_bounds	yes    Array index %d beyond high bound for array (%d)\n
+MSGCL_error     ERR_enum_val		yes    No value for enumeration literal %s\n
+MSGCL_error     ERR_obj_info		yes    Cannot determine address or type of %s\n
+MSGCL_error     ERR_assign_left_value	yes    Cannot get value for left side of assignment statement\n
+MSGCL_error     ERR_assign_right_value	yes    Cannot get value for right side of assignment statement\n
+MSGCL_error     ERR_ptr_dereference	yes    Dereference of pointer failed\n
+MSGCL_error     ERR_select_lvalue	yes    Cannot determine location for enclosing object in member selection\n
+MSGCL_error     ERR_select_register	yes    Cannot handle structure or union in register\n
+MSGCL_error     ERR_select_member	yes    Cannot determine location for member %s\n
+MSGCL_error     ERR_not_member		yes    Selected member does not represent a valid field in the structure, class or union\n
+MSGCL_error     ERR_element_size	yes    Array element size unknown\n
+MSGCL_error     ERR_index_value		yes    Cannot get value of array index\n
+MSGCL_error     ERR_sizeof		yes    Cannot compute size of object\n
+MSGCL_error     ERR_reg_addr		yes    Cannot take address of register\n
+MSGCL_error     ERR_op_left_side	yes    Cannot get value for left side operand of %s\n
+MSGCL_error     ERR_op_right_side	yes    Cannot get value for right side operand of %s\n
+MSGCL_error     ERR_op_unary		yes    Cannot get value for operand of %s\n
+MSGCL_error     ERR_pointer_arith	yes    Cannot do pointer arithmetic on operand of unknown size\n
+MSGCL_error     ERR_assume_size		yes    Cannot determine size of object, assuming %d\n
+#
+# Messages from libedit
+MSGCL_error     ERR_fc_syntax  		yes     Illegal syntax for fc command\n
+MSGCL_error     ERR_fc_range  		yes     Number out of range for fc command\n
+MSGCL_error     ERR_fc_found  		yes     Previous command not found\n
+#
+# Help command support
+#
+# Headers, etc.
+MSGCL_info	MSG_help_hdr_commands	yes	Debugger Commands:\n
+MSGCL_info	MSG_help_hdr_topics	yes	Other Topics:\n
+MSGCL_info	MSG_help_hdr_sigs	yes	Valid signals:\n
+MSGCL_info	MSG_help_hdr_sys	yes	Valid system call names:\n
+MSGCL_info	MSG_help_get_alias	yes	Type \'alias\' to see the current aliases.\n
+MSGCL_info	MSG_help_get_help	yes	Type \'help <topic>\' for specifics of a command or topic.\n
+MSGCL_info	MSG_help_topics		no	%s\n
+MSGCL_info	MSG_signame		no	%2d %-12.12s
+MSGCL_info	MSG_sys_name		no	%3d %-17.17s
+MSGCL_error	ERR_help_bad_cmd	yes	No such command or topic: %s\n
+MSGCL_error	ERR_help_no_help	yes	No help available for %s\n
+
+# ---------------------- Messages new after SVR 4.2 -------------------------
+
+# threads messages
+MSGCL_info	MSG_new_core_thread	yes	Core image of thread %d (%s) created\n
+MSGCL_info	MSG_new_thread		yes	New thread %d created (%s)\n
+MSGCL_info	MSG_thread_exit		yes	Thread %s has exited\n
+MSGCL_info	MSG_thread_create	yes	Thread %s has created new thread %s\n
+MSGCL_info	MSG_thread_count	yes	Created %d thread(s) for process %s\n
+MSGCL_info	MSG_core_thread_count	yes	Created core image(s) of %d thread(s) for process %s\n
+MSGCL_info	MSG_new_curr_thread	yes	Current thread is now %s, program %s\n
+MSGCL_info	MSG_give_up_lwp	yes	Multiplexed thread %s has given up its LWP\n
+MSGCL_info	MSG_pick_up_lwp	yes	Multiplexed thread %s has been picked up by an LWP\n
+MSGCL_info	MSG_thr_suspend	yes	Thread %s has been suspended\n
+# 2 continue messages needed for gui to distinguish states
+MSGCL_info	MSG_thr_continue	yes	Thread %s has been continued\n
+MSGCL_info	MSG_thr_continue_off_lwp yes	Thread %s has been continued\n
+MSGCL_info	MSG_es_halted		yes	HALTED %s
+MSGCL_info	MSG_thread_fork		yes	Process %s (thread %s) forked; new process %s now controlled\n
+
+# libexecon errors
+MSGCL_error	ERR_core_threads	yes 	Problem accessing thread data in core file, process %s\n
+MSGCL_error	ERR_thread_setup	yes 	Problem accessing thread data in process %s\n
+MSGCL_error	ERR_lwp_control		yes 	Could not control light-weight process %d for process %s\n
+MSGCL_error	ERR_invalid_op_off_lwp	yes	Invalid operation on idle thread %s\n
+MSGCL_error	ERR_follower_thread	yes	Problem setting up follower thread\n
+MSGCL_error	ERR_core_lwp_not_found	yes	Cannot find core file information for LWP %d\n
+MSGCL_error	ERR_libthreads		yes	Inconsistency in interface with threads library for process %s\n
+MSGCL_error	ERR_sig_pending		yes	Problem reading pending signals for %s\n
+MSGCL_error	ERR_sig_cancel		yes	Problem cancelling signals in %s\n
+MSGCL_error	ERR_thread_no_lwp	yes	Cannot find LWP specified by thread descriptor: %s\n
+MSGCL_error	ERR_thread_control	yes	Could not control thread %d for process %s\n
+MSGCL_error	ERR_thread_create	yes	Could not control new thread created in process %s\n
+MSGCL_error	ERR_thread_addr		yes	Illegal address for thread start function in thread created for process %s\n
+MSGCL_error     ERR_proc_name  	 	yes    Illegal form for process name: %s\n
+MSGCL_error     ERR_thread_name  	yes    Illegal form for thread name: %s\n
+MSGCL_error	ERR_lwp_unknown		yes	System error attempting to control light-weight process %d\n
+MSGCL_error	ERR_invalid_op_suspended	yes	Invalid operation on suspended thread %s\n
+MSGCL_error	ERR_reg_read_off_lwp	yes	Register contents inconsistent: thread %s in context switch\n
+MSGCL_error	ERR_reg_write_off_lwp	yes	Cannot write registers: thread %s in context switch\n
+MSGCL_error	ERR_self_ctl		yes	Cannot grab debugger process\n
+MSGCL_error	ERR_stop_lvalue		yes	Expression: %s does not yield an lvalue\n
+MSGCL_error	ERR_thread_release_suspended	yes	-s flag to release ignored for thread: %s\n
+MSGCL_error	ERR_expr_thread_id	yes	Process %s has threads: thread id required in this context\n
+MSGCL_error	ERR_faulting_not_user	yes	Faulting LWP for %s not attached to a user thread\n
+
+# misc messages
+MSGCL_info	MSG_sig_caught_addr	yes	%4d\tsig%-7s\tcaught\t%#x\n
+MSGCL_info	MSG_sig_ignored_addr	yes	%4d\tsig%-7s\tignored\t%#x\n
+MSGCL_info	MSG_es_halted_off_lwp	yes	HALTED (off LWP) %s
+
+# query messages
+MSGCL_info	MSG_response		no	%d
+MSGCL_error	ERR_bad_query_answer	yes	'%s' is not one of the valid choices\n
+MSGCL_query	QUERY_which_function	yes	%s is overloaded.  Enter the number of the function to use, or 0 (zero) to cancel:\n%s
+MSGCL_query	QUERY_which_func_or_all	yes	%s is overloaded.  Enter the number of the function to use, or 0 (zero) to cancel:\n%s%d\tAll of the above\n
+
+# new libexp messages
+MSGCL_info	MSG_calling		yes	Calling %s\n
+MSGCL_info	MSG_type		no	%s\n
+MSGCL_info	MSG_type_derived	yes	%s (or %s)\n
+MSGCL_info	MSG_start_class		no	
+MSGCL_info	MSG_start_array		no	
+MSGCL_info	MSG_val_close_brack	no	%s}%s
+MSGCL_info	MSG_print_member1	no	%s%s%s=%s\n
+MSGCL_info	MSG_print_member2	yes	%sstatic %s=%s\n
+MSGCL_info	MSG_array_member	no	%s[%d]=%s\n
+
+MSGCL_error	ERR_cant_get_type	no	Cannot determine type of expression\n
+MSGCL_error	ERR_ptr_to_void		yes	Cannot dereference void *\n
+MSGCL_error     ERR_restore_regs  	 yes    Could not restore registers correctly after function call in %s\n
+MSGCL_error     ERR_float_overflow	yes	Floating point constant overflow: %s\n
+MSGCL_error     ERR_float_underflow	yes	Floating point constant underflow: %s\n
+MSGCL_error	ERR_no_this		yes	Function %s has no \"this\" pointer; stopping on all calls\n
+MSGCL_error	ERR_bad_vtbl		yes	Unknown virtual function table layout\n
+MSGCL_error	ERR_no_enumeration	yes	Operand of %s cannot be an enumeration\n
+MSGCL_error	ERR_no_symbol_in_ctxt	yes	No symbol information for '%s' in '%s'\n
+MSGCL_error	ERR_sizeof_operand	yes	Operand of sizeof cannot be function or bitfield\n
+MSGCL_error     ERR_opr_not_C		yes     Operator %s not supported in C expressions\n
+MSGCL_error	ERR_no_object		yes	Object or object pointer missing for member %s\n
+MSGCL_error	ERR_not_base		yes	%s is not a base class of %s\n
+MSGCL_error	ERR_no_conversions	yes	Conversion functions are not yet supported\n
+MSGCL_error	ERR_arg_no_value	yes	Function argument has no value\n
+
+# new error messages from libutil
+MSGCL_error	ERR_no_cur_src_obj	yes	No current source file for %s\n
+MSGCL_error	ERR_bad_line_number	yes	Line number must be a positive value\n
+	# ps command for threads: current indicator (*), program name, process, pid,
+	#		function, file, line, command
+MSGCL_info	MSG_threads_ps_header	yes	Program \ \ \ ID \ \ \ \ \ \ \ \ Pid Thread State \ \ \ \ \ \ \ \ \ Function \ \ Location \ \ \ \ \ \ Command\n
+MSGCL_info	MSG_threads_ps_core	yes	%s%-9.9s %-7.7s %6d %6d Core \ \ \ \ \ \ \ \ \ \ %-10.10s %-14.14s %s\n
+MSGCL_info	MSG_threads_ps_running	yes	%s%-9.9s %-7.7s %6d %6d Running \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_threads_ps_stepping	yes	%s%-9.9s %-7.7s %6d %6d Stepping \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_threads_ps_unknown	yes	%s%-9.9s %-7.7s %6d %6d Unknown \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \  \ \ \ \ \ \ \ \ \ \ %s\n
+MSGCL_info	MSG_threads_ps_stopped	yes	%s%-9.9s %-7.7s %6d %6d Stopped \ \ \ \ \ \ \ %-10.10s %-14.14s %s\n
+MSGCL_info	MSG_threads_ps_off_lwp	yes	%s%-9.9s %-7.7s %6d %6d Off LWP \ \ \ \ \ \ \ %-10.10s %-14.14s %s\n
+MSGCL_info	MSG_threads_ps_core_off_lwp	yes	%s%-9.9s %-7.7s %6d %6d Core Off LWP \ \ %-10.10s %-14.14s %s\n
+MSGCL_info	MSG_threads_ps_core_suspend	yes	%s%-9.9s %-7.7s %6d %6d Core Suspended %-10.10s %-14.14s %s\n
+MSGCL_info	MSG_threads_ps_suspend	yes	%s%-9.9s %-7.7s %6d %6d Suspended \ \ \ \ \ %-10.10s %-14.14s %s\n
+
+# new usage messages
+MSGCL_info	MSG_usage_cmdline_loc	yes	Usage:\n%s [common_options] [[-f all|none|procs] [-r] [-l start_loc] cmd_line]\n
+MSGCL_info	MSG_usage_threads_common	yes 	\ \ \ \ \ \ \ common_options: [-V] [-i c|x] [-X opt] [-d defaults] [-s path] [-Ya|g,dir]\n
+
+# disassembler message - gets sprintf'd into dis line, not printed
+# directly
+MSGCL_error	ERR_bad_opcode	yes	***** Error - bad opcode\n
+
+# new libcmd msg
+MSGCL_error	ERR_missing_hexnum	yes	Hexadecimal number expected at %s\n
+
+# new libutil msg
+MSGCL_info	MSG_list_header	yes	Source Listing for %s, Program %s\n
+# old messages changed slightly for 4.2MP
+MSGCL_info	MSG_sig_caught		yes	%4d\tsig%-7s\tcaught\t%s\n
+MSGCL_info	MSG_sig_ignored		yes	%4d\tsig%-7s\tignored\t%s\n
+MSGCL_info	MSG_release_run		yes	Releasing and running %s\n
+MSGCL_info	MSG_release_suspend	yes	Releasing and suspending %s\n
+MSGCL_error	ERR_return_addr		yes	Cannot find return address for function in %s\n
+MSGCL_error	ERR_event_copy		yes	Could not copy event %d to %s\n
+MSGCL_error	ERR_event_reset		yes	Could not reset event %d in %s\n
+MSGCL_error	ERR_cannot_change	yes	Cannot change event %d; one of its objects is not active\n
+MSGCL_error	ERR_frame_range		yes	Frame number %d out of range for %s\n
+MSGCL_error	ERR_invalid_op_dead	yes	Invalid operation on dead object %s\n
+MSGCL_error     ERR_ambiguous_call	yes    Ambiguous call to overloaded function.  Choices are:\n%s
+MSGCL_error	ERR_get_addr_reg	yes	Cannot get address for symbol %s: allocated to a register\n
+
+# ---------------------- Messages new after SVR 4.2 MP -------------------------
+
+MSGCL_error	ERR_block_not_in_scope	yes	Line number %d does not specify a block in the current scope\n
+MSGCL_error	ERR_bad_regex	yes	Invalid regular expression %s\n
+MSGCL_error	ERR_bad_loc	yes	Invalid location expression\n
+MSGCL_info	MSG_es_halted_thread_start	yes	HALTED %s
+MSGCL_error	ERR_not_supported_gui	yes	Command not supported from graphical interface\n
+MSGCL_error	ERR_thread_change_startup	yes	Cannot handle thread state change during process startup: %s\n
+MSGCL_error	ERR_integral_const_for_array	yes	Integral constant required for array bound\n

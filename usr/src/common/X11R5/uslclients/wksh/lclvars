@@ -1,0 +1,69 @@
+#	Copyright (c) 1991, 1992 UNIX System Laboratories, Inc.
+#	All Rights Reserved     */
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+#ident "@(#)wksh:lclvars	1.2"
+
+#
+# Installation Directories
+#
+
+WKSHLIBDIR="/usr/X/lib/wksh"
+WKSHBINDIR="/usr/X/bin"
+
+#
+# Standard X Libraries
+#
+
+XROOT = /usr/X
+XINC = $(XROOT)/include
+XLIB = $(XROOT)/lib
+X11LIB = -lX11
+XtLIB  = -lXt
+XmuLIB = $(XLIB)/libXmu.a
+
+#
+# Other libraries needed for linking
+#
+
+OTHERLIBS = -lXext -lnsl -ldl -lw -lgen
+
+#
+# OPEN LOOK Libraries
+#
+
+XolLIB = -lOlit -lXol -lDt -lDtI
+
+#
+# MOTIF Libraries
+#
+
+MrmLIB = -lMrm
+XmLIB  = -lXm
+
+#
+# Standard user level compilation flags for X programs
+#
+
+LDFLAGS = -L$(XLIB)
+
+SUBCFLAGS = -O
+
+XFLAGS = -DUSL -DSVR4 -DI18N -DNARROWPROTO -DMOOLIT
+
+UFLAGS = $(XFLAGS) -DKSHELL -DUSER_PROMPT -DTEST_CODE -DSVR4_USER -D'WKSHLIBDIR=$(WKSHLIBDIR)' -D'WKSHBINDIR=$(WKSHBINDIR)' -DNORECOMP
+
+CFLAGS = $(SUBCFLAGS) -I. $(EXKSHINCLUDES) -I$(XINC) $(UFLAGS)
+
+RANLIB = :
+
+#
+# Dynamic Library Definitions
+#
+
+LIB_KIND = .so
+

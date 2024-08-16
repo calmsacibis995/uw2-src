@@ -1,0 +1,184 @@
+#ident\t"@(#)dthelp:Admin.Tools/video.hlp	1.17"
+^*version^1
+^*title^Display Setup
+^:Display_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Setting up your video display
+^0^Display Setup
+^$10
+Display Setup
+
+Use Display Setup to do the following:
+
+\to\t\k(View choices for your video display^^Viewing Choices for Your Video Display)
+\to\t\k(Set up your video display^^Setting Up Your Video Display)
+
+Note: You must have \k(Change Video Display Setup permission^dtadmin/user.hlp^Understanding Permissions) to change
+the settings for your video display.
+
+See also:
+setvideomode(1M) in the \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr)
+
+^1^Setting Up Your Video Display
+^$20
+Setting Up Your Video Display
+
+To set up your video display, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Display_Setup. The "Display Setup" window appears.
+
+  \tThe system tries to determine what type of hardware you have,
+  \tthen displays the "Display Setup" window with the following fields:
+
+  \to\tView: - See \k(Viewing Choices for Your Video Display)
+
+  \to\tVendor, Chipset, Description: - Use the arrow key to scroll
+  \t \tthrough the list and  select the hardware that matches the hardware
+  \t \tinstalled in the system.
+
+  \to\tModel, Resolution, Monitor, Colors: - Use the arrow key to scroll
+  \t \tthrough the list to select the correct specifications.
+
+  \t \tNote: If you choose a resolution that requires more memory than
+  \t \tyou selected, or if you select a model before selecting a vendor, a
+  \t \t\k("Display Setup: Warning" window^^Display Setup: Warning Window) appears. 
+
+  \to\tVideo Memory (Megabytes): Click on the appropriate memory size.
+  \t \tThe Video Memory Detected field below this option shows you how
+  \t \tmuch memory the system detected.
+
+  \t \tNote: If you choose a memory size larger or smaller than the
+  \t \tmemory detected, or if you select memory before selecting a model,
+  \t \ta \k("Display Setup: Warning" window^^Display Setup: Warning Window) appears.
+
+  \to\tMonitor Size: - Use the arrow key to scroll through and select
+  \t \tthe correct monitor size. This list contains selections for
+  \t \tthe eight most popular monitor sizes and an Other option.
+
+  \t \tIf you select Other, you must also set the Width and Height
+  \t \tfields, either in (inches) or cm (centimeters).
+
+3.\tClick on Test at the bottom of the screen. If the settings are valid,
+  \ta test pattern appears.
+
+  \tIf the settings are inconsistent with your hardware, the system
+  \tdisplays a window with a \k(warning notice^^Display Setup: Test Window).
+
+4.\tWait for the test to end.
+
+5.\tClick on Save at the bottom of the screen if you are satisfied with the
+  \tsettings. The  "Display Setup: Save" window appears. 
+
+  \tNote: You can also click on Standard VGA to go back to the default
+  \tsettings that came with your system, click on Reset to go back to the
+  \tprevious settings, or click on Cancel to close this window without making
+  \tany changes.
+
+
+^2^Display Setup: Warning Window
+^$30
+Display Setup: Warning Window
+
+This window appears for one of the following reasons:
+
+\to\tYou selected a memory size either larger or smaller than
+\t \tthe memory the system detected in your machine. 
+
+\t \tGo back and select the correct memory size.
+
+\to\tYou selected memory before selecting a model.
+
+\t \tMake the model selection, then select memory.
+
+\to\tYou selected a screen resolution that requires more memory
+\t \tthan you selected.
+
+\t \tGo back and select the correct resolution.
+
+\to\tYou selected a model before selecting a vendor.
+
+\t \tMake the vendor selection, then select a model.
+
+Click OK to dismiss this window.
+
+^2^Display Setup: Test Window
+^$40
+Display Setup: Test Window
+
+This window appears with a warning when your settings are inconsistent
+with the hardware detected.
+
+***Please note that you can cause hardware damage if you try to test
+   incorrect settings.***
+
+Click on Test if you want to go ahead with the testing (and you are
+sure the settings will not cause hardware damage), or click Cancel to
+stop the test (and keep the old settings).
+
+
+^2^Display Setup: Save Window
+^$50
+Display Setup: Save Window
+
+This window appears when you click on Actions=>Save. If you are sure
+you want to save the video display settings, click on Save. If you
+decide not to use the new settings, click on Cancel.
+
+^2^Display Setup: Test Required Window
+^$60
+Display Setup: Test Required Window
+
+This window appears if you try to save new video display settings
+without running a test. Do the following:
+
+\to\tClick on Continue to display a test pattern.
+
+\to\tWait until the test completes.
+
+\to\tClick on Actions=>Save to apply your new settings.
+
+^2^Display Setup: Exit Window
+^$70
+Display Setup: Exit Window
+
+This window appears if you try to exit Display Setup without saving
+your new settings.
+
+***Please note that you can cause hardware damage if you try to use
+   incorrect settings.***
+
+Click on Yes if you want to save the settings, No if you do not want
+to save the settings before you exit, or Cancel if you do not want
+to save the settings but do not want to exit from this window.
+
+
+^1^Viewing Choices for Your Video Display
+^$80
+Viewing Choices for Your Video Display
+
+To view entries for all supported video cards, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Display_Setup. The "Display Setup" window appears.
+
+3.\tClick on the rectangle in the box next to the View field, then click on
+  \tone of the following:
+
+  \to\tAll Choices - The system updates the vendor/model list to contain
+  \t \tentries of all supported video cards, regardless of the hardware
+  \t \tdetected.
+
+  \to\tDetected Choices - The system updates the mode list to contain
+  \t \tonly those choices appropriate to the detected hardware. If the
+  \t \thardware detection fails, only the STDVGA entry displays.
+

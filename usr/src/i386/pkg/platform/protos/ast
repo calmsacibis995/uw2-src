@@ -1,0 +1,25 @@
+#ident	"@(#)pkg.platform:i386/pkg/platform/protos/ast	1.2"
+
+!default 775 root sys 1 NULL NULL
+d  ast /tmp/astm
+
+!default 0500 root root 1 NULL NULL
+v  ast /tmp/astm/Driver_atup.o=/etc/conf/pack.d/astm/Driver.o
+v  ast /tmp/astm/Driver_mp.o=/mp/etc/conf/pack.d/astm/Driver.o
+v  ast /tmp/astm/Space.c=/etc/conf/pack.d/astm/space.c
+v  ast /tmp/astm/Master=/etc/conf/mdevice.d/astm
+v  ast /tmp/astm/Node=/etc/conf/node.d/astm
+v  ast /tmp/astm/System=/etc/conf/sdevice.d/astm
+
+!default	0444	root	sys	2 NULL NULL
+f  ast /etc/init.d/ast=/etc/init.d/ast
+l  ast /etc/rc0.d/K99ast=/etc/init.d/ast
+l  ast /etc/rc1.d/S99ast=/etc/init.d/ast
+l  ast /etc/rc2.d/S99ast=/etc/init.d/ast
+
+!default	0555	bin	bin	4 NULL NULL
+f  ast /sbin/astmonitor
+f  ast /sbin/astgraph
+f  ast /sbin/astdisplay
+f  ast /sbin/astcache
+f  ast /sbin/panel

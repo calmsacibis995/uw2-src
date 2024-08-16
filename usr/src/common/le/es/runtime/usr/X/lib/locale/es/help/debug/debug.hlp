@@ -1,0 +1,3206 @@
+^*version^1
+^*title^Depurar
+^:Depurador
+^+/usr/X/lib/locale/es/help/debug/debug.defs
+^?Un depurador multiproceso a nivel de código fuente
+
+^1^Descripción general del depurador
+^$1
+Descripción general del depurador
+
+Debug es un depurador simbólico a nivel de código fuente con muchas
+posibilidades, incluido el control sobre múltiples \k(procesos e hilos)
+y la evaluación de expresiones complejas en C o C++.  El depurador
+muestra su información en varias ventanas distintas. Cada ventana
+consta de uno o más paneles, cada uno de los cuales proporciona un
+tipo distinto de información. Los paneles disponibles en cada ventana
+diferente puede configurarlos el usuario (véase \k(Configuración)).
+Hay nueve tipos distintos de paneles.
+
+    \k(Panel de procesos) muestra los procesos y
+    subprocesos bajo el control del depurador e indica
+    qué proceso o subproceso es el actual.
+
+    \k(Panel de stacks) muestra el seguimiento de
+    stack para \d(proceso o hilo actual).  Se actualiza cada vez
+    que se detiene el proceso o subproceso actual.
+
+    \k(Panel de símbolos) muestra los símbolos del
+    proceso o subproceso actual. Se actualiza cada vez
+    que se detiene el proceso o subproceso actual.
+
+    \k(Panel de origen) muestra el código fuente del
+    programa. Cuando se detiene el proceso o subproceso actual,
+    la ventana del código fuente se actualiza para mostrar la
+    línea actual del archivo en curso.
+    También puede examinar otros archivos y definir puntos de corte
+    para borrado.
+
+    \k(Panel de desmontaje) muestra el desensamblamiento de la
+    función actual. El panel se actualiza cada vez que
+    se detiene el proceso o subproceso.
+
+    \k(Panel de registros) muestra los valores de los registros de la
+    máquina para el proceso o subproceso actual.
+    Se actualiza cada vez que se detiene el proceso o subproceso.
+
+    \k(Panel de eventos) muestra los eventos (puntos de corte, puntos
+    de observación, eventos de llamadas del sistema, etc.). El
+    borrado, desactivación, activación y edición de eventos se lleva a
+    cabo desde la ventana que contenga este panel.
+
+    \k(Panel de comandos) mantiene un registro de todos los eventos que
+    se produzcan. La E/S de procesos también aparece aquí. Este panel
+    permite introducir comandos como si se estuviera usando la
+    versión de línea de comandos del depurador.
+
+    \k(Panel de estado) mantiene el seguimiento del proceso o
+    subproceso f actual de cualquier ventana al que pertenece. Muestra
+    el estado de ese proceso o subproceso y su ubicación, si está
+    parado.
+
+El \k(configuración) suministrado por el usuario describe un
+\d(conjunto de ventanas). Cada conjunto de ventanas contiene al menos una
+ocurrencia de los nueve paneles del depurador (excepto
+\k(Panel de estado), que no es necesario). Si no se facilita ninguna
+configuración, el depurador organiza sus paneles en un conjunto de
+seis ventanas.
+
+Cada conjunto de ventanas controla un subconjunto de los procesos
+e hilos que se están depurando, y cada suproceso o proceso
+pertenece exactamente a un conjunto de ventanas. Si está depurando
+sólo un proceso con un hilo simple, no precisará más de un
+conjunto de ventanas, pero si está depurando múltiples hilos o
+procesos, puede optar por depurar cada hilo en un conjunto de
+ventanas independiente. Los conjuntos de ventanas son creados por la
+opción \k(Nuevo conjunto de ventanas) en el menú \k(Archivo) de cualquier
+ventana que contenga \k(Panel de procesos).
+
+Cada ventana incluye algunos o todos los botones de menú siguientes
+(según qué paneles aparecen en esa ventana):
+
+\t\k(Botón Archivo)
+\t\k(Botón Editar)
+\t\k(Botón Ver)
+\t\k(Botón Control)
+\t\k(Botón Evento)
+\t\k(Botón Propiedades)
+\tBotón de ayuda
+
+Los menús visualizados al seleccionar estos botones proporcionan
+comandos para controlar el estado de \k(procesos e hilos), opciones para
+cambiar la información visualizada y otros. Véanse las secciones de
+ayuda para más detalles.
+
+Cada ventana también puede contener un \d(Barra de botones).  La barra
+de botones puede ubicarse en la parte superior de la ventana (a
+la derecha bajo los botones del menú, en ventanas que no tengan un
+\k(Panel de estado) o bajo Panel de estado, en ventanas que tenga
+uno) o en la parte inferior de la ventana. La barra de botones
+contiene una selección de botones escogida de
+los menús desplegables y proporciona una forma rápida
+de llegar a los comandos del depurador de uso más frecuente.  Los
+botones disponibles en cada ventana los puede configurar el usuario
+(véase \k(Configuración)).
+
+Puede redimensionar cualquier ventana. También puede redistribuir el
+espacio dentro de la ventana. Para ello, haga clic en SELECCIONAR en
+el borde de cualquiera de los paneles. Aparecerá un distintivo que
+puede arrastrar hacia arriba o hacia abajo para incrementar o
+disminuir el tamaño del panel relativo a los otros paneles.
+
+Varios aspectos del comportamiento del depurador se pueden
+personalizar usando el menú \k(Propiedades).  Varias
+de estas propiedades también se pueden definir como
+recursos de aplicación en los archivos de recursos
+estándares del sistema X Windows, tales como el archivo .Xdefaults
+del directorio personal del usuario.  Véase \k(Personalización)
+para obtener información detallada.  Muchos
+de los recursos personalizables se pueden definir también usando
+opciones de la línea de comandos (véase
+\k(Invocación del depurador).
+
+^2^Invocación del depurador
+^$11
+\k(Descripción general del depurador)
+Invocación del depurador
+
+Desde la metáfora del Escritorio, el depurador puede invocarse en
+cualquiera de estas tres formas:
+
+1) Arrastrando un archivo de objeto desde una carpeta y soltándolo en
+   el icono del depurador de la carpeta Aplicaciones. Esto iniciará el
+   depurador con el archivo de objeto soltado como un proceso creado.
+   Esto tiene la ventaja de convertir al directorio de trabajo actual
+   del depurador en el mismo que la carpeta en la que aparece el
+   archivo de objeto.  La desventaja es que no puede dar al depurador
+   o proceso creado ninguna opción. Además, no puede arrastrar y
+   soltar un archivo central sobre el icono del depurador.
+
+2) Haciendo doble clic en el icono del depurador de la carpeta
+   Aplicaciones.  Esto iniciará el depurador con una ventana de
+   contexto vacía. Desde ahí, puede crear o capturar procesos con las
+   opciones del menú Archivo.  Esto le permitirá pasar opciones a los
+   procesos depurados, pero no al propio depurador. Este método
+   también tiene la desventaja de que el directorio de trabajo actual
+   del depurador puede no tener ninguna conexión con la opción Cambiar
+   directorio del menú Archivo de la ventana de contexto.
+
+3) Tecleando "opciones de debug" en una ventana xterm. Aunque teclee
+   un comando para iniciar el depurador, esto invocará la interfaz
+   gráfica.  Sin embargo, puede usar la interfaz de línea de comandos
+   tecleando debug -ic (ic significa interfaz, carácter).
+
+   Aunque esto supone más trabajo que hacer clic sobre un icono, este
+   método es el más flexible, permitiéndole crear procesos con
+   opciones, capturar procesos en ejecución o capturar archivos
+   principales desde la línea de comandos. Véase debug(1) para
+   información sobre las opciones disponibles.
+
+   La opción -X, que permite pasar opciones al servidor X, es la única
+   opción específica de la interfaz gráfica de usuario. Puede usar la
+   opción -X para especificar cosas tales como las fuentes y colores.
+   Por ejemplo, \tdebug -X"-fondo verde" convertirá en verde el color
+   de fondo para todas las ventanas del depurador, y\tdebug -X '-xrm
+   "debug*Contexto*fondo: verde"' establecerá el color de fondo sólo
+   en la ventana de contexto. La opción -X toma sólo un argumento, por
+   lo que cualquier opción que desee pasar con espacios en blanco deba
+   ponerse entre comillas.
+
+   En este método, el directorio de trabajo actual del depurador será
+   el mismo que el de la ventana xterm.
+
+  Varias de las propiedades que se pueden definir con las
+  opciones del menú \k(Propiedades) o como \k(recursos)
+  personalizable, se pueden definir asimismo desde la
+  línea de comandos.  Las opciones de la línea de comandos son:
+
+   o -config archivo - donde archivo es el archivo que el 
+     depurador usará como especificación de configuración.  
+     Véase \k(Configuración).
+
+   o -output_action acción - la acción puede ser BEEP (señal
+     auditiva), MESSAGE (mensaje), RAISE (activar) o NONE (ninguna)
+     (no es significativo el uso de mayúsculas o minúsculas).  Esto
+     especifica el comportamiento del depurador cuando el proceso
+     sujeto genera salida. Véase \k(Acción de salida).
+
+   o -eventt_action acción - la acción puede ser BEEP (señal
+     auditiva), MESSAGE (mensaje), RAISE (activar) o NONE (ninguna)
+     (no es significativo el uso de mayúsculas o minúsculas).  Esto
+     especifica el comportamiento del depurador cuando se provoca un
+     evento en un proceso sujeto. Véase \k(Acción de salida).
+
+   o -command_level nivel - el nivel puede ser PROGRAM (programa),
+     PROCESS (proceso), THREAD (subproceso) (el uso de mayúsculas y
+     minúsculas no es significativo).  Esto especifica si los comandos
+     del depurador se aplican por defecto al subproceso actual, a
+     todos los subprocesos del proceso actual o a todos los
+     subprocesos del programa actual. Véase \k(Granularidad).
+
+   o -event_level nivel - el nivel puede ser PROGRAM (programa),
+     PROCESS (proceso), THREAD (hilo) (el uso de mayúsculas
+     o minúsculas no es significativo).  Esto especifica si los
+     eventos del depurador se aplican por defecto al hilo
+     actual, a todos los hilos del proceso actual o a todos
+     los hilos del programa actual.  Véase \k(Granularidad).
+
+   o -thread_action acción[,acción] - la acción puede ser NONE
+     (ninguna), STOP (parada), BEEP (señal auditiva) o STOP y BEEP a
+     la vez (separados por una coma, donde el uso de mayúsculas y
+     minúsculas no es significativo). Esto especifica el
+     comportamiento del depurador cuando un hilo cambia de
+     estado. Véase \k(Acción de salida).
+
+   o -symbols tipo[,tipo..] - el tipo puede ser LOCAL, FILE
+     (archivo), GLOBAL, DEBUGGER (depurador), USER
+     (usuario) (separados por comas, donde el uso de mayúsculas
+     y minúsculas no es significativo). Esto especifica los
+     tipos de símbolos que se visualizarán en \k(Panel de símbolos).
+     Véase \k(Símbolos).
+
+Usando los métodos de invocación, puede crear o capturar procesos
+adicionales con las opciones del menú \k(Archivo) de cualquier
+ventana que contenga \k(Panel de procesos) o cualquier ventana que surja
+automáticamente cuando se inicie el depurador (véase
+\k(Configuración).  Véase \k(Crear), \k(Seleccionar proceso), y
+\k(Seleccionar Memoria principal) para más detalles. Los hilos sólo pueden
+crearse bajo control programático, y tampoco pueden capturarse
+individualmente.
+
+
+^2^Personalización=recursos
+^$12
+
+\k(Descripción general del depurador)
+Personalización
+
+Se pueden especificar varios aspectos de la organización,
+comportamiento y apariencia del depurador como definiciones de
+recursos de ventanas X en archivos de recursos de X Windows tales como
+el archivo .Xdefaults del directorio personal del usuario. El nombre
+de clase del recurso del depurador es Debug. Los recursos especiales
+de debug son:
+
+config_file:\tarchivo
+\tEspecifica la vía del archivo de configuración del depurador.
+\tVéase  \k(Configuración).
+
+config_desc:\tconfiguración
+\tEspecifica la configuración del depurador directamente.
+\tLa configuración debe seguir al formato especificado bajo
+\t\k(Configuración).  Los recursos X deben constar de una
+\tsola cadena sin líneas nuevas, por lo que cada línea de una
+\tconfiguración de líneas múltiples debe continuar con una barra
+\tinversa (\\).
+
+   o -output_action acción
+     la acción puede ser BEEP (señal auditiva),
+     MESSAGE (mensaje), RAISE (activar) o NONE (ninguna) (no
+     es significativo el uso de mayúsculas o minúsculas).  Esto
+     especifica el comportamiento del depurador cuando el proceso
+     sujeto genera salida. Véase \k(Acción de salida).
+
+   o -eventt_action acción
+     la acción puede ser BEEP (señal auditiva),
+     MESSAGE (mensaje), RAISE (activar) o NONE (ninguna) (no
+     es significativo el uso de mayúsculas o minúsculas).  Esto
+     especifica el comportamiento del depurador cuando se provoca
+     un evento en un proceso sujeto. Véase \k(Acción de salida).
+
+command_level: nivel
+     el nivel puede ser uno de PROGRAMA, PROCESO,
+     SUBPROCESO (el caso no es significativo).  Esto
+     especifica si los comandos del depurador se aplican por defecto
+     al subproceso actual, todos los subprocesos en el proceso actual
+     o todos los subprocesos en el programa actual. Véase
+     \k(Granularidad).
+
+event_level: nivel
+     el nivel puede ser uno de PROGRAMA, PROCESO,
+     SUBPROCESO (el caso no es significativo).  Esto
+     especifica si los eventos del depurador se aplican por defecto al
+     subproceso actual, todos los subprocesos en el proceso actual o
+     todos los subprocesos del programa actual.  Véase
+     \k(Granularidad).
+
+thread_action: acción[, acción]
+     la acción puede ser NONE, STOP, BEEP o STOP y BEEP (liste
+     ambas, separadas por una coma, no hay distinción de
+     mayús/minús).  Esto especifica el comportamiento del depurador
+     cuando un hilo cambia el estado.
+     Véase \k(Acción de salida).
+
+symbols tipo[,tipo..]
+     el tipo puede ser LOCAL, FILE, GLOBAL, DEBUGGER
+     USER (usuario) (separados por comas, no es significativo el 
+     uso de mayúsculas o minúsculas).  Especifica los tipos de 
+     símbolos que aparecerán en el \k(Panel de símbolos).
+     Véase \k(Símbolos).
+
+^2^Configuración=configuración
+^$13
+
+\k(Descripción general del depurador)
+Configuración
+
+El diseño del depurador gráfico es configurable por parte del
+usuario.  El usuario puede especificar:
+\t
+\to ¿Qué paneles están dentro de qué
+\t  ventanas en cada grupo de ventanas.
+\to El número de líneas que debe tener cada panes, y
+\t  para algunos paneles, también el número de columnas.
+\to El contenido y posición (superior o inferior) del
+\t  \d(Barra de botones) para cada ventana.
+
+La configuración se especifica en un archivo de configuración, o
+directamente en un archivo X Windows de recursos.  Si se especifica en
+un archivo independiente, se da la vía de acceso del archivo así como
+el recurso del archivo debug.config_file en un archivo de recursos de
+X Windows, o mediante la utilización de la opción -config en la línea
+de comandos.  Si se especifica directamente en un archivo de recursos
+de X Windows, la configuración será el valor del recurso
+debug.config_desc.  Véase \k(Invocación del depurador) y \k(Personalización).
+
+Se proporcionan diferentes configuraciones de muestra en
+el directorio /usr/ccs/lib/config.
+
+Si el archivo de configuración se pierda, es ilegible o está
+vacío, o se especifica una configuración errónea, se utilizará
+la configuración por defecto del depurador.
+
+Una configuración se compone de palabras clave y nombres definidos por
+el usuario. La distinción entre mayúsculas y minúsculas se ignora
+cuando se leen las palabras clave.  Los nombres se utilizan como
+cabeceras en las líneas de título de las ventanas y como etiquetas
+para los botones en \d(Barra de botones).  Cada nombre debe aparecer
+entre comillas (se aceptan comillas simples o dobles) y no puede tener
+líneas múltiples.
+
+Se ignoran los espacios en blanco, excepto dentro de los nombres entre
+comillas.  Un comentario comienza con un sostenido (#) y continúa
+hasta el final de la línea.  También se ignoran los comentarios.
+
+Una configuración está compuesta de una serie de descripciones de
+ventanas.  Cada descripción de ventana comienza con la palabra clave
+WINDOW, seguida de un nombre definido por el usuario, utilizado como
+el título de la ventana.  Si el nombre de la ventana va seguido de la
+palabra AUTO, la ventana aparecerá automáticamente cada vez que se
+invoque al depurador, o cuando se cree un nuevo \d(conjunto de ventanas).
+
+La descripción de la ventana contiene una serie de una o más
+descripciones de paneles.  Cada descripción de panel consiste en un
+tipo de panel, seguido por un entero decimal opcional que especifica
+el número de líneas para dicho panel.  Si el especificador de línea
+está presente, puede ir seguido de manera opcional por otro entero
+decimal que describa el número de columnas para dicho panel.
+
+Los tipos de paneles válidos son los siguientes: 
+COMMAND\t\k(Panel de comandos)
+DISASSEMBLY\t\k(Panel de desmontaje)
+EVENT\t\t\k(Panel de eventos)
+PROCESS\t\k(Panel de procesos)
+REGISTER\t\k(Panel de registros)
+SOURCE\t\t\k(Panel de origen)
+STACK\t\t\k(Panel de stacks)
+STATUS\t\t\k(Panel de estado)
+SYMBOLS\t\k(Panel de símbolos)
+
+El especificador de líneas no afecta al Panel de estado (éste siempre
+tiene 1 línea).  El especificador de columna no afecta al Panel de
+eventos, Panel de procesos, Panel de stack, Panel de estado ni al
+Panel de símbolos. Una ventana será tan amplia como su elemento más
+amplio, incluso si contiene un panel con un especificador de columna
+pequeño.
+
+Un panel sólo puede especificarse una vez por ventana, pero el mismo
+panel puede aparecer en múltiples ventanas. Si no se especifica un
+panel (distinto de \k(Panel de estado) para cualquier ventana, el
+depurador creará una ventana para albergar dicho panel.
+
+El elemento final de una descripción de ventana es la lista de
+botones.  La lista de botones es opcional, y puede aparecer antes o
+después de todas las descripciones de paneles para dicha ventana.  Si
+no se proporciona lista de botones, la ventana no tendrá un
+\d(Barra de botones).  Si la lista de botones aparece antes de las
+descripciones de paneles para la ventana, la barra de botones
+aparecerá en la parte superior de la ventana. Si la lista de botones
+sigue a las descripciones de la lista de botones, aparecerá la barra
+de botones en la parte inferior de la ventana.
+
+Una lista de botones comienza con la palabra clave BUTTONS, y va
+seguida por una serie de descripciones de botones.
+
+Cada descripción del botón se compone de un tipo de botón, seguido por
+un nombre opcional, utilizado como etiqueta para dicho botón.  Si no
+se suministra ningún nombre, el depurador suministrará un nombre por
+defecto.  Los tipos válidos de botones son:
+
+ANIMATE_DIS\t\k(Activar desmontaje)
+ANIMATE_SOURCE\t\k(Activar origen)
+DELETE\t\t\k(Suprimir)
+DESTROY\t\k(Destruir)
+DISABLE\t\t\k(Inhabilitar)
+ENABLE\t\t\k(Habilitar)
+EXPAND\t\t\k(Expandir)
+EXPORT\t\t\k(Exportar)
+HALT\t\t\k(Parar)
+INPUT\t\t\k(Introducir)
+INTERRUPT\t\k(Interrumpir)
+NEXT_INST\t\k(Instrucción siguiente)
+NEXT_STMT\t\k(Declaración siguiente)
+PIN_SYM\t\t\k(Fijar)
+POPUP\t\t\k(Botón Ventana de aparición instantánea)
+RETURN\t\t\k(Regresar)
+RUN\t\t\k(Ejecutar)
+SET_CURRENT\t\k(Definir actual)
+SET_WATCHPOINT\t\k(Definir punto de control)
+STEP_INST\t\k(Instrucción de paso)
+STEP_STMT\t\k(Declaración de paso)
+UNPIN_SYM\t\k(Soltar)
+
+El botón AP_INST es especial.  Puede aparecer más de una vez en una
+barra de botones.  Este botón se utiliza como método abreviado para
+desplegar una ventana diferente.  El campo de etiqueta es necesario
+para este tipo de botón y debe corresponder exactamente a la etiqueta
+de una de las ventanas de la configuración.  Al hacer clic en
+SELECCIONAR en el botón se despliega la ventana asociada.  La
+descripción de botón para el botón AP_INST acepta un tercer campo
+opcional, un nombre definido por el usuario que se utiliza como
+etiqueta del botón.  Esta puede ser distinta de la etiqueta de la
+ventana asociada al botón.  Si no se proporciona ningún nombre, la
+etiqueta utilizada será la misma que la de la ventana.
+
+Varios de los tipos de botones son válidos sólo si la ventana contiene
+un panel de un tipo concreto.
+
+ANIMATE_DIS sólo es válido si la ventana contiene un
+\k(Panel de desmontaje).
+
+ANIMATE_SOURCE sólo es válido si la ventana contiene un
+\k(Panel de origen).
+
+SUPRIMIR, DESACTIVAR y ACTIVAR sólo son válidos si la ventana
+contiene un \k(Panel de eventos).
+
+ENTRADA e INTERRUMPIR sólo son válidos si la ventana
+contiene un \k(Panel de comandos).
+
+SET_CURRENT sólo es válido si la ventana contiene un
+\k(Panel de procesos) o un \k(Panel de stacks).
+
+EXPAND, EXPORT, SET_WATCHPOINT, PIN_SYM y UNPIN_SYM sólo son válidos 
+si la ventana contiene un \k(Panel de símbolos).
+
+Todos los demás tipos de botones son válidos para todas las ventanas.
+
+La siguiente es una configuración de muestra que define la
+configuración por defecto del depurador.
+
+WINDOW "Origen" AUTO
+\tBUTTONS
+\t\tSET_CURRENT\t"Definir actual"
+\t\tRUN\t\t"Ejecutar"
+\t\tRETURN \t\t"Retorno"
+\t\tSTEP_STMT\t"Pasar inst"
+\t\tNEXT_STMT\t"Siguiente inst"
+\t\tHALT\t\t"Parar"
+\t\tDESTROY\t\t"Destruir"
+\t\tPOPUP\t\t"Símbolos"
+\tSTATUS
+\tSTACK\t4
+\tSOURCE\t10 60
+WINDOW "Proceso"
+\tBUTTONS
+\t\tSET_CURRENT\t"Definir actual"
+\t\tPOPUP\t\t"Comando" "Cmd"
+\t\tPOPUP\t\t"Desensamblar" "Dis
+\t\tPOPUP\t\t"Evento"
+\t\tPOPUP\t\t"Origen"
+\t\tPOPUP\t\t"Símbolos"
+\tPROCESS\t5
+WINDOW "símbolos"
+\tBUTTONS
+\t\tEXPORT\t\t"Exportar"
+\t\tPIN_SYM\t\t"Pin"
+\t\tUNPIN_SYM\t"Unpin"
+\t\tSET_WATCHPOINT\t"Definir p. de control"
+\t\tPOPUP\t\t"Comando" "Cmd"
+\t\tPOPUP\t\t"Desensamblaje" "Dis"
+\t\tPOPUP\t\t"Evento"
+\t\tPOPUP\t\t"Proceso"
+\t\tPOPUP\t\t"Origen"
+\tSTATUS
+\tSYMBOLS\t5
+WINDOW "Desensamblaje"
+\tBUTTONS
+\t\tSET_CURRENT\t"Definir actual"
+\t\tRUN\t\t"Ejecutar"
+\t\tRETURN \t\t"Retorno"
+\t\tSTEP_INST\t"Recorrer inst. paso a paso"
+\t\tNEXT_INST\t"Siguiente Inst"
+\t\tHALT\t\t"Parar"
+\t\tDESTROY\t\t"Destruir"
+\t\tPOPUP\t\t"Comando" "Cmd"
+\t\tPOPUP\t\t"Proceso"
+\t\tPOPUP\t\t"Origen"
+\tSTATUS
+\tREGISTER 6 70
+\tDISASSEMBLY 10 70
+WINDOW "Evento"
+\tBUTTONS
+\t\tDISABLE\t"Desactivar"
+\t\tENABLE\t"Activar"
+\t\tDELETE\t"Suprimir"
+\t\tPOPUP\t"Comando" "Cmd"
+\t\tPOPUP\t"Desensamblaje" "Dis
+\t\tPOPUP\t"Proceso"
+\t\tPOPUP\t"Origen"
+\t\tPOPUP\t"Símbolos"
+\tSTATUS
+\tEVENT 8
+WINDOW "Comando"
+\tBUTTONS
+\t\tINPUT\t\t"Introducir..."
+\t\tINTERRUPT\t"Interrupción"
+\t\tPOPUP\t\t"Desensamblaje" "Dis"
+\t\tPOPUP\t\t"Evento"
+\t\tPOPUP\t\t"Proceso"
+\t\tPOPUP\t\t"Origen"
+\t\tPOPUP\t\t"Símbolos"
+\tSTATUS
+\tCOMMAND 10 60
+
+^1^Panel de procesos
+^$2
+Panel de procesos
+
+El Panel de proceso lista el \k(procesos e hilos) controlado por el
+\d(conjunto de ventanas) dado.  La información para cada proceso o
+subproceso incluye:
+
+    Nombre del programa\tSuele ser el nombre del archivo ejecutable.
+\t\tSi un proceso se bifurca, tanto los procesos padres
+\t\tcomo los hijos (así como sus respectivos subprocesos, si los hay)
+\t\tpertenecerán al mismo \k(programa^^procesos e hilos).
+
+    ID\t\tUn único identificador generado por el depurador.
+
+    Estado\t\tEstado actual del proceso o subproceso.
+
+    Función\tSi el proceso o subproceso se está ejecutando o
+\t\trecorriendo, esto estará vacío. De otro modo, será el nombre de la
+\t\tfunción en donde se paró el proceso o subproceso.
+
+    Ubicación\tSi el proceso o subproceso se está ejecutando o
+\t\trecorriendo, estará vacío. Si el proceso o subproceso se paró en
+\t\tuna función compilada con información de depuración, mostrará el
+\t\tnombre del archivo y el número de la línea (archivo@línea) en
+\t\tdonde el proceso o subproceso se paró. Si la función no fue
+\t\tcompilada con información de depuración, mostrará la dirección
+\t\thexadecimal en donde se paró el proceso o subproceso.
+
+Comando\tLa línea de comandos utilizada para iniciar el programa.
+
+El Estado puede ser uno de los siguientes:
+
+    En ejecución\tEl proceso o subproceso está en marcha a
+\t\tcontinuación de un comando  \k(Ejecutar) o
+\t\t\k(Paso).
+
+    Recorriendo\tEste estado aparece sólo cuando el depurador tiene que
+\t\tejecutar un proceso o subproceso con una instrucción cada vez,
+\t\ttípicamente porque tiene que evaluar continuamente una condición
+\t\tde evento.
+
+    Parado\tEl proceso o subproceso se ha detenido.
+
+    Sin lwp\t\tEs el estado para un subproceso multiplexado cuando
+\t\tno se está ejecutando en un \d(LWP). Se ha
+\t\tplanificado como un LWP desactivado por la librería de subproceso
+\t\tposiblemente porque está bloqueado
+\t\ten E/S o en alguna sincronización
+\t\tprimitiva. Cuando esté listo para reanudar
+\t\tla ejecución, será tomado de nuevo por un LWP.
+
+    Suspendido\tEste es el estado correspondiente un subproceso que
+\t\tera el destino de una llamada thr_suspend().  Se reanudará la
+\t\tejecución cuando se continúe mediante otro subproceso.
+
+    Principal\t\tEl proceso o subproceso es una imagen básica, y puede
+\t\texaminarse pero no alterarse ni ejecutarse.
+
+    Principal sin lwp\tEs el estado de un subproceso que estaba Sin lwp
+\t\tcuando se produjo la imagen principal.
+
+    Principal suspendido\tEs el estado de un subproceso que se
+\t\tencontraba en estado Suspendido cuando se produjo la imagen
+\t\tprincipal.
+
+Puede seleccionar una o más entradas en el Panel de proceso.  Las
+entradas seleccionadas afectan al comportamiento de muchos de
+los comandos de los menús de la ventana que contiene el panel.  Por
+ejemplo, si selecciona una entrada y luego hace clic en SELECCIONAR en
+la opción \k(Ejecutar) del menú \k(Control) , los
+objetos seleccionados se ejecutarán.  Si no tenía un proceso o
+hilo seleccionado antes de seleccionar \k(Ejecutar), el
+\d(proceso o hilo actual) se habrían ejecutado.  Al seleccionar un proceso
+se seleccionan el hilo o el proceso y el \k(programa^^procesos e hilos). La mayoría
+de las opciones se aplican al objeto seleccionado, pero los comandos
+que crean eventos (\k(Parar), \k(Señal),
+\k(Llamada al sistema) y \k(Al parar) en el menú
+\k(Evento)) mediante la aplicación por defecto al programa
+seleccionado.  Puede cambiar esto con la opción \k(Granularidad)
+del menú \k(Propiedades).
+
+El proceso o subproceso actual se indica mediante un cursor en
+forma de mano a la izquierda del nombre del programa.  El proceso
+o subproceso actual determina lo que aparece en los otros
+paneles del grupo de ventanas.  El proceso o subproceso
+actual puede cambiarse en primer lugar, haciendo clic
+en SELECCIONAR en un proceso o subproceso en el Panel de
+Procesos y, en segundo lugar, haciendo clic en SELECCIONAR en
+la opción \k(Definir actual) del menú \k(Editar).
+
+También puede mover un proceso o subproceso de un conjunto de
+ventanas a otro seleccionando la opción Mover del menú
+\k(Archivo) (véase \k(Mover)), o seleccionando el
+proceso o subproceso, arrastrándolo y soltándolo en un panel de
+procesos del otro conjunto de ventanas.  Se convertirá en el proceso
+o subproceso actual en este nuevo conjunto de ventanas.
+
+Si la línea de comandos es demasiado larga y no cabe en la
+columna, se truncará por defecto.  Puede forzar el cambio de línea
+con la opción \k(Paneles) del menú \k(Propiedades).
+
+^2^Programas, procesos e hilos=procesos e hilos
+^$21
+\k(Panel de procesos)
+Programas, procesos e hilos
+
+Un programa es un objeto ejecutable en cualquiera de los formatos del
+archivo objeto comprendidos por el depurador, junto con cualquiera de
+las bibliotecas compartidas que el objeto ejecutable pueda cargar en
+tiempo de ejecución.  La imagen ejecutable de un programa es un
+proceso.  Puesto que un proceso puede bifurcarse, varios procesos
+pueden derivar finalmente de un programa simple.
+
+Un proceso se compone de uno o más subprocesos de control. Cada
+subproceso dentro de un proceso comparte: el espacio común de
+direcciones del proceso, el proceso y los identificadores del proceso
+padre, privilegios, directorios raíz y de trabajo, descriptores de
+archivo, bloqueos de archivo y de registro, límites de recursos y
+contexto de gestión de señal (excepto para la máscara señal y el stack
+de señales).
+
+Un subproceso es cada contexto individual de ejecución dentro de un
+proceso.  Cada subproceso tiene su propio conjunto de registros,
+máscara de señal y stack de señales.  En el contexto del depurador,
+"subproceso" se refiere a las entidades implantadas por las interfaces
+contenidas en <thread.h>.  Estos subprocesos son diferentes del
+proceso LWP, y se integran sobre este último.
+
+En cualquier momento dado, un subproceso puede estar ejecutándose en
+un LWP o puede estar inactivo.  Un subproceso inactivo no puede
+iniciarse por medio del depurador, pero su estado puede examinarse y
+modificarse.
+
+^1^Panel de stacks
+^$3
+Panel de stacks
+
+El Panel del Stacks muestra el seguimiento de stacks para el
+\d(proceso o hilo actual).  La información para cada marco de stacks
+incluye:
+
+    Número de marco\tLos marcos están numerados desde 0 para la
+\t\tparte inferior del stack (marco inicial).
+
+    Función\tNombre de la función.  El depurador mostrará un signo de
+\t\tinterrogación (?) si no puede encontrar un nombre para la
+\t\tdirección dada, bien porque la información simbólica es
+\t\tinsuficiente, o contador de programa del marco está indicando el
+\t\tespacio de dirección del proceso.
+
+    Parámetros\tLos nombres y valores del argumento.  Los nombres de
+\t\targumentos pueden no estar disponibles si la información simbólica
+\t\tes insuficiente.
+
+    Ubicación\tEl punto actual de ejecución del marco.  La ubicación
+\t\taparece en el formato archivo@línea, si la función se compiló con
+\t\tla información del depurador.  Si no, será una dirección
+\t\thexadecimal.
+
+El marco mostrado con el puntero en forma de mano es
+\d(trama actual). El marco actual afecta a lo que aparece en las
+otras ventanas en \d(conjunto de ventanas).  El marco actual puede
+cambiarse al hacer clic en SELECCIONAR en uno diferente, y luego
+haciendo clic en SELECCIONAR en la opción \k(Definir actual) del menú
+\k(Editar).
+
+Si la información es demasiado larga y no cabe en su columna,
+se truncará.  Puede forzar el cambio de línea en las columnas
+Parámetros y Ubicación con las opciones \k(Paneles)
+del menú \k(Propiedades)
+
+^1^Panel de símbolos
+^$4
+Panel de símbolos
+
+El Panel de símbolos muestra los valores de las variables visibles
+desde \d(contexto actual). Las clases de símbolos que pueden
+visualizase incluyen:
+
+\tvariables locales desde \d(trama actual), 
+\tvariables estáticas de archivo visibles desde el marco actual, 
+\tvariables globales visibles en el objeto actual, 
+\tvariables definidas por el depurador, 
+\to las variables definidas por el usuario y mantenidas 
+\tpor el depurador
+
+Por defecto, el panel de símbolos sólo muestra las variables locales.
+Puede cambiar los tipos de variables mostrados con la opción
+\k(Símbolos) del menú \k(Propiedades)
+
+La información visualizada para cada símbolo incluye el nombre del
+símbolo, su ubicación, tipo y valor.  Para las variables locales, la
+ubicación es el número de línea y de función del marco que las abarca.
+Para los símbolos estáticos de archivo, es el nombre de archivo, y
+para los símbolos globales, el nombre del archivo de objetos.
+
+Si la información es demasiado larga y no cabe en
+su columna, se truncará.  Puede forzar el cambio de línea en las
+columnas Tipo y Valor con las opciones \k(Paneles) del menú
+\k(Propiedades)
+
+Obsérvese que cuando un objeto de clase C++ aparece en el panel de
+símbolos, los miembros estáticos de dicha clase no aparecen en la
+lista de valores de los miembros de la columna Valor.  Para verlos hay
+que mostrar el objeto de clase en la ventana \k(Expandir) o
+\k(Mostrar valor) disponible en el menú \k(Ver) de
+cualquier ventana que contenga el panel de símbolos o
+\k(Panel de origen).
+
+^1^Panel de registros
+^$5
+Panel de registros
+
+El Panel de registros muestra los valores de los registros de las
+máquinas para el \d(proceso o hilo actual).  Los valores se muestran en
+hexadecimal (y con coma flotante, para los registros de coma flotante)
+y se actualizan siempre que el proceso o subproceso actual se detiene.
+
+^1^Panel de desmontaje
+^$6
+Panel de desmontaje
+
+El panel de desensamblaje muestra el desensamblaje de la función
+actual.  También puede ver el desensamblaje de otras
+funciones con la opción \k(Mostrar dis de la función) del menú
+\k(Ver)
+
+El Panel de Desensamblamiento muestra una señal de parada en el margen
+izquierda por cada instrucción que tiene definida un punto de corte.
+Los puntos de corte de una instrucción se pueden definir o eliminar
+haciendo doble clic en el botón SELECCIONAR del margen izquierdo.
+
+^1^Panel de origen
+^$7
+Panel de origen
+
+El Panel Origen muestra el archivo de origen actual.  Cuando el
+\d(proceso o hilo actual) se detiene, el archivo se posiciona de modo que
+muestre la línea actual de la función actual.  La línea actual aparece
+resaltada, y también indicada por una flecha en el margen izquierdo.
+Si no existe un archivo actual, o el archivo no se compiló con la
+información de depuración, el Panel Origen estará vacío.  El Panel
+Origen también estará vacío si eldepurador no puede encontrar el
+archivo actual; en cuyo caso puede utilizar la \d(Vía de acceso de origen)
+desplegable disponible desde el menú \k(Propiedades) de cualquier
+ventana que contenga un Panel Origen.
+
+Aparece una señal de parada en el margen izquierdo por cada línea que
+tenga definido un punto de corte. Los puntos de corte se pueden
+definir o eliminar haciendo doble clic en el botón SELECCIONAR del
+margen izquierdo de la línea seleccionada. El depurador mostrará un
+mensaje si es incapaz de definir el punto de corte en la línea
+seleccionada. Hay varias razones para no poder definir el punto de
+corte.
+
+    o La línea de origen no contiene nada que pueda generar un
+      código ejecutable. Esto incluiría línea en blanco y líneas que
+      contengan sólo comentarios y declaraciones de variables.
+
+    o La línea forma parte de una sentencia de líneas múltiples.
+      Puede definir un punto de corte sólo en una línea de una
+      sentencia o condición de líneas múltiples.
+
+    o La línea es el principio de una definición de función.
+      En su lugar, deefina el punto de corte en la primera sentencia
+      de la función.
+
+También puede ver otros archivos en el panel de origen, bien 
+abriendo otro archivo de la lista de la ventana \k(Abrir), bien visualizando otra 
+función de la lista de la ventana \k(Mostrar origen de la función).
+
+Puede examinar otros archivos de origen mientras esté observando el 
+Panel de origen, creando una ventana secundaria de origen.
+Las ventanas secundarias de origen se crean seleccionando la opción
+\k(Nuevo origen) en el menú \k(Archivo), y se 
+indican con un asterisco (*) en el encabezado de la ventana. Cada 
+ventana secundaria de origen consiste de un \k(Panel de estado)
+y un Panel de origen. El Panel de origen de una ventana secundaria
+no se actualiza cuando se detiene el proceso o hilo actual.
+
+^1^Panel de eventos
+^$8
+Panel de eventos
+
+El Panel de Eventos tiene dos partes: el Panel de eventos principal y
+el Panel de eventos en parada. El Panel de eventos
+principal muestra los P
+\d(evento de parada)s, \d(evento de señal)s y \d(evento de llamada del sistema)s para
+el \d(proceso o hilo actual).  El Panel en parada muestra los
+\d(evento de parada)s del proceso o hilo actual. Esta información
+para cada evento puede incluir:
+
+    ID\t\tEl número de evento.  También aparecerá el carácter 'D'
+\t\tjunto al número si el evento está \k(Desactivado^^Inhabilitar).
+
+    Tipo\t\tSTOP, SIGNAL o SYSCALL.  El tipo de un evento
+\t\tsyscall también incluye los caracteres 'E' o 'X',
+\t\tpara la entrada de llamada al sistema o la salida, respectivamente.
+
+    Procesos\tLos procesos o subprocesos para los que se ha definido
+    el evento.
+
+    Condición\tPara eventos de parada, el \k(Detener expresión) es la
+\t\tcondición. Para eventos de señal, es la lista de señales a que se
+\t\taplica.  Para eventos syscall, es la lista de llamadas al sistema
+\t\tafectadas.
+
+    Cuenta\t\tPara eventos de parada y syscall, el número de
+\t\tveces que ocurre la condición antes de que se active el evento.
+
+    Lista de comandos\tLos comandos que el depurador ejecutará
+\t\tcuando se active el evento.
+
+Si la lista de procesos, condición o lista de comandos son
+demasiado largas y no caben en sus columnas, se truncarán.
+Puede forzar el cambio de línea con la opción \k(Paneles)
+del menú \k(Propiedades)
+
+^1^Panel de comandos
+^$9
+Panel de comandos
+
+El Panel de comandos tiene dos partes:
+
+\t\k(Panel de transcripción) y
+\t\k(Línea de comandos).
+
+El panel de comandos muestra una transcripción de la sesión de
+depuración (entrada y salida del depurador y el proceso) en el
+\k(Panel de transcripción).  El \k(Línea de comandos) se usa para teclear los
+comandos del depurador como si estuviese utilizando la
+interfaz de la línea de comandos.
+
+^2^Panel de transcripción
+^$91
+\k(Panel de comandos)
+Panel de transcripción
+
+El Panel de transcripción muestra el historial de la sesión de
+depuración cuando afecta a \k(Panel de comandos) \d(conjunto de ventanas).
+Esto incluye:
+
+    o Anuncios de eventos para procesos y subprocesos pertenecientes a
+      este conjunto de ventanas,
+
+    o La salida de cualquier comando asociado a esos eventos,
+
+    o La salida de los procesos, si se capturó la salida, (véase
+      \k(Crear)), y
+
+    o La salida de los comandos tecleados en \k(Línea de comandos).
+
+^2^Línea de comandos
+^$92
+\k(Panel de comandos)
+Línea de comandos
+
+Puede teclear comandos de la línea de comandos como si estuviera
+usando la interfaz de línea de comandos del depurador. Si hace clic en
+Retorno, se ejecutará la línea de comandos. El comando, y su salida,
+aparecerán en el \k(Panel de transcripción). Véase la página del manual
+(debug(1)) para más información sobre descripciones de comandos
+disponibles.
+
+Cualquier comando o bloque de comandos puede tener el sufijo '>' y un
+nombre de archivo. Esto tiene el fecto de
+redireccionar la salida del comando al archivo en lugar
+de mostrarla en el Panel de transcripción. Puede usar también >>
+archivo", que agrega la salida al archivo, en lugar de sustituir su
+contenido actual, si es que lo tiene. Sin embargo, el depurador no
+permite que la salida de un comando se dirija a otro comando del shell
+del Sistema UNIX(r).
+
+^1^Panel de estado
+^$10
+Panel de estado
+
+El Panel de estado suele estar disponible en ventanas que
+tampoco contengan un \k(Panel de procesos).
+
+El Panel de estado indica el \d(contexto actual), es decir, el
+\d(proceso o hilo actual) de  \d(conjunto de ventanas), el estado de
+ese proceso o subproceso, y si está parado, el nombre de la
+función y el número de línea o dirección de \d(trama actual).
+
+^1^Botón Archivo=Archivo
+^$110
+Botón Archivo
+
+El botón Archivo le ofrece acceso a archivos y a las ventanas
+del depurador, y permite crear, capturar y liberar productos y si
+hace clic en MENU del botón Archivo, aparece un menú con
+distintas opciones, según qué paneles estén presentes en la ventana.
+Todas las ventanas proporcionan un menú Archivo con al menos
+las opciones siguientes:
+
+\t\k(Windows)
+\t\k(Ventana Cerrar)
+\t\k(Salir)
+
+Además, si la ventana es una que aparece automáticamente
+cuando se invoca al depurador (véase \k(Configuración)), el menú
+Archivo tendrá las siguientes opciones:
+
+\t\k(Crear)
+\t\k(Seleccionar Memoria principal)
+\t\k(Seleccionar proceso)
+\t\k(Liberar)
+\t\k(Cambiar directorio)
+
+Si la ventana contiene un \k(Panel de procesos), el menú Archivo tendrá
+las siguientes opciones:
+
+\t\k(Crear)
+\t\k(Seleccionar Memoria principal)
+\t\k(Seleccionar proceso)
+\t\k(Liberar)
+\t\k(Cambiar directorio)
+\t\k(Nuevo conjunto de ventanas)
+\t\k(Mover)
+
+Si la ventana contiene un \k(Panel de origen), el menú Archivo
+tendrá las siguientes opciones:
+
+\t\k(Abrir)
+\t\k(Nuevo origen)
+
+Finalmente, si la ventana contiene un \k(Panel de comandos), el
+menú Archivo tendrá las siguientes opciones:
+
+\t\k(Cambiar directorio)
+\t\k(Guión)
+
+El grupo de opciones del menú Archivo para cualquier ventana
+es una unión de las opciones por defecto y las opciones
+que aporta cada panel que aparece en dicha ventana.
+
+^2^Crear
+^$111
+\k(Botón Archivo)
+Crear
+
+La ventana de aparición instantánea Crear le permite crear uno o más
+procesos.  Puede especificar el archivo a crear mediante el arrastre
+de un archivo objeto de una carpeta del escritorio y soltándolo en la
+ventana Crear, o mediante la introducción del nombre de vía de acceso
+del objeto en el campo Línea de comandos.  La línea de comandos tipo
+shell puede incluir un redireccionamiento de entrada y/o salida y
+puede incluir un conducto shell.  Todos los procesos resultantes se
+detienen en el \k(ubicación) especificado en el campo Ubicación
+inicial.  Si especifica una función distinta de "principal", y no se
+puede encontrar la función en un espacio de dirección de 'proceso', el
+proceso se parará en la función "principal".  Si no se puede encontrar
+"principal", el proceso se parará en la dirección especificada en la
+cabecera del archivo objeto. Cuando se crea un proceso con múltiples
+subprocesos, éste tendrá un subproceso inicial "principal".  El
+subproceso principal se parará en la ubicación especificada.
+
+Puesto que los procesos y subprocesos se detienen tras su
+creación, deberá usar uno de los comandos del menú \k(Control)
+para que comiencen a ejecutarse.
+
+Si está seleccionada la opción Capturar E/S, la entrada y salida
+de los procesos se capturará y mostraraá en la \k(Panel de transcripción)
+y la entrada de los procesos se deberá introducir con la ventana
+\k(Introducir).  Si esta opción no está seleccionada, la salida
+del proceso va a la ventana xterm padre del depurador, y la entrada se
+introduce tecleando en dicha ventana.  Este comportamiento es de gran
+utilidad cuando se depura un programa basado en curses, o un programa
+de alto nivel de interacción.  Capturar E/S siempre se deberá
+seleccionar si el depurador se invoca desde su icono en lugar de
+hacerlo desde la ventana xterm.
+
+La opción Seguir hijos controla el comportamiento del depurador si
+alguno de los procesos o subprocesos creados se bifurca.
+Si no se selecciona Seguir hijos, el depurador no controlará al
+proceso hijo.  Si está seleccionado, el depurador controlará el
+proceso hijo y cualquiera de sus subprocesos (el proceso puede ser
+liberado desde el control del depurador utilizando el comando
+\k(Liberar)).  Todos los subprocesos creados por un proceso
+sujeto serán seguidos por el depurador (pero también pueden ser
+liberados utilizando el botón \k(Liberar)).  La ventana de
+aparición instantánea \k(Acción de salida) le permite controlar el
+comportamiento del depurador con respecto a los subprocesos creados
+recientemente.
+
+Si se selecciona la opción Kill procesos de creación anterior, todos
+los procesos resultantes del comando create anterior se destruirán.
+Esto le permite reiniciar procesos sin tener que encontrar y destruir
+de manera específica todos los procesos restantes.
+
+Si no se selecciona la opción Nuevo grupo de ventanas, los procesos 
+creados se añadirán todos al \d(conjunto de ventanas) de la ventana Crear.  
+Si se selecciona Nuevo grupo de ventanas, se creará un nuevo grupo de ventanas, 
+y todos los procesos creados estarán controlados por él.  
+En ambos casos, el primer programa del conducto se 
+convierte en el proceso actual del grupo de ventanas de control.
+
+Si crea procesos con un \k(Guión) o a través del
+\k(Línea de comandos), la línea de comandos de la ventana Crear se
+ actualizará para reflejar el comando más reciente.
+
+La ventana Crear siempre está disponible en el menú
+\k(Archivo) de cualquier ventana que contenga un
+\k(Panel de procesos) o cualquier ventana que aparezca automáticamente
+cuando se invoque al depurador.  Se invoca haciendo clic en
+SELECCIONAR en Crear del menú \k(Archivo).
+
+^2^Seleccionar Memoria principal
+^$112
+\k(Botón Archivo)
+Seleccionar Memoria principal
+
+La ventana de control del contenido de memoria principal le permite 
+abrir un archivo principal y su archivo de objetos correspondiente
+para su examen.  Introduzca los nombres del archivo principal y del 
+objeto en las líneas correspondientes de la ventana.  También puede
+arrastrar un archivo principal de una carpeta del escritorio y
+soltarlo en la ventana Controlar contenido de memoria principal.  
+Al hacer esto se completarán los campos Archivo principal y Archivo
+de objetos.
+
+Si se selecciona la opción Nuevo grupo de ventanas, se creará una
+nueva \d(conjunto de ventanas) en la que aparecerá la imagen de la memoria
+principal controlada.  Si no, la imagen principal aparecerá en el
+conjunto de ventanas padre de la ventana de aparición instantánea. En
+ambos casos, la imagen de memoria principal controlada se convertirá
+en el proceso actual de su conjunto de ventanas, y el subproceso que
+encontró el fallo será, si es posible, el subproceso actual.
+
+Las imágenes principales controladas pueden examinarse utilizando
+todos los comandos disponibles para el examen de los procesos
+activos, pero no pueden alterarse ni ejecutarse.
+
+La ventana Controlar contenido de memoria principal siempre se
+encuentra disponible en el menú \k(Archivo) de cualquier
+ventana que contenga un \k(Panel de procesos) o cualquier ventana que
+aparezca automáticamente cuando se invoque al depurador.  A éste se le
+invoca al hacer clic SELECCIONAR Controlar contenido de memoria
+principal del menú \k(Archivo).
+
+^2^Seleccionar proceso
+^$113
+\k(Botón Archivo)
+Seleccionar proceso
+
+La ventana Controlar estado de un proceso le permite controlar
+un proceso activo.  La ventana contiene una lista desplazable de
+procesos que puede controlar (los procesos distintos del proceso
+mismo con la misma ID de usuario).  Puede seleccionar más de un
+proceso de la lista.
+
+Por defecto, la depuración carga la información simbólica para el
+proceso del archivo objeto desde el que se creó el proceso.  Puede
+introducir en la línea Archivo objeto el nombre de un archivo
+de objetos alternativo desde el que cargar la información simbólica.
+Esto es útil cuando se realiza la depuración de aplicaciones de
+ejecución largas que no tengan información simbólica.  Si introduce un
+nombre de archivo en la línea Archivo objeto, deberá seleccionar sólo
+un proceso de la lista.
+
+Si no se selecciona la opción Nuevo grupo de ventanas, los procesos
+controlados se añadirán todos al \d(conjunto de ventanas) de la ventana
+Controlar el estado de los procesos.  Si está seleccionada, se creará
+un nuevo grupo de ventanas, y todos los procesos controlados se
+controlarán mediante el nuevo grupo de ventanas.  En ambos casos,
+el elemento seleccionado que aparezca primero en la lista se
+convertirá en el proceso actual en su nuevo grupo de ventanas.
+Si dicho proceso utiliza las interfaces de los subprocesos, el
+depurador seleccionará aleatoriamente un subproceso de dicho proceso
+para que pase a ser el subproceso actual.
+
+La opción Seguir hijos controla el comportamiento del depurador si
+alguno de los procesos controlados se bifurca.  Si no se selecciona
+Seguir hijos, el depurador no controlará el proceso hijo.  Si está
+seleccionada, el depurador si lo hará (el proceso puede liberarse
+desde el control del depurador utilizando el botón
+\k(Liberar)). El depurador seguirá por todos los procesos
+hijos creados por el proceso sujeto (pero también pueden liberarse
+utilizando el botón \k(Liberar)). La ventana de aparición
+instantánea \k(Acción de salida) le permite controlar el
+comportamiento del depurador con respecto a los subprocesos creados
+recientemente.
+
+La ventana Controlar el estado del proceso siempre se encuentra
+disponible en el menú \k(Archivo) de cualquier ventana que
+contenga un \k(Panel de procesos)
+o cualquier ventana que aparezca automáticamente cuando se invoque al
+ depurador.  A éste se le invoca al hacer clic en SELECCIONAR en
+ Controlar el estado del proceso del menú \k(Archivo).
+
+^2^Liberar
+^$114
+\k(Botón Archivo)
+Liberar
+
+La opción  de menú Liberar le permite liberar uno o más procesos o
+subprocesos del control del depurador.  Al hacer clic en
+SELECCIONAR en Liberar se visualiza un menú de aparición instantánea
+con dos opciones, En ejecución y Suspendido.  Si elige En Ejecución,
+los procesos o subprocesos se liberan y se pueden ejecutar.  Si se
+seleccionan los subprocesos, entonces el menú Liberar/Suspendido no
+estará disponible, puesto que los subprocesos individuales no pueden
+liberarse en un estado de parada.  En cuanto a los procesos, si elige
+Suspendido, los procesos se liberan en un estado de parada, y pueden
+volverse a controlar después.  Para liberar un proceso con subprocesos
+en un estado de parada, puede seleccionar todos los subprocesos del
+proceso, y a continuación seleccionar Liberar/Suspendido,
+o seleccionar uno de los subprocesos hijos, definir la opción "Otros
+  comandos se aplican a:" para "Proceso padre" de Propiedad de
+  granularidad, y luego seleccionar Liberar/Suspendido.  Si se utiliza
+  esta última, tenga en cuenta que, a menos que se restablezca la
+  Propiedad de granularidad, todos los comandos posteriores se
+  aplicarán al proceso padre.
+
+Si hay procesos o subprocesos seleccionados en \k(Panel de procesos),
+dichos procesos o subprocesos se liberarán, si no, se liberará el
+\d(proceso o hilo actual).
+
+La opción Liberar se encuentra disponible en el menú
+\k(Archivo) de cualquier ventana que contenga un
+\k(Panel de procesos) o cualquier ventana que aparezca automáticamente
+cuando se invoque al depurador. Para ello, se hace clic en SELECCIONAR
+en Liberar del menú \k(Archivo).  La opción Liberar no se
+encuentra disponible si no hay procesos o subprocesos en
+\d(conjunto de ventanas).
+
+Los procesos creados y controlados (véase \k(Seleccionar proceso) y
+\k(Crear)) pueden liberarse.
+
+^2^Abrir
+^$115
+\k(Botón Archivo)
+Abrir
+
+La ventana de aparición instantánea Abrir le permite elegir un archivo
+para que aparezca en  \k(Panel de origen). La ventana muestra
+una lista de los archivos que componen el programa y que fueron
+compilados con información de depuración.  Para ver uno de estos
+archivos, selecciónelo y luego haga clic en SELECCIONAR del botón
+Abrir, o arrastre el archivo y suéltelo en la ventana Origen.  Si
+arrastra el archivo y lo suelta en el espacio de trabajo, el depurador
+abrirá otra \d(ventana de origen secundaria).
+
+Obsérvese que la lista de archivos de origen viene del archivo
+de objetos propiamente dicho, y no del directorio actual.  El
+depurador no trata de encontrar un archivo hasta que no se
+haga una selección.  Si no puede encontrar el archivo
+seleccionado, use la opción \k(Vía de acceso de origen) del menú
+\k(Propiedades) para indicarle al depurador dónde
+buscar el origen.
+
+La ventana Abrir siempre se encuentra disponible en el menú
+\k(Archivo) de cualquier ventana que contenga un
+\k(Panel de origen).  A éste se le invoca al hacer clic en SELECCIONAR
+en Abrir del menú \k(Archivo).
+
+^2^Nuevo origen
+^$116
+\k(Botón Archivo)
+Nuevo origen
+
+La opción Origen nuevo crea un nuevo \d(ventana de origen secundaria).
+Se pueden usar las ventanas secundarias de origen para ver archivos
+o funciones múltiples de forma simultánea. Cuando se crea inicialmente,
+la ventana secundaria de origen muestra el mismo archivo que
+\d(Panel de origen) en la ventana desde la cual se invocó la opción
+Origen nuevo, pero puede cambiar el contenido con las opciones
+\k(Abrir) o \k(Mostrar origen de la función).
+
+La ventana Abrir siempre está disponible en el menú \k(Archivo)
+de cualquier ventana que contenga \k(Panel de origen).
+Se invoca haciendo clic en SELECCIONAR en el Origen nuevo del menú
+\k(Archivo).
+
+^2^Mover
+^$1161
+\k(Botón Archivo)
+Mover
+
+La ventana Mover le permite mover un proceso o subproceso de un
+\d(conjunto de ventanas) a otro.  Si había procesos o subprocesos
+seleccionados en \k(Panel de procesos), se moverán éstos.  De lo
+contrario, se moverán los \d(proceso o hilo actual).  El destino de la
+operación puede ser un conjunto de ventanas nuevo o uno existente.  Los
+conjuntos de ventanas se identifican por tener un ID entero,
+comenzando por 1.  Este ID entero aparece también en el título de
+todas las ventanas del conjunto.  El primer juego de ventanas tiene un
+ID implícito de 1.
+
+Si escoge al opción Conjunto de ventanas existente, aparecerá
+la lista de conjuntos de ventanas existentes.  Si se selecciona
+un elemento de esta lista y se hace clic en el botón Mover, o
+simplemente se hace doble clic en un elemento, el proceso o subproceso
+se trasladará hasta allí.
+
+Otra forma de mover un proceso o subproceso a un nuevo
+conjunto de ventanas es seleccionarlo en \k(Panel de procesos) y, a
+continuación, hacer clic en \k(Nuevo conjunto de ventanas) del menú
+\k(Archivo). También puede arrastrar un proceso o subproceso
+desde el panel de procesos de un conjunto de ventanas hasta el panel
+de procesos de otro conjunto de ventanas, y soltarlo allí.
+
+La opción Mover está disponible en el menú \k(Archivo)
+de cualquier ventana que contenga \k(Panel de procesos). Se invoca
+haciendo clic en Mover del menú \k(Archivo).  La opción Mover
+no está disponible si no hay procesos ni subprocesos en el conjunto de
+ventanas.
+
+^2^Guión
+^$117
+\k(Botón Archivo)
+Guión
+
+La ventana de aparición instantánea Guión le permite ejecutar comandos
+del depurador desde un archivo.  Introduzca el nombre del archivo en
+la línea de Archivo de guión, o arrastre el archivo desde su carpeta
+del escritorio y suéltelo en la ventana Guión.  Puede especificar si
+desea reflejar los comandos tal y como se leen con la opción de eco de
+comandos. Los comandos y su salida se visualizan en
+\k(Panel de transcripción).
+
+Casi todos los restantes comandos del depurador no están
+disponibles mientras el depurador está ejecutando un guión.  Los
+pocos comandos disponibles incluyen el cierre de ventanas,
+apertura de la ayuda e interrupción del guión (con el botón
+\k(Interrumpir) del menú \k(Editar) de cualquier ventana
+que contenga \k(Panel de comandos)).
+
+La ventana Guión siempre está disponible en el menú
+\k(Archivo) de cualquier ventana que contenga un
+\k(Panel de comandos). A éste se le invoca al hacer clic en SELECCIONAR
+en Guión del menú \k(Archivo).
+
+^2^Cambiar directorio
+^$118
+\k(Botón Archivo)
+Cambiar directorio
+
+La ventana de aparición inmediata Cambiar directorio le permite
+cambiar el directorio de trabajo actual del depurador.  El directorio
+de trabajo actual aparece en la parte superior de la ventana.
+Introduzca el nombre de la vía de acceso del nuevo directorio actual
+en el campo Nuevo directorio.  Si no introduce un nombre de vía de
+acceso, se utilizará el directorio especificado en la variable de
+entorno HOME.
+
+La ventana Cambiar directorio siempre está disponible en el menú
+\k(Archivo) de cualquier ventana que contenga un
+\k(Panel de comandos) o un \k(Panel de procesos) o cualquier ventana que
+aparezca automáticamente cuando se invoque al depurador.  La ventana
+Cambiar directorio se invoca haciendo clic en SELECCIONAR en Cambiar
+directorio en el menú \k(Archivo).
+
+^2^Nuevo conjunto de ventanas
+^$119
+\k(Botón Archivo)
+Nuevo conjunto de ventanas
+
+Si pulsa SELECCIONAR sobre la opción Nuevo conjunto de
+ventanas creará un nuevo \d(conjunto de ventanas).  Todas las ventanas que
+estén configuradas para visualización automática aparecerán (véase
+\k(Configuración)). Si había procesos o subprocesos seleccionados en
+\k(Panel de procesos) del conjunto de ventanas anterior, se moverán al
+nuevo conjunto de ventanas, de lo contrario este último estará vacío.
+
+La opción Nuevo grupo de ventanas siempre está disponible en el menú
+\k(Archivo) de cualquier ventana que contenga un
+\k(Panel de procesos).
+
+^2^Windows
+^$1110
+\k(Botón Archivo)
+Windows
+
+ Al hacer clic en SELECCIONAR en la opción Ventanas aparecerá un menú
+con una opción para cada ventana del \d(conjunto de ventanas).  Si
+selecciona una de las opciones del menú se abrirá dicha ventana.
+
+Si tiene más de un grupo de ventanas activo en la sesión del
+depurador, el menú de aparición instantánea también contendrá
+una entrada para todos los demás grupos de ventanas.
+Cada entrada tendrá la forma "ID del grupo de
+ventanas", donde ID es un número que también aparece en la
+cabecera de ventana y los títulos de menús.  La selección de una
+de estas entradas mostrará cualquier ventana que esté configurada
+para visualización automática en dicho grupo de ventanas
+(véase \k(Configuración)).
+
+El menú Ventanas está disponible el menú \k(Archivo)
+de todas las ventanas del depurador.
+
+^3^Botón Ventana de aparición instantánea
+^$11101
+\k(Botón Archivo)
+\k(Windows)
+Botón Ventana de aparición instantánea
+
+El botón de ventana de aparición instantánea está disponible sólo en
+el \d(Barra de botones) de una ventana.  La etiqueta del botón
+describe la ventana que va a aparecer.  Al hacer clic en SELECCIONAR
+en el botón aparecerá la ventana asociada a dicho botón en el mismo
+grupo de ventanas que la ventana que contiene el botón.  Una barra de
+botones puede contener múltiples botones de ventana de aparición
+instantánea.
+
+^2^Ventana Cerrar
+^$1111
+\k(Botón Archivo)
+Ventana Cerrar
+
+Si pulsa en SELECCIONAR sobre la opción Cerrar ventana, se cerrará la
+ventana.  Se puede volver a abrir con la opción \k(Windows)
+del botón del menú Archivo de cualquier ventana
+dentro de su conjunto de ventanas.
+
+Si la ventana es la única ventana abierta en \d(conjunto de ventanas), al
+cerrar la ventana desaparecerá dicho grupo de ventanas.  No podrá
+cerrar la última ventana de un grupo de ventanas si dicho grupo de
+ventanas contiene algún proceso o subproceso.
+
+Si la ventana es la única ventana del depurador, Cerrar ventana
+equivaldrá a \k(Salir).  Si hay procesos o ejecución bajo
+el control del depurador, se le pedirá confirmación antes de salir.
+
+La opción Cerrar ventana está disponible en el menú
+\k(Archivo) de cada ventana del depurador.
+
+^2^Salir
+^$1112
+\k(Botón Archivo)
+Salir
+
+Si pulsa SELECT en la opción Salir le permite salir del depurador.
+Si hay procesos o subprocesos bajo el control del depurador, se le
+pedirá confirmación.  Cuando se sale del depurador, todos los procesos
+y/o subprocesos se destruyen con kill, si se crearon (véase
+\k(Crear)) , o liberaron y ejecutaron, si se controlaron con
+grab (véase \k(Seleccionar proceso)) o \k(Liberar)).
+
+La opción Salir está disponible en el menú \k(Archivo) de
+todas las ventanas del depurador.
+
+^1^Botón Editar=Editar
+^$120
+Botón Editar
+
+Al hacer clic en MENU en el botón Editar aparece un menú con
+diversas opciones, según qué paneles estén presentes en la ventana.
+
+Si la ventana contiene un \k(Panel de procesos) o un \k(Panel de stacks),
+el menú Editar tendrá las siguientes opciones:
+
+\t\k(Definir actual)
+
+Si la ventana contiene un \k(Panel de símbolos), el menú Editar
+tendrá las siguientes opciones:
+
+\t\k(Exportar)
+\t\k(Fijar)
+\t\k(Soltar)
+
+Si la ventana contiene un \k(Panel de origen), un \k(Panel de desmontaje)
+o un \k(Panel de registros), el menú Editar tendrá la
+  siguiente opción:
+
+\t\k(Copiar)
+
+Si la ventana tiene un \k(Panel de eventos), el menú Editar tendrá
+las siguientes opciones:
+
+\t\k(Inhabilitar)
+\t\k(Habilitar)
+\t\k(Suprimir)
+
+Finalmente, si la ventana contiene un \k(Panel de comandos), el
+menú Editar tendrá las siguientes opciones:
+
+\t\k(Copiar)
+\t\k(Introducir)
+\t\k(Interrumpir)
+
+El grupo de opciones que aparecen en el menú Editar para
+cualquier ventana es una unión de las opciones aportadas por
+cada panel de dicha ventana.
+
+^2^Copiar
+^$121
+\k(Botón Editar)
+Copiar
+
+Al hacer clic en SELECCIONAR en el botón Copiar del menú
+Editar, se copia el texto seleccionado del \k(Panel de transcripción),
+\k(Panel de origen), \k(Panel de registros) o \k(Panel de desmontaje) al
+portapapeles.  Copiar no se encuentra disponible a menos que haya una
+selección de texto.
+
+Copiar se encuentra disponible en el menú Editar de cualquier ventana
+que contenga un \k(Panel de comandos), \k(Panel de origen),
+\k(Panel de desmontaje) o \k(Panel de registros).
+
+^2^Definir actual
+^$122
+\k(Botón Editar)
+Definir actual
+
+La opción Definir actual le permite elegir el \d(contexto actual).  Si
+se selecciona un proceso o subproceso, Definir actual convertirá el
+objeto seleccionado en el \d(proceso o hilo actual).  Si se selecciona un
+marco de stacks, Definir actual hará que el marco actual sea
+\d(trama actual). La información de todas las ventanas de
+\d(conjunto de ventanas) se actualizará para reflejar el nuevo contexto.
+
+La opción Definir actual no estará disponible a menos que un proceso o
+subproceso del \k(Panel de procesos) o un marco del \k(Panel de stacks)
+esté seleccionado.  Definir actual está disponible en el menú Editar
+de cualquier ventana que contenga un \k(Panel de procesos) o un
+\k(Panel de stacks).
+
+^2^Exportar
+^$123
+\k(Botón Editar)
+Exportar
+
+La opción de menú Exportar le permite expotar una variable
+definida por el usuario y mantenida por el depurador al entorno.
+Las variables exportadas se convierten en parte del entorno que se
+recibe mediante los procesos creados por el depurador.  Si los
+valores de las variables cambian, deberá volver a exportarlos para que
+los nuevos valores formen parte del entorno.  Observe que las
+variables se exportan sin el prefijo '$'.
+
+La opción Exportar está disponible sólo si está mostrando
+variables definidas por el usuario en \k(Panel de símbolos) y ha
+seleccionado al menos una de ellas.  La ventana \k(Símbolos) le
+permite escoger lo que aparece en \k(Panel de símbolos).
+
+Exportar sólo está disponible en el menú Editar de las ventanas
+que contengan un \k(Panel de símbolos).
+
+^2^Inhabilitar
+^$124
+\k(Botón Editar)
+Inhabilitar
+
+Al hacer clic en SELECCIONAR en el botón Desactivar desactiva los
+eventos seleccionados en cada parte del \k(Panel de eventos) (Panel de
+eventos principal o Panel de eventos onstop).  Los eventos
+desactivados no tienen efecto en los procesos y subprocesos a los que
+se aplican, pero no se eliminan.  Pueden restablecerse con
+\k(Habilitar).
+
+Pueden seleccionarse uno o más eventos en ambos paneles.  Esta
+opción no está disponible si los eventos seleccionados ya están
+desactivados.
+
+Inactivar sólo está disponible en el menú Editar de las ventanas
+que contengan un \k(Panel de eventos).
+
+^2^Habilitar
+^$125
+\k(Botón Editar)
+Habilitar
+
+Si pulsa SELECCIONAR sobre el botón Activar activará los eventos
+seleccionados en cualquier parte del \k(Panel de eventos) (panel de
+eventos principales o panel de eventos onstop).  Se puede seleccionar
+uno o más eventos \k(desactivados^^Inhabilitar) en ambos paneles.  Esta opción no está
+disponible si los eventos seleccionados no están desactivados.  Una
+vez activado, el evento volverá a afectar al proceso o subproces en el
+que se active.
+
+Activar sólo está disponible en el menú Editar de las ventanas
+que contengan un \k(Panel de eventos).
+
+^2^Suprimir
+^$126
+\k(Botón Editar)
+Suprimir
+
+Al hacer clic en SELECCIONAR en el botón Suprimir elimina todos los
+eventos seleccionados en el \k(Panel de eventos).  Esta
+opción está disponible si no ha seleccionado ningún evento.
+
+Suprimir sólo está disponible en el menú Editar de las ventanas
+que contengan un \k(Panel de eventos).
+
+^2^Introducir
+^$127
+\k(Botón Editar)
+Introducir
+
+La ventana de aparición instantánea Entrada le permite enviar la
+entrada a un proceso cuya E/S esté capturada (véase
+\k(Crear)).  Introduzca la cadena en el campo Entrada.  Si
+la opción Añadir línea nueva está definida, se añadirá un carácter de
+línea nueva al final de la cadena. La cadena se reflejará en el
+\k(Panel de transcripción).
+
+La ventana Entrada puede aparecer al hacer clic SELECCIONAR en la
+opción Entrada del menú Editar de cualquier ventana que contenga un
+\k(Panel de comandos).  Esta opción no está disponible a menos que la
+E/S del \d(proceso o hilo actual) esté capturada.
+
+^2^Interrumpir
+^$128
+\k(Botón Editar)
+Interrumpir
+
+Al hacer clic en SELECCIONAR en la opción Interrumpir le permite
+interrumpir un guión o un comando del \k(Línea de comandos).  Esto es
+útil si el guión o el comando ha caido en un bucle infinito o está
+generando gran cantidad de salidas.
+
+Interrumpir sólo está disponible en el menú Editar de ventanas
+que contengan un \k(Panel de comandos).
+
+^2^Fijar
+^$129
+\k(Botón Editar)
+Fijar
+
+La opción Pin está disponible en el menú \k(Ver) de
+cualquier ventana que contenga \k(Panel de símbolos). Si pulsa
+SELECCIONAR sobre la opción Pin le permitirá hacer pin en todas las
+variables seleccionadas.  Esta opción no está disponible a no ser que
+se hayan seleccionado una o más variables unpinned en
+\k(Panel de símbolos).
+
+Una variable sujeta permanece en el \k(Panel de símbolos) mientras que
+el proceso o subproceso en que se encuentra sea el
+\d(proceso o hilo actual), o hasta que esté suelta.  Cualquier variable de
+usuario, programa o depurador puede sujetarse.  Las variables sujetas
+pueden filtrarse hasta la parte superior de la lista mientras se
+actualiza el \k(Panel de símbolos).  Cuando una variable de programa se
+sale de su ámbito, toma un valor de "??".
+
+^2^Soltar
+^$1210
+\k(Botón Editar)
+Soltar
+
+La opción Unpin está disponible en el menú \k(Ver) de
+cualquier ventana que contenga \k(Panel de símbolos). Si pulsa
+SELECCIONAR sobre la opción Unpin le permitirá hacer unpin en todas
+las variables pinned. Esta opción no está disponible a no ser que se
+hayan seleccionado una o más variables pinned en \k(Panel de símbolos).
+
+Una variable unpinned desaparecerá de \k(Panel de símbolos) si ya no
+pertenece a la lista de símbolos que normalmente se mostraría
+desde el ámbito actual de acuerdo con los valores de
+propiedades de \k(Símbolos).
+
+^1^Botón Ver=Ver
+^$130
+Botón Ver
+
+El botón Visualizar proporciona el control sobre el
+estado de los subprocesos y procesos que se van a depurar;
+al hacer clic en MENU del botón Visualizar aparece un menú
+con diferentes opciones, que dependen de qué paneles estén en la
+ventana.  Cada ventana contiene un menú Visualizar.
+
+Si la ventana contiene un \k(Panel de procesos),  el menú Visualizar l
+tendrá las siguientes opciones:
+
+\t\k(Asignar)
+
+Si la ventana contiene un \k(Panel de símbolos),  el menú Visualizar
+tendrá las siguientes opciones:
+
+\t\k(Expandir)
+\t\k(Mostrar valor)
+\t\k(Definir valor)
+\t\k(Mostrar tipo)
+\t\k(Volcar)
+
+Si la ventana contiene un \k(Panel de origen),  el menú Visualizar
+tendrá las siguientes opciones:
+
+\t\k(Mostrar línea)
+\t\k(Mostrar origen de la función)
+\t\k(Buscar)
+\t\k(Expandir)
+\t\k(Mostrar valor)
+\t\k(Definir valor)
+\t\k(Mostrar tipo)
+
+Finalmente, si la ventana contiene un \k(Panel de desmontaje), el
+menú Visualizar tendrá las siguientes opciones:
+
+\t\k(Mostrar ubicación)
+\t\k(Mostrar dis de la función)
+\t\k(Buscar)
+\t\k(Mostrar valor)
+\t\k(Definir valor)
+\t\k(Volcar)
+\t\k(Asignar)
+
+El grupo de opciones que aparecen en el menú Visualizar para
+cualquier ventana es una unión de las opciones que aporta cada
+panel de dicha ventana.
+
+^2^Expandir
+^$131
+\k(Botón Ver)
+Expandir
+
+La ventana de aparición instantánea Aumentar le permite ver el
+contenido de una estructura a la que señala la variable del puntero,
+sigue una cadena de punteros o muestra el contenido de una matriz.
+Esta ventana aparece al hacer clic en el botón SELECCIONAR de la
+opción Aumentar en el menú \k(Ver) de cualquier ventana
+que contenga un \k(Panel de símbolos) o un \k(Panel de origen).  Esta
+opción está disponible sólo si ha seleccionado un símbolo en el
+\k(Panel de símbolos) o una expresión en el \k(Panel de origen).
+
+Si el símbolo seleccionado es un puntero, el campo Expresión
+se iniciará con la expresión necesaria para  desreferenciar el
+puntero. (Para los programas C y C++, dicha expresión sería el
+*símbolo). Si el símbolo seleccionado es distinto de un puntero, el
+campo Expresión mostrará el nombre del símbolo.  En ambos casos, el
+Resultado mostrará el valor de la expresión.
+
+Si el campo Resultado muestra los miembros de la estructura, clase o
+matriz siendo ellos mismos punteros, puede desreferenciar uno de los
+punteros al seleccionar dicho miembro en el campo Resultado y al
+hacer clic en SELECCIONAR en el botón Aumentar. Los campos Expresión
+y Resultado entonces se actualizarán para mostrar la cadena del
+puntero actual.  (Podría ver lo mismo al teclear la expresión en
+campo Expresión de la ventana \k(Mostrar valor)).  No hay límite
+para el número de punteros a los que puede desreferenciar de este
+modo, pero no puede desreferenciar a los punteros nulos (punteros
+que muestran un valor de 0), punteros del tipo vacío *, o punteros
+sin información acerca del tipo al que señalan.  Esto ocurrirá si la
+unidad de compilación incluía sólo una declaración posterior del
+nombre del tipo y no incluía también la definición de la clase o
+estructura señalada.
+
+En cualquier punto al seguir una cadena de punteros, puede
+retroceder al hacer clic en SELECCIONAR en el botón Plegar.
+Retrocederá un eslabón en la cadena, o un nivel de sin referencia.
+Puede hacer clic en SELECCIONAR en Plegar tantas veces como haya hecho
+clic en SELECCIONAR en Expandir.
+
+^2^Mostrar valor
+^$132
+\k(Botón Ver)
+Mostrar valor
+
+La ventana Mostrar valor le permite ver el valor de una expresión en
+el lenguaje actual.  Introduzca la expresión que desee evaluar en el
+campo Expresión.  También puede introducir una lista de expresiones
+separadas por una coma.  Las expresiones pueden contener variables del
+programa, variables del depurador incorporadas y variables definidas
+por el usuario.  Al hacer clic en SELECCIONAR en el botón Mostrar
+valor hará que se evalúen las expresiones y que aparezcan los
+resultados en el área Resultado.  Para más detalles acerca de qué
+expresiones se aceptan, véase la sección acerca del lenguaje
+específico:
+
+        \k(Soporte para el lenguaje C)
+        \k(Soporte para el lenguaje C++)
+
+La ventana Mostrar valor está disponible en el menú Visualizar en
+cualquier ventana que contenga un \k(Panel de símbolos),
+\k(Panel de origen) o \k(Panel de desmontaje). Si ha seleccionado una
+variable en uno de estos paneles cuando aparece la ventana Mostrar
+valor, el nombre de dicha variable se utilizará para inicializar el
+campo Expresión.  Si ha seleccionado cualquier proceso o subproceso en
+el \k(Panel de procesos), la expresión se evaluará en el contexto de cada
+uno de dichos procesos y subprocesos uno tras otro.  Si no ha
+seleccionado ningún proceso o subproceso, se utilizará el
+\d(proceso o hilo actual).
+
+Puede seleccionar el formato del resultado desde una de las
+opciones de la columna Formato.  La selección de "Por defecto" hará
+que el depurador imprima el resultado en el formato que elija
+basándose en el tipo de resultado.  Hay otras opciones tales como
+"Octal", "Decimal" y "Carácter".  La selección de "Otros" le permite
+introducir una cadena de formato tipo printf(3C) en el campo
+Especificar formato. No puede introducir nada en este campo sin
+seleccionar antes Otros.
+
+La evaluación de una llamada de función hace que el depurador
+cree un marco de stacks para dicha función y que la ejecute.
+Los eventos del depurador se desactivan durante la ejecución de la
+función.
+
+La opción \k(Expandir) es similar a la opción Mostrar valor,
+pero proporciona capacidades especializadas para la cancelación de las
+referencias de los punteros.
+
+^2^Definir valor
+^$133
+\k(Botón Ver)
+Definir valor
+
+La ventana Definir valor le permite definir una variable del usuario
+mantenida por el depurador o incorporada en el depurador, o evaluar
+cualquier expresión de lenguaje.  Para definir una variable del
+usuario o del depurador, introduzca una expresión del formulario:
+variable = expresión [,expresión ...] en el campo Expresión. Los
+valores legales de la expresión dependen de la variable. Si introduce
+una lista de cadenas separadas por comas y variables de usuario, los
+valores de cadena de esas expresiones se concatenarán.
+
+También puede introducir cualquier expresión del lenguaje actual
+en el campo Expresión, aunque el uso común sería evaluar una
+expresión de asignación.  Para más detalles acerca de qué expresiones
+se aceptan, véase la sección sobre el lenguaje específico:
+
+        \k(Soporte para el lenguaje C)
+        \k(Soporte para el lenguaje C++)
+
+La ventana Mostrar valor está disponible en el menú Visualizar en
+cualquier ventana que contenga un \k(Panel de símbolos),
+\k(Panel de origen) o \k(Panel de desmontaje). Si ha seleccionado una
+variable de uno de esos paneles cuando aparezca la ventana Definir
+valor, el nombre de dicha variable se utilizará para inicializar el
+campo Expresión.  Si ha seleccionado cualquier proceso
+o subproceso en el \k(Panel de procesos), la expresión se evaluará en el
+  contexto de cada uno de dichos procesos y subprocesos uno tras otro.
+  Si no ha seleccionado ningún proceso
+o subproceso, se utilizará el \d(proceso o hilo actual).
+
+^2^Mostrar tipo
+^$134
+\k(Botón Ver)
+Mostrar tipo
+
+La ventana Mostrar tipo le permite ver el tipo de una expresión en el
+lenguaje actual.  Introduzca la expresión en el campo Expresión.
+Al hacer clic en SELECCIONAR en el botón Mostrar tipo hará que
+el tipo aparezca en el área Tipo.  Para más detalles
+acerca de qué expresiones se aceptan, véase la sección sobre
+el lenguaje específico:
+
+        \k(Soporte para el lenguaje C)
+        \k(Soporte para el lenguaje C++)
+
+También puede introducir un nombre de tipo en el campo Expresión.
+Entonces el depurador mostrará la definición del tipo denominado,
+que incluye a los miembros si el tipo es un tipo de clase,
+estructura, unión o enumeración.
+
+La ventana Mostrar tipo está disponible en el menú Visualizar en
+cualquier ventana que contenga un \k(Panel de símbolos) o un
+\k(Panel de origen). Si ha seleccionado una variable en uno de estos
+paneles cuando aparezca la ventana Mostrar tipo, se utilizará el
+nombre de dicha variable para inicializar el campo Expresión.  Si ha
+seleccionado cualquier proceso
+o subproceso en el \k(Panel de procesos), aparecerá el tipo en el
+contexto de dichos procesos y subprocesos uno tras otro.  Si no ha
+seleccionado ningún proceso ni subproceso, se utilizará el
+\d(proceso o hilo actual).
+
+^2^Mostrar línea
+^$135
+\k(Botón Ver)
+Mostrar línea
+
+La opción Mostrar línea muestra una ventana de aparición instantánea
+que le permite colocar el archivo que aparece en el Panel de origen
+en una línea específica.  Introduzca el número de línea en el
+campo Línea.  La ventana Mostrar línea aparecerá al hacer clic en
+SELECCIONAR en la opción Mostrar línea en el menú \k(Ver)
+de cualquier ventana que contenga un \k(Panel de origen).
+
+^2^Mostrar origen de la función
+^$136
+\k(Botón Ver)
+Mostrar origen de la función
+
+La ventana Mostrar origen de función le permite ver el origen de
+cualquier función en el \d(proceso o hilo actual) que se compiló con la
+información de depuración.  Esta ventana aparece al hacer clic en
+SELECCIONAR en la opción Mostrar origen de función en el menú
+\k(Ver) de cualquier ventana que contenga un
+\k(Panel de origen).
+
+La ventana de aparición instantánea muestra dos listas de
+desplazamiento.  La primera lista muestra los objetos que componen
+el proceso seleccionado o el proceso padre del subproceso
+seleccionado; los objetos son el archivo ejecutable y cualquier
+biblioteca compartida depende de él.  La segunda lista muestra una
+lista de funciones.  Si está definida la opción "Mostrar funciones del
+archivo actual", se ignorará la lista de desplazamiento de Objetos, y
+sólo las funciones que estén definidas en el archivo visualizado
+actualmente en el Panel de origen aparecerán en la lista Funciones.  Si
+no está definida esta opción, la selección de la lista Objetos
+determinará las funciones listadas.  La lista de funciones puede estar
+en blanco si el objeto seleccionado no contiene ninguna de las
+funciones compiladas con la información de depuración.
+
+Puede seleccionar una función de la lista Funciones.  Al hacer clic en
+SELECCIONAR en el botón Mostrar función hará que aparezca la función
+en el \k(Panel de origen) de la ventana padre.  También puede
+arrastrar la función seleccionada y soltarla en el \k(Panel de origen)
+o en la Zona de trabajo.  Al soltarla en la Zona de trabajo se abrirá
+un nuevo, \d(ventana de origen secundaria) que muestra la función seleccionada.
+
+^2^Mostrar dis de la función
+^$137
+\k(Botón Ver)
+Mostrar dis de la función
+
+La ventana Mostrar desensamblaje de función le permite mostrar el
+desensamblaje de cualquier función de \d(proceso o hilo actual).  Esta
+ventana se abre pulsando SELECCIONAR en la opción Mostrar
+desensamblaje de función del menú \k(Ver) de cualquier
+ventana que contenga \k(Panel de desmontaje).
+
+La ventana de aparición instantánea muestra dos listas de
+desplazamiento.  La primera lista muestra los objetos que componen
+el proceso seleccionado o el proceso padre del subproceso
+seleccionado; los objetos son el archivo ejecutable y cualquier
+biblioteca compartida depende de él.  La selección en esta lista
+determina las funciones que aparecerán en la segunda lista.
+
+Puede seleccionar una función de la lista Funciones.  Al hacer clic en
+SELECCIONAR en el botón Mostrar función hará que la función
+aparezca en el Panel de desensamblaje de la ventana padre de
+Desensamblaje.  También puede arrastrar la función seleccionada y
+soltarla en el \k(Panel de desmontaje).
+
+^2^Mostrar ubicación
+^$138
+\k(Botón Ver)
+Mostrar ubicación
+
+La opción Mostrar ubicación muestra una ventana de aparición
+instantánea que le permite colocar el \k(Panel de desmontaje) para
+mostrar una dirección específica.  Introduzca la dirección hexadecimal
+en el campo Ubicación.  La ventana Mostrar ubicaciójn aparece al hacer
+clic en SELECCIONAR en la opción Mostrar ubicación en el menú
+\k(Ver) de cualquier ventana que contenga un
+\k(Panel de desmontaje).
+
+^2^Buscar
+^$139
+\k(Botón Ver)
+Buscar
+
+La ventana Buscar le permite introducir una expresión común
+tipo ed(1) para buscar en los Paneles de origen o desensamblaje.
+Introduzca la expresión a buscar en el campo Texto.  La expresión
+puede contener cualquier combinación de los siguientes elementos: 
+\t.\tHace coincidir cualquier carácter excepto un salto de línea
+\t[...]\tHace coincidir cualquiera de los caracteres entre corchetes,
+\t\t\tse permiten rangos y ^ indica negación
+\t*\tIndica cero o más de las anteriores ER 
+\t^\tHace coincidir cadenas nulas al comienzo de una línea 
+\t$\tHace coincidir la cadena nula al final de una línea 
+\t\{m\}\tIndica exactamente m apariciones de la ER anterior 
+\t\{m,\}\tIndica al menos m apariciones de la anterior ER 
+\t{m,n\}\tIndica las apariciones de m a n, inclusive
+\t\(...\)\tHace coincidir la misma cosa que coincida con ...
+\t\dígito\tHace coincidir la n-ésima ER entre paréntesis en la misma 
+\t       \texpresión 
+\t\<\tHace coincidir la cadena nula al principio de una palabra 
+\t\>\tHace coincidir la cadena nula al final de una palabra.
+
+La ventana Buscar se puede abrir desde el menú \k(Ver) de
+cualquier ventana que contenga \k(Panel de origen) o
+\k(Panel de desmontaje).  Si hay texto seleccionado en uno de estos
+paneles, se usa para inicializar el campo Texto.  Si la ventana padre
+contiene ambos paneles, estará disponible una selección a fin de
+escoger en cuál buscar.
+
+Puede buscar hacia adelante o hacia atrás.  Si se selecciona texto, la 
+búsqueda comienza después (o antes) de la cadena seleccionada; si no 
+la búsqueda comenzará desde la posición actual del cursor.
+
+^2^Volcar
+^$1310
+\k(Botón Ver)
+Volcar
+
+La ventana Volcado le permite ver el contenido de la memoria en un
+\k(ubicación) específico en el proceso o subproceso
+seleccionado. Introduzca la ubicación en el campo Ubicación.
+
+Puede introducir el número de bytes que se van a ver en el campo
+Cuenta. Si no introduce un número ahí, el depurador mostrará 256
+bytes, 16 bytes por línea.  Los bytes aparecerán en hexadecimal y
+ASCII.
+
+La ventana Volcar está disponible desde el menú \k(Ver) de
+cualquier ventana que contenga \k(Panel de símbolos) o
+\k(Panel de procesos).  Si hay una variable seleccionada en
+uno de los paneles, su nombre se usará para incializar el campo
+Ubicación.  Si ha seleccionado un proceso o subproceso en
+\k(Panel de procesos), aparecerá el contenido de la ubicación de dicho
+proceso o subproceso. Si no hay ningún proceso ni subproceso
+seleccionado, se usa el \d(proceso o hilo actual).
+
+Las ventanas \k(Mostrar valor) y \k(Expandir) proporcionan
+otras formas de examinar el espacio de direcciones correspondiente a
+un proceso o subproceso.
+
+^2^Asignar
+^$1311
+\k(Botón Ver)
+Asignar
+
+La ventana Asignación muestra la asignación virtual de direcciones
+para el proceso seleccionado o el proceso padre del subproceso
+seleccionado.  La información visualizada incluye las direcciones de
+inicio y final, tamaño y permisos de acceso para cada segmento.
+
+La ventana Asignación está disponible desde el menú
+\k(Ver) de cualquier ventana que contenga
+\k(Panel de procesos) o \k(Panel de desmontaje).  Si hay un proceso
+seleccionado en \k(Panel de procesos), aparecerá la asignación de
+direcciones para dicho proceso.  Sólo se puede seleccionar un proceso.
+Si no hay ninguno seleccionado, aparecerá la asignación de direcciones
+para el proceso actual.
+
+^1^Botón Control=Control
+^$14
+Botón Control
+
+El botón Control proporciona acceso al espación de dirección
+de un proceso controlado.
+Al hacer clic en MENU en el botón Control aparecerá un
+menú con diferentes opciones, que dependerán de los paneles que
+aparezcan en la ventana. Cada ventana proporciona un menú Control con
+al menos las siguientes opciones:
+
+\t\k(Ejecutar)
+\t\k(Regresar)
+\t\k(Ejecutar hasta)
+\t\k(Declaración de paso)
+\t\k(Instrucción de paso)
+\t\k(Declaración siguiente)
+\t\k(Instrucción siguiente)
+\t\k(Paso)
+\t\k(Saltar)
+\t\k(Parar)
+
+Además, si la ventana contiene un \k(Panel de origen), el
+menú Control tendrá la siguiente opción:
+
+\t\k(Activar origen)
+
+Finalmente, si la ventana contiene un \k(Panel de desmontaje), el
+menú Control tendrá las siguientes opciones:
+
+\t\k(Activar desmontaje)
+
+El conjunto de opciones que aparecen en el menú Control para
+cualquier ventana es una unión de las opciones por defecto y
+las opciones que aporta cada panel de dicha ventana.
+
+^2^Ejecutar
+^$141
+\k(Botón Control)
+Ejecutar
+
+La opción Ejecutar se invoca pulsando SELECCIONAR en el botón
+Ejecutar del menú \k(Control) de cualquier
+ventana.  Si la ventana contiene \k(Panel de procesos), y hay procesos
+o subprocesos seleccionados en ese panel, al invocar esta
+opción comenzarán a ejecutarse los procesos o
+subprocesos seleccionados.  Si no hay procesos ni subprocesos
+seleccionados, o se invoca Ejecutar desde una ventana que no
+contenga \k(Panel de procesos), se ejecutará el \d(proceso o hilo actual).
+Esta opción no está disponible a no ser que todos los procesos y
+subprocesos seleccionados estén detenidos.
+
+^2^Regresar
+^$142
+\k(Botón Control)
+Regresar
+
+La opción Retorno se invoca pulsando SELECCIONAR en el botón
+Retorno del menú \k(Control) de cualquier
+ventana.  Si la ventana contiene \k(Panel de procesos), y hay procesos
+o subprocesos seleccionados en ese panel, al invocar esta
+opción comenzarán a ejecutarse los procesos o
+subprocesos seleccionados.  Si no hay procesos ni subprocesos
+seleccionados, o se invoca Retorno desde una ventana que no contenga
+\k(Panel de procesos), se ejecutará el \d(proceso o hilo actual).  Cada uno
+de los procesos y/o subprocesos que se ejecute lo hará hasta que
+retorne la función actual.
+
+Observe que el proceso o subproceso puede parar antes de
+retornar a la función de llamada si un evento se activa mientras éste
+se está ejecutando.
+
+Esta opción no estará disponible a menos que todos los
+procesos o subprocesos seleccionados se detengan.
+
+^2^Ejecutar hasta
+^$143
+\k(Botón Control)
+Ejecutar hasta
+
+La opción Ejecutar hasta le permite especificar un \k(ubicación)
+a ejecutar.  Introduzca la ubicación en la línea etiquetada como
+Ubicación.
+
+La opción Ejecutar hasta se invoca pulsando SELECCIONAR en el botón
+Ejecutar hasta del menú \k(Control) de cualquier
+ventana.  Si invocó esta opción desde una ventana que contenía
+\k(Panel de procesos), los procesos o subprocesos seleccionados (si los
+hay) de ese panel se verán afectados.  De lo contrario, se verá
+afectado el \d(proceso o hilo actual).
+
+Observe que Ejecutar hasta no garantiza que el proceso o
+subproceso siempre llegue a la ubicación especificada.  Si su
+programa toma una vía de ejecución inesperada, éste puede salir o
+simplemente ignorar la ubicación.  También, si un evento se activa,
+el proceso o subproceso se parará antes de alcanzar la ubicación
+especificada.
+
+^2^Declaración de paso
+^$144
+\k(Botón Control)
+Declaración de paso
+
+Al hacer clic en SELECCIONAR en la opción de recorrer sentencias paso
+a paso, se recorren los procesos y subprocesos afectados a través de
+una sentencia de origen, paso a paso en las llamadas de función.
+
+Si la ventana contiene un \k(Panel de procesos), y hay procesos y
+subprocesos seleccionados en dicho panel, la opción de recorrer
+sentencias paso a paso afectará a los procesos y subprocesos
+seleccionados.  Si no hay ninguno seleccionado, o se invoca esta
+opción desde una ventana que no contiene un \k(Panel de procesos), se
+verá afectado el \d(proceso o hilo actual).
+
+Esta opción no estará disponible a menos que todos los
+procesos o subprocesos seleccionados se detengan.
+
+^2^Instrucción de paso
+^$145
+\k(Botón Control)
+Instrucción de paso
+
+Al hacer clic en SELECCIONAR en la opción Recorrer instrucciones paso
+a paso se avanza hacia los procesos y subprocesos afectados a través
+de una instrucción en la máquina, paso a paso en las llamadas de
+función.
+
+Si la ventana contiene un \k(Panel de procesos), y hay procesos y
+subprocesos seleccionados en dicho panel, la opción Recorrer
+instrucciones paso a paso afectará a los procesos y subprocesos
+seleccionados.  Si no hay ninguno seleccionado, o se invoca a Recorrer
+instrucciones paso a paso desde una ventana que no contiene un
+\k(Panel de procesos), se verá afectado el \d(proceso o hilo actual).
+
+Esta opción no estará disponible a menos que todos los
+procesos o subprocesos seleccionados se detengan.
+
+^2^Declaración siguiente
+^$146
+\k(Botón Control)
+Declaración siguiente
+
+Al hacer clic en SELECCIONAR en la opción Siguiente sentencia se
+recorren los procesos y subprocesos afectados a través de una
+sentencia de origen.  Se pasarán por encima las llamadas de función
+(tratadas como una sentencia simple).  Observe que un proceso o
+subproceso todavía puede detenerse si un evento se activa mientras el
+proceso o subproceso está en la subrutina a la que se ha llamado.
+
+Si la ventana contiene un \k(Panel de procesos), y hay procesos y
+subprocesos seleccionados en dicho panel, la opción Siguiente
+sentencia afectará a los procesos y subprocesos seleccionados.  Si no
+hay ninguno seleccionado, o se invoca Siguiente sentencia desde una
+ventana que no contiene un \k(Panel de procesos), se verá afectado el
+\d(proceso o hilo actual).
+
+Esta opción no estará disponible a menos que todos los
+procesos o subprocesos seleccionados se detengan.
+
+^2^Instrucción siguiente
+^$147
+\k(Botón Control)
+Instrucción siguiente
+
+Al hacer clic en SELECCIONAR en la opción Siguiente instrucción se
+recorren los procesos y subprocesos afectados a través de
+una instrucción de la máquina.  Se pasarán por encima las llamadas de
+función (tratadas como una sentencia simple).  Observe que un proceso
+o subproceso todavía puede detenerse si un evento se activa mientras
+el proceso o subproceso está en la llamada subrutina.
+
+Si la ventana contiene un \k(Panel de procesos), y hay procesos y
+subprocesos seleccionados en dicho panel, la opción Siguiente
+instrucción afectará a los procesos y subprocesos seleccionados.  Si
+no hay ninguno seleccionado, o se invoca Siguiente instrucción desde
+una ventana que no contiene un \k(Panel de procesos), se verá afectado el
+\d(proceso o hilo actual).
+
+Esta opción no estará disponible a menos que todos los
+procesos o subprocesos seleccionados se detengan.
+
+^2^Paso
+^$148
+\k(Botón Control)
+Paso
+
+La ventana Step le proporciona más control sobre la depuración paso a
+paso que las demás opciones del menú \k(Control).
+
+El primer grupo de opciones le permite controlar cuántas veces se
+recorre paso a paso un proceso o hilo.  Al seleccionar Una vez que
+se recorre el proceso o hilo una sóla vez.  Si selecciona
+Cuenta, deberá introducir, en el campo Cuenta, el número de veces que
+quiere que se recorra el proceso o hilo.
+
+Las opciones Sentencia e Instrucción especifican el nivel en que
+se está ejecutando step.
+
+La opción Llamada le permite especificar si ignorar o ir a las
+llamadas de función.
+
+Si abre la ventana Recorrer paso a paso desde una ventana que contenga
+un \k(Panel de procesos), los procesos y subprocesos seleccionados (si
+hubiera) se verían afectados. De otro modo, se verá afectado el
+\d(proceso o hilo actual).
+
+Las opciones \k(Declaración de paso), \k(Instrucción de paso),
+\k(Declaración siguiente), y \k(Instrucción siguiente) del menú
+\k(Control) proporcionan formas más sencillas de recorrer un
+proceso o subproceso paso a paso.  Por ejemplo, \k(Instrucción siguiente)
+equivale a seleccionar De uno en uno, Instrucción, y Por encima de la
+llamada en la ventana Recorrer paso a paso.  Además, los botones
+\k(Activar origen) y \k(Activar desmontaje) recorrerán paso a paso el
+proceso o subproceso continuamente hasta que usted lo detenga.
+
+^2^Activar origen
+^$149
+\k(Botón Control)
+Activar origen
+
+La opción Animar origen se invoca pulsando SELECCIONAR
+en Animar origen del menú \k(Control) de cualquier ventana
+que contenga \k(Panel de origen).  Esta opción arranca el recorrido
+\d(proceso o hilo actual), lo continúa hasta que se provoca un evento o
+usted lo detiene.  Aparecerá un mensaje en la parte
+inferior de la pantalla indicando que se está animando el
+proceso o subproceso.  Para detener la animación, seleccione
+el botón \k(Parar)  del menú \k(Control).
+Excepto \k(Destruir) y \k(Introducir), no se permite
+ninguna acción que afecte al estado del proceso o subproceso que se
+esté animando.
+
+Mientras se anima el proceso o subproceso, el depurador resaltará
+cada sentencia del \k(Panel de origen) mientras se ejecuta.  Este
+recorrerá en cualquier llamada de función que encuentre.  La
+información de otras ventanas no se actualizará hasta que se pare la
+animación. La animación se para si el proceso o subproceso termina, o
+si el subproceso entra en el estado Inactivo-LWP o Suspendido,
+o si se activa un evento.
+
+Si el recorrido se realiza demasiado rápido y no puede seguirlo
+fácilmente, puede ralentizarlo usando la opción \k(Activación)
+del menú \k(Propiedades).
+
+Al seleccionar la opción Animar origen, especifica el
+recorrido paso a paso en el nivel de sentencias.  La opción
+\k(Activar desmontaje) del menú \k(Control) de cualquier ventana
+que contenga \k(Panel de desmontaje) le permite animar el proceso o
+subproceso en el nivel de instrucciones.
+
+^2^Activar desmontaje
+^$1410
+\k(Botón Control)
+Activar desmontaje
+
+La opción Animar desensamblaje se invoca pulsando SELECCIONAR en
+Animar desensamblaje del menú \k(Control) de cualquier ventana
+que contenga \k(Panel de desmontaje). La opción Animar desensamblaje
+arranca el recorrido paso a paso \d(proceso o hilo actual), y continuará
+realizándolo hasta que un evento se provoque o usted lo detenga.
+Aparecerá un mensaje en la parte inferior de la pantalla indicando que
+se está animando el proceso o hilo.  Para detener la animación,
+seleccione el botón \k(Parar) del menú \k(Control).
+Excepto \k(Destruir) y \k(Introducir), no se permite
+ninguna acción que afecte al estado del proceso o hilo que se esté animando.
+
+Mientras se anima el proceso o subproceso, el depurador resaltará
+cada sentencia del \k(Panel de desmontaje) mientras se ejecuta.  Este
+recorrerá cualquier llamada de función que encuentre.  La
+información de otras ventanas no se actualizará hasta que se pare la
+animación. La animación se para si el proceso o subproceso termina, o
+si el subproceso entra en el estado Inactivo-LWP o Suspendido,
+o si se activa un evento.
+
+Si el recorrido se realiza demasiado rápido y no puede seguirlo
+fácilmente, puede ralentizarlo usando la opción \k(Activación)
+del menú \k(Propiedades).
+
+Al seleccionar la opción Animar desensamblaje,
+especifica el recorrido paso a paso en el nivel de instrucciones.
+La opción \k(Activar origen) del menú \k(Control)
+de cualquier ventana que contenga \k(Panel de origen) le permite
+animar el proceso o subproceso en el nivel de sentencias.
+
+^2^Saltar
+^$1411
+\k(Botón Control)
+Saltar
+
+La ventana Saltar le permite especificar un \k(ubicación) desde
+el que reanudar la ejecución de los procesos y subprocesos afectados.
+Introduzca la ubicación en la línea Ubicación.
+
+Esta opción no reanuda la ejecución de los procesos o subprocesos
+seleccionados.  La siguiente vez que seleccione una de las
+restantes opciones del menú \k(Control), la ejecución se
+iniciará desde esta ubicación.
+
+La ubicación puede ser cualquier dirección dentro del texto de los
+procesos seleccionados, pero debe tenerse mucho cuidado.  El salto no
+trata de ajustar el stack del proceso o subproceso si la dirección está
+fuera de la función actual.  También debe tenerse mucho cuidado al saltar
+cerca de los códigos que pueden tener efectos secundarios importantes.
+
+Si la ventana contiene un \k(Panel de procesos), y hay subprocesos o
+procesos seleccionados en dicho panel, la opción
+Saltar afectará a los procesos y subprocesos seleccionados.  Si no hay
+ninguno seleccionado. o se invoca Saltar desde una ventana
+que no contiene un \k(Panel de procesos), se verá afectado el
+\d(proceso o hilo actual).
+
+Esta opción no estará disponible a menos que todos los
+procesos o subprocesos seleccionados se detengan.
+
+^2^Parar
+^$1412
+\k(Botón Control)
+Parar
+
+Si hace clic en SELECCIONAR en la opción Parada hará que los procesos
+y subprocesos afectados suspendan inmediatamente la ejecución.  Esta
+opción no estará disponible a menos que los procesos y subprocesos
+seleccionados se estén ejecutando o recorriendo paso a paso.
+
+Si la ventana contiene un \k(Panel de procesos), y hay subprocesos o
+procesos seleccionados en dicho panel, la opción Parada afectará a los
+procesos y subprocesos seleccionados.  Si no hay ninguno seleccionado.
+o se invoca Parada desde una ventana que no contiene un
+\k(Panel de procesos), se verá afectado el \d(proceso o hilo actual).
+
+Observe que la petición de Parada puede no tener efecto
+instantáneamente, debido a la latencia del sistema y a las variaciones
+de programación.
+
+^1^Botón Evento=Evento
+^$15
+Botón Evento
+
+El botón Evento permite al usuario crear eventos que
+alteren el flujo de control de un subproceso o proceso.
+Al hacer clic en MENU en el botón Evento aparece un menú con
+diferentes opciones, que dependerán de qué paneles haya en la
+ventana.  Cada ventana proporciona un menú Evento con al menos las
+siguientes opciones:
+
+\t\k(Parar en la función)
+\t\k(Parar)
+\t\k(Señal)
+\t\k(Llamada al sistema)
+\t\k(Al parar)
+\t\k(Cancelar)
+\t\k(Destruir)
+\t\k(Matar)
+\t\k(Ignorar señales)
+
+Además, si la ventana contiene un \k(Panel de símbolos), el
+menú Evento tendrá la siguiente opción:
+
+\t\k(Definir punto de control)
+
+Si la ventana contiene un \k(Panel de origen) o un
+\k(Panel de desmontaje), el menú Evento tendrá las siguientes opciones:
+
+\t\k(Definir punto de ruptura)
+\t\k(Suprimir punto de ruptura)
+
+Finalmente, si la ventana contiene un \k(Panel de eventos), el menú
+Evento tendrá la siguiente opción:
+
+\t\k(Cambiar)
+
+El grupo de opciones que aparecen en el menú Evento para
+cualquier ventana es una unión de las opciones por defecto y
+las opciones que aporta cada panel de dicha ventana.
+
+^2^Definir punto de ruptura
+^$151
+\k(Botón Evento)
+Definir punto de ruptura
+
+La opción Definir punto de interrupción está disponible si ha
+seleccionado una línea en el \k(Panel de origen) o una instrucción
+en el \k(Panel de desmontaje) y si el \d(proceso o hilo actual) se para.
+Al hacer clic en SELECCIONAR en esta opción se creará un punto de
+interrupción (un tipo de \d(evento de parada)) en el
+\d(programa actual) o \d(proceso o hilo actual). El evento estará indicado
+por una señal de stop en la línea o instrucción seleccionada.  El
+evento también aparecerá en el Panel de eventos principal del
+\k(Panel de eventos).  También podrá definir un punto de interrupción
+si hace doble clic en el botón SELECCIONAR del margen izquierdo de la
+línea o instrucción seleccionada.
+
+Cuando trata de definir un punto de interrupción en una línea de
+origen, el depurador mostrará un mensaje si
+no es capaz de definir el punto de interrupción en la línea
+seleccionada.  Hay diversas razones por las que no se puede definir el
+punto de interrupción:
+
+    o La línea de origen no contiene nada que pueda generar un
+      código ejecutable. Esto incluiría línea en blanco y líneas que
+      contengan sólo comentarios y declaraciones de variables.
+
+    o La línea forma parte de una sentencia de líneas múltiples.
+      Puede definir un punto de corte sólo en una línea de una
+      sentencia o condición de líneas múltiples.
+
+    o La línea es el principio de una definición de función.
+      En su lugar, deefina el punto de corte en la primera sentencia
+      de la función.
+
+^2^Suprimir punto de ruptura
+^$152
+\k(Botón Evento)
+Suprimir punto de ruptura
+
+La opción Suprimir punto de interrupción está disponible si seleccionó
+una línea de origen con una señal de stop en ella en el
+\k(Panel de origen) o una instrucción con una señal de stop en ella en
+el \k(Panel de desmontaje). La señal de stop indica que hay un punto de
+interrupción (un tipo de \d(evento de parada)) en dicha línea o
+instrucción.  Al hacer clic en SELECCIONAR en la opción Suprimir punto
+de interrupción se eliminará el punto de interrupción y se suprimirá
+el evento.  También puede eliminar un punto de interrupción al hacer
+doble clic en el botón SELECCIONAR en el margen izquierdo de la línea
+con el punto de interrupción.
+
+^2^Definir punto de control
+^$153
+\k(Botón Evento)
+Definir punto de control
+
+La opción Definir punto de control está disponible en el menú
+\k(Control) de cualquier ventana que contenga
+\k(Panel de símbolos). Si pulsa SELECCIONAR en la opción Definir punto
+de control le permite definir puntos de control para las variales
+seleccionadas.  Esta opción no está disponible a no ser que se haya
+seleccionado una o más variables de programa en \k(Panel de símbolos).
+
+Un punto de control es un tipo de \d(evento de parada) que dice al
+depurador que pare el programa siempres que la variable cambie el
+valor. El depurador creará un evento de parada independiente para cada
+variable.  Aparecerán los nuevos eventos, y pueden eliminarse
+o desactivarse, en el \k(Panel de eventos).
+
+^2^Parar en la función
+^$154
+\k(Botón Evento)
+Parar en la función
+
+La ventana Parar en función le permite definir un punto de
+interrupción en una función.  Esta ventana está disponible en el menú
+\k(Evento) de cualquier ventana.
+
+La ventana de aparición instantánea muestra dos listas de
+desplazamiento.  La primera lista muestra los objetos que componen
+el proceso seleccionado o el proceso padre del subproceso
+seleccionado; los objetos son el archivo ejecutable y cualquier
+biblioteca compartida depende de él.  La selección en esta lista
+determina las funciones que aparecerán en la segunda lista.
+
+Puede seleccionar una función del la segunda lista para establecer
+un punto de interrupción.  Esto crea un \d(evento de parada).  Por
+defecto, los eventos se aplican a todos los procesos y subprocesos
+derivados del \k(programa^^procesos e hilos), seleccionado, no sólo al proceso o subproceso
+seleccionado.  Si desea cambiar este comportamiento, use la opción
+\k(Granularidad) del menú \k(Propiedades).  Si no ha
+seleccionado un programa en el \k(Panel de procesos), o ha invocado
+Detener en función desde una ventana que no contenga un panel de
+procesos, se supondrá el \d(programa actual).  Los programas afectados
+se listarán en la línea Programas de la parte superior de la ventana.
+El evento creado al ejecutar este comando aparecerá en el panel Evento
+principal de \k(Panel de eventos).
+
+^2^Parar
+^$155
+\k(Botón Evento)
+Parar
+
+La ventana Parar le permite crear un \d(evento de parada).  Un evento
+de parada especifica algunas condiciones del espacio de dirección del
+programa que harán que el depurador pare la ejecución del programa.
+
+Introduzca un \k(Detener expresión) en la línea Expresión.  El
+depurador evalúa la expresión de parada continuamente mientras el
+proceso o subproceso del sujeto se está ejecutando.  El depurador
+detendrá el proceso o subproceso cuando la expresión se convierte en
+verdadera.
+
+Puede introducir, en el campo Comandos, una acción para que el
+depurador realice en cualquier momento  activaciones de eventos.
+La acción debería se una o más de los comandos disponibles a través
+de la interfaz de la línea de comandos del depurador.  Los resultados
+de la ejecución de los comandos aparecerá en el \k(Panel de comandos).
+
+Puede introducir un número en el campo Cuenta para decir al depurador
+que permita la activación del evento tantas veces como haya indicado
+antes de detener el proceso o subproceso.  Después de esto, el proceso
+o subproceso se detendrá en cada aparición del evento.
+
+La ventana Stop está disponible desde el menú \k(Evento)
+cualquier ventana.  Si ha llamado a esta ventana desde una ventana que
+contenga \k(Panel de procesos), el nuevo evento se aplicará a los
+\k(programas^^procesos e hilos) seleccionados (si los hay) en \k(Panel de procesos). De lo
+contrario, el evento se aplicará al \d(programa actual) o
+\d(proceso o hilo actual).
+
+Por defecto, los eventos se aplican a todos los procesos y
+subprocesos derivados de un programa, no sólo al proceso o subproceso
+seleccionado.  Si desea modificar este comportamiento, use la ventana
+\k(Granularidad).  Los programas o subprocesos afectados
+se enumeran en la línea Programas de la parte superior de
+la ventana.
+
+El evento creado al ejecutar este comando aparecerá en el Panel de
+eventos principal del \k(Panel de eventos).
+
+^3^Detener expresión
+^$1551
+\k(Botón Evento)
+\k(Parar)
+Detener expresión
+
+Las Expresiones de stop son expresiones especiales aceptadas por el
+comando \k(Parar).  Una expresión de stop se compone de uno
+o más eventos, unidos por los operadores especiales && (y) o ll (o).
+Estos operadores son de asociación por la izquierda, pero el depurador
+no garantiza el orden en el que se evalúan los operandos.  Cada evento
+de parada puede ser: ubicación ( expr ) *lvalue
+
+Cada tipo de evento de parada tiene alguna acción que hará que el
+evento sea percibido por el depurador.  Cuando se produce una acción
+de este tipo, toda la expresión de parada se evalúa para "certeza". 
+Si es verdadera, el evento se activa de forma normal (el depurador le
+informará del evento y ejecutará cualquier comando asociado).
+
+Un \k(ubicación) es una dirección en el texto del proceso o
+subproceso donde el depurador puede definir un punto de interrupción.
+Cuando el proceso o subproceso alcanza la ubicación especificada, el
+depurador percibe el evento.  Para los eventos de parada de ubicación
+que se refieren a nombres de funciones, la expresión es verdadera
+mientras la función esté activa.  Para los eventos de parada de
+ubicación que se aplican a una dirección o número de línea concreto,
+la expresión es verdadera sólo cuando el proceso o subproceso se
+encuentra en dicha dirección o línea.  Cuando el lenguaje actual es
+C++, los eventos de parada de ubicación también pueden utilizar
+funcionalidades específicas del C++.  Véase la sección de
+\k(Soporte de C++) para obtener más detalles.
+
+"expr" puede ser cualquier expresión válida del \k(Lenguaje)
+actual. El depurador advierte el evento de stop cuando cualquiera de
+los identificadores relacionados con la expresión cambia de valor.
+Entonces, se evalúa la expresión completa dentro del contexto del
+lenguaje actual.
+
+"valor_izq" puede ser cualquier expresión del lenguaje actual que sería 
+válida en el lado izquierdo de una sentencia de asignación 
+en dicho lenguaje.  El depurador advierte este evento cuando el 
+contenido de la ubicación cambia.  El cambio propiamente dicho hace 
+que este tipo de evento de parada sea verdadero.
+
+Es posible crear expresiones de stop más potentes combinando
+eventos de parada usando el operador especial && (y).  Por ejemplo,
+para detenerse en la función "a" sólo cuando la función "b" esté
+también activa, teclee "stop a && b" en el campo Expresión de la
+ventana \k(Parar). Para detener el proceso cuando la
+expresión "x" sea verdadera dentro de la función "y", teclee "stop y
+&& (x)".
+
+^3^Ubicación=ubicación
+^$1552
+\k(Botón Evento)
+\k(Parar)
+Ubicación
+
+La sintaxis correspondiente a una ubicación es:
+\t[nombre_proceso/hilo@][nombre_archivo@]línea
+\to [nombre_proceso/hilo@][nombre_archivo@]símbolo[+-constante]
+\to dirección[+-constante]
+\to nombre_registro donde "dirección" es una dirección de programa
+en octal o hexadecimal, y "constante" es un número entero decimal.
+
+Estos son algunos ejemplos de ubicaciones:
+    17\t\tun número de línea del archivo actual (%archivo)
+    foo.c@17\tun número de línea en otro archivo
+    0x80801234\tuna dirección
+    main\t\tun nombre o etiqueta de función
+    main+3\ttres bytes después de la etiqueta
+    p1@main\tun nombre de función de un proceso especificado
+    %ubicación\t\tla ubicación actual
+    %línea\t\tel archivo y número de línea actuales
+    %r0\t\tun registro
+    %r0+80\tun registro más una desviación
+    %pc-4\tun registro menos una desviación
+    $myvar\tuna variable definida por el usuario
+
+^2^Señal
+^$156
+\k(Botón Evento)
+Señal
+
+La ventana Signal le permite crear un \d(evento de señal).  Un evento
+signal especifica la acción que se deberá ejecutar siempre que los
+procesos o subprocesos del \k(programa^^procesos e hilos)
+seleccionado reciben una señal concreta.
+
+No es necesario crear un evento sólo para detener el proceso o
+subproceso cuando reciba la señal, puesto que el depurador lo
+hace por defecto.  Véase \k(Ignorar señales) para obtener información
+detallada acerca de la activación y desactivación de dicha
+funcionalidad.
+
+Las señales aparecen en una lista desplegable.  Puede seleccionar
+una o más señales de la lista.  Por defecto, estarán
+ordenadas numéricamente.  La lista se puede ordenar alfabéticamente
+seleccionando la opción Ordenar lista por nombres.
+
+En el campo Comandos, deberá introducir la acción que el depurador
+deberá llevar a cabo cuando se provoque el evento.  La acción
+deberá ser uno o más de los comandos disponibles a través de la
+interfaz de la línea de comandos del depurador.  Los resultados de
+la ejecución de los comandos aparecerán en la
+\k(Panel de comandos).
+
+La ventana Signal está disponible desde el menú \k(Evento) de
+cualquier ventana.  Si ha llamado a esta ventana desde una ventana que
+contenga \k(Panel de procesos), el nuevo evento se aplicará a los
+\k(programas^^procesos e hilos) seleccionados (si los hay) en \k(Panel de procesos). De lo
+contrario, el evento se aplicará al \d(programa actual) o
+\d(proceso o hilo actual).
+
+Por defecto, los eventos se aplican a todos los procesos y
+subprocesos derivados de un programa, no sólo al proceso o subproceso
+seleccionado.  Si desea modificar este comportamiento, use la ventana
+\k(Granularidad).  Los programas o subprocesos afectados
+se enumeran en la línea Programas de la parte superior de
+la ventana.
+
+El evento creado al ejecutar este comando aparecerá en el Panel de
+eventos principal del \k(Panel de eventos).
+
+^2^Llamada al sistema
+^$157
+\k(Botón Evento)
+Llamada al sistema
+
+La ventana Syscall le permite crear un \d(evento de llamada del sistema).  Un evento
+syscall especifica la acción que se deberá ejecutar siempre que los
+procesos o subprocesos del \k(programa^^procesos e hilos)
+seleccionado entran o salen de una llamada al sistema.
+
+Las llamadas al sistema válidas aparecen en una lista desplegable.
+Puede seleccionar una o más llamadas al sistema de la lista.  Por
+defecto estarán ordenadas alfabéticamente.  Para ordenarla por orden
+numérico, selecciona la opción Ordenar lista por números.  El
+depurador detendrá los procesos y subprocesos afectados al entrar y/o
+salir de las llamadas al sistema seleccionadas si están definidas las
+opciones Entrada o Salida, respectivamente.
+
+Puede introducir, en el campo Comandos, una acción para que el
+depurador realice en cualquier momento  activaciones de eventos.
+La acción debería se una o más de los comandos disponibles a través
+de la interfaz de la línea de comandos del depurador.  Los resultados
+de la ejecución de los comandos aparecerá en el \k(Panel de comandos).
+
+Puede teclear un número en el campo Cuenta para decirle al depurador
+que permita que se provoque el evento tantas veces como
+indique el valor de Cuenta antes de detener el proceso o subproceso.
+A partir de ese momento, el proceso o subproceso se detendrá
+cada vez que se produzca el evento.
+
+La ventana Syscall está disponible desde el menú \k(Evento)
+de cualquier ventana.  Si ha llamado a esta ventana desde una ventana
+que contenga \k(Panel de procesos), el nuevo evento se aplicará a los
+\k(programas^^procesos e hilos) seleccionados (si los hay) en \k(Panel de procesos). De lo
+contrario, el evento se aplicará al \d(programa actual) o
+\d(proceso o hilo actual).
+
+Por defecto, los eventos se aplican a todos los procesos y
+subprocesos derivados de un programa, no sólo al proceso o subproceso
+seleccionado.  Si desea modificar este comportamiento, use la ventana
+\k(Granularidad).  Los programas o subprocesos afectados
+se enumeran en la línea Programas de la parte superior de la ventana.
+
+El evento creado al ejecutar este comando aparecerá en el Panel de
+eventos principal del \k(Panel de eventos).
+
+^2^Al parar
+^$158
+\k(Botón Evento)
+Al parar
+
+La ventana On Stop le permite crear un \d(evento de parada).  Un evento
+onstop especifica una acción que se deberá ejecutar siempre que se
+detiene un proceso o hilo afectado.  Teclee la acción en el
+espacio con la etiqueta Comandos.  La acción deberá consistir en uno o
+más de los comandos disponibles a través de la interfaz de la línea de
+comandos del depurador.  Cada vez que se detiene el proceso o
+hilo, se ejecutan los comandos, y el resultado se muestra en la
+\k(Panel de comandos).  La detención incluye pasos individuales y la
+detención por otro evento del depurador de tipo (\k(Señal),
+\k(Llamada al sistema), o \k(Parar)).
+
+La ventana Onstop está disponible desde el menú \k(Evento) de
+cualquier ventana.  Si ha llamado a esta ventana desde una ventana que
+contenga \k(Panel de procesos), el nuevo evento se aplicará a los
+\k(programas^^procesos e hilos) seleccionados (si los hay) en \k(Panel de procesos). De lo
+contrario, el evento se aplicará al \d(programa actual) o
+\d(proceso o hilo actual).
+
+Por defecto, los eventos se aplican a todos los procesos y
+subprocesos derivados de un programa, no sólo al proceso o subproceso
+seleccionado.  Si desea modificar este comportamiento, use la ventana
+\k(Granularidad).  Los programas o subprocesos afectados
+se enumeran en la línea Programas de la parte superior de la ventana.
+
+El evento creado a través de la ejecución de este comando se mostrará
+en el Panel Onstop del \k(Panel de eventos).
+
+^2^Cancelar
+^$159
+\k(Botón Evento)
+Cancelar
+
+La ventana Cancelar le permite cancelar todas las señales capturadas
+por el depurador.  Cuando una señal se vincula a un proceso o
+subproceso, el depurador recibe una notificación antes de que la
+reciban el proceso o subproceso.  Cancelar le permite eliminar la
+señal de modo que el proceso o subproceso no la reciban.
+
+La ventana muestra una lista desplegable de las señales pendientes
+con respecto al proceso o subproceso seleccionado.
+La próxima vez que permita la ejecución del proceso o subproceso, no
+recibirá las señales que seleccione en esta lista.
+
+Las señales de la lista están ordenadas por defecto por orden
+numérico.  Para ordenarla alfabéticamente, seleccione
+la opción Ordenar por nombres.
+
+La ventana Cancelar está disponible en el menú \k(Evento) de
+todas las ventanas.  Si ha abierto la ventana Cancelar desde una
+ventana que contenga un \k(Panel de procesos), las señales mostradas
+quedarán pendientes con respecto al proceso o hilo seleccionado
+(si los hay) de \k(Panel de procesos). En caso contrario, se usará
+\d(proceso o hilo actual).
+
+^2^Destruir
+^$1510
+\k(Botón Evento)
+Destruir
+
+La opción Destruir envía la señal SIGKILL a los procesos afectados.
+El depurador no puede capturar esta señal, que hará que
+finalicen los procesos afectados.
+
+La opción Destruir está disponible en el menú \k(Evento) de
+todas las ventanas.  Si ha seleccionado Destruir desde una ventana que
+contenga un \k(Panel de procesos), afectará a todos los procesos
+seleccionados (si los hay) de \k(Panel de procesos). Si no se selecciona
+nada, o si se seleccionó Destruir desde una ventana que no contenga un
+Panel de procesos, sólo afectará al proceso actual.
+
+^2^Matar
+^$1511
+\k(Botón Evento)
+Matar
+
+La ventana Kill le permite enviar una señal a un proceso o subproceso.
+La ventana muestra una lista desplegable de señales; puede
+seleccionar una señal de la lista.  Las señales de la lista están
+ordenadas numéricamente por defecto.  Se puede ordenar por orden
+alfabético seleccionando la opción Ordenar lista por nombres.
+
+La ventana Kill está disponible en el menú \k(Evento) de
+todas las ventanas.  Si ha abierto la ventana Kill desde una ventana
+que contenga un \k(Panel de procesos), la señal se enviará a los procesos
+y subprocesos (si los hay) de \k(Panel de procesos).  Si todos los
+procesos y subprocesos están seleccionados, el le preguntará si desea
+que la señal se envíe al proceso padre o a todos los subprocesos
+hijos.  Si no hay nada seleccionado, o si se abrió Kill desde una
+ventana que no contenga un Panel de procesos, la señal se enviará al
+proceso o subproceso actual.  Obsérvese que las señales no se pueden
+enviar a los subprocesos de los estados lwp desactivado o suspendido.
+
+^2^Ignorar señales
+^$1512
+\k(Botón Evento)
+Ignorar señales
+
+Por defecto, cuando se vincula una señal a un proceso o subproceso,
+el depurador la intercepta (captura) y anuncia que ha ocurrido.
+Entonces, puede cancelar la señal (con la ventana
+\k(Cancelar)), o ejecutar el proceso y dejar que reciba
+la señal.  Si no desea que el depurador intercepte una señal
+en particular, puede decirle que la ignore.
+
+La ventana Ignorar señales le permite especificar la acción del
+depurador (capturar o ignorar) para cada señal.  La ventana muestra
+una lista desplegable de las señales con la acción actual
+correspondiente al proceso o subproceso.  Puede cambiar la acción
+seleccionando una o más de las señales de la lista.  Por defecto, las
+señales se ordenan numéricamente.  Puede ordenarlas alfabéticamente
+seleccionando la opción Ordenar lista por nombres.  La lista incluye
+además el nombre del gestor de señales registrado por el programa para
+cada señal.
+
+La ventana Ignorar señales está disponible en el menú
+\k(Evento) de todas las ventanas.  Si ha abierto la ventana
+Cancelar desde una ventana que contenga un \k(Panel de procesos),
+afectará al proceso o subproceso seleccionado (si lo hay) de
+\k(Panel de procesos). En caso contrario, afectará a \d(proceso o hilo actual).
+
+La opción Ignorar señales no está disponible a no ser que el proceso o
+subproceso seleccionado se detenga.
+
+^2^Cambiar
+^$1513
+\k(Botón Evento)
+Cambiar
+
+La opción Cambiar está disponible en el menú \k(Evento) de
+todas las ventanas que contienen \k(Panel de eventos).  La opción
+Cambiar proporciona una ventana que le permite editar un evento
+existente.  Estta opción sólo está disponible si ha seleccionado un
+evento, bien en el Panel de eventos principalo en el Panel Onstop.  La
+ventana tiene el mismo aspecto que las ventanas \k(Parar),
+\k(Señal), \k(Llamada al sistema) o \k(Al parar), según
+el tipo de evento que haya seleccionado.  Los campos de la ventana se
+incializarán con los valores del evento seleccionado.  Puede cambiar
+cualquiera de ellos.  Una vez que haya finalizado, los cambios realizados
+se reflejarán en la ventana Evento.
+
+^1^Botón Propiedades=Propiedades
+^$16
+Botón Propiedades
+
+El botón Propiedades le permite cambiar algunas de las propiedades
+asociadas con los distintos paneles del depurador.  Si hace
+clic en el menú del botón Propiedades abre un menú con distintas
+opciones, según qué paneles estén presentes en la ventana.
+
+Si la ventana es de las que aparece automáticamente al invocar
+el depurador, el menú Propiedades contendrá las
+siguientes opciones:
+
+\t\k(Lenguaje)
+\t\k(Granularidad)
+\t\k(Acción de salida)
+\t\k(Vía de acceso de origen)
+
+Si la ventana contiene un \k(Panel de procesos), el menú Propiedades
+contendrá las siguientes opciones:
+
+\t\k(Paneles)
+\t\k(Granularidad)
+
+Si la ventana contiene un \k(Panel de stacks), el menú Propiedades
+contendrá la siguiente opciones:
+
+\t\k(Paneles)
+
+Si la ventana contiene un \k(Panel de símbolos), el menú Propiedades
+contendrá las siguientes opciones:
+
+\t\k(Paneles)
+\t\k(Símbolos)
+
+Si la ventana contiene un \k(Panel de comandos), el menú Propiedades
+contendrá las siguientes opciones:
+
+\t\k(Acción de salida)
+\t\k(Vía de acceso de origen)
+\t\k(Lenguaje)
+
+Si la ventana contiene un \k(Panel de origen), el menú Propiedades
+contendrá las siguientes opciones:
+
+\t\k(Vía de acceso de origen)
+\t\k(Lenguaje)
+\t\k(Granularidad)
+\t\k(Activación)
+
+Si la ventana contiene un \k(Panel de desmontaje), el menú Propiedades
+contendrá la siguiente opción:
+
+\t\k(Activación)
+
+Por último, si la ventana contiene un \k(Panel de eventos), el menú
+Propiedades contendrá la siguiente opción:
+
+\t\k(Paneles)
+\t\k(Granularidad)
+
+El conjunto de opciones contenido en el menú Propiedades para
+cualquier ventana es una unión de las opciones de todos los
+paneles contenidos en dicha ventana.
+
+Varias de las opciones del menú Propiedades también se
+pueden definir como recursos de X Window, bien en un archivo
+de recursos de X Window (como .Xdefaults) o en la línea de
+comandos del depurador.
+Véase \k(Personalización) y \k(Invocación del depurador).
+
+^2^Paneles
+^$161
+\k(Botón Propiedades)
+Paneles
+
+La ventana Paneles le permite escoger si los datos de determinadas
+columnas de \k(Panel de procesos), \k(Panel de stacks),
+\k(Panel de símbolos) y \k(Panel de eventos), se pasarán a la siguiente
+línea o se truncarán.  Por defecto, se truncarán todas.
+
+Las columnas a las que afecta son la columna Comando del
+\k(Panel de procesos), las columnas Parámetros y Ubicación del
+\k(Panel de stacks), las columnas Nombre, Tipo y Valor del
+\k(Panel de símbolos) las columnas Procesos y Lista de comandos en ambas
+ partes del \k(Panel de eventos).
+
+Esta opción siempre está disponible en el menú \k(Propiedades) 
+de cualquier ventana que contenga los paneles afectados.
+
+^2^Símbolos
+^$162
+\k(Botón Propiedades)
+Símbolos
+
+La ventana Símbolos le permite escoger qué tipos de símbolos
+aparecerán en \k(Panel de símbolos).  Las opciones son:
+
+\tGlobal\tMuestra los símbolos globales definidos en el objeto actual
+\t\t(archivo ejecutable o biblioteca compartida).
+
+\tArchivo\tMuestra los símbolos estáticos del archivo definidos
+\t\ten el archivo actual.
+
+\tLocal\tMuestra las variables locales definidas en la función actual.
+
+\tDepurador\tMuestra las variables integradas del depurador.
+
+\tUsuario\tMuestra las variables de usuario mantenidas por
+\t\tel depurador.
+
+Puede escoger cualquier combinación de estas categorías.  Por defecto,
+se mostrarán los símbolos locales.
+
+La ventana Símbolos siempre está disponible, y se puede abrir desde el
+menú \k(Propiedades) de cualquier ventana que contenga
+\k(Panel de símbolos).  Las selecciones afectan únicamente al
+\d(conjunto de ventanas) padre.
+
+^2^Vía de acceso de origen
+^$163
+\k(Botón Propiedades)
+Vía de acceso de origen
+
+La ventana Vía de acceso de origen le permite definir la vía de acceso
+que usará el depurador para encontrar los archivos de origen.
+
+Puede teclear múltiples directorios, uno por línea.  También es
+posible editar un conjunto existente de directorios.  El depurador
+buscará en los directorios según el orden en que aparezcan.
+
+Si escoge la opción "Vía de acceso específica del programa", se
+usará la vía de acceso sólo para el \k(programa^^procesos e hilos) seleccionado.  Si escoge
+la opción "Vía de acceso global", el depurador buscará el programa en
+dicha lista de directorios, si no puede encontrar el archivo primero
+en la vía de acceso específica del programa.
+
+a vía de acceso se invoca pulsando SELECCIONAR sobre la opción
+Vía de acceso de origen en el menú \k(Propiedades) de cualquier
+ventana que contenga un \k(Panel de comandos) o un \k(Panel de origen) ,
+o de cualquier ventana configurada para aparecer automáticamente al
+invocar al depurador (véase \k(Configuración)).  Si abrió la
+ventana Vía de acceso de origen desde una ventana que contiene un
+\k(Panel de procesos), los programas seleccionados (si los hay) en el
+\k(Panel de procesos) se verán afectados por la "Vía de acceso
+específica del programa".  De lo contrario, afectará al programa actual.
+
+^2^Lenguaje
+^$164
+\k(Botón Propiedades)
+Lenguaje
+
+La ventana Lenguaje le permite anular el lenguaje por defecto para la
+evaluación de expresiones.  El lenguaje por defecto se muestra en la
+línea titulada "Lenguaje actual de origen".  El depurador usa la
+información del archivo de objetos que se está depurando actualmente
+para determinar cuál es el lenguaje por defecto.  Si el archivo de
+objetos no proporciona esa información, el valor por defecto será C.
+
+Si selecciona Ninguno como lenguaje, se usará el lenguaje de origen
+actual para la evaluación de expresiones.  Si selecciona C o C++, el
+lenguaje elegido se convertirá en el lenguaje actual.
+
+El lenguaje actual afecta a la evaluación de las expresiones de las
+ventanas \k(Expandir), \k(Definir valor),
+\k(Mostrar valor), \k(Mostrar tipo) y \k(Parar), así
+como de los comandos introducidos en \k(Panel de comandos).  Para
+obtener detalles acerca de la forma en que los afecta, véase la
+sección dedicada a cada lenguaje específico: \k(Soporte para el lenguaje C)
+        \k(Soporte para el lenguaje C++)
+
+La opción Lenguaje se invoca pulsando SELECCIONAR en Lenguaje
+del menú \k(Propiedades) de cualquier ventana que
+contenga un \k(Panel de comandos) o un \k(Panel de origen), o
+de cualquier ventana configurada para aparecer automáticamente al
+invocar al depurador (véase \k(Configuración)).  El lenguaje es una
+propiedad global, y afecta a todos los \d(conjunto de ventanas)s.
+
+^3^Soporte para el lenguaje C=Soporte de C
+^$1641
+\k(Botón Propiedades)
+\k(Lenguaje)
+Soporte para el lenguaje C
+
+Cuando el lenguaje actual es C, el depurador soportará la evaluación
+de todas las expresiones ANSI C válidas, excepto de aquéllas que
+supongan la expansión o estructura de macros, la unión y enumeración
+de delcaraciones de tipo.  Un ejemplo de declaración de tipo en una
+expresión es:
+\t((struct { int i; char c; } *)p)->c = 'a';
+
+^3^Soporte para el lenguaje C++=Soporte de C++
+^$1642
+\k(Botón Propiedades)
+\k(Lenguaje)
+Soporte para el lenguaje C++
+
+El depurador reconocerá cuándo un archivo de objetos se compiló
+con el C++ Compilation System 2.0 o con el traductor
+C++, cfront (Versión 2.1 ó 3.0), y definirá el lenguaje actual (que
+aparece en la ventana \k(Lenguaje)) como C++.
+Los nombres aparecerán como en el código fuente C++, no como
+aparecen en el archivo de objetos.
+
+Cuando el lenguaje actual es C++, el depurador acepta un
+subconjunto de expresiones de C++, entre las que se
+incluyen:
+
+     o  Todas las expresiones aceptadas cuando el lenguaje es C, 
+     o  Las llamadas a las funciones de los miembros, incluidas las funciones 
+        de miembro virtual y funciones de miembros estáticos,
+     o  Las llamadas a funciones sobrecargadas, 
+     o  Las expresiones que usen nombres de tipo como typedefs, 
+     o  Las expresiones que usen funciones de operador sobrecargadas, y
+     o  Las expresiones que accedan a miembros de clase con un 
+\tpuntero "this" implícito, cuando el proceso 
+\to subproceso se detenga en una función de miembro 
+\tde clase.
+
+Se pueden introducir en las ventanas \k(Definir valor),
+\k(Mostrar valor), \k(Mostrar tipo) y \k(Parar), así
+como en el \k(Panel de comandos).
+
+Si se indica un puntero a un objeto de clase base con funciones
+virtuales, y si el depurador puede determinar que el tipo de
+objeto al que se apunta es una clase derivada de la clase base,
+la ventana \k(Mostrar tipo) mostrará la calse base y la clase
+derivada. Las ventanas \k(Mostrar valor) y \k(Expandir)
+también mostrarán el objeto en términos del tipo derivado.
+
+Cuando se imprime el contenido de una estructura, aparecerán
+los miembros de clase estática en \k(Mostrar valor) y
+\k(Expandir), con la notación de que son estáticos.  Obsérvese
+que en \k(Panel de símbolos) no aparecen los miembros estáticos.
+
+Usando las ventanas \k(Parar) o \k(Parar en la función), es
+posible definir puntos de interrupción en:
+
+     o  Funciones de miembros de clase, incluidos constructores, 
+\tdestructores y funciones de conversión,
+     o  Funciones de operador sobrecargadas, y
+     o  Funciones sobrecargadas que usen el prototipo completo, o
+     o  Funciones sobrecargadas, sin la información de prototipos.
+\tEn este caso, el depurador mostrará una lista de funciones, 
+\ty le pedirá que elija una opción o todas ellas.
+
+También se puede crear una \d(evento de parada) con una combinación
+específica de objeto y función de miembros, usando la sintaxis
+"puntero->función" u "objecto.función".  El depurador detendrá
+el proceso o subproceso al entrar en la función sólo en el caso
+de que el puntero "this" coincida con el objeto especificado.  Si la
+función es virtual, el depurador definirá el punto de
+interrupción sobre la función predominante adecuada.  Estos son
+algunos ejemplos de expresiones que se pueden introducir
+en la ventana \k(Parar) incluye:
+        C::f(int)
+        C::C
+        C::~C
+        C::operator int()
+        C::operator+
+        ptr->f(char *)
+
+^2^Granularidad
+^$165
+\k(Botón Propiedades)
+Granularidad
+
+La ventana Granularidad le permite especificar el comportamiento del
+depurador con respecto a los programas, procesos y subprocesos.
+
+Un \d(conjunto de ventanas) tiene un \d(proceso o hilo actual) y un
+\d(programa actual) (el programa actual siempre es el programa
+padre del procoeso o subproceso actual).  En cuál esté operando
+en cualquier momento dependede cuál de las opciones "Sólo
+subproceso", "Proceso padre" o "Proceso padre" está seleccionada.  Por
+defecto, la mayor parte de los comandos (\k(Paso),
+\k(Mostrar valor), etc.) son aplicables al
+subproceso (o proceso si éste no tiene ningún subproceso),
+pero los comandos que crean eventos son aplicables al programa.
+Al definir eventos en el programa en lugar de en el proceso o
+subproceso, si se vuelve a crear el programa, o si el proceso se
+bifurca, el nuevo proceso heredará todos los eventos que estaban
+definidos en el proceso antiguo.  Si se define un evento sólo en el
+proceso, todos los subprocesos creados por este último heredarán el
+evento, pero si el proceso se bifurca el proceso nuevo no heredará el
+evento, y éste desaparecerá cuando lo haga el proceso.  Si define un
+evento en un subproceso específico, el evento no se definirá en ningún
+otro proceso ni subproceso, y el evento desaparecerá cuando se salga
+de dicho subproceso.  La granularidad de los comandos de eventos se
+puede definir de forma independiente con respecto a la de los demás
+comandos.  El valor de granularidad correspondiente a los comandos no
+de eventos también es aplicable a las selecciones de \k(Panel de procesos).
+
+Los comandos que crean eventos son \k(Parar),
+\k(Parar en la función), \k(Definir punto de control), \k(Definir punto de ruptura),
+\k(Suprimir punto de ruptura), \k(Señal), \k(Llamada al sistema), y
+\k(Al parar).
+
+La opción Granularidad se invoca haciendo clic en SELECCIONAR en
+ el menú Granularidad  \k(Propiedades) de cualquier ventana que
+contenga un \k(Panel de procesos), \k(Panel de origen) o
+\k(Panel de eventos), o cualquier ventana configurada para aparecer
+automáticamente al invocar al depurador (véase \k(Configuración)).  La
+granularidad seleccionada afecta sólo al \d(conjunto de ventanas) padre.
+
+^2^Acción de salida
+^$166
+\k(Botón Propiedades)
+Acción de salida
+
+La ventana Acción de salida le permite especificar las acciones
+que el depurador deberá realizar cuando se produce un evento, o
+cuando un subproceso cambia de estado, o cuando un proceso o
+subproceso controlado genera salida.  La ventana contiene tres
+grupos de botones, uno para los eventos de proceso y usuario,
+otro para los cambios de estado de los subprocesos, y uno para
+la E/S de los procesos.
+
+Las opciones para los eventos y la E/S de procesos son:
+
+    o Abrir y activar: El depurador abrirá una venana con un
+\ta \k(Panel de comandos), donde aparecerá la notificación del evento
+\to salida del proceso en el \k(Panel de transcripción).
+
+    o Bip
+
+    o Cuadro de alerta: El depurador mostrará un mensaje informando 
+\tde lo ocurrido.
+
+    o Ninguna acción: El depurador no hará nada especial.
+
+Por defecto, el depurador emite un sonido de bip cuando se produce 
+un evento, porque la notificación del evento también se 
+muestra en la parte inferior de las ventanas principales.
+
+Cuando un proceso de salida capturada (véase \k(Crear))
+genera salida, la acción por defecto es Abir y activar (el depurador
+activará la ventana del panel de comandos en la que se muestra la
+salida). Obsérvese que esto no es aplicable a aquellos procesos cuya
+salida no se captura; el depurador no puede averiguar cuándo genera
+salida ese tipo de procesos.
+
+El estado de un hilo puede cambiar durante su vida útil.  
+Por ejemplo, un hilo multiplexado puede estar programado fuera 
+de un \d(LWP) y puede retomarlo más tarde otro 
+\d(LWP), o que otro hilo lo suspenda y otro más 
+lo continúe en un momento posterior.
+
+Las opciones de acciones de modificación del estado de los 
+subprocesoso son:
+
+    o Bip
+
+    o Detener: Se detienen los subprocesos afectados, y es necesario
+      reiniciarlos de forma explícita.
+
+Estas acciones, al contrario de lo que ocurre con aquéllas
+correspondientes a los eventos y E/S de procesos, son acumulativas.
+Es decir, puede seleccionar al mismo tiempo Bip y Detener.
+Por defecto, ambas están seleccionadas, y en las diversas
+situaciones se llevan a cabo la siguientes acciones:
+
+    o Se crea un nuevo subproceso: emisión del sonido bip, aparece
+        el mensaje de creación de subproceso, y el subproceso creador
+        se detiene, y el subproceso recién creado se detiene
+        también si no se ha creado con el indicador THR_SUSPENDED,
+        de lo contrario el subproceso suspendido no es
+        ejecutable hasta que se continúa explícitamente.
+
+    o Un subproceso sale de LWP: emisión de un sonido bip, aparece 
+        el mensaje de salida de LWP.
+
+    o Un subproceso de fuera de LWP retoma un LWP: emisión de un sonido 
+        bip, aparece el mensaje de retomar LWP, y se detiene 
+        el subproceso.
+
+    o Se suspende un subproceso: emisión de un sonido de bip, aparece 
+        el mensaje de subproceso suspendido.
+
+    o Se continúa un subproceso suspendido: emisión de un sonido 
+        bip, aparece el mensaje de continuación, se 
+        detiene el subproceso.
+
+    o Se sale de un subproceso: emisión de un sonido bip, aparece el 
+        mensaje de salida.
+
+La opción Acción de salida se invoca pulsando SELECCIONAR en Acción
+de salida del menú \k(Propiedades) de cualquier ventana que
+contenga un \k(Panel de comandos), o de cualquier ventana configurada
+para aparecer automáticamente al invocar al depurador (véase
+\k(Configuración)).
+
+^2^Activación
+^$167
+\k(Botón Propiedades)
+Activación
+
+La ventana Animación le permite controlar el intervalo entre pasos
+mientras está animado un proceso o subproceso.  Para animar un
+proceso se selecciona la opción \k(Activar origen) del menú
+\k(Control) de cualquier ventana que contenga
+\k(Panel de origen), o la opción \k(Activar desmontaje) del menú
+\k(Control) de cualquier ventana que contenga
+\k(Panel de desmontaje).  Cuando se anima un proceso
+o subproceso, el depurador lo recorre continuamente paso a paso,
+  resaltando cada sentencia a medida que se ejecuta.  Si esto se
+  realiza demasiado rápido para poder seguirlo con facilidad, puede
+  ralentizarlo especificando un tiempo de demora entre pasos.
+
+La ventana mostrará un cuadro deslizante con un rango que va desde
+ningún intervalo hasta un intervalo de un segundo.  Si coloca el
+cuadro deslizante entre los dos extremos, introducirá un intervalo de
+una fracción de un segundo.
+
+Obsérvese que al depurador le lleva algún tiempo recorrer el proceso 
+o subproceso paso a paso y actualizar la visualización.  Según las
+características del sistema, este tiempo puede ser suficiente incluso
+sin tener que definir un intervalo.  El intervalo especifica únicamente
+un tiempo mínimo entre pasos.  Si el tiempo es superior al intervalo
+especificado, el depurador no añadirá el tiempo del intervalo.
+

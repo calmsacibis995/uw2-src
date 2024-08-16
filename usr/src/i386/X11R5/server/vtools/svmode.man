@@ -1,0 +1,117 @@
+#ident	"@(#)vtools:svmode.man	1.4"
+
+.TH SETVIDEOMODE 1 "27 April 1994"
+.SH "NAME"
+setvideomode, gsetvideo \- sets a high resolution video mode
+.SH "SYNOPSIS"
+.nf
+setvideomode [option(s)]
+gsetvideo
+.SH "DESCRIPTION"
+This utility allows the user to change video configuration parameters.
+This is an interactive program that gets input from the user regarding 
+the vendor, resolution, number of colors, the amount of memory,
+and the monitor size.
+After, all the selections are made, the user can test if the selection
+works - an uniform pattern is drawn on the screen with the selected
+resolution and depth displayed in the center of the screen.
+If the test displays a good pattern, the user either can accept the
+selected mode or can try another mode. If the user accepts the 
+selection, all the information is saved in 
+"/usr/X/defaults/Xwinconfig" file.
+
+"gsetvideo" is the graphical version of setvideomode. It is known 
+as "Video Display Setup" under desktop and can be invoked from there. 
+It provides on_line help to setup your video display. But, this requires
+that the desktop or dtm be running. After setting up the display and the
+test done, the mode may be saved(accepted). 
+
+
+.SH "OPTIONS"
+setvideomode supports the following command line options.
+The first three options are mutually exclusive,
+and can't be coupled with any other option.
+However, in such a case, setvideomode
+doesn't complain. But, it takes only that option appearing 
+first in the follwing list irrespective of how the options are given
+on the command line. 
+.TP
+-default      
+restores stdvga, 640x480 16 color mode.
+.TP
+-test         
+test the current mode defined in "/usr/X/defaults/Xwinconfig" file.
+.TP
+-probe        
+detect the video chip and video memory.
+(may not be possible all times).
+.TP
+-noprobe      
+skip chip-detection.
+Use this option if you experience problems.
+.TP
+-vinfo <file> 
+use 'file' instead of VendorInfo file.
+"-vinfo" option will allow the user to specify 
+a particular vendor data base file. 
+As new boards/drivers keep going up every day, the list 
+keeps growing which is sometimes very annoying to a user. 
+If the user knows which chipset based driver to use, he/she can 
+specify that file. 
+For example,
+.nf
+
+	setvideomode -vinfo s3
+	or
+	setvideomode -vinfo /myhomedir/s3.vinfo
+.fi
+
+In the first example, it will use the 
+"/usr/X/lib/display/s3.vinfo" file, where as in 
+the 2nd example, it uses a private copy of the
+vendor data base file.
+If "-vinfo" option is not used, the default vendor 
+data file, "/usr/X/lib/display/VendorInfo" is used.
+
+.TP
+-testallmodes 
+cycles through all the supported modes.
+"-testallmodes" option is provided to ease the testing
+of all the modes for a driver. 
+With this option, after the vendor selection is made, all the 
+supported modes 
+are cycled through - ie: a test pattern is drawn for 
+each mode. 
+Before you use this mode, make sure you 
+HAVE a monitor that can support all the modes for the
+selected vendor. 
+If not, you MIGHT DAMAGE the monitor.
+This is an UNSUPPORTED feature.
+
+.SH "FILES"
+.TP
+/usr/X/lib/display/VendorInfo
+This file contains information about all the supported 
+vendors.
+
+.TP
+/usr/X/lib/display/<ANY>.dat 	
+(one of the many .dat files).
+Contains the mode data for all the supported modes by
+a vendor in the corresponding .dat file.
+
+.TP
+/usr/X/defaults/Xwinconfig
+The configuration file generated, by default.
+
+.TP
+/usr/X/lib/locale/C/help/setvideomode/svmode.hlp
+This is the help file used by "gsetvideo" to provide
+on_line help. 
+In the absence of this file, no on_line
+help is displayed.
+
+.LP
+Thanks to David E. Wexelblat and the XFree86 team for giving us
+permission to use the chip detection code from "SuperProbe" utility.
+

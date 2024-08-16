@@ -1,0 +1,1012 @@
+#ident\t"@(#)dthelp:Admin.Tools/inet.hlp	1.27"
+^*version^1
+^*title^Internet Setup
+^:Internet_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Internet_Setup
+^0^Internet Setup
+^$10
+Internet Setup
+
+Use Internet Setup to configure your system to communicate with other
+systems over TCP/IP networks. 
+
+Note: UUCP, DNS, NIS, and Routing setup are available only to users with
+\k(Change Internet Setup permission^dtadmin/user.hlp^Understanding Permissions).
+ 
+You can do the following with Internet Setup:
+
+\to\t\k(Add a new system to the Systems List^^Adding a New System to the Systems List)
+\to\t\k(Change your system netmask and broadcast address^^Setting Up Routing)
+\to\t\k(Configure your system for TCP/IP networking^^Configuring Your System for TCP/IP Networking)
+\to\t\k(Configure your system to use a default router^^Setting Up Routing)
+\to\t\k(Copy an entry from the Domain Listing to the Systems List^^Domain Listing)
+\to\t\k(Copy an icon for a remote system to a folder^^Copying an Icon for a Remote System to a Folder)
+\to\t\k(Delete a system from the Systems List^^Deleting a System from the Systems List)
+\to\t\k(Display the Domain Listing^^Domain Listing)
+
+\to\t\k(Display the Systems List^^Systems List)
+\to\t\k(Search for a specific system entry^^Searching for a System)
+\to\t\k(Setup access for remote users to the local system^^Setting Up Local System Access for Remote Users)
+\to\t\k(Setup access to a Domain Network Service server^^Accessing DNS)
+\to\t\k(Setup access to your Network Information Service server^^Accessing NIS)
+\to\t\k(Setup your system for UUCP file transfers^^Setting Up UUCP Transfer)
+\to\t\k(View the properties of a system^^Viewing System Properties)
+
+See also:
+\s(Setting Up and Configuring TCP/IP^dhelp "" ownerhb "Setting Up and Configuring TCP/IP" "" || helpLinkErr)
+\s(Introduction to TCP/IP Setup^dhelp as netag "Setting Up TCP/IP" "Introduction to TCP/IP Setup" || helpLinkErr)
+
+^1^Configuring Your System for TCP/IP Networking
+^$20
+Configuring Your System for TCP/IP Networking
+
+If you did not enter a network address for Transmission Control
+Protocol/Internet Protocol (TCP/IP) Networking during installation, the
+system automatically displays the "Internet Setup: Configure Local System"
+window the first time you double-click on Internet_Setup.
+
+To configure your system for TCP/IP networking, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup: Configure Local
+  \tSystem" window appears with the following fields:
+
+  \to\tSystem Name - Displays the name of your system.
+
+  \to\tNetwork Address - Type in the address for your system. If you do
+  \t \tnot know the network address for your system, contact your system
+  \t \tadministrator- he or she should assign this address.
+  
+  \t \tOnly fill out the following three fields if your organization has
+  \t \taccess to a \k(DNS Server^^Accessing DNS):
+    
+  \to\tDomain Name: - Type in the name of your organization's domain. 
+  \t \tThe domain name must use a .com, .edu, .gov, and so forth, for the
+  \t \textension. For example, site1.companyA.com.
+
+  \to\tDNS Server: - Type in the name of your organization's primary domain
+  \t \tname server. 
+
+  \to\tNetwork Address - Type in the address for the DNS Server. 
+
+4.\tClick on OK to save your changes.
+
+  \tNote: You can also click on Reset to cancel any changes that you
+  \thave not yet applied, or click on Cancel to dismiss the window
+  \twithout saving any changes.
+
+See also:
+\s(Installing TCP/IP^dhelp as netag "Setting Up TCP/IP" "Installing TCP/IP" || helpLinkErr)
+\s(Configuring TCP/IP at the Command Line^dhelp "" ownerhb "Setting Up and Configuring TCP/IP" "Configuring TCP/IP" || helpLinkErr)
+
+^1^Setting Up Local System Access for Remote Users
+^$30
+Setting Up Local System Access for Remote Users
+
+You can set up your system so that users on other systems (including
+yourself) can log in to and copy files to and from your local system
+(for example, using the rlogin and rcp commands). 
+
+To set up local system access for remote users, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup" window appears.
+
+  \tNote: If you configured your system for access to a \k(DNS Server^^Accessing DNS)
+  \t(DNS), by default the system displays the \k(Domain Listing view^^Domain Listing).
+
+  \tIf you did not configure your system for DNS access, the system displays
+  \tthe \k(System List view^^Systems List). Locate and click on the system
+  \tfrom which users will log in.
+
+4.\tClick on Actions=>Remote User Access. The "Internet Setup: Remote User
+  \tAccess" window appears with the following options:
+
+  \to\tSystem Name: - This text box is populated with the name of the
+  \t \tsystem currently selected in the main "Internet Setup" window.
+  \t \tIf you want to configure remote access for a different system,
+  \t \tyou can change the system name by typing over the current name
+  \t \tand pressing <Tab>. 
+
+  \to\tRemove Password Restriction: - By default, this field is set to
+  \t \t"Access to Your Personal Account." That is, you are setting up
+  \t \tremote user access for your login only.
+
+  \t \tIf you have \k(Change Internet Setup permission^dtadmin/user.hlp^Understanding Permissions), you also have
+  \t \tthe option to remove the password restriction for any local user
+  \t \t(/etc/hosts.equiv) by clicking on "Remote Users with Local Accounts."
+
+  \t \tRemote users on the specified system who have an account on your
+  \t \tsystem will then be able to log in to your system without supplying
+  \t \ta password.
+
+  \to\tUsers on <systemname> Who May Freely Access Your Account/Their
+  \t \tAccount: - Click on one of the following:
+
+  \t \t-\tNo One - If you do not want anyone to access your account or
+  \t \t \this or her own account without entering a password. This is the
+  \t \t \tdefault.
+
+  \t \t-\tSelf - If you want to be able to log in to this system from the
+  \t \t \tremote system using the same login ID (you will not be prompted
+  \t \t \tfor a password).
+
+  \t \t-\tAll Users - If you want any user on the remote system to be able
+  \t \t \tto log in without having to supply a password. The user must have
+  \t \t \tan account on your system. This option is available only if you
+  \t \t \tselected "Remove Password Restriction" for "Remote Users with
+  \t \t \tLocal Accounts."
+
+  \t \t-\tSpecific Users - If you want specific users to be able to access
+  \t \t \ttheir account or your account without needing to enter a password.
+
+  \t \t \tIf you select Specific Users, the window expands to include
+  \t \t \tadditional fields for adding users to the list. See 
+  \t \t \t\k(Selecting Specific Users) for more information.
+
+5.\tClick on OK to save the changes and dismiss the window, or on Apply
+  \tto save the changes without dismissing the window.
+    
+See also:
+\s(Files in /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr)
+
+^2^Domain Listing
+^$40
+Domain Listing
+
+To display the Domain Listing, click on View=>Domain Listing.
+
+By default, the Domain Listing displays the systems in your local domain.
+
+To view and select other domains (and sub-domains), do the following:
+
+1.\tType in the desired domain name (that is, the name of the domain
+  \tin which the system you are looking for resides) in the Domain Name
+  \ttext box.
+
+2.\tClick on Update Listing.
+
+  \tIf sub-domains exist under the specified domain, they appear at the
+  \ttop of the Domain Listing.
+
+3.\tDisplay the contents of a sub-domain by double-clicking on the
+  \tsub-domain entry. A new list displaying the contents of that
+  \tsub-domain appears to the right.
+
+  \tYou can continue to double-click on sub-domains to bring up more
+  \tsub-domains until no more sub-domains exist. However, only three levels
+  \tof domains can appear on the window at one time. If you have more than
+  \tthree levels, use the left and right arrows in the center of your screen
+  \tto move back and forth through the listings.
+
+4.\tSearch through the listings until you locate the desired system. Then,
+  \tclick on that system entry.
+
+To add a system from the Domain Listing to the /etc/hosts file, click on
+System=>Copy to Systems List. 
+
+See also:
+\k(Systems List)
+
+^2^Systems List
+^$50
+Systems List
+
+The Systems List displays the contents of your /etc/hosts file.
+
+To display the Systems List, click on View=>Systems List.
+
+Note: If /etc/hosts contains only an entry for your system and no others,
+this view is not available.
+
+Click on the desired system, then click on OK.
+
+Note: If you have \k(DNS^^Accessing DNS) configured on your system, you can change to view
+the \k(Domain Listing) by clicking on View=>Domain Listing.
+
+See also:
+\k(Adding a New System to the Systems List)
+\k(Deleting a System from the Systems List)
+\k(Viewing System Properties)
+
+^2^Selecting Specific Users
+^$60
+Selecting Specific Users
+
+Choose one of the following:
+
+\to\t\k(Add specific users to the Allowed Users list^^Adding Specific Users)
+\to\t\k(Modify entries in the Allowed Users list^^Modifying Specific Users)
+\to\t\k(Delete users from the Allowed Users list^^Deleting Specific Users)
+
+^3^Adding Specific Users
+^$70
+Adding Specific Users
+
+To add specific users to the list of users who can access your system,
+do the following:
+
+1.\tType in the desired login ID in the Login ID text box. 
+
+2.\tClick on Add. The login ID moves to the Allowed Users box. 
+
+3.\tRepeat Steps 1 and 2 for each user that you want to add to
+  \tthe list. When complete, click on OK to save the login IDs
+  \tand dismiss the window, or click on Apply to save the login IDs
+  \twithout dismissing the window.
+
+Note: If you are setting up access to your personal account, be cautious
+when adding users to this list. Remember that any users you add to this
+list will be able to log in to your account and access your files without
+having to supply a password.
+
+^3^Modifying Specific Users
+^$80
+Modifying Specific Users
+
+To make changes to an entry in the Allowed Users list, do the following:
+
+1.\tClick on the desired login ID in the Allowed Users list.
+
+2.\tMake the desired changes to the login ID.
+
+3.\tClick on Modify.
+
+4.\tClick on OK to save the changes and dismiss the window, or on Apply
+  \tto save the changes without dismissing the window.
+
+^3^Deleting Specific Users
+^$90
+Deleting Specific Users
+
+To delete a user from the Allowed Users list, do the following:
+
+1.\tClick on the desired login ID in the Allowed Users list.
+
+2.\tClick on Delete to remove the login ID.
+
+3.\tClick on OK to save the changes and dismiss the window, or on Apply
+  \tto save the changes without dismissing the window.
+
+^2^Internet Setup: Set Local Access Window
+^$100
+Internet Setup: Set Local Access Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tSystem Name: - This text box is populated with the name of the
+  \t \tsystem currently selected in the main "Internet Setup" window.
+  \t \tIf you want to configure remote access for a different system,
+  \t \tyou can change the system name by typing over the current name
+  \t \tand pressing <Tab>. 
+
+  \to\tRemove Password Restriction: - By default, this field is set to
+  \t \t"Access to Your Personal Account." That is, you are setting up
+  \t \tremote user access for your login only.
+
+  \t \tIf you have \k(Change Internet Setup permission^dtadmin/user.hlp^Understanding Permissions), you also have
+  \t \tthe option to remove the password restriction for any local user
+  \t \t(/etc/hosts.equiv) by clicking on "Remote Users with Local Accounts."
+
+  \t \tRemote users on the specified system who have an account on your
+  \t \tsystem will then be able to log in to your system without supplying
+  \t \ta password.
+
+  \to\tUsers on <systemname> Who May Freely Access Your Account/Their
+  \t \tAccount: - Click on one of the following:
+
+  \t \t-\tNo One - If you do not want anyone to access your account or
+  \t \t \this or her own account without entering a password. This is the
+  \t \t \tdefault.
+
+  \t \t-\tSelf - If you want to be able to log in to this system from the
+  \t \t \tremote system using the same login ID (you will not be prompted
+  \t \t \tfor a password).
+
+  \t \t-\tAll Users - If you want any user on the remote system to be able
+  \t \t \tto log in without having to supply a password. The user must have
+  \t \t \tan account on your system. This option is available only if you
+  \t \t \tselected "Remove Password Restriction" for "Remote Users with
+  \t \t \tLocal Accounts."
+
+  \t \t-\tSpecific Users - If you want specific users to be able to access
+  \t \t \ttheir account or your account without needing to enter a password.
+
+  \t \t \tIf you select Specific Users, the window expands to include
+  \t \t \tadditional fields for adding users to the list. See 
+  \t \t \t\k(Selecting Specific Users) for more information.
+
+2.\tClick on OK to save the changes and dismiss the window, or on Apply
+  \tto save the changes without dismissing the window.
+
+See also:
+\k(Setting Up Local System Access for Remote Users)
+
+^1^Adding a New System to the Systems List
+^$110
+Adding a New System to the Systems List
+
+To add a new system to the \k(Systems List), do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup" window appears.
+  \tNote: Make sure you are the \k(Systems List view^^Systems List).
+
+4.\tChoose a position in the list by clicking on a system. The new
+  \tsystem will be added to the line above this entry.
+
+5.\tClick on System=>New. The "Internet Setup: Add New System" window
+  \tappears with the following fields:
+
+  \to\tSystem Name: - Type in the name of the system you want to be able
+  \t \tto communicate with.
+
+  \to\tNetwork Address - Type in the network address. If you are configured
+  \t \tfor \k(DNS Access^^Accessing DNS), you can click on Get Address and the system
+  \t \twill look up the address of the system for you.
+
+  \t \tNote: If the system is in a different domain than yours, you must
+  \t \tenter the domain name in the System Name filed above.
+
+  \to\tComment - Type in any comments that you think might be useful.
+  \t \tFor example, the room number where the machine is located, the
+  \t \tname of the system owner, and so forth.
+
+6.\tClick on OK to save the changes and dismiss the window, or on Apply
+  \tto save the changes without dismissing the window.
+
+  \tNote: You can also click on Reset to cancel any changes that you have
+  \tnot yet applied, or click on Cancel to dismiss the window without making
+  \tany changes.
+
+^2^Internet Setup: Add New System Window
+^$120
+Internet Setup: Add New System Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tSystem Name: - Type in the name of the system you want to be able
+  \t \tto communicate with.
+
+  \to\tNetwork Address - Type in the network address. If you are configured
+  \t \tfor \k(DNS Access^^Accessing DNS), you can click on Get Address and the system
+  \t \twill look up the address of the system for you.
+
+  \t \tNote: If the system is in a different domain than yours, you must
+  \t \tenter the domain name in the System Name field above.
+
+  \to\tComment - Type in any comments that you think might be useful.
+  \t \tFor example, the room number where the machine is located, the
+  \t \tname of the system owner, and so forth.
+
+2.\tClick on OK to save the changes and dismiss the window, or on Apply
+
+See also:
+\k(Adding a New System to the Systems List)
+
+^1^Deleting a System from the Systems List
+^$130
+Deleting a System from the Systems List
+
+To delete a system from the \k(Systems List), do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup" window appears.
+  \tNote: Make sure you are in the \k(Systems List view^^Systems List).
+
+4.\tClick on the system entry you want to delete.
+
+5.\tClick on System=>Delete. The system entry is removed from the
+  \tSystems List.
+
+^1^Setting Up UUCP Transfer
+^$140
+Setting Up UUCP Transfer
+
+If you have \k(Change Internet Setup permission^dtadmin/user.hlp^Understanding Permissions), you can configure
+your system to send and receive mail and file transfers over TCP/IP networks
+using the UNIX UUCP (UNIX-to-UNIX Copy) facility.
+
+Note: The owner or administrator for the remote system must also
+set up his or her system to enable UUCP transfers.
+
+To accept UUCP (UNIX-to-UNIX copy) transfers from a remote system, do
+the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup" window appears.
+
+4.\tClick on the system you want to configure UUCP access for (from either
+  \tthe \k(Domain Listing) or \k(Systems List)).
+
+5.\tClick on Actions=>UUCP Transfer Setup. The "Internet Setup: UUCP
+  \tTransfer Setup" window appears with the following options:
+
+  \to\tSystem Name: - By default, this text box displays the name of the
+  \t \tsystem currently selected in the main "Internet Setup" window. You
+  \t \tcan change the system name by typing over the name currently in the
+  \t \ttext box and pressing <Tab>.
+
+  \to\tNetwork Address: - By default, this field is populated with the
+  \t \taddress of the currently selected system. If you changed the name
+  \t \tin the System Name text box, these fields will be blank.
+       
+  \t \tIf you have \k(DNS access^^Accessing DNS), you can click on Get Address for the
+  \t \tsystem to look up the network address and populate the fields. If
+  \t \tyou do not have DNS access find out the address from your network
+  \t \tadministrator and type it in. 
+
+  \to\tCurrent Status: Accepting/Rejecting from - Indicates whether or not
+  \t \tUUCP file transfers are currently being accepted for the specified
+  \t \tsystem.
+
+6.\tClick on Accept. The system adds the system to the /etc/uucp/Systems.tcp
+  \tfile. 
+
+  \tNote: You can remove a system from /etc/uucp/Systems.tcp by clicking
+  \ton Reject.
+
+^2^Internet Setup: UUCP Transfer Setup Window
+^$150
+Internet Setup: UUCP Transfer Setup Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tSystem Name: - By default, this text box displays the name of the
+  \t \tsystem currently selected in the main "Internet Setup" window. You can
+  \t \tchange the system name by typing over the name currently in the text
+  \t \tbox and pressing <Tab>.
+
+  \to\tNetwork Address: - By default, this field is populated with the
+  \t \taddress of the currently selected system. If you changed the name
+  \t \tin the System Name text box, these fields will be blank.
+       
+  \t \tIf you have \k(DNS access^^Accessing DNS), you can click on Get Address for the
+  \t \tsystem to look up the network address and populate the fields. If you
+  \t \tdo not have DNS access find out the address from your network
+  \t \tadministrator and type it in. 
+
+  \to\tCurrent Status: Accepting/Rejecting from - Indicates whether or not
+  \t \tUUCP file transfers are currently being accepted for the specified
+  \t \tsystem.
+
+2.\tClick on Accept. The system adds the system to the /etc/uucp/Systems.tcp
+
+See also:
+\k(Setting Up UUCP Transfer)
+   
+
+^1^Accessing DNS
+^$160
+Accessing DNS
+
+You do not have to provide entries in your /etc/hosts file for each system
+you want to access. If your organization has access to a DNS server, your
+system can retrieve information about these systems from that server.
+
+If you have \k(Change Internet Setup permission^dtadmin/user.hlp^Understanding Permissions), you can set up access
+to a DNS server as follows:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup" window appears.
+
+4.\tClick on Actions=>DNS Access. The "Internet Setup: DNS Access"
+  \twindow appears with the following fields:
+
+  \to\tDomain Name: - Type in the name of your organization's domain.
+  \t \tThe domain name must use a .com, .edu, .gov, and so forth, for
+  \t \tthe extension. For example, site1.companyA.com.
+
+  \to\tName Server: -  Type in the name of your organization's primary domain
+  \t \tname server.
+
+  \to\tNetwork Address: - Enter the address of the server specified in
+  \t \tName Server.
+
+  \to\tServers - Use the scroll bar to move up and down the list
+  \t \tof existing DNS servers (defined in the /etc/resolv.conf file).
+
+  \t \tYou can click on one of the following options:
+
+  \t \t-\tAdd - To place the current entries from the Name Server and Network
+  \t \t \tAddress text boxes into the scroll list.
+
+  \t \t-\tModify - To replace the selected entry with the current contents 
+  \t \t \tof the Name Server and Network Address boxes.
+
+  \t \t-\tDelete - To remove the selected entry from the scroll list.
+
+5.\tClick on OK to save your changes.
+
+  \tNote: You can also click on Reset to cancel any changes that you
+  \thave not yet applied, or click on Cancel to dismiss the window
+  \twithout saving any changes.
+
+See also:
+\s(Introduction to Domain Name Service Administration^dhelp as netag "Using Domain Name Service with TCP/IP" "" || helpLinkErr)
+
+^2^The Internet Setup: DNS Access Window
+^$170
+The Internet Setup: DNS Access Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tDomain Name: - Type in the name of your organization's domain.
+  \t \tThe domain name must use a .com, .edu, .gov, and so forth, for
+  \t \tthe extension. For example, site1.companyA.com.
+
+  \to\tName Server: -  Type in the name of your organization's primary domain
+  \t \tname server.
+
+  \to\tNetwork Address: - Enter the address of the server specified in
+  \t \tName Server.
+
+  \to\tServers - Use the scroll bar to move up and down the list
+  \t \tof existing DNS servers (defined in the /etc/resolv.conf file).
+
+  \t \tYou can click on one of the following options:
+
+  \t \t-\tAdd - To place the current entries from the Name Server and Network
+  \t \t \tAddress text boxes into the scroll list.
+
+  \t \t-\tModify - To replace the selected entry with the current contents 
+  \t \t \tof the Name Server and Network Address boxes.
+
+  \t \t-\tDelete - To remove the selected entry from the scroll list.
+
+2.\tClick on OK to save your changes.
+
+See also:
+\k(Accessing DNS)
+
+^1^Accessing NIS
+^$180
+Accessing NIS
+
+Note: Configuring your system to access an NIS server does not automatically
+enable NIS for any specific service such as user or host management.
+
+If you have \k(Manage User Info. via NIS permission^dtadmin/user.hlp^Understanding Permissions), you can configure your
+system to use a Network Information System (NIS) server as follows:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup" window appears.
+
+4.\tClick on Actions=>NIS Access. The "Internet Setup: NIS Access: window
+  \tappears with the following fields:
+
+  \to\tNIS Domain Name: - Type in the name of your organization's domain.
+
+  \t \tNote: This is not necessarily the same as your \k(DNS domain^^Accessing DNS).
+
+  \to\tNIS Server: Type in the name of your organization's NIS server.
+
+  \to\tNIS Servers - Use the scroll bar to move up and down the list of
+  \t \texisting NIS servers.
+       
+  \t \tYou can do the following with this list:
+
+  \t \t-\tClick on Add to place the current entry in the NIS Server text
+  \t \t \tbox into the scroll list.
+
+  \t \t-\tClick on Modify to replace the selected entry in the scroll list
+  \t \t \twith the current contents of the NIS Server box.
+
+  \t \t-\tClick on Delete to remove the selected entry from the scroll list.
+
+5.\tClick on OK to save your changes.
+
+  \tYou can also click on Reset to cancel any changes that you have not
+  \tyet applied, or click on Cancel dismisses the window without saving
+  \tany changes.
+
+See also:
+\s(Introduction to NIS Setup^dhelp as netag "Setting Up NIS" "" || helpLinkErr)
+\s(About NIS Administration^dhelp as netag "Introduction to NIS Administration" "" || helpLinkErr)
+
+^2^Internet Setup: NIS Access Window
+^$190
+Internet Setup: NIS Access Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tNIS Domain Name: - Type in the name of your organization's domain.
+
+  \t \tNote: This is not necessarily the same as your \k(DNS domain^^Accessing DNS).
+
+  \to\tNIS Server: Type in the name of your organization's NIS server.
+
+  \to\tNIS Servers - Use the scroll bar to move up and down the list of
+  \t \texisting NIS servers.
+       
+  \t \tYou can do the following with this list:
+
+  \t \t-\tClick on Add to place the current entry in the NIS Server text
+  \t \t \tbox into the scroll list.
+
+  \t \t-\tClick on Modify to replace the selected entry in the scroll list
+  \t \t \twith the current contents of the NIS Server box.
+
+  \t \t-\tClick on Delete to remove the selected entry from the scroll list.
+
+2.\tClick on OK to save your changes.
+
+See also:
+\k(Accessing NIS)
+
+^1^Setting Up Routing
+^$200
+Setting Up Routing
+
+After you configure your system for networking, you can contact other
+systems on your local network. However, to access systems outside of
+your local network, you may have to configure your system's \d(netmask)
+and \d(broadcast address) and specify a router that lets you reach systems
+outside of your local network.
+ 
+To configure your system to access a \d(router) within your local
+network, or to change your system's netmask and broadcast address,
+do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup" window appears.
+
+4.\tClick on Actions=>Routing Setup. The "Internet Setup: Routing Setup"
+  \twindow appears with the following fields:
+
+  \tFor Subnet Mask:
+
+  \to\tSubnet Type: - Click on the appropriate class (if you do not know
+  \t \twhat class your network is in, ask your network administrator).
+  \t \tIf your network is not configured as a standard class network,
+  \t \tselect Other.  A Mask text box appears; type in the netmask ID in
+  \t \thexadecimal format (for example, FFFF0000).
+
+  \to\tNetwork ID: - Indicates which part of the local system's address
+  \t \tis considered to be the network identifier (based on the currently
+  \t \tselected Subnet Type).
+
+  \t \tNote: This field appears only if you select class A, B, or C 
+  \t \tfor Subnet Type.
+
+  \to\tSystem ID: - Indicates which part of the local system's address
+  \t \tis considered to be the system identifier (based on the currently
+  \t \tselected Subnet Type).
+
+  \t \tNote: This field appears only if you select class A, B, or C  
+  \t \tfor Subnet Type.
+
+  \tFor Network Routing:
+
+  \to\tDefault Router: - Type in the name of the system used as a
+  \t \t\d(router) within your local network. This router should be "one
+  \t \thop" away from the your system (that is, should be directly connected
+  \t \tto the local network).
+
+  \to\tNetwork Address: - Type in the address for the default router.
+  \t \tIf your system is configured for \k(DNS access^^Accessing DNS), you can click
+  \t \ton Get Address and the system will look up the address for the router.
+
+  \to\tUpdate Routing Tables Using Broadcasted Info: - Click on this
+  \t \tcheck box if you want to run the routed program (that is the route
+  \t \tdaemon).
+
+  \t \tFor more information on routed (1M), see the \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \t \tNote: routed listens for broadcasts of information on how to
+  \t \taccess systems outside of your local network.
+
+5.\tClick on OK to save the changes. 
+
+  \tNote: You can also click on Reset to cancel any changes that you
+  \thave not yet applied, or click on Cancel to dismiss this window without
+  \tsaving any changes.
+
+See also:
+\s(Setting Up Routing^dhelp as netag "Setting Up TCP/IP" "Setting Up Routing" || helpLinkErr)
+\s(Using the routed Daemon^dhelp as netag "Setting Up Routers and Subnetworks" "Using the routed Daemon" || helpLinkErr)
+
+^2^Internet Setup: Routing Setup Window
+^$210
+Internet Setup: Routing Setup Window
+    
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \tFor Subnet Mask:
+
+  \to\tSubnet Type: - Click on the appropriate class (if you do not know
+  \t \twhat class your network is in, ask your network administrator).
+  \t \tIf your network is not configured as a standard class network,
+  \t \tselect Other. A Mask text box appears; type in the netmask ID in
+  \t \thexadecimal format (for example, FFFF0000).
+
+  \to\tNetwork ID: - Indicates which part of the local system's address
+  \t \tis considered to be the network identifier (based on the currently
+  \t \tselected Subnet Type).
+
+  \t \tNote: This field appears only if you select class A, B, or C for
+  \t \tSubnet Type.
+
+  \to\tSystem ID: - Indicates which part of the local system's address
+  \t \tis considered to be the system identifier (based on the currently
+  \t \tselected Subnet Type).
+
+  \t \tNote: This field appears only if you select class A, B, or C  
+  \t \tfor Subnet Type.
+
+  \tFor Network Routing:
+
+  \to\tDefault Router: - Type in the name of the system used as a \d(router)
+  \t \twithin your local network. This router should be "one hop" away from
+  \t \tthe your system (that is, should be directly connected to the local
+  \t \tnetwork).
+
+  \to\tNetwork Address: - Type in the address for the default router.
+  \t \tIf your system is configured for \k(DNS access^^Accessing DNS), you can click
+  \t \ton Get Address and the system will look up the address for the router.
+
+  \to\tUpdate Routing Tables Using Broadcasted Info: - Click on this
+  \t \tcheck box if you want to run the routed program (that is the route
+  \t \tdaemon).
+
+  \t \tFor more information on routed (1M), see the \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \t \tNote: routed listens for broadcasts of information on how to
+  \t \taccess systems outside of your local network.
+
+2.\tClick on OK to save the changes. 
+
+
+See also:
+\k(Setting Up Routing)
+
+^2^Internet Setup: Add New System Window
+^$215
+Internet Setup: Add New System Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tSystem Name: - Type in the name of the system you want to be able
+  \t \tto communicate with.
+
+  \to\tNetwork Address - Type in the network address. If you are configured
+  \t \tfor \k(DNS Access^^Accessing DNS), you can click on Get Address and the system
+  \t \twill look up the address of the system for you.
+
+  \t \tNote: If the system is in a different domain than yours, you must
+  \t \tenter the domain name in the System Name filed above.
+
+  \to\tComment - Type in any comments that you think might be useful.
+  \t \tFor example, the room number where the machine is located, the
+  \t \tname of the system owner, and so forth.
+
+2.\tClick on OK to save the changes and dismiss the window, or on Apply
+  \tto save the changes without dismissing the window.
+
+See also:
+\k(Adding a New System to the Systems List)
+
+^1^Copying an Icon for a Remote System to a Folder
+^$220
+Copying an Icon for a Remote System to a Folder
+
+You can create an icon for any remote system contained in your
+\k(Domain Listing) or \k(Systems List). You can then double-click on this
+icon whenever you want to log in to or transfer files to that remote system.
+
+To create an icon for the remote system, do the following:
+
+1.\tClick on the desired system in the Domain Listing or Systems list.
+
+2.\tOpen the folder to which you want to copy the remote system icon.
+
+3.\t\d(Drag-and-drop^drag-and-drop) the remote system icon to the folder you opened
+  \tin Step 2.
+
+Note: You can also use the Copy to Folder menu option to create
+an icon for a remote system. See \k(Internet Setup: Copy To Folder Window).
+
+See also:
+\k(Remote Login^Remote_Access/Remote_Access.hlp^Remote Login)
+
+^2^Internet Setup: Copy To Folder Window
+^$230
+Internet Setup: Copy To Folder Window
+
+This window lets you copy an entry for a remote system to the desired folder.
+When complete, an icon representing that remote system appears
+in the folder.
+
+Do the following:
+
+1.\tClick on a folder name or on the Parent Folder in the Folder(s) list
+  \tuntil you locate the desired folder.
+
+2.\tType in the As: field the name you want to give to the icon. By default,
+  \tthis name is the same as the system name.
+
+3.\tClick on Copy. A remote system icon representing that system appears
+  \tin the folder. You can now do the following:
+
+  \to\t\d(Double-click^double-click) on the remote system icon whenever you want
+  \t \tto log in to that remote system.
+
+  \to\t\d(Drag-and-drop^drag-and-drop) a file onto the remote sysem icon whenever you
+  \t \twant to transfer a file to that remote system.
+
+^1^Viewing System Properties
+^$240
+Viewing System Properties
+
+To view the properties of a system entry, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup" window appears.
+
+4.\tClick on the desired system in the \k(Domain Listing) or the \k(Systems List).
+
+5.\tClick on System=>Properties. The \k("Internet Setup: Properties" window^^Internet Setup: Properties Window)
+  \tappears.  
+
+    Note: If you are in the Domain Listing View, you cannot make any
+  \tchanges to the system properties. If you are in the Systems List View,
+  \tyou can make changes which will be updated in the /etc/hosts file.
+
+See also:
+\s(Files in /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^2^Internet Setup: Properties Window
+^$250
+Internet Setup: Properties Window
+
+If you are in the \k(Domain Listing) view, this window displays the system
+name and corresponding network address.
+
+If you are in the \k(Systems List) view, you can make changes to the
+properties as follows:
+
+1.\tType in the desired system name.
+
+2.\tType in the address for that system, or, if you have \k(DNS access^^Accessing DNS),
+  \tclick on Get Address to have Internet Setup look up the address.
+
+3.\tType in a comment (if desired).
+
+4.\tClick on OK to save the changes and dismiss the window, or on Apply
+  \tto save the changes without dismissing the window. The system saves
+  \tthe changes in the /etc/hosts file.
+
+  \tNote: You can also click on Reset to cancel any changes that you
+  \thave not yet applied, or click on Cancel dismisses the window
+  \twithout saving any changes.
+
+See also:
+\s(Files in /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^1^Searching for a System
+^$260
+Searching for a System
+
+To search for a system, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Internet_Setup. The "Internet Setup" window appears.
+
+4.\tClick on one of the following:
+
+  \to\tFind=>Search - To bring up the "Internet Setup: Search" window. Type
+  \t \tin the name of the system you are looking for and click on Search.
+  \t \tThe system locates and highlights the system in the \k(Domain Listing)
+  \t \tor the \k(Systems List) (depending on which view is currently selected).
+
+  \to\tFind=>First - To locate and highlight the first system entry in the
+  \t \tlist.
+
+  \to\tFind=>Last - To locate and highlight the last system entry in the list.
+
+See also:
+\k(Internet Setup: Search Window)
+
+^2^Internet Setup: Search Window
+^$270
+Internet Setup: Search Window
+
+Type in the name of the system you are looking for and click on Search.
+
+Note: If you are not sure of the full system name, or if you do not want to
+type in the full system name, enter the first few characters and click on
+Search to have the system try to locate the system for you.
+
+For example, say your organization has systems named site1, site2, site3,
+and so forth. You want to find "site2." You can type in "site" in the
+System Name field, click on Search, and the system locates the first
+occurrence of "site." In this case, the first occurrence is "site1."
+Click on Search again, and the system locates "site2." 
+

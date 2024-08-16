@@ -1,0 +1,38 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)mdemos:DragAndDrop/Imakefile	1.3"
+XCOMM 
+XCOMM (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+XCOMM ALL RIGHTS RESERVED 
+XCOMM 
+XCOMM 
+XCOMM Motif Release 1.2
+XCOMM 
+XCOMM   $RCSfile: Imakefile,v $ $Revision: 1.2 $ $Date: 92/03/13 15:33:30 $
+#include	<Motif.tmpl>
+#include	<Motif.rules>
+EXTRA_LOAD_FLAGS = -z nodefs
+INCLUDES = -I. -I$(MINCLUDESRC) -I$(INCLUDESRC) 
+SYSLIBS = -lm -lgen
+DEPLIBS1 = XmClientDepLibs
+LOCAL_LIBRARIES = XmClientLibs 
+
+
+SRCS1= DNDDemo.c  DNDDraw.c
+
+OBJS1= DNDDemo.o DNDDraw.o
+
+PROGRAMS = DNDDemo
+
+NormalLibraryObjectRule()
+
+MComplexProgramTarget_1(DNDDemo,$(LOCAL_LIBRARIES),$(SYSLIBS))
+
+
+

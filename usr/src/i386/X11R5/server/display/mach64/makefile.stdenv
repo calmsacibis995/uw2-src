@@ -1,0 +1,221 @@
+#	NAME
+#
+#		makefile : Make file.
+#
+#	SYNOPSIS
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	AUTHORS
+#
+#
+#	HISTORY
+#
+
+#	AM directives.
+..source :	debug.m g__init__.m m64__gs__.m m64__init__.m m64__vtin__.m\
+			m64__vtout__.m
+..source :	m64_clks.def m64_modes.def m64_vis.def m64_dacs.def
+..source :	m64_opt.gen option.template 
+..source :	stdenv.c generic.c g_colormap.c g_gs.c g_omm.c \
+			g_regs.c g_state.c  messages.h defaults.h global.h
+..source :	m64.c m64_arc.c m64_asm.c m64_bitblt.c m64_cmap.c \
+			m64_cursor.c  m64_debug.c m64_fill.c m64_font.c m64_gbls.c \
+			m64_gs.c m64_line.c m64_mischw.c m64_points.c m64_regs.c \
+			m64_sline.c m64_spans.c m64_state.c 
+..source :  README.mach64
+..include : devices
+..special : SAVE SAVE2 lint cfg
+
+#	Make variables.
+
+# cpp_options = 
+
+__cc_options__ = -DLIBRARY_NAME=\"LIBM64\" -DCHIPSET_NAME=\"MACH64\"\
+	-DLIBRARY_VERSION="\"0.0\""
+
+c_files =	stdenv.c generic.c g_colormap.c g_gs.c g_omm.c g_regs.c g_state.c \
+			m64_opt.c m64_regs.c m64_state.c m64.c m64_gs.c m64_cmap.c \
+			m64_mischw.c m64_gbls.c m64_fill.c  m64_bitblt.c m64_font.c \
+			m64_line.c m64_points.c m64_arc.c m64_asm.c m64_debug.c  \
+			m64_cursor.c  m64_opt.c m64_sline.c m64_spans.c  
+
+m_files = 	debug.m g__init__.m m64__gs__.m m64__init__.m m64__vtin__.m\
+			m64__vtout__.m
+
+as_s_files = 
+as_o_files = ${as_s_files:.s=.o}
+
+#	Different types of makes.
+..made_debug:		libm64_${LOGNAME}_g.so
+..made_optimized: 	libm64_${LOGNAME}_O.so
+..made_profiled: 	libm64.a 
+
+# 	Determine the appropriate flags and the target
+_cc_options_ = $(shell directory_to_make_option cc)
+_ld_options_ = $(shell directory_to_make_option ld)
+_ar_options_ = $(shell directory_to_make_option ar)
+_as_options_ = $(shell directory_to_make_option as)
+
+..made: $(shell directory_to_make_option made)
+
+#	Standard make include file.
+
+include ${std_make_include_file}
+
+# 	Munch rules.
+$(munch_c_files) : $(non_munch_o_files)
+
+debug.c : debug.m $(non_munch_o_files)
+	$(munch) -d -i '^.*_debug$$' -f m64_debug_control $(non_munch_o_files) > $(@);
+
+g__init__.c : g__init__.m $(non_munch_o_files)
+	$(munch) -c -i '^generic_.*__initialize__$$' -f generic__initialize__\
+	-p g__init__.m $(non_munch_o_files) > $(@)
+
+m64__init__.c : m64__init__.m $(non_munch_o_files)
+	$(munch) -c -i '^m64_.*__initialize__$$' -f m64__initialize__ \
+	-p m64__init__.m $(non_munch_o_files) > $(@)
+
+m64__gs__.c : m64__gs__.m $(non_munch_o_files)
+	$(munch) -c -i '^m64_.*__gs_change__$$' -f m64__gs_change__ \
+	-p m64__gs__.m $(non_munch_o_files) > $(@)
+
+m64__vtin__.c : m64__vtin__.m $(non_munch_o_files)
+	$(munch) -c -i '^m64_.*__vt_switch_in__$$' -f m64__vt_switch_in__ \
+	-p m64__vtin__.m $(non_munch_o_files) > $(@)
+
+m64__vtout__.c : m64__vtout__.m $(non_munch_o_files)
+	$(munch) -c -i '^m64.*__vt_switch_out__$$' -f m64__vt_switch_out__ \
+	-p m64__vtout__.m $(non_munch_o_files) > $(@)
+
+m64_opt.c : m64_opt.gen
+	genoptions -o $(@) -p 'm64_options_' -i $(<)
+
+libm64_${LOGNAME}_g.so: $(o_files) $(as_o_files)
+	rm -f $@ libm64.so
+	$(ld) $(LD_OPTIONS) -o $@ -h $@ $(o_files) $(as_o_files) -lm
+	ln -s $@ libm64.so
+
+libm64_${LOGNAME}_O.so: $(o_files) $(as_o_files)
+	rm -f $@ libm64.so
+	$(ld) $(LD_OPTIONS) -o $@ -h $@ $(o_files) $(as_o_files) -lm
+	ln -s $@ libm64.so
+
+libm64.a: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ar) $(AR_OPTIONS) $@ $(o_files) $(as_o_files)  -lm
+	##$(am)
+
+##$(am)
+
+m64.o : m64.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h messages.h defaults.h generic.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h g_regs.h m64_state.h m64_gbls.h m64_mischw.h m64_dacs.def m64_clks.def m64_gs.h lfb_map.h
+m64_arc.o : m64_arc.c stdenv.h messages.h defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_asm.o : m64_asm.c stdenv.h messages.h defaults.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m64_state.h
+m64_bitblt.o : m64_bitblt.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_cmap.o : m64_cmap.c stdenv.h messages.h defaults.h m64_vis.def g_colormap.h g_state.h g_gs.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_state.h m64_mischw.h m64_dacs.def m64_clks.def
+m64_cursor.o : m64_cursor.c stdenv.h messages.h defaults.h m64_asm.h g_omm.h m64_opt.h m64_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_state.h
+m64_debug.o : m64_debug.c
+m64_fill.o : m64_fill.c stdenv.h messages.h defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m64_gs.h m64_state.h
+m64_font.o : m64_font.c stdenv.h messages.h defaults.h g_omm.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_gbls.o : m64_gbls.c stdenv.h messages.h defaults.h
+m64_gs.o : m64_gs.c g_state.h g_gs.h stdenv.h messages.h defaults.h g_colormap.h g_omm.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_state.h m64_asm.h
+m64_line.o : m64_line.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_state.h m64_gs.h
+m64_mischw.o : m64_mischw.c m64_mischw.h stdenv.h messages.h defaults.h m64_dacs.def m64_clks.def g_regs.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h m64_state.h
+m64_points.o : m64_points.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_gs.h m64_regs.h g_regs.h m64_state.h
+m64_regs.o : m64_regs.c stdenv.h messages.h defaults.h g_regs.h g_state.h g_gs.h g_colormap.h
+m64_sline.o : m64_sline.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_spans.o : m64_spans.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h g_regs.h m64_gbls.h m64_gs.h m64_state.h
+m64_state.o : m64_state.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h g_regs.h m64_mischw.h m64_dacs.def m64_clks.def
+m64_opt.o : m64_opt.c stdenv.h messages.h defaults.h
+stdenv.o : stdenv.c messages.h defaults.h
+generic.o : generic.c g_state.h g_gs.h stdenv.h messages.h defaults.h g_colormap.h g_regs.h
+g_colormap.o : g_colormap.c stdenv.h messages.h defaults.h
+g_gs.o : g_gs.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h
+g_omm.o : g_omm.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h
+g_regs.o : g_regs.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h
+g_state.o : g_state.c g_gs.h stdenv.h messages.h defaults.h g_colormap.h
+debug.o :
+g__init__.o :
+m64__gs__.o :
+m64__init__.o :
+m64__vtin__.o :
+m64__vtout__.o :
+m64.d : m64.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h messages.h defaults.h generic.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h g_regs.h m64_state.h m64_gbls.h m64_mischw.h m64_dacs.def m64_clks.def m64_gs.h lfb_map.h
+m64_arc.d : m64_arc.c stdenv.h messages.h defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_asm.d : m64_asm.c stdenv.h messages.h defaults.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m64_state.h
+m64_bitblt.d : m64_bitblt.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_cmap.d : m64_cmap.c stdenv.h messages.h defaults.h m64_vis.def g_colormap.h g_state.h g_gs.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_state.h m64_mischw.h m64_dacs.def m64_clks.def
+m64_cursor.d : m64_cursor.c stdenv.h messages.h defaults.h m64_asm.h g_omm.h m64_opt.h m64_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_state.h
+m64_debug.d : m64_debug.c
+m64_fill.d : m64_fill.c stdenv.h messages.h defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m64_gs.h m64_state.h
+m64_font.d : m64_font.c stdenv.h messages.h defaults.h g_omm.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_gbls.d : m64_gbls.c stdenv.h messages.h defaults.h
+m64_gs.d : m64_gs.c g_state.h g_gs.h stdenv.h messages.h defaults.h g_colormap.h g_omm.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_state.h m64_asm.h
+m64_line.d : m64_line.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_state.h m64_gs.h
+m64_mischw.d : m64_mischw.c m64_mischw.h stdenv.h messages.h defaults.h m64_dacs.def m64_clks.def g_regs.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h m64_state.h
+m64_points.d : m64_points.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_gs.h m64_regs.h g_regs.h m64_state.h
+m64_regs.d : m64_regs.c stdenv.h messages.h defaults.h g_regs.h g_state.h g_gs.h g_colormap.h
+m64_sline.d : m64_sline.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_spans.d : m64_spans.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h g_regs.h m64_gbls.h m64_gs.h m64_state.h
+m64_state.d : m64_state.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h g_regs.h m64_mischw.h m64_dacs.def m64_clks.def
+m64_opt.d : m64_opt.c stdenv.h messages.h defaults.h
+stdenv.d : stdenv.c messages.h defaults.h
+generic.d : generic.c g_state.h g_gs.h stdenv.h messages.h defaults.h g_colormap.h g_regs.h
+g_colormap.d : g_colormap.c stdenv.h messages.h defaults.h
+g_gs.d : g_gs.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h
+g_omm.d : g_omm.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h
+g_regs.d : g_regs.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h
+g_state.d : g_state.c g_gs.h stdenv.h messages.h defaults.h g_colormap.h
+debug.d :
+g__init__.d :
+m64__gs__.d :
+m64__init__.d :
+m64__vtin__.d :
+m64__vtout__.d :
+m64.ln : m64.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h messages.h defaults.h generic.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h g_regs.h m64_state.h m64_gbls.h m64_mischw.h m64_dacs.def m64_clks.def m64_gs.h lfb_map.h
+m64_arc.ln : m64_arc.c stdenv.h messages.h defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_asm.ln : m64_asm.c stdenv.h messages.h defaults.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m64_state.h
+m64_bitblt.ln : m64_bitblt.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_cmap.ln : m64_cmap.c stdenv.h messages.h defaults.h m64_vis.def g_colormap.h g_state.h g_gs.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_state.h m64_mischw.h m64_dacs.def m64_clks.def
+m64_cursor.ln : m64_cursor.c stdenv.h messages.h defaults.h m64_asm.h g_omm.h m64_opt.h m64_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_state.h
+m64_debug.ln : m64_debug.c
+m64_fill.ln : m64_fill.c stdenv.h messages.h defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h g_state.h g_gs.h g_colormap.h m64_gs.h m64_state.h
+m64_font.ln : m64_font.c stdenv.h messages.h defaults.h g_omm.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_gbls.ln : m64_gbls.c stdenv.h messages.h defaults.h
+m64_gs.ln : m64_gs.c g_state.h g_gs.h stdenv.h messages.h defaults.h g_colormap.h g_omm.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_state.h m64_asm.h
+m64_line.ln : m64_line.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_state.h m64_gs.h
+m64_mischw.ln : m64_mischw.c m64_mischw.h stdenv.h messages.h defaults.h m64_dacs.def m64_clks.def g_regs.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h m64_state.h
+m64_points.ln : m64_points.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_gs.h m64_regs.h g_regs.h m64_state.h
+m64_regs.ln : m64_regs.c stdenv.h messages.h defaults.h g_regs.h g_state.h g_gs.h g_colormap.h
+m64_sline.ln : m64_sline.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_gbls.h m64_opt.h m64_regs.h g_regs.h m64_gs.h m64_state.h
+m64_spans.ln : m64_spans.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h g_regs.h m64_gbls.h m64_gs.h m64_state.h
+m64_state.ln : m64_state.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h m64_opt.h m64_regs.h g_regs.h m64_mischw.h m64_dacs.def m64_clks.def
+m64_opt.ln : m64_opt.c stdenv.h messages.h defaults.h
+stdenv.ln : stdenv.c messages.h defaults.h
+generic.ln : generic.c g_state.h g_gs.h stdenv.h messages.h defaults.h g_colormap.h g_regs.h
+g_colormap.ln : g_colormap.c stdenv.h messages.h defaults.h
+g_gs.ln : g_gs.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h
+g_omm.ln : g_omm.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h
+g_regs.ln : g_regs.c stdenv.h messages.h defaults.h g_state.h g_gs.h g_colormap.h
+g_state.ln : g_state.c g_gs.h stdenv.h messages.h defaults.h g_colormap.h
+debug.ln :
+g__init__.ln :
+m64__gs__.ln :
+m64__init__.ln :
+m64__vtin__.ln :
+m64__vtout__.ln :
+
+##$(am)

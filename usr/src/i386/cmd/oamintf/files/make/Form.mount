@@ -1,0 +1,63 @@
+#ident	"@(#)filemgmt:i386/cmd/oamintf/files/make/Form.mount	1.1"
+#ident	"$Header: $"
+Form="Create A File System (make)"
+`set -l LIFE=longterm`
+lifetime=$LIFE
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+framemsg=`readfile $INTFBASE/form.msg`
+
+done=`indicator -w;
+	if [ "$F3" = "no" ];
+	then
+		getfrm | set -l FRM;
+		set -l CMD="CLOSE $FRM";
+	else
+		set -l LIFE=shortterm;
+		ifdiskette $DEVICE | set -l FLOPPY;
+		if [ "$FLOPPY" = "false" ];
+		then
+			$OAMBASE/bin/call_fstyp $DEVICE | set -l XRET;
+		else 
+			set -l XRET="1";
+		fi;
+		if [ "$XRET" = "0" ];
+		then
+			set -l CMD="OPEN FORM $OBJ_DIR/Form.make2";
+		else
+			set -l CMD="OPEN FORM $OBJ_DIR/Form.$FSTYPE";
+		fi;
+	fi;
+	`$CMD
+
+name="This partition is currently mounted as"
+nrow=1
+ncol=1
+frow=1
+fcol=40
+rows=1
+columns=37
+value=$ARG1
+inactive=true
+
+name="Do you wish it to be changed to"
+nrow=2
+ncol=1
+frow=2
+fcol=33
+rows=1
+columns=44
+value=$ARG2
+inactive=true
+
+name="Confirm new mount point to be used:"
+lininfo=Form.mountfs:F3
+nrow=4
+ncol=1
+frow=4
+fcol=37
+rows=1
+rmenu={ yes no }
+value=yes
+menuonly=true
+columns=3

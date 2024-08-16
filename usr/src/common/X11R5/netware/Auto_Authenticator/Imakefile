@@ -1,0 +1,80 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)autoauthent:Imakefile	1.12"
+#ident  "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/Auto_Authenticator/Imakefile,v 1.25 1994/08/05 15:14:34 plc Exp $"
+
+#ifdef Release5
+#include <sv4Lib.tmpl>
+#endif
+#include    <Motif.tmpl>
+#include    <Motif.rules>
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+
+          SRCS = \
+		 main.c\
+		 misc.c\
+		 authen.c\
+		 loginPanel.c\
+		 newvt.c\
+		 ps.c\
+		 get_display.c\
+		 is_virtual.c\
+		 sniffproc.c
+          OBJS = \
+		 main.o\
+		 misc.o\
+		 loginPanel.o\
+		 authen.o\
+		 newvt.o\
+		 ps.o\
+		 get_display.o\
+		 is_virtual.o\
+		 sniffproc.o
+          HDRS = \
+		 main.h\
+		 sniffproc.h
+         PROGS  = xauto 
+
+     MDTILIBSRC = $(USLCLIENTSRC)/libMDtI
+        MDTILIB = $(MDTILIBSRC)/libMDtI.so
+       DTLIBSRC = $(LIBSRC)/Dt
+          DTLIB = $(DTLIBSRC)/libDt.so
+
+       INCLUDES = -DN_PLAT_UNIX -I../../../cmd/cmd-nw/include\
+					-I../include -I$(INC)/inc -I$(INC)/nw -I$(LIBSRC) \
+					-I$(LIBSRC)/Dt -I$(MDTILIBSRC)
+
+          XLIBS = XmClientLibs $(XMULIB) \
+					$(DTLIB) $(XLIB) $(MDTILIB)
+
+  SYS_LIBRARIES = ../libcomponents/libuwc.a -lnct -lNwClnt -lNwCal -lNwLoc \
+					-lNwNcp -lNwClnt -lNwNcp -lnwutil -lsl -lthread -lgen 
+
+  CC = LD_RUN_PATH=/usr/X/lib $(PFX)cc
+
+all:: $(PROGS)
+
+NormalProgramTarget($(PROGS),$(OBJS),$(LLIBS),$(XLIBS),$(SYS_LIBS))
+
+all:: $(PROGS)
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 755)
+InstallMsgCatalog(xauto2)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()

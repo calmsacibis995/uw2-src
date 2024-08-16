@@ -1,0 +1,48 @@
+#       $Header:   M:/proj/nwnfs3/rel3.0/tools/mktools/targets/nuclite/vcs/pconfig.dvt   1.6   24 Jan 1995 15:46:50   RBINDIGN  $
+#       
+#
+SERVICE_DISPATCHER none
+LOAD_MODULE PKERNEL
+LOAD_MODULE UNIXLIB
+LOAD_MODULE NUC
+LOAD_MODULE TSAPROXY
+ADMIN_NLM none
+UPDATE_AUTOEXEC
+0 load REMFILFX
+0 UNISTART.NCF
+UPDATE_STARTFILE
+4 tsaproxy
+4 netdb
+4 unixlib
+4 nuc
+UPDATE_STOPFILE
+0 xconsole
+0 telnetd
+0 nuc
+0 unixlib
+0 netdb
+0 pkernel
+#
+# product level delete actions
+#
+DELETE_ACTIONS
+UPDATE_STARTFILE
+0 nuc			
+0 unixlib		"FILE=unixlib.nlm"
+0 netdb			"FILE=netdb.nlm"
+0 tsaproxy		"FILE=tsaproxy.nlm"
+0 pkernel		"FILE=pkernel.nlm"
+0 bcastlib		"FILE=bcastlib.nlm"
+UPDATE_STOPFILE
+0 netdb			"FILE=netdb.nlm"
+0 pkernel		"FILE=pkernel.nlm"
+0 bcastlib		"FILE=bcastlib.nlm"
+#
+# component level configuration
+#
+%% XCONCOMP
+UPDATE_STOPFILE
+0 xconsole              "FILE=xconsole.nlm"
+UPDATE_STARTFILE
+0 xconsole              "FILE=xconsole.nlm"
+%%

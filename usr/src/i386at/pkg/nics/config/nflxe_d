@@ -1,0 +1,30 @@
+#ident	"@(#)pkg.nics:config/nflxe_d	1.11"
+
+NAME=Compaq_Netflex_Ether_Dual_Port
+
+DRIVER_NAME=nflxe
+
+CLASS="nflxe nflx"
+
+ETHER=true
+
+VERIFY=true
+
+BUS=EISA
+
+UNIT=2
+
+POST_SCRIPT="nflxe_post"
+
+EXTRA_FILES="/etc/netflex/cet_start
+/etc/netflex/cet_end
+/etc/netflex/unieth.bin
+/etc/netflex/uniethf.bin"
+
+CONFIG_CMDS="/etc/netflex/cet_start  nflxe /etc/netflex 0"
+
+BOARD_IDS="CPQ6200"
+
+UPGRADE_CHECK=scripts/nflxe_d.upg
+
+NUM_PORTS=2

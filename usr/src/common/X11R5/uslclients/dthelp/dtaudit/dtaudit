@@ -1,0 +1,20 @@
+#ident	"@(#)dthelp:dtaudit/dtaudit	1.1"
+
+USAGE="dtaudit -d <help_file_directory> [-o <output_file>]"
+
+while getopts d:o: x
+do
+	case $x in
+	d) D=$OPTARG;;
+	o) O=$OPTARG;;
+	esac
+done
+shift `expr $OPTIND - 1`
+
+C=`pwd`
+D=${D:-/usr/X/lib/locale/C/help}
+O=${O:-$C/dtaudit.out}
+
+find $D -type f -print > $C/hlp.files
+
+Match $C/hlp.files > $O

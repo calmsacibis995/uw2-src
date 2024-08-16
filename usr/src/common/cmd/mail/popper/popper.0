@@ -1,0 +1,198 @@
+
+
+
+     ppppooooppppppppeeeerrrr((((8888))))                 ((((AAAAuuuugggguuuusssstttt 1111999999990000))))                 ppppooooppppppppeeeerrrr((((8888))))
+
+
+
+     NNNNAAAAMMMMEEEE
+          popper - pop 3 server
+
+     SSSSYYYYNNNNOOOOPPPPSSSSIIIISSSS
+          ////uuuussssrrrr////eeeettttcccc////ppppooooppppppppeeeerrrr [ -d ] [ -t trace-file]
+
+     DDDDEEEESSSSCCCCRRRRIIIIPPPPTTTTIIIIOOOONNNN
+          _P_o_p_p_e_r is an implementation  of  the  Post  Office  Protocol
+          server  that  runs  on a variety of Unix computers to manage
+          electronic mail for Macintosh  and  MS-DOS  computers.   The
+          server  was  developed  at  the  University of California at
+          Berkeley and conforms fully to  the  specifications  in  RFC
+          1081  and RFC 1082.  The Berkeley server also has extensions
+          to send electronic mail on behalf of a client.
+
+          The -dddd flag sets  the  socket  to  debugging  and  turns  on
+          debugging.    All   debugging  information  is  saved  using
+          syslog(8).  The -tttt ttttrrrraaaacccceeee-ffffiiiilllleeee flag turns  on  debugging  and
+          saves the trace information in _t_r_a_c_e-_f_i_l_e using fprintf(s).
+
+     HHHHOOOOWWWW TTTTOOOO OOOOBBBBTTTTAAAAIIIINNNN TTTTHHHHEEEE SSSSEEEERRRRVVVVEEEERRRR
+          The  POP  server  is  available  via  anonymous   ftp   from
+          ftp.CC.Berkeley.EDU (128.32.136.9, 128.32.206.12).  It is in
+          two files in the  pub  directory:   a  compressed  tar  file
+          popper.tar.Z  and  a  Macintosh  StuffIt  archive  in BinHex
+          format called MacPOP.sit.hqx.
+
+     TTTTHHHHEEEE PPPPOOOOPPPP TTTTRRRRAAAANNNNSSSSAAAACCCCTTTTIIIIOOOONNNN CCCCYYYYCCCCLLLLEEEE
+          The Berkeley POP server is a single program (called  popper)
+          that  is launched by inetd when it gets a service request on
+          the POP TCP port.  (The official port  number  specified  in
+          RFC  1081 for POP version 3 is port 110.  However, some POP3
+          clients attempt to contact the server at port 109,  the  POP
+          version  2  port.  Unless you are running both POP2 and POP3
+          servers, you can simply define both ports  for  use  by  the
+          POP3   server.    This  is  explained  in  the  installation
+          instructions later on.)  The popper program initializes  and
+          verifies that the peer IP address is registered in the local
+          domain, logging a warning message when a connection is  made
+          to a client whose IP address does not have a canonical name.
+          For systems using BSD 4.3 bind, it also checks to see  if  a
+          cannonical  name lookup for the client returns the same peer
+          IP address, logging a warning message if it does  not.   The
+          the  server enters the authorization state, during which the
+          client must correctly identify itself by providing  a  valid
+          Unix  userid  and password on the server's host machine.  No
+          other exchanges are allowed during this state (other than  a
+          request  to  quit.)   If  authentication  fails,  a  warning
+          message is logged and the session ends.  Once  the  user  is
+          identified,  popper  changes its user and group ids to match
+          that of the user and  enters  the  transaction  state.   The
+          server  makes  a  temporary  copy  of  the  user's  maildrop
+
+
+
+     Page 1                                         (printed 10/18/93)
+
+
+
+
+
+
+     ppppooooppppppppeeeerrrr((((8888))))                 ((((AAAAuuuugggguuuusssstttt 1111999999990000))))                 ppppooooppppppppeeeerrrr((((8888))))
+
+
+
+          (ordinarily  in  /usr/spool/mail)  which  is  used  for  all
+          subsequent  transactions.   These  include  the  bulk of POP
+          commands to retrieve mail, delete mail, undelete  mail,  and
+          so  forth.   A  Berkeley  extension  also allows the user to
+          submit a mail parcel to the server who mails  it  using  the
+          sendmail   program  (this  extension  is  supported  in  the
+          HyperMail client distributed with  the  server).   When  the
+          client  quits,  the  server  enters  the  final update state
+          during which the network connection is  terminated  and  the
+          user's  maildrop  is  updated  with  the (possibly) modified
+          temporary maildrop.
+
+     LLLLOOOOGGGGGGGGIIIINNNNGGGG
+          The  POP  server  uses  syslog  to  keep  a  record  of  its
+          activities.   On systems with BSD 4.3 syslogging, the server
+          logs (by default)  to  the  "local0"  facility  at  priority
+          "notice"  for  all messages except debugging which is logged
+          at   priority   "debug".    The   default   log   file    is
+          /usr/spool/mqueue/POPlog.  These can be changed, if desired.
+          On systems with 4.2 syslogging all messages  are  logged  to
+          the local log file, usually /usr/spool/mqueue/syslog.
+
+     DDDDEEEEBBBBUUUUGGGGGGGGIIIINNNNGGGG
+          The popper program will log debugging information  when  the
+          -d  parameter  is  specified  after  its  invocation  in the
+          inetd.conf file.  Care should be  exercised  in  using  this
+          option  since it generates considerable output in the syslog
+          file.  Alternatively, the "-t <file-name>" option will place
+          debugging  information into file "<file-name>" using fprintf
+          instead of syslog.
+
+          For SunOS version 3.5, the popper  program  is  launched  by
+          inetd  from  /etc/servers.   This file does not allow you to
+          specify command line arguments.  Therefore, if you  want  to
+          enable   debugging,  you  can  specify  a  shell  script  in
+          /etc/servers to be launched instead of popper  and  in  this
+          script call popper with the desired arguments.
+
+          You can confirm that the POP server is running  on  Unix  by
+          telneting  to  port  110 (or 109 if you set it up that way).
+          For example:
+
+          %telnet myhost 110
+          Trying...
+          Connected to myhost.berkeley.edu.
+          Escape character is '^]'.
+          +OK UCB Pop server (version 1.6) at myhost starting.
+          quit
+          Connection closed by foreign host.
+
+     VVVVEEEERRRRSSSSIIIIOOOONNNN 1111....7777 RRRREEEELLLLEEEEAAAASSSSEEEE NNNNOOOOTTTTEEEESSSS
+          Extensive  re-write  of   the   maildrop   processing   code
+
+
+
+     Page 2                                         (printed 10/18/93)
+
+
+
+
+
+
+     ppppooooppppppppeeeerrrr((((8888))))                 ((((AAAAuuuugggguuuusssstttt 1111999999990000))))                 ppppooooppppppppeeeerrrr((((8888))))
+
+
+
+          contributed  by  Viktor Dukhovni <viktor@math.princeton.edu>
+          that greatly reduces the possibility that the  maildrop  can
+          be  corrupted as the result of simultaneous access by two or
+          more processes.
+
+          Added "pop_dropcopy" module to create a  temporary  maildrop
+          from  the  existing,  standard  maildrop  as root before the
+          setuid and setgid for the user is  done.   This  allows  the
+          temporary  maildrop  to be created in a mail spool area that
+          is not world read-writable.
+
+          This version does *not* send the sendmail "From "  delimiter
+          line in response to a TOP or RETR command.
+
+          Encased all debugging code in #ifdef DEBUG constructs.  This
+          code  can be included by specifying the DEGUG compiler flag.
+          Note:  You still need to use the -d or -t option  to  obtain
+          debugging output.
+
+     LLLLIIIIMMMMIIIITTTTAAAATTTTIIIIOOOONNNNSSSS
+          The POP server copies the user's entire maildrop to /tmp and
+          then operates on that copy.  If the maildrop is particularly
+          large, or inadequate space is available in  /tmp,  then  the
+          server will refuse to continue and terminate the connection.
+
+          Simultaneous modification of a single maildrop can result in
+          confusing  results.  For example, manipulating messages in a
+          maildrop using the Unix /usr/ucb/mail command while  a  copy
+          of  it  is  being  processed by the POP server can cause the
+          changes made by one  program  to  be  lost  when  the  other
+          terminates.   This  problem  is  being worked on and will be
+          fixed in a later release.
+
+     FFFFIIIILLLLEEEESSSS
+          /usr/spool/mail         mail files
+          /etc/inetd.conf         pop program invocation
+          /etc/syslog.conf        logging specifications
+
+     SSSSEEEEEEEE AAAALLLLSSSSOOOO
+          inetd(8), RFC1081, RFC1082
+
+     AAAAUUUUTTTTHHHHOOOORRRRSSSS
+          Bob Campbell, Edward Moy, Austin Shelton, Marshall  T  Rose,
+          and cast of thousands at Rand, UDel, UCI, and elsewhere
+
+
+
+
+
+
+
+
+
+
+
+     Page 3                                         (printed 10/18/93)
+
+
+

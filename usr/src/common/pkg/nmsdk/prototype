@@ -1,0 +1,49 @@
+#ident	"@(#)pkg-nmsdk:prototype	1.4"
+#
+#	Network Management Software Development Kit
+#
+
+i pkginfo
+i depend
+i copyright
+
+# i preinstall
+# i postinstall
+# i preremove
+# i postremove
+# i i.config
+# i r.config
+
+#
+# Directories
+#
+d base /usr ? ? ? ? ? ?
+d base /usr/include ? ? ? ? ? ?
+d base /usr/include/netmgt 0755 root sys 1 NULL NULL
+d base /usr/lib ? ? ? ? ? ?
+d base /usr/sbin ? ? ? ? ? ?
+
+#
+# Network Management Headers
+#
+!default     0444    bin     bin
+f base    /usr/include/netmgt/objects.h
+f base    /usr/include/netmgt/snmp-mib.h
+f base    /usr/include/netmgt/snmp.h
+f base    /usr/include/netmgt/snmpio.h
+f base    /usr/include/netmgt/snmpio.svr4.h
+f base    /usr/include/netmgt/snmpuser.h
+
+#
+# Commands
+#
+!default     0555     bin     bin
+f base  /usr/sbin/mosy=/usr/sbin/mosy.dy
+
+#
+# Libraries
+#
+!default     0444    bin     bin
+f base     /usr/lib/libsmux.a
+f base     /usr/lib/libsnmp.a
+f base     /usr/lib/libsnmpio.a

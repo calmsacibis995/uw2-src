@@ -1,0 +1,51 @@
+#ident	"@(#)pkg4.i386:ccs/postremove	1.6"
+#-------
+#Set up localized messaging
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then 
+	if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+		-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+	then
+		cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+		/usr/lib/locale/${LOCALE}/LC_MESSAGES
+		
+		installf ${PKGINST} /usr/lib/locale/${LOCALE}/LC_MESSAGES
+	fi
+fi
+#-------
+#
+# Take care of /usr/lib/cpp.
+#
+#-------
+
+if	[ -h /usr/lib/cpp -a ! -f /usr/ccs/lib/cpp ]
+then	rm -f /usr/lib/cpp
+fi
+
+#-------
+#
+# Take care of libcrypt.a
+#
+#-------
+rm -f /usr/lib/libcrypt.a
+if	[ -f /usr/lib/libcrypt_d.a ]
+then	
+	rm -f /usr/lib/libcrypt.a
+	ln /usr/lib/libcrypt_d.a /usr/lib/libcrypt.a
+fi
+#-------
+#edit /etc/profile to remove PATH modification
+#-------
+if  grep "\*\*UNIXWARE CCS\*\*" /etc/profile 
+then
+ed - /etc/profile <<Y
+g/\*\*UNIXWARE CCS\*\*/d
+w
+q
+Y
+fi
+exit 0
+

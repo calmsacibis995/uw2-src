@@ -1,0 +1,70 @@
+%% File System Parameters
+%C File System Parameters
+These tunable parameters include Generic File System parameters,
+as well as those for the Buffer Cache, DOSFS File System,
+FIFO File System, MEMFS File System,
+NAMEFS File System, NFS File System, SFS File System,
+S5 File System, UFS File System, VXFS File System,
+and the XENIX File System.
+%%% SFS Filesystem Parameters
+% SFSFLUSH
+Specifies how often the fsflush daemon
+writes sfs inode data out to disk on sfs file systems.
+A smaller value causes the daemon to run more often,
+making the file system ``harder,'' that is,
+less likely to lose data in a crash.
+However, it does take some
+CPU
+time.
+% SFSINODELWM
+Specifies the minimum number of inodes to keep in the dynamically
+allocated inode pool.
+This keeps the system from returning space to the KMA (Kernel Memory
+Allocator) when it is likely to need it back in the inode pool
+relatively quickly.
+% SFSTIMELAG
+An heuristic to not reuse inodes sooner than the specified number of ticks,
+if possible.
+% SFSNINODE
+Specifies 
+the maximum number of inode entries in the sfs inode table
+when 
+an sfs file is configured in your system.
+An sfs inode is a data structure
+that typically describes a file, directory,
+link and named pipe in an sfs file system type.
+Too few incore inodes causes:
+
+a poor buffer cache read/hit ratio (obtained with sar -b)
+
+a higher percentage of inodes with pages recycled or
+percent ipf (obtained with sar -t)
+
+a poor page attach rate (obtained with sar -p)
+
+This tunable is automatically adjusted based on memory size,
+but you can override the autotuned value by using
+idtune.
+%%% UFS File System Parameters
+% NDQUOT
+The size of the kernel quota table for the
+ufs
+file system.
+There is one entry for each user.
+Thus
+NDQUOT
+should be more than the maximum number of users
+that can be logged onto the system if a
+ufs
+or
+sfs
+file system type is being used.
+If quotas are in effect,
+the table entries limit the amount of
+disk space a user can use.
+If there are no available entries, the message
+``dquot table full''
+is printed on the console.
+If this occurs, the value of
+NDQUOT
+should be increased.

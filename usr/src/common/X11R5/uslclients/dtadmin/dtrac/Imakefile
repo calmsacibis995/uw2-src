@@ -1,0 +1,29 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)dtrac:Imakefile	1.4"
+
+all:
+
+include:
+
+depend:
+
+INSTPGMFLAGS = -m 0755
+
+InstallProgram(rac.msgs,$(DESKTOPDIR)/rac)
+InstallProgram(rac_readin.sh,$(DESKTOPDIR)/rac)
+InstallProgram(rac_prop.sh,$(DESKTOPDIR)/rac)
+InstallProgram(rac_acc.sh,$(DESKTOPDIR)/rac)
+InstallProgram(rac_copy.sh,$(DESKTOPDIR)/rac)
+InstallProgram(rac_misc.sh,$(DESKTOPDIR)/rac)
+InstallProgram(rac_verify.sh,$(DESKTOPDIR)/rac)
+
+InstallNonExecFile(Remote_Login,$(DESKTOPDIR)/.node)
+
+InstallMsgCatalog(dtrac)

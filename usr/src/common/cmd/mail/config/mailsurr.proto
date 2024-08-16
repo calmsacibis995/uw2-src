@@ -1,0 +1,143 @@
+#comment 
+####
+#### Part 1
+####
+#### Accepts and Denies should go here
+####
+
+# Prevent all shell meta-characters
+#
+'.+'	'.*[`;&|^<>()].*'	'Deny No Shell Metacharacters'
+'.+'	'!*#.*'			'Deny No Shell Metacharacters'
+
+
+####
+#### Part 2
+####
+#### Address translations should go here.
+#### Do the appropriate mapping between various addressing schemes.
+#### All remote mail should leave this section in RFC822 format
+####
+
+# Collapse bang address loops that go through two or more hops
+#
+'.+'	'[^!@%]+![^@%]+![^@%]+'	'Translate T=1;B=*; R=|/usr/lib/mail/surrcmd/uucollapse' '%n'
+
+<PATHS>	# Reroute using pathrouter.
+<PATHS>	#
+<PATHS>	'.+' '[^@]+' 'Translate R=|/usr/lib/mail/surrcmd/pathrouter %n'
+<PATHS>	
+# Map domain-routed domain addresses. That is, map all names of
+# the form domain1!... -> @domain1[,@domain2]*:user@domain3 
+#
+'.+'	'(.+)!([^!:]+)!([^!:]+)'	'Translate R=!\\1:\\3@\\2'
+'.+'	'(.*)!([^!:]+):(.+)'	'Translate R=\\1,@\\2:\\3'
+'.+'	',@(.+)'	'Translate R=@\\1'
+
+# Map all names of the form host!user -> user@host
+# The default is to give @ precedence over anything else.
+# ! and @ may not be present in the same address
+#
+'.+'	'([^!]*)!([^!]+)'	'Translate R=\\2@\\1'
+
+# Map all names of the form user%host (without any other @) -> user@host
+#
+'.+'	'([^@]*)%%([^@%]+)'	'Translate R=\\1@\\2'
+
+# Map all names of the form host.local-domain!user -> host!user
+#	(host must not have a . in it)
+#
+<CLUSTER>	'.+'	'([^@]+)@([^.]+):real'	'Translate R=\\1@\\2%D:real'
+<CLUSTER>	'.+'	'@([^.,:]+):real([,:].+)'	'Translate R=@\\1%D:real\\2'
+'.+'	'([^@]+)@([^.]+)'	'Translate R=\\1@\\2%D'
+'.+'	'@([^.,:]+)([,:].+)'	'Translate R=@\\1%D\\2'
+
+# Map all names of the form user@local-machine -> user
+# Map all names of the form user@uname -> user
+# Then loop back through from the top.
+#
+'.+'	'([^@]+)@%L%D'		'Translate R=\\1'
+'.+'	'([^@]+)@%U%D'		'Translate R=\\1'
+<ACCDOM>	'.+'	'([^@]+)@%{NODOT}'		'Translate R=\\1'
+
+# Run all (apparently) local names through the mail alias processor.
+#
+'.+'	'.+'			'Translate T=1;B=*; R=|/usr/lib/mail/surrcmd/mailalias -P%L! -P%U! -P%L\%D! -P%U\%D! -S@%U\%D -S@%L\%D -S@%L -S@%U -r -p' '%n'
+
+####
+#### Part 3
+####
+#### Delivery commands should go here.
+####
+
+# Check for binary mail. Uncomment this if you want to use it.
+#
+#'.+'	'!([^!]+)!.+'		'< F=*;C=0; /usr/lib/mail/surrcmd/ckbinarsys -t %C -s \\1'
+
+# If you have a flat name space across multiple machines, but user-names only
+# exist on disjoint machines, this entry will forward any name not known
+# locally off to the given host.
+#
+<(!ROUTEMHS||!MHS)&&SMTR&&!CLUSTER>	'.+'	'[^@]+'			'Translate T=1;B=*; R=|/usr/lib/mail/surrcmd/localmail -p -S @%X' '%n'
+<(!ROUTEMHS||!MHS)&&SMTR&&CLUSTER>	'.+'	'[^@]+'			'Translate T=1;B=*; R=|/usr/lib/mail/surrcmd/localmail -p -S @%X:real' '%n'
+<ROUTEMHS&&MHS>	'.+'	'[^@]+'			'Translate T=1;B=*; R=|/usr/lib/mail/surrcmd/localmail -p -S @%g%D' '%n'
+
+# The mail transports go here.
+#
+<UUCPTCP&&CLUSTER>	'.+'	'([^@,:]+)@(.+)%D:real'	'< H=add_from_header; sh -c "/usr/gnu/bin/perl /usr/lib/mail/surrcmd/doUucpTcp \\2 uux -a %R -p -- \\2!rmail \\1"'
+<UUCPTCP>	'.+'	'([^@,:]+)@(.+)%D'	'< H=add_from_header; sh -c "/usr/gnu/bin/perl /usr/lib/mail/surrcmd/doUucpTcp \\2 uux -a %R -p -- \\2!rmail \\1"'
+<CLUSTER&&UUCPTCP>	'.+'	'@([^@,:]+)%D:real[,:](.+)'	'< H=add_from_header; sh -c "/usr/gnu/bin/perl /usr/lib/mail/surrcmd/doUucpTcp \\1 uux -a %R -p -- \\1!rmail \\2"'
+<UUCPTCP>	'.+'	'@([^@,:]+)%D[,:](.+)'	'< H=add_from_header; sh -c "/usr/gnu/bin/perl /usr/lib/mail/surrcmd/doUucpTcp \\1 uux -a %R -p -- \\1!rmail \\2"'
+<MHS>	'[^@]+'	'([^@,:]+)@%g%D'		'< B=4096; /usr/lib/mail/surrcmd/smfqueue -h 0 -r %R@%U%D ' '\\1@%g%D'
+<MHS>	'.+'	'([^@,:]+)@%g%D'		'< B=4096; /usr/lib/mail/surrcmd/smfqueue -h 0 -r %R ' '\\1@%g%D'
+<MHS>	'[^@]+'	'([^@,:]+)@(.+%g%D)'	'< B=4096; /usr/lib/mail/surrcmd/smfqueue -h 0 -r %R@%U%D ' '\\1@\\2'
+<MHS>	'.+'	'([^@,:]+)@(.+%g%D)'	'< B=4096; /usr/lib/mail/surrcmd/smfqueue -h 0 -r %R ' '\\1@\\2'
+<MHS>	'.+'	'[^@,:]+@%g%D'		'Deny smfqueue failed'
+<MHS>	'.+'	'[^@,:]+@.+%g%D'	'Deny smfqueue failed'
+<IP>	# If DNS is not used, use "smtpqer -N". If DNS is used, remove the "-N".
+<IP>	#
+<CLUSTER&&IP&&!DNS&&!(SMTR&&STUP)>	'.+'	'([^@,:]+)@(.+):real'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -N -f %R -s \\2' '\\1'
+<IP&&!DNS&&!(SMTR&&STUP)>	'.+'	'([^@,:]+)@(.+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -N -f %R -s \\2' '\\1'
+<CLUSTER&&IP&&!DNS&&!(SMTR&&STUP)>	'.+'	'@([^@,:]+):real[,:](.+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -N -f %R -s \\1' '\\2'
+<IP&&!DNS&&!(SMTR&&STUP)>	'.+'	'@([^@,:]+)[,:](.+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -N -f %R -s \\1' '\\2'
+<CLUSTER&&IP&&!DNS&&SMTR&&STUP>	'.+'	'([^@,:]+)@(.+):real'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -N -f %R -s %X' '\\1@\\2'
+<IP&&!DNS&&SMTR&&STUP>	'.+'	'([^@,:]+)@(.+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -N -f %R -s %X' '\\1@\\2'
+<IP&&!DNS&&SMTR&&STUP>	'.+'	'(@[^@,:]+[,:].+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -N -f %R -s %X' '\\1'
+<IP&&!DNS&&SMTR&&STUP>	'.+'	'(@[^@,:]+[,:].+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -N -f %R -s %X' '\\1'
+<CLUSTER&&IP&&DNS&&!(SMTR&&STUP)>	'.+'	'([^@,:]+)@(.+):real'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -f %R -s \\2' '\\1'
+<IP&&DNS&&!(SMTR&&STUP)>	'.+'	'([^@,:]+)@(.+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -f %R -s \\2' '\\1'
+<CLUSTER&&IP&&DNS&&!(SMTR&&STUP)>	'.+'	'@([^@,:]+):real[,:](.+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -f %R -s \\1' '\\2'
+<IP&&DNS&&!(SMTR&&STUP)>	'.+'	'@([^@,:]+)[,:](.+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -f %R -s \\1' '\\2'
+<CLUSTER&&IP&&DNS&&SMTR&&STUP>	'.+'	'([^@,:]+)@(.+):real'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -f %R -s %X' '\\1@\\2'
+<IP&&DNS&&SMTR&&STUP>	'.+'	'([^@,:]+)@(.+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -f %R -s %X' '\\1@\\2'
+<IP&&DNS&&SMTR&&STUP>	'.+'	'(@[^@,:]+[,:].+)'	'< B=4096; /usr/lib/mail/surrcmd/smtpqer -f %R -s %X' '\\1'
+<UUCP&&CLUSTER>	'.+'	'([^@,:]+)@(.+)%D:real'	'< H=add_from_header;B=1024; uux -a %R -p -- \\2!rmail' '(\\1)'
+<UUCP>	'.+'	'([^@,:]+)@(.+)%D'	'< H=add_from_header;B=1024; uux -a %R -p -- \\2!rmail' '(\\1)'
+<UUCP>	'.+'	'@([^@,:]+)%D[,:](.+)'	'< H=add_from_header;B=1024; uux -a %R -p -- \\1!rmail' '(\\2)'
+<SMTR&&!STUP>	
+<SMTR&&!STUP>	####
+<SMTR&&!STUP>	#### Part 3b
+<SMTR&&!STUP>	####
+<SMTR&&!STUP>	#### Smarter-host processing
+<SMTR&&!STUP>	####
+<SMTR&&!STUP>	
+<SMTR&&!STUP>	# If none of the above work, then ship remote mail off to a smarter host.
+<SMTR&&!STUP>	# Make certain that SMARTERHOST= is defined within /etc/mail/mailcnfg.
+<SMTR&&!STUP>	# If there is no smarter host, then routed mail fails here.
+<SMTR&&!STUP>	#
+<SMTR&&!STUP>	'.+'	'@%X.+'			'Deny Smarter host unreachable'
+<CLUSTER&&SMTR&&!STUP>	'.+'	'(@.+)'			'Translate T=1; R=@%X:real,\\1'
+<CLUSTER&&SMTR&&!STUP>	'.+'	'([^@].+@.+)'		'Translate T=1; R=@%X:real:\\1'
+<!CLUSTER&&SMTR&&!STUP>	'.+'	'(@.+)'			'Translate T=1; R=@%X,\\1'
+<!CLUSTER&&SMTR&&!STUP>	'.+'	'([^@].+@.+)'		'Translate T=1; R=@%X:\\1'
+
+####
+#### Part 4
+####
+#### Postprocessing commands should go here.
+####
+
+# Log mail delivery
+#
+<LOG>	'.+'	'.+'	'> W=1;B=*; /usr/lib/mail/surrcmd/maillog -o /var/mail/:log' '-O %O %R %n %H %l --'
+<LOG>	'.+'	'.+'	'Errors W=1;B=*; /usr/lib/mail/surrcmd/maillog -o /var/mail/:errors' '-O %O %R %n %H %l --'

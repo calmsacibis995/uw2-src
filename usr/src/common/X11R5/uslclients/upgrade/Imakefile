@@ -1,0 +1,82 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994, 1995 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)dtupgrade:Imakefile	1.19"
+
+#undef InstallUpgradeScripts
+#define InstallUpgradeScripts(files,dest,flag)				@@\
+install:: files								@@\
+	MakeDir($(DESTDIR)dest)						@@\
+	@(set -x; for i in files; do \					@@\
+		$(INSTALL) -c flag $$i $(DESTDIR)dest; \		@@\
+	done)
+
+#undef DependTarget
+#define DependTarget(src)						@@\
+DependDependency()							@@\
+									@@\
+depend::								@@\
+	$(DEPEND) $(DEPENDFLAGS) -s "# DO NOT DELETE" -- $(ALLDEFINES) $(DEPEND_DEFINES) -- src
+
+#undef CreateAdotOut
+#define CreateAdotOut(pgm,src,dest)					@@\
+AllTarget(pgm)								@@\
+									@@\
+pgm:: src								@@\
+	$(CC) $(CFLAGS) -o $@ src					@@\
+									@@\
+InstallProgram(pgm,dest)						@@\
+DependTarget(src)							@@\
+NormalLintTarget(src)							@@\
+									@@\
+clean::									@@\
+	$(RM) pgm
+
+#undef EnableExecBit
+#define EnableExecBit(file)						@@\
+AllTarget(file)								@@\
+									@@\
+file::									@@\
+	$(CHMOD) +x file						@@\
+									@@\
+clean::									@@\
+	$(CHMOD) -x file
+
+DtUpgradeDir = $(DTADMDIR)/upgrade
+     ShFiles = dtupgrade_post.sh
+    DotFiles = dtapp_dfts.dot dtday1_view.dot dtfclass_scan.awk\
+		dtlocale.dot dtsaved_map.dot dtupgrade_utils.dot \
+		dtuser_home.dot
+    DatFiles = dtapp_dfts.dat dtday1_view.dat dtfonts.dat dtknown_cdbs.dat \
+		dtknown_classes.dat dtknown_helps.dat dtknown_privs.dat \
+		dtobso_rscs.dat dtold_files.dat dtprinters.dat dttypes.dat
+NonExecFiles = $(DotFiles) $(DatFiles)
+   ExecFiles = $(ShFiles)
+ READMEFiles = README.UW2.0.sys README.UW2.0.user
+
+        Src1 = dtlogindir.c
+        Pgm1 = dtlogindir
+
+        Src2 = dtcdb_scan.c
+        Pgm2 = dtcdb_scan
+
+        Src3 = dtgetusers.c
+        Pgm3 = dtgetusers
+
+        Src4 = dtday1locale.c
+        Pgm4 = dtday1locale
+
+CreateAdotOut($(Pgm1),$(Src1),$(DtUpgradeDir))
+CreateAdotOut($(Pgm2),$(Src2),$(DtUpgradeDir))
+CreateAdotOut($(Pgm3),$(Src3),$(DtUpgradeDir))
+CreateAdotOut($(Pgm4),$(Src4),$(DtUpgradeDir))
+EnableExecBit(dtupgrade_post.sh)
+InstallUpgradeScripts($(NonExecFiles),$(DtUpgradeDir),$(INSTDATFLAGS))
+InstallUpgradeScripts($(ExecFiles),$(DtUpgradeDir),$(INSTBINFLAGS))
+InstallMsgCatalog(upgrade)
+InstallMultiple($(READMEFiles),$(USRLIBDIR)/locale/C)

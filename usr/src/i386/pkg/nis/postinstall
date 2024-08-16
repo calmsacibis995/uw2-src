@@ -1,0 +1,381 @@
+#ident	"@(#)pkg.nis:nis/postinstall	1.35"
+#ident  "$Header: $"
+SCRIPTS=/usr/sbin/pkginst
+UPGRADE_STORE=/var/sadm/upgrade
+PKGMSG=/${PKGINST}.pkg export PKGMSG
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+PATH=/bin:/usr/bin:/usr/etc:/usr/sbin:$PATH
+export PATH 
+yproot_dir=/var/yp
+hf=/tmp/ypservers
+maps=`cat $yproot_dir/YPMAPS | /sbin/grep -v "^#"`
+MENU_DIR=/etc/inst/locale/${LOCALE}/menus/nis
+PKG_MENU=${REQDIR}/nis
+REQ_MENU=${PKG_MENU}
+MENU_RESP=/tmp/nisout
+error_string="" export error_string
+INITSCRIPT=/etc/init.d/nis
+NISTMP=/tmp/.nissave
+clientp=F
+masterp=F
+slavep=F
+host=""
+errors_in_setup=F
+
+cleanup()
+{
+if [ -f "$NIS_RESP" ]
+then
+	rm -f $NIS_RESP
+fi
+if [ -f "$NISTMP" ]
+then
+	rm -f $NISTMP
+fi
+if [ -f "$MENU_RESP" ]
+then
+	rm -f $MENU_RESP
+fi
+if [ -f "$hf" ]
+then
+	rm -f $hf
+fi
+}
+
+savemv()
+{
+	trap "" 1 2 3 15
+	mv -f $1 $2 > /tmp/nis.config 2>&1
+	if [ $? -ne 0 ]; then
+		error 4 "Unable to create %s\n" $2
+	fi
+	trap 1 2 3 15
+}
+
+lecho()
+{
+	pfmt -s nostd -g ${PKGMSG}:$1 "$2" $3 $4 $5
+}
+error()
+{
+	
+	export error_string 
+	export mgs_num 
+	msg_num="$1" 
+	error_string="`/usr/bin/pfmt -s error -g ${PKGMSG}:$1 "$2" 2>&1`" $3 $4 $5
+	. /etc/inst/locale/C/menus/menu_colors.sh error > /dev/null 2>&1
+	menu_colors error
+	menu -f ${MENU_DIR}/menu.err -o /dev/null 2>/dev/null
+	menu_colors regular
+}
+set_initd_nis()
+{
+	chmod 0644 /etc/init.d/nis 2>/tmp/nis.config
+	ed - /etc/init.d/nis << EOF > /dev/null 2>&1
+/^domain=/s/"[a-z,A-z,0-9]*"/"$1"/
+/^isserver=/s/=[0-9]*/=$2/
+/^ismaster=/s/=[0-9]*/=$3/
+/^startypbind=/s/=[0-9]*/=1/
+w
+q
+EOF
+	chmod 0444 /etc/init.d/nis 2>/tmp/nis.config
+	echo "domainname $domain" > /etc/rc2.d/S51domain 2>/dev/null
+	chmod 0755 /etc/rc2.d/S51domain 2>/dev/null
+}
+#
+# add tcpip_nis.so to /etc/netconfig
+#
+
+set_netconfig()
+{
+grep tcpip_nis /etc/netconfig > /dev/null 2>&1
+if [ $? = 1 ]; then
+	nawk '  BEGIN { OFS="\t" }
+			{
+			   if (match($7, "/usr/lib/tcpip.so")) 
+				  sub("/usr/lib/tcpip.so", "/usr/lib/tcpip_nis.so,/usr/lib/tcpip.so", $7);
+			  print $0
+			} ' < /etc/netconfig > /tmp/net$$
+
+	if [ $? -eq 0 ]; then
+		savemv /tmp/net$$ /etc/netconfig
+	else
+		errors_in_setup=T
+		error 5 "Unable to add tcpip_nis.so to /etc/netconfig\n"
+	fi
+fi
+}
+
+initnis()
+{
+
+host=`uname -n`
+notdone=1
+while [ $notdone = 1 ]
+do
+	case "$TYPE" 
+	in
+		1 )
+			masterp=T
+			ismaster=1
+			isserver=1
+			notdone=0
+			;;
+		2 )
+			slavep=T
+			isserver=1
+			notdone=0
+			;;
+		3 )
+			clientp=T
+			notdone=0
+			;;
+	esac
+done
+}
+
+#. ${SCRIPTS}/updebug
+#[ "$UPDEBUG" = YES ] && set -x
+
+#
+# Check to see if we are being called from boot floppy
+#
+if [ -f /etc/inst/scripts/postreboot.sh ]
+then
+	mkdir /tmp/nis
+	cp ${REQDIR}/postinstall /etc/inst/scripts/nispostinst
+	chmod +x /etc/inst/scripts/nispostinst
+	exit 0
+fi
+
+# We are rebooting after fnd set installation if the script
+# /etc/rc2.d/S02POSTINST exists
+if [ ! -f /etc/rc2.d/S02POSTINST ] 
+then
+	# if we make it this far, postinstall must be called from pkagadd
+	NIS_RESP=/tmp/nis.resp
+fi
+
+
+[ -d ${MENU_DIR} ] || mkdir -p ${MENU_DIR}
+menu -r -f ${MENU_DIR}/menu.wk -o $MENU_RESP
+MENUS="menu.1 menu.2 menu.2.1 menu.2.1.1 menu.3 menu.4 menu.5 menu.err menu.ck menu.ol menu.hosts menu.wk"
+for i in $MENUS
+do
+	if [  -f ${MENU_DIR}/$i ]
+	then
+		installf ${PKGINST}  ${MENU_DIR}/$i f 0644 root sys
+	fi
+done
+# source in the response file variables
+/usr/bin/ls $NIS_RESP >/dev/null 2>&1
+if [ "$?" = "0" ]
+then
+. $NIS_RESP
+fi
+if [ "$CONFIG_NOW" = "No" ]
+then
+	cleanup
+	menu -c
+	exit 0
+else
+
+	if [ -f /usr/lib/.ns.so ]; then
+		# if upgrade and overlay be sure things are clean
+		rm -rf /usr/lib/ns.so
+		rm -rf /usr/lib/ns.so.1
+		/sbin/ln -s /usr/lib/.ns.so /usr/lib/ns.so
+		/sbin/ln -s /usr/lib/.ns.so /usr/lib/ns.so.1
+	fi
+fi
+#
+# if the user has chosen to use the current configuration,
+# simply update the /etc/init.d/nis script and exit.
+#
+if [ "$USE_CURRENT" = "Yes" ] 
+then
+echo "domain=$domain" >> $NISTMP
+echo "isserver=$isserver" >> $NISTMP
+echo "ismaster=$ismaster" >> $NISTMP
+echo "startypbind=$startypbind" >> $NISTMP
+echo "startypserv=$startypserv" >> $NISTMP
+echo "startyppass=$startyppass" >> $NISTMP
+ed - $INITSCRIPT << EOF > /dev/null 2>&1
+/^domain\=/d
+/^isserver\=/d
+/^ismaster\=/d
+/^startypbind\=/d
+/^startypserv\=/d
+/^startyppass\=/d
+w
+q
+EOF
+ed - $INITSCRIPT << EOF > /dev/null 2>&1
+1,2r $NISTMP
+w
+q
+EOF
+echo "domainname $domain" > /etc/rc2.d/S51domain 2>/dev/null
+chmod 0755 /etc/rc2.d/S51domain 2>/dev/null
+cleanup
+menu -c
+exit 0
+fi
+
+initnis
+host=`uname -n` 2>/tmp/nis.config
+
+if [ $? -ne 0 ]
+then 
+	menu -c
+	error 1 "Can not determine local host's name. \n"
+	cleanup
+	exit 1
+fi
+
+if [ -z "$host" ]
+then
+	menu -c
+	error 2 "The local host's name has not been set. Please set it. \n"
+	cleanup
+	exit 1
+fi
+
+domainname $def_dom
+def_dom=`ypalias -d $def_dom 2>/dev/null`
+real_def_dom=$def_dom
+ypservers_map=`ypalias ypservers`
+domain_dir="$yproot_dir""/""$def_dom" 
+binding_dir="$yproot_dir""/binding/""$def_dom"
+binding_file="$yproot_dir""/binding/""$def_dom""/ypservers"
+
+if [ ! -d $yproot_dir -o -f $yproot_dir ]
+then
+	menu -c
+    error 12 " The directory %s does not exist.\nRestore it from the distribution.\n" $yproot_dir
+	cleanup
+	exit 1
+fi
+
+# add domainname and ypservers aliases to aliases file
+echo ypservers $ypservers_map >> $yproot_dir/aliases
+echo $real_def_dom $def_dom >> $yproot_dir/aliases
+sort $yproot_dir/aliases | uniq > /tmp/.ypaliases 
+mv /tmp/.ypaliases $yproot_dir/aliases
+
+if [ ! -d "$yproot_dir"/binding ]
+then	
+	menu -c
+    error 13 "The directory %s does not exist.\nNIS configuration has not completed properly.\nPlease read the NIS Administrator's Guide and \nreconfigure NIS for this system." $yproot_dir/binding
+	cleanup
+	exit 1
+fi
+
+if [ ! -d  $binding_dir ]
+then	
+	menu -c
+    error 13 "The directory %s does not exist.\nNIS configuration has not completed properly.\nPlease read the NIS Administrator's Guide and \nreconfigure NIS for this system." $binding_dir
+	cleanup
+	exit 1
+fi
+
+#
+##
+## If client only, we are done
+## 	our purpose was just to set up the binding file
+##
+if [ $clientp = T ]
+then
+	set_initd_nis $def_dom 0 0
+	set_netconfig
+	menu -c
+	lecho 8 "\n \n%s has been successfully set up as a NIS client. \
+\n \n" $host
+	cleanup
+	exit 0
+fi
+
+for dir in $yproot_dir/$def_dom
+do
+
+	if [ -d $dir ]; then
+		rm -rf $dir
+	fi
+
+	mkdir $dir 2>/tmp/nis.config
+	if [ $?  -ne 0 ]
+	then
+		menu -c
+		error 6 "Can not make new directory %s \n" $dir
+		cleanup
+		exit 1
+	fi
+
+done
+
+
+if [ $slavep = T ]
+then
+	set_initd_nis $def_dom 1 0
+	set_netconfig
+	echo "master=$master" > $yproot_dir/xfrmaps
+	echo "maps=\"$maps\"" >> $yproot_dir/xfrmaps
+	menu -c
+	lecho 9 "\n \n%s has been successfully set up as a NIS slave server. \
+\n \n" $host
+	cleanup
+	exit 0
+fi
+
+#
+# This must be a NIS master so create NIS maps
+#
+rm -f $yproot_dir/*.time
+
+
+makedbm $hf $yproot_dir/$def_dom/$ypservers_map >> /tmp/nis.config 2>&1
+
+if [ $?  -ne 0 ]
+then
+	error 7 "Error building NIS maps. Could not build nis data base %s/%s/%s.\n" $yproot_dir $def_dom $ypservers_map
+	errors_in_setup=T
+	menu -c
+	cleanup
+	exit 1
+fi
+
+in_pwd=`pwd`
+cd $yproot_dir
+
+# ypbuild is used instead of the regular make command
+# because /usr/ccs/bin/make cannot inherit privileges
+# in Enhanced Security environment.
+/var/yp/ypbuild MAKE=/var/yp/ypbuild SHELL=/sbin/sh NOPUSH=1 >> /tmp/nis.config 2>&1
+
+if [ $?  -ne 0 ]
+then
+	menu -c
+	error 7 "Error building NIS maps. Could not build nis data base %s/%s/%s.\n" $yproot_dir $def_dom $ypservers_map
+	errors_in_setup=T
+	cleanup
+	exit 1
+fi
+
+set_initd_nis $def_dom 1 1
+set_netconfig
+cd $in_pwd
+
+menu -c 
+if [ $errors_in_setup = T ]
+then
+	lecho 10 "\n \n%s has been set up as a NIS master server\
+with errors. \
+Please read /tmp/nis.config for further information and re-run ypinit\n \n" $host
+else
+	lecho 11 "\n \n%s has been successfully set up as a NIS master server. \
+\n \n" $host
+fi
+	
+cleanup
+exit 0

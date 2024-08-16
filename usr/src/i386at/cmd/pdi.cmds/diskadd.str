@@ -1,0 +1,38 @@
+#ident	"@(#)pdi.cmds:diskadd.str	1.1"
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+\nusage: diskadd [-F s5dm] [1] ( for Second Disk )\n
+usage: diskadd [-F s5dm] cCCbBtTTdDD ( for additional Disks )\n\n
+Issued with [1] or without an argument diskadd will\nadd the Second disk with the appropriate name.\n
+For any additional disks, the argument must be in the form:\n\n
+        cCCbBtTTdDD\n\n
+        Where CC is the PDI Controller number (1-2 digits)\n
+              B  is the Bus ID on that Controller (1 digit)\n
+              TT is the Target ID on that Bus (1-2 digits)\n
+        and   DD is the Logical Unit on that Target (1-2 digits).\n
+You have canceled the diskadd program.  \n
+The diskadd program is currently being run and cannot be run concurrently.\n
+Please retry this at a later time.\n
+y
+Y
+n
+N
+You have invoked the System V disk management (s5dm) diskadd utility.\n
+The purpose of this utility is to set up additional disk drives.\n
+This utility can destroy the existing data on the disk.\n
+Do you wish to continue?\n
+(Type %s for yes or %s for no followed by ENTER): \n
+\nThere does not seem to be a second disk present on your system.\n
+Please verify your disk is connected correctly.\n
+\n%s does not seem to be present on your system.\n
+The device you wish to add cannot be added.\n
+It already has a mounted filesystem on it.\n
+\nThe Installation of the disk has failed.\n
+Received error return value from %s.\n
+Diskadd for %s DONE at %s\n

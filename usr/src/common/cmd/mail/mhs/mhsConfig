@@ -1,0 +1,73 @@
+#!/usr/gnu/bin/perl
+# -*-Perl-*-
+#ident	"@(#)mail:common/cmd/mail/mhs/mhsConfig	1.4"
+
+push(@INC, "/usr/lib/mail/surrcmd");
+require "keyVal";
+
+# diemsg requires @DIEMSG from the caller
+sub diemsg {
+  $[ = 0;
+  die `gettxt $0:$_+1 "$0: ERROR: $DIEMSG[$_]\n"`;
+}
+
+$0 =~ s:.*/::;				# just leave basename
+$ENV{"PATH"} = "/usr/lib/mail/surrcmd:/usr/sbin:/usr/bin:/bin";
+
+# Get configuration from configuration files.
+%CNFG = ();
+&keyVal(*CNFG, "/etc/mail/smfcnfg");
+&diemsg(0) if (!scalar(%CNFG));
+&diemsg(0) if (!defined($CNFG{MHSGATEWAY}) || !defined($CNFG{MV}));
+
+# UnixWare stores the inetGW here, optional for other implementations
+%MAILCNFG = ();
+&keyVal(*MAILCNFG, "/etc/mail/mailcnfg");
+$CNFG{INETGW} = $MAILCNFG{"\%g"} if (scalar(%MAILCNFG) &&
+				     defined($MAILCNFG{"\%g"}));
+undef %MAILCNFG;
+
+if (defined($CNFG{MAILSERV})) {
+  # NUCFS path
+  #$MV = "/.NetWare/$CNFG{MAILSERV}/$CNFG{MV}";
+  $MV = "$CNFG{MV}:";
+  $MV .= "/$CNFG{DIRECTORY}" if (defined($CNFG{DIRECTORY}));
+}
+else {
+  # NFS path
+  $MV = $CNFG{MV};
+}
+$mhsGW = $CNFG{MHSGATEWAY};
+($MHSGW = $mhsGW) =~ tr/a-z/A-Z/;
+$mhsGWS = defined($CNFG{MHSGWS}) ? "($mhsGW|$CNFG{MHSGWS})" : "($mhsGW)";
+$inetGW = $CNFG{INETGW};
+$inetGWS = defined($CNFG{INETGWS}) ? "($inetGW|$CNFG{INETGWS})" : "($inetGW)";
+($INETGW = $inetGW) =~ tr/a-z/A-Z/;
+$SMFVersion = defined($CNFG{SMFVERSION}) ? $CNFG{SMFVERSION} : 71;
+
+&nwlogin;
+
+# now use $MV to get workgroup name
+#open(NETDIR, "<$MV/mhs/mail/public/netdir.tab") || &diemsg(1);
+open(NETDIR, "nwreadfile $CNFG{MAILSERV} $MV/mhs/mail/public/netdir.tab |") || &diemsg(1);
+#seek(NETDIR, 0x4b, 0);
+read(NETDIR, $junk, 0x4b);
+read(NETDIR, $mhsNotWG, 1);
+#seek(NETDIR, 0x76, 0);
+read(NETDIR, $junk, 0x2a);
+read(NETDIR, $mhsWG, 8);
+close(NETDIR);
+$mhsNotWG = unpack("c", $mhsNotWG);
+$mhsWG =~ s/\0.*//;
+
+($domain = `getDomain`) || chop($domain = `domainname`);
+
+sub nwlogin {
+  if (defined($CNFG{MAILSERV})) {
+    $SIG{'PIPE'} = 'IGNORE';
+    $LOGINCMD="|nwlogin -f $CNFG{MAILSERV}/$CNFG{MHSLOGIN} >/dev/null 2>/dev/null";
+    open(LOGINPIPE, $LOGINCMD);
+    print LOGINPIPE `decrypt $CNFG{MHSPASSWD}`;
+    close(LOGINPIPE);
+  }
+}

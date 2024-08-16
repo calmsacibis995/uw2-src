@@ -1,0 +1,95 @@
+*Panner*backgroundStipple: grid2
+
+*allowShellResize: true
+*buttonbox*ShapeStyle: oval
+*Form*Panner.Thickness: -1
+*Form.defaultDistance: 0
+*Form.BorderWidth: 0
+*Porthole.BorderWidth: 0
+*Porthole.top: ChainTop
+*Porthole.left: ChainLeft
+*Porthole.bottom: ChainBottom
+*Porthole.right:  ChainRight
+*Porthole.resizable: on
+*Panner.top: ChainTop
+*Panner.left: ChainLeft
+*Panner.bottom: ChainTop
+*Panner.right:  ChainLeft
+*Panner.resizable: on
+*Tree*ShapeStyle: rectangle
+*Tree*Toggle*BorderWidth: 0
+*Porthole*Box.BorderWidth: 0
+*Porthole*Box.HSpace: 0
+*Porthole*Box.VSpace: 0
+*Paned*allowResize: true
+
+*Tree*List*Font: -adobe-helvetica-medium-r-normal--*-80-*-*-*-*-iso*-*
+
+*SimpleMenu*BackingStore: NotUseful
+*Font: -adobe-helvetica-bold-r-normal--*-120-*-*-*-*-iso*-*
+*buttonbox.MenuButton.leftBitmap: menu12
+*SimpleMenu*menuLabel.vertSpace:   100
+*SimpleMenu*SmeLine*Height: 12
+
+*quit.Label: Uscita
+
+*buttonbox.quit.baseTranslations:  #override \
+		<Btn1Down>,<Btn1Up>: Quit() unset()
+
+*Toggle.baseTranslations: #augment \n\
+<Btn2Down>,<Btn2Up>: set() notify() Resources(toggle) \n\
+<Key>q: Quit() \n\
+<Key>space: Select(nothing) \n\
+<Key>p: Select(parent) \n\
+<Key>a: Select(ancestors) \n\
+<Key>c: Select(children) \n\
+<Key>d: Select(descendants) \n\
+Ctrl<Key>r: Resources(on) \n\
+Ctrl<Key>n: Resources(off) \n\
+
+*List.baseTranslations: #augment \n\
+<Key>q: Quit() \n\
+<Key>space: Select(nothing) \n\
+<Key>p: Select(parent) \n\
+<Key>a: Select(ancestors) \n\
+<Key>c: Select(children) \n\
+<Key>d: Select(descendants) \n\
+Ctrl<Key>r: Resources(on) \n\
+Ctrl<Key>n: Resources(off) \n\
+
+*Porthole.baseTranslations: #override \n\
+<Btn1Down>,<Btn1Up>:	Select(nothing) \n\
+<Key>q: Quit() \n\
+Ctrl<Key>h: SetOrientation(west) \n\
+Ctrl<Key>v: SetOrientation(north) \n\
+Ctrl<Key>r: Resources(on) \n\
+Ctrl<Key>n: Resources(off) \n\
+Shift<Key>c: SetLabelType(class) \n\
+Shift<Key>v: SetLabelType(variable) \n\
+<Key>space: Select(nothing) \n\
+<Key>i: Select(invert) \n\
+<Key>p: Select(parent) \n\
+<Key>a: Select(ancestors) \n\
+<Key>c: Select(children) \n\
+<Key>d: Select(descendants) \n\
+<Key>r: Select(resources) \n\
+<Key>s: Select(shown) \n\
+
+*buttonbox.view.Label: Mostra
+*buttonbox.view.viewMenu.layoutHorizontal.Label: Disposizione orizzontale
+*buttonbox.view.viewMenu.layoutVertical.Label: Disposizione verticale
+*buttonbox.view.viewMenu.namesVariable.Label: Mostra nomi di variabili
+*buttonbox.view.viewMenu.namesClass.Label: Mostra nomi di classe
+*buttonbox.view.viewMenu.viewResources.Label: Mostra caselle risorse
+*buttonbox.view.viewMenu.viewNoResources.Label: Nascondi caselle risorse
+
+*buttonbox.select.Label: Seleziona
+*buttonbox.select.selectMenu.unselect.Label: Deseleziona tutto
+*buttonbox.select.selectMenu.selectAll.Label: Seleziona tutto
+*buttonbox.select.selectMenu.selectInvert.Label: Inverti tutti
+*buttonbox.select.selectMenu.selectParent.Label: Seleziona superiore
+*buttonbox.select.selectMenu.selectAncestors.Label: Seleziona ascendenti
+*buttonbox.select.selectMenu.selectChildren.Label: Seleziona inferiori
+*buttonbox.select.selectMenu.selectDescendants.Label: Seleziona discendenti
+*buttonbox.select.selectMenu.selectHasResources.Label: Seleziona 'ha risorse'
+*buttonbox.select.selectMenu.selectShownResources.Label: Seleziona caselle risorse mostrate

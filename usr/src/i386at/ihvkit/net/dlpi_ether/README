@@ -1,0 +1,30 @@
+#ident	"@(#)ihvkit:net/dlpi_ether/README	1.1"
+#ident  "$Header: $"
+
+This is a sample ethernet driver for use with UnixWare-1.1.  The driver
+can be generated and installed by executing the top level make file.
+
+	make -f dlpi_ether.mk install
+
+However, before the driver source files can be compiled and installed
+ensure that the following guidelines are followed:
+
+1) Save the following files:
+
+	/usr/include/sys/dlpi_ether.h
+	/usr/include/sys/dlpi_el16.h
+	/usr/include/sys/el16.h
+	/etc/conf/pack.d/el16/Driver.o
+	/etc/conf/pack.d/el16/space.c
+	/etc/conf/sdevice.d/el16
+	/etc/conf/mdevice.d/el16
+	/etc/conf/node.d/el16
+
+2) Replace the contents of the System file (located in ./el16.cf)
+   by the contents of /etc/conf/sdevice.d/el16 to reflect the correct choice 
+   of IRQ, RAM address etc.
+
+3) Ensure that the cable type settings on your adapter match the values 
+   present in ./el16.cf/Space.c.
+
+4) After the driver is installed, do a rebuild and reboot the system.

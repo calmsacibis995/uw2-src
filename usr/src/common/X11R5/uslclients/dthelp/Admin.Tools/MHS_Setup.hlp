@@ -1,0 +1,174 @@
+#ident\t"@(#)dthelp:Admin.Tools/MHS_Setup.hlp	1.12"
+^*version^1
+^*title^MHS Setup
+^:MHS_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Setting up Message Handling Service (MHS)
+^0^MHS Setup
+^$10
+MHS Setup
+
+Use Message Handling Service (MHS) Setup to configure the UnixWare side
+of a gateway between MHS and UnixWare mail.
+
+You must have \k(Administer the MHS Gateway permission^dtadmin/user.hlp^Understanding Permissions) to be able to use
+MHS Setup.
+
+Before you set up MHS, see the following:
+
+\to\t\k(Determining If You Need to Set Up an MHS Gateway)
+\to\t\k(Configuring the MHS Gateway)
+
+See also:
+\s(Using MHS Setup^dhelp "" ownerhb "Setting Up and Configuring Mail" "Using MHS Setup" || helpLinkErr)
+
+^1^Determining If You Need to Set Up an MHS Gateway
+^$20
+Determining If You Need to Set Up an MHS Gateway
+
+Before you decide to set up an MHS gateway, you need to understand
+what it is and when you should use it.
+
+The following questions may help you determine whether or not you need
+to set up a gateway:
+
+\to\tWhat is an MHS gateway?
+
+\t \tThe UnixWare MHS gateway is a set of programs that allows UnixWare
+\t \tMail to send and receive messages from a Message Handling Service
+\t \t(MHS) mail system. To do this, the gateway translates data between
+\t \tthe Internet RFC-822 mail format and the MHS SMF-71 mail format. It
+\t \tplaces SMF-71 messages into the MHS outgoing mail queue and gets
+\t \tSMF-71 messages destined for UnixWare from an incoming mail queue.
+
+\to\tWhen should you use the MHS gateway?
+
+\t \tYou should use the gateway when you need to exchange messages
+\t \tbetween the UnixWare mail system and an MHS mail system. 
+
+\to\tShould you configure an MHS gateway on each UnixWare system at your
+\t \tsite?
+
+\t \tNo. You only need one MHS gateway per site.
+
+\to\tDo you need to run MHS Setup on each UnixWare Desktop?
+
+\t \tNo. Only use the MHS Setup program on the system you configure as
+\t \tthe MHS gateway. Use the Smarter Host variable in \k(Mail Setup^Mail_Setup/Mail_Setup.hlp^Mail Setup)
+\t \tto set up all other systems to send mail bound for MHS to the gateway
+\t \tsystem.
+
+\to\tWhich NetWare user should you use for the login name required by
+\t \tMHS Setup?
+
+\t \tYou should use the same login name that MHS uses to transfer
+\t \tmail between MHS hosts. See the person who administers MHS for the
+\t \tcorrect login name and password.
+
+^1^Configuring the MHS Gateway
+^$30
+Configuring the MHS Gateway
+
+An MHS gateway, configured with a NetWare file server, functions as a 
+transfer agent for incoming and outgoing mail through NetWare and
+UnixWare.
+
+When mail comes in to an MHS network, the MHS host automatically routes
+the mail to a drop box (a gateway directory) on a server. UnixWare then
+picks up the mail from the server, translates it from MHS mail's SMF-71
+format to \k(Internet's^dtadmin/inet.hlp^Internet Setup) RFC-822 format,
+and submits it to the UnixWare mail program (/bin/mail) for delivery to its
+final destination.
+
+To configure an MHS gateway, you must do the following:
+
+\to\t\k(Set up a NetWare system for the MHS gateway^^Setting Up the NetWare Side of an MHS Gateway)
+\to\t\k(Set up a UnixWare system for the MHS gateway^^Setting Up the UnixWare Side of an MHS Gateway)
+
+^2^Setting Up the NetWare Side of an MHS Gateway
+^$40
+Setting Up the NetWare Side of an MHS Gateway
+
+To set up the NetWare side of an MHS gateway, do the following:
+
+\to\tMake sure the appropriate NLMs are installed on your NetWare file
+\t \tserver (see \k(NetWare Setup^NetWare_Setup/NetWare_Setup.hlp^NetWare Setup)).
+
+\to\tCreate a new gateway on the MHS host (use gateway version 71 or
+\t \tSMF71, depending on your MHS software).
+
+\to\tSet up MHS routes for UnixWare mail users who will be receiving
+\t \tMHS mail through the gateway.
+
+^2^Setting Up the UnixWare Side of an MHS Gateway
+^$50
+Setting Up the UnixWare Side of an MHS Gateway
+
+To set up the UnixWare side of an MHS gateway so that it can send and
+receive MHS mail, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. 
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on MHS_Setup. The "MHS Mail Setup" window appears.
+
+3.\tSet the desired variables (see your NetWare or networking administrator
+  \tif you need additional information on any of these variables).
+
+  \tYou can use the <Tab> key to move from field to field.
+
+  \tNote: When you click on a variable label, detailed information
+  \tfor that variable appears in the Description box.
+
+4.\tClick on OK to apply the settings.
+
+  \tNote: You can also click on Reset to go back to the previous
+  \tsettings, or on Cancel to dismiss the window without making any
+  \tchanges.
+
+See also:
+\k(UnixWare Mail Setup^Mail_Setup/Mail_Setup.hlp^Mail Setup)
+\k(Using MHS Mail)
+
+^1^Using MHS Mail
+^$60
+Using MHS Mail
+
+Following are examples of addresses you might use when sending
+mail through an MHS gateway:
+
+\to\tTo send mail from MHS to UnixWare, you can use one of the following:
+
+\t \t-\t<user>@<gateway> 
+       
+\t \t-\t<user>@<workgroup>
+
+\t \t-\t<xxx>@<gateway> {<rfc-822 address>}
+
+ \t \tWhere xxx is a placeholder that conforms to the SMF-71 standard
+\t \t(unique among the other addresses in the message) and rfc-822 address
+\t \trepresents the address of the user on the other side of the gateway.
+
+\to\tTo send mail to MHS from a UnixWare system that does not have a
+\t \tdomain name, you can use the following:
+
+\t \t-\t<user>[.<app>]@[<workgroup>.]<internet gateway>
+
+\t \tWhere app and workgroup are optional. Workgroup defaults to the MHS
+\t \tserver workgroup, app defaults to the user's default application,
+\t \tand internet gateway is the value of the internet gateway field
+\t \tentered in MHS Setup.
+
+\to\tTo send mail to MHS from a UnixWare system that does have a domain
+\t \tname, you can use the following:
+
+ \t \t-\t<user>[.<app>]@[<workgroup>.]<internet gateway>.[<domain>]
+
+\t \tWhere app, workgroup, and domain are optional. Workgroup defaults to
+\t \tthe MHS server workgroup, app defaults to the user's default application,
+\t \tinternet gateway is the value of the internet gateway field entered in
+\t \tMHS Setup, and domain defaults to the domain of the UnixWare host.
+

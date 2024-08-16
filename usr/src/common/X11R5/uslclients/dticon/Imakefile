@@ -1,0 +1,26 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)dticon:Imakefile	1.2"
+
+#define InstallIconDir(subdir,dest)					@@\
+install:: subdir							@@\
+	MakeDir($(DESTDIR)dest)						@@\
+	@case '${MFLAGS}' in *[i]*) set +e;; esac; \			@@\
+	(for i in `ls subdir`; do \					@@\
+	(set -x; $(INSTALL) -c $(INSTALLFLAGS) subdir/$$i $(DESTDIR)dest); \	@@\
+	done)
+
+all::
+
+depend::
+
+InstallIconDir(pixmaps,$(USRLIBDIR)/pixmaps)
+InstallIconDir(pixmasks,$(USRLIBDIR)/pixmasks)
+InstallIconDir(bitmaps,$(USRLIBDIR)/bitmaps)
+InstallIconDir(bitmasks,$(USRLIBDIR)/bitmasks)

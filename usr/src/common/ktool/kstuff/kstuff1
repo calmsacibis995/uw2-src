@@ -1,0 +1,1141 @@
+#!	/bin/sh
+#
+#ident	"@(#)ktool:common/ktool/kstuff/kstuff1	1.17"
+#ident  "$Header:"
+#
+#	install a kernel on a target machine
+
+usage() {
+	echo 'usage: kstuff1 [ -KIMQS# ] [ -n driver ] ... [ -N driver ] ...
+	   [ -Y driver ] ...  [ -r rename.file ] [ -t kname ] kernel-name'
+	exit 1
+}
+
+make_pgms() {
+	cat << '--eoawk--' > /var/tmp/kstuff1.awk
+#
+# kstuff1.awk
+#
+#	Awk program to merge the driver configurations of the target and
+#	source trees.
+#
+#	This program reads through the Master and System files of the
+#	source and target trees. Source tree Master and System files are
+#	modified as appropriate.
+#
+#	Messages for user consumption are sent to standard error via
+#	/dev/fd/2. The standard output is assumed to be piped to shell.
+#	Thus, commands to remove files, copy directories, and rename
+#	drivers are generated to the standard output.
+#
+	#
+	# mark a range of dev nums as used
+	#
+	function reserve_range(range, type) {
+		n = split(range, num_a, "-")
+		if (n == 1)
+			major[num_a[1] " " type] = 1
+		else
+			for (i1 = num_a[1]; i1 <= num_a[2]; ++i1)
+				major[i1 " " type] = 1
+	}
+
+	#
+	# check a range of dev nums to see if they already in use
+	#
+	function check_range(range, type) {
+		check_range_ret = 1
+		n = split(range, num_b, "-")
+		if (n == 1) {
+			if (major[num_b[1] " " type] == 1)
+				check_range_ret = 0
+		} else
+			for (i2 = num_b[1]; i2 <= num_b[2]; ++i2)
+				if (major[i2 " " type] == 1) {
+					check_range_ret = 0
+					break
+				}
+
+		return check_range_ret
+	}
+
+	#
+	# find a range of unused dev nums
+	#
+	function find_range(size, type) {
+		for (i3 = 0; i3 <= 256 - size; ++i3) {
+			for (j = i3; j < i3 + size; ++j) {
+				if (major[j " " type] == 1)
+					break
+			}
+			if (j == i3 + size) {
+				if (size == 1)
+					fr_range = i3
+				else
+					fr_range = i3 "-" (i3 + size - 1)
+				reserve_range(fr_range, type)
+				return fr_range
+			}
+		}
+
+		return ""
+	}
+
+	#
+	# Remap a range of major device number into an open range
+	# (if necessary). Update the res_major file for keep-majors
+	# marked devices.
+	#
+	function convert(range, type, driver, keep) {
+		if (check_range(range, type)) {
+			reserve_range(range, type)
+			if (keep)
+				printf "%s\t%s\t%s\n", type, range, \
+				       driver >> res_major
+			return range
+		}
+		n = split(range, num_c, "-")
+		if (n == 1)
+			size = 1
+		else
+			size = num_c[2] - num_c[1] + 1
+
+		convert_ret = find_range(size, type)
+		if (convert_ret == "") {
+			printf "WARNING: cannot assign %s major " \
+			       "device number(s) for driver %s\n", \
+			       type_name[type], driver > "/dev/fd/2"
+		} else if (keep) {
+			printf "WARNING: changing reserved %s major " \
+			       "device number(s) for driver\n" \
+			       "\t%s from %s to %s\n",
+			       type_name[type], driver,
+			       range, convert_ret > "/dev/fd/2"
+			printf "%s\t%s\t%s\n", type, convert_ret, \
+			       driver >> res_major
+		}
+
+		return convert_ret
+	}
+
+	#
+	# Activate or stub out a driver by changing all fields of the second
+	# column of the System file to Y or N as appropriate
+	#
+	function activate_driver(driver, direction) {
+		System = conf_root "/sdevice.d/" driver
+		modified = 0
+		active = 0
+		output = ""
+		while ((getline < System) == 1) {
+			fc = substr($0, 1, 1)
+			if (fc != "" && fc != "#" && fc != "*" && fc != "$") {
+				if ($2 == "Y")
+					active = 1
+				if ($2 != direction) {
+					$2 = direction
+					modified = 1
+				}
+			}
+			output = output $0 "\n"
+		}
+		close System
+		if (modified) {
+			printf "%s", output > System	# overwrite
+			close System
+		} else if (direction == "Y" && !active) {
+			printf "WARNING: cannot activate driver %s:\n" \
+			       "\tNo instances in System file.", driver
+		}
+	}
+
+	#
+	# remove a driver from the source tree
+	#
+	function remove_driver(driver) {
+		rm_list = rm_list " " conf_root "/*/" driver
+	}
+
+	#
+	# rename the Driver.o of the specified driver to the appropriate
+	# Driver_<type>.o
+	#
+	#	If stuffing onto a true MP box, then stub out the "atup"
+	#	driver.
+	#
+	function rename_object(driver) {
+		if (source_type == "" || !source_object[driver])
+			return
+		if (driver == "atup" && source_type != "atup" && \
+		    active_psms > 1)
+			activate_driver(driver, "N")
+
+		#
+		# For now, we don't actually do any renaming.
+		#
+		# rename[driver] = source_type
+	}
+
+	#
+	# Make judgement on a source only driver to either:
+	#       (1) accept it as it is, or
+	#       (2) remap the block/character major numbers and cpu binding, or
+	#       (3) delete it as unfit for further use.
+	#
+	function judge_source_driver(driver) {
+		Master = conf_root "/mdevice.d/" driver
+		fail = 0
+		activate = 0
+		modified = 0
+		output = ""
+		while ((getline < Master) == 1) {
+			if ($0 !~ /^[#*$]|^$/) {
+				if (driver ~ YES) {
+					activate = 1
+					activate_type = "Y"
+				} else if (driver ~ NO) {
+					# keep the driver but stub it out
+					activate = 1
+					activate_type = "N"
+				} else if ($3 !~ /r/ && driver !~ new) {
+					fail = 1
+					break
+				}
+				keep = ($3 ~ /k/)
+				if ($3 ~ /b/) {
+					bmaj = convert($5, "b", $1, keep)
+					if (bmaj == "") {
+						fail = 1
+						break
+					}
+					if (bmaj != $5) {
+						$5 = bmaj
+						modified = 1
+					}
+				}
+				if ($3 ~ /c/) {
+					cmaj = convert($6, "c", $1, keep)
+					if (cmaj == "") {
+						fail = 1
+						break
+					}
+					if (cmaj != $6) {
+						$6 = cmaj
+						modified = 1
+					}
+				}
+			}
+			output = output $0 "\n"
+		}
+		close Master
+		if (fail) {
+			remove_driver(driver)
+		} else {
+			if (modified) {
+				printf "%s", output > Master	# update file
+				close Master
+			}
+			if (activate)
+				activate_driver(driver, activate_type)
+			rename_object(driver)
+			print driver > do_idmknod
+		}
+	}
+
+	#
+	# Is a converted target driver still interface clean?
+	#
+	function convert_iface_clean(driver) {
+		Master = conf_root "/.iroot/mdevice.d/" driver
+
+		while ((getline line < Master) == 1) {
+			n = split(line, field)
+
+			#
+			# For version 2, an unknown $interface means that
+			# the driver is not interface clean. Note that
+			# "base" is an unknwon interface in this sense.
+			#
+			if (field[1] == "$interface") {
+				iface_pattern = interface[field[2]]
+				iversion = field[3]
+				if (iversion == "" || iface_pattern == "" || \
+				    iversion !~ iface_pattern) {
+					close Master
+					return 0
+				}
+			}
+		}
+		close Master
+		return 1
+	}
+
+	#
+	# Should we incoporate a driver from the target tree? Do so iff
+	# it is interface clean.
+	#
+	# Return TRUE iff the driver was incoporated into the source
+	# configuration.
+	#
+	function judge_target_driver(driver) {
+		if (!target_iface_clean[driver] || !target_configured[driver])
+			return 0
+
+		#
+		# If upgrading idtools version, then we must use idinstall
+		# to convert the Master and System files.
+		#
+		if (target_version < source_version) {
+			if (system("/var/tmp/kstuff-install " driver) != 0)
+				return 0
+			if (!convert_iface_clean(driver))
+				return 0
+			convert_list = convert_list " " driver
+		}
+
+		#
+		# incorporate a target driver in the source tree
+		#
+		printf "Incorporating driver %s from %s.\n", driver, tg_conf \
+			> "/dev/fd/2"
+
+		#
+		# copy the driver from the source
+		#
+		cpio[driver] = 1
+
+		return 1
+	}
+
+	#
+	# copy the target's System file, possibly also deconfiguring it or
+	# making it static
+	#
+	#	odriver - the driver's name in the target
+	#	driver - the driver's name in the source
+	#
+	function copy_system(odriver, driver) {
+		System = tg_conf "/sdevice.d/" odriver
+		output = ""
+
+		while ((getline < System) == 1) {
+			#
+			# Version 1 support:
+			# 	if the target is not $loadable, then the
+			#	source will not be made $loadable
+			#
+			if (source_version == 1) {
+				if ($1 == "$loadable" && target_static[driver])
+					continue
+			} else {
+				#
+				# Version 2 support
+				#
+				if ($1 == "$version") {
+					#
+					# convert to version 2 if necessary
+					#
+					if ($2 == 1) {
+						$2 = "2"
+						output = output $0 \
+							"\n$oversion 1\n"
+					} else {
+						output = output $0 "\n"
+					}
+
+					#
+					# Make the source $static iff the
+					# source was $static.
+					#
+				    	if (target_static[driver])
+						output = output "$static\n"
+					continue
+				}
+
+				#
+				# Delete any erroneous $static which might be
+				# present in the source. Also, delete any
+				# stale $loadable which might be present
+				# in version 1.
+				#
+				if ($1 == "$static" || $1 == "$loadable")
+					continue
+			}
+
+			#
+			# process instance lines
+			#
+			if ($0 !~ /^[#$*]|^$/) {
+				#
+				# make sure the driver has the new name
+				#
+				$1 = driver
+
+				#
+				# if the source lacks an object file, then it
+				# must be stubbed out
+				#
+				if (!source_object[driver])
+					$2 = "N"
+			}
+			output = output $0 "\n"
+		}
+		close System
+		System = conf_root "/sdevice.d/" driver
+		printf "%s", output > System		# update file
+		close System
+	}
+
+	#
+	# update the source's Master file with the major device numbers
+	# and cpu bindings from the target, if available, or with newly
+	# assigned major numbers otherwise
+	#
+	#	odriver - the driver's name in the target
+	#	driver - the driver's name in the source
+	#
+	function update_master(odriver, driver) {
+		Master = conf_root "/mdevice.d/" driver
+		output = ""
+		update = 0
+
+		while ((getline < Master) == 1) {
+			if ($0 !~ /^[#$*]|^$/) {
+				keep = ($3 ~ /k/)
+				if ($3 ~ /b/) {
+					Xbmaj = target_bmaj[odriver]
+					if (Xbmaj) {
+						bmaj = substr(Xbmaj, 2)
+					} else {
+						bmaj = \
+						    convert($5, "b", $1, keep)
+					}
+					if (bmaj != $5) {
+						$5 = bmaj
+						update = 1
+					}
+				}
+				if ($3 ~ /c/) {
+					Xcmaj = target_cmaj[odriver]
+					if (Xcmaj) {
+						cmaj = substr(Xcmaj, 2)
+					} else {
+						cmaj = \
+						    convert($6, "c", $1, keep)
+					}
+					if (cmaj != $6) {
+						$6 = cmaj
+						update = 1
+					}
+				}
+				if (target_binding[odriver]) {
+					binding = \
+					    substr(target_binding[odriver], 2)
+					if (binding != $7) {
+						$7 = binding
+						update = 1
+					}
+				}
+			}
+			output = output $0 "\n"
+		}
+		close Master
+		if (update) {
+			printf "%s", output > Master
+			close Master
+		}
+	}
+
+	#
+	# Merge System and Master files when the same driver is present in
+	# both the source and the target.
+	#
+	#	odriver - the driver's name in the target
+	#	driver - the driver's name in the source
+	#
+	function merge_drivers(odriver, driver) {
+		if (!source_object[driver]) {
+			#
+			# if the source driver only contains Stubs, and the
+			# target driver is a real driver and can be used, then
+			# use the target.
+			#
+			if (judge_target_driver(odriver)) {
+				remove_driver(driver)
+				return
+			}
+		}
+
+		#
+		# Merge System files. Make sure that we are not inadvertently
+		# making a driver $loadable which is not capable of it.
+		#
+		if (target_system[odriver]) {
+			copy_system(odriver, driver)
+		} else {
+			#
+			# just remove the System file from the source
+			#
+			rm_list = rm_list " sdevice.d/" driver
+		}
+
+		#
+		# update the source Master file, recovering the major device
+		# numbers and cpu binding from the target
+		#
+		update_master(odriver, driver)
+
+		#
+		# rename the Driver.o file
+		#
+		rename_object(driver)
+
+		#
+		# If the driver has not been renamed, then use the target's
+		# node file (if it exists).
+		#
+		# If the driver has been renamed, then use the source's
+		# node file. If the source's node file actually exists, then
+		# we will need to run idmknod.
+		#
+		if (odriver == driver) {
+			if (target_node[driver])
+				cp_list = cp_list " " driver
+		} else {
+			print driver > do_idmknod
+		}
+	}
+
+	#
+	# scan a target System file, attempting to determine if it is
+	# configured in and static
+	#
+	function scan_target_system(driver) {
+		System = tg_conf "/sdevice.d/" driver
+
+		target_system[driver] = 1
+		if (target_version == 1)
+			target_static[driver] = 1
+		else
+			target_static[driver] = 0
+
+		while ((getline line < System) == 1) {
+			n = split(line, field)
+			if (field[1] == "$loadable")	# version 1 support
+				target_static[driver] = 0
+			if (field[1] == "$static")	# version 2 support
+				target_static[driver] = 1
+			if (line ~ /^[#$*]|^$/)
+				continue
+			if (field[2] == "Y") {
+				target_configured[driver] = 1
+				break
+			}
+		}
+		close System
+	}
+
+	#
+	# scan a target Master file, looking for such information as:
+	#	1. is the driver a possible active psm?
+	#	2. The major device numbers
+	#	3. The cpu binding
+	#	4. Is the driver interface clean?
+	#
+	function scan_target_master(driver) {
+		Master = tg_conf "/mdevice.d/" driver
+
+		target_master[driver] = 1
+		#
+		# for version 2, a driver is considered to be clean until an
+		# unknown $interface is discovered
+		#
+		# for version 1, a driver is considered to be clean
+		# clean if a $dversion or a characteristic of b, c, or h
+		# is discovered
+		#
+		if (target_version == 2)
+			target_iface_clean[driver] = 1
+
+		while ((getline line < Master) == 1) {
+			n = split(line, field)
+
+			#
+			# for version 1, $dversion files are considered to
+			# be interface clean
+			#
+			if (field[1] == "$dversion")
+				target_iface_clean[driver] = 1
+
+			#
+			# For version 2, an unknown $interface means that
+			# the driver is not interface clean. Note that
+			# "base" is an unknwon interface in this sense.
+			#
+			if (field[1] == "$interface") {
+				iface_pattern = interface[field[2]]
+				iversion = field[3]
+				if (iversion == "" || iface_pattern == "" || \
+				    iversion !~ iface_pattern)
+					target_iface_clean[driver] = 0
+			}
+
+			if (line ~ /^[#$*]|^$/)
+				continue
+
+			#
+			# For version 1 of the idtools, drivers with
+			# characteristic of b, c, or h are considered to be
+			# interface clean
+			#
+			if (target_version == 1 && field[3] ~ /[bch]/)
+				target_iface_clean[driver] = 1
+
+			#
+			# is this a possibly active psm?
+			#
+			if (field[2] == "psm_" && target_configured[driver])
+				++active_psms
+
+			#
+			# pick up major device range in use by the target
+			#
+			if (field[3] ~ /b/) {
+				reserve_range(field[5], "b")
+				target_bmaj[driver] = "X" field[5]
+			}
+			if (field[3] ~ /c/) {
+				reserve_range(field[6], "c")
+				target_cmaj[driver] = "X" field[6]
+			}
+
+			#
+			# pick up cpu binding
+			#
+			if (n == 7)
+				target_binding[driver] = "X" field[7]
+		}
+		close Master
+	}
+
+	#
+	# Scan a the rename map file, forming a an internal bidirectional
+	# renaming mapping arrays (but only if the renamed driver actually
+	# exists in both the source and the target).
+	#
+	function scan_rename_map(driver) {
+		while ((getline line < rmap) == 1) {
+			if (line !~ /^[#*$]|^$/) {
+				n = split(line, field)
+				odriver = field[1]
+				ndriver = field[2]
+				if (target_master[odriver] && \
+				    source_master[ndriver]) {
+					old_driver[ndriver] = odriver
+					new_driver[odriver] = ndriver
+				}
+			}
+		}
+		close rmap
+	}
+
+	#
+	# The phases of scanning are:
+	#	1. ls -lr /dev
+	#	2. source tree Interface files
+	#	3. target tree System files
+	#	4. targe tree node files
+	#	5. target tree Master files
+	#	6. source tree System files
+	#	7. source tree object files
+	#	8. source tree Master files
+	#
+	BEGIN {
+		OFS = "\t"
+		type_name["b"] = "block"
+		type_name["c"] = "character"
+		res_major = conf_root "/cf.d/res_major"
+		do_idmknod = conf_root "/.do_idmknod"
+	}
+	$1 == "source##interface" {
+		#
+		# interface file names are in the form
+		#
+		#	name.version
+		#
+		# but the version may have "." characters within
+		#
+		i = index($2, ".")
+		if (i != 0) {
+			iname = substr($2, 1, i - 1)
+			iversion = substr($2, i + 1)
+			#
+			# Form a pattern to match known versions
+			#
+			gsub(/\./, "\\.", iversion)
+			if (interface[iname])
+				interface[iname] = interface[iname] "|^" \
+					iversion "$"
+			else
+				interface[iname] = "^" iversion "$"
+		}
+	}
+	$0 ~ /^[bc]/ {
+		split($5, field, ",")
+		reserve_range(field[1], substr($1, 1, 1))
+		next
+	}
+	$1 == "target##system" {
+		scan_target_system($2)
+		next
+	}
+	$1 == "target##node" {
+		target_node[$2] = 1
+		next
+	}
+	$1 == "target##master" {
+		scan_target_master($2)
+		next
+	}
+	$1 == "source##system" {
+		source_system[$2] = 1
+		next
+	}
+	$1 == "source##object" {
+		split($2, field, "/")
+		source_object[field[1]] = field[2]
+		next
+	}
+	$1 == "source##master" {
+		source_master[$2] = 1
+		next
+	}
+	END {
+		#
+		# read in the rename map file
+		#
+		if (rmap)
+			scan_rename_map()
+
+		#
+		# Process drivers in the target which are not in the source,
+		# deciding if each should be included in the merged tree.
+		# If the target has been renamed, then the renamed driver
+		# is in the source (because the new_driver[] and
+		# old_driver[] arrays will only be set when both drivers
+		# are actually present. If the target driver has not been
+		# renamed, but the source driver is the result of a rename,
+		# then target must be dropped due to the name conflict.
+		#
+		for (driver in target_master)
+			if (target_master[driver] && !new_driver[driver] && \
+			    !old_driver[driver] && !source_master[driver])
+				judge_target_driver(driver)
+
+		#
+		# Process drivers in the source, distinguishing which
+		# need to be merged with the target and which are source
+		# only. If the source is the result of a rename merge with
+		# renamed driver. If the source is not the result of a rename,
+		# but the target is being renamed, then we in effect have a
+		# source only driver.
+		#
+		for (driver in source_master)
+			if (source_master[driver]) {
+				#
+				# detect renaming in either direction
+				#
+				odriver = old_driver[driver]
+				if (!odriver && !new_driver[driver])
+					odriver = driver
+				if (target_master[odriver])
+					merge_drivers(odriver, driver)
+				else
+					judge_source_driver(driver)
+			}
+
+		#
+		# now generate command to the shell (next on the pipe)
+		#
+		# 1. remove pieces being deleted
+		#
+		print "cd " conf_root
+		if (rm_list)
+			#print " rm -rf " rm_list
+			 print " echo " rm_list " | xargs rm -rf "
+
+		#
+		# 2. rename source Driver.o(s)
+		#
+		print "cd pack.d"
+		for (driver in rename)
+			printf "mv %s/Driver.o %s/Driver_%s.o\n", \
+			       driver, driver, rename[driver]
+
+		#
+		# 3. copy node files from the target
+		#
+		print "cd " tg_conf "/node.d"
+		if (cp_list) {
+			printf "for f in %s; do echo $f; done |\n", cp_list
+			printf "cpio -pdum %s/node.d\n", conf_root
+		}
+
+		#
+		# 4. incorporate entire drivers from the target using cpio
+		#
+		print "cd " tg_conf
+		for (driver in cpio)
+			printf "find */%s -print | " \
+			       "egrep -v \"^mod\\\\.d\" | cpio -pdum %s\n", \
+			       driver, conf_root
+
+		#
+		# 5. copy in converted Master and System files
+		#
+		if (convert_list) {
+			print "cd $CONF_ROOT/.iroot/mdevice.d"
+			printf "cp %s $CONF_ROOT/mdevice.d\n", convert_list
+			print "cd ../sdevice.d"
+			printf "cp %s $CONF_ROOT/sdevice.d\n", convert_list
+		}
+		print "cd  $CONF_ROOT; rm -rf .iroot"
+	}
+--eoawk--
+
+	cat << '--eoshell--' > /var/tmp/kstuff-install
+#!	/bin/sh -e
+#
+# kstuff-install
+#
+#	shell script to perform an idinstall as a way of converting
+#	a idtools version 1 driver to version 2
+#
+
+DRIVER=$1
+INSROOT=$CONF_ROOT/.iroot
+if [ ! -d $INSROOT ]; then
+	mkdir $INSROOT
+	cd $INSROOT
+	ln -s $CONF_ROOT/interface.d .
+fi
+INSDIR=$CONF_ROOT/.convert
+rm -rf $INSDIR
+mkdir $INSDIR
+cd $INSDIR
+ln $TG_CONF/mdevice.d/$DRIVER Master
+if [ -f $TG_CONF/sdevice.d/$DRIVER ]; then
+	ln $TG_CONF/sdevice.d/$DRIVER System
+fi
+Driver_dot_os="`echo $TG_CONF/pack.d/$DRIVER/Driver*.o`"
+case "$Driver_dot_os" in
+"$TG_CONF/pack.d/$DRIVER/Driver*.o") ;;
+*) ln $Driver_dot_os .
+esac
+$CONF_ROOT/bin/idinstall -R$INSROOT -aemsz $DRIVER
+cd /
+rm -rf $INSDIR
+--eoshell--
+	chmod 555 /var/tmp/kstuff-install
+}
+
+merge_drivers() {
+	#
+	# identify the type of the source tree
+	#
+	SOURCE_TYPE=
+	if [ -f $CONF_ROOT/cf.d/type ]; then
+		SOURCE_TYPE=`cat $CONF_ROOT/cf.d/type`
+	fi
+	#
+	# We can sense if the trees are idtools version 1 or version 2 by
+	# the presence or absence of interface.d directories.
+	#
+	SOURCE_VERSION=1
+	TARGET_VERSION=1
+	if [ -d $CONF_ROOT/interface.d ]; then
+		SOURCE_VERSION=2
+	fi
+	if [ -d $TG_CONF/interface.d ]; then
+		TARGET_VERSION=2
+	fi
+	if [ $TARGET_VERSION -eq 2 -a $SOURCE_VERSION -eq 1 ]; then
+		echo "ERROR: Cannot kstuff an idtools version 1 kernel" \
+		     "onto a version 2 target" >&2
+		exit 1
+	fi
+
+	make_pgms
+	trap "rm -rf /var/tmp/kstuff1.awk /var/tmp/kstuff-install \
+	      $CONF_ROOT/.convert; exit 100" 0 1 2 3 15
+        {
+		#
+		# Generate input for the AWK program (which does all the
+		# real thinking).
+                #
+                # 1. scan the /dev tree to find all the major numbers in use
+		#    by other conf trees
+		# 2. the names of the source interface.d files
+		# 3. the names of the target sdevice.d files
+		# 4. the names of the target node.d files
+		# 5. the names of the target mdevice.d files
+		# 6. the names of the source sdevice.d files
+		# 7. the names of the source Driver.o files
+		# 8. the names of the source mdevice.d files
+		#
+		# Output from the awk program is piped to a shell for
+		# execution.
+		#
+                /bin/ls -lR /dev
+		if [ $SOURCE_VERSION -eq 2 ]; then
+			cd $CONF_ROOT/interface.d; for f in *; do
+				echo "source##interface" $f; done
+		fi
+		cd $TG_CONF/sdevice.d; for f in *; do
+			echo "target##system" $f; done
+		cd $TG_CONF/node.d; for f in *; do
+			echo "target##node" $f; done
+		cd $TG_CONF/mdevice.d; for f in *; do
+			echo "target##master" $f; done
+		cd $CONF_ROOT/sdevice.d; for f in *; do
+			echo "source##system" $f; done
+		cd $CONF_ROOT/pack.d; for f in */Driver.o; do
+			echo "source##object" $f; done
+		cd $CONF_ROOT/mdevice.d; for f in *; do
+			echo "source##master" $f; done
+        } | awk -f /var/tmp/kstuff1.awk new="$NEW_DRIVERS" NO="$NO" \
+		YES="$YES" tg_conf=$TG_CONF conf_root=$CONF_ROOT \
+		source_type=$SOURCE_TYPE target_version=$TARGET_VERSION \
+		source_version=$SOURCE_VERSION rmap=$RMAP | sh
+	trap 0 1 2 3 15
+	rm -f /var/tmp/kstuff1.awk /var/tmp/kstuff-install
+}
+
+
+IDOPTS="-B"
+NEW_DRIVERS="^cdki\$|^bdki\$|^ktest\$"
+NO="^@#@"	# matches nothing
+YES="^@#@"	# matches nothing
+Q=0
+I=0
+M=0
+TG_CONF=/etc/conf
+COMMANDS=
+RMAP=
+
+while getopts \#IKMN:Y:QSc:n:r:t: c
+do
+	case $c in
+	K) IDOPTS="$IDOPTS -K";;
+	I) I=1;;
+	M) M=1;;
+	N) NO="${NO}|^${OPTARG}\$";;
+	Y) YES="${YES}|^${OPTARG}\$";;
+	Q) IDOPTS="$IDOPTS -Q"; Q=1;;
+	S) IDOPTS="$IDOPTS -S";;
+	c) COMMANDS="$COMMANDS ${OPTARG}";;
+	n) NEW_DRIVERS="${NEW_DRIVERS}|^${OPTARG}\$";;
+	r) RMAP=/var/tmp/$OPTARG;;
+	t) if [ $OPTARG = unix ]; then
+		TG_CONF=/etc/conf
+	   else
+		TG_CONF=/etc/conf.$OPTARG
+	   fi;;
+	\#) IDOPTS="$IDOPTS -#";;
+	esac
+done
+shift `expr $OPTIND - 1`
+if [ $# -ne 1 ]; then
+	usage
+fi
+KERNEL=$1
+if [ "$KERNEL" = unix ]; then
+	CONF_ROOT=/etc/conf
+else
+	CONF_ROOT=/etc/conf.$KERNEL
+fi
+FINAL_CONF_ROOT=$CONF_ROOT
+if [ $CONF_ROOT = $TG_CONF -a $Q -eq 0 ]; then
+	CONF_ROOT=/etc/.kbuild
+fi
+export CONF_ROOT TG_CONF
+set -e
+
+#
+# if neither -I nor -M is specified, then assume both
+#
+if [ $I -eq 0 -a $M -eq 0 ]; then
+	I=1
+	M=1
+fi
+
+if [ $M -eq 1 ]; then
+	if [ -d $CONF_ROOT ]; then
+		if [ $Q -eq 0 ]; then
+			echo
+			echo Deleting old version of $CONF_ROOT
+			rm -rf $CONF_ROOT
+			mkdir $CONF_ROOT
+		fi
+	else
+		if [ $Q -eq 1 ]; then
+			echo "ERROR: $CONF_ROOT does not exist (required with -Q)"
+			exit 1
+		fi
+		mkdir $CONF_ROOT
+	fi
+
+	echo
+	echo Installing materials for the new kernel at ${CONF_ROOT}.
+	cd $CONF_ROOT
+	uncompress < /var/tmp/bundle.Z | cpio -icdum
+
+	if [ $? -eq 0 ]; then
+		echo
+		rm /var/tmp/bundle.Z
+	fi
+
+	if [ $Q -eq 0 ]; then
+		echo
+		echo Merging Configuration from $TG_CONF
+		cd $TG_CONF
+		find cf.d/res_major sassign.d init.d rc.d sd.d -print |
+			cpio -pdum $CONF_ROOT
+
+		#
+		# merge the driver configurations
+		#
+		merge_drivers
+
+		#
+		# merge stune files
+		#
+		cd $TG_CONF
+		if [ -f $CONF_ROOT/cf.d/stune -a -f $TG_CONF/cf.d/stune ]; then
+			cd $CONF_ROOT/cf.d
+			cat stune $TG_CONF/cf.d/stune |
+				awk 'seen[$1] == 1 {next}
+				     {print; seen[$1] = 1}' > stune.new
+			mv -f stune.new stune
+		elif [ -f $TG_CONF/cf.d/stune ]; then
+			if [ ! -d $CONF_ROOT/cf.d ]; then
+				mkdir $CONF_ROOT/cf.d
+			fi
+			cp $TG_CONF/cf.d/stune $CONF_ROOT/cf.d/stune
+		fi
+	fi
+
+	#
+	# execute user supplied commands
+	#
+	trap 'echo ERROR: $cmd failed; exit 100' 0
+	for cmd in $COMMANDS; do
+		echo executing $cmd
+		/var/tmp/$cmd $TG_CONF $CONF_ROOT
+	done
+	trap 0
+
+	echo
+	echo Configuration merge complete in ${CONF_ROOT}.
+fi
+
+if [ $I -eq 0 ]; then
+	exit
+fi
+
+rm -rf /var/tmp/etc
+mkdir /var/tmp/etc
+ln -s $CONF_ROOT /var/tmp/etc/conf
+ROOT=/var/tmp
+MACH=
+export ROOT MACH
+if [ -x $CONF_ROOT/bin/idbuild ]; then
+	KTOOL=$CONF_ROOT/bin
+else
+	KTOOL=$TG_CONF/bin
+fi
+export KTOOL
+IDBUILD=$KTOOL/idbuild
+IDMKNOD=$KTOOL/idmknod
+sh -cx "$IDBUILD $IDOPTS -I $CONF_ROOT/include.d"
+rm -f $CONF_ROOT/.copy_unix
+DO_IDMKNOD=0
+if [ -r $CONF_ROOT/.do_idmknod ]; then
+	for drv in `cat $CONF_ROOT/.do_idmknod`; do
+		if [  -f $CONF_ROOT/node.d/$drv ]; then
+			DO_IDMKNOD=1
+		fi
+	done
+fi
+rm -f $CONF_ROOT/.do_idmknod
+if [ $DO_IDMKNOD -eq 1 ]; then
+	sh -cx "$IDMKNOD -s -r $CONF_ROOT"
+fi
+
+cd $CONF_ROOT
+rm -rf mod.d
+mv modnew.d mod.d
+rm -f mod_register
+mv cf.d/mod_register .
+
+STAND=`df -F bfs | awk '$1 == "/stand" { print 1; exit }'`
+if [ -z "$STAND" ]; then
+	/usr/sbin/mount /stand
+fi
+
+if [ $CONF_ROOT != $FINAL_CONF_ROOT ]; then
+	if [ "$KERNEL" = unix ]; then
+		echo
+		echo updating tools in $CONF_ROOT/bin
+		cd /etc/conf/bin
+		{
+			(
+				cd $CONF_ROOT/bin
+				echo *
+			)
+			echo *
+		} | awk 'NR == 1 { for (i = 1; i <= NF; ++i)
+					conf_root[$i] = 1 }
+			 NR == 2 { for (i = 1; i <= NF; ++i)
+					if (conf_root[$i] != 1)
+						print $i }' |
+		cpio -pdum $CONF_ROOT/bin
+
+		echo saving /etc/conf as /etc/conf.unix.old
+		rm -rf /etc/conf.unix.old
+		mv /etc/conf /etc/conf.unix.old
+
+		echo saving /stand/unix as /stand/unix.old
+		mv -f /stand/unix /stand/unix.old
+
+		if [ ! -d /etc/conf.unix.old/include.d ]; then
+			echo saving old kernel include files as /etc/conf.unix.old/include.d
+			mkdir /etc/conf.unix.old/include.d
+			cd /usr/include
+			(cd $CONF_ROOT/include.d; find . -print) | while read f; do
+				if [ -r /usr/include/$f ]; then
+					echo $f
+				fi
+			done | cpio -pdum /etc/conf.unix.old/include.d
+		fi
+
+		echo installing new kernel header files into /usr/include
+		cd $CONF_ROOT/include.d
+		find . -type d -exec chmod 755 {} +
+		find . -type f -exec chmod 644 {} +
+		find . -print | cpio -pdum /usr/include
+	elif [ -d $FINAL_CONF_ROOT ]; then
+		echo Deleting old version of $FINAL_CONF_ROOT
+		rm -rf $FINAL_CONF_ROOT
+	fi
+	echo installing $CONF_ROOT at $FINAL_CONF_ROOT
+	mv $CONF_ROOT $FINAL_CONF_ROOT
+	CONF_ROOT=$FINAL_CONF_ROOT
+fi
+
+echo
+echo Copying new kernel to /stand/$KERNEL
+echo
+cp $CONF_ROOT/cf.d/unix /stand/$KERNEL
+rm -f $CONF_ROOT/.copy_unix
+rm -rf /var/tmp/etc

@@ -1,0 +1,238 @@
+#ident	"@(#)dcu:scripts/dcu	1.32"
+#DCUDEBUG=5 export DCUDEBUG
+
+if [  "${UNIX_INSTALL}" = N ]
+then
+	exec 2>/tmp/dcu.err
+fi
+PS4='[$LINENO]+ '
+
+STTYS=0
+STTYA=0
+STTYX=0
+struct termios_data c_iflag:short c_oflag:short c_cflag:short c_lflag:short c_line:char c_cc:'char [19]'
+struct termiosx_data x_hflag:short x_cflag:short x_rflag:'short [5]' x_sflag:short
+
+function dcuclear
+{
+# dcuclear()
+# Called when the dcu is being exited and reseting the terminal
+# via its setstty() function to do a `tput clear`.
+# Calling/Exit State: void.
+
+	[ "$DCUDEBUG" -gt 3 ] && {
+		print -u2 "$0 called"
+		set -x
+	}
+	tput clear
+}
+
+function getstty
+{
+# getstty()
+# Called to get the current terminal settings.
+# Calling/Exit State: void.
+
+[ "$DCUDEBUG" -gt 3 ] && {
+print -u2 "$0 called"
+set -x
+}
+
+	cdecl termios_data cbs={}
+	cdecl termios_data cba={}
+	cdecl termiosx_data cbx={}
+
+# TCGETS
+	ccall ioctl 0 21517 cbs
+	retd=$_RETD
+	cprint -v STTYS cbs
+
+# TCGETA
+	ccall ioctl 0 21505 cba
+	retd=$_RETD
+	cprint -v STTYA cba
+
+# TCGETX
+	ccall ioctl 0 22529 cbx
+	retd=$_RETD
+	cprint -v STTYX cbx
+}
+
+function pr_dcu_reboot
+{
+# pr_dcu_reboot()
+# Called to display a message before the system is automatically rebooted
+# when a conflict is detected during the Installation process.
+# Calling/Exit State: void.
+
+[ "$DCUDEBUG" -gt 3 ] && {
+print -u2 "$0 called"
+set -x
+}
+display  -w "$DCUreboot" -bg $RED -fg $WHITE
+footer $GENERIC_CONTINUE_FOOTER
+call proc_loop
+}
+
+function setstty
+{
+# setstty()
+# Called when existing the dcu to reset the terminal settings.
+# Calling/Exit State: void.
+
+[ "$DCUDEBUG" -gt 3 ] && {
+print -u2 "$0 called"
+set -x
+}
+	cdecl termios_data cbs="$STTYS"
+	cdecl termios_data cba="$STTYA"
+	cdecl termiosx_data cbx="$STTYX"
+
+# TCSETAF
+	ccall ioctl 0 21518 cbs
+	retd=$_RETD
+
+# TCSETA
+	ccall ioctl 0 21506 cba
+	retd=$_RETD
+
+# TCSETX
+	ccall ioctl 0 22530 cbx
+	retd=$_RETD
+}
+
+# main()
+#	Device Configuration Utility
+
+[ "$DCUDEBUG" -gt 1 ] && {
+print -u2 "dcu called"
+set -x
+}
+getstty
+UNIX_INSTALL=${UNIX_INSTALL:-N}
+DCUMODE=DCUSCREENS
+DCUSILENT=N
+DCUMAP=N
+DCUCONFLICT=N
+DCULANG=${LC_ALL:-${LC_MESSAGES:-"${LANG}"}}
+DCULANG=${DCULANG:-C}
+if [ ! -d ${DCUDIR}/locale/${DCULANG} ]
+then
+	DCULANG=C
+fi
+DCUSCRIPTS=${DCUDIR}/scripts export DCUSCRIPTS
+DCULIBS=${DCUDIR}/dculib export DCULIBS
+DCUMENUS=${DCUDIR}/menus export DCUMENUS
+DCULOCALE=${DCUDIR}/locale/${DCULANG} export DCULOCALE
+OLANGDEP_SCRIPTS=${LANGDEP_SCRIPTS}
+LANGDEP_SCRIPTS=${DCULOCALE} export LANGDEP_SCRIPTS
+OFPATH=$FPATH
+FPATH=:${DCUDIR}/scripts:${DCUDIR}/menus/${DCULANG}:${DCUSCRIPTS}:${DCUMENUS}:${LANGDEP_SCRIPTS}/help:$FPATH
+
+unset -f helpwin
+while getopts :sSND:C arguments
+do
+	case "$arguments" in
+	s) 
+		DCUMODE=LITTLE_SILENT
+		DCUSILENT=Y
+		DCUMAP=Y
+		> /etc/dcu.d/.run_silent
+		;;
+	S) 
+		DCUMODE=BIG_SILENT
+		DCUSILENT=Y
+		DCUMAP=Y
+		> /etc/dcu.d/.run_silent
+		;;
+	N) 
+		if [ "$UNIX_INSTALL" = Y ]
+		then
+			DCUMODE=DCUSCREENS
+			DCUMAP=Y
+		else
+			DCUMODE=NO_UPDATE
+			DCUSILENT=Y
+			DCUMAP=Y
+		fi
+		;;
+	C) 
+		DCUCONFLICT=Y
+		;;
+	D) 
+		shift
+		DCUMODE=DCUDELMODS
+		set -A DCUMODVALS "$*"
+		DCUSILENT=Y
+		;;
+	:) 
+		print "$0: -$OPTARG requires a value"
+		exit 2
+		;;
+	\?) 
+		print "$0: unknown option -$OPTARG"
+		exit 2
+		;;
+	esac
+done
+
+. ${DCULOCALE}/txtstrings
+. ${DCUSCRIPTS}/funcrc
+
+if [ -n "$Continued_String" ]
+then
+	call strdup "Continued_String=$Continued_String"
+	call -c putenv $_RETX
+fi
+if [ -n "$PageUp_String" ]
+then
+	call strdup "PageUp_String=$PageUp_String"
+	call -c putenv $_RETX
+fi
+if [ -n "PageDown_String" ]
+then
+	call strdup "PageDown_String=$PageDown_String"
+	call -c putenv $_RETX
+fi
+
+if [ "$DCUMODE" = DCUSCREENS ]
+then
+	. ${DCULOCALE}/config
+	if [ "${UNIX_INSTALL}" = Y ]
+	then
+		. /etc/inst/scripts/winrc
+		. /etc/inst/scripts/scr_init boot
+	else
+		GENERIC_HEADER="$DCU_GENERIC_HEADER"
+		. ${DCUSCRIPTS}/winrc
+		. ${DCUSCRIPTS}/scr_init
+	fi
+fi
+
+. ${DCUSCRIPTS}/start
+if [ "$DCU_HALT" = Y ] && [ "$UNIX_INSTALL" = Y ]
+then
+	pr_dcu_reboot
+	halt
+fi
+
+FPATH=$OFPATH
+unset -f helpwin
+LANGDEP_SCRIPTS=${OLANGDEP_SCRIPTS}
+if [ "$UNIX_INSTALL" = N ]
+then
+	[ "$DCUSILENT" = N ] && {
+		call endwin
+		dcuclear
+	}
+	setstty
+	if [ -n "$RSMGR_UPDATE" -a -x ${ROOT}/etc/conf/bin/idconfupdate ] 
+	then
+		${ROOT}/etc/conf/bin/idconfupdate
+		if [ "$?" != "0" ]
+		then
+			DCU_EXIT_CODE=4
+		fi
+	fi
+fi
+exit $DCU_EXIT_CODE

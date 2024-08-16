@@ -1,0 +1,233 @@
+#ident\t"@(#)dthelp:Admin.Tools/printuse.hlp	1.12"
+^*version^1
+^*title^Printer
+^:Printer
+^*width^70
+^+DesktopMgr/help.defs
+^?Sending, checking, deleting, and changing print requests
+^0^Using Your Printer
+^$10
+Using Your Printer
+
+Before you can send print requests to a local or remote printer, you must
+configure that printer. For detailed information on setting up your printer,
+see \k(Printer Setup^dtadmin/Printer_Setup.hlp^Printer Setup).
+
+After you configure a printer, you can do the following:
+
+\to\t\k(Print a file^^Printing a File)
+\to\t\k(Display print requests^^Displaying Print Requests)
+\to\t\k(View the properties of a print request^^Viewing the Properties of a Print Request)
+\to\t\k(Change the properties of a print request^^Changing the Properties of a Print Request)
+\to\t\k(Delete a print request^^Deleting a Print Request)
+
+See also:
+\s(Printing^dhelp "" userhb "Printing" "" || helpLinkErr)
+
+
+^1^Printing a File
+^$20
+Printing a File
+
+If you want to print a file you created with a third-party application
+(for example, a word processing or spreadsheet application), use that
+application's menu system to print.
+
+If you want to print an ASCII text file (or any file you created on
+UnixWare or another UNIX system), do the following:
+
+1.\t\d(Drag-and-drop^drag-and-drop) the file onto the desired printer icon.
+  \tThe "Printer: Request Properties" window for that printer appears.
+
+2.\tSet the following options:
+
+  \to\tBanner Page Title: - Type in the title you want to appear
+  \t \ton your banner page). By default, the system prints the filename
+  \t \ton the banner page. 
+
+  \to\tCopies: - Type in the number of copies you want to print.
+
+  \to\tSend Mail When Done? - Click on Yes if you want the system
+  \t \tto send mail to your \k(Mailbox folder^DesktopMgr/Mailbox.hlp^Overview of the Mailbox Folder) when the job completes printing,
+  \t \tor No if you do not want the system to send you mail
+  \t \twhen the job completes printing.
+
+  \to\tPrint Banner Page: -  Click on Yes to print a banner page in front
+  \t \tof your document, or No to omit the banner page from the front of
+  \t \tyour document.
+
+  \to\tFile to be printed is: - By default, this field is set to Text. Click
+  \t \ton the arrow box, then click on one of the following:
+    
+  \t \t-\tText - To print text files (sometimes called ASCII or flat files).
+  \t \t \tThese types of files do not contain any formatting information.
+  \t \t \tThey are simply files containing characters typed on a keyboard.
+  \t \t \tFor example, the \k(Text Editor^dtedit/edit.hlp^The Text Editor) produces this type of file.
+
+  \t \t-\tText (no word wrap) - Lines that do not fit on the page will
+  \t \t \teither be wrapped at the edge of the page (in the middle of a word)
+  \t \t \tor truncated, depending on the printer.
+
+  \t \t-\tPostScript - To print PostScript language files. Your printer must
+  \t \t \tbe a PostScript printer to use this option. Some applications let
+  \t \t \tyou print a document (or other data file) to a file in PostScript
+  \t \t \tformat.
+
+  \t \t-\tHP PCL - To print files created for printers using HP PCL emulation,
+  \t \t \tsuch as the HP Laserjet printer.
+
+  \t \t-\tTroff Output - To print files created with the UNIX troff command
+  \t \t \tformat.  
+
+  \t \t-\tOther - To specify another file type not listed in the menu. You must
+  \t \t \thave the filter for this file type loaded on your system.
+
+  \t \t \tIf you select Other, the Specify Type text box appears. Type in the
+  \t \t \tfile type.
+
+  \t \t \tIf you want to set additional options for a PostScript printer
+  \t \t \t(such as page lengths, page widths, and so forth), see
+  \t \t \t\k(Printer: Other Options).  
+
+3.\tClick on Print to send the request to the printer. The "Printer: Message"
+  \twindow appears to let you know that your job was accepted, and also
+  \tgives you the request id for that job. You may want to write down this
+  \tjob id for future reference. Then, click on Continue to print the job.
+
+  \tThe "Printer Setup: Properties" window disappears.
+
+  \tNote: You can also click on Reset to change the options back to the
+  \tprevious options, or Cancel to close the window without changing the
+  \toptions and sending the print request.
+
+See also:
+\s(Printing at the Command Line^dhelp "" ownerhb "Setting Up and Configuring Printers" "Printing at the Command Line" || helpLinkErr)
+
+^2^Printer: Other Options
+^$30
+Printer: Other Options
+
+If you are using a PostScript printer, and your document requires special
+settings, you can set additional print options. For example, you may need
+to print a document that contains more characters per inch than the default
+printer is set for. You could then set the "Character Pitch in the Printer:
+Other Options" window to force the system to squeeze more characters on a
+line.
+
+You can set the options for the following in the "Printer: Other
+Options" window:
+
+\to\tPage Length: - Select the desired unit value (inches, centimeters,
+\t \tor characters), then type (in the text box) the desired length for
+ \t\ta page.
+
+\to\tPage Width: - Select the desired unit value (inches, centimeters,
+\t \tor characters), then type (in the text box) the desired width
+ \t \tfor a page.
+
+\to\tCharacter Pitch: - Select the desired unit value (inches, centimeters,
+\t \tor characters), then type (in the text box) the desired width for
+\t \teach character.
+
+\to\tLine Pitch: - Select the desired unit value (inches, centimeters,
+\t \tor characters), then type (in the text box) the desired height for
+\t \teach line.
+
+\to\tLocale: - Click on the desired locale.
+
+\t \tNote: Depending on what locale you choose, the Character Set option
+\t \tmay become unavailable (greyed out).
+
+\to\tCharacter Set: - Click on the arrow box for a list of available
+\t \tcharacter sets. Then, click on the desired set.
+
+\to\tMisc Options:  -  Type in the UNIX system lp command options.
+
+\t \tFor more information, see lp (1M) in the \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+See also:
+\s(Providing Filters^dhelp as sysag "Providing Print Services" "Providing Filters" || helpLinkErr)
+\s(PostScript Printers^dhelp as sysag "Providing Print Services" "PostScript Printers" || helpLinkErr)
+
+
+^1^Displaying Print Requests
+^$40
+Displaying Print Requests
+
+To display all requests waiting to be printed for a given printer, do the
+following:
+
+1.\t\d(Double-click^double-click) on that printer icon. The "Printer: <printername>"
+  \twindow appears (where printername is the name of your printer).
+
+  \tEach print request is identified by the login ID  of the person who
+  \tsubmitted the request.
+
+2.\tClick on Actions=>Exit to dismiss the window.
+
+To view the properties of a print request, see
+\k(Viewing the Properties of a Print Request).
+
+To change the properties of a print request, see
+\k(Changing the Properties of a Print Request).
+
+To delete a print request, see \k(Deleting a Print Request).
+
+^1^Viewing the Properties of a Print Request
+^$50
+Viewing the Properties of a Print Request
+
+To view the properties of a print request, do the following:
+
+1.\t\d(Double-click^double-click) on the printer icon. The "Printer: <printername>"
+  \twindow appears.
+
+2.\tClick on the desired print request.
+
+3.\tClick on Print Request=>Properties. The "Printer: Request Properties"
+  \twindow for that printer appears. See Step 2 of \k(Printing a File) for a
+  \tdescription of the options in this window.
+
+4.\tClick on OK or Cancel to dismiss the window. 
+
+See also:
+\k(Changing the Properties of a Print Request)
+
+^1^Changing the Properties of a Print Request
+^$50
+Changing the Properties of a Print Request
+
+To change the properties of a print request, do the following:
+
+1.\t\d(Double-click^double-click) on the printer icon. The "Printer: <printername>"
+  \twindow appears.
+
+2.\tClick on the desired print request.
+
+3.\tClick on Print Request=>Properties. The "Printer: Request Properties"
+  \twindow for that printer appears.
+
+4.\tMake the desired changes. See Step 2 of \k(Printing a File) for
+  \ta description of the options in this window.
+
+5.\tClick on OK to apply the changes and dismiss the window.
+
+  \tNote: You can also click on Reset to go back to the previous
+  \toptions, or you can click on Cancel to dismiss the window
+  \twithout changing any properties.
+
+^1^Deleting a Print Request
+^$60
+Deleting a Print Request
+
+To delete a print request, do the following:
+
+1.\t\d(Double-click^double-click) on the printer icon. The "Printer: <printername>"
+  \twindow appears.
+
+2.\tClick on the print request you want to delete.
+
+3.\tClick on Print Request=>Properties. The "Printer: Delete" pop-up 
+  \tconfirmation window appears, asking if you to confirm that you
+  \tdelete the request. Click on Delete to go ahead with the removal,
+  \tor on Cancel if you decide not to delete the print request. 

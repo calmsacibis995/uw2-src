@@ -1,0 +1,123 @@
+'\"ident        "@(#)MGizmo:man/base.man	1.3"
+.TH BaseWindowGizmo 3L
+.SH NAME
+\f(CBBaseWindowGizmo\fP \- an abstract data type (ADT) that permits the
+creation of a default top-level window.
+The \f(CBBaseWindowGizmo\fP consists of a data structure and a set
+of functions that operate on this data structure.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/BaseWGizmo.h>
+#include <Gizmo/MsgGizmo.h>
+
+Widget  GetBaseWindowIconShell(Gizmo \fIg\fP);
+Widget  GetBaseWindowShell(Gizmo \fIg\fP);
+Widget  GetBaseWindowMenuBar(Gizmo \fIg\fP);
+void    SetBaseWindowLeftMsg(Gizmo \fIg\fP, char *\fImessage\fP);
+void    SetBaseWindowRightMsg(Gizmo \fIg\fP, char *\fImessage\fP);
+void    SetBaseWindowTitle(Gizmo \fIg\fP, char *\fItitle\fP);
+void	SetBaseWindowIconName(Gizmo, char *);
+void    SetBaseWindowGizmoPixmap(Gizmo \fIg\fP, char *\fIpixmapName\fP);
+.ft
+.fi
+.SH "DESCRIPTION"
+A \f(CBBaseWindowGizmo\fP is an application shell containing a \f(CWform\fP
+widget.
+This form is the parent of 
+a menubar, a working area (\f(CWform\fP widget), and an optional message area.
+A \f(CBBaseWindowGizmo\fP is created by populating a \f(CBBaseWindowGizmo\fP
+data structure and calling \f(CBCreateGizmo\fP with a pointer to this
+structure.
+The \f(CBBaseWindowGizmo\fP data structure may contain a pointer to a
+\f(CBGizmoRec\fP structure.
+All Gizmos created from this \f(CBGizmoRec\fP structure are parented by
+the work area (\f(CWform\fP widget).
+The first Gizmo in the \f(CBGizmoRec\fP is automatically attached to the
+top of the form.
+Similarly, the last Gizmo is attached to the bottom of the form.
+.PP
+The following is the definition of the \f(CBBaseWindowGizmo\fP data type:
+.PP
+.nf
+.ft CB
+typedef struct _BaseWindowGizmo {
+        HelpInfo *       help;           /* Help info */
+        char *           name;           /* Name of shell and name of Gizmo */
+        char *           title;          /* Title of base window */
+        MenuGizmo *      menu;           /* Menubar */
+        GizmoArray       gizmos;         /* List of Gizmos */
+        int              numGizmos;      /* Number of Gizmos in list */
+        MsgGizmo *       footer          /* Footer displayed at bottom */
+        char *           iconName;       /* Name to display when iconified */
+        char *           iconPixmap;     /* File containing icon pixmap */
+} BaseWindowGizmo;
+.fi
+.ft
+.PP
+\f(CBSetBaseWindowLeftMsg\fP sets the text of the left footer message.
+.PP
+\f(CBSetBaseWindowRightMsg\fP sets the text of the right footer message.
+.PP
+\f(CBSetBaseWindowTitle\fP sets the title of the base window.
+.PP
+\f(CBSetBaseWindowIconName\fP sets the icon name of the base window.
+.PP
+\f(CBSetBaseWindowGizmoPixmap\fP changes the pixmap used by the icon shell.
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBBaseWindowGizmo\fP:
+.IP \fBGetGizmoWidget\fP 25
+Returns the row column widget that makes up the work area of the
+\f(CBBaseWindowGizmo\fP.
+.IP \fBGetGizmoGizmo\fP 25
+Returns the handle to the \f(CBBaseWindowGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 25
+Undefined.
+.IP \fBGetGizmoPreviousValue\fP 25
+Undefined.
+.PP
+If no match is found and the \f(CBBaseWindowGizmo\fP has a menu then the menu
+is queried.
+If no match is found in the menu and the \f(CBBaseWindowGizmo\fP has a
+\f(CBGizmoArray\fP then the array is queried for the named Gizmo.
+.PP
+\f(CBGetBaseWindowIconShell\fP returns the widget id for the icon window shell
+which gets created when an icon pixmap is provided in the \f(CBBaseWindowGizmo\fP
+structure.
+The widget is a \f(CBvendorShellWidgetClass\fP.
+.PP
+\f(CBGetBaseWindowShell\fP returns the widget id for the toplevel shell of the
+base window.
+This widget is a \f(CBtopLevelShellWidgetClass\fP.
+.PP
+\f(CBGetBaseWindowMenuBar\fP returns the widget id for the base window's menu
+bar.
+The widget is created by a call to \f(CBXmCreateMenuBar\fP.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the top level shell.
+.SH "USAGE"
+.nf
+.ft CB
+extern GizmoMenu          menu;
+extern GizmoRec           gizmoArray;
+extern MsgGizmo           footer;
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", &menu, gizmoArray, 5, &footer
+};
+
+main ()
+{
+        Gizmo   handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.ft
+.fi
+.SH "REFERENCES
+.ft CB
+Gizmo\f(CW(3L)\fP
+MsgGizmo\f(CW(3L)\fP

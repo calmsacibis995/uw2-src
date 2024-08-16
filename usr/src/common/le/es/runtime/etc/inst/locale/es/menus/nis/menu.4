@@ -1,0 +1,46 @@
+.ul
+Instalación y configuración del servicio de información de red (NIS)
+.lr
+F1=Ayuda
+.top
+`[ "$TYPE" != "1" ] && echo "  \n \n  Para que NIS funcione correctamente, es necesario construir\n  una lista de un servidor NIS o más:\n \n \n"`
+`[ "$first_loop" = "yes" ] && [ "$TYPE" = "1" ] && echo "  \n \n  El servidor maestro NIS es: $SERVER1\n \n \n"`
+`[ "$first_loop" = "yes" ] && [ "$TYPE" = "1" ] && echo "  Ahora puede introducir los servidores esclavos NIS si los hay.\n \n"`
+.button
+Aplicar
+Redefinir
+.bottom
+Pulse <Tab> para mover el cursor entre los campos. Al terminar, mueva el
+cursor a "Aplicar" y pulse <Intro> para continuar.
+.form
+`[ "$first_loop" = "yes"  ] && [ "$TYPE" = "1" ] && echo "5 0 36//[A-z0-9 ]*//Servidor://SERVER2//"`
+#`[ "$first_loop" = "yes"  ] && [ "$TYPE" != "1" ] && echo "5 1 36//[A-z0-9 ]*//Server name://SERVER1//"`
+`[ "$first_loop" = "yes"  ] && echo "5 1 36//[A-z0-9 ]*//Servidor://SERVER1//"`
+`[ "$first_loop" = "yes" ] && echo "//Teclee el nombre de host de un servidor NIS//"`
+`[ "$first_loop" = "no" ] && echo "5 0 36//[A-z0-9 ]*//Servidor://SERVER1//"`
+`[ "$first_loop" = "no" ] && echo "//Teclee el nombre de host de un servidor NIS//"`
+5 0 36//[A-z0-9 ]*//Servidor://SERVER2//
+//Teclee el nombre de host de un servidor NIS//
+5 0 36//[A-z0-9 ]*//Servidor://SERVER3//
+//Teclee el nombre de host de un servidor NIS//
+`[ "$first_loop" = "no" ] && echo "5 0 36//[A-z0-9 ]*//Servidor://SERVER4//"`
+`[ "$first_loop" = "no" ] && echo "//Teclee el nombre de host de un servidor NIS//"`
+#5 0 36//[A-z0-9 ]*//Server name://SERVER5//
+#//Enter host name of an NIS server//
+2 2//No::No//Yes::Sí//¿Añadir más servidores NIS?://more_servers//
+//Use las teclas de flecha izquierda/derecha para escoger Sí si desea añadir más servidores //
+.help
+Si esta máquina es un servidor maestro NIS, teclee los nombres de
+las máquinas que van a actuar como servidores NIS para este dominio, si
+las hay. 
+
+Si esta máquina es un servidor esclavo NIS, introduzca los nombres
+de una máquina o más que actuará(n) como servidor(es) NIS para este
+dominio. 
+
+Asegúrese de que las máquinas que introduce tienen entradas en el
+archivo /etc/inet/hosts. 
+
+Para obtener más información, véase el Manual del administrador de NIS.
+.helpinst
+Supr=Cancelar  F1=Ayuda  ESC=Salir de Ayuda   1=Av Pág    2=Re Pág

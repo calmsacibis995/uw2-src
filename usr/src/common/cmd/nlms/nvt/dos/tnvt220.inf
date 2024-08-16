@@ -1,0 +1,572 @@
+DefineVariables
+   Text [LWPpath]
+   Text [CompanyName] := Novell Inc.
+   Text [ProductName] := TNVT220
+   Logical [OfferInstallationDirectoryChoice] := YesCharacter
+   Directory [DefaultInstallationDirectory] := TNVT220
+   Text [ModifyMode] := UNDECIDED
+   Number [MinimumFilesSetting] := 0
+   Number [MinimumBuffersSetting] := 0
+   Directory [ReadmeFileName] :=
+   Logical [InquireAboutSystemFileLocation] := YesCharacter
+   Logical [AskBeforeFileReplacement] := YesCharacter
+   Text [ExitMessage] := Thanks!
+   Directory [ProgramToRun] :=
+   Logical [AddInstallDirectoryToPath] := YesCharacter
+   Text [MinimumOSVersion] := 0
+   Number [MinimumSystemMemoryRequiredPresent] := 0
+   Logical [AllowCGA] := YesCharacter
+   Logical [AllowMDA] := YesCharacter
+   Logical [Allow808x] := YesCharacter
+   Logical [Allow80286] := YesCharacter
+   Logical [MathCoprocessorRecommended] := NoCharacter
+   Logical [FixedDiskRequired] := YesCharacter
+   Text [NetWorkInstallation] := AllowNetwork
+   Logical [UseShadows] := YesCharacter
+   Text [MainBorder] := NONE
+   Text [PopupBorder] := SINGLE
+   Text [TopLine] := "  INSTALLING the Novell TNVT220 Terminal Emulator  "
+   Text [TopLineColors] := WhiteOnBrown
+   Text [BottomLineColors] := WhiteOnLightGray
+   Text [PopupColors] := WhiteOnCyan
+   Text [AttentionColors] := WhiteOnRed
+   Text [SpecialPopupColors] := WhiteOnBrown
+   Text [ExpressSetupDescription] := Install [ProductName]
+   Text [ExtractionOptions] := ShowJustOne  ;; See GetQuedFiles
+   Logical [NeedToTerminate] := NoCharacter
+   Logical [Installed] := NoCharacter
+   Text [DisplayAdapterSummary] :=
+   Text [CPUTypeSummary] :=
+   Text [NetworkActive] :=
+   Text [MathCoprocessorStatus] :=
+   Text [InstallationDriveSummary] :=
+   Text [OSVersionSummary] :=
+   Text [SystemMemorySummary] :=
+   Logical [InsufficientSystem] := NoCharacter
+   Logical [CompatibilityNoticeGiven] := NoCharacter
+   Logical [NeedToModify] := NoCharacter
+   Text [PathTask] :=
+   Text [BuffersTask] :=
+   Text [FilesTask] :=
+   Text [BackgroundCharacter] := B0
+   Text [ScreenColors] := WhiteOnBlue
+   Text [BottomLine] := "<F2> Visit DOS   <F3> System Summary   <F9> to Quit"
+EndDefineVariables
+
+;;LetButton <F1> Do ShowHelpInfo
+LetButton <F2> Do VisitOS
+LetButton <F3> Do ShowSystemSummary
+LetButton <F9> Do ExitInstallation
+;;If [CommandLine1] = -ScriptView
+;;   SetTraceMode On
+;;EndIf
+;;If [CommandLine2] = -ScriptView
+;;   SetTraceMode On
+;;EndIf
+;;If [CommandLine3] = -ScriptView
+;;   SetTraceMode On
+;;EndIf
+
+If [CommandLine1] = -ReplaceFiles
+  SetReplacementInquiry Off
+EndIf
+If [CommandLine2] = -ReplaceFiles
+  SetReplacementInquiry Off
+EndIf
+If [CommandLine3] = -ReplaceFiles
+  SetReplacementInquiry Off
+EndIf
+
+If [InquireAboutSystemFileLocation] = NoCharacter
+  If DriveIsPresent [BootDrive]  ;; if not, COMSPEC has been changed
+    NoSysFileConfirmation
+  EndIf
+EndIf
+
+If [AskBeforeFileReplacement] = NoCharacter
+  SetReplacementInquiry Off
+EndIf
+
+[LWPpath] := FullPathTo VTCPIP.386 PathOnly     ;; try to find an LWP file
+If [LWPpath] <> BlankString                     ;; if found one,
+   [Number1] := PositionOf \BIN in [LWPpath]    ;; string off \BIN\VTCPIP.386
+   If [Number1] = 0                             ;; if didn't find \BIN
+      [LWPpath] := BlankString                  ;; must not be LWP
+   else                                         ;; is LWP
+      [Number1] := [Number1] - 1
+      [LWPpath] := SubstringOf [LWPpath] from Beginning to [Number1]
+   Endif
+Endif
+
+Do SetupInstalit
+Do PrepareSystemReport
+
+:Again
+ClearScreen
+TextBox @xy(Center,4)
+  Thanks for purchasing the Novell TNVT220 Terminal Emulator.
+  Would you like to have a complete installation or would you
+  like to retrieve a specific file from the installation disk?
+EndTextBox
+GetMenuChoice @xy(Center,10) UseHeader "MAIN MENU"
+  Install
+    ;[ExpressSetupDescription]
+  Get a New Copy of a File
+    ;Retrieve a specific file
+  Finished
+    ;Exit SETUP and return to DOS
+EndGetMenuChoice
+
+ClearScreen
+
+InCase choice is
+  =1:  If [LWPpath] = BlankString
+         QueFileGroup 1
+       else
+         QueFileGroup 2
+       Endif
+  =2:  Do GetNewCopyOfFile
+       GoTo Continue
+  =3:  Do ExitInstallation
+EndInCase
+
+If QueSize = 0
+  GoTo Continue
+EndIf
+
+If [Installed] = YesCharacter
+else
+   If [LWPpath] = BlankString
+      If [FixedDiskRequired] = YesCharacter
+        DetermineInstallationDrive QueSize RequireFixed
+      else
+        DetermineInstallationDrive QueSize
+      EndIf
+      [InstallationDirectory] := InstallationDrive:\[DefaultInstallationDirectory]
+      If [OfferInstallationDirectoryChoice] = YesCharacter
+         If [FixedDiskRequired] = YesCharacter
+            DetermineInstallationDirectory QueSize RequireFixed
+         else
+            DetermineInstallationDirectory QueSize
+         EndIf
+      else
+      EndIf
+   else
+      [InstallationDirectory] := [LWPpath]\[DefaultInstallationDirectory]
+      Dialog PressAnyKey UseHeader "LAN Workplace For DOS Installed!"
+         LAN Workplace for DOS has been found installed on 
+         your computer in [LWPpath]. As a result, the new 
+         version of TNVT220 which you are installing will be 
+         copied into [InstallationDirectory].
+      EndDialog
+   Endif
+EndIf
+
+GetQuedFiles ShowJustOne
+[Installed] := YesCharacter
+If QueSize <> 0  ;; Some files were selected but not installed if <> 0
+  [Installed] := NoCharacter
+  UnqueAllFiles  ;; Remove uninstalled files from que
+  Dialog ;; Message when unable to get all necessary files
+    Unable to successfully complete this option.
+  EndDialog
+EndIf
+:Continue
+GoTo Again
+
+Procedure ShowSystemSummary  ;; System summary - change with care.
+  If [InstallationDirectory] <> BlankString
+    [InstallationDriveSummary] := InstallationDrive (FreeSpaceOnDrive InstallationDrive bytes free)
+  else
+    [InstallationDriveSummary] := (Not Selected)
+  EndIf
+  Dialog PressAKey [SpecialPopupColors]
+    .cHERE IS A SUMMARY OF YOUR SYSTEM
+    .c[String8]  ;; notes whether any incompatibilities were found
+
+    Operating System Version:  [OSVersionSummary]
+    CPU Type:  [CPUTypeSummary]
+    Display Adapter:  [DisplayAdapterSummary]
+    Math Coprocessor:  [MathCoprocessorStatus]
+    Main Memory Present:  [SystemMemorySummary]
+    Extended Memory Present:  ExtendedMemoryPresentK
+    XMS Memory Available:  XMSMemoryAvailableK
+    Installation Drive:  [InstallationDriveSummary]
+    Network:  [NetworkActive]
+    [String9]  ;; information about network suitability
+  EndDialog
+EndProcedure
+
+Procedure PrepareSystemReport
+  [InsufficientSystem] := NoCharacter
+  If OSVersion < [MinimumOSVersion]
+    [OSVersionSummary] := OSVersion (need at least [MinimumOSVersion])
+    [InsufficientSystem] := YesCharacter
+  else
+    [OSVersionSummary] := OSVersion
+  EndIf
+  If MainMemory < [MinimumSystemMemoryRequiredPresent]
+    [SystemMemorySummary] := MainMemoryK (need at least [MinimumSystemMemoryRequiredPresent]K)
+    [InsufficientSystem] := YesCharacter
+  else
+    [SystemMemorySummary] := MainMemoryK
+  EndIf
+  If 808X
+    If [Allow808X] = YesCharacter
+      [CPUTypeSummary] := 808x
+    else
+      [CPUTypeSummary] := 808x (not compatible with [ProductName])
+      [InsufficientSystem] := YesCharacter
+    EndIf
+  EndIf
+  If 80286
+    [CPUTypeSummary] := 80286
+  EndIf
+  If 80386
+    [CPUTypeSummary] := 80386
+  EndIf
+  If 80486
+    [CPUTypeSummary] := 80486
+  EndIf
+  If [CPUTypeSummary] = BlankString
+    [CPUTypeSummary] := 808x
+  EndIf
+  If MicroChannel
+    [CPUTypeSummary] := [CPUTypeSummary] (in MicroChannel Architecture)
+  else
+    [CPUTypeSummary] := [CPUTypeSummary] (ISA or EISA Architecture)
+  EndIf
+  If CGA
+    If [AllowCGA] = YesCharacter
+      [DisplayAdapterSummary] := CGA
+    else
+      [DisplayAdapterSummary] := CGA (not compatible with [ProductName])
+      [InsufficientSystem] := YesCharacter
+    EndIf
+  EndIf
+  If MDA
+    If [AllowMDA] = YesCharacter
+      [DisplayAdapterSummary] := MDA
+    else
+      [DisplayAdapterSummary] := MDA (not compatible with [ProductName])
+      [InsufficientSystem] := YesCharacter
+    EndIf
+  EndIf
+  If EGA
+    [DisplayAdapterSummary] := EGA
+  EndIf
+  If VGA
+    [DisplayAdapterSummary] := VGA
+  EndIf
+  If HGC
+    [DisplayAdapterSummary] := HGC
+  EndIf
+  If HGCPlus
+    [DisplayAdapterSummary] := HGC Plus
+  EndIf
+  If Network
+    [NetworkActive] := Network Active
+  else
+    [NetworkActive] := No Network Active
+  EndIf
+  If NovellLoaded
+    [NetworkActive] := Novell [NetworkActive]
+  EndIf
+  If MathCoprocessorPresent
+    [MathCoprocessorStatus] := Present
+  else
+    If [MathCoprocessorRecommended] = YesCharacter
+      [MathCoprocessorStatus] := Not Present But Recommended
+      If [CompatibilityNoticeGiven] = YesCharacter
+      else
+        Dialog  ;; Notice if math coprocessor recommended
+          [ProductName] needs a math coprocessor
+          for best performance.  Your system does not
+          contain one.
+        EndDialog
+      EndIf
+    else
+      [MathCoprocessorStatus] := Not Present
+    EndIf
+  EndIf
+
+  If [InsufficientSystem] = YesCharacter
+    [String8] := (Please note the listed incompatibilities)
+  EndIf
+  If [NetworkInstallation] contains DisallowNetwork
+    [String9] := "   (You cannot install this version on a network drive)"
+  EndIf
+  [CompatibilityNoticeGiven] := YesCharacter
+EndProcedure
+
+
+Procedure GetNewCopyOfFile
+:StartOver
+Dialog [String1] 12 UseHeader "Getting a single file" UpperCase
+  Please enter the name of the file
+  you need a new copy of or leave
+  blank to exit.
+EndDialog
+If [String1] = BlankString
+  Exit
+EndIf
+If [String1] contains \
+  Popup Please enter just the file name with no path.
+  GoTo StartOver
+EndIf
+If FileIsInLibrary [String1]
+else
+  Popup Cannot find a file named [String1].
+  GoTo StartOver
+EndIf
+QueFiles
+  [String1]
+EndQueFiles
+GetQuedFiles ShowJustOne
+EndProcedure
+
+
+Procedure VisitOS
+  Dialog [YesOrNo1] [SpecialPopupColors]  ;; Notice before exiting to OS
+    Do you wish to exit to the operating system and
+    then return?
+  EndDialog
+  If [YesOrNo1] = YesCharacter
+    ExitToDOS
+  EndIf
+EndProcedure
+
+Procedure ExitInstallation
+ClearScreen
+If [Installed] = YesCharacter
+  [Number1] := [MinimumBuffersSetting] + [MinimumFilesSetting]
+  If [Number1] <> 0
+    ModifyConfigSys
+      SetBuffersToAtLeast [MinimumBuffersSetting]
+      SetFilesToAtLeast [MinimumFilesSetting]
+    EndModifyConfigSys
+  EndIf
+  NoSysFileConfirmation                         ;; since already inquired once
+  [Number2] := 1                                ;; set flag
+  Do FindAutoexecBat                            ;; find AUTOEXEC.BAT
+  If [InstallationDirectory] <> BlankString
+    If [AddInstallDirectoryToPath] = YesCharacter
+       If [LWPpath] <> BlankString
+          TextBox @xy(Center,2) UseHeader "AUTOEXEC.BAT Modification Information"
+SETUP has found LAN Workplace for DOS installed on your computer in 
+[LWPpath]. The LWP version of TNVT220 allows you to 
+connect to Unix hosts using TELNET. The version of TNVT220 you have 
+just installed only supports connections to hosts using NVT. SETUP 
+is about to add the path string [InstallationDirectory] to the PATH 
+variable in AUTOEXEC.BAT. If this string is added to the beginning 
+of the PATH string you will not be able to run the LWP version of 
+TNVT220 without typing the entire path string [LWPpath]\BIN\TNVT220 
+on the command line. If the above string is added to the end of the PATH 
+string you will not be able to run the new version of TNVT220 without 
+typing the entire path string [InstallationDirectory]\TNVT220 on the 
+command line. If the new TNVT220 is renamed to NTNVT220 you may access
+either program by typing only it's name, as you do now with TNVT220.
+          EndTextBox
+          GetMenuChoice @xy(Center,18) UseHeader "AUTOEXEC.BAT Modification Options"
+             Add string to beginning of PATH
+             Add string to end of PATH
+             Rename TNVT220 to NTNVT220 and add string to end of PATH
+             Don't modify AUTOEXEC.BAT
+          EndGetMenuChoice
+          ClearScreen
+          InCase choice is
+             =1: ModifyAutoexecBat
+                   DeletePathComponent [InstallationDirectory]
+                   AddPathComponent [InstallationDirectory] at Beginning
+                 EndModifyAutoexecBat
+             =2: ModifyAutoexecBat
+                   DeletePathComponent [InstallationDirectory]
+                   AddPathComponent [InstallationDirectory] at End
+                 EndModifyAutoexecBat
+             =3: If FileExists [InstallationDirectory]\NTNVT220.EXE
+                    DeleteFiles from [InstallationDirectory] Quietly
+                       NTNVT220.EXE
+                    EndDeleteFiles
+                 EndIf
+                 RenameFile [InstallationDirectory]\TNVT220.EXE to NTNVT220.EXE
+                 ModifyAutoexecBat
+                   DeletePathComponent [InstallationDirectory]
+                   AddPathComponent [InstallationDirectory] at End
+                 EndModifyAutoexecBat
+             =4: [Number2] := 0
+          EndInCase
+       else
+          TextBox @xy(Center,2) UseHeader "AUTOEXEC.BAT Modification Information"
+             SETUP is about to modify your AUTOEXEC.BAT file by adding the string
+             [InstallationDirectory]\BIN to the end of the PATH variable string.
+          EndTextBox
+          GetMenuChoice @xy(Center,7) UseHeader "AUTOEXEC.BAT Modification Options"
+             Modify AUTOEXEC.BAT
+             Don't modify AUTOEXEC.BAT
+          EndGetMenuChoice
+          ClearScreen
+          InCase choice is
+             =1: ModifyAutoexecBat
+                   DeletePathComponent [InstallationDirectory]\BIN
+                   AddPathComponent [InstallationDirectory]\BIN at End
+                 EndModifyAutoexecBat
+             =2: [Number2] := 0
+          EndInCase
+       Endif
+    EndIf
+  EndIf
+  If [Number2] = 0                              ;; if no change requested
+      TextBox @xy(Center,2) UseHeader "Add environmental string to AUTOEXEC.BAT "
+         SETUP will now add the string TELAPI_XPORT=NVT to your 
+         AUTOEXEC.BAT file. The new version of TNVT220 will not 
+         execute without this variable. You may either add this 
+         variable to AUTOEXEC.BAT yourself or let SETUP do it 
+         for you.
+      EndTextBox
+      GetMenuChoice @xy(Center,9) UseHeader "AUTOEXEC.BAT Modification Options"
+          Let SETUP modify AUTOEXEC.BAT
+          Don't modify AUTOEXEC.BAT
+      EndGetMenuChoice
+      ClearScreen
+      InCase choice is
+         =1: 
+         =2: [Number2] := GoTo [Point1]         ;; skip modification
+      EndInCase
+  Endif
+  ExamineTextFile [String9]                     ;; open AUTOEXEC.BAT
+  [Number1] := LineNumberWith (TELAPI_XPORT,=,) ;; find variable line
+  If [Number1] = 0                              ;; if not there
+     [Number1] := LineNumberWith (PATH,=,)      ;; get the PATH line
+     ModifyAutoexecBat                          ;; add variable
+        InsertAtLine [Number1] TELAPI_XPORT=NVT ;; insert line
+     EndModifyAutoexecBat
+  else
+     ModifyAutoexecBat
+       DeleteLine [Number1]
+       InsertAtLine [Number1] TELAPI_XPORT=NVT
+     EndModifyAutoexecBat
+  Endif
+  ForgetTextFile                                ;; done with file
+
+[Point1]
+  If BootFilesModified
+  else
+    Dialog
+      No changes were necessary to AUTOEXEC.BAT or CONFIG.SYS.
+    EndDialog
+  EndIf
+
+EndIf
+If [ProgramToRun] <> BlankString
+  Dialog [YesOrNo1]  ;; Explains purpose of program to be run, if any
+    [ProgramToRun] does <insert purpose here>.
+    Do you wish to run it now?
+  EndDialog
+  If [YesOrNo1] = YesCharacter
+    Run [ProgramToRun] SwapOut
+    If OSErrorCode <> 0
+      Dialog  ;; Message if OS unable to Run program
+        Unable to run [ProgramToRun].
+        Error code was OSErrorCode.
+      EndDialog
+    else
+      If OSExitCode <> 0
+        Dialog ;; Message if program ran but returned non-zero code
+          [ProgramToRun] executed but was not successful.
+          Return code OSExitCode.
+        EndDialog
+      EndIf
+    EndIf
+  EndIf
+EndIf
+
+If [ReadmeFileName] <> BlankString
+  ChangeDirectoryTo [InstallationDirectory]
+  Dialog [YesOrNo1] ;; Ask whether to browse readme file, if any
+    [ReadmeFileName] contains important information.
+    Do you wish to read it now?
+  EndDialog
+  If [YesOrNo1] = YesCharacter
+    If FileExists [ReadmeFileName]
+      BrowseFile [ReadmeFileName]
+    else
+      Popup Sorry, readme file [ReadMeFileName] is missing.
+    EndIf
+  EndIf
+EndIf
+Dialog ;; Final Farewell
+  Thanks for using [ProductName]!
+EndDialog
+SoLong
+EndProcedure
+
+Procedure SetupInstalit
+  SetScreenAttrTo [ScreenColors]
+  SetBackgroundCharTo B0
+  Do PrepareSystemReport
+  If [UseShadows] = YesCharacter
+    SetShadows On
+  else
+    SetShadows Off
+  EndIf
+  If [InquireAboutSystemFileLocation] = NoCharacter
+    NoSysFileConfirmation
+  EndIf
+  SetMainBorderTo     [MainBorder]
+  SetPopupBorderTo    [PopupBorder]
+  SetModifyModeTo     UNDECIDED
+  SetShadowAttrTo     DarkGrayOnBlack
+  SetScreenAttrTo     [ScreenColors]
+  SetPopupAttrTo      [PopupColors]
+  SetAttentionAttrTo  [AttentionColors]
+  SetTopLineAttrTo    [TopLineColors]
+  SetBottomLineAttrTo [BottomLineColors]
+  SetBottomLineTo     [BottomLine]
+  SetTopLineTo        [TopLine]
+  SetExitMessageTo    [ExitMessage]
+  SetAllowExit        Off
+EndProcedure
+
+Procedure FindAutoexecBat
+
+   [String9] := FullPathTo AUTOEXEC.BAT
+   If [String9] <> BlankString
+      Exit                                      ;; got it
+   Endif
+
+:FABloop
+   Dialog [String9] 80 UseHeader "Locate AUTOEXEC.BAT" UpperCase
+      Please enter the full path specification of 
+      AUTOEXEC.BAT (i.e. C:\DOS\MS60\AUTOEXEC.BAT)
+      or leave blank to exit.
+   EndDialog
+   If [String9] = BlankString                   ;; if blank input
+      Exit                                      ;; done for now
+   EndIf
+   If FileExists [String9]                      ;; if exists
+      Exit                                      ;; done for now
+   Endif
+   Dialog PressAnyKey UseHeader "File Locate Error!"
+      SETUP could not find [String9].
+      Please try again. You may type <F2> to enter
+      DOS if you need to search for AUTOEXEC.BAT.
+      To return to SETUP from DOS just type EXIT 
+      at the DOS prompt. 
+   EndDialog
+   GoTo FABloop
+
+EndProcedure
+
+Procedure InstallFiles
+
+   If [LWPpath] = BlankString                   ;; if LWP not installed,
+      QueAllFiles                               ;; normal installation
+      Exit
+   Endif
+   QueFiles                                     ;; just get emulator
+      TNVT220.EXE
+   EndQueFiles
+   GetQuedFiles ShowJustOne
+
+EndProcedure
+

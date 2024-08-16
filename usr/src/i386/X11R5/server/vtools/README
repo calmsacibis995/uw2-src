@@ -1,0 +1,112 @@
+#ident	"@(#)vtools:README	1.2"
+
+setvideomode:
+	Usage: setvideomode <option>
+		-default      restores stdvga, 640x480 16 color mode
+		-probe        detect the video chip and video memory
+		                   may not be possible all times
+		-test         test the current mode defined in
+				/usr/X/defaults/Xwinconfig file
+		-vinfo <file> use 'file' instead of VendorInfo file
+		-testallmodes cycles through all the supported modes
+
+	sets a high res video mode. This is a replacement for the older
+	"setvgamode" utility. The main difference between these two utlitities
+	is the format of the Xwinconfig file. "setvgamode" generates 'one-line"
+	entry in the config file, which is recognized by the older R4 server,
+	where as the R5 server can read a multi-line config file. The new file
+	has lot more information than the the old file.
+
+	If this binary is invoked as "setvgamode", it generates old format
+	file and if invoked as "setvideomode" it generates new format file.
+
+vprobe:
+	Usage: vprobe
+
+	detects the amount of memory and the type of video chip whenever
+	possible. Not all chips provide a 'fool-proof' mechanism, so we do
+	the best we can. vprobe can detect the following chipsets. 
+
+	S3 801
+	S3 928
+	ATI Mach8
+	ATI Mach32
+	ET4000
+	CIRRUS GD5422, GD5424, GD5426, GD5434
+	Trident T8900
+	ET3000
+	Western Digital/Paradise	PVGA1A, WD90C00, WD90C10, WD90C11	
+	Genoa
+	ATI V3, V4, V5
+
+vtest: 
+	Usage: vtest <configfile>
+
+	This utility tests the display for the mode defined in <configfile>
+	If no file is specified, the default file, "/usr/X/defaults/Xwinconfig"
+	is used. 
+
+:General Information for developers:
+====================================
+
+	This utility when invoked, reads a vendor info file to get the
+	information about all the supported vendors. The default vendor
+	information is in "/usr/X/lib/display/VendorInfo" file. This is 
+	a plain ascii file. All the necessary vendor info is picked up from
+	this file.
+
+	Once the vendor list is built, it is presented to the user and after
+	the user makes the selection, the corresponding "mode data file" is
+	opened and a "mode list" is built, which is then presented to the
+	user. (ex: sample data file: /usr/X/lib/display/ultrapro.dat)
+
+	Please study the following data files before you jump into source
+	code:
+		/usr/X/lib/display/VendorInfo
+		/usr/X/lib/display/<ANY>.dat 	(one of the many .dat files)
+
+		/usr/X/defaults/Xwinconfig
+
+	Xwinconfig file is generated after the user accepts the
+	selected mode.
+
+
+
+	vprobe && vtest: 
+	----------------
+	These two utilities are provided both as a "function calls" 
+	and a "stand alone" utilities. The functions are
+	called from "setvideomode" utility. A user can use run the 
+	"stand alone" utilities separately. For this purpose, the two
+	files, "main.c" and "vprobe/Main.c" are compiled twice.
+
+	"-testallmodes" option is provided to ease the testing of all the
+	modes for a driver. With this option, after the vendor selection
+	is made, all the supported modes are cycled through - ie: a test
+	pattern is drawn for each mode. Before you use this mode, make
+	sure you HAVE a monitor that can support all the modes for the
+	selected vendor. If not, you MIGHT DAMAGE the monitor.
+
+	"-vinfo" option will allow the user to specify a particular
+	vendor data base file. As new boards/drivers keep going up every
+	day, the list keeps growing which is sometimes very annoying to
+	a user. If the user knows which chipset based driver to use, you
+	can specify that file. For example,
+
+		setvideomode -vinfo s3
+		or
+		setvideomode -vinfo /myhomedir/s3.vinfo
+
+	In the first example, it will use the "/usr/X/lib/display/s3.vinfo"
+	file, where as in the 2nd example, it uses a private copy of the
+	vendor data base file.
+	If "-vinfo" option is not used, the default vendor data file,
+	"/usr/X/lib/display/VendorInfo" is used.
+
+
+	NOTE: We should remove the code to generate the old format config
+	files, once we are fully converted to R5 server env. Until then,
+	be careful of the changes you make to data file formats or any
+	other misc changes. There are too many obscure conditions that might
+	cause side-effects, so be CAREFUL and test every change with as many
+	boards as you can (time consuming)

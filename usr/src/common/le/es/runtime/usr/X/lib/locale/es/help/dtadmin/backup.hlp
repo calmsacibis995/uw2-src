@@ -1,0 +1,451 @@
+#ident\t"@(#)dthelp:Admin.Tools/backup.hlp      1.26"
+^*version^1
+^*title^CopiaSeg-Restaurar
+^:CopiaSeg-Restaurar
+^*width^70
+^+DesktopMgr/help.defs
+^?Realización de copias de seguridad y restauración de los archivos
+^0^CopiaSeg-Restaurar
+^$10
+CopiaSeg-Restaurar
+
+Use Copias de seguridad-Restaurar para lo siguiente:
+
+\to\tRealización de \k(Copias de seguridad de los datos^^Realización de copias de seguridad) del disco duro del
+\t \tsistema en un medio extraíble (como disquete o cinta de cartucho)
+\t \to en otro archivo.
+\to\t\k(Restaurar los datos^^Restauración de archivos) de nuevo al disco duro del sistema.
+\to\t\k(Guardar un guión de copia de seguridad^^Salvaguarda de un guión de copia de seguridad).
+
+Véase también:
+\k(Descripción general de la carpeta Discos-etc^dtadmin/disk.hlp^Descripción general de la carpeta Discos-etc)
+\s(El servicio de copias de seguridad^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(El servicio de restauración^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^1^Realización de copias de seguridad
+^$20
+Realización de copias de seguridad
+
+Antes de realizar una copia de seguridad, asegúrese de etiquetar el 
+disquete o cinta, y de poner la fecha para referencias futuras.
+
+Para realizar copias de seguridad de los archivos del sistema, haga lo
+siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Copias de seguridad-Restaurar.
+
+  \tNota: También puede ir directamente a la \k(Carpeta Discos-etc^dtadmin/disk.hlp^Descripción general de la carpeta Discos-etc)
+  \ty mantener pulsado el botón derecho del ratón sobre el
+  \ticono que representa el medio deseado (por ejemplo, cinta,
+  \tCD-ROM o disco) y hacer clic en Copias de seguridad.
+
+  \tAparecerá la ventana "Copias de seguridad" con las siguientes
+  \topciones:
+
+  \to\tCopia de seguridad a: - Haga clic en la flecha para que aparezca
+  \t \tuna lista de opciones, como disquete (por ejemplo, Disco A),
+  \t \tun archivo de la unidad de disco duro (Archivo), etc.
+  \t \tHaga clic en la opción adecuada.
+
+  \t \tSi selecciona Archivo, aparecerá un campo de destino.  Teclee la
+  \t \t\d(vía de acceso) completa en la que desee realizar la copia
+  \t \tde seguridad de los archivos y carpetas (use esta opción si
+  \t \tdesea realizar una copia de seguridad en una archivo o carpeta
+  \t \tdel sistema,
+  \t \to en el disco duro de un sistema remoto al que tenga acceso).
+
+  \t \tNota: Si está realizando las copias de seguridad en un disquete
+  \t \to cinta de cartucho, inserte ahora el disquete o la cinta en la
+  \t \tunidad adecuada.  Si está usando un disquete, asegúrese de que
+  \t \testá formateado correctamente.  Para obtener más información
+  \t \tacerca de cómo formatear medios, véase
+  \t \t\k(Formateado de disquetes^dtadmin/floppy.hlp^Formateo de disquetes).
+
+  \to\tClase de copia de seguridad: - Esta opción está disponible
+  \t \tsólo para los usuarios con permisos de propietario del sistema
+  \t \t(véase \k(Comprensión de los permisos^dtadmin/user.hlp^Comprensión de los permisos)).
+
+  \t \tHaga clic en una de las siguientes opciones:
+
+  \t \t-\tSistema completo - Para realizar la copia de seguridad del
+  \t \t \tsistema de archivos completo.  Obsérvese que la utilidad de
+  \t \t \tcopias de seguridad usa el archivo /etc/ignore para determinar
+  \t \t \tqué directorios ignorar (no incluir en la copia) durante una
+  \t \t \tcopia de seguridad completa.  Antes de iniciar una copia de
+  \t \t \tseguridad completa, asegúrese de comprobar el archivo
+  \t \t \t/etc/ignore. Si contiene directorios que desee incluir en la
+  \t \t \tcopia, suprima estas entradas del archivo.
+
+  \t \t \tNota: La copia de seguridad completa no es un sustituto
+  \t \t \tpara la creación de un disquete o cinta de recuperación
+  \t \t \ten caso de emergencia.  No puede restaurar el sistema completo
+  \t \t \tdesde una copia de seguridad completa del sistema.  Para
+  \t \t \tobtener información sobre la creación de disquetes
+  \t \t \ty cintas de recuperación en caso de emergencia, véase
+  \t \t \t"Recuperación del sistema" en el Manual del propietario del
+  \t \t \tsistema.
+
+  \t \to\tArchivos personales: Para realizar la copia de seguridad de
+  \t \t \tlos archivos y carpteas de la
+  \t \t \t\d(carpeta personal^directorio personal).
+
+  \t \t-\tArchivos de otros usuarios - Para realizar copias de seguridad
+  \t \t \tpara otros usuarios.  Haga clic en \k(Lista de usuarios^^Ventana Copia de seguridad: Lista de usuarios) y haga
+  \t \t \tclic en los IDs de usuario deseados.
+
+  \t \t \tNota: Si realiza la copia de seguridad de los archivos de otro usario, 
+  \t \t \tsólo incluye su carpeta personal y el contenido de la misma, 
+  \t \t \tno todos los archivos del sistema de los que el usuario es 
+  \t \t \tpropietario.
+
+  \to\tTipo: - Haga clic en una de las siguientes opciones:
+
+  \t \to\tCompleto: Para realizar la copia de seguridad de todos
+  \t \t \tlos archivos de la clase de copia de seguridad seleccionada.
+
+  \t \to\tIncremental: Para realizar copia de seguridad sólo de los
+  \t \t \tarchivos que hayan cambiado desde la última copia de seguridad
+  \t \t \tcompleta.
+
+  \t \t \tAdvertencia: si usted es el \k(propietario del sistema^dtadmin/user.hlp^Comprensión de los permisos) y
+  \t \t \testá realizando copias de seguridad de los archivos para los
+  \t \t \tusuarios del sistema, obsérvese que el sistema considera
+  \t \t \tla última copia de seguridad como la última copia de
+  \t \t \tseguridad para todos los usuarios, no para un usuario en
+  \t \t \tparticular. Por ejemplo, como propietario del sistema, se
+  \t \t \tinicia una copia de seguridad incremental para el usuarioA a las
+  \t \t \t10:00 a.m., y la copia se termina a las 10:30.  A continuación
+  \t \t \tse inicia una copia de seguridad incremental para el usuarioB.  El
+  \t \t \tsistema sólo copiará los archivos cambiados por el usuarioB entre
+  \t \t \tlas 10:00 y las 10:30 a.m. (la hora de la última copia de
+  \t \t \tseguridad). No copiará los archivos cambiados por el usuarioB desde
+  \t \t \tla última copia de seguridad de los archivos del usuarioB.
+
+  \t \t \tNota: Si ha movido un archivo a una nueva ubicación después
+  \t \t \tde la última copia de seguridad completa, el sistema no lo
+  \t \t \tencontrará en la nueva ubicación para la copia de
+  \t \t \tseguridad incremental subsiguiente.  Esto se debe
+  \t \t \ta que, cuando se mueve un archivo, la fecha de
+  \t \t \tmodificación del mismo no cambia, de modo que
+  \t \t \tel sistema no lo considera como un archivo modificado.
+
+  \t \t-\tArchivos seleccionados - Para incluir en la copia sólo los
+  \t \t \tarchivos y carpetas \d(arrastrar y soltar) en la ventana "Copias
+  \t \t \tde seguridad".
+
+  \t \t \tTambién puede hacer clic en \k(Edición=>Excluir^^Excluir) para
+  \t \t \teliminar archivos y carpetas de la lista de copias de
+  \t \t \tseguridad.
+
+  \to\tCrear registro de copias de seguridad: - Haga clic en este
+  \t \tcuadro si desea crear un archivo que liste todos los archivos y
+  \t \tcarpetas que se van a incluir en la copia.
+
+  \to\tCopia de seguridad de archivos locales sólo: - Haga clic en
+  \t \teste cuadro si desea excluir todos los archivos que residan
+  \t \tfísicamente en un sistema remoto.
+
+3.\tHaga clic en Copiar ya si desea comenzar la copia de seguridad
+  \tinmediatamente.
+
+  \tSi desea programar la copia de seguridad para un momento
+  \tposterior, haga clic en Copiar más tarde y complete la información
+  \tdeseada de la \k(ventana "Programador de tareas: Añadir tarea"^^Ventana Programador de tareas: Añadir tarea).
+
+  \tAparecerá la ventana "Copias de seguridad: Aviso de confirmación".
+  \tHaga clic en Continuar para seguir con la copia de seguridad, o en
+  \tCancelar si decide que no desea realizarla.
+
+  \tNota: Si la cinta o disquete que hay en la unidad contiene
+  \tarchivos, aparecerá la ventana "Copias de seguridad:
+  \t¿Sobreescribir datos?". Haga clic en sobreescribir si no le
+  \timporta que el sistema destruya los archivos que están en el
+  \tdisco, o retire el disco actual y reemplácelo por otro disco antes
+  \tde hacer clic en Sobreescribir.
+
+  \tAparecerá la \k(ventana "Copia de seguridad en proceso"^^Ventana Copia de seguridad en proceso).
+  \tA medida que el sistema vaya copiando archivos en los
+  \tdisquetes, irá mostrando los nombres de estos archivos
+  \ten la zona de pié de página de la ventana "Copia de seguridad".
+
+  \tUna vez finalizado, aparecerá el siguiente mensaje en la zona de
+  \tpié de página de la ventana "Copias de seguridad: Copia de
+  \tseguridad finalizada".
+
+  \tNota: Es posible que desee volver a realizar copias de seguridad
+  \tde los mismos archivos usando las mismas opciones en otro momento.
+  \tVéase \k(Salvaguarda de un guión de copia de seguridad).
+
+4.\tSaque la cinta o disquete de la unidad.
+
+Véase también:
+\s(El servicio de copias de seguridad^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(Creación de disquetes de recuperación en caso de emergencia^dhelp "pe.es" ownerhb "Recuperación del sistema" "Creación de disquetes de recuperación en caso de emergencia" || helpLinkErr)
+\s{Creación de cintas de recuperación en caso de emergencia^dhelp "pe.es" ownerhb "Recuperación del sistema" "Creación de cintas de recuperación en caso de emergencia" || helpLinkErr}
+
+^2^Ventana Copia de seguridad: Lista de usuarios
+^$30
+Ventana Copia de seguridad: Lista de usuarios
+
+Esta ventana aparece instantáneamente cuando hace clic en Archivos de
+otros usuarios.  Para añadir un usuario a la lista de copias de
+seguridad, haga lo siguiente:
+
+1.\tHaga clic en el ID de usuario deseado.
+
+2.\tHaga clic en OK para añadir el usuario a la lista y cerrar la
+  \tventana, o en Aplicar para añadir el usuario a la lista de copias
+  \tde seguridad sin cerrar la ventana (o haga clic en Cancelar si
+  \tdecide que no desea añadir el usuario a la lista de copias de
+  \tseguridad).
+
+  \tAparecerá el icono de la carpeta personal del usuario en la
+  \tventana "Copias de seguridad".
+
+Nota: Cuando selecciona un usuario de la lista, el sistema realiza
+copia de seguridad sólo de los archivos del \d(directorio personal) de ese
+usuario.  Es decir, si el usuario es propietario de archivos que están
+en un directorio distinto de su directorio personal, el sistema no
+incluirá estos archivos automáticamente en la copia.
+
+^2^Excluir
+^$50
+Excluir
+
+Para eliminar archivos y carpetas de la lista de copias de seguridad,
+haga lo siguiente:
+
+1.\tHaga clic en los archivos y carpetas de la ventana "Copias de
+  \tseguridad" que no desee incluir en la copia.
+
+2.\tHaga clic en Edición=>Excluir.  El sistema eliminará los archivos
+  \ty carpetas de la lista de copias de seguridad.
+
+^2^Ventana Copia de seguridad: Aviso de confirmación
+^$70
+Ventana Copia de seguridad: Aviso de confirmación
+
+Esta ventana aparece cuando inicia la copia de seguridad.  Haga clic
+en Continuar para realizar la copia, o en Cancelar si decide no
+realizarla.
+
+^2^Ventana Copia de seguridad: ¿Sobreescribir datos?
+^$80
+Ventana Copia de seguridad: ¿Sobreescribir datos?
+
+Esta ventana aparece cuando está realizando copias de seguridad a una
+cinta o disquete que ya contiene archivos.
+
+Realice una acción de las siguientes:
+
+\to\tHaga clic en sobreescribir si no le importa que el sistema
+\t \tdestruya los archivos que están en el disco.
+
+\to\tRetire el disco actual si no desea destruir los archivos.  A
+\t \tcontinuación, inserte uno nuevo jy haga clic en Sobreescribir.
+\t \tAsegúrese de que esta vez desea sobreescribir toda la información
+\t \tque exista en el nuevo disco que inserte.  El sistema ya no
+\t \tvolverá a preguntarle.
+
+\to\tHaga clic en Salir para detener el procedimiento de realización de
+\t \tcopias de seguridad.  A continuación, vuelva a iniciar el proceso
+\t \tcon otra cinta o disquete.
+
+^2^Ventana Copia de seguridad en proceso
+^$90
+Ventana Copia de seguridad en proceso
+
+Esta ventana aparece cuando el sistema está creando el índice del
+archivo comprimido de copias de seguridad.  Haga clic en Cancelar si
+decide detener la realización de la copia.
+
+^2^Ventana Programador de tareas: Añadir tarea
+^$100
+Ventana Programador de tareas: Añadir tarea
+
+Esta ventana aparece cuando selecciona Copiar más tarde.  Obsérvese
+que el sistema ya ha completado el campo Tarea.  Defina las opciones
+de esta ventana tal y como se indica a continuación:
+
+\to\tHora: Teclee la hroa a la que desee que se ejecute la copia de
+\t \tseguridad (en horas y minutos, en formato de 24 horas).  Por
+\t \tejemplo, si desea que el programa se ejecute a las 6:00 p.m.,
+\t \tteclee 18:00.
+
+\to\tCada: Haga clic en Hora o Minuto para anular el valor de Hora
+\t \tanterior y que el programa se ejecute cada hora o cada minuto.
+
+\to\tCuándo: Escoja si desea que el programa se ejecute un día concreto
+\t \tde la semana o en una fecha específica, tal y como se indica a
+\t \tcontinuación:
+
+\t \to Si hace clic en Día de la semana, vaya al cuadro siguiente
+\t \t  (también llamada Día de la semana) y haga clic en la casilla de
+\t \t  flecha para ver un menú desplegable con los días.  Haga clic en
+\t \t  el día deseado. Por ejemplo, Todos los días, Domingo, Lunes,
+\t \t  etc.
+
+\t \to\tSi hace clic en Fecha, aparecerán los cuadros de Mes y Fecha.
+\t \t \tHaga clic en las casillas de flecha de los cuadros de mes y día
+\t \t \tpara obtener un menú desplegable con los meses y los días.  Haga
+\t \t \tclic en el mes y día deseados.  Por ejemplo, Todos los meses el
+\t \t \tprimer Lunes.
+
+Cuando haya finalizado, haga clic en Añadir tarea(1).
+
+^1^Restauración de archivos
+^$120
+Restauración de archivos
+
+Para restaurar archivos, haga lo siguiente:
+
+1.\tInserte en la unidad adecuada la cinta de cartucho o disquete que
+  \tcontenga los archivos que desee restaurar.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+3.\tHaga doble clic en Copias de seguridad-Restaurar.  Aparecerá la
+  \tventana "Restaurar", con los siguientes campos:
+
+  \tNota: También puede ir directamente a la \k(Disks-etc folder^dtadmin/disk.hlp^Descripción general de la carpeta Discos-etc) y
+  \thacer doble clic en el icono del dispositivo adecuado para abrir
+  \tla ventana "Restaurar".
+
+  \to\tRestaurar desde: - Hacer clic en el medio desde el que vaya a
+  \t \tllevar a cabo la restauración.  Por ejemplo, Archivo, Cartucho,
+  \t \tCinta, Disco_A o Disco_B.
+
+  \t \tNota: Si selecciona Archivo, aparecerá el cuadro Archivo de
+  \t \tdestino. Teclee el nombre de \d(vía de acceso) completo del
+  \t \tarchivo desde el que vaya a realizar la restauración.
+
+  \to\tSobreescribir archivos si existen: - Haga clic en este cuadro 
+  \t \tsi desea restaurar reemplazando todos los archivos existentes 
+  \t \tcon los mismos nombres.
+
+  \to\tMostrar archivos: - Haga clic en este cuadro si desea ver una
+  \t \tlista de los archivos y carpetas de la cinta, disquete
+  \t \to archivo desde el que va a realizar la restauración.  Seleccione
+  \t \t  los archivos que vaya a restaurar.
+
+5.\tHaga clic en restaurar.  Aparecerá la \k(ventana "Restauración en proceso"^^Ventana Restauración en proceso).
+  \tA medida que el sistema vaya restaurando los archivos, aparecerán sus nombres
+  \ten la región de pié de página de la ventana Restaurar.
+
+  \tUna vez finalizada, aparecerá el siguiente mensaje en la región de
+  \tpié de página de la ventana "Restaurar": Restauración finalizada.
+
+Véase también:
+\s(El servicio de restauración^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^2^Ventana Restauración en proceso
+^$130
+Ventana Restauración en proceso
+
+Esta ventana aparece para informarle de que el sistema está
+restaurando los archivos.  Si decide que no desea continuar con
+la restauración, haga clic en Cancelar.
+
+^1^Salvaguarda de un guión de copia de seguridad
+^$140
+Salvaguarda de un guión de copia de seguridad
+
+Puede guardar los archivos de copia de seguridad y las opciones de
+copias de seguridad seleccionadas en un guión de copia de seguridad.
+Más adelante, cuando vaya a repetir la misma copia, bastará con que
+llame a este procedimiento para hacerlo.
+
+Para guardar el procedimiento de realización de copias de seguridad,
+haga lo siguiente desde la ventana "Copias de seguridad":
+
+1.\tHaga clic en Archivo=>Guardar como.  Aparecerá la ventana "Copias
+  \tde seguridad: Guardar procedimiento".
+
+2.\tTeclee el nombre del archivo en el que desee guardar la lista de
+  \tarchivos.  Por ejemplo, si está guardando la lista para realizar
+  \tuna copia de seguridad diaria, es posible que desee llamar al
+  \tarchivo "diario".
+
+3.\tHaga clic en Guardar.  El sistema guardará el procedimiento de
+  \trealización de copias de seguridad, incluidas las opciones de
+  \tcopia de seguridad, en el archivo especificado con la extensión
+  \t.bkup. Por ejemplo, si el nombre del archivo es "diario", el
+  \tsistema guardará el procedimiento como diario.bkup.
+
+4.\tUse este procedimiento la próxima vez que desee realizar una copia
+  \tde seguridad del mismo conjunto de archivos.  Véase
+  \t\k(Uso de un guión de copia de seguridad).
+
+^2^Ventana Copia de seguridad: Guardar guión
+^$150
+Ventana Copia de seguridad: Guardar guión
+
+Para obtener información acerca de cómo completar las opciones
+de esta ventana, véase
+\k(Salvaguarda de un guión de copia de seguridad).
+
+Véase también: \k(Uso de un guión de copia de seguridad)
+
+^1^Uso de un guión de copia de seguridad
+^$160
+Uso de un guión de copia de seguridad
+
+Para realizar una copia de seguridad desde un procedimiento guardado,
+haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Copias de seguridad-Restaurar.  Aparecerá la
+  \tventana "Copias de seguridad".
+
+3.\tHaga clic en Archivo=Abrir.  Aparecerá la ventana "Copias de
+  \tseguridad: Abrir procedimiento".
+
+4.\tUse las teclas de flecha para desplazarse arriba y abajo por la
+  \tcarpeta hasta que encuentre el archivo que contiene el
+  \tprocedimiento deseado.
+
+5.\tHaga clic en el nombre del archivo.  Aparecerá el nombre en
+  \tel cuadro de texto Archivo.
+
+6.\tHaga clic en Abrir.  Aparecerán los nombres de los archivos y las
+  \topciones de copia de seguridad seleccionadas para el procedimiento
+  \ten la ventana "Copias de seguridad".
+
+7.\tHaga clic en Copias de seguridad.  El sistema realizará la copia
+  \tde seguridad de los archivos designados en el procedimiento.
+
+  \tNota: También puede hacer clic en Copiar más tarde si desea
+  \tprogramar la copia para otro momento.
+
+^2^Ventana Copia de seguridad: Abrir guión
+^$170
+Ventana Copia de seguridad: Abrir guión
+
+En esta ventana, haga lo siguiente
+
+1.\tUse las teclas de flecha para desplazarse arriba y abajo por la
+  \tcarpeta hasta que encuentre el archivo que contiene el
+  \tprocedimiento deseado.
+
+2.\tHaga clic en el nombre del archivo.  Aparecerá el nombre en
+  \tel cuadro de texto Archivo.
+
+3.\tHaga clic en Abrir.  Aparecerán los nombres de los archivos y las
+  \topciones de copia de seguridad seleccionadas para el procedimiento
+  \ten la ventana "Copias de seguridad".
+
+4.\tHaga clic en Copias de seguridad.  El sistema realizará la copia
+  \tde seguridad de los archivos designados en el procedimiento.

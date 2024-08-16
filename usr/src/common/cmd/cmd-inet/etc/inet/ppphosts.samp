@@ -1,0 +1,73 @@
+#!/sbin/sh
+#ident	"@(#)cmd-inet:common/cmd/cmd-inet/etc/inet/ppphosts.samp	1.1"
+#ident	"$Header: $"
+
+#
+#	STREAMware TCP
+#	Copyright 1987, 1993 Lachman Technology, Inc.
+#	All Rights Reserved.
+#
+
+#
+#
+#	One tab between fields only
+#
+# Entries have this format:
+# Name tty System [Timer options] [Link options] [IP options] [Other] 
+# Those fields in brackets ([]) are optional
+#
+# Entries may continue onto multiple lines by giving a '\' as the
+# last character of a line.
+#
+# Name		destination host or ppp login name(starting with *)
+# tty  		tty name for direct connection 
+# System	uucp system name for this remote host
+#
+# Timer options:
+# 	"idle=idle_time"  idle_time is the inactivity timeout 
+#			  in minutes (default = forever)
+# 	"tmout=timeout"   timeout per PPP protocol request (default = 3 seconds)
+# 	"conf=num"	  Set the maximum number of times of configure retry 
+#			  (default = 10)
+#	"term=num"	  Set the maximum number of times of termination retry 
+#			  (default = 2)
+#	"nak=num" 	  Set the maximum number of times of configure-nak 
+#			  retry (default = 10)
+#
+# Link options:
+#	"mru=num".        Set the maximum receive unit (default = 296)
+# 	"accm=num(hex)"   Set the asyc control character map 
+#			  (default = 0x00000000)
+#	"pap" 	  	  Do password authentication 
+#			  (default : no password authentication)
+#	"nomgc"   	  disable magic number negotiation
+#			  (default : enable magic number negotiation)
+# 	"protcomp" 	  Do protocol field compression
+#		       	  (default : no protocol field compression)
+# 	"accomp" 	  Do addrerss-control field compression
+#		 	  (default : no addrerss-control field compression)
+#
+# IP options
+# 	"ipaddr" 	  Do IP address negotiation
+#		          (default : no IP address negotion)
+#	"rfc1172addr"     Using RFC1172 IP addresses negotiation
+#		 	  (default : RFC1332 IP address negotiation)
+# 	"VJ"              Do  VJ Compressed TCP/IP
+#			  (default : no VJ compressed TCP/IP)
+#
+# Other
+# 	"old" 		  remote side using ISC TCP Release 4
+#		 	  (default : remote side not using ISC TCP Release 4) 
+#	"paptmout=tmout"  PPP waits for the peer to password authenticate 
+#			  itself for tmout minutes 
+#			  (default = 1) 
+#
+# Examples:
+# 1. For outbound PPP connection,
+# ice_sl tty00 ice idle=5 tmout=3 conf=10 term=2 nak=10 mru=296 accm=ffffffff\ 
+#	pap nomgc protcomp accomp ipaddr  rfc1172addr VJ old
+#
+# 2. For inbound PPP connection,
+# *nppp - - idle=1 tmout=3 conf=10 term=2 nak=10 mru=296\
+#    pap protcomp accomp ipaddr VJ    
+##################################################################

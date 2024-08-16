@@ -1,0 +1,418 @@
+#ident\t"@(#)dthelp:Admin.Tools/backup.hlp      1.26"
+^*version^1
+^*title^Backup-Ripristino
+^:Backup-Ripristino
+^*width^70
+^+DesktopMgr/help.defs
+^?Il backup e ripristino dei file
+^0^Backup-Ripristino
+^$10
+Backup-Ripristino
+
+Utilizzare il Backup-Ripristino per fare quanto segue:
+
+\to\t\k(Fare il backup dei dati^^Backup di file) dal disco rigido del sistema su supporti removibili
+\t \t(quali dischetti o nastri a cartuccia) o su un altro file.
+\to\t\k(Ripristinare i dati^^Ripristino dei file) sul disco rigido di sistema.
+\to\t\k(Salvare uno script di backup^^Salvataggio di uno script di backup).
+
+Vedi anche:
+\k(Introduzione alla cartella Disks-etc^dtadmin/disk.hlp^Introduzione alla cartella Dischi-ecc.)
+\s(Il servizio di Backup^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(Il servizio di Ripristino^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^1^Backup di file
+^$20
+Backup di file
+
+Prima di fare il backup, assicurarsi di aver etichettato il dischetto o il nastro
+per riferimento futuro.
+
+Per fare il backup dei file nel sistema procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Backup-Ripristina.
+
+  \tNota: Si può anche entrare direttamente nella \k(Cartella Dischi-etc^dtadmin/disk.hlp^Introduzione alla cartella Dischi-ecc.)
+  \t e premere e tenere premuto il pulsante destro del mouse
+  \t sull'icona che rappresenta il supporto (ad esempio, nastro,
+  \t CD-ROM o disco). Poi fare clic su Backup.
+
+  \tAppare la finestra "Backup" con le seguenti opzioni:
+
+  \to\tBackup su: - Fare clic sulla freccia per ottenere l'elenco delle altre
+  \t \tscelte, quali un dischetto (ad esempio, Disco A), un file sul disco rigido (File),
+  \t \te così via. Fare clic sull'opzione appropriata.
+
+  \t \tSe si seleziona File, appare il campo Destinazione. Immettere il
+  \t \t\d(percorso) completo in cui fare il backup dei file e
+  \t \tdelle cartelle (usare questa opzione se si desidera fare il
+  \t \tbackup di un file o di una cartella nel proprio disco rigido o
+  \t \tin un sistema remoto a cui si ha accesso).
+
+  \t\tNota: Per il backup su dischetti o nastro a cartuccia, inserire
+  \t \til disco o il nastro nell'unità appropriata. Nell'utilizzo di
+  \t \tdischetti, assicurarsi che questi siano formattati correttamente.
+  \t \tPer ulteriori informazioni sulla formattazione, vedi
+  \t \t\k(La Formattazione dei Dischetti^dtadmin/floppy.hlp^Formattazione dei dischetti).
+
+  \to\tClassi di Backup: - Questa opzione è disponibili solo per gli
+  \t \tutenti forniti dei permessi di proprietario del sistema
+  \t \t(vedere \k(Capire i Permessi^dtadmin/user.hlp^Comprensione dei permessi)))
+
+  \t \tFare clic su una delle seguenti opzioni:
+
+  \t \t-\tSistema Completo -  Per fare il backup del sistema intero.
+  \t \t \tNotare che il backup utilizza il file /etc/ignore per
+  \t \t \tstabilire quali directory ignorare (di cui non fare il
+  \t \t \tback up) durante un backup di Sistema Completo. Prima di
+  \t \t \tiniziare un Backup Completo, assicurarsi del contenuto del file
+  \t \t \t/etc/ignore. Se contiene delle directories di cui si
+  \t \t \tvuole il backup, occorre eliminare i loro nomi dal file.
+
+  \t \t \tNota: La Selezione del backup completo non sostituisce la
+  \t \t \tcreazione di un nastro o dischetto di recupero di emergenza.
+  \t \t \tNon è possibile ripristinare l'intero sistema da un backup
+  \t \t \tcompleto.  Per informazioni sulla creazione di nastri e dischetti
+  \t \t \tdi recupero d'emergenza, vedi "Recupero del sistema"
+  \t \t \tnel Manuale del proprietario del sistema.
+
+   \t \t-\tFile Personali - Per fare il backup dei file e delle cartelle
+   \t \t \tnella propria cartella\d(home^home directory).
+
+  \t \t-\tFile di altri utenti - Per fare il backup di file per altri utenti.
+  \t \t \tFare clic su \k(Lista utenti^^Backup: Finestra Lista utenti), poi fare clic sulle ID degli utenti desiderati.
+
+  \t \t \tNota: Fare il backup dei file di un altro utente significa
+  \t \t \tfare il backup solo della sua cartella home e di quanto
+  \t \t \tcontiene, non di tutti i file nel sistema appartenenti a
+  \t \t \tquell'utente.
+
+  \to\tTipo: - Fare clic una delle seguenti opzioni:
+
+  \t \t-\tCompleto - Per fare il backup di tutti i file nella classe di
+  \t \t \tbackup selezionata.
+
+  \t \t-\tIncrementale - Per fare il backup solo dei file modificati dopo
+  \t \t \tl'ultimo backup completo.
+
+  \t \t \tAvviso: Se si è il \k(proprietario del sistema^dtadmin/user.hlp^Comprensione dei permessi) e si fa il backup
+  \t \t \tdi file per altri utenti del sistema, notare che il sistema
+  \t \t \tinterpreta l'ultimo backup come l'ultima volta che è stato
+  \t \t \teseguito il backup per qualsiasi utente, non come l'ultima
+  \t \t \tvolta che è stato eseguito per un determinato utente. Ad
+  \t \t \tesempio, si supponga che, come proprietario del sistema, si
+  \t \t \tavvii un backup incrementale per l'utenteA alle 10:00 e che
+  \t \t \tquesto termini alle 10:30. Se poi si avvia un backup
+  \t \t \tincrementale per l'utenteB, il sistema farà il backup solo dei
+  \t \t \tfile che l'utenteB ha modificato tra le 10:00 e le 10:30
+  \t \t \t(l'ora dell'ultimo backup), ma non farà il backup di qualsiasi
+  \t \t \taltro file che l'utenteB potrebbe aver modificato dall'ultimo
+  \t \t \tbackup dei suoi file.
+
+  \t \t \tNota: Se un file viene spostato dopo un backup completo, il
+  \t \t \tsistema non terrà conto della sua nuova posizione nel successivo
+  \t \t \tbackup incrementale. Questo perché la data di modifica non viene
+  \t \t \tcambiata per lo spostamento di un file, e quindi il sistema non
+  \t \t \triterrà modificato il file.
+
+  \t \t-\tFile selezionati - Per fare il backup solo dei file e delle
+  \t \t \tcartelle \d(trascinare e rilasciare) nella finestra "Backup"
+
+  \t \t \tSi può anche fare clic su \k(Modifica=>Escludi^^Escludi) per rimuovere file
+  \t \t \te cartelle dalla lista di backup.
+
+  \to\tCrea Log di Backup : - Fare clic su questa casella per
+  \t \tcreare un file che elenchi tutti i file e cartelle di cui si sta
+  \t \tfacendo il backup.
+
+  \to\tBackup solo di File Locali: - fare clic su questa casella per
+  \t \tsaltare tutti i file fisicamente residenti su un sistema remoto.
+
+3.\tFare clic su Backup Ora se si vuole avviare subito backup.
+
+  \tSe si desidera programmare il backup per un'ora successiva,
+  \tfare clic su Backup differito e indicare le
+  \tinformazioni desiderate nella
+  \t\k(finestra "Programmatore di Task: Aggiungi Task"^^Programmatore di task: Finestra Aggiungi task).
+
+  \tAppare la finestra "Backup: Richiesta di conferma". Fare clic su
+  \tContinua per proseguire il backup, o su Annulla se si decide di
+  \tnon proseguire il backup.
+
+  \tNota: Se il nastro o dischetto nell'unità contiene dei file,
+  \tappare la finestra "Backup: Sovrascrivere i Dati?". Fare clic su
+  \tSovrascrivi se non importa che i file sul dischetto vengano
+  \tcancellati, oppure rimuovere il dischetto attuale e sostituirlo
+  \tcon un altro prima di fare clic su Sovrascrivi.
+
+  \tAppare la \k(finestra "Backup in Corso"^^Finestra Backup in corso). Durante la copiatura dei
+  \tfile sui dischetti, vengono visualizzati i loro nomi a pié della
+  \tfinestra "Backup".
+
+  \tAlla fine, compare il seguente messaggio a pié della finestra
+  \t"Backup": Backup terminato.
+
+  \tNota: Per fare in seguito il backup degli stessi file con le
+  \tstesse opzioni, vedi \k(Salvataggio di uno script di backup).
+
+4.\tTogliere il nasto o il dischetto dall'unità.
+
+Vedi anche:
+\s(Il servizio di Backup^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(Creazione di dischetti di recupero d'emergenza^dhelp "pe.it" ownerhb "Recupero del sistema" "Creazione di dischetti di recupero" || helpLinkErr)
+\s{Creazione di nastri di recupero d'emergenza^dhelp "pe.it" ownerhb "Recupero del sistema" "Creazione di nastri di recupero" || helpLinkErr}
+
+^2^Backup: Finestra Lista utenti
+^$30
+Backup: Finestra Lista utenti
+
+Questa finestra a comparsa appare facendo clic su File di Altri
+Utenti. Per aggiungere un utente alla lista di backup procedere come
+segue:
+
+1.\tFare clic sulla ID dell'utente.
+
+2.\tFare clic su OK per aggiungere l'utente alla lista e liberare la
+  \tfinestra, o su Applica per aggiungere l'utente alla lista di
+  \tbackup senza liberare la finestra a comparsa (o fare clic su
+  \tAnnulla se si decide di non voler aggiungere l'utente alla lista
+  \tdi backup.
+
+  \tL'icona della cartella home dell'utente appare nella finestra
+  \t"Backup".
+
+Nota: Quando si seleziona un utente dalla lista, il sistema fa solo il
+backup dei file nella \d(home directory) di quell'utente. Vale a
+dire, non verrà fatto automaticamente il backup dei file che l'utente
+eventualmente possiede in una directory diversa dalla sua directory
+home.
+
+^2^Escludi
+^$50
+Escludi
+
+Per rimuovere file e cartelle dalla lista di backup, procedere come
+segue:
+
+1.\tFare clic nella finestra "Backup" su file e cartelle da non
+  \tincludere nel backup.
+
+2.\tFare clic su Modifica=>Escludi. Verranno rimossi file e cartelle
+  \tdalla lista di backup.
+
+^2^Backup: Finestra Avviso di conferma
+^$70
+Backup: Finestra Avviso di conferma
+
+Questa finestra appare alla partenza del backup. Fare clic su
+Continua per procedere con il backup, o su Annulla per non procedere
+con il backup.
+
+^2^Backup: Finestra Sovrascrivere i dati?
+^$80
+Backup: Finestra Sovrascrivere i dati?
+
+Questa finestra appare quando si effettua il backup su un nastro o un
+dischetto che già contiene dei file.
+
+È possibile:
+
+\to\tFare clic su Sovrascrivi se non importa che vengano persi i
+\t \tfile sul dischetto.
+
+\to\tRimuovere il dischetto se non si vuole distruggere i file, quindi
+\t \tinserire un dischetto nuovo e fare clic su Sovrascrivi.
+\t \tAccertarsi di voler sovrascrivere le informazioni presenti sul
+\t \tnuovo dischetto. Non verrà più emesso un prompt con il
+\t \tmessaggio di avviso di Sovrascrittura.
+
+\to\tFare clic su Esci per fermare la procedura di backup. Poi
+\t \triavviare il backup con un altro nastro o dischetto.
+
+^2^Finestra Backup in corso
+^$90
+Finestra Backup in corso
+
+Questa finestra appare durante la creazione dell'indice per l'archivio
+di backup. Fare clic su Annulla per fermare il backup.
+
+^2^Programmatore di task: Finestra Aggiungi task
+^$100
+Programmatore di task: Finestra Aggiungi task
+
+Questa finestra appare selezionando Backup Dopo. Notare che il campo
+Task è già stato completato. Impostare le opzioni nella finestra come
+segue:
+
+\to\tTempo - Immettere l'ora (ora e minuti in formato a 24 ore) a cui
+\t \tdeve avviarsi il backup. Ad esempio, per eseguire
+\t \til programma alle 6:00 di sera immettere 18:00.
+
+\to\tOgni - Fare clic su Ora o Minuto per annullare l'effetto del
+\t \tvalore tempo e fare eseguire il programma ogni ora o minuto.
+
+\to\tQuando - Selezionare per far eseguire il programma un giorno
+\t \tparticolare della settimana o in una data specifica, come segue:
+
+\t \t- Se si fa clic su Giorno della Settimana, procedere alla
+\t \t \t prossima casella (pure denominata Giorno della Settimana) e fare
+\t \t \tclic sulla casella freccia per visualizzare il menu a tendina
+\t \t \trelativa ai giorni. Fare clic sul giorno desiderato. Ad esempio,
+\t \t \tOgni Giorno, Domenica, Lunedì, ecc.
+
+\t \t-\tFacendo clic su Data, vengono visualizzate le caselle Mese e
+\t \t \tData. Fare clic sulle frecce delle caselle Mese e Giorno per
+\t \t \tavere i menu a tendina relativi ai mesi e giorni. Fare clic sul
+\t \t \tmese e giorno desiderati. Ad esempio, Il primo Lunedì di Ogni
+\t \t \tMese.
+
+Alla fine, fare clic su Aggiungi Task(1).
+
+^1^Ripristino dei file
+^$120
+Ripristino dei file
+
+Per ripristinare i file, procedere come segue:
+
+3.\tInserire nell'unità appropriata la cartuccia o il dischetto
+  \tcontenente i file da ripristinare.
+
+2.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+3.\tFare doppio clic su Backup-Ripristino. Appare la finestra
+  \t"Ripristina" con i seguenti campi:
+
+  \tNota: Si può entrare direttamente nella \k(cartella Disks-etc^dtadmin/disk.hlp^Introduzione alla cartella Dischi-ecc.) e fare
+  \tdoppio clic sull'icona di dispositivo appropriata per far
+  \tapparire la finestra "Ripristino".
+
+  \to\tRipristina Da: - Fare clic sul supporto dal quale fare il
+  \t \tripristino. Ad esempio, File, Nastro a cartuccia, Disco_A o
+  \t \tDisco_B.
+
+  \t \tNota: Scegliendo File, Appare la casella File di Destinazione.
+  \t \tImmettere il nome \d(percorso) completo del file da
+  \t \tripristinare.
+
+  \to\tSovrascrivi file esistenti: - Fare clic su questa casella se si
+  \t \tdesidera ripristinare sostituendo i file esistenti con lo stesso
+  \t \tnome.
+
+  \to\tMostra i File: - Fare clic su questa casella per vedere l'elenco
+  \t \tdei file e delle cartelle nel nastro, dischetto, o file dal
+  \t \tquale si ripristina. Selezionare i file da ripristinare.
+
+5.\tFare clic su ripristina. Appare la \k(finestra "Ripristino in Corso"^^Finestra Ripristino in corso).
+  \tI nomi dei file in via di ripristino compaiono a pié della
+  \tfinestra Ripristino.
+
+  \tAlla fine, appare il seguente messaggio a pié della finestra
+  \t"Ripristino": Ripristino terminato.
+
+Vedi anche:
+\s(Il Servizio di Ripristino^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^2^Finestra Ripristino in corso
+^$130
+Finestra Ripristino in corso
+
+Questa finestra appare per avvisare che è in corso il ripristino dei
+file. Se non si vuole continuare il ripristino, fare clic su Annulla.
+
+^1^Salvataggio di uno script di backup
+^$140
+Salvataggio di uno script di backup
+
+È possibile salvare in uno script di backup la lista dei file di cui
+fare il backup e le opzioni di backup selezionate. In seguito, quando
+si desidera eseguire di nuovo lo stesso backup, basterà richiamare lo
+script ed eseguirlo.
+
+Per salvare lo script di backup, procedere come segue nella finestra
+"Backup":
+
+1.\tFare clic su File=>Salva con nome. Appare la finestra "Backup:
+  \tSalva Script".
+
+2.\tImmettere il nome del file nel quale salvare la lista dei file.
+  \tAd esempio, nel caso di salvataggio di una lista per un
+  \tbackup quotidiano, il nome potrebbe essere "quotidiano".
+
+3.\tFare clic su Salva. Lo script di backup, insieme alle opzioni di
+  \tbackup, viene salvato con il suffisso .bkup nel file specificato.
+  \tAd esempio, se al file viene dato il nome "quotidiano", il sistema
+  \tsalverà lo script di backup con il nome quotidiano.bkup.
+
+4.\tUtilizzare questo script per i successivi backup dello stesso set
+  \tdi file. Vedi \k(Uso di uno script di backup).
+
+^2^Backup: Finestra Salva script
+^$150
+Backup: Finestra Salva script
+
+Per informazioni sull'inserimento delle opzioni in questa finestra,
+vedi \k(Salvataggio di uno script di backup).
+
+Vedi anche: \k(Uso di uno script di backup)
+
+^1^Uso di uno script di backup
+^$160
+Uso di uno script di backup
+
+Per eseguire il backup da uno script di backup precedentemente
+salvato, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Backup-Ripristino. Appare la finestra
+  \t"Backup".
+
+3.\tFare clic su File=>Apri. Appare la finestra "Backup: Apri Script".
+
+4.\tUtilizzare le frecce per spostarsi su e giù nella cartella per
+  \ttrovare il file contenente lo script di backup desiderato.
+
+5.\tFare clic sul nome del file. Il nome compare nella casella di
+  \ttesto File.
+
+6.\tFare clic su Apri. I nomi dei file e le opzioni desiderate
+  \tdello script di backup vengono visualizzati nella finestra
+  \t"Backup".
+
+7.\tFare clic su Backup. Viene eseguito il backup dei file specificati
+  \tnello script di backup.
+
+  \tNota: Si può anche fare clic su Backup differito se si desidera
+  \tprogrammare il backup per un'ora diversa.
+
+^2^Backup: Finestra Apri script
+^$170
+Backup: Finestra Apri script
+
+In questa finestra, fare quanto segue:
+
+1.\tUtilizzare le frecce per spostarsi su e giù nella cartella per
+  \ttrovare il file contenente lo script di backup desiderato.
+
+2.\tFare clic sul nome del file. Il nome viene visualizzato nella
+  \tcasella di testo File.
+
+3.\tFare clic su Apri. I nomi dei file e le opzioni desiderate dello
+  \tscript di backup vengono visualizzati nella finestra "Backup".
+
+4.\tFare clic su Backup. Viene eseguito il backup dei file
+  \tspecificati nello script di backup.

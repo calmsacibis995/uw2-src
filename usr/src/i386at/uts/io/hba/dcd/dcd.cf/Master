@@ -1,0 +1,10 @@
+#ident	"@(#)kern-i386at:io/hba/dcd/dcd.cf/Master	1.6"
+#ident	"$Header: $"
+$version 2
+$interface ddi 5
+$interface sdi 2
+$interface base
+# non-conforming due to funny dependencies on sub-dcd modules (see space.c)
+$entry start intr halt
+$modtype Host Bus Adaptor Driver
+dcd	dcd_	Lh	20	0	0

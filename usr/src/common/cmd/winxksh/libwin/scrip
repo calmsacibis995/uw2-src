@@ -1,0 +1,19 @@
+#ident	"@(#)winxksh:libwin/scrip	1.2"
+(
+if [ -n "$ps" ]
+then
+	cd /tmp
+	ps -f
+	sleep 10
+fi
+call win_init 80 24 7 0 32
+call create_window 10 10 50 20 2 4 7 0
+open_form -l 'echo $res >/tmp/stderr'
+#open_form
+add_field -ilen 20 -p tom: -px 2 -py 3 -ix 5 -iy 5 res
+call form_finish
+call run_form
+call endwin
+echo res=$res
+)
+#);tput reset

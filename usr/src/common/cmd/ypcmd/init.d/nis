@@ -1,0 +1,105 @@
+#ident	"@(#)ypcmd:init.d/nis	1.9"
+#ident  "$Header: $"
+
+domain=""
+isserver=0
+ismaster=0
+startypbind=0
+startypserv=0
+startyppass=0
+PATH=$PATH:/usr/bin:/usr/sbin
+LABEL="UX:$0"
+CAT="uxrc"
+
+if [ ! -d /usr/bin ]; then
+	exit 1 # /usr not mounted
+fi
+
+case "$1" in
+'start')
+	#
+	# If nis has not been initialized just exit
+	#
+	if [ $startypbind = 0 ]; then
+		exit 0
+	fi
+	#
+	# Make sure secure rpc has not already set the domain name and
+	# started up ypbind or ypserver 
+	#
+	d=`domainname`
+	if [ -z "$d" ]; then
+		if [ -z "$domain" ]
+		then
+			pfmt -l $LABEL -s error -g $CAT:4 "NIS ERROR: domain name not set"
+			exit 1
+		fi
+		domainname $domain
+	fi
+
+	rm -f /etc/ps_data
+	ps -e > /tmp/nis$$
+	grep ypbind /tmp/nis$$ > /dev/null 2>&1
+	startypbind=$?
+
+	grep ypserv /tmp/nis$$ > /dev/null 2>&1
+	startypserv=$?
+
+	if [ $startyppass = 1 ]; then
+		grep rpc.yppa /tmp/nis$$ > /dev/null 2>&1
+		startyppass=$?
+	fi
+
+	rm /tmp/nis$$
+
+	#
+	# Now start up NIS daemons
+	#
+	if [ $startypbind = 1 ]; then
+		touch /var/yp/ypbind.log
+		/usr/lib/netsvc/yp/ypbind  > /dev/console 2>&1
+	fi
+
+	if [ $isserver = 1 -a $startypserv = 1 ]; then
+		touch /var/yp/ypserv.log
+		# set NETPATH for ypserv
+		NETPATH="ticlts:ticots:ticotsord:udp:tcp" export NETPATH
+		/usr/lib/netsvc/yp/ypserv > /dev/console 2>&1
+		ps -ea | grep ypupdate
+		if [ $? ]
+		then
+			if [ -x /usr/lib/netsvc/yp/ypupdated ]
+			then
+				/usr/lib/netsvc/yp/ypupdated > /dev/console 2>&1
+			fi
+		fi
+	fi
+
+	if [ $ismaster = 1 -a $startyppass = 1 ]; then
+		touch /var/yp/yppasswdd.log
+		/usr/lib/netsvc/yp/rpc.yppasswdd /etc/passwd /etc/shadow  > /dev/console 2>&1
+	fi
+
+	#
+	# Transfer maps from master to this slave server.  
+	#
+	if [ -f /var/yp/xfrmaps ]; then
+		touch /var/yp/ypxfr.log
+		( . /var/yp/xfrmaps
+		for map in $maps
+		do
+			ypxfr -h $master -c -d $domain $map
+		done ) >> /var/yp/ypxfr.log 2>&1 &
+		rm /var/yp/xfrmaps
+	fi
+	;;
+'stop')
+		kill `/usr/bin/ps -e | \
+			egrep 'ypbind|ypserv|ypupdate|rpc.ypp*' | \
+			awk '{print $1}'` 2> /dev/null
+			
+	;;
+*)
+	pfmt -l $LABEL -s error -g $CAT:4 "Usage: /etc/init.d/nis { start | stop }\n"
+	;;
+esac

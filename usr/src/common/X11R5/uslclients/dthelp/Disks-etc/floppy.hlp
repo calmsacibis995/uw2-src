@@ -1,0 +1,207 @@
+#ident\t"@(#)dthelp:Disks-etc/floppy.hlp	1.20"
+^*version^1
+^*title^Disk A or B
+^:Disk A or Disk B
+^*width^70
+^+DesktopMgr/help.defs
+^?Using floppy disks
+^0^Disk A or B
+^$10
+Disk A or B
+
+The icons Disk_A and Disk_B represent the floppy drives on your system
+(if your computer has only one floppy disk drive, you will see the Disk_A
+icon only).
+
+Use Disk A or Disk B to do the following:
+
+\to\t\k(Format floppy disks^^Formatting Floppy Disks)
+\to\t\k(Backup and restore files and folders^dtadmin/backup.hlp^Backup-Restore)
+\to\t\k(Open a floppy disk as a file folder^^Opening a Floppy Disk as a File Folder) 
+\to\t\k(Install an application^dtadmin/App_Installer.hlp^Application Installer)
+\to\t\k(Erase a floppy disk^^Erasing a Floppy Disk)
+
+Note: Before you can copy any information to a floppy disk, the disk must be
+formatted.
+
+
+^1^Formatting Floppy Disks
+^$20
+Formatting Floppy Disks
+
+To format floppy disks, do the following:
+
+Note: If you are already in the Disks-etc folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Disks-etc in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Disks-etc" window appears.
+
+2.\tClick on Disk_A (or Disk_B) in the Disks-etc folder.
+
+3.\tMake sure the floppy disk is not write-protected.
+
+  \to\tOn 3.5" floppy disks- the black tab on the back of the disk should
+  \t \tcover the hole.
+
+  \to\tOn 5.25: floppy disks- the notch on the outside edge of the disk
+  \t \tshould be exposed.
+
+4.\tInsert the floppy disk into the appropriate drive (A or B).
+
+5.\t\d(Right-click^right-click) on the Disk_A or Disk_B icon.
+
+6.\tClick on Format. The "Format" window appears.
+
+7.\tClick on the appropriate \k(Density^^Floppy Disk Densities) for your floppy disk. 
+
+8.\tClick on the desired \k(Type^^Format Types). 
+
+9.\tClick on File=>Format. The "Format in Progress" window appears.
+
+  \tThis window displays a sliding bar to let you know the progress of the
+  \tformat, and also displays the message "Format in progress, please wait."
+  \tWhen finished, this same window displays the message "Formatting
+  \tcomplete."
+
+See also:
+\s(Formatting Diskettes^dhelp "" userhb "Managing Files and Folders" "Formatting Diskettes" || helpLinkErr)
+
+
+^2^Floppy Disk Densities
+^$30
+Floppy Disk Densities
+
+The UnixWare Desktop supports the following disk densities:
+
+\to\t720 KB
+
+\to\t360 KB
+
+\to\t1.2 MB
+
+\to\t1.44 MB    
+
+\to\t2.88 MB
+
+^2^Format Types
+^$40
+Format Types
+
+Click on one of the following format types:
+
+\to\tBackup Use -  If you want to copy files from your hard disk to the
+  \tfloppy disk.
+
+\to\tDesktop Folder - If you want to be able to open up the floppy disk
+\t \tas a folder. You can manipulate files written to this floppy disk like
+\t \tfiles in any file folder.
+
+\t \tNote: If you choose Desktop Folder but do not want to use the default
+\t \tfile system type, click on \k(File=>Properties^^Format: Properties Window) to select another type.
+
+\to\tDOS Format - If you want to use the floppy disk with the DOS operating
+\t \tsystem. (Even though you are on a UnixWare system, you may also have
+\t \tDOS installed as an application on your Desktop).
+
+In addition to the file formats that UnixWare creates, the Desktop can also
+read files created in other formats. See \k(Additional Supported Format Types)
+for more information.
+
+^2^Format: Properties Window
+^$45
+Format: Properties Window
+
+This window displays the available file system types you can choose
+from. Click on the desired file system type and click on OK.
+
+For more information on file types, see \s(Managing File System Types^dhelp as sysag "Managing File System Types" "" || helpLinkErr).
+
+^2^Additional Supported Format Types
+^$50
+Additional Supported Format Types
+
+In addition to the formats described in \k(Format Types), the UnixWare Desktop
+can also read files created in other formats. Supported floppy disk
+formats include the following:
+
+\to\tBackup Use - Although the Desktop uses the UNIX system command
+\t \tcalled \d(cpio) when it creates back ups, it can also restore files
+\t \tcreated with the UNIX system tar(1) command.
+
+\t \tNote: For more information on UNIX system commands, see the
+\t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+\to\tDesktop Folder - The Desktop can open a file folder for floppy disks
+\t \tcreated in any file system supported by UnixWare, for example, s5,
+\t \tufs, and vxfs file system (see \k(Opening a Floppy Disk as a File Folder)). 
+
+\t \t-\ts5 is the standard UNIX System V file system. It does not allow
+\t \t \tfile names longer than 14 characters.
+
+\t \t-\tufs accepts longer file names than s5 and is tuned for writing larger
+\t \t \tchunks of data at a time.
+
+\t \t-\tvxfs is the hardened file system (which enables you to turn off your
+\t \t \tcomputer while it's running without losing data).
+
+\to\tDOS Format -  The Desktop can read (and write) files from a DOS
+\t \tformatted disk. 
+
+\to\tInstallation Formats - The Desktop can read and install application
+\t \tpackages formatted in several UNIX system formats, including pkgadd,
+\t \ttar, installpkg, and custom. 
+
+See also:
+\k(Backup-Restore^dtadmin/backup.hlp^Backup-Restore)
+\k(Application Installer^dtadmin/App_Installer.hlp^Application Installer)
+\s(Managing File System Types^dhelp as sysag "Managing File System Types "" || helpLinkErr)
+       
+
+^1^Opening a Floppy Disk as a File Folder
+^$70
+Opening a Floppy Disk as a File Folder
+
+You may want to open up a floppy disk as a file folder. This is a
+convenient way to work with files, because you can copy, add, or
+delete them as if they were on your computer's hard disk.
+
+Note: You can open and use a DOS-formatted floppy just as you would
+a floppy formatted for the Desktop.
+
+To open a floppy disk as a file folder, do the following:
+
+1.\tFormat the floppy disk as a Desktop Folder. (See \k(Formatting Floppy Disks)).
+
+2.\t\d(Double-click^double-click) on the floppy disk icon that contains the disk you
+  \twant to use as the file folder. A folder window appears. From
+  \tthis window, you can do the following:
+
+  \to\t\d(Drag-and-drop^drag-and-drop) files on to the folder.
+
+  \to\tUse any of the features on the File menu (such as Copy, Delete, or
+  \t \tMove).
+
+  \to\tAdd folders to the window.
+
+  \to\tOpen files and start programs.
+
+
+^1^Erasing a Floppy Disk
+^$100
+Erasing a Floppy Disk
+
+Note: The Erase option only appears on the menu if the device supports this
+option.
+
+To erase all of the data from a floppy disk, do the following:
+
+1.\t\d(Double-click^double-click) on Disks-etc in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe Folder: Disks-etc window appears.
+
+2.\tClick on Disk_A (or Disk_B).
+
+3.\tInsert the disk into the appropriate drive (A or B).
+
+4.\t\d(Right-click^right-click) anywhere on the floppy disk icon.
+
+5.\tClick on Erase. 

@@ -1,0 +1,654 @@
+#ident\t"@(#)dthelp:Admin.Tools/user.hlp        1.25"
+^*version^1
+^*title^Configuration des utilisateurs
+^:Conf_utilisateurs
+^*width^70
+^+DesktopMgr/help.defs
+^?Aide relative à l'icône Configuration_utilisateurs
+^0^Configuration des utilisateurs
+^$10
+Configuration des utilisateurs
+
+Utilisez Configuration des utilisateurs pour ajouter des \k(comptes^^Types de comptes)
+d'ouverture de session utilisateur dans votre système, pour supprimer
+des comptes d'utilisateurs de votre système et pour associer des
+\k(autorisations^^Présentation des autorisations) aux comptes d'utillisateurs et de
+\k(groupes^^Groupes d'utilisateurs) ou les modifier.
+
+L'option Configuration des utilisateurs vous permet d'exécuter les
+opérations suivantes :
+
+\to\t\k(Visualiser utilisateurs et groupes^^Visualisation des utilisateurs et des groupes)
+\to\t\k(Ajouter un nouvel utilisateur dans votre système^^Ajout d'un utilisateur)
+\to\t\k(Ajouter un nouveau groupe dans votre système^^Ajout d'un groupe)
+\to\t\k(Effacer un utilisateur^^Suppression d'un utilisateur)
+\to\t\k(Effacer un groupe^^Suppression d'un groupe)
+\to\t\k(Assigner des autorisations de configuration^^Affectation des autorisations utilisateur)
+\to\t\k(Modifier les caractéristiques associées aux utilisateurs^^Changement des caractéristiques des utilisateurs)
+
+Remarque : avant d'ajouter des utilisateurs sur votre système, vous
+pouvez vous reporter à \k(Gestion de plusieurs utilisateurs) pour de plus amples
+informations.
+
+Voir également : 
+\s(Création et gestion des comptes d'utilisateurs^dhelp as sysag "Creating and Managing User Accounts" || helpLinkErr)
+
+^1^Visualisation des utilisateurs et des groupes
+^$20
+Visualisation des utilisateurs et des groupes
+
+Pour visualiser les utilisateurs et les groupes, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_utilisateurs. Par défaut, la
+  \tfenêtre "Configuration des utilisateurs : compte d'utilisateur"
+  \tapparaît, sauf si vous avez modifié la vue préalablement. Cette
+  \tfenêtre affiche tous les comptes d'ouverture de session
+  \tutilisateur résidant sur votre système.
+
+3.\tModifier la vue en cliquant sur Visualiser=>Réservés pour
+  \tvisualiser les comptes d'ouverture de session réservés, ou sur
+  \tVisualiser=>Groupes pour afficher les groupes d'utilisateurs.
+  \t(Pour retourner à la vue présentant les comptes d'utilisateurs, il
+  \tvous suffit de cliquer sur Visualiser=>Utilisateur).
+
+
+^1^Ajout d'un utilisateur
+^$30
+Ajout d'un utilisateur
+
+Remarque : Vous devez être doté \k(d'autorisations^^Présentation des autorisations) propriétaire
+pour ajouter des utilisateurs.
+
+Pour ajouter un nouvel utilisateur sur votre système, procédez comme
+suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_utilisateurs. La fenêtre
+  \t"Configuration des utilisateurs" apparaît (selon la dernière vue
+  \tsélectionnée, la fenêtre affiche les Comptes d'utilisateurs, les
+  \tGroupes, ou les Comptes réservés).
+
+3.\tCliquez sur Compte=>Nouveau. La fenêtre "Configuration des
+  \tutilisateurs : ajouter nouveau compte d'utilisateur" apparaît.
+  \tElle comporte les champs suivants :
+
+  \to\tID d'ouverture de session : - Tapez le nom que l'utilisateur
+  \t \tentre lorsqu'il ouvre une session. Ce nom ne doit pas comporter
+  \t \tplus de 14 caractères. Vous souhaitez peut-être demander à
+  \t \tl'utilisateur s'il a une préférence concernant l'ID d'ouverture
+  \t \tde session.
+
+ \to\tType : - Cliquez sur Bureau ou sur Non-bureau. L'option Bureau
+ \t \tlance l'interface utilisateur graphique (GUI) lors de l'ouverture
+ \t \tde session. L'option Non-bureau propose à l'utilisateur l'invite
+ \t \tdu shell UNIX standard.
+
+ \to\tGérer Infos. utilisateur via NIS - Apparaît uniquement si votre
+ \t \tsystème est configuré pour \k(NIS^dtadmin/inet.hlp^Accès à DNS).
+
+\t \tCliquez sur cette case si l'utilisateur est un utilisateur NIS.
+\t \tConfiguration des utilisateurs disparaît et les champs suivants
+\t \tapparaissent en grisé : Dossier d'origine, Shell, ID utilisateur,
+\t \tGroupe et Commentaires.
+
+\t \tLe système extrait automatiquement les valeurs de ces champs dans
+\t \tla base de données NIS.
+
+ \to\tCommentaire : - Permet d'ajouter des informations relatives au nom
+ \t \tdu compte d'ouverture de session. Par exemple, si l'ID d'ouverture
+ \t \tde session est jmj, vous souhaiterez peut-être ajouter un
+ \t \tcommentaire tel que "John M. Jones, Ingénieur système."
+
+\to\tAfficher autres options : - Cliquez sur cette case pour faire
+\t \tapparaître les champs suivants :
+
+ \t \t-\tDossier d'origine : - Indiquez le nom du répertoire privé. Si
+ \t \t \tvous ne modifiez pas ce champ, le système affecte automatiquement
+ \t \t \tle répertoire /home/user, où user correspond à l'ID d'ouverture de
+ \t \t \tsession de l'utilisateur.
+
+ \t \t-\tNom du terminal X : - Cette option n'est pas disponible (elle
+ \t \t \tapparaît en grisé) si vous configurez un utilisateur qui
+ \t \t \tn'emploiera pas le Bureau.
+
+\t \t \tSi l'utilisateur ouvre une session à partir d'une autre station
+\t \t \tde travail ou d'un terminal X connecté en réseau, entrez le nom
+\t \t \tdu terminal X dans ce champ.
+
+ \t \t \tRemarque : si vous n'entrez pas le nom du terminal X dans ce
+ \t \t \tchamp, le système vous demandera d'entrer le nom du terminal X
+ \t \t \tchaque fois que vous ouvrirez une session du Bureau.
+
+ \t \t-\tShell : - Indiquez le type d'interpréteur de ligne de commande
+ \t \t \tdu shell UNIX, tel que sh (shell) ou ksh (kshell). Si vous savez
+ \t \t \tpas de quel shell il s'agit, vous n'avez pas besoin de modifier
+ \t \t \tcette entrée.
+
+ \t \t-\tID utilisateur : - Indiquez un ID utilisateur (UID). Vous pouvez
+ \t \t \tutiliser tout nombre entier supérieur à 99 (les UID de 0 à 99 sont
+ \t \t \taffectés aux comptes réservés uniquement). Si vous n'affectez pas
+ \t \t \td'UID, le système utilise par défaut le premier nombre disponible
+ \t \t \t(unique) immédiatement supérieur à la valeur la plus élevée
+ \t \t \tactuellement affectée. Par exemple, si vous avez affecté des UID
+ \t \t \tde 100 à 105, le système utilise 106 comme valeur par défaut pour
+ \t \t \tl'UID suivant.
+
+  \t \t \tSi vous envisagez d'affecter des utilisateurs à
+  \t \t \tplusieurs machines, il est recommandé de leur attribuer le
+  \t \t \tmême UID sur chaque système. Cette précaution s'avère
+  \t \t \tparticulièrement utile pour certains paquets de gestion de
+  \t \t \tréseau.
+
+  \t \t \tRemarque : pour des raisons de sécurité, le système ne vous
+  \t \t \tlaissera pas choisir un UID qui a été utilisé précédemment et
+  \t \t \trécemment supprimé.  Avant de pouvoir être réutilisé,  l'UID est
+  \t \t \tsoumis à un processus appelé "vieillissement" qui dure un
+  \t \t \tcertain laps de temps. Pour annuler ce processus de
+  \t \t \tvieillissement, voir \k(Réutilisation d'un numéro d'identification d'utilisateur).
+
+  \t \t-\tGroupes : - Sélectionnez le groupe auquel vous souhaitez que
+  \t \t \tl'utilisateur soit assigné. Vous serez peut-être d'avis qu'il
+  \t \t \test pratique d'assigner des autorisations de groupes à
+  \t \t \tplusieurs utilisateurs qui doivent collaborer (voir
+  \t \t \t\k(Groupes d'utilisateurs)).
+
+ \t \t-\tPréférences locales : - Sélectionnez la préférence locale
+ \t \t \tappropriée (par exemple, Anglais américain, Français, Allemand,
+ \t \t \tetc.).
+
+\t \t \tRemarque : contrairement aux modifications apportées à une
+\t \t \tPréférence locale du dossier \k(Préférences^DesktopMgr/locpref.hlp^Changement de préférence locale) qui entrent en vigueur
+\t \t \timmédiatement, les modifications apportées à une Préférence
+\t \t \tlocale de Configuration des utilisateurs ne prennent effet que
+\t \t \tlors de la prochaine ouverture de session. Ainsi, si vous
+\t \t \tmodifiez la préférence locale associée à un utilisateur pendant
+\t \t \tqu'il est connecté au système, l'utilisateur devra se
+\t \t \tdéconnecter et ouvrir une nouvelle session pour constater ce
+\t \t \tchangement.
+
+  \t \t \tDe plus, vous ne pouvez pas apporter des changements à votre
+  \t \t \tpropre préférence locale au moyen de Configuration des
+  \t \t \tutilisateurs si vous êtes le propriétaire du système. Dans ce
+  \t \t \tcas, modifiez votre préférence locale au moyen de \k(Préférences^DesktopMgr/locpref.hlp^Changement de préférence locale).
+
+4.\tCliquez sur Ajouter. Une fenêtre apparaît instantanément, vous
+  \tdemandant de confirmer si vous souhaitez ajouter l'utilisateur.
+
+5.\tCliquez sur Oui. Le système ajoute une icône représentant le
+  \tnouveau compte dans la fenêtre "Configuration des utilisateurs".
+
+Voir également :
+\s(Création et gestion des comptes d'utilisateurs^dhelp as sysag "Creating and Managing User Accounts" "" || helpLinkErr)
+
+^2^Gestion de plusieurs utilisateurs
+^$40
+Gestion de plusieurs utilisateurs
+
+Vous devez connaître les principes suivants si vous devez gérer
+plusieurs utilisateurs sur votre système :
+
+\to\tChaque utilisateur est doté \k(d'autorisations^^Affectation des autorisations utilisateur) d'accès
+\t \tdistinctes aux fichiers qu'il crée. Il peut protéger ces fichiers
+\t \tou bien les partager librement.
+
+\to\tLe compte propriétaire est autorisé à exécuter toutes les
+\t \topérations de configuration de base disponibles sur le Bureau.
+
+\to\tLe propriétaire peut accorder à tout utilisateur une autorisation
+\t \tlui permettant d'exécuter des opérations de configuration
+\t \tspécifiques ; il peut également lui accorder toutes les
+\t \tautorisations propriétaire.
+
+Voir également :
+\s(Contrôle de l'accès au système et aux données^dhelp as sysag "Creating and Managing User Accounts" "Controlling Access to the System and Data" || helpLinkErr)
+
+^2^Types de comptes
+^$50
+Types de comptes
+
+Le terme "compte" réfère à une ouverture de session utilisateur. Sur
+un système, les comptes d'ouverture de session se répartissent comme
+suit :
+
+\to\tComptes réservés (également appelés comptes système) - Utilisés
+\t \tpour exécuter des tâches administratives particulières sur le
+\t \tsystème. Par exemple, \d(racine) est un compte
+\t \td'ouverture de session réservé, qui est utilisé pour contrôler
+\t \tl'intégralité du système. Dans certains cas, vous n'ouvrez pas
+\t \tdirectement une session sur un compte réservé. L'ouverture de
+\t \tsession nuucp, par exemple, n'est utilisée automatiquement que
+\t \tlorsque les fichiers à distance sont transférés au sein d'un
+\t \tréseau.
+
+\to\tComptes d'ouverture de session utilisateur - Utilisés pour les
+\t \tutilisateurs "courants" de votre système.
+
+^2^Réutilisation d'un numéro d'identification d'utilisateur
+^$55
+Réutilisation d'un numéro d'identification d'utilisateur
+
+Pour réutiliser un numéro d'identification utilisateur (UID) qui est
+en cours de "vieillissement" (c'est-à-dire que cet UID a été utilisé
+récemment et que le système le mobilise pour des raisons de sécurité),
+exécutez les opérations suivantes en tant qu'utilisateur racine à
+partir de la ligne de commande :
+
+1.\tType :
+
+  \tcd /etc/security/ia
+
+2.\tEditez le fichier ageuid en supprimant l'entrée associée à l'UID.
+
+  \tRemarque : il s'agit d'un fichier accessible en lecture seulement.
+  \tSi vous utilisez "vi" pour éditer ce fichier, vous ne pouvez pas
+  \tutiliser simplement ".wq" pour éditer le fichier et pour quitter.
+  \tVous devez d'abord éditer le fichier en utilisant :w!, puis entrer
+  \t:q pour quitter. Pour de plus amples informations sur
+  \tl'utilisation de vi, voir vi(1M) dans Command Reference.
+
+^1^Ajout d'un groupe
+^$60
+Ajout d'un groupe
+
+Remarque : vous devez être doté \k(d'autorisations^^Présentation des autorisations) système
+propriétaire pour pouvoir ajouter des groupes.
+
+Pour ajouter un nouveau groupe sur votre système, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_utilisateurs. La fenêtre
+  \t"Configuration des utilisateurs" apparaît (selon la dernière vue
+  \tsélectionnée, la fenêtre affiche les Comptes d'utilisateurs, les
+  \tGroupes, ou les Comptes réservés).
+
+3.\tCliquez sur Groupe=>Nouveau. La fenêtre "Configuration des
+  \tutilisateurs : ajouter nouveau groupe" apparaît. Elle comporte les
+  \tchamps suivants :
+
+  \to\tNom du groupe : - Entrez le nom du nouveau groupe.
+
+  \to\tGérer Infos relatives aux groupes via NIS - Apparaît uniquement
+  \t \tsi votre système est configuré pour \k(NIS^dtadmin/inet.hlp^Accès à DNS).
+
+  \t \tCliquez sur cette case si le groupe est un groupe NIS.
+  \t \tConfiguration des utilisateurs disparaît et le champ ID de
+  \t \tgroupe apparaît en grisé.
+
+ \t \tLe système extrait automatiquement la valeur correspondant à l'ID
+ \t \tdu groupe dans la base de données NIS.
+
+  \to\tID de groupe : - Entrez l'ID du groupe. Si vous n'affectez pas
+  \t \td'ID de groupe, le système affecte par défaut le premier ID de
+  \t \tgroupe disponible immédiatement supérieur.
+
+4.\tCliquez sur Ajouter. Une fenêtre de confirmation apparaît
+  \tinstantanément.
+
+5.\tCliquez sur Oui pour ajouter le groupe (ou sur Non si vous ne
+  \tsouhaitez plus l'ajouter).
+
+^2^Groupes d'utilisateurs
+^$70
+Groupes d'utilisateurs
+
+Vous pouvez assigner plusieurs utilisateurs à un groupe. Cela vous
+permet de définir des \k(autorisations^^Présentation des autorisations) d'accès, de telle sorte que
+certains fichiers, dossiers et applications ne soient disponibles qu'à
+un groupe spécifique d'utilisateurs.
+
+Imaginons par exemple que trois personnes travaillent sur le même
+projet. Vous pouvez leur assigner un groupe dénommé "Projet 1". A
+mesure que ces personnes créent des fichiers relatifs à leur projet,
+elles peuvent définir des autorisations de groupe telles que seules
+les personnes du groupe Projet1 puissent accéder à ces fichiers.
+
+Reportez-vous à \k(Ajout d'un groupe) pour les procédures concernant
+l'ajout d'un nouveau groupe dans le système.
+
+Voir également :
+\s(Création et gestion des comptes d'utilisateurs^dhelp as sysag "Creating and Managing User Accounts" "" || helpLinkErr)
+\s(Définition des UID et des GID^dhelp as sysag "File Protection" "Set-UID and Set-GID" || helpLinkErr)
+
+^1^Suppression d'un utilisateur
+^$80
+Suppression d'un utilisateur
+
+Remarque : Vous devez être doté des \k(autorisations^^Présentation des autorisations)
+propriétaire système pour pouvoir effacer des utilisateurs.
+
+Pour effacer un utilisateur de votre système, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_utilisateurs. La fenêtre
+  \t"Configuration des utilisateurs" apparaît (selon la dernière vue
+  \tsélectionnée, la fenêtre affiche les Comptes d'utilisateurs, les
+  \tGroupes, ou les Comptes réservés).
+
+3.\tCliquez sur Visualiser=>Utilisateur.
+
+4.\tCliquez sur l'icône représentant l'utilisateur que vous souhaitez
+  \teffacer (si les comptes d'utilisateur ne s'affichent pas,
+  \tsélectionnez Visualiser=>Utilisateur).
+
+5.\tCliquez sur Compte=>Effacer. Une fenêtre de confirmation apparaît
+  \tinstantanément.
+
+6.\tCliquez sur Supprimer les fichiers de l'utilisateur pour effacer
+  \ttous les fichiers figurant dans le répertoire privé de
+  \tl'utilisateur, ou sur Sauvegarder les fichiers de l'utilisateur si
+  \tvous souhaitez sauvegarder le répertoire privé de l'utilisateur
+  \tavant d'effacer son compte. Si vous choisissez de sauvegarder les
+  \tfichiers, le système vous demande d'insérer un média (tel qu'une
+  \tdisquette ou une cartouche de bande).
+
+7.\tCliquez sur Oui pour effacer le compte de l'utilisateur (ou sur
+  \tNon si vous changez d'avis ou si vous avez commis une erreur). Le
+  \tsystème supprime l'icône du compte d'ouverture de session associé
+  \tà l'utilisateur de la fenêtre "Configuration des utilisateurs".
+
+Voir également :
+\k(Réutilisation d'un numéro d'identification d'utilisateur)
+
+^1^Suppression d'un groupe
+^$85
+Suppression d'un groupe
+
+Remarque : Vous devez être doté des \k(autorisations^^Présentation des autorisations)
+propriétaire système pour effacer les groupes.
+
+Pour effacer un groupe de votre système, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_utilisateurs. La fenêtre
+  \t"Configuration des utilisateurs" apparaît (selon la dernière vue
+  \tsélectionnée, la fenêtre affiche les Comptes d'utilisateurs, les
+  \tGroupes, ou les Comptes réservés).
+
+3.\tCliquez sur Visualiser=>Groupes.
+
+4.\tCliquez sur l'icône représentant le groupe que vous souhaitez
+  \teffacer (si les comptes de groupes ne s'affichent pas,
+  \tsélectionnez Visualiser=>Groupes).
+
+5.\tCliquez sur Groupe=>Effacer. Une fenêtre de confirmation apparaît
+  \tinstantanément.
+
+6.\tCliquez sur Oui pour effacer le groupe (ou sur Non si vous changez
+  \td'avis ou si vous avez commis une erreur). Le système supprime
+  \tl'icône du groupe de la fenêtre Configuration des utilisateurs.
+
+^1^Affectation des autorisations utilisateur
+^$90
+Affectation des autorisations utilisateur
+
+Vous devez être doté des \k(autorisations^^Présentation des autorisations)
+propriétaire système pour pouvoir assigner des autorisations de
+configuration.
+
+Avant de passer la procédure suivante en revue pour assigner des
+autorisations de configuration, vous souhaiterez peut-être
+consulter \k(Présentation des autorisations).
+
+Pour affecter des autorisations de configuration à un compte
+d'ouverture de session utilisateur spécifique, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_utilisateurs. La fenêtre
+  \t"Configuration des utilisateurs" apparaît (selon la dernière vue
+  \tsélectionnée, la fenêtre affiche les Comptes d'utilisateurs, les
+  \tGroupes, ou les Comptes réservés).
+
+3.\tCliquez sur Visualiser=>Utilisateur.
+
+4.\tCliquez sur l'icône représentant l'utilisateur auquel vous
+  \tsouhaitez affecter des autorisations de configuration.
+
+5.\tCliquez sur Actions=>Autorisations. La fenêtre "Configuration des
+  \tutilisateurs : autorisations utilisateur" apparaît.
+
+6.\tAffectez les autorisations comme suit :
+
+\to\tL'utilisateur sélectionné est le propriétaire du système - Cliquez
+\t \tsur cette case si vous souhaitez accorder au propriétaire toutes
+\t \tles autorisations dont il peut bénéficier.
+
+\to\tL'utilisateur sélectionné peut - Cliquez sur les cases de votre
+\t \tchoix figurant sous cet en-tête si vous souhaitez que
+\t \tl'utilisateur ne puisse exécuter que certaines fonctions de
+\t \tconfiguration.
+
+7.\tCliquez sur Appliquer OK pour affecter à l'utilisateur les
+  \tautorisations liées au compte.
+
+Voir également : 
+\s(L'attribut du propriétaire^dhelp as sysag "File Protection" "The Owner Attribute" || helpLinkErr)
+\s(L'attribut du groupe^dhelp as sysag "File Protection" "The Group Attribute" || helpLinkErr)
+
+^2^Présentation des autorisations
+^$100
+Présentation des autorisations
+
+Lorsque vous installez le Bureau sur votre ordinateur, le système vous
+demande d'ajouter un compte d'utilisateur défini comme le
+"propriétaire" du système. Le propriétaire est doté de privilèges
+spéciaux lui permettant d'exécuter des tâches administratives qui ne
+doivent pas être accessibles à tous. Par exemple, si vous êtes
+propriétaire, vous ne souhaitez peut-être pas que tous ceux qui
+utilisent votre système puissent ajouter d'autres utilisateurs ou
+modifier la configuration de vos imprimantes ou de vos réseaux.
+
+En tant que propriétaire, vous pouvez assigner des autorisations de
+propriétaire à un autre utilisateur (voir \k(Affectation des autorisations utilisateur)). Vous
+pouvez soit assigner l'intégralité des privilèges du propriétaire,
+soit des privilèges permettant d'exécuter certaines tâches seulement.
+
+Le statut de propriétaire à part entière vous permet d'exécuter toutes
+les tâches décrites ci-dessous, ainsi que d'ajouter ou d'effacer des
+utilisateurs et d'affecter des autorisations permettant l'exécution de
+tâches. Les autorisations propriétaire spécifiques comprennent :
+
+\to\tArrêter le système - Permet d'arrêter le système d'exploitation à
+\t \tl'aide de la commande \k(Arrêter^DesktopMgr/shutdown.hlp^Arrêt de votre système).
+
+\t \tDes restrictions s'appliquent à cette fonction car il n'est pas
+\t \tsouhaitable qu'un utilisateur puisse arrêter le système
+\t \tarbitrairement. Vous ne souhaitez probablement pas accorder cette
+\t \tautorisation à d'autres utilisateurs.
+
+\to\tAccès aux disques, aux bandes, etc. - Vous permet de lire et
+\t \td'écrire des informations à partir d'un disque, d'une bande ou
+\t \td'autres icônes du dossier \k(Disques-etc^dtadmin/disk.hlp^Présentation du dossier Disques-etc). Par défaut, tous les
+\t \tutilisateurs sont autorisés à accéder aux disques et aux bandes.
+
+\to\tAccès aux systèmes à distance - Vous permet d'ouvrir une session à
+\t \tdistance et d'échanger des fichiers avec des systèmes à distance.
+\t \tCes fonctions sont disponibles à partir de toute icône de système
+\t \tà distance installée via \k(Configuration des connexions^dtadmin/DialMgr.hlp^Configuration de connexion) ou
+\t \t\k(Configuration d'Internet^dtadmin/inet.hlp^Configuration d'Internet). Le système accorde ce privilège à tous
+\t \tles utilisateurs par défaut.
+
+\to\tModifier configuration des connexions - Vous permet d'ajouter ou
+\t \tde modifier les configurations des connexions directes ou des
+\t \tconnexions par modem de votre ordinateur à partir du dossier
+\t \t\k(Configuration des connexions^dtadmin/DialMgr.hlp^Configuration de connexion).
+
+\t \tCette fonction vous permet également de définir les systèmes
+\t \tauxquels ces connexions vous permettent d'accéder. Ces
+\t \tconfigurations changent rarement. Les autorisations de
+\t \tmodification doivent donc être limitées.
+
+\to\tModifier configuration d'Internet - Vous permet d'ajouter des
+\t \téléments dans la liste des systèmes auxquels vous pouvez accéder
+\t \tpar l'intermédiaire d'une connexion Ethernet (via
+\t \t\k(Configuration d'Internet^dtadmin/inet.hlp^Configuration d'Internet)).
+
+\t \tUne mauvaise affectation des noms et des adresses système risquant
+\t \td'entraîner des problèmes au sein d'un réseau, ce privilège doit
+\t \tdonc être attribué avec discernement.
+
+\to\tGérer les imprimantes - Vous permet de modifier les informations
+\t \trelatives à la configuration des imprimantes au moyen de
+\t \t\k(Configuration des imprimantes^dtadmin/Printer_Setup.hlp^Configuration des imprimantes).
+
+\t \tLes informations relatives à l'imprimante incluent le type de
+\t \tl'imprimante et son mode de connexion à votre système. Dans la
+\t \tmesure où vous n'avez généralement pas besoin de modifier la
+\t \tconfiguration de votre imprimante après son installation et sa
+\t \tconfiguration initiales, les autres utilisateurs n'ont pas
+\t \tréellement besoin de l'autorisation Gérer les imprimantes.
+
+\to\tAjouter/Supprimer des polices - Vous permet d'ajouter et de
+\t \tsupprimer des polices à partir de \k(Configuration des polices^dtadmin/fontmgr.hlp^Polices). Etant
+\t \tdonné qu'une application ne peut fonctionner si la police dont
+\t \telle a besoin n'est pas installée ou est mal configurée, vous
+\t \tdevez attribuer ce privilège avec discernement.
+
+\to\tAjouter/Supprimer des applications - Vous permet d'installer et de
+\t \tsupprimer des paquets d'applications sur le système à partir du
+\t \tdossier \k(Programme Installation d'applications^dtadmin/App_Installer.hlp^Installateur d'applications). Vous devez
+\t \trestreindre l'accès à ce privilège pour contrôler les types
+\t \td'applications installés sur votre système.
+
+\to\tAvertir les dossiers/fichiers locaux - Vous permet d'avertir les
+\t \t\d(objets partagés^objet partagé) locaux à l'aide de
+\t \t\k(Partage de fichiers^dtadmin/FileShar.hlp^Partage de fichiers).
+
+\t \tDans la mesure où cette fonction permet à des systèmes à distance
+\t \td'accéder à votre ordinateur, vous devez restreindre l'accès à ce
+\t \tprivilège.
+
+\to\tConnexion à des dossiers/fichiers à distance - Permet de se
+\t \tconnecter à des \d(objets partagés^objet partagé) à distance à
+\t \tl'aide de \k(Partage de fichiers^dtadmin/FileShar.hlp^Partage de fichiers).
+
+ \t \tCe privilège permet aux utilisateurs d'accéder aux fichiers à
+ \t \tpartir des systèmes à distance. Si vous souhaitez contrôler le
+ \t \tflux d'informations transmis à votre ordinateur, vous devez
+ \t \trestreindre l'accès à ce privilège.
+
+\to\tGérer le courrier UnixWare - Permet de modifier la
+\t \t\k(Configuration du courrier UnixWare^Mail_Setup/Mail_Setup.hlp^Configuration courrier).
+
+\to\tGérer la passerelle MHS - Vous permet de modifier le
+\t \t\k(Système de traitement des messages^MHS_Setup/MHS_Setup.hlp^Configuration MHS).
+
+\to\tAccès à Configuration NetWare - Vous permet de configurer \k(NetWare^NetWare_Setup/NetWare_Setup.hlp^Configuration NetWare).
+
+\to\tPartager applications - Vous permet de rendre disponible ou de
+\t \tpartager des applications de votre système avec des systèmes à
+\t \tdistance via \k(Partage d'applications^App_Sharing/applsharing.hlp^Partage d'applications).
+
+\to\tAccès au serveur d'installation - Vous permet d'installer des
+\t \tproduits ou des paquets UnixWare au sein d'un réseau NetWare, à
+\t \tl'aide du \k(serveur d'installation^Install_Server/Install_Server.hlp^Serveur d'installation).
+
+\to\tLancer et arrêter processeurs - Vous permet d'exécuter des
+\t \tfonctions de configuration multitraitrement, telles que la mise en
+\t \tligne ou hors ligne d'un processeur, à l'aide de
+\t \t\k(Configuration des processeurs^dtadmin/multiproc.hlp^Configuration du processeur).
+
+Remarque : L'ouverture de session racine correspond à l'ouverture de
+session classique du système UNIX pour toutes les tâches
+d'administration système. Pour de plus amples informations,
+reportez-vous à \k(Connexion sous la racine).
+
+Voir également : 
+\s(L'attribut du propriétaire^dhelp as sysag "File Protection" "The Owner Attribute" || helpLinkErr)
+\s(L'attribut du groupe^dhelp as sysag "File Protection" "The Group Attribute" || helpLinkErr)
+\s(Set-UID et Set-GID^dhelp as sysag "File Protection" "Set-UID and Set-GID" || helpLinkErr)
+
+^2^Connexion sous la racine
+^$110
+Connexion sous la racine
+
+L'ouverture de session racine correspond à l'ouverture de session
+classique du système UNIX pour toutes les tâches d'administration
+du système. La plupart des procédures de base autrefois disponibles
+uniquement pour les utilisateurs connectés en tant que racine peuvent
+être définies par le propriétaire du système (voir
+\k(Présentation des autorisations)).
+
+Si vous le souhaitez, vous pouvez vous connecter au système à partir
+d'une fenêtre \k(Terminal^xterm/term.hlp^Terminal) et exécuter les tâches administratives à l'aide
+des commandes et des fichiers UNIX. Pour de plus amples détails
+concernant l'utilisation de l'interface de la ligne de commande UNIX,
+reportez-vous à \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+
+^1^Changement des caractéristiques des utilisateurs
+^$120
+Changement des caractéristiques des utilisateurs
+
+Vous devez être doté des \k(autorisations^^Présentation des autorisations) du propriétaire
+pour pouvoir modifier les caractéristiques associées à un utilisateur.
+
+Vous pourrez modifier les caractéristiques définies lorsque vous
+ajouterez un nouvel utilisateur ultérieurement.
+
+Pour modifier les caractéristiques associées à un utilisateur,
+procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Configuration_utilisateurs. La fenêtre
+  \t"Configuration des utilisateurs" apparaît (selon la dernière vue
+  \tsélectionnée, la fenêtre affiche les Comptes d'utilisateurs, les
+  \tGroupes, ou les Comptes réservés).
+
+3.\tCliquez sur Visualiser=>Comptes d'utilisateurs.
+
+4.\tCliquez sur l'icône représentant l'utilisateur dont vous souhaitez
+  \tmodifier les caractéristiques.
+
+5.\tCliquez sur Compte=>Propriétés. La fenêtre "Configuration des
+  \tutilisateurs : propriétés du compte d'utilisateur" apparaît.
+
+6.\tModifiez les propriétés comme vous le souhaitez (reportez-vous à
+  \t\k(Ajout d'un utilisateur)) pour obtenir une description de chaque
+  \tpropriété.
+
+7.\tCliquez sur Appliquer. Le système affecte les nouvelles propriétés
+  \tà l'utilisateur.
+

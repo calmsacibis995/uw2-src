@@ -1,0 +1,347 @@
+#ident\t"@(#)dthelp:Admin.Tools/NetWare_Access.hlp	1.13"
+^*version^1
+^*title^NetWare Access
+^:NetWare_Access
+^*width^70
+^+DesktopMgr/help.defs
+^?Accessing a NetWare server on another UnixWare system
+^0^NetWare Access
+^$10
+NetWare Access
+
+Use NetWare Access to connect to a NetWare server on another
+UnixWare system.
+
+You can do the following with NetWare Access:
+
+\to\t\k(Log in to a NetWare server^^Logging in to a NetWare Server)
+\to\t\k(Log out of a NetWare server^^Logging Out of a NetWare Server)
+\to\t\k(Change your password on a NetWare server^^Changing Your NetWare Password) 
+\to\t\k(Save a list of servers^^Saving a List of NetWare Servers)
+\to\t\k(Enable single login access for all users on the system^^Enabling or Disabling Single Login)
+\to\t\k(Disable single login access for all users on the system^^Enabling or Disabling Single Login)
+
+\to\t\k(Set a primary server^^Setting a Primary Server)
+\to\t\k(Save a list of servers^^Saving a List of NetWare Servers)
+\to\t\k(View a list of users on a NetWare server^^Viewing Users on a NetWare Server)
+\to\t\k(View a list of volumes on a NetWare server^^Viewing Volumes on a NetWare Server)
+\to\t\k(View your network address and node address^^Viewing Your Network Address and Node Address)
+
+See also:
+\s(Accessing NetWare^dhelp "" userhb "Accessing NetWare" "" || helpLinkErr)
+\s(Setting Up and Configuring NetWare Connectivity^dhelp "" ownerhb "Setting Up and Configuring NetWare Connectivity "" || helpLinkErr)
+
+^1^Logging in to a NetWare Server
+^$20
+Logging in to a NetWare Server
+
+Note: Before you can access a NetWare server from a UnixWare system,
+you must get a login and password on that NetWare server.
+
+To log in to a NetWare server from a UnixWare system, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on NetWare_Access.
+  \tThe \k("NetWare Access for <user>" window^^NetWare Access for <user> Window)appears, displaying a
+  \tlist of NetWare servers that are, or can be, connected to your
+  \tUnixWare system. 
+
+4.\tClick on the icon that represents the server you want to log in to.
+
+5.\tClick on Login. The "Authentication Panel" window appears.
+
+6.\tSet the following options:
+
+  \to\tType in your login name on the NetWare server.
+ 
+  \t \tSee also: \k(Logging in to a NetWare Server Using Another <user>)
+
+  \to\tType in your password for your login on the NetWare server.
+
+7.\tClick on Apply to log in to the server and close the window,
+  \tor click on Cancel if you decide you do not want to log in to
+  \tthe server.
+
+8.\tClose the "NetWare Access for <user>" window after you have
+  \tsuccessfully logged in to the NetWare server.
+
+  \tNote: If the NetWare server you are trying to reach is down or
+  \tdisconnected, the Desktop displays a clock that, after 45 seconds,
+  \tis replaced by the following message: Cannot attach to server.
+
+   \tContact the system administrator for that server to find out why it is
+  \tdown or disconnected, or try again later. 
+
+See also:
+\k(Accessing a NetWare Server Through Another UnixWare System)
+\s(Setting Up and Configuring NetWare Connectivity^dhelp "" ownerhb "Setting Up and Configuring NetWare Connectivity" "" || helpLinkErr)
+
+
+^2^NetWare Access for <user> Window
+^$30
+NetWare Access for <user> Window
+
+This window displays the NetWare servers that your UnixWare system is,
+or can be, connected to (where <user> is replaced by your login).
+
+You can update the server list by clicking on Actions=>Update Servers.
+An updated list of servers appears, enabling you to see if a server has
+gone down or come up since you last opened this window.
+
+See also:
+\k(Logging in to a NetWare Server Using Another <user>)
+\k(Logging Out of a NetWare Server)
+\k(Changing Your NetWare Password)
+\k(Saving a List of NetWare Servers) 
+
+^2^Authentication Panel Window
+^$40
+Authentication Panel Window
+
+This window appears when you try to access a remote NetWare server from
+your UnixWare Desktop. You must have a login and a password on this
+server to gain access.
+
+Type in your login and password, then click on Apply.
+
+^2^Logging in to a NetWare Server Using Another <user>
+^$50
+Logging in to a NetWare Server Using Another <user>
+
+Note: Before you can log in to a NetWare server using another user,
+you must have the login and password for that user, as well as
+permission from the user who owns the account.
+
+To log in to a NetWare server from your UnixWare system using another
+valid user (other than your own user), do the following
+from the \k("NetWare Access for <user>" window^^NetWare Access for <user> Window):
+
+1.\tClick on Actions=>New User. The "Choose User" window appears.
+
+2.\tClick on the desired user from the list of valid users
+  \tfor your UnixWare system.
+
+   \tNote: If you need to add a user to your system, see
+  \t\k(Adding a New User^dtadmin/user.hlp^Adding a New User).
+
+3.\tType in the UnixWare login password for that user.
+
+4.\tClick on Cancel to close the password window.
+
+5.\tClick on Cancel to close the "Choose Users" window.
+
+6.\tGo to \k(Logging in to a NetWare Server).
+
+
+^2^Choose User Window
+^$60
+Choose User Window
+
+This window displays a list of valid users on your UnixWare server.
+
+See \k(Logging in to a NetWare Server Using Another <user>) for
+more information on this window.
+
+^2^Accessing a NetWare Server Through Another UnixWare System
+^$70
+Accessing a NetWare Server Through Another UnixWare System
+
+To access a NetWare server from your system through another Application
+Server or Personal Edition, do the following after connecting to the
+remote UnixWare system:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on NetWare_Access in the Networking folder.
+  \tThe \k("NetWare Access for <user>" window^^NetWare Access for <user> Window) appears.
+
+4.\tLog in to the desired NetWare server (as described in
+  \t\k(Logging in to a NetWare Server)).
+
+Note: If you are accessing a Personal Edition or Application Server
+remotely (for example, using telnet or another non-graphical method)
+to access a NetWare file server, you must first \k(authenticate^^Authentication Panel Window)
+the Personal Edition or Application Server to the NetWare Server.
+
+
+^1^Logging Out of a NetWare Server
+^$80
+Logging Out of a NetWare Server
+
+To log out of one or more NetWare servers, do the following from the
+\k("NetWare Access for <user>" window^^NetWare Access for <user> Window):
+
+1.\tClick on the servers you want to log out of.
+
+2.\tClick on Logout. You are now logged out of the specified NetWare
+  \tservers, and your user disappears from the Authenticated As
+  \tcolumn in the "NetWare Access for <user>" window.
+
+^1^Changing Your NetWare Password
+^$90
+Changing Your NetWare Password 
+
+To change your NetWare password, do the following from the
+\k("NetWare Access for <user>" window^^NetWare Access for <user> Window):
+
+1.\tClick on the NetWare server to which you want to change your password.
+
+2.\tClick on Password. The "Change Password" window appears.
+
+3.\tType in your old (current) password and click on Apply.
+
+4.\tType in the new password and click on Apply. Another window appears
+  \tasking you to enter your password again.
+
+5.\tType in the new password again, then click on Apply. The window closes.
+  \tUse the new password the next time you log in to the server.
+
+^1^Saving a List of NetWare Servers
+^$100
+Saving a List of NetWare Servers
+
+You may want to save a list of servers so that the next time you log in,
+only the selected servers appear. To save a list of servers, do the
+following from the \k("NetWare Access for <user>" window^^NetWare Access for <user> Window):
+
+1.\tClick on the servers that you want to save to a list.
+
+2.\tClick on Select.
+
+3.\tClick on Actions=>Save Select. The system saves the selected servers
+  \tto a list. The next time you double-click on NetWare_Access, only
+  \tthese selected servers will appear.
+
+  \tNote: If you want to view all servers, click on Actions=>Show All.
+
+^1^Enabling or Disabling Single Login
+^$105
+Enabling or Disabling Single Login
+
+You must have "Enable NetWare Single Login" turned on in 
+\k(NetWare Setup^NetWare_Setup/NetWare_Setup.hlp^NetWare Setup) for users to be able to enable or disable Single Login.
+
+If your login ID and password are synchronized between your UnixWare
+system and a NetWare Server, Single Login "silently" logs you in to any
+server. That is, it allows you to log in to a NetWare server without
+supplying your login ID and password, provided the login ID and the password
+on your UnixWare system and on the NetWare server you are trying to
+reach are the same. By default, Single Login is enabled for every user.
+
+To enable or disable Single Login access, do the following:
+
+Note: If you are already in the Admin Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^Introduction to the UnixWare Desktop).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tClick on one of the following:
+
+  \to\tActions=Enable Single Login (to turn Single Login on).
+  \to\tActions=Disable Single Login (to turn Single Login off).
+
+^1^Setting a Primary Server
+^$107
+Setting a Primary Server
+
+Normally, users see a list of servers that are attached to the nearest
+server. By setting a primary server, you allow users to see an additional
+list of NetWare servers (seen by this primary server) that are otherwise
+not seen by the nearest server.
+
+To set a primary server, do the following from the
+\k(NetWare Access for <user> window^^NetWare Access for <user> Window):
+
+1.\tClick on Action=>Set Primary Server. The "Set Primary Server" window
+  \tappears with the following field:
+
+  \tPrimary Server: - Type in the name of the desired server.
+
+2.\tClick on Apply.
+
+3.\tClick on Action=>Update. The system updates the list of servers to
+  \tinclude the additional servers seen by the primary server you just
+  \tspecified.
+
+
+^1^Viewing Users on a NetWare Server
+^$110
+Viewing Users on a NetWare Server
+
+To view a list of users on a NetWare server, do the following:
+
+1.\tLog in to a NetWare server as described in
+  \t\k(Logging in to a NetWare Server). 
+
+2.\tClick on User List in the \k("NetWare Access for <user>" window^^NetWare Access for <user> Window).
+
+  \tA pop-up window appears with the following information about each
+  \tuser on the server:
+
+  \to\tNetWare connection ID
+
+  \to\tUser name
+
+  \to\tNetWare login server time
+
+3.\tClick on Cancel to close this window.
+
+^1^Viewing Volumes on a NetWare Server
+^$120
+Viewing Volumes on a NetWare Server
+
+To view a list of volumes on a NetWare server, do the following:
+
+1.\tLog in to a NetWare server as described in
+  \t\k(Logging in to a NetWare Server). 
+
+2.\tClick on Volume List in the \k("NetWare Access for <user>" window^^NetWare Access for <user> Window).
+
+  \tA pop-up window appears with the following information for each
+  \tvolume that you have access to on the NetWare server:
+
+  \to\tVolume name
+
+  \to\tTotal disk space on volume  
+
+  \to\tAvailable disk space on volume
+
+  \to\tTotal directories on volume
+
+  \to\tAvailable directories on volume
+
+^1^Viewing Your Network Address and Node Address
+^$130
+Viewing Your Network Address and Node Address
+
+By default, the "Network Access" window displays server names under
+the File Server column and user names under the Authenticated As
+column.
+
+You can change the display to include your network address and node
+address by doing the following from the
+\k("NetWare Access for <user>" window^^NetWare Access for <user> Window): 
+
+1.\tClick on View=>Format=>Long. The system now displays each server's
+  \taddress along with the file server name and the name of the
+  \tauthenticated user.
+
+2.\tClick on View=>Format=>Short to go back to the default view.
+
+

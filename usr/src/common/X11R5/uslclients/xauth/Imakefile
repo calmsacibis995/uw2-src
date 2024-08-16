@@ -1,0 +1,32 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)xauth:Imakefile	1.5"
+
+#if SystemV
+     BUTIL_SRCS = butil.c
+     BUTIL_OBJS = butil.o
+#else
+     BUTIL_SRCS = 
+     BUTIL_OBJS = 
+#endif
+
+#ifdef Release5
+     DEFINES = $(SIGNAL_DEFINES) -DTCPCONN
+     DEPLIBS = $(DEPXAUTHLIB) $(DEPXLIB) $(DEPXMULIB) $(DEPXTOOLLIB) $(DEPXBSDLIB)
+     LOCAL_LIBRARIES = $(XAUTHLIB) $(XLIB) $(XMULIB) $(XTOOLLIB) $(XBSDLIB) -lresolv
+#else
+     DEPLIBS = $(DEPXAUTHLIB) $(DEPXMULIB)
+     LOCAL_LIBRARIES = $(XAUTHLIB) $(XMULIB)
+     DEFINES = ConnectionFlags $(SIGNAL_DEFINES)
+#endif
+     SRCS = xauth.c gethost.c process.c parsedpy.c $(BUTIL_SRCS) 
+     OBJS = xauth.o gethost.o process.o parsedpy.o $(BUTIL_OBJS) 
+
+ComplexProgramTarget(xauth)
+

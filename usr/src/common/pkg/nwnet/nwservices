@@ -1,0 +1,110 @@
+#ident	"@(#)pkg.nw:nwservices	1.4"
+#ident	"$Id: nwservices,v 1.6 1994/07/13 17:44:29 vtag Exp $"
+
+if [ ! -f /etc/inet/services ]
+then
+	echo >/etc/inet/services
+fi
+
+#
+#	Remove all NetWare entries from the services file
+#
+sed -e '/\/ipx[ 	]/d' \
+	-e '/\/spx[ 	]/d' \
+	-e '/\/spx$/d' \
+	-e '/\/ipx$/d' /etc/inet/services \
+	|| exit 2
+
+#
+#	For installation append NetWare services to file
+#
+if [ "$1" = install ]
+then
+
+cat <<!
+#	NetWare services for spx/ipx
+inetinst	1006/spx			# network install
+apfs		36938/spx			#any private file service
+apts		38939/spx			#any private terminal service
+auth		36940/spx		authentication
+bftp		36941/spx 
+biff		36914/ipx		comsat
+bootpc		36915/ipx 
+bootps		36916/ipx		bootp
+chargen		36942/spx		ttytst source
+chargen		36917/ipx		ttytst source
+cmip-agent	36943/spx 
+cmip-manage	36944/spx 
+courier		36945/spx		rpc		# experimental
+csnet-ns	36946/spx				#CSNET Name Service
+daytime		36947/spx 
+daytime		36918/ipx 
+discard		36919/ipx		sink null
+discard		36948/spx		sink null
+echo		36820/ipx 
+echo		36949/spx 
+eprc		36821/ipx 
+exec		36950/spx 
+finger		36951/spx 
+ftp		36952/spx 
+ftp-data	36953/spx 
+hostnames	36954/spx		hostname	# usually to sri-nic
+ingreslock	36955/spx 
+iso-ip		36956/spx 
+iso-tp0		36957/spx 
+iso-tsap	36958/spx 
+link		36959/spx		ttylink
+listen		36960/spx			# sysv listener service
+login		32867/spx 
+monitor		36822/ipx				# experimental
+name		36923/ipx		nameserver
+name		36962/spx		nameserver
+nameserver	36924/ipx		domain
+nameserver	36963/spx		domain
+netstat		36925/ipx 
+netstat		36964/spx 
+new-rwho	36926/ipx		new-who		# experimental
+nfsd		36927/ipx			# NFS server daemon
+nntp		36965/spx	usenet readnews untp # Network News Transfer
+ntp		36928/ipx				# Network Time Protocol
+ntp		36966/spx				# Network Time Protocol
+pcserver	36967/spx				# ECD Integrated PC board srvr
+pop-2		36968/spx				# Post Office
+print-srv	36969/spx 
+printer		36970/spx		spooler		# line printer spooler
+qotd		36929/ipx		quote
+qotd		36971/spx		quote
+rje		36972/spx		netrjs		#any private rje
+rmonitor	36930/ipx		rmonitord	# experimental
+route		36931/ipx		router routed
+sftp		36973/spx 
+shell		36974/spx		cmd		# no passwords used
+smtp		36975/spx		mail
+snmp		36879/ipx 
+snmp-trap	36880/ipx 
+sunrpc		36810/spx		rpcbind
+sunrpc		36889/ipx		rpcbind
+supdup		36976/spx 
+syslog		36932/ipx 
+systat		36933/ipx		users
+systat		36977/spx		users
+talk		36934/ipx 
+telnet		36978/spx 
+tftp		33683/ipx 
+time		36935/ipx		timserver
+time		36979/spx		timserver
+ttymon		36980/spx			# sysv tty service
+uucp		36981/spx		uucpd		# uucp daemon
+uucp-path	36982/spx 
+who		36936/ipx		whod
+whois		36937/ipx		nicname		# usually to sri-nic
+whois		36983/spx		nicname		# usually to sri-nic
+x400		36984/spx				# ISO Mail
+x400-snd	36985/spx 
+xserver0	32998/spx			# X-Window Server Display 0
+unixtsa   	37002/spx			# TSA
+!
+
+fi
+
+exit 0

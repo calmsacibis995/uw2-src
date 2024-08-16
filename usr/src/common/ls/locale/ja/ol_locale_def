@@ -1,0 +1,106 @@
+!	THE FORMAT USED BY THIS FILE TO SPECIFY RESOURCES IS SAME AS
+!	THE ONE USED BY X WINDOW SYSTEM. THE CONTENT SHOULD NOT BE 
+!	MODIFIED UNLESS YOU ARE FAMILIAR WITH THE INTERNALS AND/OR SPECIFIC
+!	REQUIREMENTS OF A LOCALE.
+!
+!	This file provides default values of i18n resources for
+!	the "C" locale. This file will be read by the OPENLOOK Toolkit 
+!	routines to obtain the default value of localized resources
+!	iff not set by the user elsewhere. 
+!	It may be used as a template to create default locale 
+!	definition file for other locales. Please follow the guidelines 
+!	provided below when creating such a file for other locale(s).
+!
+!	(1) copy this file and edit (using an editor that supports the 
+!	    local language )right hand side of ':' such that,
+!
+!		- For resources 'xnlLanguage', inputLang', 'displayLang',
+!		  'numeric', and 'tdFormat', the first field (on right 
+!		  side of ':')  specify the locale namen LATIN-1.
+!		  Specify a label in local language (surrounded by 
+!		  double quotes) in the second field for these resources.
+!		  The string specified in double quotes is used by the
+!		  Work Space Manager to display labels in Locale
+!		  Property Sheet.
+!
+!		- For the 'fontGroup' resource, specify a comma separated
+!		  font group names indicating available font groups for
+!		  drawing text in this locale.
+!
+!		- For the 'fontGroupDef' resource specify a string in the
+!		  following format.
+!
+!		  *fontGroupDef: <fontGroup1 = <font_name>/<font_name>/
+!		  <font_name>/font_name>,fontGroup2=<font_name>/.......
+!		  
+!		  where each <fontGroup.> refers to the font group name
+!		  specified in the FontGroup resouce. A list of <font_name>
+!		  is associated with corresponding <fontGroup.> and will
+!		  be used to construct a list of XFontStruct for drawing
+!		  an Internationalized string. At most four <font_names>
+!		  can be supplied for a <fontGroup.>.
+!
+!	(2) Install the newly created locale definition file "ol_locale_def"
+!	    as "/usr/X/lib/locale/<locale_name>/ol_locale_def.
+!
+! Actual resource definition starts here.
+!
+*xnlLanguage:ja "dtlocaledef:40Japan"
+*inputLang:ja "dtlocaledef:41Japanese (ja)"
+*displayLang:ja "dtlocaledef:41Japanese (ja)"
+*numeric:ja "10,000"
+*timeFormat:ja "dtlocaledef:41Japanese (ja)"
+!
+!	The following three resources are not needed for "C" locale and 
+!	hence commented out ('!' character in first column). If a locale
+!	needs these resources then specify appropriate value as described
+!	above and un-comment lines, (by removing a '!' character from
+!	first column).
+!
+*fontGroup:gothic
+*fontGroupDef:gothic=r14/k14/r14
+*inputMethod:vje
+*imStatus:true
+
+*sansSerifFamilyFontList: \
+   -*-helvetica-medium-r-normal--*-120-*-*-p-*-iso8859-1;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:PLAIN_FONT_TAG,\
+   -*-helvetica-medium-o-normal--*-120-*-*-p-*-iso8859-1;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:ITALIC_FONT_TAG,\
+   -*-helvetica-bold-r-normal--*-120-*-*-p-*-iso8859-1;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:BOLD_FONT_TAG,\
+   -*-helvetica-bold-o-normal--*-120-*-*-p-*-iso8859-1;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:BOLD_ITALIC_FONT_TAG
+
+*SerifFamilyFontList: \
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:PLAIN_FONT_TAG,\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:ITALIC_FONT_TAG,\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:BOLD_FONT_TAG,\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:BOLD_ITALIC_FONT_TAG
+
+*monospacedFamilyFontList: \
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:PLAIN_FONT_TAG,\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:ITALIC_FONT_TAG,\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:BOLD_FONT_TAG,\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0201.1976-0;\
+   -misc-fixed-*-*-*-*-*-130-*-*-*-*-jisx0208.1983-0:BOLD_ITALIC_FONT_TAG
+

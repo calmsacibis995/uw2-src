@@ -1,0 +1,14 @@
+#ident	"@(#)pkg.nuc:preinstall	1.1"
+#!/sbin/sh
+#  Create a new reserved user account (mhsmail) under the existing group (mail)
+/usr/sbin/useradd -u 61 -g mail -d /var/spool/smf -m -c "MHS Admin Processes" mhsmail 2>/dev/null
+
+#  Create new user description for mhsmail.  Add as administrator in TFM database.
+/usr/bin/adminuser -n mhsmail 2>/dev/null
+
+#  Tell cron it's OK to let mhsmail user submit and run cron jobs.
+/usr/bin/grep "mhsmail" /etc/cron.d/cron.allow >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	echo "mhsmail" >> /etc/cron.d/cron.allow
+fi

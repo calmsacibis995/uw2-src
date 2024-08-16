@@ -1,0 +1,56 @@
+.pageno
+Seite %d von %d
+.ul
+UNIX Systeminstallation
+.hhelp_ban
+Anweisungen
+.helpbanner
+Hilfe: Paket entfernen
+.ur
+Paket entfernen
+.ll
+.lr
+F1=Hilfe
+.top
+`[ "$ALL_NEW" ] &&  echo "WARNUNG: Es sind neuere Versionen aller Pakete installiert."`
+`[ "$ALL_NEW" ] ||  echo "WARNUNG: Es sind neuere Versionen mancher Pakete installiert."`
+
+`[ "$ALL_NEW" ] &&  echo "Neuere Versionen der von Ihnen im \n'${SETINST}'-Satz ausgewählten Pakete,\nsind auf Ihrem Computer installiert. Sie sind dabei, ältere Versionen\ndieser Pakete zu installieren. Drücken Sie die Taste 'F1' (oder ?), um eine\nListe der Pakete angezeigt zu bekommen, deren neuere Versionen bereits\ninstalliert sind."`
+`[ "$ALL_NEW" ] ||  echo "Neuere Versionen von einigen der von Ihnen im\n '${SETINST}'-Satz ausgewählten Pakete,\nsind auf Ihrem Computer installiert. Sie sind dabei, ältere Versionen\ndieser Pakete zu installieren. Drücken Sie die Taste 'F1' (oder '?'), um\neine Liste der Pakete angezeigt zu bekommen, deren neuere Versionen\nbereits installiert sind."`
+
+Sie müssen die neuere Version dieser Pakete entfernen, ehe Sie eine ältere 
+Version installieren können. Speichern Sie Ihre Konfigurationsdateien, 
+ehe Sie die neueren Pakete entfernen.
+
+Die Pakete werden dieses Mal nicht installiert.
+`[ "$ALL_NEW" ] &&  echo "Die Installation dieses Sets wird jetzt beendet."`
+Nähere Angaben entnehmen Sie der Dokumentation.
+.form
+ENTER
+.selection
+Drücken Sie ENTER, um fortzufahren
+.help
+Wenn Sie detaillierte Informationen benötigen, können Sie 
+jederzeit die 'F1'- (oder '?') drücken.
+
+`[ "$ALL_NEW" ] || echo "Neuere Versionen mancher Pakete im Satz '${SETINST}' sind bereits"`
+`[ "$ALL_NEW" ] && echo "Neuere Versionen aller Pakete im Satz '${SETINST}' sind bereits"`
+auf Ihrem Computer installiert. Es handelt sich um folgende Pakete:
+
+`cat $PKG_RM`
+
+Diese Pakete können nicht überlagert werden. Sie müssen sie entfernen,
+ehe Sie die ältere Version installieren können.
+
+Es ist wichtig, die neueren Pakete zu entfernen. Vorher können die 
+älteren Pakete nicht installiert werden. Speichern Sie Ihre 
+Konfigurationsdateien, ehe Sie die neueren Pakete entfernen.
+
+Nähere Angaben entnehmen Sie der Dokumentation.
+.helpinst
+ESC=Hilfe verlassen  F1=Anweisungen  1=Vor  2=Zurück
+.hhelpinst
+ESC=Anweisungen verlassen  1=Vor  2=Zurück
+.working
+Wird bearbeitet...
+.end

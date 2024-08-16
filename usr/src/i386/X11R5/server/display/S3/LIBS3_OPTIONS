@@ -1,0 +1,55 @@
+# memory that is saved by the video driver. By default, the driver saves all the
+# available video memory (ex: 1MB or 2MB or 4MB). If you use the non-X vt 
+# (ex: console) only for text mode, you need to save only 32K and if you use
+# the console for DOS/standard_vga graphics programs, you have to save 256K. 
+# uncomment one of the next two lines that is applicable to your usage.
+#vt-switch-save-lines=32
+#vt-switch-save-lines=256
+
+# You can try the following options at your *OWN RISK*. ALWAYS turn the 
+# graphical login *OFF* (disable_glogin), before you play with video modes.
+# For more information on various user-defined S3 options read the README.S3
+# MMIO does not seem to work on the 801 based cards. Yet it is worth giving
+# a try enabling only mmio-write-pixtrans. mmio-write-enhanced-regs
+# does not work for sure on 801 based cards.
+#memory-and-register-access-mode=mmio-write-pixtrans
+
+# MMIO operations sort of works on the 928 cards. Almost all cards work
+# faster with mmio-write-pixtrans enabled. Some cards seem to have problems
+# if mmio-write-enhanced-regs is enabled and some dont. S3 has published that
+# this feature reliably works with the E-Step onwards.
+#memory-and-register-access-mode=mmio-write-pixtrans,mmio-write-enhanced-regs
+
+# The various waitstates and write posting controls. By default these
+# have been switched ( commented off )for the slower mode of operation
+# (chipset defaults). 
+#enable-write-posting=yes
+#wait-state-control=no
+#read-wait-control=0
+#decode-wait-control=0
+#fast-rmw=yes
+
+# There are two versions of the BT485 dac: one supports a maximum
+# of 110MHz and the other supports 135MHz bandwidths. The default is 110MHz
+# There is no way (atleast not that we know of) to detect the different versions
+# But, if the Bt485 on your video card has "Bt485KPJ135" on it, you can
+# override the default value by defining 'dac-name=Bt485KPJ135'.
+# This will enable you to get more hi-refresh modes, especially if you want
+# to run the 1280x1024 mode at >60Hz frequencies.
+#
+#	1280x1024@60Hz	requires 110 MHz
+#	1280x1024@70Hz	requires 126 MHz
+#	1280x1024@72Hz	requires 130 MHz
+#	1280x1024@74Hz	requires 135 MHz
+#
+# IF YOU DO NOT HAVE Bt485KPJ135, and if you try this option, you can
+# DAMAGE YOUR VIDEO BOARD. 
+# uncomment the next line if you have Bt485 that supports 135MHz
+#dac-name=Bt485KPJ135
+
+# If you want startup diagnostics printed out
+#verbose-startup=1
+
+#if you have any problem with cursor (ex: no cursor display), uncomment the next
+#line
+#cursor-type=software-cursor

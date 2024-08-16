@@ -1,0 +1,26 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5extensions:Imakefile	1.4"
+XCOMM $XConsortium: Imakefile,v 1.13 91/07/16 23:10:30 gildea Exp $
+#define IHaveSubdirs
+#define PassCDebugFlags
+
+#if BuildServer
+  SERVERSUBDIRS = server
+#else
+#if BuildPexClients
+  SERVERSUBDIRS = server/PEX/dipex/swap
+#endif
+#endif
+        SUBDIRS = $(SERVERSUBDIRS) lib include test
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+MakeLintLibSubdirs(lib)
+MakeLintSubdirs(lib,install.ln,install.ln)

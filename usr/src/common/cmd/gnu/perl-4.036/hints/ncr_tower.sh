@@ -1,0 +1,16 @@
+#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+optimize='-O0'
+ccflags="$ccflags -W2,-Sl,2000"
+eval_cflags='large="-W0,-XL"'
+teval_cflags=$eval_cflags
+d_mkdir=$undef
+usemymalloc='y'
+mallocsrc='malloc.c'
+mallocobj='malloc.o'

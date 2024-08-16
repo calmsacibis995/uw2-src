@@ -1,0 +1,36 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)libatm:config/Imakefile	1.2"
+
+#ifndef ENCODINGS_DIR
+ENCODINGS_DIR = $(FONTDIR)/type1/type1Encodings
+#endif
+
+all::	AdobeStdEncoding \
+	ISOLatin1Encoding \
+	ISOLatin2Encoding \
+	ISOLatin3Encoding \
+	ISOLatin4Encoding \
+	ISOLatin5Encoding \
+	ISOLatin9Encoding \
+	encodings.def
+
+
+InstallNonExecFile(AdobeStdEncoding,$(ENCODINGS_DIR))
+InstallNonExecFile(ISOLatin1Encoding,$(ENCODINGS_DIR))
+InstallNonExecFile(ISOLatin2Encoding,$(ENCODINGS_DIR))
+InstallNonExecFile(ISOLatin3Encoding,$(ENCODINGS_DIR))
+InstallNonExecFile(ISOLatin4Encoding,$(ENCODINGS_DIR))
+InstallNonExecFile(ISOLatin5Encoding,$(ENCODINGS_DIR))
+InstallNonExecFile(ISOLatin9Encoding,$(ENCODINGS_DIR))
+InstallNonExecFile(encodings.def,$(ENCODINGS_DIR))
+
+depend::
+
+clean::

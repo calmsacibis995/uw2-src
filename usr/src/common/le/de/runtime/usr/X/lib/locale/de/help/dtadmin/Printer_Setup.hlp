@@ -1,0 +1,882 @@
+#ident \t"@(#)dthelp:Admin.Tools/Printer_Setup.hlp       1.21"
+^*version^1
+^*title^Drucker-Setup
+^:Drucker-Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Drucker einrichten (Drucker-Setup)
+^0^Drucker-Setup
+^$10
+Drucker-Setup
+
+Mit "Drucker-Setup" können Sie Drucker hinzufügen, löschen, gemeinsam
+benutzen, steuern oder die Eigenschaften von Druckern ändern.
+
+\to\t\k(Lokalen Drucker hinzufügen^^Lokalen Drucker hinzufügen) (\d(seriell^serieller Drucker) oder \d(parallel^Paralleler Drucker))
+\to\t\k(Fernen UNIX Systemdrucker hinzufügen^^Fernen UNIX Drucker hinzufügen)
+\to\t\k(Fernen NetWare Drucker hinzufügen^^Fernen NetWare Drucker hinzufügen)
+\to\t\k(Standarddrucker zuweisen^^Standarddrucker zuordnen)
+\to\t\k(Eigenschaften eines Druckers ändern^^Druckereigenschaften ändern)
+\to\t\k(Lokalen Drucker an NetWare Druck-Server anschließen^^Lokalen Drucker an einen NetWare Server anschließen)
+\to\t\k(Lokale und ferne Drucker steuern^^Drucker steuern)
+
+\to\t\k(Drucker löschen^^Drucker löschen)
+\to\t\k(Verbindung eines lokalen Druckers zu einem NetWare Druck-Server trennen^^Verbindung eines lokalen Druckers an einen NetWare Drucker-Server aufheben)
+\to\t\k(Druckersymbol in einen Ordner kopieren^^Druckersymbol in einen Ordner kopieren)
+\to\t\k(Zugriff für lokale Benutzer einrichten^^Zugriff für lokale Benutzer einrichten)
+\to\t\k(Zugriff für ferne Benutzer einrichten^^Zugriff auf ein fernes System einrichten)
+\to\t\k(Druckereigenschaften anzeigen^^Druckereigenschaften ansehen)
+
+Hinweise zum Drucken von Dateien sowie zum Überprüfen und Ändern von
+Druckaufträgen finden Sie in \k("Drucker verwenden"^dtadmin/printuse.hlp^Ihren Drucker verwenden).
+
+Siehe auch:
+\k(Funktionsleiste des Drucker-Setup verwenden)
+\s(Drucker-Setup verwenden^dhelp "pe.de" ownerhb "Drucker einrichten und konfigurieren" "Drucker-Setup verwenden" || helpLinkErr)
+\s(Was ist der LP-Druckdienst?^dhelp as sysag "Providing Print Services" "" || helpLinkErr)
+
+^1^Lokalen Drucker hinzufügen
+^$20
+Lokalen Drucker hinzufügen
+
+Damit Sie Ihrem System einen lokalen Drucker hinzufügen können, müssen
+Sie eine \k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen.
+
+Um Ihrem System einen lokalen Drucker hinzuzufügen, gehen Sie wie
+folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie "Drucker=>Lokalen Drucker hinzufügen" an. Das Fenster
+  \t"Drucker-Setup: Lokalen Drucker hinzufügen" erscheint. Es enthält
+  \tfolgende Felder:
+
+  \to\t Lokaler Druckername: - Geben Sie den Namen ein, den für den an
+  \t \t Ihr System angeschlossenen lokalen Drucker verwenden wollen.
+
+  \to\tDruckermodell: - Mit der Bildlaufleiste können Sie sich in der
+  \t \tList der Druckertypen auf- und abwärts bewegen. Klicken Sie den
+  \t \tDruckertyp an, der mit Ihrem Drucker übereinstimmt.
+
+  \to\tVerbindungstyp: - Klicken Sie \d(Seriell^serieller Drucker) oder
+  \t \t\d(Parallel^Paralleler Drucker) an, je nachdem, an welchen
+  \t \tSchnittstellentyp der Drucker angeschlossen ist.
+
+  \t \tHinweis: Wenn Sie einen Drucker direkt an Ihren Computer
+  \t \tanschließen, verwenden Sie entweder eine serielle oder eine
+  \t \tparallele Schnittstelle. Wenn Sie nicht sicher sind, ob es sich
+  \t \tbei Ihrem Drucker um einen seriellen oder einen parallelen
+  \t \tDrucker handelt, schlagen Sie im mit dem Drucker gelieferten
+  \t \tHandbuch nach.
+
+  \t \tWenn Sie "Seriell" auswählen, klicken Sie "Serielle
+  \t \tKonfiguration" an, um folgende Optionen einzustellen:
+
+  \t \t- Baud-Rate - Klicken Sie die Geschwindigkeit an, die mit der
+  \t \t  Ihres Druckers übereinstimmt. Standardmäßig ist dieses Feld auf
+  \t \t  9600 eingestellt.
+
+  \t \t-\tParität - Klicken Sie die passende Parität an. Das System
+  \t \t \tverwendet \d(Parität) für Fehlerprüfungen. Standardmäßig
+  \t \t \tist dieses Feld auf "Keine" eingestellt.
+
+  \t \t-\tStopbits - Klicken Sie die gewünschten Stopbits an.
+  \t \t \tStandardmäßig ist dieses Feld auf 1 eingestellt.
+
+  \t \t-\tZeichengröße - Klicken Sie die passende Zeichengröße an.
+  \t \t \tStandardmäßig ist dieses Feld auf 8 eingestellt.
+
+  \to\tSchnittstelle: - Wenn Sie einen seriellen Drucker hinzufügen,
+  \t \tklicken Sie "COM1", "COM2", oder "Sonstige" an. Wenn Sie einen
+  \t \tparallelen Drucker hinzufügen, klicken Sie "LPT1", "LPT2" oder
+  \t \t"Andere" an.
+
+  \t \tWenn Sie "Andere" wählen, erscheint ein Textfeld "Gerät".
+  \t \tGeben Sie den \d(Pfad) des Geräts ein, an das der
+  \t \tDrucker angeschlossen ist.
+
+  \to\tPost senden bei Druckerfehler: - Klicken Sie "Ja" an, wenn Sie
+  \t \telektronische Post erhalten möchten, falls der Drucker ausfällt.
+  \t \tKlicken sie "Nein" an, wenn Sie in diesem Fall keine Post
+  \t \terhalten möchten.
+
+  \to\tStandardmäßig Bannerseite drucken? - Klicken Sie "Ja" an, wenn
+  \t \tsie möchten, daß das System standardmäßig eine Bannerseite
+  \t \tdruckt. Klicken Sie "Nein" an, wenn Sie standardmäßig keine
+  \t \tBannerseite möchten.
+
+  \to\tBannerseiteübersteurung zulassen? - Klicken Sie "Ja" an, wenn
+  \t \tSie gestatten möchten, daß andere Benutzer die
+  \t \tStandard-Bannerseite unterdrücken können. Klicken Sie "Nein" an,
+  \t \twenn Sie dies nicht gestatten möchten.
+
+  \to\tAndere Optionen anzeigen: - Klicken Sie diese Schaltfläche an,
+  \t \twenn Sie folgende zusätzlichen Optionen für Ihren Drucker
+  \t \teinstellen möchten:
+
+  \t \t-\tSeitenlänge
+
+  \t \t-\tSeitenbreite
+
+  \t \t-\tZeichenabstand
+
+  \t \t-\tZeilenabstand
+
+  \t \tDiese Optionen haben alle einen numerischen und einen
+  \t \tEinheitenwert. Sie können als Einheit Zoll, Zentimeter oder
+  \t \tZeichen wählen.
+
+4.\tKlicken Sie "Hinzufügen" an. Das Symbol des Druckers erscheint im
+  \tFenster "Drucker-Setup".
+
+  \tHinweis: Sie können auch "Zurücksetzen" anklicken, um die
+  \tursprünglichen Werte für die Optionen wiederherzustellen. Wenn Sie
+  \t"Abbrechen" anklicken, verlassen Sie das Fenster, ohne den Drucker
+  \thinzuzufügen.
+
+Siehe auch:
+\k(Druckersymbol in einen Ordner kopieren)
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^1^Fernen UNIX Drucker hinzufügen
+^$30
+Fernen UNIX Drucker hinzufügen
+
+Um ihrem System einen fernen Drucker hinzuzufügen, müssen Sie eine
+\k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen. Um den Zugriff auf einen
+fernen UNIX Drucker einzurichten, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie "Drucker=>UNIX Drucker hinzufügen" an. Das Fenster
+  \t"Drucker-Setup: Fernen UNIX Drucker hinzufügen" erscheint. Es
+  \tenthält folgende Felder:
+
+  \to\tDruckername: - Geben Sie den Namen ein, den Sie für den fernen
+  \t \tUNIX Drucker in Ihrem lokalen System verwenden möchten.
+
+  \to\tDruckermodell: - Klicken Sie das Rechteck in dem Kästchen neben dem
+  \t \tTypenfeld an, um ein Menü mit Druckertypen anzuzeigen. Klicken
+  \t \tSie anschließend den passenden Typ an.
+
+  \to\tTyp des fernen Betriebssystems: - Klicken Sie "System V" oder
+  \t \t"BSD" an (wenn Sie nicht sicher sind, fragen Sie den Verwalter
+  \t \tdes fernen Systems).
+
+  \to\tFernes System: - Wenn Ihr System nicht für \k(DNS^dtadmin/inet.hlp^Auf DNS zugreifen) und \k(NIS^dtadmin/inet.hlp^Auf NIS zugreifen)
+  \t \tkonfiguriert ist, wird mit dieser Option nur die Systemliste
+  \t \tangezeigt (/etc/hosts).
+
+  \t \tIst Ihr System für DNS und NIS konfiguriert, werden die
+  \t \tverfügbaren Domain (Domain Network Service Server, Networking
+  \t \tInformation Service Server und Systemliste) in dem Kasten in der
+  \t \tlinken Ecke angezeigt.
+
+  \t \tKlicken Sie das gewünschte System an.
+
+  \t \tHinweis: Wenn Sie eine Domain anklicken, erscheinen die
+  \t \tzugehörigen Unterdomain in dem Kasten rechts. Dort können Sie
+  \t \tdie gewünschte Unterdomain anklicken. Hat diese weitere
+  \t \tUnterdomain, erscheinen diese rechts davon in einem Kasten.
+  \t \tKlicken Sie die Unterdomain so lange an, bis Sie den
+  \t \tgewünschten Systemnamen finden.
+
+  \t \tDas System zeigt gleichzeitig nur jeweils zwei Spalten bzw.
+  \t \tKästen an. Um zusätzliche Kästen anzuzeigen, verwenden Sie die
+  \t \tBildlaufleiste oben in den Kästen. Damit können Sie sich nach
+  \t \tlinks oder rechts bewegen.
+
+  \to\tName des fernen Druckers: - Geben Sie den Namen des Druckers im
+  \t \tfernen System ein.
+
+  \to\tStandardmäßig Bannerseite drucken? - Klicken Sie "Ja" an, wenn
+  \t \tsie möchten, daß das System standardmäßig eine Bannerseite
+  \t \tdruckt. Klicken Sie "Nein" an, wenn Sie standardmäßig keine
+  \t \tBannerseite möchten.
+
+  \to\tBannerseite unterdrückbar? - Klicken Sie "Ja" an, wenn Sie
+  \t \tgestatten möchten, daß andere Benutzer die Standard-Bannerseite
+  \t \tunterdrücken können. Klicken Sie "Nein" an, wenn Sie dies nicht
+  \t \tgestatten möchten.
+
+4.\tKlicken Sie "Hinzufügen" an. Das Symbol des Druckers erscheint im
+  \tFenster "Drucker-Setup".
+
+  \tHinweis: Sie können auch "Zurücksetzen" anklicken, um die
+  \tursprünglichen Werte für die Optionen wiederherzustellen. Wenn Sie
+  \t"Abbrechen" anklicken, verlassen Sie das Fenster, ohne den Drucker
+  \thinzuzufügen.
+
+Siehe auch:
+\k(Druckersymbol in einen Ordner kopieren)
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^1^Fernen NetWare Drucker hinzufügen
+^$40
+Fernen NetWare Drucker hinzufügen
+
+Um einen fernen NetWare Drucker Ihrem System hinzuzufügen, müssen Sie
+eine \k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen.
+
+Um eine Warteschlange für einen NetWare Drucker einzurichten, gehen
+Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie "Drucker=>NetWare Drucker hinzufügen" an. Das Fenster
+  \t"Drucker-Setup: NetWare Drucker hinzufügen" erscheint. Es enthält
+  \tfolgende Felder:
+
+  \to\tDruckername: - Geben Sie den Namen ein, den Sie lokal verwenden
+  \t \tmöchten, um auf den fernen NetWare Drucker zuzugreifen.
+
+  \to\tDruckermodell: - Klicken sie den passenden Druckertyp ab.
+
+  \to\tNetWare Server: - Klicken Sie in der Liste der Datei-Server den
+  \t \tgewünschten Server an. Der Name des Servers erscheint in diesem
+  \t \tFeld, und eine Liste der für diesen Server verfügbaren Drucker
+  \t \terscheint rechts davon in der Liste "Drucker".
+
+  \to\tDrucker: - Klicken Sie den Drucker an, auf den Sie zugreifen
+  \t \tmöchten. Der Name des Druckers erscheint im Feld "NetWare
+  \t \tDrucker".
+
+  \to\tStandardmäßig Bannerseite drucken? - Klicken Sie "Ja" an, wenn
+  \t \tsie möchten, daß das System standardmäßig eine Bannerseite
+  \t \tdruckt. Klicken Sie "Nein" an, wenn Sie standardmäßig keine
+  \t \tBannerseite möchten.
+
+  \to\tBannerseite unterdrückbar? - Klicken Sie "Ja" an, wenn Sie
+  \t \tgestatten möchten, daß andere Benutzer die Standard-Bannerseite
+  \t \tunterdrücken können. Klicken Sie "Nein" an, wenn Sie dies nicht
+  \t \tgestatten möchten.
+
+  \to\tStandardmäßig Seitenvorschub? - Klicken Sie "Ja" an, wenn Sie am
+  \t \tEnde eines Druckauftrags einen Seitenvorschub wünschen.
+  \t \tAndernfalls klicken Sie "Nein" an.
+
+  \t \tWenn Sie einen Seitenvorschub aktivieren, wird sichergestellt,
+  \t \tdaß der nächste Druckauftrag mit einem Seitenanfang beginnt.
+
+  \t \tHinweis: Wenn eine Anwendung am Ende einer Datei automatisch
+  \t \teinen Seitenvorschub einfügt, wird durch diese Option eine
+  \t \tLeerseite eingezogen, ehe der nächste Auftrag gedruckt wird.
+
+  \to\tSeitenvorschub unterdrückbar?: - Klicken Sie "Ja" an, wenn Sie
+  \t \tmöchten, daß Benutzer den Standardseitenvorschub unterdrücken
+  \t \tkönnen. Andernfalls klicken Sie "Nein" an.
+
+4.\tKlicken Sie "Hinzufügen" an, um den Drucker hinzuzufügen und die
+  \tausgewählten Optionen anzuwenden.
+
+  \tHinweis: Sie können auch "Zurücksetzen" anklicken, um die
+  \tursprünglichen Werte für die Optionen wiederherzustellen. Wenn Sie
+  \t"Abbrechen" anklicken, verlassen Sie das Fenster, ohne den Drucker
+  \thinzuzufügen.
+
+Siehe auch:
+\k(Druckersymbol in einen Ordner kopieren)
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^1^Drucker löschen
+^$50
+Drucker löschen
+
+Um einen Drucker in Ihrem System zu löschen, müssen Sie eine
+\k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen.
+
+Um einen Drucker zu löschen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken sie den Drucker an, den Sie löschen möchten.
+
+4.\tKlicken Sie "Drucker=>Löschen" an. Das System entfernt das Symbol
+  \tdes Druckers aus dem Fenster "Drucker-Setup".
+
+Siehe auch:
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^1^Druckereigenschaften ansehen
+^$60
+^1^Druckereigenschaften ansehen
+
+Um die Eigenschaften eines Druckers anzuzeigen, gehen Sie wie folgt
+vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie den Drucker an, dessen Eigenschaften Sie anzeigen
+  \tmöchten.
+
+4.\tKlicken Sie "Drucker=>Eigenschaften" an. Das Fenster
+  \t"Drucker-Setup: Eigenschaften" erscheint.
+
+5.\tNachstehend finden Sie eine Beschreibung der Felder und Optionen
+  \tfür die einzelnen Druckertypen.
+
+    o\tFür einen lokalen Drucker (seriell oder parallel) siehe
+     \tSchritt 3 von \k(Lokalen Drucker hinzufügen).
+
+  \to\tFür einen fernen UNIX Drucker siehe Schritt 3 in
+  \t \t"\k(Fernen UNIX Drucker hinzufügen)".
+
+  \to\tFür einen fernen NetWare Drucker siehe Schritt 3 in
+  \t \t"\k(Fernen NetWare Drucker hinzufügen)".
+
+6.  Klicken Sie "Abbrechen" an, um das Fenster zu verlassen.
+
+^1^Druckereigenschaften ändern
+^$70
+Druckereigenschaften ändern
+
+Um die Eigenschaften von Druckern zu ändern, müssen Sie eine
+\t\k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen.
+
+Um die Eigenschaften eines Druckers zu ändern, gehen Sie wie folgt
+vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie den Drucker an, bei dem Sie Änderungen vornehmen
+  \tmöchten.
+
+4.\tKlicken Sie "Drucker=>Eigenschaften" an. Das Fenster
+  \t"Drucker-Setup: Eigenschaften" erscheint.
+
+5.\tNehmen Sie die gewünschten Änderungen vor. Einzelheiten zu den für
+  \tdie einzelnen Drucker verfügbaren Feldern und Optionen finden Sie
+  \tnachstehend.
+
+  \to\tFür einen lokalen Drucker (seriell oder parallel) siehe
+  \t \tSchritt 3 von \k(Lokalen Drucker hinzufügen).
+
+  \to\tFür einen fernen UNIX Drucker siehe Schritt 3 in
+  \t \t"\k(Fernen UNIX Drucker hinzufügen)".
+
+  \to\tFür einen fernen NetWare Drucker siehe Schritt 3 in
+  \t \t"\k(Fernen NetWare Drucker hinzufügen)".
+
+  \tHinweis: Den Namen eines Druckers können Sie nicht ändern.
+
+6.\tKlicken Sie "OK" an, um die Änderungen anzuwenden.
+
+  \tHinweis: Sie können auch "Zurücksetzen" anklicken, um die
+  \tvorhergehenden Änderungen wiederherzustellen. Wenn Sie "Abbrechen"
+  \tanklicken, verlassen Sie das Fenster ohne Änderungen.
+
+Siehe auch:
+\k(Standarddrucker zuordnen)
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^1^Standarddrucker zuordnen
+^$80
+Standarddrucker zuordnen
+
+Sie können einen Ihrer Drucker zum Standarddrucker machen. Dann werden
+Druckaufträge automatisch an diesen Drucker geleitet, wenn Sie in
+einer Anwendung die Druckoption wählen, ohne einen Drucker anzugeben,
+oder wenn Sie in einem Ordnerfenster "Datei=>Drucken" wählen.
+
+Um einen Standarddrucker zuzuweisen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie den Drucker an, der zum Standarddrucker werden soll.
+
+4.\tKIicken Sie "Drucker=>Standarddrucker" an. Damit wird der aktuell
+  \tausgewählte Drucker zu Ihrem Standarddrucker.
+
+Siehe auch:
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^1^Lokalen Drucker an einen NetWare Server anschließen
+^$90
+Lokalen Drucker an einen NetWare Server anschließen
+
+Wenn Sie eine \k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen, können Sie
+einen lokalen Drucker an einen NetWare Druck-Server anschließen.
+
+Um einen lokalen Drucker an einen NetWare Druck-Server anzuschließen,
+gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie den Drucker an, den Sie anschließen möchten.
+
+4.\tKlicken Sie "Drucker=>NDrucker" an. Das Fenster "Drucker-Setup:
+  \tNetWare Druck-Server - Anschlußstatus" erscheint. Es enthält
+  \tfolgende Meldung:
+
+    <Druckername> ist nicht angeschlossen. Anschließen?
+
+5.\tKlicken Sie "Ja" an. Das Fenster "Drucker-Setup: Lokalen Drucker
+  \tan NetWare Druck-Server anschließen" erscheint.
+
+  \tHinweis: Wenn Sie den Drucker letztlich nicht anschließen möchten,
+  \tklicken Sie "Nein" an. Damit verlassen Sie das Fenster, ohne die
+  \tVerbindung herzustellen.
+
+6.\tKlicken Sie in der Liste der Datei-Server das gewünschte System
+  \tan. Die für das System verfügbaren Druck-Server werden rechts von
+  \tder Liste in der Liste der Druck-Server angezeigt.
+
+7.\tKlicken Sie den gewünschten Druck-Server an. Die auf diesem Server
+  \tverfügbaren Drucker erscheinen rechts von der Liste in dem Kasten
+  \t"Druckername".
+
+8.\tKlicken Sie den Namen des gewünschten Druckers an.
+
+9.\tKlicken Sie Verbinden an. Der Drucker kann jetzt Druckaufträge
+  \tder NetWare Druckerwarteschlange bearbeiten.
+
+  \tHinweis: Sie können auch "Abbrechen" anklicken, um das Fenster zu
+  \tverlassen, ohne den Drucker anzuschließen.
+
+Siehe auch:
+\k(Verbindung eines lokalen Druckers an einen NetWare Drucker-Server aufheben)
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^1^Verbindung eines lokalen Druckers an einen NetWare Drucker-Server aufheben
+^$100
+Verbindung eines lokalen Druckers an einen NetWare Drucker-Server aufheben
+
+Wenn Sie eine \k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen, können Sie die
+Verbindung eines lokalen Druckers mit einem NetWare Druck-Server
+trennen.
+
+Um die Verbindung eines lokalen Druckers mit einem NetWare
+Druck-Server zu trennen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie den Drucker an, dessen Verbindung Sie trennen möchten.
+
+4.\tKlicken Sie "NDrucker" an. Im Fenster "Drucker-Setup: NetWare
+  \tDruck-Server - Anschlußstatus" erscheint folgende Meldung:
+
+  \t<Druckername> ist an NetWare Druck-Server <DruckServername> als
+  \tferner Drucker <NetWareDruckername> angeschlossen.
+
+  \tVerbindung trennen?
+
+5.\tKlicken Sie "Ja" an. Damit wird die Verbindung des Druckers
+  \tunterbrochen.
+
+  \tHinweis: Sie können auch "Nein" anklicken, um das Fenster zu
+  \tverlassen, ohne den Drucker abzutrennen.
+
+Siehe auch:
+\k(Lokalen Drucker an einen NetWare Server anschließen)
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^2^Fenster Drucker-Setup: Status der NetWare Drucker-Server Verbindungen
+^$110
+Fenster Drucker-Setup: Status der NetWare Drucker-Server Verbindungen
+
+Ist Ihr lokaler Drucker an einen NetWare Server angeschlossen,
+erscheint in diesem Fenster eine Meldung wie die folgende:
+
+\t\t\t<Druckername> ist an NetWare Druck-Server
+\t\t\t<DruckServername> as ferner Drucker <NWDruckername>
+\t\t\tangeschlossen.
+
+\t\t\tVerbindung trennen?
+
+Klicken Sie "Ja" an, wenn Sie den Drucker abtrennen möchten.
+Andernfalls klicken Sie "Nein" an.
+
+Ist Ihr lokaler Drucker nicht an einen NetWare Server angeschlossen,
+sieht die Meldung in diesem Fenster etwa wie folgende aus:
+
+\t\t\t<Druckername> ist nicht an einen NetWare Druck-Server
+\t\t\tangeschlossen.
+
+\t\t\tAnschließen?
+
+Klicken Sie "Ja" an, wenn Sie den Drucker anschließen möchten.
+Andernfalls klicken Sie "Nein" an.
+
+Siehe auch:
+\k(Lokalen Drucker an einen NetWare Server anschließen)
+\k(Verbindung eines lokalen Druckers an einen NetWare Drucker-Server aufheben)
+
+^1^Zugriff auf ein fernes System einrichten
+^$120
+Zugriff auf ein fernes System einrichten
+
+Sie müssen eine \k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen, um für ferne
+Systeme den Zugriff auf lokale Drucker einzurichten.
+
+Hinweis: Wenn sie keine Druckerverwaltungsberechtigung besitzen,
+können Sie wie folgt vorgehen, um zu sehen, welchen Systemen der
+Zugriff gestattet oder nicht gestattet ist. Sie können dann jedoch
+keine Änderungen vornehmen.
+
+Wenn Sie einen Drucker erstmals einrichten, wird allen fernen Systemen
+der Zugriff auf diesen Drucker verweigert. Sie können für ferne System
+den Zugriff auf lokale Drucker einrichten. Dazu gehen Sie wie folgt
+vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie den Drucker an, den Sie für den Zugriff durch ferne
+  \tSystem einrichten möchten.
+
+4.\tKlicken Sie "Drucker=>Fernzugriff einrichten" an. Das Fenster
+  \t"Drucker-Setup: Fernzugriff einrichten" erscheint. In dem Kasten
+  \tin der linken Ecke werden die verfügbaren Domain angezeigt.
+
+  \tHinweis: Wenn Sie eine Domain anklicken, erscheinen die
+  \tzugehörigen Unterdomain in dem Kasten rechts. Dort können Sie die
+  \tgewünschte Unterdomain anklicken. Hat diese weitere UnterDomain,
+  \terscheinen diese rechts davon in einem Kasten. Klicken Sie die
+  \tUnterdomain so lange an, bis Sie den gewünschten Systemnamen
+  \tfinden.
+
+  \tDas System zeigt gleichzeitig nur jeweils zwei Spalten bzw. Kästen
+  \tan. Um zusätzliche Kästen anzuzeigen, verwenden Sie die
+  \tBildlaufleiste oben in den Kästen. Damit können Sie sich nach
+  \tlinks oder rechts bewegen.
+
+5.\tGehen Sie wie folgt vor, um einen Zugriff auf den fernen Drucker
+  \tzu gestatten oder zu verweigern:
+
+  \tHinweis: Um mehrere Systeme auszuwählen, halten Sie <Strg>
+  \tgedrückt, während Sie mit der linken Maustaste klicken.
+
+  \to\tKlicken Sie "Alle Systeme zulassen außer" an. Klicken Sie
+  \t \tdas/die gewünschte/n System/e im Mehrspalten-Browser und
+  \t \tanschließend "Hinzufügen" an. Die ausgewählten Systeme werden in
+  \t \tdie Liste im rechten Kasten verlegt.
+
+  \t \tAlle Systeme außer den in die Liste aufgenommenen haben nun
+  \t \tZugriff auf den fernen Drucker.
+
+  \to\tKlicken Sie "Alle Systeme ablehnen außer" an, klicken Sie die
+  \t \tgewünschten Systeme im Mehrspalten-Browser und schließlich
+  \t \t"Hinzufügen" an. Die ausgewählten Systeme werden in die Liste im
+  \t \trechten Kasten verlegt.
+
+  \t \tAllen Systemen außer den in die Liste aufgenommenen wird der
+  \t \tZugriff auf den fernen Drucker verweigert.
+
+  \tSie können alle Systeme wie folgt entfernen:
+
+  \to\tKlicken Sie die gewünschten Systeme an. Klicken Sie anschließend
+  \t \t"Entfernen" bzw. "Alle entfernen" an, um die ausgewählten
+  \t \tSysteme bzw. alle Systeme zu löschen.
+
+6.\tKlicken Sie "OK" an. Nun ist der Drucker für den Zugriff ferner
+  \tBenutzer eingerichtet.
+
+  \tHinweis: Wenn Sie keinen Fernzugriff einrichten möchten, können
+  \tSie auch "Abbrechen" anklicken.
+
+Siehe auch:
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^1^Zugriff für lokale Benutzer einrichten
+^$130
+Zugriff für lokale Benutzer einrichten
+
+Um lokalen Benutzern den Zugriff zu gestatten, müssen Sie eine
+\k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen.
+
+Hinweis: Wenn Sie keine Druckerverwaltungsberechtigung besitzen,
+können Sie mit dem folgenden Verfahren feststellen, welchen Benutzern
+der Zugriff gestattet oder nicht gestattet ist. Sie können jedoch
+keine Änderungen vornehmen.
+
+Wenn Sie einen Drucker erstmals einrichten, wird allen Benutzern der
+Zugriff auf diesen Drucker gestattet. Sie können den Zugriff lokaler
+Benutzer auf lokale oder ferne Drucker wie folgt kontrollieren:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie den Drucker an, auf den Sie den Zugriff gestatten oder
+  \tverweigern möchten.
+
+4.\tKlicken Sie "Drucker=>Benutzerzugriff einrichten". Das Fenster
+  \t"Drucker-Setup: Benutzerzugriff einrichten" erscheint.
+
+5.\tSie gestatten oder verweigern den Zugriff wie folgt:
+
+  \tHinweis: Um mehrere Benutzer auszuwählen, halten Sie <Strg>
+  \tgedrückt, während Sie mit der rechten Maustaste klicken.
+
+  \to\tUm den Zugriff zu gestatten, klicken Sie die gewünschten
+  \t \tBenutzer und anschließend "Zulassen" an. Die Benutzer werden in
+  \t \tdie Liste "Zulassen" verlegt.
+
+  \to\tUm den Zugriff zu verweigern, klicken Sie die gewünschten
+  \t \tBenutzer und anschließend "Verweigern" an. Die Benutzer werden in
+  \t \tdie Liste "Verweigern" verlegt.
+
+  \to\tUm alle Benutzer aus der Liste "Zulassen" zu entfernen, klicken
+  \t \tSie "Alle Verweigern" an. Damit werden alle Benutzer aus der Liste
+  \t \t"Zulassen" in die Liste "Verweigern" verlegt.
+
+6.\tKlicken Sie "OK" an.
+
+  \tHinweis: Sie können auch "Abbrechen" anklicken, wenn Sie den
+  \tZugriff für lokale Benutzer nicht zulassen oder ablehnen möchten.
+
+Siehe auch:
+\k(Funktionsleiste des Drucker-Setup verwenden)
+
+^1^Drucker steuern
+^$140
+Drucker steuern
+
+Wenn Sie eine \k(Druckerverwaltungsberechtigung^dtadmin/user.hlp^Mit Berechtigungen umgehen können) besitzen, können Sie
+lokale und ferne Drucker aktivieren und deaktivieren sowie festlegen,
+ob ein Drucker neue Druckaufträge annehmen soll.
+
+Hinweis: Wenn Sie keine Druckerverwaltungsberechtigung besitzen,
+können Sie das folgende Verfahren verwenden, um zu wissen, ob ein
+Drucker aktiv oder nicht aktiv ist oder Druckaufträge empfängt. Sie
+können jedoch keine Änderungen vornehmen.
+
+Um einen Drucker zu steuern, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie den Drucker an, den Sie steuern möchten.
+
+4.\tKlicken Sie "Drucker=>Steuern" an. Das Fenster "Drucker-Setup:
+  \tDrucker steuern" erscheint. Es enthält folgende Optionen:
+
+  \to\t<Drucker Name ist verfügbar/nicht verfügbar>: - Zeigt den Namen
+  \t \tdes aktuell gewählten Druckers sowie die Information an, ob der
+  \t \tDrucker aktiv oder nicht aktiv ist.
+
+  \to\tNeue Anforderungen: - Klicken Sie "Annehmen" an, wenn Sie
+  \t \tmöchten, daß der Drucker neue Anforderungen in der Warteschlange
+  \t \tannimmt. Andernfalls klicken Sie "Zurückweisen" an.
+
+  \to\tDruckerstatus: - Klicken Sie "Aktiviert" an, wenn Sie möchten,
+  \t \tdaß der Drucker die Aufträge in der Warteschlange druckt.
+  \t \tKlicken Sie "Deaktiviert" an, wenn Sie möchten, daß der Drucker
+  \t \tkeine Druckaufträge aus der Warteschlange mehr druckt.
+
+5.\tKlicken Sie auf "Anwenden", um die Änderungen zu speichern.
+
+  \tHinweis: Sie können auch "Zurücksetzen" anklicken, um die
+  \tvorhergehenden Änderungen wiederherzustellen. Wenn Sie "Abbrechen"
+  \tanklicken, verlassen Sie das Fenster ohne Änderungen.
+
+Siehe auch:
+\k(Funktionsleiste des Drucker-Setup verwenden)
+\s(Von der Befehlszeile Drucker steurn und Dateien drucken^dhelp "pe.de" ownerhb "Drucker einrichten und konfigurieren" "Von der Befehlszeile Drucker steurn und Dateien drucken" || helpLinkErr)
+
+^1^Druckersymbol in einen Ordner kopieren
+^$150
+Druckersymbol in einen Ordner kopieren
+
+Wenn Sie Ihr System mit einem Drucker ausgestattet haben, können Sie
+das Druckersymbol für den schnelleren Zugriff in einen Ordner
+kopieren.
+
+Um ein Druckersymbol in einen Ordner zu kopieren, gehen Sie wie folgt
+vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie das Druckersymbol an, das Sie in einen anderen Ordner
+  \tkopieren möchten.
+
+4.\tÖffnen Sie den Ordner, in den Sie das Druckersymbol kopieren
+  \tmöchten.
+
+5.\tVerschieben Sie das Druckersymbol mit der Methode
+  \t\d(Ziehen und Ablegen^ziehen-und-ablegen) in den Ordner.
+
+Sie können ein Druckersymbol auch mit Hilfe der Menüoptionen in einen
+anderen Ordner kopieren (siehe \k(Fenster Drucker-Setup: In Ordner kopieren)).
+
+
+^2^Fenster Drucker-Setup: In Ordner kopieren
+^$160
+Fenster Drucker-Setup: In Ordner kopieren
+
+Um ein Druckersymbol mit Hilfe der Menüoptionen in einen anderen
+Ordner zu kopieren, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf "Drucker_Setup". Das Fenster "Drucker-Setup"
+  \terscheint.
+
+3.\tKlicken Sie das Druckersymbol an, das Sie in einen anderen Ordner
+  \tkopieren möchten.
+
+4.\tKlicken Sie "Drucker=>In Ordner kopieren" an. Das Fenster
+  \t"Drucker-Setup: In Ordner kopieren" erscheint mit folgenden
+  \tFeldern:
+
+  \tKopieren: - Zeigt den Namen des ausgewählten Druckers an.
+
+  \tAn: - Wählen Sie den \d(Pfad) des gewünschten Ordners,
+  \tindem Sie die Ordnernamen im Mehrspalten-Browser anklicken. Wenn
+  \tder ausgewählte Ordner zusätzliche Ordner enthält, werden diese in
+  \tder rechten Spalte angezeigt. Sie können einen Ordner in diesem
+  \tFeld anklicken. Wenn Sie hier einen Ordner anklicken, der
+  \tzusätzliche Ordner enthält, wird rechts von dieser Spalte ein
+  \tdrittes Feld angezeigt.
+
+  \tKlicken Sie Ordner an, bis Sie den gewünschten \d(Pfad)
+  \terreichen. Um mehrere Spalten anzuzeigen, verschieben Sie die
+  \tFelder mit der Bildlaufleiste nach links und rechts.
+
+  \tHinweis: Sie können auch den vollständigen \d(Pfad) des
+  \tgewünschten Ordners in das Auswahlfeld eingeben.
+
+5.\tKlicken Sie "OK" an. Das System kopiert das Druckersymbol in den
+  \tOrdner.
+
+^1^Funktionsleiste des Drucker-Setup verwenden
+^$170
+Funktionsleiste des Drucker-Setup verwenden
+
+Mit der Funktionsleiste im Fenster "Drucker-Setup" erhalten Sie einen
+einfacheren Zugriff auf bestimmte Funktionen. Anstatt die Funktion im
+Menü aufzurufen, können Sie das entsprechende Symbol in der
+Funktionsleiste anklicken.
+
+Beispiel: Wenn Sie den aktuell ausgewählten Drucker löschen möchten,
+können Sie, statt "Drucker=>Löschen" anzuklicken, in der
+Funktionsleiste das Symbol "Löschen" anklicken.
+
+Die Funktionsleiste befindet sich unter der Menüleiste. Wenn Sie den
+Mauszeiger auf ein Symbol in der Funktionsleiste verschieben, zeigt
+das System eine kurze Beschreibung des Symbols im Fußteilbereich unter
+dem Symbol an.
+
+Auf folgende Funktionen können Sie durch Anklicken der Symbole der
+Funktionsleiste im Fenster "Drucker-Setup" zugreifen:
+
+\to  \k(Lokalen Drucker hinzufügen^^Lokalen Drucker hinzufügen)
+\to  \k(Fernen UNIX Drucker hinzufügen^^Fernen UNIX Drucker hinzufügen)
+\to  \k(Fernen NetWare Drucker hinzufügen^^Fernen NetWare Drucker hinzufügen)
+\to  \k(Drucker löschen^^Drucker löschen)
+\to  \k(Druckereigenschaften ändern^^Druckereigenschaften ändern)
+\to  \k(Druckersymbole in einen Ordner kopieren^^Druckersymbol in einen Ordner kopieren)
+\to  \k(Standarddrucker bestimmen^^Standarddrucker zuordnen)
+
+\to  \k(Drucker steuern^^Drucker steuern)
+\to  \k(Benutzerzugriff festlegen^^Zugriff für lokale Benutzer einrichten)
+\to  \k(Fernen Zugriff festlegen^^Zugriff auf ein fernes System einrichten)
+\to  \k(Verbindung zu einem NetWare Drucker herstellen oder trennen^^Lokalen Drucker an einen NetWare Server anschließen)
+\to  \k(Hilfe^DesktopMgr/help.hlp^Hilfe verwenden)
+\to  Beenden (identisch mit Datei=>Beenden)
+

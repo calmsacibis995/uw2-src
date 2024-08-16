@@ -1,0 +1,98 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/parameters/set/Form.log	1.1.7.3"
+#ident  "$Header: Form.log 2.0 91/07/12 $"
+#	Module Name: Form.log
+form="Set Event Log Parameters - Form 2"
+
+framemsg=`readfile $INTFBASE/form.msg`
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+# following line is a bad kludge to make sure this form doesn't hang around
+lifetime=longterm
+
+close=`rm -f $SLOGERR`
+`unset -l APATH -l ANODE -l APROG`
+`echo "$AUDITLOG" | fmlgrep "Next" | sed 's/^Next.*:			//g;s/\/MMDD.*//' | set -l APATH`
+`echo "$AUDITLOG" | fmlgrep "Next" | sed 's/^Next.*MMDD\#\#\#//' | set -l ANODE`
+`echo "$AUDITLOG" | fmlgrep "Program" | sed 's/^Program.*:		//' | set -l APROG`
+
+`if [ "$APATH" = "none" ];
+ then
+	set -l APATH="";
+	set -l ANODE="";
+ fi`
+`if [ "$APROG" = "none" ];
+ then
+	set -l APROG="";
+ fi`
+
+done=`set -l SLOGARGS="$SLOGARGS -A $F1";
+        if [ -n "$F3" ] ;
+        then
+                set -l SLOGARGS="$SLOGARGS -n $F3";
+        fi;
+	getfrm |set -l FRAMEID2;
+	test -n "$F2" && set -l SLOGARGS="$SLOGARGS -a $F2";
+	message -f "Setting event log parameters.";
+	shell "$TFADMIN auditlog $!SLOGARGS" >/dev/null 2>$SLOGERR;
+	if [ $RET -ne 0 ]; 
+	then
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.setnok";
+	elif [ -s "$SLOGERR" ];
+	then
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.setwok";
+	else
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.setok";
+	fi`$CMD
+
+#F1
+name=Secondary event log to be used:
+lininfo=Form.log:seclog
+nrow=1
+ncol=3
+frow=1
+fcol=35
+rows=1
+columns=15
+scroll=TRUE
+value="$APATH"
+invalidmsg= const "Error - Enter a full pathname to a directory or character special device."
+fieldmsg= const "Enter a full pathname to a directory or character special device."
+
+#F2
+name=String to append to defined log file:
+lininfo=Form.log:secstring
+nrow=2
+ncol=3
+frow=2
+fcol=41
+rows=1
+columns=8
+value="$ANODE"
+valid=`if [ -n "$F2" ];
+        then
+		valstr -r '[!/;-9;-z]\{0,7\}$' "$F2";
+	else
+		echo TRUE;
+        fi`
+invalidmsg= const "Error - string is more than 7 characters or contains a '/'."
+fieldmsg= const "Specify a string to be appended to the event log file."
+
+#F3
+name=Program to run when event log becomes full:
+lininfo=Form.log:program
+nrow=3
+ncol=3
+frow=3
+fcol=47
+rows=1
+columns=15
+scroll=TRUE
+value="$APROG"
+valid=`if [ -n "$F3" ];
+	then
+		regex -v "$F3" '^/[^ :]*$' && test -x "$F3";
+	else
+		echo TRUE;
+	fi`
+invalidmsg= const "Error - Must enter an absolute filename to an executable file."
+fieldmsg= const "Enter an absolute filename to an executable file."
+

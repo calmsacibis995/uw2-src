@@ -1,0 +1,148 @@
+#!/sbin/sh
+#ident	"@(#)ktool:common/ktool/idtools/idtarg/idcpunix	1.17"
+#ident	"$Header:"
+
+umask 022
+
+UNIX=unix
+LABEL=UX:idcpunix
+CATALOG=uxidtools
+
+PATH=/sbin:/usr/bin
+export PATH
+
+# set up environment to conform to the newly installed kernel
+env_setup()
+{
+	if [ -f /etc/conf/cf.d/stune ]
+	then
+		cp /etc/conf/cf.d/stune /etc/conf/cf.d/stune.current
+		if [ -x /sbin/chlvl ]
+		then
+			chlvl SYS_PRIVATE /etc/conf/cf.d/stune.current 2>/dev/null
+		fi
+	else
+		pfmt -l $LABEL -s warn -g $CATALOG:86 "cannot find /etc/conf/cf.d/stune\n"
+	fi
+	if [ -d /etc/conf/modnew.d ]
+	then
+		rm -rf /etc/conf.unix.old
+		mkdir /etc/conf.unix.old
+		if [ -d /etc/conf/mod.d ]
+		then
+			mv /etc/conf/mod.d /etc/conf.unix.old/mod.d
+		fi
+		mv /etc/conf/modnew.d /etc/conf/mod.d
+		if [ -x /sbin/chlvl ]
+		then
+			chlvl SYS_PRIVATE /etc/conf.unix.old /etc/conf/mod.d /etc/conf/mod.d/* 2>/dev/null
+		fi
+	else
+		pfmt -l $LABEL -s warn -g $CATALOG:87 "cannot find /etc/conf/modnew.d\n"
+	fi
+	if [ -f /etc/conf/cf.d/mod_register ]
+	then
+		rm -f /etc/conf.unix.old/mod_register
+		if [ -f /etc/conf/mod_register ]
+		then
+			mv /etc/conf/mod_register /etc/conf.unix.old/mod_register
+		fi
+		mv /etc/conf/cf.d/mod_register /etc/conf/mod_register
+		chmod 444 /etc/conf/mod_register
+		if [ -x /sbin/chlvl ]
+		then
+			chlvl SYS_PRIVATE /etc/conf/mod_register 2>/dev/null
+		fi
+	else
+		pfmt -l $LABEL -s warn -g $CATALOG:88 "cannot find /etc/conf/cf.d/mod_register\n"
+	fi
+}
+
+copyunix()
+{
+	cp /etc/conf/cf.d/unix /stand/$UNIX
+	if [ $? -ne 0 ]
+	then
+		pfmt -l $LABEL -s error -g $CATALOG:89 "Failed to install the new UNIX Operating System kernel in /stand.\nThe following is the contents of /stand:\n"
+		echo
+		ls -CF /stand
+		message -cu `gettxt $CATALOG:90 "Do you want to retry by removing some files from /stand? "`
+		case "$?" in
+		"1")
+			pfmt -l $LABEL -s info -g $CATALOG:91 "The new UNIX Operating System kernel is not installed.\n"
+			if [ "$unix_saved" -a -f /stand/unix.old ]
+			then
+				mv /stand/unix.old /stand/unix
+			fi
+			if [ "$stand_mounted" ]
+			then
+				umount /stand
+			fi
+			rm -f /etc/conf/.copy_unix
+			exit 1
+			;;
+		"0")
+			FILES=
+			while :
+			do
+				pfmt -s nostd -g $CATALOG:92 "Please enter the file(s) to be removed: "
+				read FILES
+				[ ! "$FILES" ] || break
+			done
+			export FILES
+			(cd /stand; rm -rf $FILES)
+			copyunix
+			;;
+		esac
+	fi
+}
+
+unix_saved=
+stand_mounted=
+
+if [ -f /etc/conf/.copy_unix -a -f /etc/conf/cf.d/unix ]
+then
+	stand_mounted=`mount | while read mntp junk
+	do
+		if [ "$mntp" = "/stand" ]
+		then
+			echo yes
+			break
+		fi
+	done`
+	if [ -z "$stand_mounted" ]
+	then
+		mount /stand
+		if [ $? != 0 ]
+		then
+			pfmt -l $LABEL -s error -g $CATALOG:93 "Cannot mount /stand. The installation of the new\nUNIX Operating System kernel failed.\n"
+			exit 1
+		fi
+	fi
+	if [ -f /stand/$UNIX ]
+	then
+		mv /stand/$UNIX /stand/$UNIX.old 
+		if [ $? -eq 0 ]
+		then
+			unix_saved=y
+			pfmt -l $LABEL -s info -g $CATALOG:94 "Saved the previous UNIX Operating System kernel as %s.old.\n" "$UNIX"
+		else
+			pfmt -l $LABEL -s warn -g $CATALOG:95 "Can not save the previous UNIX Operating System kernel.\n"
+		fi
+	fi
+	
+	copyunix
+
+	pfmt -l $LABEL -s info -g $CATALOG:96 "Installed new UNIX Operating System kernel.\n"
+	if [ -z "$stand_mounted" ]
+	then
+		umount /stand
+	fi
+	rm -f /etc/conf/.copy_unix
+	> /etc/conf/.new_unix
+	if [ -x /sbin/chlvl ]
+	then
+		chlvl SYS_PRIVATE /etc/conf/.new_unix 2>/dev/null
+	fi
+	env_setup
+fi

@@ -1,0 +1,280 @@
+#!/bin/ksh 
+#	@@man
+#	NAME
+#
+#		munch : Generate control function.
+#
+#	SYNOPSIS
+#
+#		munch [ option ... ] [ -- ] [ object_file ... ]
+#
+#	DESCRIPTION
+#
+#		With the "-c" option, write a control function for object files
+#		onto standard output that will invoke all functions matching a
+#		specified pattern. With the "-d" option, write a debug control
+#		function for object files onto standard output that will control
+#		all debug variables matching a specified pattern. Identifier
+#		patterns are as in EGREP(1).
+#
+#		Options :
+#
+#			-G debug_control_function_guard_identifier (default "__DEBUG__")
+#			-S debug_stream_identifier (default "debug_stream_p")
+#			-d (generate debug control function)
+#			-c (generate control function, default)
+#			-i identifier_pattern (default "^.*_initialize$")
+#			-f function_identifier (default "initialize")
+#
+#		Without any options and arguments, write a notice.
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#		TMPDIR : Temporary file directory.
+#
+#	FILES
+#
+#		${TMPDIR}/${$} : Temporary file.
+#
+#	SEE ALSO
+#
+#		CPP(1), EGREP(1), NM(1)
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	AUTHORS
+#	HISTORY
+#	@@name munch 2.0.0 15_June_1992
+#	@@end
+
+#ident	"@(#)p9k:p9k/munch	1.1"
+
+#	Set shell options.
+
+set -f;
+
+#	Set variables.
+
+typeset debug_control_function_guard_identifier=__DEBUG__;
+typeset debug_stream_identifier=debug_stream_p;
+integer is_generate_control_function=1;
+typeset identifier_pattern="^.*_initialize$";
+typeset function_identifier=initialize;
+typeset function_argument_list="void";
+typeset function_prototype="void";
+typeset include_list="";
+
+#	Set signal handlers.
+
+trap 'rm -fr ${TMPDIR}/${$}; exit 1' HUP INT QUIT IOT;
+trap 'rm -fr ${TMPDIR}/${$}' EXIT;
+
+#	Write notice.
+
+function write_notice
+{
+	print "name     : munch 2.0.0 15_June_1992";
+	print "synopsis : munch [ option ... ] [ -- ] [ object_file ... ]";
+	print "options  :";
+	print "           -G debug_control_function_guard_identifier" \
+		"(default \"__DEBUG__\")";
+	print "           -S debug_stream_identifier (default \"debug_stream_p\")";
+	print "           -d (generate debug control function)";
+	print "           -c (generate control function, default)";
+	print "           -i identifier_pattern (default \"^.*_initialize$\")";
+	print "           -f function_identifier (default \"initialize\")";
+	print "           -p prototype_file (default \"\")";
+	print "author   : karthik gargi,joseph koshy";
+}
+
+((${#} <= 0)) && { write_notice 1>&2; exit; };
+
+#	Analyze options.
+
+while getopts ":cdf:G:i:S:a:I:p:" option;
+do
+	case ${option} in
+		(p)
+			prototype_file="${OPTARG}";
+			;;
+		(c)
+			is_generate_control_function=1;
+			;;
+
+		(d)
+			is_generate_control_function=0;
+			;;
+
+		(f)
+			function_identifier=${OPTARG};
+			;;
+
+		(G)
+			debug_control_function_guard_identifier=${OPTARG};
+			;;
+
+		(i)
+			identifier_pattern=${OPTARG};
+			;;
+
+		(S)
+			debug_stream_identifier=${OPTARG};
+			;;
+
+		(:)
+			shift OPTIND-2;
+			print -u2 munch : argument not specified with option \
+				\"$(expr "${1}" : '\(.\)')${OPTARG}\".;
+			exit 1;
+			;;
+
+		(\?)
+			shift OPTIND-1;
+			print -u2 munch : option \
+				\"$(expr "${1}" : '\(.\)')${OPTARG}\" is invalid.;
+			exit 1;
+			;;
+
+		(*)
+			print -u2 munch : option \"${option}\" is invalid.;
+			exit 1;
+			;;
+	esac;
+done;
+
+shift OPTIND-1;
+
+#	Analyze arguments.
+
+((${#} <= 0)) && { write_notice 1>&2; exit; };
+
+#	Extract prototypes
+
+if [[ -n "${prototype_file}" ]]; then
+
+	[[ -f "${prototype_file}" ]] || {\
+	print -u2 "munch : missing prototype file \"${prototype_file}\".";\
+	exit 1;\
+	}
+	
+	function_argument_list="$(sed -n -e \
+		's/^%FUNCTIONARGUMENTS%[ \t]*\(.*\)$/\1/p' ${prototype_file})";
+	function_prototype="$(sed -n -e 's/^%FUNCTIONPROTOTYPE%[ \t]*\(.*\)$/\1/p'\
+		${prototype_file})";
+	include_file_list="$(sed -n -e 's/^%INCLUDEFILELIST%[ \t]*\(.*\)$/\1/p'\
+		${prototype_file})";
+
+fi
+
+#	Generate control function.
+
+nm -h -p -- "${@}" > ${TMPDIR}/${$} &&
+	nawk \
+		-v debug_control_function_guard_identifier=${debug_control_function_guard_identifier} \
+		-v debug_stream_identifier=${debug_stream_identifier} \
+		-v is_generate_control_function=${is_generate_control_function} \
+		-v identifier_pattern=${identifier_pattern} \
+		-v function_identifier=${function_identifier} \
+		-v function_argument_list="${function_argument_list}"\
+		-v function_prototype="${function_prototype}"\
+		-v include_file_list="${include_file_list}"\
+		'
+			#	Initialize.
+
+			BEGIN \
+			{
+				#	Determine identifier qualifier.
+
+				if (is_generate_control_function)
+				{
+					identifier_qualifier = "^T$";
+				}
+				else
+				{
+					identifier_qualifier = "^D$";
+				}
+
+				#	Set identifier count.
+
+				identifier_count = 0;
+			}
+
+			#	Analyze identifier definition.
+
+			(NF == 3 && $2 ~ identifier_qualifier && $3 ~ identifier_pattern) \
+			{
+				#	Add identifier to identifier list.
+
+				identifier_list[(identifier_count ++)] = $3;
+			}
+
+			#	Generate control function or debug control function.
+
+			END \
+			{
+				if (is_generate_control_function)
+				{
+					#	Generate control function.
+					gsub("^|,","\x0A#include ",include_file_list);
+					printf "%s\n\n", include_file_list;
+
+					for (number = 0; number < identifier_count; number ++)
+					{
+						printf "extern void %s(%s);\n",
+							identifier_list[number], function_prototype;
+					}
+
+					printf "\nvoid\n%s(%s)\n{\n", function_identifier, \
+						function_prototype;
+
+					for (number = 0; number < identifier_count; number ++)
+					{
+						printf "\t%s(%s);\n", identifier_list[number],
+							function_argument_list;
+					}
+
+					printf "}\n";
+				}
+				else
+				{
+					#	Generate debug control function.
+
+					printf "#if (defined(%s))\n\n"\
+						"#include <stdlib.h>\n\n"\
+						"#include \"stdenv.h\"\n\n"\
+						"extern FILE *%s;\n" \
+						"extern enum debug_level debug;\n\n",
+						debug_control_function_guard_identifier,\
+						debug_stream_identifier;
+
+					for (number = 0; number < identifier_count; number ++)
+					{
+						printf "extern enum debug_level %s;\n", identifier_list[number];
+					}
+
+					printf "\nvoid\n%s(boolean is_debug)\n{\n\tif (%s == " \
+						"NULL && (%s =\n\t\tfopen(getenv(\"debug_stream\")," \
+						" \"w\")) == NULL)\n\t{\n\t\t%s = stdout;\n\t}\n" \
+						"\n\tdebug = ((is_debug  \n\t\t&& atoi(getenv(" \
+						"\"debug\"))) != DEBUG_LEVEL_NONE);\n", 
+						function_identifier,
+						debug_stream_identifier, debug_stream_identifier,
+						debug_stream_identifier;
+
+					for (number = 0; number < identifier_count; number ++)
+					{
+						printf "\t%s = ((debug != DEBUG_LEVEL_NONE) ? " \
+							"debug :\n" \
+							"(atoi(getenv(\"%s\"))));\n",
+							identifier_list[number], identifier_list[number];
+					}
+
+					printf "}\n\n#endif\n";
+				}
+			}
+		' \
+		${TMPDIR}/${$};

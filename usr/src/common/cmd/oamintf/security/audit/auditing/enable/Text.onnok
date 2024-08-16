@@ -1,0 +1,24 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/enable/Text.onnok	1.1.3.2"
+#ident  "$Header: Text.onnok 2.0 91/07/12 $"
+#	Module Name: Text.onnok
+
+title="Error Enabling Auditing"
+framemsg=`readfile $INTFBASE/conf.msg`
+lifetime=shortterm
+
+rows=6
+columns=60
+
+text="
+An error occured in trying to enable auditing.
+
+`readfile $ONAUDERR`"
+
+altslks
+name=CONT
+button=11
+action=CLOSE
+
+name=CANCEL
+button=14
+action=CLEANUP

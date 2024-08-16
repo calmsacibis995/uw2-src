@@ -1,0 +1,44 @@
+#pragma ident	"@(#)mach64:mach64/m64_clks.def	1.2"
+
+/***
+ ***	NAME
+ ***
+ ***	m64_clocks.def : clock definitions for the clock chips 
+ ***			supported by the M64 series of chipsets.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***	#define M64_CLOCK_CHIP(CHIP_NAME, DESCRIPTION, CHECK_FUNC, 
+ ***		PROG_FUNC)
+ ***
+ ***	#include "m64_clocks.def"
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		__DEBUG__ : Enable debugging and assertion checking.
+ ***
+ ***	FILES
+ ***
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	HISTORY
+ ***
+ ***/
+
+DEFINE_CLOCK_CHIP(M64_CLOCK_CHIP_NULL, "", 0, 0),
+
+DEFINE_CLOCK_CHIP(M64_CLOCK_CHIP_ICS2595, "ICS 2595 Clock Generator",
+	ics2595_check_frequency, ics2595_select_frequency),
+	
+DEFINE_CLOCK_CHIP(M64_CLOCK_CHIP_COUNT, "", 0, 0)

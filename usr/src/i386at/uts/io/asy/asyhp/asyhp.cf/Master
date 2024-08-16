@@ -1,0 +1,10 @@
+#ident	"@(#)kern-i386at:io/asy/asyhp/asyhp.cf/Master	1.8"
+#ident	"$Header: $"
+$version 2
+$depend iasy
+$interface ddi 6
+$interface base
+# non-conforming symbols:
+#   portfree portalloc com_ppi_strioctl cdebugger
+$entry _asyinit intr start
+asyhp	asyhp	h	0	0	0

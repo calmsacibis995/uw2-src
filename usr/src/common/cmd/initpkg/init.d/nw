@@ -1,0 +1,116 @@
+#ident	"@(#)initpkg:common/cmd/initpkg/init.d/nw	1.29"
+#ident	"$Id: nw,v 1.38.2.1 1994/10/25 19:50:26 vtag Exp $"
+
+#	NetWare IPX Protocol Stack Startup
+
+if [ -z "$LC_ALL" -a -z "$LC_MESSAGES" ]
+then
+	if [ -z "$LANG" ]
+	then
+		LNG=`defadm locale LANG 2>/dev/null`
+		if [ "$?" != 0 ]
+		then LANG=C
+		else eval $LNG
+		fi
+	fi
+	export LANG
+fi
+CAT=uxrc
+LABEL="UX:$0"
+
+eval `LC_MESSAGES="$LANG" /usr/sbin/nwcm -v binary_directory -v log_directory -v ipx_start_at_boot`
+eval `LC_MESSAGES="$LANG" /usr/sbin/nwcm -C`
+NWBIN=$binary_directory
+LOG=$log_directory
+BOOT=$ipx_start_at_boot
+LOG=$LOG/startipx.log
+USAGE="$0 { start | stop }"
+
+if [ ! -d "$NWBIN" ]
+then			
+	# have to have /usr mounted
+	exit 1
+fi
+
+case $1 in
+'start')
+	if [ -f "$LOG" ]
+	then
+		rm -f $LOG.old
+		mv $LOG $LOG.old
+	fi
+
+	pfmt -s nostd -g $CAT:137 "NetWare IPX setup at %s\n" "`date`" 2>> $LOG
+	/usr/bin/chmod 0644 $LOG
+
+	#	Configure the protocol stack.
+
+	#
+	#	Make server_name match "uname -n" value
+	#
+	server_name="`uname -n`"
+	LC_MESSAGES="$LANG" /usr/sbin/nwcm -s"server_name=$server_name" >/dev/null
+
+	#
+	#	Discover our networks.  nwdiscover just exits if ipx_auto_discovery
+	#	is off
+	#
+	LC_MESSAGES="$LANG" $NWBIN/nwdiscover -u -t1 >> $LOG 2>&1
+	
+	if [ "$BOOT" != on ]
+	then
+		pfmt -l $LABEL -s info -g $CAT:38 "NetWare IPX startup is disabled\n"
+ 		pfmt -s nostd -g $CAT:38 "NetWare IPX startup is disabled\n" 2>> $LOG
+		exit 1
+	fi
+
+	if [ -z "$_AUTOBOOT" ]
+	then
+		if LC_MESSAGES="$LANG" $NWBIN/statnps
+		then
+			if ps -aef | fgrep -v " `cat $config_dir/npsd.pid` " | fgrep IPX >/dev/null 2>&1
+			then
+				#
+				# npsd has a pid file, and process is npsd
+				#
+				pfmt -s nostd -g $CAT:39 "NetWare IPX is already up and running\n" 2>>$LOG
+				exit 1
+			fi
+		fi
+	fi
+	#
+	# Cleanup .pid files, npsd is not up
+	#
+	rm -f $config_dir/*.pid
+
+	LC_MESSAGES="$LANG" $NWBIN/startnps -v >> $LOG 2>&1
+	if LC_MESSAGES="$LANG" $NWBIN/statnps
+	then
+		:
+	else
+		pfmt -l $LABEL -s error -g $CAT:40 "Problem starting up npsd, check %s\n" "$LOG"
+		pfmt -s nostd -g $CAT:41 "Problem starting up npsd\n" 2>>$LOG
+		exit 1
+	fi
+
+	;;
+
+'stop')
+
+	pfmt -s nostd -g $CAT:42 "NetWare IPX shutdown at %s\n" "`date`" 2>> $LOG
+
+	#stop all the daemons 
+	
+	if LC_MESSAGES="$LANG" $NWBIN/stopnps -q >>$LOG 2>&1
+	then
+		:
+	else
+		pfmt -l $LABEL -s warn -g $CAT:43 "Problem stopping IPX, check %s\n" "$LOG"
+		pfmt -s nostd -g $CAT:44 "Problem stopping IPX\n" 2>>$LOG
+	fi
+	;;
+*)
+	pfmt -l $LABEL -s action -g $CAT:4 "Usage: %s\n" "$USAGE" 2>&1
+	exit 1
+	;;
+esac

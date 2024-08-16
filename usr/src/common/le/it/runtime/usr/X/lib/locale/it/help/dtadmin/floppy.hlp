@@ -1,0 +1,217 @@
+#ident\t"@(#)dthelp:Disks-etc/floppy.hlp        1.20"
+^*version^1
+^*title^Disco A o B
+^:Disco A o Disco B
+^*width^70
+^+DesktopMgr/help.defs
+^?Utilizzare unità per dischetti
+^0^Disco A o B
+^$10
+Disco A o B
+
+Le icone Disco_A e Disco_B rappresentano le unità per dischetti sul
+sistema (se il sistema è dotato di una sola unità per dischetti,
+compare solo l'icona Disco_A).
+
+Utilizzare Disco A o Disco B per fare quanto segue:
+
+\to\t\k(Formattare dischetti^^Formattazione dei dischetti)
+\to\t\k(Fare il backup e il ripristino di file e cartelle^dtadmin/backup.hlp^Backup-Ripristino)
+\to\t\k(Aprire un dischetto come cartella^^Apertura di un dischetto come cartella di file)
+\to\t\k(Installare un'applicazione^dtadmin/App_Installer.hlp^Installatore applicazioni)
+\to\t\k(Cancellare un dischetto^^Cancellazione di un dischetto)
+
+Nota: Prima di copiare informazioni su un dischetto, il dischetto deve
+essere formattato.
+
+
+^1^Formattazione dei dischetti
+^$20
+Formattazione dei dischetti
+
+Per formattare dischetti, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Dischi-ecc, passare al Punto 2.
+
+1.\t\d(Fare doppio clic^doppio clic) su Dischi-ecc nella \k(finestra "Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare).
+  \t Appare la finestra "Cartella: Dischi-ecc".
+
+2.\tFare clic su Disco_A (o Disco_B) nella cartella Dischi-ecc.
+
+3.\tAssicurarsi che il dischetto non sia protetto dalla scrittura.
+
+  \to\tSu dischetti da 3,5"- la linguetta nera sul retro del
+  \t \tdischetto dovrebbe coprire il foro..
+
+  \to\tSu dischetti da 5,25"- la tacca sul bordo esterno
+  \t \tdel dischetto deve essere scoperta.
+
+4.\tInserire il dischetto nell'unità appropriata (A o B).
+
+5.\t\d(Fare clic col pulsante destro^clic destro) sull'icona
+  \tDisco_A o Disco_B.
+
+6.\tFare clic su Formatta. Appare la finestra "Formatta".
+
+7.\tFare clic sulla \k(Densità^^Densità dei dischetti) appropriata per il dischetto.
+
+8.\tFare clic sul \k(Tipo^^Tipi di formato) desiderato.
+
+9.\tFare clic su File=>Formatta. Appare la finestra "Formattazione in
+  \tcorso".
+
+  \tQuesta finestra visualizza una barra che scorre per indicare
+  \tl'avanzamento della formattazione, come pure il messaggio
+  \t"Formattazione in corso, prego attendere". (Alla fine, questa
+  \tstessa finestra mostra il messaggio "Formattazione terminata".
+
+Vedi anche:
+\s(Formattazione di dischetti^dhelp "pe.it" userhb "Gestione di file e cartelle" "Formattazione dei dischetti" || helpLinkErr)
+
+
+^2^Densità dei dischetti
+^$30
+Densità dei dischetti
+
+Il Desktop UnixWare supporta le seguenti densità per dischetti:
+
+\to\t720 KB
+
+\to\t360 KB
+
+\to\t1,2 MB
+
+\to\t1,44 MB
+
+\to\t2,88 MB
+
+^2^Tipi di formato
+^$40
+Tipi di formato
+
+Fare clic su uno dei seguenti tipi di formato:
+
+\to\tUso Backup - Se si desidera copiare file dal disco
+  \trigido al dischetto.
+
+\to\tCartella Desktop - Se si desidera poter aprire il dischetto
+\t \tcome cartella. Si possono gestire i file scritti su questo
+\t \tdischetto come file in una cartella qualunque.
+
+\t \tNota: Se si sceglie Cartella Desktop ma non si vuole usare il tipo
+\t \tdi file system di default, fare clic su \k(File=>Proprietà^^Formato: Finestra Proprietà) per
+\t \tselezionare un altro tipo.
+
+\to\tFormato DOS - Per usare i dischetti con il sistema operativo DOS.
+\t \t(Pur trovandosi su un sistema UnixWare, si può aver DOS installato
+\t \tcome applicazione sul proprio Desktop).
+
+In aggiunta ai formati di file creati da UnixWare, il Desktop è pure
+in grado di leggere file creati in altri formati. Vedere
+\k(Tipi di formato supportati addizionali) per ulteriori informazioni.
+
+^2^Formato: Finestra Proprietà
+^$45
+Formato: Finestra Proprietà
+
+Questa finestra visualizza i tipi di file system disponibili da cui
+poter scegliere. Fare clic sul tipo di file system desiderato e fare
+clic su OK.
+
+Per ulteriori informazioni sui tipi di file, vedi
+\s(Gestione dei tipi di file system^dhelp as sysag "Managing File System Types" "" || helpLinkErr).
+
+^2^Tipi di formato supportati addizionali
+^$50
+Tipi di formato supportati addizionali
+
+In aggiunta ai formati descritti in \k(Tipi di formato), il Desktop
+UnixWare può anche leggere file creati in altri formati. I formati per
+dischetti supportati comprendono i seguenti:
+
+\to\tUso Backup - Sebbene il Desktop utilizzi il comando di sistema
+\t \tUNIX \d(cpio) quando crea i backup, può anche
+\t \tripristinare i file creati con il comando di sistema UNIX tar(1).
+
+\t \tNota: Per ulteriori informazioni sui comandi del sistema UNIX,
+\t \tvedi il \s(Riferimento dei comandi^dhelp refman uarm "" "" || helpLinkErr).
+
+\to\tCartella Desktop - Il Desktop può aprire una cartella di file per
+\t \tdischetti creati in qualunque file system supportato da UnixWare,
+\t \tad esempio i file system s5, tufs e vxfs (vedi
+\t \t\k(Apertura di un dischetto come cartella di file)).
+
+\t \t-\ts5 è il file system standard per UNIX System V. Non consente
+\t \t \tl'utilizzo di nomi di file lunghi più di 14 caratteri.
+
+\t \t-\tufs accetta nomi di file più lunghi di s5 ed è ottimizzato per
+\t \t \tla scrittura di porzioni di dati più grandi alla volta.
+
+\t \t-\tvxfs è il file system rafforzato (che consente lo spegnimento
+\t \t \tdel computer, durante l'esecuzione, senza perdere dati).
+
+\to\tFormato DOS - Il Desktop può leggere (e scrivere) file da un disco
+\t \tformattato per DOS.
+
+\to\tFormati per Installazione - Il Desktop può leggere e installare
+\t \tpacchetti applicativi formattati in numerosi formati di sistema
+\t \tUNIX, compresi pkgadd, tar, installpkg, e custom.
+
+Vedi anche:
+\k(Backup-Ripristino^dtadmin/backup.hlp^Backup-Ripristino)
+\k(Installatore di applicazioni^dtadmin/App_Installer.hlp^Installatore applicazioni)
+\s(Gestione dei tipi di file system^dhelp as sysag "Managing File System Types" "" || helpLinkErr)
+
+
+^1^Apertura di un dischetto come cartella di file
+^$70
+Apertura di un dischetto come cartella di file
+
+Può essere opportuno aprire un dischetto come cartella di file. È una
+maniera pratica di gestire file, in quanto permette di copiarli,
+aggiungerli o cancellarli come se si trovassero sul disco rigido.
+
+Nota: Si può aprire e utilizzare un dischetto formattato per DOS
+esattamente come uno formattato per il Desktop.
+
+Per aprire un dischetto come cartella di file, procedere come segue:
+
+1.\tFormattare il dischetto come Cartella Desktop. (Vedi
+  \t\k(Formattazione dei dischetti)).
+
+2.\t\d(Fare doppio clic^doppio clic) sull'icona di dischetto
+  \trelativa al dischetto da utilizzare come cartella di file. Appare
+  \tla finestra di una cartella. Dalla finestra sono possibili le
+  \tseguenti operazioni:
+
+  \to\t\d(Trascinare e rilasciare^trascinare e rilasciare) i file sulla
+  \t \tcartella.
+
+  \to\tUsare tutti i comandi del menu File (quali Copia,
+  \t \tCancella, o Sposta),
+
+  \to\tAggiungere cartelle alla finestra.
+
+  \to\tAprire file e avviare programmi.
+
+
+^1^Cancellazione di un dischetto
+^$100
+Cancellazione di un dischetto
+
+Nota: L'opzione Cancella compare sul menu solo se il dispositivo la
+supporta.
+
+Per cancellare tutti i dati da un dischetto, procedere come segue:
+
+1.\t\d(Fare doppio clic^doppio clic) su Disks-etc nella finestra
+  \t\k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra Cartella: Disks-etc.
+
+2.\tFare clic su Disco_A (o Disco_B).
+
+3.\tInserire il dischetto nell'unità appropriata (A o B).
+
+4.\t\d(Fare clic col pulsante destro^clic destro) ovunque
+  \tsull'icona del dischetto.
+
+5.\tFare clic su Cancella.

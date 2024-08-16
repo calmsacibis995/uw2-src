@@ -1,0 +1,1595 @@
+FOOTER_HEIGHT=2
+Yes=ja
+No=nein
+Y=j
+N=n
+Enter_yesno="Geben Sie $Yes oder $No ein"
+MiniWelcome="Willkommen im Wartungsmodus.
+
+ Ihre Festplattensysteme, wenn vorhanden, sind unter /mnt montiert.
+ Wenn Sie eine Shell von Ihrem root-Dateisystem auf der Festplatte 
+ laufen lassen wollen, verwenden Sie den Befehl \"chroot\" 
+ (chroot /mnt /bin/sh).
+
+ Um den Wartungsmodus zu verlassen, geben Sie einfach \"exit\" ein.
+"
+# Long names for packages must not exceed 32 characters.
+# This restriction insures that any two package names
+# side-by-side will not overflow the right margin of pkgs menu.
+
+as_name="Application Server"
+pe_name="Personal Edition"
+eval LONG_NAME="\"\$${SET_NAME}_name\""
+base_name="Base System"
+lp_name="Printer Support"
+nsu_name="Network Support Utilities"
+acp_name="Enh. Application Compatibility"
+dtxt_name="Graphics Utilities"
+display_name="Graphics Display Support"
+atm_name="Adobe Type Manager(TM)"
+desktop_name="Desktop Manager"
+cmds_name="Advanced Commands"
+nics_name="Network Interface Card Support"
+oam_name="OA&M"
+bkrs_name="Extended Backup and Restore"
+terminf_name="Terminfo Utilities"
+inet_name="Internet Utilities (TCP/IP)"
+dfs_name="Distributed File System Util."
+rpc_name="Remote Procedure Calls Utilities"
+nfs_name="Network File System Utilities"
+nis_name="Network Information Service"
+audit_name="Auditing"
+acl_name="Access Control Lists"
+dynatext_name="DynaText Document Browser"
+manpages_name="Traditional Manual Pages"
+ASdocs_name="Application Server Documentation"
+frASdocs_name="French AS Documentation"
+itASdocs_name="Italian AS Documentation"
+deASdocs_name="German AS Documentation"
+esASdocs_name="Spanish AS Documentation"
+jaASdocs_name="Japanese AS Documentation"
+PEdocs_name="Personal Edition Documentation"
+frPEdocs_name="French PE Documentation"
+itPEdocs_name="Italian PE Documentation"
+dePEdocs_name="German PE Documentation"
+esPEdocs_name="Spanish PE Documentation"
+jaPEdocs_name="Japanese PE Documentation"
+jaSDKdocs_name="Japanese SDK Documentation"
+bsdcompat_name="BSD Compatibility"
+dtxtfonts_name="Graphics Supplemental Fonts"
+dtclients_name="Applications and Demos"
+nwnet_name="NetWare Networking"
+nuc_name="NetWare UNIX Client"
+merge_name="Advanced Merge"
+frmerge_name="French Advanced Merge"
+itmerge_name="Italian Advanced Merge"
+demerge_name="German Advanced Merge"
+esmerge_name="Spanish Advanced Merge"
+jamerge_name="Japanese Advanced Merge"
+bns_name="Basic NetWare Server"
+ls_name="Language Supplement"
+mele_name="Modified English Lang. Extension"
+frle_name="French Language Extension"
+itle_name="Italian Language Extension"
+dele_name="German Language Extension"
+esle_name="Spanish Language Extension"
+jale_name="Japanese Language Extension"
+jadicopft_name="Japanese DICOP Fonts"
+ccs_name="Optimizing C Compilation System"
+osmp_name="OS Multiprocessor Support"
+server_name="Server Utilities"
+nwsup_name="NetWare Integration Kit"
+platform_name="Additional Platform Utilities"
+netmgt_name="Network Management"
+ADVANCED_name="ADVANCED UNIXWARE PACKAGES"
+BASIC_name="BASIC UNIXWARE PACKAGES"
+BLANK_name=" "
+GRAPHICS_name="GRAPHICS PACKAGES"
+NETWORK_name="NETWORKING PACKAGES"
+
+GENERIC_HEADER="UnixWare $LONG_NAME ${VERSION} Installation"
+GENERIC_BAD_CHOICE="Bitte verwenden Sie F2 für die Auswahlmöglichkeiten."
+GENERIC_CONTINUE_CHOICE="Installation wird fortgesetzt"
+
+GENERIC_FOOTER="Verwenden Sie die Pfeil-nach-oben-/Pfeil-nach-unten-Tasten und
+die Eingabetaste, um auszuwählen"
+GENERIC_CHOOSE_FOOTER="$GENERIC_FOOTER."
+GENERIC_MENU_FOOTER="$GENERIC_FOOTER."
+AUTOMERGE_FOOTER="$GENERIC_FOOTER."
+BLKTYPE_FOOTER="$GENERIC_FOOTER."
+DATE_NODE_FOOTER="$GENERIC_FOOTER."
+FDFS_FOOTER="$GENERIC_FOOTER, F1=Hilfe."
+INETINST_MENU_FOOTER="$FDFS_FOOTER"
+MAIN_FOOTER="$GENERIC_FOOTER, F1=Hilfe, F9=Wartungsmodus."
+MOREHELP_FOOTER="$GENERIC_FOOTER oder Esc, um die Hilfe zu verlassen."
+GENERIC_FORM_FOOTER="Verwenden Sie die Tabulatortaste/Pfeiltasten, um sich zu bewegen,
+F1=Hilfe, F2=Auswahlmöglichkeiten, F10=Anwenden."
+GENERIC_WAIT_FOOTER="Bitte warten."
+INTL_DIRECTIONS="$GENERIC_FORM_FOOTER"
+
+NonBoot=" "
+Boot=Aktiv
+
+# For use in "asknodename" script
+System_Name="Systemknotenname:"
+SHORTNAME="Der Systemknotenname muß mindestens 3 Zeichen haben."
+BADCHARNAME="Der Systemknotenname muß aus ASCII-Buchstaben und Zahlen bestehen."
+NODEPROMPT="Geben Sie den Knotennamen für Ihr System ein, und drücken Sie die EINGABETASTE."
+INITIAL_NODE_TITLE="Geben Sie den Systemknotennamen ein"
+
+# For use in "asktime" script
+SYSTEM_TIME_MSG="Die aktuelle Systemzeit ist"
+CONF_TIME_MSG="Die von Ihnen konfigurierte Zeit ist"
+TIME_ERR_TZ="Bitte verwenden Sie F2, um eine Zeitzone auszuwählen."
+TIME_DIRECTIONS="Verwenden Sie die Tabulatortaste, um sich zu bewegen,
+F1=Hilfe, F2=Zeitzonenauswahl, F10=Anwenden."
+Year=Jahr
+Month=Monat
+Day=Tag
+Hour=Stunde
+Minute=Minute
+Timezone=Zeitzone
+AREA_CHOICE_TITLE="Kontinent"
+AREA_CHOICE_FOOTER="Wählen Sie Ihren Kontinent aus und drücken Sie dann die EINGABETASTE."
+TZ_CHOICE_TITLE="Zeitzone"
+TZ_CHOICE_FOOTER="Verwenden Sie die Pfeiltasten, um eine Zeitzone auszuwählen,
+und drücken Sie dann die EINGABETASTE:"
+NASAname="Nordamerika/Südamerika"
+EURname="Europa"
+ASIAAUSname="Asien/Australasien"
+
+# For use in "asktime" script.
+# Attention localizers, the MAXTZ_NAME variable must be set equal to
+# the maximum number of characters in a translated timezone name.
+# Examine field 1 of each timezone pair defined in EURtz, NASAtz and
+# ASIAAUStz, below. Set MAXTZ_NAME equal to the maximum length of field 1.
+
+MAXTZ_NAME=20
+
+# For use in "asktime" script.
+# Attention localizers, field 2 of each timezone pair below must not
+# be translated!
+# Fields 1 and 2 must be separated by TABs, not spaces.
+EURtz="GB-Irland	GB-Eire
+CET	CET
+EET	EET
+Polen	Poland
+Türkei	Turkey
+W-SU	W-SU
+Island	Iceland
+WET	WET"
+
+# For use in "asktime" script.
+# Attention localizers, field 2 of each timezone pair below must not
+# be translated!
+# Fields 1 and 2 must be separated by TABs, not spaces.
+NASAtz="USA/Osten	US/Eastern
+USA/Zentrum		US/Central
+USA/Bergregion		US/Mountain
+USA/Pazifikraum		US/Pacific
+USA/Yukon		US/Yukon
+USA/East-Indiana		US/East-Indiana
+USA/Arizona		US/Arizona
+USA/Hawaii		US/Hawaii
+Kanada/Neufundland	Canada/Newfoundland
+Kanada/Atlantikküste		Canada/Atlantic
+Kanada/Osten		Canada/Eastern
+Kanada/Zentrum		Canada/Central
+Kanada/Bergregion		Canada/Mountain
+Kanada/Pazifikraum		Canada/Pacific
+Kanada/Yukon		Canada/Yukon
+Kanada/East-Saskat	Canada/East-Saskat
+MST			MST
+HST			HST
+EST			EST
+Mexiko/BajaNorte	Mexico/BajaNorte
+Mexiko/BajaSur		Mexico/BajaSur
+Mexiko/Allgemein		Mexico/General
+Brasilien/Osten		Brazil/East
+Brasilien/Westen		Brazil/West
+Brasilien/Acre		Brazil/Acre
+Brasilien/DeNoronha	Brazil/DeNoronha
+Chile/Kontinent	Chile/Continental
+Chile/Osterinsel	Chile/EasterIsland"
+
+# For use in "asktime" script.
+# Attention localizers, field 2 of each timezone pair below must not
+# be translated!
+# Fields 1 and 2 must be separated by TABs, not spaces.
+ASIAAUStz="Israel	Israel
+Japan			Japan
+Singapur		Singapore
+Hongkong		HongKong
+Neuseeland		New-Zealand
+Australien/Tasmanien	Australia/Tasmania
+Australien/Victoria	Australia/Victoria
+Australien/NSW		Australia/NSW
+Australien/Queensl.	Australia/Queensland
+Australien/Norden		Australia/North
+Australien/Westen		Australia/West
+Australien/Sturt		Australia/Sturt
+Australien/Yancow.	Australia/Yancowinna
+Australien/LHI		Australia/LHI
+China			China
+Korea			Korea
+ROC			ROC"
+
+# For use in "choose" script
+CHOOSE_TITLE="Auswahlmöglichkeiten"
+
+CHANGE_NAME="Anzeigen oder Ändern ^Systemknotenname"
+TITLE_NAME="Knotenname des Systems"
+CHANGE_TIME="Anzeigen oder Ändern ^Zeit und Datum"
+TITLE_TIME="Datum und Zeit"
+
+# For use in "fd" script
+SAYCYLS="Anzahl der Zylinder: "
+SAYUSEDCYLS="Gegenwärtig verwendet: "
+FD_ERR_ADDR_TOOBIG="Zylinderadresse ist größer als Plattengröße."
+FD_FOOTER="Plattengeometrie wird gelesen ...."
+FD_PART_CHOOSE_FOOTER="Bitte wählen Sie einen Partitionstyp aus und drücken Sie die EINGABETASTE."
+FD_FS_CHOOSE_FOOTER="Bitte wählen Sie einen Dateisystemtyp aus und drücken Sie die EINGABETASTE."
+FD_ERR_STATUS="Bitte verwenden Sie F2, um einen Partitionsstatus auszuwählen."
+FD_ERR_TYPE="Bitte verwenden Sie F2, um eine Partitionstyp auszuwählen."
+FD_ERR_PCT="Der Prozentsatz muß eine Zahl zwischen 0 und 100 sein."
+FD_ERR_LENGTH="Die Länge muß einer Zahl zwischen 1 und \${DISK_NUMCYL[disk]} entsprechen."
+FD_ERR_PRE5DOSPCT="Eine vor-DOS 5.0-Partition kann nicht mehr als 10% ausmachen."
+FD_ERR_OVER_100="Die angegebene Anzahl von Zylindern ist zu groß für die Partition."
+FD_ERR_BAD_ADDRS="Zylinderadressen überlappen."
+FD_ERR_UNDEF="Nicht angegebene Größe für die Partition \$i."
+FD_ERR_DISKNO="Bitte geben Sie 1 oder 2 ein"
+PART_CHOOSE="Typ auswählen"
+
+# Do not translate the following five strings into another language.
+UNIX="UNIX System"	#Do not translate
+DOS="DOS"		#Do not translate
+SYSCONFIG="System"	#Do not translate
+PRE5DOS="pre-5.0DOS"	#Do not translate
+other="Other"		#Do not translate
+
+unused="nicht verwendet"
+Partition="Partition"
+Type="Typ"
+Status="Status"
+Percentage="%"
+Start="Start"
+End="Ende"
+Length="Länge"
+Cylinders="Zylinder"
+MB="Größe (MB)"
+YN="($Yes/$No)"
+
+# For use in "fd_fs" and dischk scripts
+FDISK_1_ENTRY="Platte 1 Partitionen"
+FDISK_2_ENTRY="Platte 2 Partitionen"
+FSCONF_ENTRY="Dateisysteme"
+DISKCHK_ENTRY="Plattenoperationen"
+MENU_EXIT="Zurück zum vorherigen Menü"
+
+DiskCheck="Funktionen                               "
+DCHK_1="Oberflächenanalyse auf Platte1 ausführen:"
+DCHK_2="Oberflächenanalyse auf Platte2 ausführen:"
+DO_BOOTSECTOR="Systemhauptstartcode überschreiben:      "
+
+# For use in "fs" script
+ATTR_FOOTER="Verwenden Sie die Tabulatortaste/Pfeiltasten, um sich zu bewegen,
+F1=Hilfe, F2=Auswahlmöglichkeiten, F6=Erweiterte Optionen, F10=Anwenden."
+FS_ERR_TYPE="Bitte verwenden Sie F2, um einen Dateisystemtyp auszuwählen."
+FS_ERR_TOOSMALL="Bitte geben Sie eine Zahl für die Größe ein, die größer oder gleich \$min ist."
+FS_ERR_NOTNUM="Bitte geben Sie eine Zahl ein."
+FS_ERR_TOOBIG="Die gewählten Dateisystemgrößen sind zu umfangreich für die Festplatte \$dsk."
+FS_ERR_HUGE="Die zugelassene maximale Größe (in MB) ist"
+FS_ERR_DISKNUM="Die von Ihnen eingegebene Plattennummer ist ungültig."
+FS_ERR_NOALTS="Für Platte 2 wurde kein alternativer Sektortabellenslice definiert."
+FS_BLKSIZE_ERR="Die designierte Blockgröße entspricht nicht dem Dateityp."
+FS_INODE_ERR="Begrenzte I-Knoten werden auf diesem Dateisystemtyp nicht unterstützt."
+FSTYPE_CHOOSE="Dateisystem auswählen"
+BLKTYPE_CHOOSE="Blockgröße auswählen"
+FS_AVAIL="Verfügbare Größen (MB): "
+FS_USED="Gegenwärtig verwendet (MB): "
+FS_DISK1="Platte 1: "
+FS_DISK2="Platte 2: "
+off="aus"
+slice=Slice
+FileSystem="Dateisystem"
+Attribute="Attribute"
+fstypeDESC="Dateisystemtyp"
+blocksDESC="Dateisystem-Blockgröße"
+inodesDESC="64KB Inodebegrenzung"
+Description="Beschreibung"
+standDESC="Startdateisystem"
+swapDESC="Auslagerungsslice"
+rootDESC="Stammdateisystem"
+usrDESC="Dateisystem usr"
+homeDESC="Benutzerdateisystem"
+dumpDESC="Speicherauszugsslice"
+varDESC="Dateisystem für Zusatzprodukte"
+home2DESC="Dateisystem für zweiten Benutzer"
+tmpDESC="Temporäres Dateisystem"
+altsDESC="Alt/Sektorslice"
+privDESC="Privates Volume"
+FsType="Typ   "
+Size="Größe"
+Disknum="Platte"
+INODE_CHOICES="nein ja"
+
+# For use in gauge
+INST_GAUGE_TITLE="Installationsfortschritt"
+DISK0_GAUGE_TITLE="Prüfung der primären Festplatte"
+DISK1_GAUGE_TITLE="Prüfung der sekundären Festplatte"
+
+# For use in "helpwin" script
+FIRST_PAGE_FOOTER="F1=Mehr Hilfe, Seite nach unten, Esc, um Hilfe zu verlassen"
+MIDDLE_PAGE_FOOTER="F1=Mehr Hilfe, Seite nach unten, Seite nach oben, Esc, um Hilfe zu verlassen"
+LAST_PAGE_FOOTER="F1=Mehr Hilfe, Seiten nach oben, Esc, um Hilfe zu verlassen"
+ONLY_PAGE_FOOTER="F1=Mehr Hilfe, Esc, um Hilfe zu verlassen"
+MOREHELP_TITLE="Verwandte Hilfethemen"
+
+# For use in "inst" script
+INSTMSG="
+
+  Software wird installiert  
+
+      Bitte warten Sie
+
+"
+SURFACE_SCAN_TEXT="
+ Prüfung des aktiven UNIX Bereichs
+ Ihrer Festplatte nach fehlerhaften Blöcken. 
+
+ Die Plattenkapazität bestimmt
+ die Dauer dieses Prozesses.
+"
+
+DISKSETUP_DISK0_MSG="
+ Prüfung der primären Festplatte... 
+"
+DISKSETUP_DISK1_MSG="
+ Prüfung der sekundären Festplatte... 
+"
+
+DISKSETUP_FAULT="
+Fataler Fehler: Fehlgeschlagener Versuch, eine Festplatte einzurichten.
+
+Mögliche Ursachen für das Versagen:
+
+  - beschädigte Festplatte bzw. Festplattencontroller
+  - beschädigte Datenverbindung zwischen Platte und Controller
+  - nicht korrekt beendeter externer Bus (falls vorhanden)
+
+$HANDBOOK
+"
+
+MKFS_WAIT="
+ Einrichtung der Dateisysteme... 
+"
+MKFS_FAILED="
+Fataler Fehler: Fehlgeschlagener Versuch,
+auf Ihrer Festplatte Dateisysteme einzurichten.
+
+Mögliche Ursachen für das Versagen:
+
+  - beschädigte Festplatte bzw. Festplattencontroller
+  - beschädigte Datenverbindung zwischen Platte und Controller
+  - nicht korrekt beendeter externer Bus (falls vorhanden)
+
+$HANDBUCH
+$CONTROL_D
+"
+
+REBUILD_MSG="
+
+    Das Betriebssystem wird aufgebaut   
+
+         Bitte warten Sie 
+
+    (Das kann einige Minuten dauern)
+
+"
+
+# For use in "intl" script
+LOCALES="Keine (USA)
+Argentinien
+Australien
+Österreich
+Belgien/Holländisch
+Belgien/Französisch
+Brasilien
+Kanada/Englisch
+Kanada/Französisch
+Chile
+Dänemark
+Finnland
+Finnland/Schwedisch
+Frankreich
+Deutschland
+Hong Kong
+Island
+Indien
+Irland
+Italien
+Mexiko
+Niederlande
+Neuseeland
+Norwegen
+Portugal
+Singapur
+Spanien
+Schweden
+Schweiz/Französisch
+Schweiz/Deutsch
+Schweiz/Italienisch
+GB
+USA
+Venezuela"
+Country_Language="Land/Sprache"
+Keyboard="Tastatur"
+Other_Countries="Zusätzliche Unterstützung"
+None=Keine
+Related_Countries="Verwandte Länder"
+All_Countries="Alle Länder verfügbar"
+BADRELATED="$GENERIC_BAD_CHOICE"
+BADLOCALE="Bitte verwenden Sie F2, um ein Land auszuwählen."
+BADKEYBOARD="Bitte verwenden Sie F2, um eine Tastatur auszuwählen."
+
+# For use in "keyboard" script
+# Field 2 below must not be translated!
+# Fields 1 and 2 must be separated by TABs, not spaces.
+KEYBOARDS="Belgisch	BE
+Kanadisch (IBM 445)	CA
+Dänisch			DK
+Holländisch			NL
+Finnisch			SE
+Französisch			FR
+Französisch-Kanadisch		fr_CA
+Deutsch			DE
+Isländisch		IS
+Italienisch			IT
+Italienisch (IBM 142)	IT2
+Japanisch (A01)		A01
+Japanisch (AX)		AX
+Latin-American		es
+Mexican			es
+Norwegian		NO
+Portuguese		PT
+Spanish			ES
+Swedish			SE
+Swiss-French		fr_CH
+Swiss-German		de_CH
+UK English		GB
+US (ASCII)		NONE
+US (Latin-1)		US"
+KEYBOARD_FOOTER="Verwenden Sie die Pfeiltasten, um eine Tastatur auszuwählen, 
+und drücken Sie dann die EINGABETASTE."
+KEYBOARD_ENTRY="Tastaturtyp auswählen"
+
+# For use in "main" script
+MAIN_TITLE="Installationsmenü"
+SAVE_EXIT="^Alle Einstellungen akzeptieren und jetzt installieren"
+SAVE_EXIT2="Alle Einstellungen akzeptieren und jetzt installieren"
+SAVE_EXIT_PROMPT="Die Installation beginnt, wenn Sie die EINGABETASTE drücken."
+EXIT_ERR="Wählen Sie \"$SAVE_EXIT2\", um mit der Installation zu beginnen."
+CANCEL="^Installation abbrechen und das System herunterfahren"
+CANCEL2="Installation abbrechen und das System herunterfahren"
+CANCEL3="Installation a^bbrechen und System abschalten"
+CANCEL_PROMPT="Wählen Sie die, um die Installation abzubrechen und das System herunterzufahren"
+NODE_PROMPT="Wählen Sie die, um den Systemknotennamen anzuzeigen oder zu ändern."
+TIME_PROMPT="Wählen Sie die, um die Zeit oder das Datum anzuzeigen oder zu ändern."
+PKGPROMPT="Wählen Sie die, um Liste der zu installierenden Pakete anzuzeigen/zu ändern."
+PKGENTRY="^Paketauswahl anzeigen oder ändern"
+PKGENTRY2="Paketauswahl anzeigen oder ändern"
+RESET_PROMPT="Wählen Sie die, um die Installation ganz von vorne nochmal zu beginnen."
+RESET_ENTRY="Installation ^neu starten"
+HARD_DISK_PROMPT="Wählen, um Dateisysteme oder Partitionen der Festplatte anzuzeigen oder zu ändern."
+HARD_DISK_ENTRY="P^lattenkonfiguration anzeigen oder ändern"
+HARD_DISK_ENTRY2="Plattenkonfiguration anzeigen oder ändern"
+HARD_DISK_ENTRY_TITLE="Plattenkonfiguration"
+INTL_PROMPT="Wählen Sie die, um den Tastaturtyp anzuzeigen oder zu ändern."
+INTL_ENTRY="^Tastaturtyp anzeigen oder ändern"
+INTL_ENTRY2="Tastaturtyp anzeigen oder ändern"
+
+# For use in "pkgs" script
+PKG_TITLE="Paketauswahl"
+PKG_FOOTER="F1=Hilfe, F5=Alles auswählen, F6=STANDARD auswählen,
+Leertaste=umschalten, ENTER=Zurück."
+PKG_REQ_MSG="Das Paket \$CURPKGNAME wird für alle Installationen benötigt."
+NOND_PKG_REQ="Für dieses Paket muß eine nicht-destruktive Installation gewählt werden."
+NOPARAM="       Mit dem $CURPKGNAME-Paket sind keine für  
+              den Benutzer sichtbaren Parameter zugeordnet.
+                          
+              Drücken Sie die EINGABETASTE, um fortzufahren."
+
+NOSELECT="Um Parameter zu bearbeiten, müssen Sie zuerst das Paket auswählen"
+
+# For use in "securevt" script
+BADSERIAL="
+   Die eingegebene Seriennummer ist nicht richtig.   
+
+   Drücken Sie die EINGABETASTE, um fortzufahren.
+"
+SERIAL_PROMPT="Bitte geben Sie die Seriennummer Ihrer UnixWare Kopie ein:"
+SERIAL_TITLE="Seriennummer eingeben"
+
+HANDBOOK="Weitere Informationen finden Sie im UnixWare Installationshandbuch."
+Welcome=" Willkommen zur UnixWare Installation ${LONG_NAME} ${VERSION}!
+
+ Für die Installation von UnixWare ${VERSION} müssen Sie auf verschiedene
+ Fragen antworten.  Soweit möglich, sind bereits Standardwerte vorgegeben.
+
+ Sobald Sie das ${MAIN_TITLE} erreicht haben, können Sie alle
+ Einstellungen erneut prüfen und ändern oder die Installation abbrechen.
+
+ Permanente Änderungen werden erst vorgenommen, wenn Sie 
+ \"${SAVE_EXIT2}\"
+ in ${MAIN_TITLE} wählen.
+
+ Bitte lesen Sie die Anleitungen unten am Bildschirm;
+ die meisten Bildschirme gestatten auch, mit der F1-Taste Hilfe aufzurufen.
+
+ $HANDBOOK"
+
+WELCOME_FOOTER="Drücken Sie die EINGABETASTE, um fortzufahren."
+
+# Minimum Hardware Error message
+DISKerror="
+Fataler Fehler: Entweder konnte UnixWare keine einzige Festplatte finden,
+oder Ihre primäre Festplatte ist zu klein.  Die Installation kann nicht 
+fortgesetzt werden.
+
+Sie müssen über mindestens 80MB primären Festplattenspeicherplatz verfügen, 
+um den Installationsprozeß erneut starten zu können.
+
+$HANDBOOK
+$CONTROL_D
+"
+MINIHW_CHOOSE="
+Versuchen Sie noch einmal, HBA-Treiber zu laden und/oder das DCU einzugeben
+$CANCEL2
+"
+INSTERR="Drücken Sie die EINGABETASTE, um die Installation zu beenden."
+
+# Hardware Error Stop message
+HWerror="
+FEHLER: Auf Ihrem Computersytem wurden Fehler entdeckt, und
+deshalb kann die Installation nicht fortgesetzt werden.
+
+$HANDBOOK
+
+"
+# For use in useanswers
+FDISKerror="
+ FEHLER: Bei der Einrichtung Ihrer Festplattenpartitionen wurde ein
+ Fehler entdeckt, d.h. die Installation kann nicht fortgesetzt werden.
+
+ Beheben Sie das Problem, bevor Sie einen weiteren Installationsversuch
+ starten.
+
+ $HANDBOOK
+"
+FDISKERROR_FOOTER="$WELCOME_FOOTER"
+
+# For use in "floppy2" script
+HBAFLOP_EXPLAIN=" UnixWare ${VERSION} beinhaltete ein Diskette mit dem Etikett \"Host Bus Adapter
+Drivers\".  Diese Diskette enthält die allgemeinen Gerätetreiber für gängige
+Host-Busadapter (HBA) und andere Geräte.  Hardware-Händler liefern
+möglicherweise noch zusätzliche HBA-Disketten.  Wenn dies der Fall sein
+sollten, lesen Sie bitte in den mit den anderen HBA-Disketten mitgelieferten
+Anleitungen nach, in welcher Reihenfolge Sie die Disketten einlegen müssen.
+$HANDBOOK
+
+ Wenn HBA-Diskette(n) erforderlich ist/sind, oder wenn Sie nicht sicher sind:
+   1. Die Installationsdiskette aus dem Laufwerk entfernen.
+   2. Die erste HBA-Diskette einlegen und die EINGABETASTE drücken.
+ Wenn Sie sicher sind, daß Ihr System keine HBA-Disketten benötigt:
+   1. Die Installationsdiskette aus dem Laufwerk entfernen.
+   2. \"$GENERIC_CONTINUE_CHOICE\" wählen und die EINGABETASTE drücken.
+
+"
+
+HBAFLOP_MORE="
+ Wenn Sie zusätzliche HBA-Disketten haben:
+  1. Legen Sie die nächste HBA-Diskette ein und drücken Sie ENTER.
+
+ Wenn Sie keine zusätzlichen HBA-Disketten benötigen:
+  1. Nehmen Sie die HBA-Diskette aus dem Laufwerk.
+  2. Wählen Sie \"$GENERIC_CONTINUE_CHOICE\" und drücken Sie
+     die EINGABETASTE.
+"
+HBAFLOP_CHOOSE="Treiber für den Host-Busadapter installieren
+$GENERIC_CONTINUE_CHOICE"
+HBAFLOP_CHOOSE_MORE="Andere HBA-Disketten installieren
+$GENERIC_CONTINUE_CHOICE"
+HBAERROR_CHOOSE="Diese HBA-Diskette nochmal versuchen
+Diese HBA-Diskette abbrechen"
+HBA_NOROOM="
+Es ist nicht genügend Speicherplatz vorhanden, um das Modul \$hbaname zu laden. 
+Dieses Modul ist für den erfolgreichen Abschluß der Installation nicht
+unbedingt erforderlich und kann deshalb übergangen werden. Wird dieses 
+Modul nicht geladen, kann während der Installation auf keines der 
+Geräte zugegriffen werden, die von diesem Modul gesteuert werden.
+"
+MINHBA_CHOOSE="Diesen HBA-Treiber übergehen.
+$CANCEL2"
+
+FLOPPY_MOUNT_FOOTER="Wird von Diskette geladen....."
+FLOPPY_IHVHBA_FOOTER="HBA-Modul wird von Diskette geladen....."
+FLOPPY_ERROR_FOOTER="Fehler beim Laden den HBA-Moduls...."
+FLOPPY_MOUNT_ERROR="Fehler beim Montieren der Diskette...."
+REMOVE_FLOPPY_FOOTER="Bitte nehmen Sie die Diskette jetzt heraus."
+IHVLOADFOOTER="\$loadname wird geladen "
+NOIHVS="Von dieser Diskette wurde kein HBA-Modul ausgewählt."
+IHVSELECT=" Ausgewählte HBA-Module werden geladen. "
+DUPIHVS="
+Die Diskette wurde bereits geladen.
+Laden von dieser Diskette wurde bereits beendet.
+"
+HBA_REINSERT="
+Legen Sie jetzt die HBA-Diskette mit folgendem Etikett ein
+"
+HBA_LOAD_FOOTER="\$HBA_PROMPT wird geladen "
+HBA_FOOTER="Drücken Sie die EINGABETASTE, wenn Sie bereit sind."
+HBA_EMSG1="
+Installation der HBA-Diskette unmöglich. Noch einmal versuchen.
+"
+HBA_EMSG2="
+Sie haben die falsche HBA-Diskette eingelegt. Versuchen Sie es noch einmal.
+"
+HBA_EMSG3="
+Diese Diskette scheint keine HBA-Diskette zu sein. Versuchen Sie es nochmal.
+"
+HBA_EMSG4="
+Die Treiber auf dieser HBA-Diskette sind auf Ihrem System nicht notwendig.
+"
+IHVwait="
+
+       Bitte warten Sie, während
+die HBA-Hardwaretreiber geladen werden.
+
+"
+Floppy2Wait="
+
+        Bitte warten Sie, während
+die Systemhardware-Treiber geladen werden. 
+
+"
+cdrom_prompt="
+Bitte legen Sie die $LONG_NAME CD 
+in das CD-ROM-Laufwerk ein und drücken Sie die EINGABETASTE. 
+
+Wenn Sie mehr als ein CD-ROM-Laufwerk haben, stellen Sie sicher, 
+daß alle leer sind, bis auf das eine, das die $LONG_NAME CD enthält. 
+Wenn die CD bereits im Laufwerk ist, drücken Sie nur die EINGABETASTE.
+"
+tape_prompt="
+Bitte legen Sie das $LONG_NAME Band
+in das Bandlaufwerk ein und drücken Sie die EINGABETASTE.
+
+Wenn Sie mehr als ein Bandlaufwerk haben, 
+stellen Sie sicher, daß alle leer sind, 
+bis auf das eine, das das $LONG_NAME Band enthält. 
+Wenn das Band bereits im Laufwerk ist, drücken 
+Sie nur die EINGABETASTE.
+"
+diskette_prompt="
+Bitte legen Sie die Diskette mit dem Etikett \"Installation Tools\"
+in das 3,5 Zoll Diskettenlaufwerk ein und drücken Sie dann die EINGABETASTE.
+"
+GET_TOOLS_WAIT="
+
+     Bitte warten Sie, während die 
+ System-Softwaretreiber geladen werden. 
+
+"
+# Disk size warning messages
+DISK0warn="
+Die aktuelle Partitionierung ist aus folgenden Gründen nicht akzeptabel:
+
+        -Es gibt keine UNIX Systempartition.
+        -Die UNIX Systempartition ist nicht AKTIV.
+        -Die UNIX Systempartition hat weniger als 80 MB.
+
+"
+DISK0WARN="Bitte drücken Sie ENTER, wenn bereit, und versuchen es nochmals."
+DISK1warn="
+Wenn Sie auf Ihrer zweiten Festplatte auch eine UNIX Systempartition
+einrichten wollen, so muß diese mindenstens 40 MB haben.
+Die aktuelle Partition ist aus folgenden Gründen nicht akzeptabel:
+
+        -Es gibt keine UNIX Systempartition.
+        -Sie müssen eine AKTIVE UNIX Systempartition bestimmen.
+        -Die UNIX Systempartition hat weniger als 40 MB.
+
+"
+DISKWARN1="Bitte drücken Sie ENTER, wenn bereit, und versuchen es nochmals."
+HighCYLS="
+Die gegenwärtig AKTIVE UnixWare Partition ist keine LADBARE
+ Partition. Der gesamte Slice /stand der AKTIVEN Partition
+ auf Platte 1 muß unter der Zylindernummer 1024 liegen.
+"
+FOOTER_HIGHCYLS="Warnung, Booten der Partition nicht möglich."
+#strings for reboot
+REBOOT_MSG="
+  Die Installation von UnixWare ${VERSION} wurde erfolgreich abgeschlossen.  
+  Anwendungen und andere Software-Pakete können nach einem Neustart des
+  Computers unter Verwendung der verfügbaren Tools installiert werden.
+
+          ****STELLEN SIE SICHER, DASS DIE BOOT-LAUFWERKE****
+              ****(DISKETTE UND/ODER CD-ROM) LEER SIND****
+
+  Wenn Sie die EINGABETASTE drücken, wird das System abgeschaltet
+  und neu gestartet.
+"
+UPGRADE_WARN="
+  Wenn Sie von UnixWare 1.1 oder UnixWare 1.1.2 auf UnixWare 2.01
+  aufrüsten oder eine Überlagerung durchführen, wird Ihr UnixWare 2.01
+  System das Paket NetWare UNIX Client (nuc) und das Paket
+  NetWare Networking (nwnet) nicht einschließen.
+
+  Wenn Ihr UnixWare 2.01 System läuft, können Sie die Pakete
+  NetWare UNIX Client und NetWare Networking mit dem Anwend_Installierer  
+  auf dem Desktop oder mit dem Befehl pkgadd installieren.
+"
+# the following used by askfdisk function
+ASKFDISK="
+HINWEIS: Ihr Computer verfügt nicht über die vorgeschriebe primäre
+Festplattenpartition von mindestens 80 MB; die Festplatte muß daher
+neu paritioniert werden.
+
+Sie müssen einen primären Festplattenspeicher von mindestens 80 MB
+erstellen, bevor Sie mit der Installation fortfahren können.
+
+$HANDBOOK
+
+            Drücken Sie die EINGABETASTE, wenn Sie bereit sind.
+
+"
+
+NOND_CHOOSE="Nicht-destruktive Installation ausführen
+Destruktive Installation ausführen
+$CANCEL2"
+
+NOND_EXPLAIN="   Die aktive UNIX Partition enthält ein installiertes UnixWare System.
+ 
+   Sie können eine \"nicht-destruktive\" Installation der UnixWare ${VERSION}
+   auf dem bereits existierenden UnixWare System auswählen. Dadurch werden 
+   die Benutzerdateien sowie installierte Anwendungen und ausgewählte
+   Dateisysteme erhalten. Oder Sie können eine \"destruktive\" Installation
+   wählen, bei der Sie die Plattenpartitionen und die aktive Partition 
+   ändern können. Alle Daten auf der aktiven Partition werden gelöscht, 
+   bevor die UnixWare ${VERSION} installiert wird. Wenn Sie keine
+   Systemsicherung neueren Datums haben, brechen Sie die Installation
+   jetzt ab, erstellen Sie eine Sicherungskopie Ihres Systems und starten
+   die Installation anschließend erneut.
+"
+
+NOND_FOOTER="$GENERIC_FOOTER."
+NOND_ENTRY="Destruktive/Nicht-destruktive Installation"
+
+NOND_PREP_MSG="
+
+Konfigurationsdateien für spätere 
+
+    Verarbeitung speichern.
+
+"
+
+AUTOMERGE_CHOOSE="Dateien automatische kombinieren.
+Dateien nicht automatisch kombinieren."
+
+AUTOMERGE_EXPLAIN="Die Installation kann Ihre gespeicherten Konfigurationsdateien nach der
+Beendigung der Installation mischen, oder Sie können es selbst tun. Wenn
+Sie es selbst tun, erhalten Sie eine Postnachricht darüber, wo sich die
+gespeicherten Dateien befinden."
+
+AUTOMERGE_ENTRY="Mischoption auswählen"
+
+# Server Utilities (server)-these strings are used by the ii_* scripts in PROTO
+inet_illegal_netmask="Ungültige Netmask eingegeben"
+inet_illegal_addr="Ungültige IP-Adresse eingegeben"
+
+INETINST_CHOICE="Installationsmethode auswählen"
+NOMEDIA="Bitte wählen Sie die Installationsmethode aus."
+
+# This can be used on message line with Inst Method screen
+# when more help text is added
+INST_MSG="Wenn das notwendige Gerät nicht aufgelistet ist, drücken Sie F1 für Hilfe."
+
+INETINST_CDROM="Von CD-^ROM installieren"
+INETINST_CDROM_PROMPT="Von CD-ROM installieren"
+INETINST_DISKETTE="Von ^Diskette installieren"
+INETINST_DISKETTE_PROMPT="Von Diskette installieren"
+INETINST_SPX="Von ^SPX Netzwerkserver installieren"
+INETINST_SPX_PROMPT="Von einem Server auf Ihrem SPX Netzwerk aus installieren"
+INETINST_SPX_SERVER="Name des Installationsservers "
+INETINST_SPX_EXPLAIN="Name des Installationsservers - Anzahl der Sprünge zum Server in Klammern."
+INETINST_SPX_TITLE="Installationsserver auswählen "
+INETINST_SERVER_DIRECTIONS="Pfeiltasten verwenden, um Install-Server auszuwählen. Dann ENTER drücken."
+INETINST_TAPE="Von ^Magnetband installieren"
+INETINST_TAPE_PROMPT="Von Magnetband installieren"
+INETINST_TCP="Von ^TCP Netzwerkserver installieren"
+INETINST_TCP_PROMPT="Von einem Server in Ihrem TCP Netzwerk aus installieren"
+
+#These CONFIRM messages are separate to facilitate translation.
+
+CONFIRM_cdrom="
+ Sie möchten die Installation von der CD-ROM aus
+         durchführen. Ist das richtig?
+"
+CONFIRM_tape="
+ Sie möchten die Installation vom Magnetband aus
+         durchführen. Ist das richtig?
+"
+CONFIRM_diskette="
+ Sie möchten die Installation von der Diskette aus
+          durchführen. Ist das richtig?
+"
+CONFIRM_tcp="
+ Sie möchten die Installation von einem Server in Ihrem
+     TCP-Netzwerk aus durchführen. Ist das richtig?
+"
+CONFIRM_spx="
+ Sie möchten die Installation von einem Server in Ihrem
+     SPX-Netzwerk aus durchführen. Ist das richtig?
+"
+CONFIRM_yes="Ja, Fortsetzen der Installation."
+CONFIRM_no="Nein, Rückkehr zum vorhergehenden Bildschirm."
+
+II_FLOPPY_FOOTER="Hardwareinformationen zum Netzwerk werden von Diskette geladen..."
+II_ERR_MSG=" Sie haben für das/die folgende(n) Feld(er)
+ keine Werte eingegeben, die nötig sind,
+ um mit dieser Installation fortzufahren.
+ Drücken Sie ENTER, um zum 
+ aktuellen Bildschirm zurückzukehren 
+ und geben Sie einen gültigen Wert ein für:
+
+  \${II_FLD[0]}
+  \${II_FLD[1]}
+  \${II_FLD[2]}
+  \${II_FLD[3]}
+  \${II_FLD[4]}
+  \${II_FLD[5]}"
+
+II_MULTI_CARD="
+ Es wurde mehr als eine Netzwerkschnittstellenkarte gefunden. 
+ Im  nächsten Bildschirm müssen Sie die Steckplatznummer der
+ Karte angeben, die Sie für diese Installation verwenden wollen.
+
+ Drücken Sie die EINGABETASTE, um fortzufahren. "
+
+INETINST_TITLE="Netzwerk installieren"
+INETINST_HW_SEL_TITLE="Netzwerk-Hardware auswählen"
+INETINST_HW_SEL_PROMPT="         Netzwerkkarte "
+INETINST_HW_SEL_FOOTER="Eine Netzwerkkarte wählen, TAB für Weiter,
+F1=Erweiterte Liste, EINGABETASTE=Anwenden"
+
+INETINST_HW_CONF_TITLE="Netzwerk-Hardware konfigurieren"
+INETINST_HW_CONF_FOOTER="Netzwerk-Hardware konfigurieren"
+
+INETINST_IRQ_PROMPT="Interrupt-Vektor "
+INETINST_IO_PROMPT="E/A-Adreßbereich "
+INETINST_RAM_PROMPT="Speicheradreßbereich "
+INETINST_CABLE_PROMPT="Kabeltyp "
+INETINST_SLOT_PROMPT="Steckplatznummer "
+INETINST_DMA_PROMPT="DMA-Kanal "
+INETINST_IRQ_DIRECTIONS="Verwenden Sie die Tabulatortaste, um einen 
+Interrupt-Vektor auszuwählen und drücken Sie dann die EINGABETASTE."
+INETINST_IO_DIRECTIONS="Verwenden Sie die Tabulatortaste, um einen 
+EA/-Adreßbereich auszuwählen und drücken Sie dann die EINGABETASTE."
+INETINST_RAM_DIRECTIONS="Verwenden Sie die Tabulatortaste, um eine 
+Speicheradreßbereich auszuwählen und drücken Sie dann die EINGABETASTE."
+INETINST_CABLE_DIRECTIONS="Verwenden Sie die Tabulatortaste, um einen 
+Kabeltyp auszuwählen, und drücken Sie dann die EINGABETASTE."
+INETINST_SLOT_DIRECTIONS="Verwenden Sie die Tabulatortaste, um einen 
+Steckplatz auszuwählen, und drücken Sie dann die EINGABETASTE."
+INETINST_DMA_DIRECTIONS="Verwenden Sie die Tabulatortaste, um einen DMA-Kanal
+auszuwählen, und drücken Sie dann die EINGABETASTE."
+
+INETINST_BAD_IRQ="Ungültiger IRQ; drücken Sie F2 für Auswahlmöglichkeiten"
+INETINST_BAD_IO="Ungültiger E/A-Adressenbereich; F2 drücken für Auswahl"
+INETINST_BAD_RAM="Ungültiger Speicheradreßbereich; drücken Sie F2 für Auswahlmöglichkeiten"
+INETINST_BAD_CABLE="Ungültiger Kabeltyp; drücken Sie F2 für Auswahlmöglichkeiten"
+INETINST_BAD_SLOT="Ungültiger Steckplatz; drücken Sie F2 für Auswahlmöglichkeiten"
+INETINST_BAD_DMA="Ungültiger DMA-Kanal; drücken Sie F2 für Auswahlmöglichkeiten"
+
+INETINST_NET_CONF_TITLE="Netzwerkprotokoll konfigurieren"
+INETINST_UNAME_TITLE=" Systemknotenname"
+INETINST_MY_INET_TITLE="IP-Adresse des Systems"
+INETINST_MY_MASK_TITLE="Systemnetmask"
+INETINST_ROUTER_INET_TITLE="Router-IP-Adresse"
+INETINST_SERVER_INET_TITLE="Server IP-Adresse"
+
+INETINST_UNAME_PROMPT="Geben Sie den Namen dieses Systems ein"
+INETINST_MY_INET_PROMPT="Geben Sie die IP-Adresse dieses Systems ein"
+INETINST_MY_MASK_PROMPT="Geben Sie Ihre Netmask ein (z.B.: 0xffffff00 or 255.255.255.0)"
+INETINST_ROUTER_INET_PROMPT="Geben Sie die IP-Adresse Ihres Routers ein"
+INETINST_SERVER_INET_PROMPT="Geben Sie die Adresse Ihres Installationsservers ein"
+INETINST_FORM_FOOTER="Verwenden Sie die die Tabulatortaste-Taste, um sich zu bewegen, 
+F1=Hilfe, F10=Anwenden."
+
+INETINST_INSERT_AGAIN="    Entweder haben sie keine Diskette
+  eingelegt, oder die Diskette, die Sie
+     eingelegt haben, ist nicht die
+    Dienstprogrammdiskette für die
+     Network Installation Utilities.
+
+"
+
+INETINST_INSERT_FLOPPY="
+  Stellen Sie sicher, daß sich die Diskette
+
+  \"Network Installation Utilities\" im Laufwerk befindet, 
+
+   und drücken Sie anschließend die EINGABETASTE.
+"
+
+INETINST_REMOVE_FLOPPY="
+        Bitte entfernen Sie die Diskette 
+
+ \"Network Installation Utilities\" aus dem Diskettenlaufwerk
+
+       und drücken Sie die EINGABETASTE, um fortzufahren.
+"
+
+INETINST_HW_CHOICES_TITLE="Unterstützte Netzwerkkarten"
+
+# For use in "netinst" script
+INETINST_WAIT_MSG="Die Konfiguration Ihres Netzwerkes wird einige Minuten dauern. Bitte warten Sie."
+
+INETINST_LOADING_MODULES="
+
+ Netzwerktreiber werden geladen 
+
+        Bitte warten Sie
+
+"
+# For use in "netinst" script
+INETINST_CONFIGURE_NETWORK="
+
+ Netzwerk wird konfiguriert
+
+  Bitte warten Sie
+
+"
+
+# For use in "netinst" script
+INETINST_COPY_WAIT="
+
+ System Installation Utilities werden geladen  
+
+             Bitte warten Sie
+
+"
+# For use in "netinst" script
+INETINST_MODLOAD_FAIL=" Konnte folgenden Treiber nicht laden:"
+INETINST_TCPLOAD_FAIL=" Konnte das TCP-Kernmodul nicht laden: "
+INETINST_SPXLOAD_FAIL=" Konnte das SPX-Kernmodul nicht laden: "
+INETINST_OPENDEV_FAIL=" Konnte dieses Gerät nicht öffnen:"
+INETINST_UNAME_FAIL=" Konnte Systemknotennamen nicht einstellen."
+INETINST_SLINK_FAIL=" Konnte STREAMS-Module für TCP nicht verknüpfen."
+INETINST_NWDISC_FAIL=" Konnte nwdicover nicht ausführen."
+INETINST_NPSD_FAIL=" Konnte npsd nicht starten."
+INETINST_SERVER_FAIL=" Konnte den Installationsserver nicht finden."
+INETINST_IFCONFIG_FAIL=" Konnte Netzwerkschnittstelle nicht hochbringen."
+INETINST_ROUTE_FAIL=" Konnte Netzwerk auf keine Route einstellen."
+INETINST_PING_FAIL=" Konnte mit Ihrem Installationsserver keinen Kontakt aufnehmen."
+INETINST_NET_FAILURE=" 
+ Bei der Konfiguration Ihres Netzwerks ist ein Problem
+ aufgetreten. Wenn Sie auf die EINGABETASTE drücken,
+ wird das System neu gestartet. 
+ Im Anhang \"Fehlerbehebung\" des Installationshandbuchs 
+ können  Sie die Lösungsmöglichkeiten für das folgende 
+ Problem nachschlagen:
+
+"
+
+INETINST_NO_IRQ="Sämtliche von Ihrer Netzwerkkarte unterstützten IRQs
+werden gegenwärtig von anderen Geräten verwendet."
+INETINST_NO_IO=" Sämtliche von Ihrer Netzwerkkarte unterstützten 
+ E/A-Adressenbereiche werden gegenwärtig von anderen
+ Geräten verwendet."
+INETINST_NO_RAM=" Sämtliche von Ihrer Netzwerkkarte unterstützten Speicheradressbereiche
+ werden gegenwärtig von anderen Geräten verwendet."
+INETINST_NO_DMA=" Sämtliche von Ihrer Netzwerkkarte unterstützten DMA-Kanäle
+ werden gegenwärtig von anderen Geräten verwendet."
+
+II_GOBACK_MSG="
+ Nach Abschluß der Netzwerkkonfiguration war der Installationsserver
+ nicht ansprechbar.  Gehen Sie zurück, und prüfen Sie die auf dem Bildschirm
+ \"Netzwerkprotokoll konfigurieren\" eingegebenen Werte, oder brechen Sie 
+ die Installation ab und starten Sie das System neu.  Wenn Sie zurückgehen, 
+ prüfen Sie bei der Gelegenheit ebenfalls, ob Ihr Netzkabel richtig 
+ angebracht ist und ob sich der gewählte Installationsserver wirklich
+ im Netzwerk befindet.
+"
+II_GOBACK_YES="Zum Bildschirm \"Netzwerkprotokoll konfigurieren\" zurückkehren"
+II_GOBACK_NO="Die Installation abbrechen und das System neu starten"
+
+II_FRAME_TITLE="Die Rahmenart wählen"
+II_MULTI_FRAME="
+ Auf Ihrem Netzwerk ist lediglich eine Rahmenart in Verwendung.  Die Auswahl 
+ der zu verwendenden Rahmenart muß während der Systemkonfiguration erfolgen.
+ Damit die Installation erfolgreich durchgeführt werden kann,
+ muß mindestens ein Installationsserver vorhanden sein, der die gewählte
+ Rahmenart verwendet. Sind Sie sich bei Ihrer Wahl nicht sicher,
+ setzen Sie sich mit Ihrem Netzwerkverwalter in Verbindung.
+"
+# The following block of text is used by osmp.req.sh and osmp.post.sh.
+# These scripts are installed by the osmp package and run by inst.gen
+# before rebuild is run. These scripts provide menus for platform
+# specific information and prompt for a PSM floppy.
+
+PSM_WIDTH=70
+PSM_DEPTH=18
+
+PSMLIST="Keine MP-Unterstützung
+Compaq SystemPro/ProLiant
+Intel MP-Spezifikation
+Tricord PowerFrame
+Corollary Cbus
+AST Manhattan
+Olivetti LSX 5050
+Plattformunterstützungs-Modulpaket"
+
+PSM_STRING="PSM"
+
+PSM_FOOTER="Drücken Sie die EINGABETASTE, um fortzufahren, F5, 
+um ein Plattformunterstützungsmodul auszuwählen"
+
+PSM_RFOOTER="Verwenden Sie die Pfeiltasten, um ein Plattformunterstützungsmodul
+auszuwählen, und drücken Sie dann die EINGABETASTE."
+
+PSM_ENTRY="Wählen Sie das Plattformunterstützungsmodul"
+
+PSM_MSG1="
+Das UnixWare Entdeckungsschema hat das Modul
+"
+
+PSM_MSG2="
+als das hardwarespezifisches Mehrprozessor-Plattformunterstützungsmodul
+erkannt, das installiert werden sollte. Wenn Sie F5 drücken,
+können Sie ein anderes Plattformunterstützungsmodul zur Installation
+auswählen, gar keines installieren oder ein Modul von einer PSM
+(Plattformunterstützungsmodul) -Paketdiskette. Wenn Sie die
+EINGABETASTE drücken, wird
+"
+
+PSM_MSG3="
+das Modul installiert.
+"
+
+NOPSM_MSG="
+Das UnixWare Entdeckungsschema konnte das Mehrprozessor-
+Plattformunterstützungsmodul nicht identifizieren, das 
+installiert werden soll, um die Mehrprozessorfähigkeiten 
+auf Ihrem System zu aktivieren. Wenn Sie F5 drücken,
+können Sie ein beliebiges aufgelistetes Modul oder ein
+Modul von einer PSM (Plattformunterstützungsmodul)-Paketdiskette
+installieren.
+"
+
+PSM_REINSERT="
+Sie haben sich dazu entschlossen, ein Mehrprozessor-
+Plattformunterstützungsmodul von einem Paket zu installieren.
+Bitte legen Sie die Diskette in das Laufwerk.
+"
+
+PSM_FLOPFOOTER="Drücken Sie die EINGABETASTE, wenn Sie bereit sind."
+PSM_EMSG1="
+Kann PSM-Diskette nicht installieren.   Versuchen Sie es nochmal.
+"
+PSM_EMSG2="
+Sie haben die falsche PSM-Diskette eingelegt. Versuchen Sie es nochmal.
+"
+PSM_EMSG3="
+Diese Diskette scheint keine PSM-Diskette zu sein. Versuchen Sie es nochmal.
+"
+PSM_REINSERTCols=70
+PSM_REINSERTLines=15
+# End of text used by osmp scripts.
+
+CDROM_MSG="
+ Prüfung der CD-ROM... 
+"
+CDROM_ERROR="
+ Die gegenwärtig im Laufwerk befindliche CD ist nicht die 
+ Installations-CD $LONG_NAME. Legen  
+ Sie die Installations-CD $LONG_NAME ein. 
+"
+CDROM_OPEN_ERROR="
+ Im Laufwerk konnte keine CD gefunden werden.
+ Vergewissern Sie sich, daß die CD richtig in 
+ das Laufwerk eingelegt wurde und daß das Laufwerk 
+ richtig angeschlossen und eingeschaltet ist. 
+"
+CDROM_MOUNT_ERROR="
+ Die im Laufwerk befindliche CD ist nicht lesbar. Entweder die CD
+ ist beschäftigt, das CD-ROM-Laufwerk funktioniert nicht korrekt,
+ oder die CD ist nicht die Installations-CD
+ $LONG_NAME. 
+
+ Stellen Sie sicher, daß sich die Installations-CD $LONG_NAME
+ im CD-ROM-Laufwerk befindet.
+"
+
+TAPE_MSG="
+ Band wird überprüft... 
+"
+TAPE_ERROR="
+ Das gegenwärtig im Laufwerk befindliche Band ist nicht das 
+ Installationsband $LONG_NAME. Legen 
+ Sie das Installationsband $LONG_NAME ein. 
+"
+TAPE_OPEN_ERROR="
+ Im Bandlaufwerk konnte kein Band gefunden werden.  Vergewissern
+ Sie sich, daß das Band richtig in das Laufwerk eingelegt wurde,
+ daß der Signalspeicher (falls vorhanden) aktiv ist und daß
+ das Bandlaufwerk richtig angeschlossen und eingeschaltet ist.
+"
+TAPE_READ_ERROR="
+ Das im Bandlaufwerk befindliche Band ist nicht lesbar. Vergewissern
+ Sie sich, daß das Band richtig in das Laufwerk eingelegt wurde,
+ daß der Signalspeicher (falls vorhanden) aktiv ist und daß
+ das Bandlaufwerk richtig angeschlossen und eingeschaltet ist.
+"
+
+DEP_FAIL="Sie haben das \$PKG Paket ausgewählt.
+Dieses hängt jedoch von den folgenden Paketen ab,
+die sie nicht zur Installation ausgewählt haben.
+
+\$DEP1
+\$DEP2
+\$DEP3
+\$DEP4
+
+Wählen Sie entweder alle erforderlichen
+Pakete aus, oder machen Sie die Auswahl
+des \$PKG Pakets rückgängig.
+
+Drücken Sie die EINGABETASTE, um zum Bildschirm
+mit der Paketauswahl zurückzukehren"
+DEP_FAIL1="Sie haben das \$PKG Paket ausgewählt. Dieses
+hängt jedoch von dem folgenden Paket ab, das
+sie nicht zur Installation ausgewählt haben.
+
+\$DEP1
+
+Wählen Sie entweder dieses Paket aus, oder machen
+Sie die Auswahl des \$PKG Pakets rückgängig.
+
+Drücken Sie die EINGABETASTE, um zum Bildschirm mit
+der Paketauswahl zurückzukehren"
+
+# For use in "dcuprompt" script
+DCUprompt="
+ Sie haben jetzt die Möglichkeit, UnixWare DCU (Device Configuration 
+ Utility) auszuführen. DCU ist ein erweiterter Dienst, mit dem Sie 
+ die Konfiguration der UnixWare Systemgerätetreiber, der Gerätetreiber 
+ oder aller Host-Busadadapterdisketten (HBA) anzeigen und ändern
+ können.
+
+ VORSICHT: Sie müssen die Hardwarekonfiguration kennen, um
+           DCU zu verwenden. UnixWare konfiguriert die meisten 
+           Computer, ohne daß Sie mit DCU eingreifen müssen."
+
+DCU_CHOOSE="$GENERIC_CONTINUE_CHOICE
+Aufruf der DCU (Siehe VORSICHT oben)"
+HBAwait="
+
+Bitte warten Sie, während
+die HBA-Hardwaretreiber geladen werden.
+
+"
+
+OBSPKG_CHOOSE="Veraltete Pakete entfernen
+Installation abbrechen"
+
+OBSPKG_EXPLAIN="Das gegenwärtig installierte UnixWare System enthält
+Pakete die veraltet sind und als ein Teil der 
+Aufrüstungsinstallationsprozedur entfernt werden. 
+Wenn Sie diese Pakete nicht enfernen wollen, müssen 
+Sie den Installationsprozeß jetzt abbrechen."
+
+OBSPKG_FOOTER="Wählen Sie jetzt die Paketentfernung aus oder nicht,
+und drücken Sie dann die EINGABETASTE."
+OBSPKG_ENTRY="Entfernen des veralteten Pakets"
+PKG_MSG="Prüfen der installierten Pakete"
+UNKREL_EXPLAIN="
+ Die aktuelle UNIX Partition enthält keine UNIX Version,
+ auf der UnixWare ${VERSION} nicht-destruktiv installiert
+ werden kann. Mit der Auswahl von \"Destruktive Installation\"
+ können Sie Ihre Plattenpartitionierung verändern und die aktive 
+ Partition einrichten. Alle Daten auf der aktiven Partition
+ werden gelöscht, bevor UnixWare ${VERSION} installiert wird.
+ 
+ Wenn Sie keine destruktive Installation durchführen wollen,
+ brechen Sie die Installation sofort ab.
+"
+UNKREL_CHOOSE="Destruktive Installation
+Installation abbrechen"
+UNKREL_FOOTER="$GENERIC_FOOTER."
+UNKREL_ENTRY="Inhalt der UNIX Partition unbekannt"
+NOSPACE_EXPLAIN="
+ Die gegenwärtig aktive UNIX Partition weist nicht genügend
+ freien Speicherplatz für eine nicht-destruktive Installation
+ $LONG_NAME auf.
+
+ Sie können eine destruktive Installation durchführen oder die 
+ Installation abbrechen, Ihr bereits vorhandenes UnixWare System
+ neu starten und einige Dateien entfernen.  Um eine nicht-destruktive
+ Installation durchzuführen, müssen Sie \$FS_LACKS MB freien Speicherraumi
+ im \$FS_BIG haben.
+"
+NOSPACE_ENTRY="Nicht genügend Speicherplatz für eine nicht-destruktive Installation"
+FLOP2_PROMPT="
+ Entfernen Sie die Diskette aus dem Laufwerk
+ und legen Sie die Diskette mit dem Etikett 
+ \"Installationsdiskette 2 von 2\".
+
+Drücken Sie die EINGABETASTE, um fortzufahren.
+"
+FLOP2_ERR="
+ Beim Lesen der Diskette ist ein Fehler aufgetreten. Mögliche Gründe 
+ für den Fehler sind   
+        - es war keine Diskette eingelegt 
+        - es wurde eine falsche oder beschädigte Diskette eingelegt
+        - eine Diskette wurde nicht richtig eingelegt 
+        - die CMOS-Einstellungen für Diskettenlaufwerk A ist falsch
+
+ Ersetzen Sie die sich gegenwärtig im Laufwerk befindliche Diskette
+ mit der Diskette mit dem Etikett \"Installationsdiskette 2 von 2\",
+ und drücken Sie dann die EINGABETASTE, um forzufahren.  Wenn diese
+ Meldung erneut erscheint, verwenden Sie das
+ System-CMOS-Einstellungsprogramm (In der bei Ihrem Rechner
+ mitgelieferten Dokumentation beschrieben) um die Einstellungen für
+ Diskettenlaufwerk A zu überprüfen.  Wenn die Einstellung falsch ist,
+ korrigieren Sie sie, und beginnen Sie die Installation von neuem.
+ Wenn die Einstellung richtig ist, setzen Sie sich mit Ihrem
+ Kundendienst in Verbindung, um eine neue \"Installationsdiskette
+ 2 von 2\" zu erhalten.
+"
+FLOP2_READ="
+ Diskette wird gelesen... 
+"
+
+# This screen appears (text & choose box) if a destructive install will occur
+DISK_INFO=" Sie können auf Ihrem System ausschließlich UnixWare ${VERSION} installieren
+ oder Platz auf der Festplatte für weitere Betriebssysteme reservieren.
+ Wenn Sie mehr als ein  Betriebssystem unterstützten möchten oder
+ bereits unterstützen, drücken Sie die EINGABETASTE. Verfügen Sie
+ über eine zweite Platte, können Sie diese später mit der Auswahl
+ \"${HARD_DISK_ENTRY2}\" in ${MAIN_TITLE}
+ konfigurieren.
+ VORSICHT: ALLE DATEN IN DER AKTIVEN UNIX PARTITION WERDEN GELÖSCHT,
+ wenn Sie \"${SAVE_EXIT2}\" 
+ in ${MAIN_TITLE} wählen. Wurde bereits eine Software auf Ihrem System
+ installiert, aber noch keine Sicherungskopie angefertigt, wählen Sie
+ \"$CANCEL2\", starten Sie neu,
+ und erstellen Sie eine Sicherungskopie von Ihrem System.
+
+
+"
+
+BADDISK_INFO=" Auf Ihrer Festplatte:\$disk wurden fehlerhafte 
+ Plattenpartitionierungsinformationen entdeckt.  Dieser Fehler kann
+ durch die Zuteilung der gesamten Platte für die Installation des
+ UnixWare Systems automatisch behoben werden. Andernfalls muß die
+ Systeminstallation abgebrochen werden.
+
+ Weitere Informationen können Sie dem Abschnitt zur Hardware-Fehlerbehebung 
+ im Installationshandbuch entnehmen."
+BADDISK_CHOOSE="GESAMTE PLATTE für UW ${VERSION}, überschreibt ALLE Partitionen)
+$CANCEL2"
+FAILED_DISK=" Auf Ihrer Festplatte:\$disk wurden fehlerhafte
+ Plattenpartitionierungsinformationen entdeckt. Die Systeminstallation 
+ muß abgebrochen werden.
+
+ Weitere Informationen können Sie dem Abschnitt zur
+ Hardware-Fehlerbehebung im Installationshandbuch entnehmen. "
+
+FOOTER_FAILED_DISK="EINGABETASTE=$CANCEL2"
+
+PARTS_CHOOSE_TITLE="Destruktive Installation"
+
+DISK_CHOOSE="Aktuelle Plattenkonfiguration einsehen/ändern.
+GANZE PLATTE für UnixWare ${VERSION} -Überschriebt ALLE Partitionen
+$CANCEL2"
+
+# This text (DISK_EXPLAIN) appears along with the Disk 1 Partition form if
+# the user chooses the second option
+
+DISK_EXPLAIN=" Auf diesem Bildschirm können Sie Ihre Plattenkonfiguration ändern und
+ Plattenplatz für andere Betriebssysteme reservieren. Wenn Sie später diese
+ Konfiguration ändern wollen oder eine zweite Platte konfigurieren wollen,
+ wenn eine existiert, wählen Sie \"${HARD_DISK_ENTRY2}\"
+ aus dem ${MAIN_TITLE}. 
+ Es werden keine endgültigen Änderungen an Ihrem System vorgenommen,
+ bevor Sie \"${SAVE_EXIT2}\" aus dem
+ ${MAIN_TITLE} auswählen. Dann WERDEN ALLE DATEN IN DER AKTIVEN UNIX
+ PARTITION UND ALLEN ANDEREN PARTITIONEN, DIE GEÄNDERT WURDEN, GELÖSCHT. 
+ Drücken Sie F1 für weitere Informationen.
+"
+
+# PKG_INFO text always appears before the Install Menu
+PKG_INFO=" Im nachfolgenden ${MAIN_TITLE} können Sie Ihre 
+ Installationseinstellungen anzeigen und ändern und UnixWare
+ ${VERSION}  installieren.
+ 
+ Wenn Sie \"${PKGENTRY2}\" auswählen, werden die 
+ UnixWare ${VERSION} Softwarepakete angezeigt. Es wurde ein Standardsatz von Paketen
+ für Sie ausgewählt, aber das mag nicht für alle Systeme passend sein.
+
+   - Wenn Sie einen Mehrprozessor-Computer haben, sollten Sie das 
+     \"$osmp_name\" Paket auswählen. 
+   - Wenn Sie auf die Online-Dokumentation zugreifen wollen, sollten 
+     Sie die Pakete \"${LONG_NAME} Documentation\" und 
+     \"$dynatext_name\" auswählen. 
+   - Wenn Sie NetWare und/oder die Internet-Netzfunktionen nicht 
+     benötigen, sollten Sie diese Auswahl rückgängig machen.
+
+ Sie können alle Pakete, die Sie jetzt nicht installieren, später noch 
+ installieren. Lesen Sie nach im Systemeigentümer-Handbuch im Kapitel
+ über die Installation von Anwendungen."
+
+#
+#	The following strings are for the Additional Platform Utilities package
+#
+Platform_Title="Auswahl zusätzlicher Platform Utilities"
+Compaq_Title="Compaq Plattformkonfiguration"
+Choice_Compaq="Compaq"
+Msg_Compaq="Zusätzliche Platform Utilities für Compaq-Plattformen installieren."
+#
+Choice_Tricord="Tricord"
+Msg_Tricord="Zusätzliche Platform Utilities für Tricord-Plattformen installieren."
+#
+Choice_Ast="AST Manhattan"
+Msg_Ast="Erweiterte Frontplattenunterstützung für AST Manhatten-Plattformen installieren."
+#
+Choice_None="Keine der oben genannten"
+Msg_None="Keine zusätzlichen Platform Utilities installieren."
+KEYBOARD_ERR="
+  Sie haben keine \"US (ASCII)\" Tastatur ausgewählt.
+  Unterstützung für die von Ihnen ausgewählte Tastatur ist im Paket  
+  \"$ls_name\".
+
+  Sie müssen entweder das Paket \"$ls_name\" auswählen, 
+  in dem Sie \"$PKGENTRY2\" wählen oder Sie müssen die 
+  \"US (ASCII)\" Tastatur mit dem Menü \"$INTL_ENTRY2\" 
+  auswählen. 
+ 
+  Drücken Sie die EINGABETASTE, um fortzufahren.
+"
+SPACE_ERR="
+  Die zur Installation ausgewählten Pakete werden nicht 
+  in das gegenwärtig konfigurierte Dateisystem hineinpassen. 
+
+  Machen Sie entweder die Auswahl einiger Pakete rückgängig mit   
+  \\\"$PKGENTRY2\\\", oder erhöhen Sie die Größe von
+  \$FS_BIG mit mindestens \$FS_LACKS Megabyte (MB) mit dem Menü    
+  \\\'$HARD_DISK_ENTRY2 --> \'$FSCONF_ENTRY\\\"    
+. 
+
+  Drücken Sie die EINGABETASTE, um fortzufahren.
+"
+
+#Error messages for faultvt
+CONTROL_D="
+Die <Strg>- und die D-Taste gleichz. Drücken, um die Installation zu beenden."
+FS_LOAD_FAILED="
+Schwerwiegender Fehler: Das Ladens eines
+System-Softwaretreibers ist fehlgeschlagen.
+
+Mögliche Gründe für dieses Versagen sind
+
+  - das Band oder die CD ist beschädigt
+  - das Bandlaufwerk, das CD-ROM-Laufwerk oder die Netzwerkkarte
+    arbeiten nicht ordnungsgemäß
+  - der Netzwerk-Installationsserver hat falsche Daten gesendet
+
+$HANDBOOK
+$CONTROL_D
+"
+GenericFatalErr="
+Auf Ihrem Computersystem wurde ein schwerwiegender Fehler entdeckt
+und die Installation kann nicht fortgesetzt werden. Für weitere
+Informationen überprüfen Sie die /tmp/stderr-Datei, sowie die
+*.log und *.err-Dateien (wenn vorhanden) im Verzeichnis /mnt/tmp.
+
+$HANDBOOK
+$CONTROL_D
+"
+IDBUILD_FAILED="
+Schwerwiegender Fehler: Der Aufbau des UNIX Systemkerns ist fehlgeschlagen.
+(Der Kern ist das Progaramm, das die Basis von UnixWare darstellt.) Fehler
+wurden in die Datei /tmp/kernel.build geschrieben.
+
+Wenn Sie wissen, wie Sie die Fehler beheben können, so tun Sie dies
+und geben Sie dann \"exit\" ein.  Der Aufbau des Kerns wird dann
+automatisch noch einmal versucht.
+
+$HANDBOOK
+"
+INSTerr="
+Ihre Systeminstallation wurde beendet, weil beim Lesen Ihres
+Installationsdatenträgers (CD, Netz, Band, etc.) ein fataler Fehler
+aufgetreten ist.
+
+Das Problem muß jetzt erst behoben werden, bevor die Installation 
+fortgesetzt werden kann. Bitte überprüfen Sie auf Hardware- oder
+Netzprobleme und starten Sie dann die Installation von neuem.
+
+$HANDBOOK
+$CONTROL_D
+"
+PDI_FAILED="
+Schwerwiegender Fehler: Hardwaretreiber konnten nicht eingerichtet werden.
+
+Mögliche Gründe für den Fehler sind
+
+      - einer der Host-Bus-Adapter disketten, die Sie verwendet haben, 
+        ist beschädigt oder ungültig
+      - Ihr Diskettenlaufwerk arbeitet nicht richtig
+      - die Installationsdiskette ist beschädigt
+      - ein schwerwiegender Fehler ist bei der Installation von UnixWare
+        auf Ihrer Festplatte aufgetreten
+
+Bitte setzten Sie sich mit Ihrem Kundendienst in Verbindung, um neue
+Host-Bus-Adapter und Installationsdisketten zu erhalten.
+
+$HANDBOOK
+$CONTROL_D
+"
+PKGerr="
+Wegen eines schwerwiegenden Fehlers, der bei der Installation
+Ihrer ausgewählten Softwarepakete aufgetreten ist, wurde die
+Systeminstallation abgebrochen. Dieser Softwarefehler kann aber
+auch aus einem Systemversagen stammen.
+
+Der Fehler muß jedoch zuerst behoben werden,
+bevor die Installation fortgesetzt werden kann.
+
+$HANDBOOK
+$CONTROL_D
+"
+#End of Error messages for faultvt
+
+LICENSE_FLOP_PROMPT="
+Bitte legen Sie die Programmlizenzdiskette in Laufwerk A:
+
+Drücken Sie die EINGABETASTE, wenn Sie bereit sind.
+"
+KEY_TITLE="Geben Sie den Aktivierungsschlüssel ein"
+SERIAL_PROMPT2="Seriennummer:"
+KEY_PROMPT="Aktivierungsschlüssel:"
+AGAIN_KEY="Drücken Sie die EINGABETASTE, um es nochmal zu versuchen."
+BAD_KEY="
+             Ungültiger Aktivierungsschlüssel! 
+
+ Die installation von Novell UnixWare von Compaq kann 
+ ohne gültigen Aktivierungsschlüssel nicht fortgesetzt werden. 
+"
+KEY_FOOTER="F1=Hilfe, F9=Installation abbrechen, F10=Anwenden."
+KEY_DISPLAY="
+ Bitte geben Sie den Aktivierungsschlüssel 
+ für Novell UnixWare $LONG_NAME ein.
+ Der Aktivierungsschlüssel wird von Ihrem 
+ Compaq-Softwarehändler geliefert.
+"
+BAD_KEY_IN_IFILE="
+ Der bereits eingegebene Aktivierungsschlüssel für die
+ UnixWare $LONG_NAME von Novell ist nicht gültig. 
+ Sie werden jetzt zur Eingabe des Aktivierungsschlüssels aufgefordert. 
+"
+DO_SETUP="
+ UnixWare wird eingerichtet...
+"
+FLOPPY_NOT_EMPTY="
+ Bitte nehmen Sie die Diskette 
+ aus dem Diskettenlaufwerk A.
+"
+CD_NOT_EMPTY="
+ Bitte nehmen Sie die CD 
+ aus dem CD-ROM-Laufwerk.
+"
+RETENSION_WAIT="
+   Das Band wird wieder gestrafft.
+   Das wird etwa drei Minuten dauern.   
+"
+COLOR_PROMPT="
+
+                Bildschrimtypauswahl
+
+  UnixWare konnte nicht feststellen, ob Ihr Computer
+  mit einem Farb- oder Monochrombildschirm ausgestattet ist.
+
+  Um sicherzustellen, daß Sie alles auf dem Bildschrim während
+  der Installation lesen können, muß UnixWare wissen, welchen
+  Bildschirmtyp Sie haben.
+
+  Auf einem Farbbildschirm erscheint diese Bildschrimseite mit
+  weißem Text auf blauem Hintergrund.  Wenn dies nicht der Fall ist,  
+  sollte Ihr Bildschirm als nicht-Farbbildschirm angesehen werden.
+  Welcher Bildschirmtyp ist an Ihren Computer angeschlossen?
+
+  Sie haben folgende Auswahlmöglichkeiten:
+
+  1. Farbbildschirm.
+  2. Nicht-Farbbildschirm.
+
+  Bitte geben Sie 1 oder 2 ein und drücken Sie dann die EINGABETASTE:  
+"
+
+Continued_String="(Seite nach oben/Seiten nach unten für weiteres)"
+PageDown_String="(Seite nach unten für mehr)"
+PageUp_String="(Seite nach oben für mehr)"
+INSTALL_MORE_BEGIN="
+ Bitte warten Sie, während die zusätzlichen
+ Produkte, die Sie  ausgewählt haben, installiert werden.
+"
+INSTALL_MORE_MIDDLE="
+Installierung von"
+INSTALL_MORE_END="
+ Die Installierung der zusätzlichen Produkte
+ ist abgeschlossen.
+"
+ODM_UP_EXPLAIN="
+  Für das gegenwärtig auf Ihrer Platte installierte UNIX System wurden
+  die Erweiterungen für den Online-Datenmanager (ODM) installiert. 
+  Um eine Upgrade-Installation durchführen zu können, benötigen Sie die 
+  Diskette \"ODM Upgrade Installation Utilities\", die mit dem
+  ODM-Paket für $LONG_NAME, $VERSION geliefert wird.
+
+  Ohne die ODM-Upgradediskette können Sie keine Upgrade-Installation
+  durchführen. Sie können entweder mit einer destruktiven Installation  
+  fortfahren oder den Installationsprozeß vollständig abbrechen."
+ODM_UP_CHOOSE="Die Diskette ODM Upgrade Utilities laden  
+Mit einer destruktiven Installation fortfahren
+Die Installation abbrechen und das System neu starten"
+ODM_WAIT="
+
+
+  Die ODM Upgradediskette wird geladen
+
+        Bitte warten
+
+
+"
+ODMINST_INSERT_AGAIN="  
+  Entweder wurde keine Diskette eingelegt, oder
+  die eingelegte Diskette ist nicht die Diskette
+  mit den ODM Upgrade Utilities.
+
+"
+
+ODMINST_INSERT_FLOPPY="
+  Vergewissern Sie sich, daß sich die Diskette mit
+
+  den ODM Upgrade Utilities im Laufwerk befindet,
+ 
+  und drücken Sie die EINGABETASTE.
+"
+
+ODMINST_REMOVE_FLOPPY="
+
+  Entfernen Sie die Diskette mit den ODM Upgrade Utilities
+
+  aus dem Diskettenlaufwerk, 
+
+  und drücken Sie die EINGABETASTE, um fortzufahren
+
+"
+ODM_MEDIA_CHOOSE="$INETINST_CDROM_PROMPT
+$INETINST_DISKETTE_PROMPT"
+ODM_PROMPT="
+
+    Sie müssen jetzt die \"Veritas Online
+
+    Daten-Manager\" Software installieren.   
+
+ Wählen Sie unten den Mediumtyp, und drücken Sie dann ENTER 
+
+"
+#faultvt error messages
+FAULTVT_INTERN_ERR1="Interner Fehler: Seriennummer ist zu lang."
+FAULTVT_INTERN_ERR2="Interner Fehler in cpq_load:\n Kann nicht gefunden werden"
+FAULTVT_INTERN_ERR3="Interner Fehler: Fehlerhafte Option"
+INV_KEY="Interner Fehler -- Validier_taste ergab fehlerhaftes Resultat."

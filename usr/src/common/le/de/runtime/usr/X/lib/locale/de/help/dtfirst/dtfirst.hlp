@@ -1,0 +1,234 @@
+#ident\t"@(#)dthelp:Admin.Tools/dtfirst.hlp     1.20"
+^*version^1
+^*title^Erstes_Setup
+^:Erstes_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Erstes_Setup
+^0^Erstes_Setup
+^$10
+Erstes_Setup
+
+Wenn Sie UnixWare installiert haben, können Sie Ihre Systemumgebung
+individuell anpassen. Nachfolgend finden Sie eine Liste von ersten
+Setup-Tasks, die Sie durchführen sollten, bevor Sie UnixWare zum
+ersten mal verwenden. Klicken Sie (d.h. drücken Sie die linke
+Maustaste und lassen Sie sie schnell wieder los) auf den
+hervorgehobenen Task, den Sie ausführen wollen.
+
+Es erscheint ein Hilfebildschirm mit einer kurzen Beschreibung des
+Task oder einer Erklärung, warum Sie diesen Task ausführen sollten. In
+diesem Hilfebildschirm können Sie folgendes tun:
+
+\to\tUm zusätzliche Informationen und Instruktionen für die Ausführung
+\t \tdes Tasks zu erhalten, wenden Sie sich entweder an die
+\t \tOnline-Hilfe oder Ihre UnixWare Dokumentation in Buchform.
+
+\t\tHinweis: Für weiter Informationen, wie Sie die Online-Hilfe
+\t\tverwenden, klicken Sie auf \k(Hilfe verwenden^DesktopMgr/help.hlp^Hilfe verwenden).
+
+\to\tTask aufrufen (wo möglich).
+
+Hinweis: Sie müssen nicht alle dieser Setup-Tasks ausführen. Wählen
+Sie nur solche aus, die für Ihre Umgebung sinnvoll sind. Wenn Sie sich
+entschließen, jetzt einige oder alle Tasks nicht auszuführen, können
+Sie immer noch später mit einem Doppelklick (d.h. die linke Maustaste
+schnell zweimal hintereinander kurz drücken) auf das Symbol
+Erstes_Setup im \k(Hilfebildschirm^DesktopMgr/helpdesk.hlp^Überblick über den Hilfe-Bildschirm) zu diesem Hilfebildschirm zurückkehren
+
+Selbst wenn Sie alle anderen tasks überspringen möchten, so empfehlen
+wir Ihnen jedoch, wenigstens den ersten in der Liste,
+"Notfallwiederherstellungs-Disketten erstellen" auszuführen.
+
+Hinweis: Wenn Sie irgendwelche Elemente in der folgenden Liste
+anklicken und dann zu diesem Hilfebildschirm zurückkehren möchten,
+klicken Sie die Schaltfläche Zurückverfolgen oben auf Ihrem Bildschirm
+an.
+
+\to\t\k(Notfallwiederherstellungsdisketten erstellen)
+\to\t\k(Bildschirmauflösung erhöhen)
+\to\t\k(Ihr System für TCP/IP-Netzwerkbetrieb konfigurieren)
+\to\t\k(Ihr System für Anwähl-Netzwerkbetrieb konfigurieren)
+\to\t\k(Ihr System für die Sendung von Post an Benutzer in anderen Netzwerken konfigurieren)
+\to\t\k(Drucker einrichten)
+\to\t\k(UNIX Anwendungen installieren)
+\to\t\k(DOS und Windows installieren)
+\to\t\k(Ihr System für NetWare Zugriff konfigurieren)
+\to\t\k(Notfallwiederherstellungsbänder erstellen)
+
+Nachdem Sie das Setup zum ersten Mal ausgeführt haben, sollten Sie die
+Überblickinformationen über das System lesen. Klicken Sie auf
+\k(Einführung in den UnixWare Desktop^DesktopMgr/desktop.hlp^Einführung in den UnixWare Desktop).
+
+Hinweis: Eine Liste der in diesem Hilfesystem erwähnten Warenzeichen
+erhalten Sie durch Anklicken von \k(Warenzeichen^DesktopMgr/trademark.hlp^Warenzeichen).
+
+
+^1^Notfallwiederherstellungsdisketten erstellen
+^$20
+Notfallwiederherstellungsdisketten erstellen
+
+Die Notfallwiederherstellungs-Diskette ist eine individuell an Ihr
+System angepaßte Diskette. Sollte Ihr System beschädigt werden, können
+Sie mit Hilfe dieser Diskette Ihr UnixWare System an einen Punkt
+bringen, von dem aus Sie den Schaden reparieren können.
+
+Für Instruktionenen zur Erstellung der
+Notfallwiederherstellungs-Diskette schlagen Sie in
+Systemeigentümer-Handbuch unter "Ihr System wiederherstellen" nach.
+
+Um jetzt eine Wiederherstellungsdiskette für den Notfall zu
+erstellen, klicken Sie auf
+\s(Notfallwiederherstellungsdiskette erstellen^/usr/X/bin/xterm -t "`gettxt dtfirst2:10 Notfallwiederherstellungsdiskette erstellen`" -E $XWINHOME/adm/dtexec -P root su root -c "'/sbin/emergency_disk -g diskette1'").
+
+^1^Bildschirmauflösung erhöhen
+^$30
+Bildschirmauflösung erhöhen
+
+Sie können die Auflösung Ihres Bildschirms verändern, um mehr
+Informationen auf ihrem Bildschirm angezeigt zu bekommen; Sie können
+auch die Anzahl der von Ihrem System auf dem Bildschirm verwendeten
+Farben erhöhen.
+
+Für weitere Informationen klicken Sie auf \k(Anzeige-Setup^dtadmin/video.hlp^Anzeige-Setup).
+
+Um jetzt Ihre Bildschirmauflösung zu erhöhen, klicken Sie auf
+\s(Bildschirm einrichten^/sbin/tfadmin gsetvideo -p || /usr/bin/gettxt dtfirst2:11 "Ihre Bildschirmauflösung konnte nicht erhöht werden." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Ihr System für TCP/IP-Netzwerkbetrieb konfigurieren
+^$40
+Ihr System für TCP/IP-Netzwerkbetrieb konfigurieren
+
+Wenn Sie während der ursprünglichen Installation TCP/IP (Transmission
+Control Protocol/Internet Protocol) nicht konfiguriert haben, oder
+wenn Sie einen bootp-Server in Ihrer Umgebung haben (überprüfen Sie
+das mit Ihrem Systemverwalter), müssen Sie jetzt TCP/IP einrichten, um
+an die Benutzer von anderen Systemen Post senden zu können und um
+Zugang zu Druckern in anderen UNIX Systemen zu haben.
+
+Sie werden wahrscheinlich auch den Zugang zum DNS-Server (Domain Name
+Service), einem NIS-Server (Network Information Service), einem
+Netzwerk-Router, usw. einrichten wollen. Sie führen alle diese
+Setup-Tasks, einschließlich der Konfigurierung von TCP/IP, mit der
+Funktion Internet-Setup aus.
+
+
+Für weitere Informationen klicken Sie auf \k(Internet-Setup^dtadmin/inet.hlp^Internet-Setup).
+
+Um den TCP/IP-Netzwerkbetrieb jetzt zu konfigurieren, klicken Sie auf
+\s(TCP/IP einrichten^/sbin/tfadmin inet || /usr/bin/gettxt dtfirst2:12 "TCP/IP-Netzbetrieb-Setup konnte nicht aufgerufen werden." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Ihr System für Anwähl-Netzwerkbetrieb konfigurieren
+^$50
+Ihr System für Anwähl-Netzwerkbetrieb konfigurieren
+
+Wenn Sie auf ein anderes System per Modem über das Telefonnetzwerk
+zugreifen müssen (Sie befinden sich zum Beispiel in einem entfernten
+Büro und müssen mit Ihrem Büro Kontakt aufnehmen), müssen Sie Ihr
+System für Anwählnetzwerkbetrieb konfigurieren.
+
+Für weitere Informationen klicken Sie auf \k(Anwähl-Setup^dtadmin/DialMgr.hlp^Anwähl-Setup).
+
+Um Ihr System jetzt für den Anwähl-Netzbetrieb via Modem einzurichten,
+klicken Sie auf \s(Anwählnetzbetrieb einrichten^/sbin/tfadmin dialup || /usr/bin/gettxt dtfirst2:13 "Anwählnetzbetrieb-Setup konnte nicht aufgerufen werden." | /usr/X/desktop/rft/dtmsg).
+
+^1^Ihr System für die Sendung von Post an Benutzer in anderen Netzwerken konfigurieren
+^$60
+Ihr System für die Sendung von Post an Benutzer in anderen Netzwerken konfigurieren
+
+Wenn Sie Ihr System so konfigurieren möchten, daß es mit einem
+Post-Server Kontakt aufnimmt, der Post an UNIX Systeme auf anderen
+Netzwerken senden kann, müssen Sie die Post mit Post-Setup
+konfigurieren. Klicken Sie für weitere Informationen auf \k(Post-Setup^Mail_Setup/Mail_Setup.hlp^Post-Setup).
+
+Um Post jetzt zu konfigurieren, klicken Sie auf \s(Post einrichten^/sbin/tfadmin Mail_Setup || /usr/bin/gettxt dtfirst2:14 "Post konnte nicht konfiguriert werden." | /usr/X/desktop/rft/dtmsg).
+
+Wenn Ihr System ein Application Server ist, und Sie es in einen
+Gateway zwischen UNIX System Postanwendern und NetWare Message
+Handling Service (MHS) Postanwendern verwandeln wollen, müssen Sie es
+mit MHS-Setup konfigurieren. Für weitere Informationen klicken Sie auf
+\k(MHS-Setup^MHS_Setup/MHS_Setup.hlp^MHS-Setup).
+
+Um einen MHS-Gateway jetzt zu konfigurieren, klicken Sie auf
+\s(MHS-Gateway einrichten^/sbin/tfadmin MHS_Setup || /usr/bin/gettxt dtfirst2:15 "Es konnte kein MHS-Gateway eingerichtet werden." | /usr/X/desktop/rft/dtmsg).
+
+^1^Drucker einrichten
+^$70
+Drucker einrichten
+
+Bevor Sie Druckaufträge an einen lokalen oder fernen Drucker senden
+können, müssen Sie Ihren Zugriff auf diesen Drucker konfigurieren.
+
+Für weitere Informationen siehe \k(Drucker-Setup^dtadmin/Printer_Setup.hlp^Drucker-Setup).
+
+Um einen Drucker jetzt zu konfigurieren, klicken Sie auf
+\s(Drucker einrichten^/sbin/tfadmin prtsetup -o || /usr/bin/gettxt dtfirst2:16 "Es konnte kein Drucker eingerichtet werden." | /usr/X/desktop/rft/dtmsg).
+
+^1^UNIX Anwendungen installieren
+^$80
+UNIX Anwendungen installieren
+
+Sie werden nach der ursprünglichen UnixWare Installation
+wahrscheinlich andere UNIX Anwendungen oder zusätzliche Pakete auf
+Ihrem System installieren wollen. Zum Beispiel das ASdocs-Paket, mit
+dem Sie Zugriff auf das vollständige Satz der UnixWare Application
+Server Online-Dokumentation haben.
+
+Für weitere Informationen klicken Sie auf \k(Anwendungs-Installierer^dtadmin/App_Installer.hlp^Anwend-Installierer).
+
+Um jetzt eine UNIX Anwendung zu installieren, klicken Sie auf
+\s(UNIX Anwendungen installieren^/sbin/tfadmin PackageMgr || /usr/bin/gettxt dtfirst2:17 "Es konnte keine UNIX Anwendung installiert werden." | /usr/X/desktop/rft/dtmsg).
+
+Hinweis: Sie können den Anwendungs-Installierer auch zur Installation
+von DOS- oder Windows-Anwendungen verwenden. Siehe
+\k(DOS und Windows installieren).
+
+^1^DOS und Windows installieren
+^$90
+DOS und Windows installieren
+
+Wenn Sie DOS oder Windows auf Ihrem UnixWare System installieren
+wollen, oder jedwelche DOS- oder Windows-Anwendungen, müssen Sie durch
+\d(Doppelklicken^doppelklicken) auf entweder das Win_Setup- oder
+DOS-Symbol auf eine DOS-Umgebung zugreifen.
+
+Für weitere Informationen siehe "Mit DOS und Windows arbeiten" m
+Desktop-Benutzerhandbuch.
+
+
+^1^Ihr System für NetWare Zugriff konfigurieren
+^$100
+Ihr System für NetWare Zugriff konfigurieren
+
+Wenn Sie Zugriff auf NetWare Server haben, können Sie Ihre
+Konnektivität zu NetWare durch die Neukonfiguration der NetWare
+IPX/SPX Netzwerkprotokoll-Parameter erweitern. Wenn Ihr System zum
+Beispiel mehrere Netzwerkkarten hat, können Sie diese für NetWare
+Netzwerkbetreib und NetWare IPX-Routing konfigurieren.
+
+Sie können gleichfalls aktivieren oder deaktivieren, daß der Status
+von NetWare IPX/SPX Netzwerkstapeln von einem anderen System aus
+gesteuert und überwacht wird.
+
+Für weitere Informationen siehe \k(NetWare Setup^NetWare_Setup/NetWare_Setup.hlp^NetWare Setup).
+
+Um NetWare Zugriff jetzt zu konfigurieren, klicken Sie auf
+\s(NetWare Zugriff einrichten^/sbin/tfadmin nwsetup || /usr/bin/gettxt dtfirst2:18 "NetWare Zugriff konnte nicht konfiguriert werden." | /usr/X/desktop/rft/dtmsg).
+
+^1^Notfallwiederherstellungsbänder erstellen
+^$110
+Notfallwiederherstellungsbänder erstellen
+
+Wenn Sie alle zusätzlichen Produkte und Anwendungen installiert haben,
+schützen Sie Ihre System durch die Erstellung von
+Notfallwiederherstellungsbändern.
+
+Für Anweisungen zur Erstellung von Notfallwiederherstellungsbändern
+siehe "Ihr System wiederherstellen" im Systemeigentümer-Handbuch.
+
+Hinweis: Falls Sie eine Upgrade-Installation vorgenommen haben,
+sollten Sie gleichfalls eine neue vollständige Sicherungskopie Ihres
+Systems erstellen. Siehe \k(Sichern-Wiederherstellen^dtadmin/backup.hlp^Sichern-Wiederherstellen).
+

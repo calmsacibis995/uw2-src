@@ -1,0 +1,61 @@
+#ident	"@(#)bkrs:common/cmd/bkrs/bkintf.d/backups/bksetup/except/add/Form.add	1.5.3.2"
+#ident  "$Header: Form.add 1.2 91/06/21 $"
+form="Add Entries to the Backup Exception List"
+
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+close=`rm -f $ERR $PAT`
+
+framemsg=`readfile $INTFBASE/form.msg`
+
+done=`message -w "Trying to add entries to exception list.";
+	set -l ERR=/tmp/$VPID.bea;
+	set -l PAT=/tmp/$VPID.pat;
+        echo "$F2" | sed -e 's/,/ /g;s/  */ /g;s/^ //;s/ $//;/^$/d'| tr ' ' '\012' >$PAT;
+        shell "bkexcept -a - <$PAT -t $F1 2>$ERR";
+	if [ $RET -eq 0 ] ;
+	then
+		getfrm | set -l FNUM;
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.addok $F1 $FNUM";
+	else
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.addnok $F1";
+	fi`$CMD
+
+begrow=any
+begcol=any
+
+# File Name field - F1
+name=File name:
+lininfo=F1
+nrow=2
+ncol=2
+
+value=`brfindtab bkexcept`
+scroll=true
+
+frow=2
+fcol=13
+rows=1
+columns=50
+
+choicemsg="Enter the file name containing the exception list."
+
+valid=`valpath -gw "$F1"`
+
+invalidmsg="$F1 is not a regular file or is not writable."
+
+# Patterns field - F2
+name=Pattern(s):
+lininfo=F2
+nrow=3
+ncol=2
+
+scroll=true
+
+frow=3
+fcol=14
+rows=3
+columns=50
+
+choicemsg="Enter the patterns for files/directories to exclude from backups."
+

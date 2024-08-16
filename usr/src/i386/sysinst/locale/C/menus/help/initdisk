@@ -1,0 +1,76 @@
+.ident	"@(#)proto:locale/C/menus/help/initdisk	1.8"
+.related kbhelp genhelp diskconf filesys
+.title Help: Disk Partitions
+ABOUT THIS OPTION
+Select this option to view and change how your hard disk is 
+partitioned.  (An 80 MB active UNIX partition must be selected.)
+
+ABOUT PARTITIONS
+Partitioning a hard disk divides it into parts which can be
+used for different operating systems.
+
+CAUTIONS:  If you delete any partition(s), all files in the
+           deleted partition(s) are destroyed.
+
+           If you change the type, size, or location of a
+           partition, all files in that partition are destroyed.
+
+           Back up your system before changing partitions or
+           file systems.
+.page
+USING THIS OPTION
+Select a Disk Partition to view/update how your disk is
+partitioned.  A menu then displays the disk partition and
+includes four fields that you can modify:
+
+       Type       Status       %       Cylinders
+
+TYPE
+The following are the choices for the types of partitions:
+
+   UNIX System   pre-5.0DOS   DOS   other   unused   System
+
+UnixWare must be installed on the 'UNIX System' partition type.
+If a UNIX System partition is not active, an error message is
+generated when you try to install UnixWare and you must either
+change the active partition or cancel the installation.
+.page
+If a system partition is displayed, you should not change its
+configuration.  If a system partition is not displayed, do
+not create it.
+
+NOTE:  If you plan to put a version of DOS (prior to Release 5.0)
+       on your system at the same time, make partition 1 the DOS
+       partition.
+
+Do the following to change the Type:
+    1. Use the <Tab> or up/down arrow keys to move to the desired
+       field.
+    2. Press <F2> to view the choices for the Type field.
+    3. Use the <Tab> key to move the asterisk (*) to your choice.
+    4. After selecting your choice, press <Enter> to return to the
+       Disk Partitions menu.
+.page
+STATUS
+Select 'Active' for the active partition; leave this field blank
+for other partitions.  The system always boots from the partition
+labeled Active.
+
+Do the following to change the Status:
+    1.  Use the <Tab> or up/down arrow keys to move to the field.
+    2.  Press <F2> to change the type from Active to Inactive
+        (blank) or to change the type from Inactive to Active.
+
+% AND CYLINDERS
+Fill in the % or Cylinders fields to specify the size of the
+UnixWare partition.  Do the following to change these fields:
+    1.  Use the <Tab> or up/down arrow keys to move to the field.
+    2.  Type in the value.
+.page
+EXITING THE DISK PARTITIONS MENU
+When you are finished viewing or changing partition information,
+press <F10> to return to the Disk Configuration menu.
+
+EXITING HELP
+Press <Esc> to return to the Disk Configuration menu.
+Press <F1> for more help.

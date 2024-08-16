@@ -1,0 +1,40 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5misc:uslclients/Imakefile	1.30"
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#if HasBuiltinExtension
+        DTBUILTIN = dtbuiltin
+#endif
+         USLGAMES = train breakout
+
+      XWINSUBDIRS = xinit xpr xwd xwud xlswins \
+		oldattlib xevent xinfo xhints xsetroot xauth xdemo
+
+  OPENLOOKSUBDIRS = libDtI libMDtI olwm olam olprintscreen olpixmap xterm \
+		$(DTBUILTIN) dsdm dtm dtmail dtedit dtclock dtadmin dtsched \
+		dtcalc dthelp $(USLGAMES) wksh xdm xidlelock xidleprefs \
+		dtcolor dticon xdpydev dtfirst upgrade
+
+#ifdef BuildOnlyXWIN
+          SUBDIRS = $(XWINSUBDIRS)
+#elif BuildOnlyOpenLook
+          SUBDIRS = $(OPENLOOKSUBDIRS)
+#else
+          SUBDIRS = $(XWINSUBDIRS) $(OPENLOOKSUBDIRS)
+#endif
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+install::
+	(set -x; $(MKDIRHIER) $(DESKTOPDIR)/Applications;\
+	$(MKDIRHIER) $(DESKTOPDIR)/Utilities);

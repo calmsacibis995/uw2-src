@@ -1,0 +1,100 @@
+#!/usr/gnu/bin/perl --
+# -*-Perl-*-
+#ident	"@(#)mail:common/cmd/mail/mhs/smf-poll	1.7"
+# MHS-Gate -- gateway MHS and Unix mail
+# (C) Copyright 1992-1994 Novell, Inc.   All Rights Reserved.
+# Jack Thomasson, Senior Consultant, Novell Consulting Services
+# Modified for UnixWare by Scott Harrison, Software Engineer Consultant, Novell
+# poll MHS gateway directory for new mail
+
+open(STDERR, ">>/var/spool/smf/LOG");
+push(@INC, "/usr/lib/mail/surrcmd");
+
+# used by sub diemsg in mhsConfig
+@DIEMSG = ("configuration information",
+	   "netdir.tab: could not open",
+	   "no working directory",
+	   );
+
+&lock("/var/spool/smf/smfpoll.pid");
+require "mhsConfig";
+
+$caught = 0;
+sub handler {
+  local($sig) = $_[$[];
+  warn "$0: caught SIG$sig\n";
+  ++$caught;
+}
+$SIG{"HUP"} = 'handler';
+$SIG{"TERM"} = 'handler';
+
+sub poll {
+  # set where, default to "."
+  local($where) = @_;
+  $where = "." unless $where;
+
+  local($mtime) = (stat($where))[9];
+  do {
+    sleep(50);
+  } while ($mtime == (stat($where))[9] && !$caught);
+}
+
+#chdir "$MV/mhs/mail/gates/$mhsGW/out" || &diemsg(2);
+
+$ext = $$ % 1000;
+
+while (!$caught) {
+  $processed = 0;
+  #opendir(GATEOUTDIR, ".");
+  #@files = readdir(GATEOUTDIR);
+  #closedir(GATEOUTDIR);
+  open(GATEOUTDIR, "nwreaddirectory $CNFG{MAILSERV} $MV/mhs/mail/gates/$mhsGW/out |");
+#  @files = read(GATEOUTDIR);
+#  close(GATEOUTDIR);
+#  foreach $file (@files) {
+    while(<GATEOUTDIR>) {
+    exit(0) if ($caught);
+    chop;
+    $file = $_;
+    next if ($file =~ /\./);
+    $new = substr($file, 0, rindex($file, "/")) . "/$$.USE";
+#    $new = "$$." . substr($file, -3);
+    #next unless rename($file, $new);
+    $command =  "nwrenamefile $CNFG{MAILSERV} '$file' $new";
+    next if system($command);
+    ++$processed;
+    # inverse sense used here because system returns exit value where
+    # 0 = OK
+    if (system ("/usr/lib/mail/surrcmd/smf-in", $new)) {
+      #rename($new, "$file.bad");
+      system("nwrenamefile $CNFG{MAILSERV} $new '$file.bad'");
+    }
+    else {
+      #unlink($new);
+      system("nwdeletefile $CNFG{MAILSERV} $new");;
+    }
+  }
+  close(GATEOUTDIR);
+  # &poll unless ($processed);
+  &unlockAndExit("/var/spool/smf/smfpoll.pid") unless ($processed);
+}
+
+sub lock {
+    $lockfilename = $_[0];
+    if (open(LOCKFILE, "<$lockfilename")) {
+	$pid = <LOCKFILE>;
+	chop $pid;
+	close(LOCKFILE);
+	exit(0) if (!system("kill -0 $pid"));
+	unlink($lockfilename);
+    }
+
+    open(LOCKFILE, ">$lockfilename");
+    print LOCKFILE "$$\n";
+    close(LOCKFILE);
+}
+
+sub unlockAndExit {
+    unlink($_[0]);
+    exit(0);
+}

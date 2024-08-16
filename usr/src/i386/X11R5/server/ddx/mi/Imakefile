@@ -1,0 +1,40 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5server:ddx/mi/Imakefile	1.4"
+
+#include <Server.tmpl>
+
+LIB = libmi.a
+
+SRCS =  miarc.c midash.c mipolycon.c \
+	mipolygen.c mipolyutil.c mivaltree.c \
+	micursor.c miregion.c mispans.c miwideline.c \
+	miexpose.c miinitext.c mibstore.c
+
+OBJS =  miarc.o midash.o mipolycon.o \
+	mipolygen.o mipolyutil.o mivaltree.o \
+	micursor.o miregion.o mispans.o miwideline.o \
+	miexpose.o miinitext.o mibstore.o
+
+INCLUDES = -I. -I../../include -I$(INCLUDESRC) -I$(FONTSRC)/include
+LINTLIBS = ../../dix/llib-ldix.ln ../../os/llib-los.ln
+
+NormalLibraryObjectRule()
+NormalLibraryTarget(mi,$(OBJS))
+LintLibraryTarget(mi,$(SRCS))
+NormalLintTarget($(SRCS))
+
+SpecialObjectRule(miinitext.o, $(ICONFIGFILES), -I../si $(EXT_DEFINES))
+
+#if HasSaberC
+saber_src:
+	/**/#load $(CFLAGS) $(EXT_DEFINES) $(SRCS)
+#endif
+
+DependTarget()

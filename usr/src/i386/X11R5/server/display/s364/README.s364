@@ -1,0 +1,550 @@
+#pragma ident	"@(#)s364:s364/README.s364	1.4"
+
+Due to non-standards in the Intel video world, it is literally impossible
+for any vendor to test all the available combinations of the machines, monitors
+and video hardware. By default, most of the popular combinations are tested
+before any SDD is released.
+
+
+The S364 SDD has been designed to handle various non-standard env's so that
+it will ease the support and users can even try out various non-default
+options. A user can define the options in "/usr/X/lib/display/S364_OPTIONS"
+file or in an env variable, "DISPLIB_OPTIONS". For example, I can have
+the following lines in "/usr/X/lib/display/S364_OPTIONS" file:
+
+    verbose-startup=1
+    rectfill-options=!use-offscreen-memory
+
+The above options will print some verbose information about the hardware,
+turns OFF the the use of offscreen memory for drawing rectangle fills.
+
+Or you can set the same in a env variable. The env variable approach is used
+if you want to over-ride only one or two options. If you have more than
+one or two, define the options in S364_OPTIONS as defined earlier.
+
+    DISPLIB_OPTIONS="rectfill-options=!use-offscreen-memory"
+    export DISPLIB_OPTIONS
+
+This will force rectangle fills not to use offscreen memory, or in otherwords
+tiles will not be downloaded into offscreen memory. The precedence of options
+is as follows (in order of decreasing priority):
+
+    a.  from the "DISPLIB_OPTIONS" environment variable
+    b.  from the "/usr/X/lib/display/S364_OPTIONS" file
+    c.  default options that were compiled into the library.
+
+OPTION DESCRIPTIONS:
+--------------------
+@option si-interface-version
+	@option-type	unique-enumeration
+	@valid-range	1-0 1-1 auto-configure
+	@default		auto-configure
+	@description	The version number that the SDD returns to the SI 
+					server.
+
+@option verbose-startup
+	@option-type	numeric
+	@valid-range	0..1
+	@default		0
+	@description	Print messages about chipset configuration if
+					set to 1.
+	
+################################################################################
+#
+# 		            CRTC/MONITOR  CONFIGURATION
+#
+################################################################################
+
+#   MODEDB parameters
+#
+#   This option provides for display mode initialization in the style of
+#	XFree86 by giving a modedb line. This will give some flexibility for 
+#	users to configure display modes.
+#
+#	It is the responsibility of the user to make sure that the monitor 
+#	he/she has supports the required refresh rate in the 
+#	particular resolution specified in the modedb parameters.
+#
+#   NOTE: Please note that the first field "name" in the modedb line should
+#   be removed when assigning the line to the option.
+#
+# Example:
+#	XFree86 ModeDB line:
+#		 "1024x768"     65    1024 1032 1208 1288    768  768  773  798
+#
+#	The option will be,
+# 	modedb-string="65    1024 1032 1208 1288    768  768  773  798"
+#
+@option	modedb-string
+	@option-type	string
+	@description	ModeDB entry in the following format: 
+                    "Clock HorizontalTiming VerticalTiming". 
+                    Clock is in MHz.
+                    The Timing field consists of Display, SyncStart,
+                        SyncEnd and Total timings in that order.
+					Anything after VerticalTiming field is IGNORED.
+					Interlaced modes are NOT SUPPORTED. Hence, it is
+					assumed that the mode parameters are for 
+					Non Interlaced mode.
+
+#	Monitor sync type
+@option	monitor-sync-type
+	@option-type 	unique-enumeration
+	@valid-range	composite-sync sync-on-green separate-sync
+	@default		composite-sync
+	@description	The monitor's SYNC type.
+
+#	Vertical Sync Pulse Polarity.
+@option	vsync-polarity
+	@option-type	unique-enumeration
+	@valid-range	positive negative default
+	@default		default
+	@description	The polarity of the v-sync pulse. Actually monitor
+					dependent. But most monitors could handle either case.
+
+#	Horizontal Sync Pulse Polarity.
+@option	hsync-polarity
+	@option-type	unique-enumeration
+	@valid-range	positive negative default
+	@default		default
+	@description	The polarity of the h-sync pulse. Actually monitor
+					dependent. But most monitors could handle either case.
+
+
+
+################################################################################
+#
+#	                 DIRECT HARDWARE REGISTER OVERRIDES
+#
+################################################################################
+
+@option register-values-string
+	@option-type 	string
+	@default		""
+	@description	This option provides a general way of programming 
+					crtc registers of the chipset. Format of the string
+					is as follows 
+					"index mask value rbits, index mask value rbits , ...\"\
+					Each 4-tuple is comma seperated. No range value checking
+					is done. The meanings of index,mask,value,rbits are :
+					index - register index to program ( like crtc registers)
+					mask,value  - value bits corresponding to a 1 in the mask
+								  will be programmed.
+					rbits	- bit positions with a 1 in rbits are treated as
+							  reserved bits. ( a 0 will be written).
+
+################################################################################
+#
+#	                         LFB OPTIONS
+#
+################################################################################
+
+@option framebuffer-physical-address
+	@option-type	numeric
+	@valid-range	32..4088
+	@default		120
+	@description	The physical address where the framebuffer will be mapped.
+					This value is specified in megabytes and indicates the 
+					start physical address of the framebuffer in your systems
+					memory space. This has to be greater than the available
+					memory on your system and has to be a multiple of  
+					8MB
+
+@option framebuffer-access-for-core-server
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	Whether or not the framebuffer is visible to the core
+					server. If yes the core server can directly
+					draw into the video memory without calling the sdd 
+					specific drawing routines if required. There are some
+					problems here which are performance related.
+
+################################################################################
+#
+#			             CHIPSET/CLOCK/BUS DETAILS.
+#
+################################################################################
+
+# To override autodetection scheme
+@option	chipset-name
+	@option-type	unique-enumeration
+	@valid-range	vision864 vision964 auto-detect
+	@default		auto-detect
+	@description	The type of accelarator.
+
+# 	Chipset stepping number : use this to override the auto-detection scheme.
+@option	chipset-revision-number
+	@option-type	numeric
+	@valid-range	-1..10
+	@default		-1
+	@description	The stepping number on the chipset. 
+					-1 indicates auto detect.
+
+#	Clock chip.
+@option	clock-chip-name
+	@option-type	unique-enumeration
+	@valid-range	chrontel-ch9204c chrontel-ch9204g icd-2061a 
+					tvp3025 use-builtin
+	@default		use-builtin
+	@description	The type of clock chip on the video board.  
+
+#	Bus type
+@option	bus-kind
+	@option-type	unique-enumeration
+	@valid-range	vlb pci auto-detect
+	@default		auto-detect
+	@description	Type of memory bus.
+
+################################################################################
+#
+#                         TIMEOUTS
+#
+################################################################################
+
+@option	graphics-engine-loop-timeout-count
+	@option-type	numeric
+	@valid-range	1..
+	@default		200000
+	@description	Number of cycles to wait before signalling an error.
+
+@option	graphics-engine-micro-delay-count
+	@option-type	numeric
+	@valid-range	1..
+	@default		40
+	@description	Number of cycles spin-wait between register accesses.
+
+@option	crtc-sync-timeout-count
+	@option-type	numeric
+	@valid-range	1..
+	@default		100000
+	@description	Number of cycles to wait for sync pulse to occour
+
+#########################################################################
+#
+# 						CLOCK related.
+#
+#########################################################################
+
+@option video-clock-delay
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	Introduces a delay for the clocks to synchronize.
+					Used only if the video board has Ti3025 dac.
+
+@option	video-clock-invert
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	The video clock inversion loop is enabled till the 
+					clocks are synchronized. Used only if the video board
+					has Ti3025 dac.
+
+@option memory-clock-frequency
+	@option-type	numeric
+	@valid-range	0..
+	@default		57
+	@description	Specifies the Mclock frequency in MHz to be
+					programmed. Used only if the video board has Ti3025 dac.
+					When increaing memory clock frequency beyond 57 MHz,
+					MAKE SURE your board can operate at that frequency. High
+					values of memory clock frequency MIGHT cause drawing
+					problems ( pixel droppings ). A value of 0 means that
+					memory clock is not programmed. (left at default)
+
+################################################################################
+#
+#                 DACS, COLORMAPS AND VISUALS.
+#
+################################################################################
+
+@option	dac-name
+	@option-type	unique-enumeration
+	@valid-range	att21c498 Bt485KPJ110 Bt485KPJ135 
+					TVP3020-135MDN TVP3020-175MDN TVP3020-200MDN 
+					PTVP3025-135MDN PTVP3025-175MDN PTVP3025-200MDN use-builtin
+	@default		use-builtin
+	@description	The type of DAC on board.
+
+@option dac-max-frequency
+	@option-type 	numeric
+	@valid-range	0..
+	@default		0
+	@description	Every dac has a maximum frequency to which it can operate
+					without damaging itself/card/monitor. This option allows
+					overriding of the builtin default value for the dac.
+					A value of 0 (default) will use the builtin defaults.
+					UTMOST CAUTION SHOULD BE TAKEN WHILE CHANGING THIS OPTION.
+					Wrong use can damage your system. The value is in Hz.
+
+@option clock-doubler-threshold
+	@option-type	numeric
+	@valid-range	-1..
+	@default		-1
+	@description	This option provides a way of specifying the threshold 
+					greater than which the clock doubler will be enabled
+					for dacs that have an internal clock doubler. A  value
+					of -1 indicates that builtin default threshold values
+					have to be used.
+
+@option	dac-rgb-width
+	@option-type	unique-enumeration
+	@valid-range	6 8 
+	@default		8
+	@description	Number of significant bits per R/G/B output.
+					`default' value is the industry standard of 6.
+
+@option	dac-32-bit-color-mode
+	@option-type	unique-enumeration
+	@valid-range	argb bgra
+	@default		argb
+	@description	Order of R/G/B pixels in a 32 bit word.
+
+@option dac-16-bit-color-mode
+	@option-type	unique-enumeration
+	@valid-range	555 565 664
+	@default		555
+	@description	Bits for R/G/B in 16 bit mode.
+
+@option	screen-visual-list
+	@option-type	multiple-enumeration
+	@valid-range	static-gray gray-scale static-color pseudo-color
+					true-color direct-color
+    @description    Supported display visuals in addition to the screen 
+					default visual specified in the server config file. 
+					Remember that for screen depths greater than 8 only 
+					true-color or direct-color can appear as the list.
+					Caveat : the core server does not seem to handle 
+					multiple visuals per screen yet ...
+
+#   A description file for static colormaps
+@option static-colormap-description-file
+	@option-type    string
+
+
+#################################################################################
+#	                           DRAWING RELATED.
+#
+################################################################################
+
+#
+# 	Controlling the SDD data/strategy.
+#
+
+# 	Cursor types.
+@option	cursor-type
+	@option-type	unique-enumeration
+	@valid-range	dac-cursor chipset-cursor software-cursor auto-configure
+	@default		auto-configure
+	@description	Cursor implementation types.
+
+#	Downloadable cursors.
+@option cursor-max-size
+	@option-type	string
+	@description	Maximum size of a cursor in WxH.
+
+#	Downloadable cursors.
+@option number-of-downloadable-cursors
+	@option-type	numeric
+	@valid-range	0..1
+	@default		1
+	@description	Number of downloaded hardware cursors.  `0' means
+					use internal default.
+
+#	Fonts.
+@option	number-of-downloadable-fonts
+	@option-type	numeric
+	@valid-range	0..
+	@default		17
+	@description	Number of downloaded fonts. `0' means to turn off
+					font handling in the SDD.
+
+#	The number of glyphs in a font suitable for downloading.
+@option max-number-of-glyphs-in-downloadable-font
+	@option-type	numeric
+	@valid-range	0..
+	@default		256
+	@description	The maximum number of glyphs in a font suitable
+					for downloading.  0 means ignore this criterion.
+
+# 	VT switch size
+@option vt-switch-save-lines
+	@option-type	numeric
+	@valid-range	0..8072
+	@default		8072
+	@description	Number of lines of screen to save. Exact values would 
+					save the total memory occupied by the x server.
+
+#	Graphics state
+@option number-of-graphics-states
+	@option-type	numeric
+	@valid-range	0..
+	@default		4
+	@description	Number of SDD graphics states. `0' means use
+					internal default.
+	
+#	Strategy decisions
+
+@option	tile-best-size
+	@option-type	string
+	@default		"64x64"
+	@description	Best tile size as seen by the Si code
+
+@option stipple-best-size
+	@option-type	string
+	@default		"64x64"
+	@description	Best stipple size as seen by si code.
+
+@option maximum-offscreen-downloadable-bitmap-width
+	@option-type	numeric
+	@valid-range	1..
+	@default		256
+	@description	Do not download tiles/stipples of more than this width
+					into offscreen memory
+
+@option maximum-offscreen-downloadable-bitmap-height
+	@option-type	numeric
+	@valid-range	1..
+	@default		256
+	@description	Do not download tiles/stipples of more than this height
+					into offscreen memory
+
+@option small-stipple-conversion-threshold
+	@option-type	numeric
+	@valid-range	1.....
+	@default		32
+	@description	Convert stipples that are a power of two and having
+					repeated patterns into 8x8 patterns so that they can
+					be stippled using the faster graphics engine monochrome
+					patblt feature. This value specifies the maximum width
+					and height of such a stipple. Only powers of 2 are legal
+					values. This option is used even for tiles which get 
+					reduced to stipples because they have only 2 colors.
+
+
+@option glyph-cache-size
+	@option-type	string
+	@default		"64x64"
+	@description	Cache glyphs smaller than this size in offscreen memory
+
+@option arc-cache-size
+	@option-type	numeric
+	@valid-range	0..
+	@default		16
+	@description	The number of arcs to cache in the display library
+					at a given time. `0' means switch off arc caching.
+
+#
+#	Controlling Drawing Functions.
+#
+
+@option rectfill-options
+	@option-type	multiple-enumeration
+	@valid-range	use-solid-fill-rect use-tile-fill-rect
+					use-stipple-fill-rect use-ge-mono-patfill
+					use-offscreen-memory use-tile-shrink none
+	@default		use-solid-fill-rect use-stipple-fill-rect
+					use-offscreen-memory use-ge-mono-patfill
+					use-tile-fill-rect use-tile-shrink
+	@description	Controlling fill functionality.
+
+@option bitblt-options
+	@option-type	multiple-enumeration
+	@valid-range	use-ss-bitblt use-ms-bitblt 
+					use-sm-bitblt use-ms-stplblt none
+	@default		use-ss-bitblt use-ms-bitblt use-sm-bitblt use-ms-stplblt
+	@description	Controlling fill functionality.
+
+@option linedraw-options
+	@option-type	multiple-enumeration
+	@valid-range	use-line-draw use-line-rectangles 
+					use-segment-draw use-dashed-line none
+	@default		use-line-draw use-line-rectangles 
+					use-segment-draw use-dashed-line
+	@description	Controlling line draw functionality.
+
+@option spansfill-options
+	@option-type	multiple-enumeration
+	@valid-range	use-solid-fill 
+	@default		use-solid-fill 
+	@description	Controlling spans fill functionality.
+
+@option	pointdraw-options
+	@option-type	multiple-enumeration
+	@valid-range	use-plot-point none
+	@default		use-plot-point 
+	@description	Controlling plot point functionality.
+
+@option fontdraw-options
+	@option-type 	multiple-enumeration
+	@valid-range	draw-non-terminal-fonts draw-terminal-fonts
+					use-offscreen-memory draw-multiple-glyphs
+	@default		draw-non-terminal-fonts draw-terminal-fonts
+					draw-multiple-glyphs
+	@description	Controlling the kinds of fonts the display library
+					should handle, and whether we should attempt to
+					download fonts into offscreen memory.
+
+@option	arcdraw-options
+	@option-type	multiple-enumeration
+	@valid-range	draw-one-bit-arcs
+	@default		draw-one-bit-arcs
+	@description	Controls the drawing operation for arcs.
+
+################################################################################
+#
+#  Options specific to #9GXE
+#
+################################################################################
+
+@option pci-9gxe64-1280-modes
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	Option to enable/disable 1280 and 1152 (high refresh
+					rate) modes on #9GXE64 PCI Vision864 based boards.
+
+
+################################################################################
+#
+#	Options for specific configurations.
+#
+################################################################################
+@option vlb-964-line-workaround
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	Workaround in case any problems are observed
+					in solid line drawing on VLB Vision964 based boards.
+
+
+################################################################################
+
+KNOWN PROBLEMS AND WORK AROUNDS
+-------------------------------
+
+1). On #9GXE64PRO vision 964 based boards, occasionally 4 to 8 pixels 
+	depending on the resolution, from the left edge wrap around to the 
+	right edge of the screen or the set of pixels from the right edge 
+	duplicate. This is due to a hardware problem in 964 chip (according
+	to #9), the problem in the synchronization of the 
+	pixel clock and the latch clock. To work around this, execute the 
+	utility /usr/X/lib/display/9gxe64wrap, as root.
+
+		The usage of this is,
+			/usr/X/lib/display/9gxe64wrap [<delay in sec>]
+
+	The default delay is 5 secs, but if the problem is not fixed by
+	executing the utility, try increasing the delay value. The maximum
+	allowed delay is 10 seconds.
+
+	By running this utility, the screen will be blanked out for a period, 
+	equivalent to the delay time. This 'work around' might fix the problem 
+	in most cases, but is not guaranteed to work in all environments. 
+	You can try running this utility more than one time, which might 
+	fix the problem too.
+
+	You can also try this utility if you see problems like jumping cursor
+	or glitch at the left edge of the screen. 
+

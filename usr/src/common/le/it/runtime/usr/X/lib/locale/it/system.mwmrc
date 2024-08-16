@@ -1,0 +1,125 @@
+! 
+! (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+! ALL RIGHTS RESERVED 
+! 
+! 
+! Motif Release 1.2
+! 
+
+!!
+!!  DEFAULT Mwm 1.2 RESOURCE DESCRIPTION FILE (system.mwmrc)
+!!
+!!  NOTE: To personalize this file, copy this file before editing it.
+!!  	  Personalize copies of the Mwm resource file typically
+!!	  reside as:
+!!
+!!		$HOME/.mwmrc
+!!
+
+!!
+!! Root Menu Description (this menu must be explicitly posted via f.menu)
+!!
+
+Menu DefaultRootMenu
+{
+	"Menu Root"		f.title
+	"Nuova finestra"		f.exec "xterm &"
+	"Sposta avanti"		f.circle_up
+	"Sposta indietro"		f.circle_down
+	"Rigenera"		f.refresh
+	"Avvicina le icone"		f.pack_icons
+!	"Toggle Behavior..."	f.set_behavior
+	"Blocca"                  f.exec "xlock &"
+	 no-label		f.separator
+	"Riavvia..."		f.restart
+!	"Quit..."		f.quit_mwm
+
+}
+
+Menu RootMenu_1.1
+{
+	"Menu Root"		f.title
+	"Nuova finestra"		f.exec "xterm &"
+	"Sposta avanti"		f.circle_up
+	"Sposta indietro"		f.circle_down
+	"Rigenera"		f.refresh
+!	"Pack Icons"		f.pack_icons
+!	"Toggle Behavior"	f.set_behavior
+	no-label		f.separator
+	"Riavvia..."		f.restart
+}
+
+!!
+!! Default Window Menu Description
+!!
+
+Menu DefaultWindowMenu
+{
+	Ripristina		_R	Alt<Key>F5	f.restore
+	Sposta		_S	Alt<Key>F7	f.move
+	Dimensione		_D	Alt<Key>F8	f.resize
+	"Riduci a icona"	_c	Alt<Key>F9	f.minimize
+	Ingrandisci	_I	Alt<Key>F10	f.maximize
+	Indietro		_n	Alt<Key>F3	f.lower
+	no-label				f.separator
+	Chiudi		_h	Alt<Key>F4	f.kill
+}
+
+
+!!
+!! Key Binding Description
+!!
+
+Keys DefaultKeyBindings
+{
+	Shift<Key>Escape	window|icon		f.post_wmenu
+	Alt<Key>space		window|icon		f.post_wmenu
+	Alt<Key>Tab		root|icon|window	f.next_key
+	Alt Shift<Key>Tab	root|icon|window	f.prev_key
+	Alt<Key>Escape		root|icon|window	f.next_key
+	Alt Shift<Key>Escape	root|icon|window	f.prev_key
+	Alt Shift Ctrl<Key>exclam root|icon|window	f.set_behavior
+	Alt<Key>F6		window			f.next_key transient
+	Alt Shift<Key>F6	window			f.prev_key transient
+	Shift<Key>F10		icon			f.post_wmenu
+!	Alt Shift<Key>Delete	root|icon|window	f.restart
+}
+
+!!
+!! Button Binding Description(s)
+!!
+
+Buttons DefaultButtonBindings
+{
+	<Btn1Down>	icon|frame	f.raise
+	<Btn3Down>	icon|frame	f.post_wmenu
+	<Btn3Down>	root		f.menu	DefaultRootMenu
+}
+ 
+Buttons ExplicitButtonBindings
+{
+	<Btn1Down>	frame|icon	f.raise
+	<Btn3Down>	frame|icon	f.post_wmenu
+	<Btn3Down>	root		f.menu	DefaultRootMenu
+!	<Btn1Up>	icon		f.restore
+	Alt<Btn1Down>	window|icon	f.lower
+!	Alt<Btn2Down>	window|icon	f.resize
+!	Alt<Btn3Down>	window|icon	f.move
+
+}
+ 
+Buttons PointerButtonBindings
+{
+	<Btn1Down>	frame|icon	f.raise
+	<Btn3Down>	frame|icon	f.post_wmenu
+	<Btn3Down>	root		f.menu	DefaultRootMenu
+	<Btn1Down>	window		f.raise
+!	<Btn1Up>	icon		f.restore
+	Alt<Btn1Down>	window|icon	f.lower
+!	Alt<Btn2Down>	window|icon	f.resize
+!	Alt<Btn3Down>	window|icon	f.move
+}
+
+!!
+!!  END OF mwm RESOURCE DESCRIPTION FILE
+!!

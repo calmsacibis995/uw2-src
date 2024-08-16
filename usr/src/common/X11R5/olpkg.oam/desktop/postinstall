@@ -1,0 +1,115 @@
+#ident	"@(#)olpkg.oam:desktop/postinstall	1.38"
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+
+#
+#	USL Desktop Manager Package
+#
+
+PKGMSG=${PKG}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+
+#
+# now make sure fonts.dir is up-to-date
+#
+
+/usr/X/bin/mkfontdir /usr/X/lib/fonts/75dpi
+/usr/X/bin/mkfontdir /usr/X/lib/fonts/100dpi
+
+#
+# ensure that tfadmin executes properly
+#
+chmod +x /usr/bin/adminuser
+filepriv -f allprivs /sbin/tfadmin
+
+#
+# uudemon.cleanup script from Ella Fisher
+#
+CLEANUP='45 23 * * * $TFADMIN /usr/lib/uucp/uudemon.clean -d  > /dev/null 2>&1'
+
+#add "uudemon.clean -d" entry
+
+TEMPUUCP=/usr/tmp/uucp.tmp.$$
+NEWUUCP=/usr/tmp/uucp.new.$$
+TEMPROOT=/usr/tmp/root.tmp.$$
+NEWROOT=/usr/tmp/root.new.$$
+
+crontab -l uucp >$TEMPUUCP 2>/dev/null
+crontab -l root >$TEMPROOT 2>/dev/null
+grep -v "uudemon.clean" $TEMPUUCP >$NEWUUCP 2>&1
+grep -v "uudemon.clean" $TEMPROOT >$NEWROOT 2>&1
+echo "$CLEANUP" >> $NEWUUCP 2>/dev/null
+if /sbin/su uucp -c "crontab $NEWUUCP" >/dev/null 2>&1
+then
+	/sbin/su root -c "crontab $NEWROOT" >/dev/null 2>&1
+else
+	pfmt -s warn -g ${PKGMSG}:2 "\%s cannot install uucp crontab entry\n\tfor uudemon.clean\n" ${PKGNAME} 2>&1
+fi
+
+
+############# Begin UPGRADE AND OVERLAY #######################
+
+SCRIPTS=/usr/sbin/pkginst
+
+[ "$AUTOMERGE" = NULL ] || {
+#	If AUTOMERGE=Yes, ${SCRIPTS}/pkgmrgconf will 
+#	merge the config files listed in $UPGRADE_STORE/${PKGINST}.sav.
+#	If merge failed, it informs user which files the merge failed.
+
+#	If AUTOMERGE=No, ${SCRIPTS}/pkgmrgconf will 
+#	inform user where there old config files live and that
+#	the system will use new versions of the config. files
+
+#	request and preinstall set AUTOMERGE to one of "Yes" or NULL
+#	"No" is not currently possible.
+
+	${SCRIPTS}/pkgmrgconf "${PKGINST}" "$AUTOMERGE" "$NAME"
+}
+CONFIGFILE=/usr/X/lib/xdm/xdm-config
+if [ -s ${CONFIGFILE} -a ! "`grep terminateServer ${CONFIGFILE}`" ]
+then
+   echo 'DisplayManager._0.terminateServer:	true' >> ${CONFIGFILE}
+fi
+
+${SCRIPTS}/up_cleanup "${PKGINST}"
+############# End   UPGRADE AND OVERLAY #######################
+
+#
+# If we're running from install on boot, no need to setup owner since
+# the postreboot.sh will take care of it.  if, however, this is an
+# after-the-fact pkgadd, the owner has to be setup here.
+#
+
+[ -f /etc/inst/scripts/postreboot.sh ] || {
+	set `grep mail= /var/sadm/install/admin/* | cut -f2 -d=`
+	while [ $# -ne 0 ]
+	do
+		[ "$1" != "root" ] && /usr/X/adm/dtadduser -m $1 2>/dev/null
+		/usr/X/adm/make-owner $1 2>/dev/null
+		shift
+	done
+}
+
+#
+# Now clean up
+#
+rm -rf /tmp/pkg >/dev/null 2>&1
+exit ${errflag}

@@ -1,0 +1,66 @@
+#ident	"@(#)debugger:config.d/common/config.ctxt	1.1"
+
+# This configuration is closest to the old default configuration
+# of the debugger, with the addition of a button bar in each
+# window.
+
+Window "Context" auto 
+	Buttons 
+		Set_current 
+		Run 
+		Return 
+		Step_Stmt 
+		Next_Stmt 
+		Halt 
+		Destroy 
+		Popup "Source"
+	Process	3 
+	Stack	5 
+	Symbols	5
+Window "Source" 
+	Buttons 
+		Animate_Source "Animate" 
+		Run 
+		Return 
+		Step_Stmt 
+		Next_Stmt 
+		Halt 
+		Destroy 
+		Popup "Context"
+	Status 1 
+	Source 10 60
+Window "Disassembly" 
+	Buttons 
+		Animate_Dis "Animate" 
+		Run 
+		Return 
+		Step_Inst 
+		Next_Inst 
+		Halt 
+		Destroy 
+		Popup "Context"
+		Popup "Source"
+	Status	1
+	Register	6  70
+	Disassembly	10 70
+Window "Event" 
+	Buttons 
+		Disable 
+		Enable 
+		Delete 
+		Popup "Command" "Cmd"
+		Popup "Context"
+		Popup "Disassembly" "Dis"
+		Popup "Source"
+	Status	1 
+	Event	8 
+Window "Command" 
+	Buttons 
+		Interrupt 
+		Input 
+		Popup "Context"
+		Popup "Disassembly" "Dis"
+		Popup "Event"
+		Popup "Source"
+	Status 1 
+	Command 10 60

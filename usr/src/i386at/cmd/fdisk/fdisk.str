@@ -1,0 +1,126 @@
+#ident	"@(#)fdisk:i386at/cmd/fdisk/fdisk.str	1.9"
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+Usage: partsize [-s] [-d] [raw-device]\n
+Usage: %s [raw-device]\n
+Other
+pre-5.0DOS
+DOS-DATA
+EXT-DOS
+DOS
+UNIX System
+Active
+      
+unknown argument: %s\n
+only one option can be used.\n
+Default device (%s) cannot be opened\n
+The second disk is not installed on your system.\n
+Use this command to create partitions and filesystems on the second\ndisk after it has been installed.\n
+cannot open %s\n
+Make sure that the disk is properly installed\n
+SECOND
+second
+illegal device - %s\n
+Can only be executed on a disk. \n
+Unable to obtain %d bytes of temporary memory.\n
+Error reading partition table\n
+Possibly wrong device node, use a node that starts from cylinder 0\n
+The recommended default partitioning for your disk is:\n\n
+    %d%% \"UNIX System\" -- lets you run UNIX System programs\n
+    %d%% \"DOS (v. 3.2 or later) only\" \n\n
+  a 100%% \"UNIX System\" partition. \n\n
+To select this, please type \"y\".
+  To partition your disk\ndifferently, type \"n\" and the \"fdisk\" program will let you\nselect other partitions. 
+Please answer \"y\" or \"n\": 
+Error initializing DOS partition.\n
+error writing boot record\n
+Enter Selection: 
+Please enter a one digit number between 0 and 5
+The partition table is full! \n
+You must delete an old partition before creating a new one.\n
+There is no more room on the disk for another partition.\n
+Indicate the type of partition you want to create\n
+(1=UNIX System, 2=pre-5.0DOS, 3=post-4.0DOS, 4=System, 5=other, x=Exit). 
+Illegal selection, try again.
+Partition %d is now the Active partition
+Do you want this to become the \"Active\" partition? \n
+UNIX partitions must be in the \"Active\" state to be accessible.\n
+Type \"y\" to mark the partition \"Active\" or \"n\". 
+\nDo you want this partition to become the Active boot partition?\n
+The UNIX System partition requires at least %d%% of the disk.\n
+Indicate the percentage of the disk you want this partition \nto use (or enter \"c\" to specify in cylinders). 
+Illegal Percentage value specified\n
+Please re-create the partition
+Percentage specified is too large, enter a value between %d and 100.\n
+Percentage specified is too small, enter a value between %d and 100.\n
+Maximum size for a pre-5.0DOS partition is %d%%.\n
+Minimum size for a UNIX System partition is %d%%.\n
+Partition defined is too large - Maximum size available is %d%%.\n
+Enter starting cylinder number: 
+Illegal number, please re-create the partition
+Cylinder %d out of bounds, maximum is %d\n
+Partition cannot be created because it overlaps with an existing partition.\n
+Starting cylinder of a partition must be less than 1024.\n
+Enter partition size in cylinders: 
+Minimum size for UNIX System partition is %d cylinders.\n
+Partition defined is too large - Maximum size available is %d cylinders (%d%%).
+Partition too small - Minimum size is 3 cylinders.
+             Total disk size is %d cylinders (%4.1f MB)\n\n
+                                        Cylinders                Approx\n
+Partition   Status       Type       Start   End   Length    %%      MB\n
+=========   ======    ===========   =====   ===   ======   ===   ======
+\n    %d       %s    %-11.11s   %4d   %4d    %4d    %3d    %4.1f
+THERE ARE NO PARTITIONS CURRENTLY DEFINED
+SELECT ONE OF THE FOLLOWING: \n\n
+     1.   Create a partition\n
+     2.   Change Active (Boot from) partition\n
+     3.   Delete a partition\n
+     4.   Exit (Update disk configuration and exit)\n
+     5.   Cancel (Exit without updating disk configuration)
+Enter the number of the partition you want to access on the %s disk\n(or enter 0 for none): 
+Enter the number of the partition you want to boot from\n(or enter 0 for none): 
+Illegal response, please give a number between 0 and 4\n
+There is currently no Active partition on the %s disk, you will not\nbe able to access filesystems created there.
+There is currently no Active partition
+Partition does not exist
+A DOS-DATA or EXT_DOS partition may not be made active.\n
+Select another partition.
+Partition %d is now the accessible partition on the %s disk.\n
+Partition %d is now the Active partition.
+ It will be activated when you reset\nyour computer or turn it on again.\n
+Enter the number of the partition you want to delete\n(or enter x to exit ): 
+Illegal response, try again\n
+Partition %d does not exist.
+Do you want to delete partition %d?
+  This will erase all files and \nprograms in this partition (type \"y\" or \"n\"). 
+Partition %d has been deleted.
+  This was the active partition.
+If you have created a UNIX System, or DOS partition, you must\ninitialize the partition to reflect the new configuration.\n
+For a Unix System partition run the disksetup(1m) command.\n
+For a DOS partition, run the DOS format command.
+Changes\nlimited to the \"Active\" status field require\nno additional action.\n
+You have changed or allocated a DOS partition.\n
+Run the DOS format command to initialize the partition.\n
+The system master boot code has been overwritten.\n
+You must \"Update\" for the change to take effect.
+     0.   Overwrite system master boot code\n
+WARNING: Not all operating systems support disk partitions starting or\nending above cylinder 1023.
+  See documentation for additional information.\n
+PART%d=\n
+PART%d=\"%d\t%s\t%s\t%d\t%d\t%d\t%d\t%f\"\n
+NPART=%d\n
+NUMCYL=%d\n
+NUMMB=%.1f\n
+MAXCYL=%d\n
+MAXPCT=%d\n
+Maximum size for pre-5.0DOS partition is %d cylinders.\n
+System partition (requires to start at cylinder 0) overlaps with partition 1\nMaximum size available is %d%%.  
+System Configuration partition is required to start at cylinder 0.\n
+Disk too small -- System Configuration partition requires %d MB of storage.\n
+System

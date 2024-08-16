@@ -1,0 +1,249 @@
+argvtostr terminata in errore\n
+Insuccesso nell'allocazione della memoria\n
+Il nome di comando \"%s\" esiste già\n
+L'utente \"%s\" esiste già\n
+Il nome di ruolo \"%s\" non è unico\n
+Utente \"%s\" indefinito\n
+Il privilegio di processo \"%s\" non esiste nel comando \"%s\"\n
+Uso scorretto\n
+\nuso: adminuser [-n] [-o ruolo[,...]]\n               [-a cmd:path[:priv[:priv...]][,...]]\n               utente ...\n     adminuser [-o ruolo[,...]]\n               [-r cmd[:priv[:priv...]][,...]]\n               [-a cmd:path[:priv[:priv...]][,..\n
+%s:\n
+ruoli:     <nessuno>\n
+ruoli:     
+Comandi:\n     <nessuno>\n
+Comandi:\n
+           %s:%s 
+Il nome di ruolo \"%s\" esiste già\n
+Nome di ruolo \"%s\" indefinito\n
+\nuso: adminrole [-n] [-a cmd:path[:priv[:priv...]][,...]] ruolo ...\n     adminrole [-r cmd[:priv[:priv...]][,...]]\n               [-a cmd:path[:priv[:priv...]][,...]] ruolo ...\n     adminrole [-d] ruolo ...\n     adminrole\n
+%s:\t<vuoto>\n
+%s:
+\t%s:%s 
+Privilegio di processo non valido: \"%s\"\n
+Privilegio di processo duplicato: \"%s\"\n
+Numero di privilegio non riconosciuto: \"%d\"\n
+<sconosciuto> 
+Impossibile eseguire il file di programma\n
+Nome di comando \"%s\" non definito\n
+Utente non ammesso\n
+Impossibile impostare l'insieme massimo di privilegi\n
+\nuso:\ttfadmin [ruolo:] cmd [arg]\n\ttfadmin -t [ruolo:] cmd [arg]\n
+Specifica di comando insufficiente: \"%s\"\n
+Va specificato il nome di percorso completo del comando\n
+Va specificato il nome di percorso completo del database TFM\n
+Impossibile leggere la lista dei ruoli per l'utente \"%s\"\n
+Il database TFM non esiste\n
+Impossibile inizializzare il database TFM\n
+Impossibile aggiungere l'utente \"%s\"\n
+Impossibile aggiungere il ruolo \"%s\"\n
+ Impossibile alterare l'utente \"%s\"\n
+Impossibile alterare il ruolo \"%s\"\n
+L'utente \"%s\" viene modificato in questo momento; riprovare più tardi\n
+Il ruolo \"%s\" viene modificato in questo momento; riprovare più tardi\n
+Impossibile rimuovere il ruolo \"%s\"\n
+Impossibile rimuovere l'utente \"%s\"\n
+Impossibile modificare il comando \"%s\"\n
+Impossibile modificare la lista dei ruoli per l'utente \"%s\"\n
+Nome di comando non corretto: \"%s\"\n
+uso scorretto\n
+uso: chlvl livello file1 [file2 ...]\n
+errore di programma\n
+specificato un livello di sicurezza non valido\n
+LTDB non è accessibile\n
+permesso negato per il file \"%s\"\n
+il file \"%s\" non è 'tranquillo' (cioè il file è aperto e/o mappato)\n
+il livello di sicurezza specificato non rientra nell'intervallo di dispositivo\nper il file \"%s\"\n
+il file system per il file \"%s\" non supporta etichette per ciascun file\n
+servizio di sistema non installato\n
+il file \"%s\" è inaccessibile\n
+interrotto per far rispettare il minimo privilegio\n
+il file system per il file \"%s\" è montato in sola lettura\n
+manca CLASS_OBJ per \"%s\"\n
+tipo ACL non valido per \"%s\"\n
+permesso negato per \"%s\"\n
+file \"%s\" non trovato\n
+insuccesso di stat per il file \"%s\", %s\n
+malloc terminata in errore\n
+acl terminato in errore per il file \"%s\", %s\n
+Num. File: %s\n
+Num. proprietario: 
+Num. Gruppo: 
+default:
+utente::
+utente:
+gruppo::
+gruppo:
+classe:
+altro:
+\tn. effettivo:
+uso: getacl [-ad] file ...\n
+acl terminato in errore per \"%s\", %s\n
+sono state specificate opzioni incompatibili\n
+elementi duplicati: \"%s\"\n
+elementi duplicati per \"%s\": \"%s\"\n
+specifica di elemento non ammessa, \"%s\"\n
+manca il proprietario del file, il gruppo del file, la \"classe\" o \"altro\"\n
+la chiamata ad aclsort è terminata in errore\n
+la chiamata ad aclsort è terminata in errore per \"%s\"\n
+Impossibile aprire il file \"%s\",%s\n
+\"%s\", linea %d; elemento ACL non valido\n
+proibito cancellare proprietario e gruppo del file, \"classe\" e \"altro\"\n
+tipo \"%s\" sconosciuto\n
+id di utente \"%s\" sconosciuta\n
+id di gruppo \"%s\" sconosciuta\n
+permesso \"%s\" sconosciuto\n
+non esiste un elemento di ACL corrispondente a \"%s\": \"%s\"\n
+per \"%s\" è possibile specificare solo proprietario e gruppo di file, \"classe\" e\n\"altro\"\n
+gli elementi di ACL di default possono essere impostati solo sulle directory,\nnon su \"%s\"\n
+\nuso: setacl [-r]\n
+              [-m [[d[efault]:]u[ser]::operm | perm[,]]\n
+                  [[d[efault]:]u[ser]:uid:operm | perm[,...]]\n
+                  [[d[efault]:]g[roup]::operm | perm[,]]\n
+                  [[d[efault]:]g[roup]:gid:operm | perm[,...]]\n
+                  [[d[efault]:]c[lass]:operm | perm[,]]\n
+                  [[d[efault]:o[ther]:operm | perm[,]]\n
+              [-d [[d[efault]:]u[ser]:uid[,...]]\n
+                  [[d[efault]:]g[roup]:gid[,...]]\n
+                  [[d[efault]:]u[ser]::[,]]\n
+                  [[d[efault]:]g[roup]::[,]]\n
+                  [[d[efault]:]c[lass]:[,]]\n
+                  [[d[efault]:]o[ther]:[,]]]\n
+              oggetto(i)\n
+        o\n
+       setacl [-r]\n
+              -s u[ser]::operm | perm[,]\n
+                 [d[efault]:u[ser]::operm | perm[,]]\n
+                 g[roup]::operm | perm[,]\n
+                 [d[efault]:g[roup]::operm | perm[,]]\n
+                 c[lass]:operm | perm[,]\n
+                 [d[efault]:c[lass]:operm | perm[,]]\n
+                 o[ther]:operm | perm[,]\n
+                 [d[efault]:o[ther]:operm | perm[,]]\n
+                 [[d[efault]:]u[ser]:uid:operm | perm[,...]]\n
+                 [[d[efault]:]g[roup]:gid:operm | perm[,...]]\n
+       setacl [-r] -f nome_file oggetto(i)\n
+uso: lvldelete [-r] -a nome_alias[,nome_alias...]\n
+                                       [-r] -c id_cat[,id_cat...]\n
+                                       [-r] -f nome_livello\n
+                                       [-r] -h id_classe[,id_classe...]\n
+                                       [-r] -l lid[,lid...]\n
+\nIdentificatori di livello (LID):\n
+\nClassificazioni:\n
+\nCategorie:\n
+\nNomi alias:\n
+\nLivelli:\n
+\nuso: lvlname [[-r] -a nome_alias::nome_livello]\n
+               [[-r] -c #:nome_c[,#:nome_c...]\n
+               [[-r] -h #:nome_h[,#:nome_h...]\n
+               [[-r] -l [identif_livello::]nome_livello]\n
+               [-p]\n
+dove\n
+       nome_alias       - alias di un livello completamente qualificato\n
+       nome_c           - nome di categoria non gerarchica\n
+       nome_h          - nome di classificazione gerarchica\n
+    identif_livello - numero livello (LID) completamente specificato\n
+    nome_livello   - livello completamente specificato,\n                          nome_h[:nome_c[,nome_c]...]\n
+       n.                - numero di classificazione o categoria\n
+uso: lvlprt [-s]\n
+argomento di opzione non ammesso -- \"%s\"\n
+numero \"%s\" non valido\n
+nome \"%s\" non valido\n
+nome di livello \"%s\" non valido\n
+il nome \"%s\" è riservato\n
+il LID \"%d\" è riservato\n
+il nome \"%s\" è già usato come alias, classificazione o categoria\n
+L'uso dell'identificatore \"%s\" è riservato al sistema\n
+identificatore di livello \"%s\" non valido: deve essere numerico\n
+il numero di classificazione \"%s\" attualmente non ha nome\n
+il numero di classificazione \"%s\" è già assegnato\n
+il nome di classificazione \"%s\" attualmente non è definito\n
+il numero di classificazione \"%s\" è fuori dall'intervallo (1 - %d)\n
+il numero di categoria \"%s\" attualmente non ha nome\n
+il numero di categoria \"%s\" è già assegnato\n
+il nome di categoria \"%s\" attualmente non è definito\n
+il numero di categoria \"%s\" non è nell'intervallo (1 - %d)\n
+l'identificatore di livello \"%s\" attualmente non ha nome\n
+l'identificatore di livello \"%s\" è in stato valido-inattivo\n
+l'identificatore di livello \"%d\" è già assegnato a un livello\n
+il nome di livello \"%s\" attualmente non è definito\n
+il nome di livello \"%s\" è già in uso\n
+l'identificatore di livello \"%s\" non è nell'intervallo (1 - %d)\n
+l'alias per il nome di livello \"%s\" è già stato assegnato\n
+il nome alias \"%s\" attualmente non è definito\n
+impossibile creare LTDB\n
+impossibile chiudere LTDB\n
+LTDB è in corso di modifica\n
+impossibile togliere il lock da LTDB\n
+impossibile posizionarsi in LTDB\n
+impossibile leggere da LTDB\n
+impossibile scrivere su LTDB\n
+impossibile leggere da log della storia\n
+impossibile scrivere su log della storia\n
+log della storia inaccessibile\n
+impossibile chiudere log della storia\n
+impossibile creare log della storia\n
+manca la memoria per le richieste dell'utente\n
+manca la memoria per leggere da log della storia\n
+manca la memoria per scrivere su log della storia\n
+manca la memoria per convertire il LID in un livello completamente specificato\n
+manca la memoria per riordinare l'output\n
+LTDB non più sincronizzato durante l'elaborazione del nome di livello \"%s\"\n
+la classificazione o categoria che contiene il livello del LID \"%d\" attualmente\nnon ha nome\n
+la classificazione o categoria che contiene il livello dell'alias \"%s\"\nattualmente non ha nome\n
+il prossimo LID assegnato automaticamente non è corretto; assegnare il nome di livello \"%s\" alla fine del file\n
+traboccamento del prossimo LID assegnato automaticamente; il nome di livello\n\"%s\" non è assegnato\n
+argvtostr terminata in errore\n
+impossibile aprire i file di backup di LTDB\n
+impossibile scrivere i file di backup di LTDB\n
+il file %s non esiste\n
+impossibile accedere al file %s\n
+impossibile creare il file per l'utente %s\n
+il file per l'utente %s esiste già\n
+%s\n
+\tuso: maccnv\n
+impossibile passare alla directory /etc/security/ia/level\n
+impossibile tradurre %s\n
+Elemento non valido nel file delle parole d'accesso - scavalcato\n
+combinazione di opzioni non valida -r & -v\n
+uso: mldmode [ -r | -v stringa]\n
+opzione non ammessa -- %s\n
+modo multilivello=%s\n
+exec terminata in errore, errno = %d\n
+uso: admalloc [-m][-o][-w liv -u utente,gruppo] [-r livalto-livbasso] disp ...\n     admalloc -s\n     admalloc -d[-f] [dispositivo]...\n
+%s non è definito nel database dei dispositivi\n
+%s è già allocato\n
+allocazione non permessa per \"%s\" per %s\n
+\"%s\" non è definito o è inaccessibile per \"%s\"\n
+lo stato \"%s\" non è ammesso per %s\n
+il livello o intervallo di livelli specificato non sono ammessi per %s\n
+Database dei dispositivi non accessibile - informare l'amministratore\n
+Database dei dispositivi incoerente - informare l'amministratore\n
+livello %s non valido\n
+%s occupato\n
+informazioni di sicurezza su %s non accessibili\n
+LTDB non accessibile - informare l'amministratore\n
+%s non domina %s\n
+Database dei dispositivi in uso - riprovare più tardi\n
+\"%s\" o \"%s\" non definito sul sistema\n
+\"%d\" o \"%d\" non definito sul sistema\n
+permesso negato per %s\n
+uso: devstat -Z|z [dispositivo]...\n
+combinazione di opzioni non valida -Z & -z\n
+permesso negato\n
+\"%s\" non è definito nel database dei dispositivi\n
+\"%s\" non è definito o è inaccessibile per \"%s\"\n
+\"%s\" è indefinito o inaccessibile\n
+\"%s\" non è un file a blocchi su disco o speciale a caratteri di \"%s\"\n
+\"%s\" non è un file a blocchi su disco o speciale a caratteri\n
+memoria insufficiente\n
+nome di dispositivo: %s\n
+nome percorso   : %s\n
+\tstato      : %s\n
+\tmodo        : %s\n
+\talta        : %s\n
+\tbassa         : %s\n
+\tusa conteggio   : %d\n
+\tindicatore di versione: %s\n
+\"%s\" manca del privilegio richiesto per \"%s\"\n
+\nuso:\ttfadmin [ruolo:] cmd [arg]\n\ttfadmin -t [ruolo:] cmd[:priv[:priv...]]\n
+Uso: mldmode [ -r | -v [stringa] ]\n

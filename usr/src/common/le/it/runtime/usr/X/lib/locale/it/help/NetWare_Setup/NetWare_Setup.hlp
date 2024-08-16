@@ -1,0 +1,279 @@
+#ident\t"@(#)dthelp:Admin.Tools/NetWare_Setup.hlp       1.28"
+^*version^1
+^*title^Configurazione NetWare
+^:Cfg_NetWare
+^*width^70
+^+DesktopMgr/help.defs
+^?Configurazione NetWare
+^0^Configurazione NetWare
+^$10
+Configurazione NetWare
+
+Usare Configurazione NetWare per configurare o riconfigurare
+\d(Internetwork Package Exchange^IPX) IPX e le schede della Local Area Network
+(LAN) per potere usare NetWare
+
+Se sul sistema è stata installata una scheda della LAN al momento
+dell'installazione di UnixWare, il software rileva automaticamente la
+scheda e l'indirizzo e il Internetwork Package Exchange (IPX)
+configurato.
+
+Se non è stata installata una scheda LAN quando è stato installato
+UnixWare, o se si decide di aggiungere altre schede, bisogna usare la
+Configurazione NetWare per configurare, o riconfigurare le schede IPX
+o LAN.
+
+Nota: È necessario il permesso per
+\k(permesso di Accesso alla Configurazione NetWare^dtadmin/user.hlp^Comprensione dei permessi) per usare la
+Configurazione NetWare. Inoltre, si deve avere una conoscenza
+approfondita dell'amministrazione NetWare e di gestione della rete
+prima di eseguire le modifiche con la Configurazione NetWare.
+
+Per configurare il sistema ed usare NetWare, fare quanto segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Cfg_NetWare. Appare la finestra "Configurazione
+  \tNetWare" con le seguenti opzioni:
+
+  \to\tNome server: - Visualizza il nome del proprio sistema.
+
+  \to\tClient UNIX NetWare: - Fare clic su Sì se si desidera
+  \t \tabilitare i servizi NUC (NetWare UNIX Client). Fare clic su No per
+  \t \tdisabilitare i servizi NUC.
+
+  \to\tAbilita scoperta automatica IPX: - Questa opzione viene attivata
+  \t \talla prima installazione di UnixWare per rilevare la scheda di
+  \t \trete installata nel sistema. Inoltre verifica la configurazione della
+  \t \trete ad ogni avviamento del sistema.
+
+  \to\tIndirizzo interno LAN IPX: - Immettere l'indirizzo (fino a 8 caratteri)
+  \t \tdella scheda di rete interna. Questo indirizzo ha come
+  \t \tprefisso i caratteri "0x." Ad esempio, 0x01010348.
+
+  \to\tTratti IPX max: - Digitare il numero massimo di sistemi, o
+  \t \tnodi, attraverso cui si desidera trasferire i dati.
+
+  \t \tQuesta opzione permette di limitare il traffico proveniente
+  \t \tdalla rete. Per esempio, se si inserisce cinque come numero
+  \t \tmassimo di tratti, il sistema getta \d(pacchetti^pacchetto) che superano
+  \t \ti cinque tratti. Se non sei amministratore della rete, si
+  \t \tconsiglia di lasciare il valore su default, ovvero 16 tratti.
+
+  \to\tConfigurazione LAN logica: - Fare clic su questa casella se si
+  \t \tvuole visualizzare ed impostare le opzioni della configurazione
+  \t \tdella LAN. Vedere \k(Configurazione della LAN logica).
+
+  \to\tSequenced Packet eXchange: - Fare clic su questa casella se si desidera
+  \t \tvisualizzare e impostare le opzioni per \d(Sequenced Packet eXchange^SPX) (SPXII). Vedi
+  \t \t\k(Configurazione di SPXII).
+
+  \to\tComunicazione Peer to Peer: - Fare clic su Sì se si desidera \d(pubblicizza)
+  \t \tle proprie applicazioni ad altri utenti. Vedi \k(Comuncazione Peer to Peer).
+
+  \t \tPer default, questa opzione è impostata su No.
+
+  \to\tGestione rete: - Fare clic su questa casella se si desidera
+  \t \tvisualizzare e impostare le opzioni per la gestione di rete NPS
+  \t \t(NetWare Protocol Stack) e il NetWork Management Trap Time.
+  \t \tVedi \k(Gestione della rete).
+
+  \to\tDaemon di diagnostica: - Fare clic su questa casella per
+  \t \teseguire il daemon di diagnostica. Per default, questa opzione è
+  \t \timpostata su No.
+
+  \to\tAutentica automatica NUC remoto: - Per default, questa
+  \t \topzione è Sì e visualizza il \k(pannello di autentica^Auto_Authenticator/xauto.hlp^Finestra Auto_Autenticatore) quando è necessario.
+  \t \tQuando è impostata a No, gli utenti devono usare nwlogin per accedere
+  \t \tai server NetWare.
+
+  \t \tPer ulteriori informazioni sull'autentica, vedere
+  \t \t\k(Accesso NetWare ^NetWare_Access/NetWare_Access.hlp^Accesso NetWare).
+
+  \to\tAbilita login singoli a NetWare: - Fare clic su Sì per consentire
+  \t \tagli utenti il login a sistemi remoti senza indicare la ID di login e la parola d'ordine
+  \t \t(purché la ID di login e la parola d'ordine siano le stesse su entrambi i sistemi).
+
+4.\tFare clic su Salva le impostazioni correnti per salvare le
+  \tmodifiche.
+
+  \tNota: Per ritornare ai valori precedenti è possibile fare clic su
+  \tRipristina le impostazioni precedenti, o su Ripristina default. In
+  \ttal modo si torna ai valori del momento dell'installazione di
+  \tUnixWare.
+
+  \tSe si decide di non fare modifiche, non fare clic su Salva
+  \timpostazioni correnti, altrimenti fare clic su Esci.
+
+
+^1^Configurazione della LAN logica
+^$20
+Configurazione della LAN logica
+
+Quando si seleziona l'opzione Configurazione della LAN logica, nella
+finestra "Configurazione NetWare", appare la finestra "Configurazione
+della LAN logica". La finestra visualizza lo stato della LAN logica
+numerata da uno a otto. Appare una casella accanto ad ogni LAN. Se una
+LAN è correntemente inattiva ma disponibile per l'uso, questa casella
+è contrassegnata da una "X".
+
+Per configurare una LAN logica, fare quanto segue:
+
+1.\tAndare al campo Indirizzo LAN interna IPX e digitare l'indirizzo
+  \tdella LAN desiderata.
+
+2.\tFare clic sulle opzioni LAN (la casella rettangolare accanto al
+  \tcampo Configurazione LAN logica. Appare una finestra a comparsa
+  \tcon lista delle LAN logiche.
+
+3.\tFare clic sulla LAN desiderata. Appare una finestra a comparsa
+  \tper la LAN con i seguenti campi:
+
+  \to\tDispositivo LAN IPX: - Fare clic sulla casella rettangolare per
+  \t \tottenere una lista dei dispositivi disponibili (ad esempio
+  \t \t/dev/wd_0).
+
+  \to\tTipo di frame LAN IPX: - Fare clic sulla casella rettangolare
+  \t \tper ottenere una lista dei tipi di frame disponibili, poi fare
+  \t \tclic sul tipo desiderato (ad esempio, Ethernet II).
+
+  \to\tIndirizzo LAN esterna IPX: - Digitare l'indirizzo attribuito dal
+  \t \tproprio amministratore della rete.  \t
+
+  \to\tVelocità LAN (kilobyte/secondo): - Digitare il tipo di velocità
+  \t \tdesiderato in kilobyte. Per default il campo è impostato su
+  \t \t10000.
+
+4.\tFare clic su OK per applicare le impostazioni.
+
+5.\tRipetere le istruzioni contenute dal punto 2 al punto 4 per le
+  \taltre LAN logiche che si desidera configurare.
+
+6.\tFare clic su Chiudi per liberare la finestra e salvare i cambiamenti.
+
+^2^Finestra Configurazione logica della LAN per <LAN>
+^$30
+Finestra Configurazione logica della LAN per <LAN>
+
+In questa finestra, fare quanto segue:
+
+1.\tImpostare le opzioni seguenti:
+
+  \to\tDispositivo LAN IPX: - Fare clic sulla casella rettangolare per
+  \t \tottenere una lista dei dispositivi disponibili (ad esempio
+  \t \t/dev/wd_0).
+
+  \to\tTipo di frame LAN IPX: - Fare clic sulla casella rettangolare
+  \t \tper ottenere una lista dei tipi di frame disponibili, poi fare
+  \t \tclic sul tipo desiderato (ad esempio, Ethernet II).
+
+  \to\tIndirizzo LAN esterna IPX: - Digitare un indirizzo unico per
+  \t \tquesta LAN fino a 10 caratteri (ad esempio 0x89413000).
+
+  \to\tVelocità LAN (kilobyte/secondo): - Digitare il tipo di velocità
+  \t \tdesiderato in kilobyte. Per default il campo è impostato su
+  \t \t10000.
+
+4.\tFare clic su OK per applicare le impostazioni ed uscire dalla
+  \tfinestra.
+
+Vedi anche:
+\k(Configurazione della LAN logica)
+
+^1^Configurazione di SPXII
+^$40
+Configurazione di SPXII
+
+Quando si seleziona Sì per l'opzione \d(Sequenced Packet eXchange^SPX) nella
+finestra "Configurazione NetWare", appare la finestra "Sequenced
+Packet eXchange".
+
+Per selezionare il numero massimo di connessioni SPXII e di
+\d(socket^socket) e per attivare il Terminale virtuale
+NetWare (NVT) per un uso remoto, fare quanto segue:
+
+1.\tImpostare le opzioni seguenti:
+
+  \to\tLogin remoto rete SPX (NVT): - Fare clic su Sì per consentire
+  \t \til login NVT remoto, o su No in caso contrario.
+
+  \to\tConnessioni max SPX: - Digitare il numero massimo di
+  \t \tconnessioni permesse per SPXII.
+
+  \to\tSocket max SPX: - Digitare il numero massimo di socket SPXII da usare
+  \t \tcontemporaneamente per ascoltare le richieste di connessione
+  \t \tin arrivo dai loro punti finali.
+
+4.\tFare clic su OK per applicare le impostazioni ed uscire dalla
+  \tfinestra.
+
+  \tNota: Si può anche fare clic su Annulla per uscire dalla finestra
+  \tsenza fare modifiche.
+
+^1^Comuncazione Peer to Peer
+^$50
+Comuncazione Peer to Peer
+
+Quando si seleziona Sì per l'opzione Comunicazione Peer to Peer nella
+finestra "Configurazione NetWare", appare la finestra "Protocollo di
+pubblicizzazione servizi".
+
+Per selezionare il numero di servizi da \d(pubblicizza), fare
+quanto segue:
+
+1.\tImmettere nel campo di testo il numero massimo di server che si
+  \tdesidera che il Protocollo di pubblicizzazione dei servizi riconosca.
+
+  \tPer default, questo campo è impostato su 3000.
+
+4.\tFare clic su OK per applicare le impostazioni ed uscire dalla
+  \tfinestra.
+
+  \tNota: Si può anche fare clic su Annulla per uscire dalla finestra
+  \tsenza fare modifiche.
+
+^1^Gestione della rete
+^$60
+Gestione della rete
+
+Quando si seleziona Sì per l'opzione di Gestione della rete nella finestra
+"Configurazione NetWare", appare la finestra "Gestione della rete" che
+fornisce svariati modi per controllare le reti a disposizione degli
+amministratori della rete con una certa esperienza.
+
+Per default, le opzioni di questa finestra sono inattive.
+
+Per usare questi strumenti di gestione della rete si deve disporre di
+un certo tipo di console di gestione della rete (Netview o Open View,
+ad esempio).
+
+Per attivare i servizi di gestione della rete, fare quanto segue:
+
+1.\tImpostare le opzioni seguenti:
+
+  \to\tGestione di rete NWUMPS: - Fare clic su Sì per abilitare il
+  \t \tcontrollo del NetWare per lo stack di protocollo di gestione
+  \t \tUNIX.
+
+  \to\tTempo di trap di gestione della rete: - Digitare il valore del
+  \t \ttempo di trap.
+
+  \t \tNota: Il tempo di trap indica la frequenza con cui il sistema
+  \t \tinvia un evento di rete e le informazioni di allarme alla
+  \t \tconsole di gestione della rete.
+
+  \t \tPer default, questo campo è impostato su 5 secondi.
+
+4.\tFare clic su OK per applicare le impostazioni ed uscire dalla
+  \tfinestra.
+
+  \tNota: Si può anche fare clic su Annulla per uscire dalla finestra
+  \tsenza fare modifiche.

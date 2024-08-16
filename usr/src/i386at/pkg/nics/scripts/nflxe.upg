@@ -1,0 +1,21 @@
+#!/usr/bin/xksh
+
+#ident	"@(#)pkg.nics:scripts/nflxe.upg	1.2"
+
+exec 2>/tmp/nflxe.out
+set -x
+
+SDEV=/etc/conf/sdevice.d/nflxe
+
+[[ -f $SDEV ]] && {
+
+	# check for active entry in System file
+	grep "nflxe[ 	]*Y" $SDEV > /dev/null 2>&1
+	(( $? == 0 )) && {
+
+		# if Board ID exists in resmgr, then we know it's a single
+		# port and not a dual port card in the machine
+		resmgr | egrep "CPQ6100|CPQ6101" > /dev/null 2>&1
+		(( $? == 0 )) && exit 1 || exit 0
+	}
+}

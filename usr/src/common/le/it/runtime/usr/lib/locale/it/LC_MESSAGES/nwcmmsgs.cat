@@ -1,0 +1,180 @@
+
+
+$quote "
+
+
+
+$
+$ Copyright 1991, 1992 Novell, Inc.
+$ All Rights Reserved.
+$
+$ This work is subject to U.S. and International copyright laws and
+$ treaties.  No part of this work may be used, practiced, performed,
+$ copied, distributed, revised, modified, translated, abridged,
+$ condensed, expanded, collected, compiled, linked, recast,
+$ transformed or adapted without the prior written consent
+$ of Novell.  Any use or exploitation of this work without
+$ authorization could subject the perpetrator to criminal and
+$ civil liability.
+$
+
+$  DEVELOPERS:  Do NOT add messages or constants to this file
+$
+$  You must go to file "nls/English/nwcmmsg.m4" and make additions there.
+$
+$
+$ The text in this file may be translated and the
+$ corresponding catalog file rebuilt for other languages.
+$ Rebuilding a catalog file is done with the following:
+$  % gencat nwcmmsgs.cat nwcmmsgs.msg
+$        where nwumsgs.cat is the new catalog file.
+$
+$set 1  MSG_NWCM_REV_SET
+$ Do NOT touch the following REV string. (MUST match msgtable.h)
+1 "@(#)$Header: /SRCS/esmp/usr/src/nw/lib/libnutil/nls/English/nwnet/nwcmmsg.m4,v 1.5 1994/08/30 15:29:17 mark Exp $"
+$set 3  MSG_NWCM_FOLD_SET
+1 "Parametri non documentati"
+2 "Parametri generali del server"
+3 "Parametri dei servizi di directory NetWare"
+4 "Parametri di server AFP"
+5 "Parametri regolabili del sistema"
+6 "Parametri vari"
+7 "Parametri di localizzazione"
+8 "Parametri di trasporto IPX/SPX/NetBIOS"
+9 "Parametri SAP"
+10 "Parametri di trasporto AppleTalk"
+11 "Parametri dei servizi di stampa AppleTalk"
+12 "Parametri di gestione di rete"
+13 "Parametri Pserver"
+14 "Parametri NPRINTER"
+15 "Parametri NVT"
+16 "Parametri di sincronizzazione dei tempi"
+17 "Parametri del client UNIX NetWare"
+101 "n"
+102 "g"
+103 "z"
+104 "m"
+105 "b"
+106 "v"
+107 "l"
+108 "s"
+109 "P"
+110 "t"
+111 "d"
+112 "e"
+113 "i"
+114 "a"
+115 "r"
+116 "o"
+117 "c"
+
+$set 4  MSG_NWNET_DH_SET
+1 "Parametri configurati incorrettamente"
+2 "Nome server"
+3 "Abilitare Scoperta automatica rete IPX?"
+4 "Numero di rete interno IPX"
+5 "Numero di zone hash del router IPX"
+6 "Nome del dispositivo del driver del router IPX"
+7 "Nome daemon del driver del router IPX"
+8 "Tipo di router"
+11 "Nome file di log SAP"
+12 "Nome file dump SAP"
+13 "Nome file traccia SAP"
+14 "Numero massimo di messaggi registrati su file SAP"
+15 "Numero massimo di server SAP"
+16 "Priorità run-time SAP"
+17 "Abilitare il protocollo SPX?"
+18 "Massimo socket di ascolto SPX"
+21 "Massimo connessioni SPX"
+22 "Abilitare Login Remoto Rete SPX (NVT)?"
+23 "Avviare IPX al boot?"
+
+24 "Indirizzo di rete LAN IPX"
+25 "Nome dispositivo LAN IPX"
+26 "Numero PPA dispositivo LAN IPX"
+27 "Tipo di dispositivo IPX LAN"
+28 "Tipo di frame IPX LAN"
+31 "Nome interfaccia IPX LAN"
+
+32 "Intervallo tra broadcast RIP"
+33 "Intervallo RIP superato"
+34 "Dimensioni massime del pacchetto RIP"
+35 "Ridurre al minimo il traffico RIP nella WAN?"
+36 "Ritardo in millisecondi tra i pacchetti RIP"
+37 "Intervallo tra broadcast SAP"
+38 "Intervalli di invecchiamento SAP"
+41 "Dimensione massima pacchetto SAP"
+42 "Ridurre al minimo il traffico SAP nella WAN?"
+43 "Ritardo in millisecondi tra i pacchetti SAP."
+44 "Ripondere alle richieste di acquisizione del server più vicino?"
+45 "Velocità della LAN in kilobyte/secondo"
+46 "Salti massimi IPX"
+
+47 "Abilitare i servizi di diagnostica?"
+48 "Nome daemon dei servizi di diagnostica"
+51 "Nome file di log dei servizi di diagnostica"
+52 "Percorso della directory dei file binari"
+53 "Percorso di directory dei file di log"
+54 "Abilitare NetBIOS?"
+55 "Nome shim dei flussi IPX NetBIOS"
+56 "Abilitare la compatibilità SAP del file /var/spool/sap/in,out?"
+57 "Abilitare inizializzazione rapida daemon SAP?"
+58 "Pubblicizzare la condivisione delle applicazioni remote?"
+61 "Publicizzare i servizi del server d'installazione?"
+62 "Comunicazione peer to peer?"
+$
+$	Note to translators.  Any occurrence of the string \047 in the
+$ following text is a representation of a quote character,
+$ i.e., the four character sequence \047 is displayed as a quote character.
+$
+101 "Non è disponibile la guida per questo parametro"
+102 "Questo parametro controlla il nome sotto il quale sono pubblicizzati i servizi IPX (Installazione, NVT, NCP...) sulla rete. Questo nome deve essere diverso da tutti gli altri server NetWare della rete. Non può contenere spazi e segni di punteggiatura. Quando i servizi IPX vengono pubblicizzati, le lettere dell'alfabeto del nome vengono convertiti in lettere maiuscole. Il nome del server viene impostato automaticamente sul nome nodo UNIX ogni volta che il sistema viene avviato. Se si desidera cambiare il nome server su un valore diverso dal nome nodo UNIX, si deve modificare lo script /etc/init.d/nw.\n\nLunghezza: 2 - 47 caratteri\nDefault: \047\047"
+103 "Questo parametro controlla la scoperta automatica dell'indirizzo del server\047. Se impostato su sì, la scoperta automatica dell'indirizzo della rete per questo server è attivata. Se impostata su no, la scoperta automatica è disattivata. Se l'indirizzo LAN interno IPX ha un valore diverso da zero, la scoperta automatica viene eseguita una volta e poi spenta.\n\nValori supportati: sì, no\nDefault: sì"
+104 "Questo parametro fornisce un indirizzo di rete singolo per l'accesso da LAN multiple. Specifica l'indirizzo di rete della rete interna (LAN 0). Impostare questo valore solo se sono configurate molteplici reti sul sistema. Questo indirizzo deve essere diverso da tutti gli altri indirizzi di rete assegnati sull'internetwork IPX. Il valore di default (zero) indica che non è configurata nessuna rete interna. Digitare i valori in esadecimali (0xNNNNN), decimali (NNNNN) o ottali (0NNNN). I valori vengono visualizzati sempre in formato esadecimale.\n\nValori supportati: da 1 a 0xfffffffe\nDefault: 0"
+105 "Questo parametro specifica il numero di voci hash nella tabella di informazioni sull'instradamento. Aumentare questo valore se dalla rete locale in cui risiede il router/server è visibile un numero molto alto di reti. Diminuirlo se dalla rete locale in cui risiede il router/server è visibile un numero molto ridotto di reti. Qualsiasi numero fornito viene arrotondato a una potenza di 2.\n\nValori supportati: da 1 a 32768\nDefault: 64"
+106 "Questo parametro specifica il percorso completo del nome di dispositivo RIPX.\n\nLunghezza massima: 127\nDefault: \047/dev/ripx\047"
+108 "Questo parametro specifica il nome di un daemon del router alternativo che utilizza l'interfaccia router sostituibile.\n\nLunghezza massima: 127\nDefault: \047\047"
+111 "Questo parametro specifica se viene avviato il SAPD (Server Advertiser Protocol Daemon) e se il RIP pubblicizza le reti IPX. Se il parametro della rete interna IPX ha un valore diverso da zero, il tipo di router viene impostato automaticamente su COMPLETO quanto viene avviato IPX. Se il tipo di router è impostato su COMPLETO, SAPD viene avviato e RIP pubblicizza. Se il tipo di router è impostato su CLIENT, SAPD non viene avviato e RIP non pubblicizza.\n\nValori supportati:COMPLETO, CLIENT\nImpostazione iniziale: Application Server=COMPLETO, Personal Edition=CLIENT"
+112 "Questo parametro specifica il nome del file di log per i messaggi generati durante il normale funzionamento del daemon SAP, come messaggi che si riferiscono alle ore di inizio/fine o ad altre situazioni inabituali che si sono verificate. I valori validi sono nomi file UNIX (creati nella directory di log) o un percorso ed un nome file validi.\\n\nLunghezza massima: 127\nDefault: \047sap.log\047"
+113 "Questo parametro specifica il nome del file che riceve l'output quando il daemon SAP fa la copia delle tabelle SAP. La copia viene iniziata inviando il daemon SAP a SIGPIPE e generalmente viene usata solo per il debug. I valori validi sono tutti i nomi di file UNIX validi (creati nella directory_log), un percorso e un nome di file validi, oppure \"/dev/null\" (disabilita la registrazione).\"\n\nLunghezza massima: 127\nDefault: \047sap.dump\047"
+114 "Questo parametro specifica il dispositivo che visualizza i messaggi di traccia che visualizzano i pacchetti SAP quando viene eseguito il comando \047track on\047. I valori validi sono i nomi file UNIX validi (creati nella directory di log), un percorso o nome file valido, o la console \047/dev/console\047\n\nLunghezza massima: 127\nDefault: \047/dev/console\047"
+115 "Questo parametro specifica il numero massimo di messaggi che vengono registrati nel file specificato dal parametro del file di log sap. Usare un valore 0 per disabilitare la registrazione.\n\nValori suportati: da 0 a 4294967295\nDefault: 300"
+116 "Questo parametro specifica il numero massimo di server di tutti i tipi visibili su tutte le reti riconosciute da SAP. Ciò determina le dimensioni della regione della memoria condivisa usata da SAP. Se questo parametro è troppo piccolo, i nuovi server che non corrispondono nella tabella vengono ignorati.\n\nValori supportati: da 50 a 4294967295\nDefault: 3000"
+117 "Questo parametro imposta un valore che specifica la priorità di esecuzione per il daemon SAP relativo ad altri processi e utilizzato principalmente per dare a SAP una priorità maggiore rispetto ad altri processi.\n\nValori supportati: da 0 a 40\nDefault: 15"
+121 "Questo parametro specifica se il driver SPX viene avviato all'avvio dello stack del protocollo IPX. SPX è un procotollo di trasporto Novell che funziona con il trasporto IPX per garantire la consegna di pacchetti di dati lungo la rete. IPX è un servizio datagram e SPX è un servizio basato sulla connessione. Alcuni servizi NetWare richiedono SPX, ad esempio la stampa e NVT.\n\nValori supportati: sì, no\nDefault: sì"
+122 "Questo parametro specifica quanti socket può usare SPX simultaneamente per axcoltare le richieste di connessione da altri punti finali. Questo parametro è configurabile in modo che i sistemi piccoli possano allocare efficacemente la memoria per ottimizzare le prestazioni. Aumentare questo valore se le applicazioni hanno problemi perché non è possibile aprire i socket di ascolto.\n\nValori supportati: da 5 a 200\nDefault: 50"
+123 "Questo parametro specifica il numero massimo di connessioni supportate da SPX. I sistemi piccoli possono far diminuire questo parametro per conservare le risorse di memoria del kernel. Se il sistema utilizza i servizi di stampa NetWare, prevedere connessioni sufficienti per il server di stampa, le stampanti e gli altri server NetWare serviti dal server di stampa. I sistemi configurati per i servizi NVT probabilmente avranno bisogno di aumentare questo parametro poiché NVT utilizza SPXII per il suo protocollo sottostante. Aumentare questo parametro se le connessioni non riescono perché non sono più disponibili altri dispositivi o socket.\n\nValori supportati: da 5 a 1024\nDefault: 100"
+124 "Questo parametro specifica se i servizi di login remoto NVT devono essere attivati.\n\nValori supportati: sì, no\nImpostazione iniziale: Application Server=sì, Personal Edition=no"
+125 "Questo parametro controlla se IPX viene avviato al boot. Se impostato su sì, IPX viene avviato automaticamente al momento del boot. Se impostato su no, IPX non viene avviato al boot. Da notare che se IPX non viene avviato, gli altri servizi che richiedono IPX non funzionano, come il Client Unix di rete, NVT ed altri.\n\nValori supportati: sì, no\nDefault: sì"
+131 "Questo parametro specifica il numero di rete esterna IPX per il sistema di cablaggio a cui è collegata la scheda della rete. Tutti i driver collegati a questo sistema di cablaggio devono usare lo stesso numero di rete per il per il sistema di cablaggio e per il tipo di frame. Una x nel nome del parametro specifica quale rete viene configurata. Ogni tipo di frame richiede il proprio numero di rete esterna IPX diverso dagli altri. È possibile immettere i valori in esadecimali (0xNNNNN), decimali (NNNNN) o ottali (0NNNN). I valori vengono visualizzati sempre in formato esadecimale. Quesro parametro deve essere specificato: il default non è un valore valido.\n\nValori supportati: tuti i valori compresi tra 1 e 0xFFFFFFFE che non siano in conflitto con altri numeri di rete IPX assegnati (interni ed esterni)\nDefault: 0"
+132 "Questo parametro specifica il nome del driver del dispositivo per la scheda di rete. I valori validi sono il percorso e il nome file di un driver di LAN valido.\n\nLunghezza massima: 127\nDefault: \047\047"
+133 "L'uso di questo parametro è specifico al fornitore DLPI e specifica il punto fisico di collegamento. Usare il valore di default su UnixWare.\n\nValori supportati: da 0 a 65535\nDefault: 0"
+134 "Questo parametro specifica l'interfaccia tra il driver di dispositivo e IPX indicando la topologia del cablaggio (Ethernet o Token Ring).\n\nValori supportati: ETHERNET_DLPI, TOKEN-RING_DLPI\nDefault: \047ETHERNET_DLPI\047"
+135 "Questo parametro specifica il tipo di frame.\n\nValori supportati: ETHERNET_II, ETHERNET_802.2, ETHERNET_802.3, ETHERNET_SNAP, TOKEN-RING, TOKEN-RING_SNAP\nDefault: ETHERNET_802.2 per reti Ethernet\n         TOKEN_RING per reti Token Ring"
+136 "L'uso di questo parametro è specifico al fornitore DLPI e specifica il nome dell'interfaccia. Usare il valore di default su UnixWare.\n\nLunghezza massima: 127\n\nDefault: \047\047"
+137 "Questo parametro specifica il numero degli intervalli tra i broadcast RIP (un unità d'intervallo è uguale a 30 secondi).\n\nValori supportati: tra 1 e 65535\nDefault: 2 (60 secondi)"
+138 "Questo parametro specifica il numero di intervalli broadcast RIP che devono intercorrere da quando l'ultimo pacchetto di broadcast è stato ricevuto prima che una rete venga considerata \'ferma\' e rimossa dalla tabella di informazioni router.\n\nValori supportati: da 1 a 256\nDefault: 4 (4 * 2 * 30 = 240 secondi)'"
+141 "Questo parametro specifica le dimensioni massime in byte per i pacchetti RIP.\n\nValori supportati: tra 40 e 4294967295. I pacchetti più grandi delle dimensioni massime supportate per il tipo di rete non possono comunque essere inviati\nDefault: 432"
+142 "Questo parametro consente all'amministratore di ridurre al minimo il traffico RIP su una WAN e indica se il driver RIP diffonde solo per indicare i cambiamenti nella disponibilità del router o se il RIP diffonde tutte le informazioni periodicamente. Se impostato su sì, il RIP diffonde solo le modifiche (WAN). Se impostato su no, il RIP diffonde periodicamente tutte le informazioni del server.\n\nValori supportati: sì, no\nDefault: no"
+143 "Questo parametro specifica il numero di millisecondi su cui il driver RIP aspetta tra gli invii dei pacchetti lungo la LAN. il che permette di evitare ai server/router riceventi di acquisire i pacchetti troppo velocemente. (Questo parametro viene ignorato se la rete è una WAN (ad esempio, Riduzione al minimo del traffico RIP sulla WAN impostato su sì).\n\nValori supportati: da 0 a 500\nDefault: 55"
+144 "Questo parametro specifica il numero di intervalli tra i broadcast SAP (un'unità di intervallo è uguale a 30 secondi).\n\nValori supportati: da 1 a 65535\nDefault: 2 (60 secondi)"
+145 "Questo parametro specifica il numero di intervalli di broadcast SAP che devono intercorrere da quando l'ultimo pacchetto di broadcast è stato ricevuto prima che una rete venga considerata \'ferma\' e rimossa dalla tabella di informazioni del server.\n\nValori supportati: da 1 a 256\nDefault: 4 (4 * 2 * 30 = 240 secondi)'"
+146 "Questo parametro specifica le dimensioni massime in byte per i pacchetti SAP.\n\nValori supportati: da 96 a 4294967295\nDefault: 480"
+147 "Questo parametro consente all'amministratore di ridurre al minimo il traffico SAP su una WAN e indica se il daemon SAP diffonde solo per indicare i cambiamenti nella disponibilità del router o se diffonde tutte le informazioni periodicamente. Se impostato su sì, il SAP diffonde solo le modifiche (WAN). Se impostato su no, il SAP diffonde periodicamente tutte le informazioni del server.\n\nValori supportati: sì, no\nDefault: no"
+148 "Questo parametro specifica il numero di millisecondi su cui il daemon SAP aspetta tra gli invi dei pacchetti lungo la LAN. il che permette di evitare ai server/router riceventi di acquisire i pacchetti troppo velocemente. (Questo parametro viene ignorato se la rete è una WAN (ad esempio, Riduzione al minimo del traffico RIP sulla WAN impostato su sì).\n\nValori supportati: da 0 a 500\nDefault: 55"
+151 "Questo parametro indica se vengono inviate delle risposte ad una richiesta di acquisizione server più vicino.\n\nValori supportati: sì, no\nDefault: sì"
+152 "Questo parametro specifica la velocità in kilobyte al secondo a cui i dati vengono trasferiti lungo la rete. Il valore di questo parametro viene utilizzato per calcolare il numero di tick per i pacchetti del router.\n\nValori supportati: da 0 a 4294967295\nDefault: 10000"
+153 "Questo parametro specifica il numero massimo di router che possono essere passati durante la ricerca di una rete di destinazione. Se si raggiunge il limite, il pacchetto viene scartato.\n\nValori supportati: da 2 a 16\nDefault: 16"
+154 "Questo parametro specifica se i servizi di diagnostica sono attivati o meno. Se i servizi di diagnostica sono attivati, il protocollo di diagnostica IPX viene abilitato e la macchina risponde alle domande del procotollo di diagnostica. Questo parametro dovrebbe essere impostato su sì se la gestione della rete è attivata. La console NMS a finestre richiede il protocollo di diagnostica per disegnare la mappa della rete.\n\nValori supportati: sì, no\nDefault: no"
+155 "Questo parametro specifica il nome del daemon del protocollo di diagnostica IPX. Il daemon si trova nella directory specificata dal parametro di configurazione della directory binaria.\n\nLunghezza massima: 127\nDefault: \047nwdiagd\047"
+156 "Questo parametro specifica il nome del file di log per i messaggi generati durante il normale funzionamento del daemon di diagnostica, come i messaggi relativi all'inizio/fine o alle situzioni atipiche che si possono verificare. I valori validi sono nomi file UNIX validi (creati nella directory di log) o un percorso e un nome file validi.\n\nLunghezza massima: 127\nDefault: \047diag.log\047"
+161 "Questo parametro specifica il percorso UNIX per la directory in cui sono stati trovati i file eseguibili NetWare.\n\nLunghezza massima: 127\nDefault: \047/usr/sbin\047"
+162 "Questo parametro specifica il percorso UNIX per la directory in cui sono stati trovati i file di log NetWare.\n\nLunghezza massima: 127\nDefault: \047/var/netware\047"
+163 "Questo parametro specifica se è stato avviato il NetBIOS. L'impostazione di questo parametro su sì attiva tanto il datagram NetBIOS quanto i punti finali del trasporto della sessione NetBIOS.\n\nValori supportati: sì, no\nDefault: no"
+164 "Questo parametro definisce lo shim NetBIOS. Questo shim fornisce un'interfaccia al protocollo IPX.\nLunghezza massima: 127\n\nDefault: \047nbix\047"
+165 "Questo parametro viene utilizzato per abilitare l'uso della compatibilità UnixWare 1.0 dei file /var/spool/sap/in e /var/spool/sap/out per la pubblicizzazione dei servizi. Gli sviluppatori dovrebbero tuttavia usare le API di pubblicizzazione SAP disponibili sulla libreria nwutil invece di abilitare questo parametro.\n\nValori supportati: sì, no\nDefault: no"
+166 "Questo parametro specifica se il daemon SAP esegue un'inizilizzazione rapida. Se questo parametro è impostato su sì, il daemon SAP diventa operativo mentre si definisce la tabella dei server di rete. Se questo parametro è impostato su no, il daemon SAP diventa operativo dopo che è stata definita la tabella dei server di rete.\n\nValori supportati: sì, no\nDefault: sì"
+167 "Questo parametro controlla se il server pubblicizza o meno la condivisione delle applicazioni remote. Se impostato su sì, il server dichiara che ha delle applicazioni da condividere. Se impostato su no, la condivisione delle applicazioni non è pubblicizzata.\n\nValori supportati: sì, no\nDefault: no"
+168 "Questo parametro controlla se questa macchina viene dichiarata come server d'installazione o meno. Se impostato su sì, gli altri possono installare il software da questa macchina.\n\nValori supportati: sì, no\nDefault: no"
+171 "Questo parametro controlla se questa macchina viene dichiarata come piattaforma UnixWare o meno. Se impostato su sì, le altre macchine possono ottenere il nome del server e l'indirizzo IPX di questa macchina. Questo parametro deve essere impostato su sì se vengono utilizzate le operazioni peer-to-peer (come la condivisione delle applicazioni).\n\nValori supportati: sì, no\nDefault: sì"
+

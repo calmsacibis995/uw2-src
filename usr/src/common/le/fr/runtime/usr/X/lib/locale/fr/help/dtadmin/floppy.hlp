@@ -1,0 +1,224 @@
+#ident\t"@(#)dthelp:Disks-etc/floppy.hlp        1.20"
+^*version^1
+^*title^Disque A ou B
+^:Disque A ou Disque B
+^*width^70
+^+DesktopMgr/help.defs
+^?Utilisation des disquettes
+^0^Disque A ou B
+^$10
+Disque A ou B
+
+Les icônes Disque_A et Disque_B représentent les unités de disquettes
+de votre système (si votre ordinateur ne comporte qu'une unité de
+disquettes, vous ne verrez que l'icône Disque_A).
+
+Utilisez Disque A ou Disque B pour exécuter les opérations suivantes :
+
+\to\t\k(Formater des disquettes^^Formatage de disquettes)
+\to\t\k(Sauvegarder et restaurer des fichiers et des dossiers^dtadmin/backup.hlp^Sauvegarde-Restauration)
+\to\t\k(Ouvrir une disquette comme un dossier contenant des fichiers^^Ouvrir une disquette comme un dossier de fichiers)
+\to\t\k(Installer une application^dtadmin/App_Installer.hlp^Installateur d'applications)
+\to\t\k(Effacer le contenu d'une disquette^^Effacement du contenu d'une disquette)
+
+Remarque : pour pouvoir copier des informations sur une disquette,
+vous devez préalablement la formater.
+
+
+^1^Formatage de disquettes
+^$20
+Formatage de disquettes
+
+Pour formater des disquettes, procédez comme suit :
+
+Remarque : si vous êtes déjà dans le dossier Disques-etc, passez à
+l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Disques-etc dans la
+  \tfenêtre \k("Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : disques-etc"
+  \tapparaît.
+
+2.\tCliquez sur Disque_A (ou Disque_B) dans le dossier Disques-etc.
+
+3.\tVérifiez que la disquette n'est pas protégée en écriture.
+
+  \to\tSur les disquettes 3,5", l'onglet noir situé à l'arrière de la
+  \t \tdisquette doit être placé dans l'encoche.
+
+  \to\tSur les disquettes 5,25", l'encoche située sur le bord externe
+  \t \tde la disquette ne doit pas être recouverte.
+
+4.\tInsérez la disquette dans l'unité appropriée (A ou B).
+
+5.\t\d(Cliquez avec le bouton droit de la souris^cliquer sur le bouton droit de la souris) sur
+  \tl'icône Disque_A ou Disque_B.
+
+6.\tCliquez sur Formater. La fenêtre "Formatage" apparaît.
+
+7.\tCliquez sur la \k(densité^^Densités des disquettes) correspondant à votre disquette.
+
+8.\tCliquez sur le  \k(type^^Types de format) souhaité.
+
+9.\tCliquez sur  Fichier=>Formater. La fenêtre "Formatage en cours" apparaît.
+
+  \tCette fenêtre affiche le pourcentage du disque formaté, ainsi que
+  \tle message "Formatage en cours, veuillez patienter."
+  \tLorsque vous avez terminé, cette même fenêtre affiche le message
+  \t"Disquette formatée".
+
+Voir également :
+\s(Formatage de disquettes^dhelp "pe.fr" userhb "Gestion des fichiers et des dossiers" "Formatage de disquettes" || helpLinkErr)
+
+
+^2^Densités des disquettes
+^$30
+Densités des disquettes
+
+Le Bureau UnixWare prend en charge les densités de disque suivantes :
+
+\to\t720 Ko
+
+\to\t360 Ko
+
+\to\t1,2 Mo
+
+\to\t1,44 Mo
+
+\to\t2,88 Mo
+
+^2^Types de format
+^$40
+Types de format
+
+Cliquez sur l'un des types de formats suivants :
+
+\to\tPour la sauvegarde - Permet de copier des fichiers de votre disque
+\t \tdur sur la disquette.
+
+\to\tDossier du Bureau - Vous permet d'ouvrir la disquette comme un
+\t \tdossier. Vous pouvez également utiliser les fichiers copiés sur
+\t \tcette disquette comme des fichiers d'un dossier.
+
+\t \tRemarque : si vous sélectionnez Dossier du Bureau mais que vous ne
+\t \tsouhaitez pas utiliser le type de système de fichiers par défaut,
+\t \tcliquez sur \k(Fichier=>Caractéristiques^^Fenêtre Format : caractéristiques) pour sélectionner un autre
+\t \ttype.
+
+\to\tFormat DOS - Vous permet d'utiliser la disquette avec le système
+\t \td'exploitation DOS. (Même si vous êtes sur un système UnixWare,
+\t \tvous pouvez installer DOS comme application sur votre Bureau.)
+
+Outre les formats de fichiers créés par UnixWare, le Bureau peut
+également lire des fichiers créés dans d'autres formats. Voir
+\k(Autres types de format supportés) pour de plus amples informations.
+
+^2^Fenêtre Format : caractéristiques
+^$45
+Fenêtre Format : caractéristiques
+
+Cette fenêtre affiche tous les types de systèmes de fichiers
+disponibles. Cliquez sur le type de systèmes de fichiers souhaité,
+puis sur OK.
+
+Pour de plus amples informations sur les types de fichiers, voir
+\s(Gestion des types de systèmes de fichiers^dhelp as sysag "Managing File System Types" "" || helpLinkErr).
+
+^2^Autres types de format supportés
+^$50
+Autres types de format supportés
+
+Outre les formats décrits dans \k(Types de format), le Bureau UnixWare
+peut également lire des fichiers créés dans d'autres formats. Les
+formats de disquettes suivants sont pris en charge :
+
+\to\tPour la sauvegarde - Bien que le Bureau utilise la commande UNIX
+\t \t\d(cpio) lorsqu'il crée des sauvegardes, il peut
+\t \trestaurer des fichiers créés à l'aide de la commande tar(1) UNIX.
+
+\t \tRemarque : pour de plus amples informations sur les commandes
+\t \tUNIX, voir \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+\to\tDossier du Bureau - Le Bureau peut ouvrir un dossier de fichiers
+\t \tcorrespondant à des disquettes créées dans tout système de
+\t \tfichiers pris en charge par UnixWare, par exemple, s5, ufs et le
+\t \tsystème de fichiers vxfs (voir \k(Ouvrir une disquette comme un dossier de fichiers)).
+
+\t \t-\ts5 correspond au système de fichiers UNIX System V standard.  Il
+\t \t \tn'accepte pas les noms de fichiers comportant plus de 14
+\t \t \tcaractères.
+
+\t \t-\tufs accepte des noms de fichiers plus longs que s5. Il autorise
+\t \t \tl'écriture de blocs de données plus volumineux.
+
+\t \t-\tvxfs est un système de fichiers plus fiable (qui vous permet ,
+\t \t \tpendant qu'un traitement est en cours, d'éteindre votre ordinateur
+\t \t \tsans risque de perte de données).
+
+\to\tFormat DOS - Le Bureau peut lire (et écrire) des fichiers à partir
+\t \td'un disque au format DOS.
+
+\to\tFormats d'installation - Le Bureau peut lire et installer des
+\t \tpaquets d'applications utilisant divers formats UNIX, comme
+\t \tpkgadd, tar, installpkg, et custom.
+
+Voir également :
+\k(Sauvegarder-Restaurer^dtadmin/backup.hlp^Sauvegarde-Restauration)
+\k(Installation d'applicationsr^dtadmin/App_Installer.hlp^Installateur d'applications)
+\s(Gestion des types de systèmes de fichiers^dhelp as sysag "Managing File System Types" "" || helpLinkErr)
+
+
+^1^Ouvrir une disquette comme un dossier de fichiers
+^$70
+Ouvrir une disquette comme un dossier de fichiers
+
+Vous souhaitez peut-être pouvoir ouvrir une disquette comme un dossier
+de fichiers. Cette méthode de travail est très conviviale dans la
+mesure où vous pouvez copier les fichiers, les ajouter, ou les effacer
+comme s'ils figuraient sur le disque dur de votre ordinateur.
+
+Remarque : vous pouvez ouvrir et utiliser une disquette au format DOS
+de la même façon que vous le feriez avec une disquette formatée pour
+le Bureau.
+
+Pour ouvrir une disquette comme un dossier de fichiers, procédez comme
+suit :
+
+1.\tFormatez la disquette comme un dossier du Bureau. (Voir \k(Formatage de disquettes)).
+
+2.\t\d(Cliquez deux fois^cliquer deux fois) sur l'icône de la disquette
+  \tcontenant le disque que vous souhaitez utiliser comme dossier de
+  \tfichiers. Une fenêtre de dossiers apparaît. Dans cette fenêtre,
+  \tvous pouvez exécuter les opérations suivantes :
+
+  \to\t\d(Faites glisser^faire glisser) les fichiers sur le dossier.
+
+  \to\tUtilisez une des fonctions du menu Fichier (telles que Copier,
+  \t \tEffacer, ou Déplacer).
+
+  \to\tAjoutez des dossiers dans la fenêtre.
+
+  \to\tOuvrez les fichiers et lancez les programmes.
+
+
+^1^Effacement du contenu d'une disquette
+^$100
+Effacement du contenu d'une disquette
+
+Remarque : l'option Effacer n'apparaît dans le menu que si le
+périphérique prend cette option en charge.
+
+Pour effacer toutes les données contenues sur une disquette, procédez
+comme suit :
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Disques-etc dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre Dossier : disques-etc
+  \tapparaît.
+
+2.\tCliquez sur Disque_A (ou sur Disque_B).
+
+3.\tInsérez la disquette dans l'unité appropriée (A ou B).
+
+4.\t\d(Cliquez avec le bouton droit de la souris^cliquer sur le bouton droit de la souris) sur
+  \tl'icône de la disquette.
+
+5.\tCliquez sur Effacer.

@@ -1,0 +1,37 @@
+#ident	"@(#)bkrs:common/cmd/bkrs/basic.d/Menu.backup	1.2"
+#ident	"$Header: $"
+
+menu="Backup to Removable Media"
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+close=`unset -l VMSYS`
+`set -l VMSYS=/usr/vmsys`
+
+name=Backup History
+lininfo=history
+itemmsg="Move to an item with the arrow keys and strike the ENTER key to select."
+action=`/usr/bin/backup -h > /usr/tmp/backup.$VPID`open $OBJ_DIR/Text.history /usr/tmp/backup.$VPID
+
+name=Personal Backup
+lininfo=personal
+itemmsg="Move to an item with the arrow keys and strike the ENTER key to select."
+action=open menu $OBJ_DIR/private/Menu.private
+
+name=Schedule Backup to Tape
+lininfo=schedule
+itemmsg="Move to an item with the arrow keys and strike the ENTER key to select."
+action=`indicator -w; shell "if /bin/ps -e | /usr/bin/grep ' cron$' > /dev/null
+	       then echo 1
+	       else echo 0
+	       fi" | regex
+	       '^1$' "open menu $OBJ_DIR/sched/Menu.sched"
+	       '^0$' "open text $OBJ_DIR/sched/Text.nocron"`
+
+name=System Backup
+lininfo=system
+itemmsg="Move to an item with the arrow keys and strike the ENTER key to select."
+action=open menu $OBJ_DIR/system/Menu.system
+
+name=""
+button=8
+action=nop

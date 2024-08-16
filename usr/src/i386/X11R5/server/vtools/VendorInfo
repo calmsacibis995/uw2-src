@@ -1,0 +1,22 @@
+VENDOR = "Standard VGA"
+              MODEL = StandardVGA	; model name
+            CHIPSET = STDVGA		; -1 if you are not sure
+              CLASS = VGA16		; class of the display module
+          CLASS_LIB = libvga16.so.2	; core drawing lib for this class
+         VENDOR_LIB = stdvga.so.2	; vendor library 
+         CONFIGFILE = stdvga.dat	; modes supported by this library
+             DEVICE = "/dev/console"	; device used by this display card
+     PREINSTALL_CMD = builtin		; run this before anything else
+    POSTINSTALL_CMD = builtin		; run this after everything 
+           TEST_CMD = builtin		; video test command
+     INFO2VENDORLIB = 
+        DESCRIPTION = "Standard VGA, 640x480, 16 colors"
+
+#include "/usr/X/lib/display/s364.vinfo"
+#include "/usr/X/lib/display/mach64.vinfo"
+#include "/usr/X/lib/display/p9k.vinfo"
+#include "/usr/X/lib/display/mach.vinfo"
+#include "/usr/X/lib/display/s3.vinfo"
+#include "/usr/X/lib/display/vga256.vinfo"
+#include "/usr/X/lib/display/qv.vinfo"
+#include "/usr/X/lib/display/vga16.vinfo"

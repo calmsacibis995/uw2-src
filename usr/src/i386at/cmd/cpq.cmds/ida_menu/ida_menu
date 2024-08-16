@@ -1,0 +1,320 @@
+#ident	"@(#)cpq.cmds:ida_menu/ida_menu	1.2"
+#
+#	Copyright 1992, 1993, 1994  Compaq Computer Corporation
+#
+#  This script was developed to display IDA device diagnostics.
+#
+
+# Tune these to your system needs.
+VERSION="1.3"
+DIAGS=/usr/bin/compaq/diags/ida
+DEVICE=
+
+# Define return values.
+: ${OK=0} ${FAIL=1}
+
+
+# Function definitions
+########################
+
+#---------------------------------------------------------------------
+# get the device path name
+#---------------------------------------------------------------------
+
+get_device()
+{
+  tput clear             # clear the screen
+  echo "*****************************************************************"
+  echo "*  COMPAQ Intelligent Disk Array Diagnostic Utility Menu        *"
+  echo "*  Version $VERSION                                                  *"
+  echo "*  Copyright (C) COMPAQ Computer Corporation, 1992, 1993        *"
+  echo "*****************************************************************"
+
+  DEVICE=
+  ret_code="-1"
+  while [ "$DEVICE" = "" ]
+  do
+     $DIAGS/ida_disks 2>>/tmp/$$.err >/tmp/$$.ida_disks
+     if [ ! -s /tmp/$$.ida_disks ]
+     then
+	 echo "EISA NVM has detected no IDA Controllers in this system."
+	 cleanup $OK
+     fi
+
+     # list all available IDA devices
+     	echo "\nDevice List:"
+     	cat /tmp/$$.ida_disks
+     	echo "\nEnter device name (*=all devices, q=quit): \c"
+     	read DEVICE
+
+	if  [ "$DEVICE" = "q" ] ; then
+ 	    cleanup $OK
+	elif  [ "$DEVICE" = "" ] ; then
+	    echo "Entry not understood, try again"
+	elif  [ "$DEVICE" = "*" ] ; then
+	    date > $DIAGS/ida_file
+	    $DIAGS/ida_info 2>>/tmp/$$.err >> $DIAGS/ida_file
+     	    $DIAGS/ida_info 2>>/tmp/$$.err | more -cdw
+	    DEVICE=""
+        elif [ ! -r $DEVICE ] ; then
+            echo "Can't find device: $DEVICE"
+            DEVICE=""
+	else
+		$DIAGS/ida_init $DEVICE 2>>/tmp/$$.err
+		awks="/ret/ {print \$2}"
+		ret_code=`awk "$awks" /usr/bin/compaq/diags/ida/init_file`
+     	fi
+  done
+}
+
+#---------------------------------------------------------------------
+# Prompt for yes or no answer - returns non-zero for no.
+#---------------------------------------------------------------------
+
+getyn() {
+	while	echo "$* (y/n) \c"
+	do	read yn rest
+		case $yn in
+		[yY])	return $OK 			;;
+		[nN])	return $FAIL			;;
+		*)	echo "Please answer y or n" 	;;
+		esac
+	done
+}
+
+#---------------------------------------------------------------------
+# print the menu
+#---------------------------------------------------------------------
+
+print_menu()
+{
+cat << EndOfMenu
+
+       *********************************
+       *  COMPAQ IDA Diagnostic Menu   *
+       *********************************
+       >>>  Current Device: $DEVICE  <<<
+
+       1  - Identify Controller
+       2  - Identify Logical Drive Status
+       3  - Sense Configuration
+       4  - Sense Drive Monitor & Performance Threshold Violation Status
+       5  - Return Drive Monitor & Performance Statistics
+       6  - Return Drive Monitor & Performance Thresholds
+       7  - Return Monitor & Performance Parameter Control Data
+       8  - Return Posted Write Status
+       9  - Flush/Disable/Enable Posted Write Memory
+      10  - Set Periodic Statistics Sampling Interval
+      11  - Disable/Enable Alarm Beep
+      12  - Accept Media Exchange (Smart Disk Array Controller only)
+      13  - Read Error Log (Smart Disk Array Controller only)
+      14  - Specify a New Device
+       q  - Quit
+
+EndOfMenu
+echo "      Enter Selection: \c"
+read select
+}
+
+#---------------------------------------------------------------------
+# cleanup stuff
+#---------------------------------------------------------------------
+
+cleanup()
+{
+  rm -f /tmp/$$.err
+  setcolor -n
+  clear
+  exit "$1"
+}
+#---------------------------------------------------------------------
+# Main
+#---------------------------------------------------------------------
+
+# main()
+
+trap "" 0 1 2 3 15
+
+ret_code="-1"
+
+# don't allow command line arguments
+[ $# -ge 1 ] &&
+{
+	echo Command line arguments are not supported, exiting ...
+	cleanup $FAIL
+}
+
+setcolor yellow blue    # set up the screen color
+
+while [ "$ret_code" = -1 ]
+do
+
+if  [ "$DEVICE" = "" ] ; then
+   get_device
+elif  [ ! -r $DEVICE ] ; then
+   echo "Can't find device: $DEVICE"
+   get_device
+fi
+
+if  [ "$ret_code" = -1 ]
+then
+  echo "$DEVICE is not supported or the IDAM driver is not in the kernel."
+  echo "\nPress Enter to continue...\c"
+  read ans
+  DEVICE=""
+fi
+if  [ "$ret_code" = -2 ]
+then
+  echo "$DEVICE is not supported or the IDAM driver is not in the kernel."
+  echo "\nPress Enter to continue...\c"
+  ret_code="-1"
+  read ans
+  DEVICE=""
+fi
+done
+
+while  [ "$select" = "" ]
+do
+
+tput clear    # clear the screen
+
+cd /
+
+  print_menu     # print out the menu
+
+
+  case $select in
+
+
+	1)	tput clear
+	  	echo "Identify Controller: $DEVICE\n"
+     		$DIAGS/id_ctrl $DEVICE 2>>/tmp/$$.err | more -cdw
+		;;
+
+	2)	tput clear
+	  	echo "Identify Logical Drive Status: $DEVICE\n"
+     		$DIAGS/id_lstatus $DEVICE 2>>/tmp/$$.err
+		echo "\nPress Enter to continue...\c"
+		read ans
+		;;
+
+	3)	tput clear
+	  	echo "Sense Configuration: $DEVICE\n"
+     		$DIAGS/sense_config $DEVICE 2>>/tmp/$$.err
+		echo "\nPress Enter to continue...\c"
+		read ans
+		;;
+
+	4)	tput clear
+	  	echo "Sense Drive Threshold Violation Status: $DEVICE\n"
+     		$DIAGS/thresh_stat $DEVICE 2>>/tmp/$$.err
+		echo "\nPress Enter to continue...\c"
+		read ans
+		;;
+
+	5)	tput clear
+	  	echo "Return Drive Monitor & Performance Statistics: $DEVICE\n"
+		FLAG="-1"
+
+		while [ "$FLAG" -lt 0 -o "$FLAG" -gt 1 ]
+		do
+   		  echo "Enter 0: Since Manufacture or 1: Since Power On: \c"
+	      	  read FLAG
+		  if  [ "$FLAG" = "" ]
+		  then
+		    FLAG="-1"
+		  fi
+		  if  [ "$FLAG" -lt 0 -o "$FLAG" -gt 1 ]
+		  then
+		    echo "Please enter \"0\" or \"1\".\n"
+		  fi
+                done
+		PHYS_NUM="-1"
+
+     		$DIAGS/return_stat $DEVICE $FLAG 2>>/tmp/$$.err | more -cdw
+		;;
+
+	6)	tput clear
+	  	echo "Return Drive Monitor & Performance Thresholds: $DEVICE\n"
+     		$DIAGS/ret_hold $DEVICE 2>>/tmp/$$.err | more -cdw
+		;;
+
+	7)	tput clear
+	  	echo "Return Monitor & Performance Parameter Control Data: $DEVICE\n"
+     		$DIAGS/ret_mp_cont $DEVICE 2>>/tmp/$$.err | more -cdw
+		;;
+
+	8)	tput clear
+	  	echo "Return Posted Write Status: $DEVICE\n"
+     		$DIAGS/ret_cache_st $DEVICE 2>>/tmp/$$.err
+		echo "\nPress Enter to continue...\c"
+		read ans
+		;;
+
+	9)	tput clear
+ 	   	echo "Flush/Disable/Enable Posted Write Memory: $DEVICE\n"
+     		$DIAGS/flush_cache $DEVICE 2>>/tmp/$$.err
+		echo "\nPress Enter to continue...\c"
+		read ans
+		;;
+
+	10)	tput clear
+	   	echo "Set Periodic Statistics Sampling Interval: $DEVICE\n"
+     		$DIAGS/set_delay $DEVICE 2>>/tmp/$$.err
+		echo "\nPress ENTER to continue ...\c"
+		read ans
+		;;
+
+	11)	tput clear
+	   	echo "Disabling Alarm Beep: $DEVICE\n"
+     		$DIAGS/dis_beep $DEVICE 2>>/tmp/$$.err
+		echo "\nPress ENTER to continue ...\c"
+		read ans
+		;;
+
+	12)	tput clear
+	   	echo "Accept Media Exchange: $DEVICE\n"
+     		$DIAGS/media_chg $DEVICE 2>>/tmp/$$.err
+		echo "\nPress ENTER to continue ...\c"
+		read ans
+		;;
+
+	13)	tput clear
+	  	echo "Return Drive Error Logs: $DEVICE\n"
+     		$DIAGS/ret_err_log $DEVICE 2>>/tmp/$$.err | more -cdw
+		;;
+
+        14)	ret_code="-1"
+		while [ "$ret_code" = -1 ]
+		do
+	 		get_device
+			if  [ "$ret_code" = -1 ]
+			then
+  			echo "$DEVICE is not an IDA device."
+  			echo "\nPress Enter to continue...\c"
+  			read ans
+			fi
+			if  [ "$ret_code" = -2 ]
+			then
+  			echo "$DEVICE is not an IDA device."
+  			echo "\nPress Enter to continue...\c"
+  			ret_code="-1"
+  			read ans
+			fi
+		done
+		echo "\nPress ENTER to continue ...\c"
+		read ans
+		;;
+
+	# exit menu
+	q|Q)	# reset the color and exit
+		cleanup $OK
+		;;
+
+	*)	;;
+  esac
+
+	select=""
+done
+
+cleanup $OK

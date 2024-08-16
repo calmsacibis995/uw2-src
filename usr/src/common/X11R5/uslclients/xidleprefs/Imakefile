@@ -1,0 +1,54 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)xidleprefs:Imakefile	1.6"
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+XLIBDIR     =  $(ROOT)/$(MACH)/usr/X/lib
+
+CC = LD_RUN_PATH=/usr/lib/X11 $(PFX)cc
+          DEBUG =  -O
+    CDEBUGFLAGS = -O
+
+
+          SRCS1 = main.c creation.c callbacks.c
+          OBJS1 = main.o creation.o callbacks.o
+          HDRS1 = xidleprefs.h
+
+           OBJS = $(OBJS1)
+           SRCS = $(SRCS1)
+           HDRS = $(HDRS1)
+          PROGS = ScreenLock
+
+
+       DTLIBSRC = $(LIBSRC)/Dt
+          DTLIB = $(DTLIBSRC)/libDt.so
+
+       INCLUDES = -I$(LIBSRC) -I$(LIBSRC)/Xol 
+
+          XLIBS = XolClientLibs $(XLIB) $(DTLIB) 
+  SYS_LIBRARIES = -lgen
+
+all:: $(PROGS)
+
+NormalProgramTarget($(PROGS),$(OBJS1),$(LLIBS),$(XLIBS),$(SYS_LIBS))
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 555)
+
+InstallMsgCatalog(xidleprefs)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()
+

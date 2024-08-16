@@ -1,0 +1,151 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5server:Imakefile	1.41"
+
+/**/#	Copyright (c) 1990, 1991, 1992, 1993 USL
+/**/#	  All Rights Reserved
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF USL
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#include <Server.tmpl>
+
+/**/#
+/**/# Undef LocalityTuning only in the server until the assembler
+/**/# problems found with ddx/si/sifillsp.c can be fixed.
+
+#if UslLocalityTuning
+#ifndef FurServerTarget
+#define	FurServerTarget(program)					@@\
+          PROGRAM = program.F						@@\
+									@@\
+AllTarget(program.F)							@@\
+									@@\
+program.F: $(NONSHARED_XWINLIBS) $(DEPLIBS) $(DYN_OBJ) program		@@\
+	RemoveTargetProgram($@)						@@\
+	$(LD) -r -o program.r $(DUMMYOBJS) $(NONSHARED_XWINLIBS) $(DYN_OBJ) @@\
+	$(FUR) -l program.funcs program.r				@@\
+	LD_RUN_PATH=$(SERVER_RUNPATHS) $(CC) -o $@ program.r $(CDEBUGFLAGS) $(CCOPTIONS) $(FONT) $(OS1) $(EXTENSIONS) $(SYS_LIBRARIES) $(EXTRA_LOAD_FLAGS) -lnsl -ldl -lm -lsocket $(MEMUTILLIB) @@\
+									@@\
+InstallProgram(program.F,$(BINDIR))					@@\
+install:: program.F							@@\
+	$(RM) $(BINDIR)/X						@@\
+	(cd $(BINDIR); $(LN) $(SERVER).F X)				@@\
+
+#endif /* FurServerTarget */
+#endif /* UslLocalityTuning */
+
+
+     CDEBUGFLAGS = ServerCDebugFlags
+     STD_DEFINES = ServerDefines FontDefines 
+ SERVER_RUNPATHS = $(XWINLIBDIR)/display:$(XWINLIBDIR)
+
+#if	UseInstalled
+          XAULIB = $(ROOT)$(MACH)/$(USRLIBDIR)/libXau.a
+        XDMCPLIB = $(ROOT)$(MACH)/$(USRLIBDIR)/libXdmcp.a
+#else
+          XAULIB = $(LIBSRC)/Xau/libXau.a
+#endif
+
+#ifndef OtherExts
+#define OtherExts PexExts XinputExts
+#endif /* OtherExts */
+
+
+         DEPDIRS = $(FONTSRC)/lib/font $(EXTENSIONSRC)/server
+       OTHEREXTS = OtherExts
+      EXTENSIONS = $(OTHEREXTS) $(EXTENSIONSRC)/server/libext.a
+          XAULIB = $(XAUTHSRC)/libXau.a
+        XDMCPLIB = $(XDMCPLIBSRC)/libXdmcp.a
+              OS = os/libos.a $(XAULIB) $(XDMCPLIB)
+             OS1 = $(XAULIB) $(XDMCPLIB)
+         BSDEMUL = $(LIBSRC)/Berk/Berklib.o
+             MFB = ddx/mfb/libmfb.a
+             CFB = ddx/cfb/libcfb.a
+              MI = ddx/mi/libmi.a
+             DIX = dix/libdix.a
+            FONT = $(FONTSRC)/lib/font/libfont.a
+         SYSLIBS = -lm
+
+          SERVER = Xwin
+
+XCOMM
+XCOMM Xwin server
+XCOMM
+#if BuildBuiltinExt
+EXTRA_LOAD_FLAGS = -lgen -Wl,-Bexport
+#endif
+ EXTRA_LIBRARIES = ExtraLibraries -lsocket
+        SUBDIRS0 = dix os ddx/si ddx/mi ddx/mfb
+        SUBDIRS1 = ddx/io
+     DISPLAYDIRS = display
+        XWINDIRS = $(SUBDIRS0) $(SUBDIRS1) $(DISPLAYDIRS) $(DEPDIRS)
+            FONT = $(FONTSRC)/lib/font/libfont.so
+        XWINOBJS = ddx/io/init.o dix/dixfonts.o
+
+#if UslLocalityTuning
+ SHARED_XWINLIBS = $(FONT)
+
+NONSHARED_XWINLIBS = ddx/io/init.o dix/dixfonts.o ddx/io/libio.a \
+	$(DIX) os/libos.a ddx/si/libsi.a $(MI) ddx/mfb/libmfb.a \
+	ddx/si/libsi.a ddx/io/dyn.o
+#endif
+
+/* DYNAMIC SDD LIBRARIES */
+     XWIN_D_LIBS = ddx/io/libio.a $(DIX) $(OS) $(FONT) ddx/si/libsi.a $(MI) \
+	ddx/mfb/libmfb.a ddx/si/libsi.a ddx/io/dyn.o $(EXTENSIONS)
+  XWIN_D_SYSLIBS = $(SYSLIBS)
+
+/* STATIC SDD LIBRARIES */
+/* Example: Using libvga256 */
+     XWIN_S_LIBS = ddx/io/libio.a $(DIX) $(OS) $(FONT) ddx/si/libsi.a $(MI) \
+	ddx/mfb/libmfb.a ddx/si/libsi.a ddx/io/arch.o $(EXTENSIONS)
+  XWIN_S_SYSLIBS = -Bstatic -L./display/vga256 -lvga256 -Bdynamic \
+	$(SYSLIBS) -ldl
+
+#if XWINSharedDisplayLibrary
+all:: Xwin
+#else
+all:: Xwin_s
+#endif
+
+ServerTarget(Xwin,$(XWINDIRS),$(XWINOBJS),$(XWIN_D_LIBS),$(XWIN_D_SYSLIBS))
+ServerTarget(Xwin_s,$(XWINDIRS),$(XWINOBJS),$(XWIN_S_LIBS),$(XWIN_S_SYSLIBS))
+InstallProgram($(SERVER),$(BINDIR))
+
+#define IRunAsRoot YES
+#define IHaveSubdirs
+
+        SUBDIRS = $(SUBDIRS0) $(SUBDIRS1) $(DISPLAYDIRS) defaults
+
+XCOMM
+XCOMM leave the CHMOD lines on separate lines, else the builds in the cross-env
+XCOMM will have problems
+XCOMM
+install::
+	$(RM) $(BINDIR)/X
+	(cd $(BINDIR); $(LN) $(SERVER) X)
+	$(CHMOD) u+s $(BINDIR)/$(SERVER)
+	$(CHMOD) u+s $(BINDIR)/X
+
+DependSubdirs($(SUBDIRS))
+MakeLintLibSubdirs($(SUBDIRS))
+LintSubdirs($(SUBDIRS))
+ForceSubdirs($(DEPDIRS) $(SUBDIRS))
+InstallManPage(Xwin,$(MANDIR))
+
+InstallMultiple(README.Xwin,$(DISPLIBDIR))
+
+#if UslLocalityTuning
+FurServerTarget(Xwin)
+#endif
+
+CleanTarget()
+clobber::
+	$(RM) $(SERVER)

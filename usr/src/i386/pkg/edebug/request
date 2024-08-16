@@ -1,0 +1,79 @@
+#ident	"@(#)pkg4.i386:edebug/request	1.1.1.5"
+#
+
+#
+#  Do we have Desktop Metaphor installed?
+#
+`pkginfo -i desktop > /dev/null 2>&1`
+HAS_DTM=$?
+
+
+#
+#  Set defaults:
+#       default is 'y' for installing graphical interface
+#       if DTM not installed and INSTALL_MODE is CUSTOM, then
+#       'n' is the default
+#
+
+DTINSTALL="y"
+
+[ "${HAS_DTM}" != "0" ] && DTINSTALL="n"
+
+export DTINSTALL
+
+#Set up localized menus
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+MENU_DIR=/etc/inst/locale/${LOCALE}/menus/${PKGINST}
+PKG_MENUS=${REQDIR}/inst/locale/${LOCALE}/${PKGINST}
+REQ_MENU=${REQDIR}/${PKGINST}
+
+[ -d ${MENU_DIR} ] || mkdir -p ${MENU_DIR}
+MENUS="menu.edebug"
+
+for i in ${MENUS}
+do
+	if [ ! -f ${MENU_DIR}/$i ]
+	then
+		if [ -f ${PKG_MENUS}/$i ]
+		then
+			cp ${PKG_MENUS}/$i  ${MENU_DIR}
+		else 
+			cp ${REQ_MENU}/$i  ${MENU_DIR}
+		fi
+		installf ${PKGINST} ${MENU_DIR}/$i
+	fi
+done
+#  Set up to use menu_colors; default to C-locale if ${LOCALE}'s dir has
+#  no menu_colors.sh
+#
+if [ -f /etc/inst/locale/${LOCALE}/menus/menu_colors.sh ]
+then
+        . /etc/inst/locale/${LOCALE}/menus/menu_colors.sh
+else
+        . /etc/inst/locale/C/menus/menu_colors.sh
+fi
+
+menu_colors regular
+menu -f ${MENU_DIR}/menu.edebug -o $1 2>/dev/null
+
+. $1
+
+# are we installing icons to all existing desktop users?
+# desktop AppInstaller sets INSTALL_ICONS to FALSE since it already
+# provides the option of installing to all users or a specific user
+# Note: we always install to all existing user's accounts when
+# doing a pkgadd without going through the desktop
+DTINSTALLICONS="y"
+[ "${INSTALL_ICONS}" = "FALSE" ] && DTINSTALLICONS="n"
+
+CLASSES="none"
+if [ "$DTINSTALL" = "y" ]
+then
+	CLASSES=$CLASSES" edbgdt"
+fi
+cat >$1 <<!
+DTINSTALL=$DTINSTALL
+DTINSTALLICONS=$DTINSTALLICONS
+CLASSES='$CLASSES'
+!
+exit 0

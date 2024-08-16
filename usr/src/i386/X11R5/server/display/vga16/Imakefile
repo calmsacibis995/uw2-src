@@ -1,0 +1,134 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)vga16:vga16/Imakefile	1.34"
+
+#include <Server.tmpl>
+#include <sv4Lib.rules>
+
+#define VGASharedLibraryTarget(libname,rev,solist,down,up)		@@\
+AllTarget(Concat(lib,libname.so.rev))					@@\
+									@@\
+Concat(lib,libname.so.rev):  solist					@@\
+	-@if [ -f $@ ]; then $(MV) $@ O$@; fi				@@\
+	(cd down; $(CC) -G -o up/$@ $(SHLIBLDFLAGS) -h $@ solist -lc)	@@\
+	$(RM) Concat(lib,libname.so)					@@\
+	$(LN) $@ Concat(lib,libname.so)					@@\
+									@@\
+clean::									@@\
+	$(RM) Concat(lib,libname.so.rev) Concat(lib,libname.so)
+
+/*
+ * Debugging the server with dynamically linked library is sometimes painful
+ * To statically link libvga16.a into the server:
+ *
+ * #undef XWINSharedDisplayLibrary
+ * and define a VENDOR_DIR; this can be any one of the directories under
+ * devices
+ *
+ * and do:
+ *	make clean
+ *	make Makefile
+ *	make
+ *	cd ../../.. (ie: to the server dir)
+ *	make Xwin_a (make sure SDD=.....libvga16.a in the server/Makefile)
+ */
+
+/* #undef XWINSharedDisplayLibrary
+ */
+
+/*
+ * for archive, we have to include the objects from one of the directories
+ * under "devices", so that these objects are archived into libvga16.a
+ */ 
+#if XWINSharedDisplayLibrary
+VENDOROBJS =
+#else
+VENDOROBJS = ./devices/et4k/?*.o
+#endif
+
+#define IHaveSubdirs
+SUBDIRS = devices
+
+/*
+ *  	compilation option forced to -Xa, since -Xc does not recognize "asm"
+ *	keyword, which is called by "sys/inline.h" and used in all the files in
+ *	this directory
+ *
+ *  The reason to define .c.o: here is that the $(CCOPTIONS) is passed on 
+ *  command line from server dir, so there is no easy way to overwrite the default
+ *  option (-Xc). Eventhough CFLAGS has -Xc, since we are forcing -Xa after CFLAGS,
+ *  all other previously defined -X options are ignored.
+ */
+.c.o:
+	$(RM) $@
+	${CC} $(CFLAGS) -Xa -Dix86 -c $*.c
+
+
+NONPROFTMP=cat
+PROFTMP=m4 m4.def mcount.def 
+ASMTMP=$(NONPROFTMP)
+
+SRCS =	 vga.c vgaconfig.c vgadata.c vgags.c vgacolor.c \
+	 vgabitblt.c vgabltcopy.c vgablthelp.c vgastplblt.c vgarop.c \
+	 vgadlfont.c \
+	 vgacurs.c \
+	 vgapixel.c vgapoints.c \
+	 vgafill.c vgabigstpl.c vgabigtile.c \
+	 vgasl.c \
+	 vgaline.c vgalnclip.c \
+	 vgaasm.s egaasm.s vgabytefl.s \
+	 vtio.c vtio_dyn.c vgacache.c v1compat.c
+
+OBJS =   vga.o vgaconfig.o vgadata.o vgags.o vgacolor.o \
+	 vgabitblt.o vgabltcopy.o vgablthelp.o vgastplblt.o vgarop.o \
+	 vgadlfont.o \
+	 vgacurs.o \
+	 vgapixel.o vgapoints.o \
+	 vgafill.o vgabigstpl.o vgabigtile.o \
+	 vgasl.o \
+	 vgaline.o vgalnclip.o \
+	 vgaasm.o egaasm.o vgabytefl.o \
+	 vgacache.o v1compat.o
+
+
+   INCLUDES = -I.  -I../../ddx/si -I../../../X11 -I../../include
+     LFLAGS = -buxz
+
+INITOBJ = vtio_dyn.o
+
+#if XWINSharedDisplayLibrary
+SHLIBLDFLAGS =
+VGASharedLibraryTarget(vga16,$(DISPLIBREV),$(OBJS) $(INITOBJ),.,.)
+InstallSharedLibrary(vga16,$(DISPLIBREV),$(DISPLIBDIR))
+#else /* XWINSharedDisplayLibrary */
+CDEBUGFLAGS = ServerCDebugFlags
+NormalLibraryObjectRule()
+NormalLibraryTarget(vga16,$(OBJS) $(INITOBJ) $(VENDOROBJS))
+#endif /* XWINSharedDisplayLibrary */
+
+MakeSubdirs($(SUBDIRS))
+ForceSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+DependTarget()
+
+.s.o:
+	$(ASMTMP) $*.s > tmp.c
+	$(CC) -P $(INCLUDES) tmp.c
+	sed -e "/^\#ident/d" -e "s/\% /\%/g" tmp.i > tmp.s
+	$(CC) -c tmp.s
+	mv tmp.o $*.o
+	@if [ -d shared ]; then \
+		$(CC) -c -O tmp.s; \
+		$(MV) tmp.o ./shared/$*.o; \
+	fi
+	/bin/rm -f tmp.s tmp.c
+
+
+lint: ${CFILES} ${LIBCFILES}
+	$(LINT) $(LFLAGS) -Clibvga16 $(INCLUDES) $(SRCS) >lint.out 2>&1

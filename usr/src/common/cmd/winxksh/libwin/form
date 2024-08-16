@@ -1,0 +1,30 @@
+#ident	"@(#)winxksh:libwin/form	1.1"
+
+valid() {
+	if [ "$1" = "$2" ]
+	then
+		return 0
+	fi
+	msg "You said $1 is $2"
+	return 1
+}
+if [ -n "$ps" ]
+then
+	cd /tmp
+	ps -f
+	sleep 10
+fi
+if [ -z "$init" ]
+then
+	init=on
+	. scr_init
+fi
+call -n create_window 15 5 60 15 2 $COLOR_WHITE $COLOR_CYAN 0
+FORMWID=$_RETD
+open_form -fentry msg
+#open_form
+add_field -entry 'msg Enter tom' -exit 'valid tom $tom' -ilen 20 -p tom: -px 2 -py 3 -ix 10 -iy 3 tom
+add_field -choice '. popup' -ilen 20 -p larry: -px 2 -py 5 -ix 10 -iy 5 larry
+call form_finish
+call run_form
+call Wclose $FORMWID

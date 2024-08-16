@@ -1,0 +1,35 @@
+/*************************************************************************
+*        Copyright (c) 1991-93 Compaq Computer Corporation               *
+**************************************************************************
+*                                                                        *
+*   Module:  Compaq SMUX Manager Configuration File.                     *
+*                                                                        *
+**************************************************************************
+*************************************************************************/
+
+
+/************************************************************************* 
+ * The following are data collection agents that are not started
+ * automatically at system boot time.
+ *  
+ *	   Agent Name            Poll     'Set'    'Trap'    "Reboot	agent
+ *                               Time     State    State      State	flag
+ *                             (seconds)  (OK     = Enabled)
+ *                                        (NOT_OK = Disabled)
+ */
+agent  =  "os/os_agent"          -p 15     -s OK    -t OK; 
+agent  =  "stdeq/stdeq_agent"    -p 60     -s OK    -t OK     -r OK      -a;
+agent  =  "alarm/alarm_agent"    -p 1      -s OK    -t OK;
+
+/************************************************************************* 
+ * ALERT MAIL
+ *   Send system mail when a trap event occurs.
+ *
+ *   Syntax:  
+ *      mail = "mail_path  subject_line  destination(s)"
+ *
+ *   Example: 
+ *      mail = "/bin/mail -s 'Compaq Insight Manager Trap Alarm' root usr1...";
+ ************************************************************************/
+mail  = "/bin/mail -s 'Compaq Insight Manager Trap Alarm' root";
+

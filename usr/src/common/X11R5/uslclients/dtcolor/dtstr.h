@@ -1,0 +1,51 @@
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1993 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+#ident	"@(#)dtcolor:dtstr.h	1.1.1.4"
+"Alpine.vp",
+"Arizona.vp",
+"Black.vp",
+"BlackWhite.vp",
+"Brocia.vp",
+"Cabernet.vp",
+"Camouflage.vp",
+"Charcoal.vp",
+"Chocolate.vp",
+"Cinnamon.vp",
+"Clay.vp",
+"Default.vp",
+"Golden.vp",
+"GrayScale.vp",
+"Lilac.vp",
+"Mustard.vp",
+"Neptune.vp",
+"NorthernSky.vp",
+"Nutmeg.vp",
+"Olive.vp",
+"Orchid.vp",
+"Sand.vp",
+"SanteFe.vp",
+"Savannah.vp",
+"SeaFoam.vp",
+"SoftBlue.vp",
+"SouthWest.vp",
+"Tundra.vp",
+"Urchin.vp",
+"Wheat.vp",
+"White.vp",
+"WhiteBlack.vp",
+"16!BlueBell.vp",
+"16!Cream.vp",
+"16!Default.vp",
+"16!Forest.vp",
+"16!GrayScale.vp",
+"16!Indigo.vp",
+"16!Mauve.vp",
+"16!Olive.vp",
+"16!Pastel.vp",
+"16!Roses.vp",

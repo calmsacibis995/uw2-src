@@ -1,0 +1,6 @@
+#ident	"@(#)langsup:i386/ls/etc/mpchan	1.1"
+eval `defadm keyboard MAPCHAN 2> /dev/null`
+if [ $? = 0  -a ! -z "$MAPCHAN" ]
+then
+	/usr/bin/mapchan -f $MAPCHAN
+fi

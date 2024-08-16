@@ -1,0 +1,23 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#pragma ident	"@(#)s364:s364/devices/Imakefile	1.1"
+
+#include <Server.tmpl>
+#include <sv4Lib.rules>
+
+#define IHaveSubdirs
+
+      SUBDIRS = s364_init
+
+S364_VINFOFILE = s364.vinfo
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+InstallMultiple($(S364_VINFOFILE),$(DISPLIBDIR))

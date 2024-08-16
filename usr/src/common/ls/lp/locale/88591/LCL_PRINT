@@ -1,0 +1,144 @@
+#!/bin/sh
+# Copyright (c) 1993 UNIX System Laboratories, Inc.
+# All Rights Reserved 
+# 
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF 
+# UNIX System Laboratories, Inc.
+# The copyright notice above does not evidence any
+# actual or intended publication of such source code.
+#
+#ident "@(#)langsup:common/ls/lp/locale/88591/LCL_PRINT	1.4"
+#
+
+#  Process args to get the printer type
+PRT_DEF="NO"
+while getopts T: c $*
+do
+	case $c in
+	T)
+		PRT_NAME=`/usr/bin/echo "$OPTARG" | /usr/bin/awk '{print $1}'`
+
+		case $PRT_NAME in
+		hp*|laser* )
+				EMUL_TYPE="hplaserjet";;
+		ibm*|proprinter )
+				EMUL_TYPE="ibmproprinter";;
+		epson*|fx*|ex*|dx*|dfx* )
+				EMUL_TYPE="epson";;
+		canon*|bj* )
+				EMUL_TYPE="bj-10";;
+		esac
+
+		if [ "$EMUL_TYPE" = "hplaserjet" ] ; then
+			PRT_DEF="YES"
+			CS88591="(0N"
+			CS437="(10U"
+			CS850="(12U"
+			CS865="(11U"
+			CSRESET="E&k0G\c"
+			CS2=
+		elif [ "$EMUL_TYPE" = "ibmproprinter" ] ; then
+			PRT_DEF="YES"
+			CS437="[T\004\000\000\000\001\265\c"
+			CS850="[T\004\000\000\000\003R\c"
+			CS860="[T\004\000\000\000\003\134\c"
+			CS863="[T\004\000\000\000\003\136\c"
+			CS865="[T\004\000\000\000\003\140\c"
+			CSRESET="[K\001\00004\c"
+			CS2="\066\c"
+		elif [ "$EMUL_TYPE" = "epson" ] ; then
+			case $_LOCALE in
+			en_US* ) ICS_NUM=0;;
+			fr* ) ICS_NUM=1;;
+			de* ) ICS_NUM=2;;
+			en* ) ICS_NUM=3;;
+			da* ) ICS_NUM=4;;
+			sv* ) ICS_NUM=5;;
+			it* ) ICS_NUM=6;;
+			es* ) ICS_NUM=7;;
+			no* ) ICS_NUM=9;;
+			fi* ) ICS_NUM=9;;
+			is* ) ICS_NUM=;;
+			nl* ) ICS_NUM=;;
+			pt* ) ICS_NUM=;;
+			esac
+			if [ "$ICS_NUM" != "" ]; then
+				PRT_DEF="YES"
+				CS_SEL="R$ICS_NUM\c"
+				CSRESET="@\c"
+				CS2="t\001\066\c"
+			fi
+		elif [ "$EMUL_TYPE" = "bj-10" ] ; then
+			PRT_DEF="YES"
+			CS437="[T\004\000\000\000\001\265\c"
+			CS850="[T\004\000\000\000\003R\c"
+			CSRESET="[K\001\00004\c"
+			CS2="\066\c"
+		else
+			PRT_DEF="NO"
+		fi
+
+		break;;
+
+	?)
+		continue;;
+	esac
+done
+
+
+
+#  Change codeset and cat file
+if [ "$PRT_DEF" = "NO" ] ; then
+	/usr/bin/iconv -f88591 -tASCII -mb
+elif [ "$CS_SEL" != "" ] ; then
+	if [ "$CS2" != "" ]; then
+		/usr/bin/echo $CS2
+	fi
+	/usr/bin/echo $CS_SEL
+	/usr/bin/iconv -f88591 -tPC850 -mb
+	/usr/bin/echo $CSRESET
+elif [ "$CS88591" != "" ] ; then
+	if [ "$CS2" != "" ]; then
+		/usr/bin/echo $CS2
+	fi
+	/usr/bin/echo $CS88591
+	/usr/bin/cat
+	/usr/bin/echo $CSRESET
+elif [ "$CS850" != "" ] ; then
+	if [ "$CS2" != "" ]; then
+		/usr/bin/echo $CS2
+	fi
+	/usr/bin/echo $CS850
+	/usr/bin/iconv -f88591 -tPC850 -mb
+	/usr/bin/echo $CSRESET
+elif [ "$CS860" != "" ] ; then
+	if [ "$CS2" != "" ]; then
+		/usr/bin/echo $CS2
+	fi
+	/usr/bin/echo $CS860
+	/usr/bin/iconv -f88591 -tPC860 -mb
+	/usr/bin/echo $CSRESET
+elif [ "$CS863" != "" ] ; then
+	if [ "$CS2" != "" ]; then
+		/usr/bin/echo $CS2
+	fi
+	/usr/bin/echo $CS863
+	/usr/bin/iconv -f88591 -tPC863 -mb
+	/usr/bin/echo $CSRESET
+elif [ "$CS865" != "" ] ; then
+	if [ "$CS2" != "" ]; then
+		/usr/bin/echo $CS2
+	fi
+	/usr/bin/echo $CS865
+	/usr/bin/iconv -f88591 -tPC865 -mb
+	/usr/bin/echo $CSRESET
+elif [ "$CS437" != "" ] ; then
+	if [ "$CS2" != "" ]; then
+		/usr/bin/echo $CS2
+	fi
+	/usr/bin/echo $CS437
+	/usr/bin/iconv -f88591 -tPC437 -mb
+	/usr/bin/echo $CSRESET
+else
+	/usr/bin/iconv -f88591 -tASCII -mb
+fi

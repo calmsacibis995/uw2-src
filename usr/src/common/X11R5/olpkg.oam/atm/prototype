@@ -1,0 +1,84 @@
+#ident	"@(#)olpkg.oam:atm/prototype	1.11"
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+i copyright
+i depend
+i pkginfo
+i postinstall
+i postremove
+i preremove
+i dummy.pkginfo
+
+!PKGINST=atm
+!PACKDIR=../usr/src/$WORK/X11R5/fonts/scaled/atm13
+!DUMMY_PKGINFO=../usr/src/$WORK/X11R5/olpkg.oam/$PKGINST/dummy.pkginfo
+!OLD_PKGINST=atm13
+
+
+!default 0755 bin bin
+
+d enduser /var ? ? ?
+d enduser /var/sadm ? ? ?
+d enduser /var/sadm/pkg ? ? ?
+d enduser /var/sadm/pkg/$OLD_PKGINST
+
+f enduser /var/sadm/pkg/$OLD_PKGINST/pkginfo=$DUMMY_PKGINFO 0644 root sys
+
+d enduser /usr ? ? ?
+
+d enduser /usr/X
+d enduser /usr/X/lib
+d enduser /usr/X/lib/fonts
+d enduser /usr/X/lib/fonts/type1
+d enduser /usr/X/lib/fonts/type1/type1Encodings
+d enduser /usr/X/lib/fonts/type1/afm
+
+!default 0644 bin bin
+
+f enduser /usr/X/lib/libatm.so
+
+f enduser /usr/X/lib/fonts/type1/COB_____.pfa=$PACKDIR/COB_____.pfa
+f enduser /usr/X/lib/fonts/type1/COBO____.pfa=$PACKDIR/COBO____.pfa
+f enduser /usr/X/lib/fonts/type1/COM_____.pfa=$PACKDIR/COM_____.pfa
+f enduser /usr/X/lib/fonts/type1/COO_____.pfa=$PACKDIR/COO_____.pfa
+f enduser /usr/X/lib/fonts/type1/HVB_____.pfa=$PACKDIR/HVB_____.pfa
+f enduser /usr/X/lib/fonts/type1/HVBO____.pfa=$PACKDIR/HVBO____.pfa
+f enduser /usr/X/lib/fonts/type1/HV______.pfa=$PACKDIR/HV______.pfa
+f enduser /usr/X/lib/fonts/type1/HVO_____.pfa=$PACKDIR/HVO_____.pfa
+f enduser /usr/X/lib/fonts/type1/SY______.pfa=$PACKDIR/SY______.pfa
+f enduser /usr/X/lib/fonts/type1/TIB_____.pfa=$PACKDIR/TIB_____.pfa
+f enduser /usr/X/lib/fonts/type1/TIBI____.pfa=$PACKDIR/TIBI____.pfa
+f enduser /usr/X/lib/fonts/type1/TIR_____.pfa=$PACKDIR/TIR_____.pfa
+f enduser /usr/X/lib/fonts/type1/TII_____.pfa=$PACKDIR/TII_____.pfa
+
+f enduser /usr/X/lib/fonts/type1/config
+f enduser /usr/X/lib/fonts/type1/type1Encodings/AdobeStdEncoding
+f enduser /usr/X/lib/fonts/type1/type1Encodings/ISOLatin1Encoding
+f enduser /usr/X/lib/fonts/type1/type1Encodings/ISOLatin2Encoding
+f enduser /usr/X/lib/fonts/type1/type1Encodings/ISOLatin3Encoding
+f enduser /usr/X/lib/fonts/type1/type1Encodings/ISOLatin4Encoding
+f enduser /usr/X/lib/fonts/type1/type1Encodings/ISOLatin5Encoding
+f enduser /usr/X/lib/fonts/type1/type1Encodings/ISOLatin9Encoding
+f enduser /usr/X/lib/fonts/type1/type1Encodings/encodings.def
+
+f enduser /usr/X/lib/fonts/type1/afm/COB_____.afm=$PACKDIR/afm/COB_____.afm
+f enduser /usr/X/lib/fonts/type1/afm/COBO____.afm=$PACKDIR/afm/COBO____.afm
+f enduser /usr/X/lib/fonts/type1/afm/COM_____.afm=$PACKDIR/afm/COM_____.afm
+f enduser /usr/X/lib/fonts/type1/afm/COO_____.afm=$PACKDIR/afm/COO_____.afm
+f enduser /usr/X/lib/fonts/type1/afm/HVB_____.afm=$PACKDIR/afm/HVB_____.afm
+f enduser /usr/X/lib/fonts/type1/afm/HVBO____.afm=$PACKDIR/afm/HVBO____.afm
+f enduser /usr/X/lib/fonts/type1/afm/HV______.afm=$PACKDIR/afm/HV______.afm
+f enduser /usr/X/lib/fonts/type1/afm/HVO_____.afm=$PACKDIR/afm/HVO_____.afm
+f enduser /usr/X/lib/fonts/type1/afm/SY______.afm=$PACKDIR/afm/SY______.afm
+f enduser /usr/X/lib/fonts/type1/afm/TIB_____.afm=$PACKDIR/afm/TIB_____.afm
+f enduser /usr/X/lib/fonts/type1/afm/TIBI____.afm=$PACKDIR/afm/TIBI____.afm
+f enduser /usr/X/lib/fonts/type1/afm/TIR_____.afm=$PACKDIR/afm/TIR_____.afm
+f enduser /usr/X/lib/fonts/type1/afm/TII_____.afm=$PACKDIR/afm/TII_____.afm

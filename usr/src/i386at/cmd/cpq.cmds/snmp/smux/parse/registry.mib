@@ -1,0 +1,700 @@
+/*************************************************************************
+*        Copyright (c) 1993 Compaq Computer Corporation                  *
+**************************************************************************
+*                                                                        *
+*   Module:  Compaq SNMP Data Registry MIB File.                         *
+*                                                                        *
+**************************************************************************
+*************************************************************************/
+
+/* 
+ * The path to the data registry file area... 
+ */
+registry =  /usr/bin/compaq/registry 
+
+
+/*
+ * Define COMPAQ Data Registry items
+ *
+ *   SUB-PATH		  ITEM NAME			TYPE
+ */
+
+/*
+ * UNIXWARE OS Host MIB
+ */
+table_index = 1
+"unixware/filesys" 	 "cpqHoFileSysIndex" 			TABLE
+"unixware/filesys" 	 "cpqHoFileSysDesc" 			TABLE
+"unixware/filesys" 	 "cpqHoFileSysSpaceTotal"  		TABLE
+"unixware/filesys" 	 "cpqHoFileSysSpaceUsed"  		TABLE
+"unixware/filesys"	 "cpqHoFileSysPercentSpaceUsed"		TABLE
+"unixware/filesys" 	 "cpqHoFileSysAllocUnitsTotal" 		TABLE
+"unixware/filesys" 	 "cpqHoFileSysAllocUnitsUsed"  		TABLE
+
+"unixware/misc" 	 "cpqHoMibRevMajor"  			SCALAR
+"unixware/misc" 	 "cpqHoMibRevMinor"  			SCALAR
+"unixware/misc" 	 "cpqHoMibCondition"  			SCALAR
+"unixware/misc" 	 "cpqHoOsCommonPollFreq"  		SCALAR
+
+table_index = 1
+"unixware/common" 	 "cpqHoOsCommonModuleIndex"  		TABLE
+"unixware/common" 	 "cpqHoOsCommonModuleName"  		TABLE
+"unixware/common" 	 "cpqHoOsCommonModuleVersion"  		TABLE
+"unixware/common" 	 "cpqHoOsCommonModuleDate"  		TABLE
+"unixware/common" 	 "cpqHoOsCommonModulePurpose"  		TABLE
+
+"unixware/info" 	 "cpqHoName"  				SCALAR
+"unixware/info" 	 "cpqHoVersion"				SCALAR
+"unixware/info" 	 "cpqHoDesc"  				SCALAR
+
+table_index = 1
+"unixware/cpu" 		 "cpqHoCpuUtilUnitIndex"		TABLE
+"unixware/cpu" 		 "cpqHoCpuUtilMin"  			TABLE
+"unixware/cpu" 		 "cpqHoCpuUtilFiveMin"  		TABLE
+"unixware/cpu" 		 "cpqHoCpuUtilThirtyMin"  		TABLE
+"unixware/cpu" 		 "cpqHoCpuUtilHour"  			TABLE
+
+/* Host OS Interface Physical Map Table items, provided by NIC agent. */
+
+table_index = 1
+"unixware/ifmap" 	 "cpqHoIfPhysMapIndex" 			TABLE
+"unixware/ifmap" 	 "cpqHoIfPhysMapSlot" 			TABLE
+"unixware/ifmap" 	 "cpqHoIfPhysMapIoBaseAddr" 		TABLE
+"unixware/ifmap" 	 "cpqHoIfPhysMapIrq" 			TABLE
+"unixware/ifmap" 	 "cpqHoIfPhysMapDma" 			TABLE
+"unixware/ifmap" 	 "cpqHoIfPhysMapMemBaseAddr" 		TABLE
+
+/*
+ * Alarm Agent MIB
+ */
+"alarm/misc" 		 "cpqMeMibRevMajor"  			SCALAR
+"alarm/misc" 		 "cpqMeMibRevMinor"  			SCALAR
+"alarm/misc" 		 "cpqMeMibCondition"  			SCALAR
+"alarm/misc" 		 "cpqMeOsCommonPollFreq"  		SCALAR
+"alarm/misc" 		 "cpqMeAlarmNextIndex" 			SCALAR
+
+table_index = 1
+"alarm/common" 		 "cpqMeOsCommonModuleIndex"  		TABLE
+"alarm/common" 		 "cpqMeOsCommonModuleName"  		TABLE
+"alarm/common" 		 "cpqMeOsCommonModuleVersion"  		TABLE
+"alarm/common" 		 "cpqMeOsCommonModuleDate"  		TABLE
+"alarm/common" 		 "cpqMeOsCommonModulePurpose"  		TABLE
+
+table_index = 1
+"alarm/entry" 		 "cpqMeAlarmIndex"    			TABLE
+"alarm/entry" 		 "cpqMeAlarmInterval" 			TABLE
+"alarm/entry" 		 "cpqMeAlarmVariable" 			TABLE
+"alarm/entry" 		 "cpqMeAlarmSampleType" 		TABLE
+"alarm/entry" 		 "cpqMeAlarmValue" 			TABLE
+"alarm/entry" 		 "cpqMeAlarmStartupAlarm" 		TABLE
+"alarm/entry" 		 "cpqMeAlarmRisingThreshold" 		TABLE
+"alarm/entry" 		 "cpqMeAlarmFallingThreshold" 		TABLE
+"alarm/entry" 		 "cpqMeAlarmPermanence" 		TABLE
+"alarm/entry" 		 "cpqMeAlarmOwner" 			TABLE
+"alarm/entry" 		 "cpqMeAlarmStatus" 			TABLE
+
+
+/*
+ * Standard Equipment MIB
+ */
+"stdeq/misc" 		 "cpqSeMibRevMajor"  			SCALAR
+"stdeq/misc" 		 "cpqSeMibRevMinor"  			SCALAR
+"stdeq/misc" 		 "cpqSeMibCondition"  			SCALAR
+"stdeq/misc" 		 "cpqSeOsCommonPollFreq"  		SCALAR
+"stdeq/misc" 		 "cpqSeSysRomVer"  			SCALAR
+"stdeq/misc" 		 "cpqSeBaseMem"  			SCALAR
+"stdeq/misc" 		 "cpqSeTotalMem"  			SCALAR
+"stdeq/misc" 		 "cpqSeVideoDesc"  			SCALAR
+"stdeq/misc" 		 "cpqSeKeyboardDesc"  			SCALAR
+
+table_index = 1
+"stdeq/common" 		 "cpqSeOsCommonModuleIndex"  		TABLE
+"stdeq/common" 		 "cpqSeOsCommonModuleName"  		TABLE
+"stdeq/common" 		 "cpqSeOsCommonModuleVersion"  		TABLE
+"stdeq/common" 		 "cpqSeOsCommonModuleDate"  		TABLE
+"stdeq/common" 		 "cpqSeOsCommonModulePurpose"  		TABLE
+
+table_index = 1
+"stdeq/cpu" 		 "cpqSeCpuUnitIndex"  			TABLE
+"stdeq/cpu" 		 "cpqSeCpuSlot"  			TABLE
+"stdeq/cpu" 		 "cpqSeCpuName"  			TABLE
+"stdeq/cpu" 		 "cpqSeCpuSpeed"  			TABLE
+"stdeq/cpu" 		 "cpqSeCpuStep"  			TABLE
+"stdeq/cpu" 		 "cpqSeCpuStatus"  			TABLE
+
+table_index = 2
+"stdeq/fpu"		 "cpqSeFpuUnitIndex"			TABLE
+"stdeq/fpu"		 "cpqSeFpuChipIndex"			TABLE
+"stdeq/fpu"	  	 "cpqSeFpuSlot"				TABLE
+"stdeq/fpu"		 "cpqSeFpuName"				TABLE
+"stdeq/fpu"		 "cpqSeFpuSpeed"			TABLE
+"stdeq/fpu"		 "cpqSeFpuType"				TABLE
+
+table_index = 2
+"stdeq/cache"		 "cpqSeCpuCacheUnitIndex"		TABLE
+"stdeq/cache"		 "cpqSeCpuCacheLevelIndex"		TABLE
+"stdeq/cache"	  	 "cpqSeCpuCacheSize"			TABLE
+"stdeq/cache"		 "cpqSeCpuCacheSpeed"			TABLE
+"stdeq/cache"		 "cpqSeCpuCacheStatus"			TABLE
+
+table_index = 1
+"stdeq/slot" 		 "cpqSeEisaSlotIndex"  			TABLE
+"stdeq/slot" 		 "cpqSeEisaSlotRaw"  			TABLE
+"stdeq/slot" 		 "cpqSeEisaSlotBoardId"  		TABLE
+"stdeq/slot" 		 "cpqSeEisaSlotBoardName"  		TABLE
+"stdeq/slot" 		 "cpqSeEisaSlotCfRev"  			TABLE
+"stdeq/slot" 		 "cpqSeEisaSlotType"  			TABLE
+
+table_index = 2
+"stdeq/func" 		 "cpqSeEisaFunctSlotIndex" 		TABLE
+"stdeq/func" 		 "cpqSeEisaFunctIndex" 			TABLE
+"stdeq/func" 		 "cpqSeEisaFunctStatus" 		TABLE
+"stdeq/func" 		 "cpqSeEisaFunctType" 			TABLE
+"stdeq/func" 		 "cpqSeEisaFunctCfgRev"			TABLE
+"stdeq/func" 		 "cpqSeEisaFunctSels" 			TABLE
+"stdeq/func" 		 "cpqSeEisaFunctInfo" 			TABLE
+
+table_index = 3
+"stdeq/irq" 		 "cpqSeEisaIntSlotIndex"		TABLE
+"stdeq/irq" 		 "cpqSeEisaIntFunctIndex"		TABLE
+"stdeq/irq" 		 "cpqSeEisaIntAllocIndex"		TABLE
+"stdeq/irq" 		 "cpqSeEisaIntNum"			TABLE
+"stdeq/irq"  		 "cpqSeEisaIntShare"			TABLE
+"stdeq/irq"  		 "cpqSeEisaIntTrigger"			TABLE
+
+table_index = 3
+"stdeq/mem"		 "cpqSeEisaMemSlotIndex" 		TABLE
+"stdeq/mem"		 "cpqSeEisaMemFunctIndex"		TABLE
+"stdeq/mem"	  	 "cpqSeEisaMemAllocIndex"		TABLE
+"stdeq/mem"  		 "cpqSeEisaMemStartAddr"		TABLE
+"stdeq/mem"		 "cpqSeEisaMemSize"			TABLE
+"stdeq/mem"		 "cpqSeEisaMemShare"			TABLE
+"stdeq/mem"		 "cpqSeEisaMemType"			TABLE
+"stdeq/mem"		 "cpqSeEisaMemCache"			TABLE
+"stdeq/mem"		 "cpqSeEisaMemAccess"			TABLE
+"stdeq/mem"		 "cpqSeEisaMemDecode"			TABLE
+"stdeq/mem"		 "cpqSeEisaMemDataSize"			TABLE
+
+table_index = 3
+"stdeq/dma"		 "cpqSeEisaDmaSlotIndex" 		TABLE
+"stdeq/dma"		 "cpqSeEisaDmaFunctIndex"		TABLE
+"stdeq/dma"		 "cpqSeEisaDmaAllocIndex"		TABLE
+"stdeq/dma"		 "cpqSeEisaDmaChannel"			TABLE
+"stdeq/dma"		 "cpqSeEisaDmaShare"			TABLE
+"stdeq/dma"		 "cpqSeEisaDmaTiming"			TABLE
+"stdeq/dma"		 "cpqSeEisaDmaXfer"			TABLE
+"stdeq/dma"		 "cpqSeEisaDmaXferCount"		TABLE
+
+table_index = 3
+"stdeq/port"		 "cpqSeEisaPortSlotIndex" 		TABLE
+"stdeq/port"		 "cpqSeEisaPortFunctIndex"		TABLE
+"stdeq/port"		 "cpqSeEisaPortAllocIndex"		TABLE
+"stdeq/port"		 "cpqSeEisaPortAddr"			TABLE
+"stdeq/port"		 "cpqSeEisaPortShare"			TABLE
+"stdeq/port"		 "cpqSeEisaPortSize"			TABLE
+
+table_index = 2
+"stdeq/free"		 "cpqSeEisaFreeFormSlotIndex" 		TABLE
+"stdeq/free"		 "cpqSeEisaFreeFormFunctIndex"		TABLE
+"stdeq/free"		 "cpqSeEisaFreeFormValue"		TABLE
+
+table_index = 3
+"stdeq/init"		 "cpqSeEisaInitSlotIndex" 		TABLE
+"stdeq/init"		 "cpqSeEisaInitFunctIndex"		TABLE
+"stdeq/init"		 "cpqSeEisaInitAllocIndex"		TABLE
+"stdeq/init"		 "cpqSeEisaInitUseMask"			TABLE
+"stdeq/init"		 "cpqSeEisaInitAccess"			TABLE
+"stdeq/init"		 "cpqSeEisaInitAddr"			TABLE
+"stdeq/init"		 "cpqSeEisaInitValue"			TABLE
+"stdeq/init"		 "cpqSeEisaInitMask"			TABLE
+
+table_index = 1
+"stdeq/serial"		 "cpqSeSerialPortIndex" 		TABLE
+"stdeq/serial"		 "cpqSeSerialPortAddr"			TABLE
+"stdeq/serial"		 "cpqSeSerialPortDesc"			TABLE
+
+table_index = 1
+"stdeq/parallel"	 "cpqSeParallelPortIndex" 		TABLE
+"stdeq/parallel"	 "cpqSeParallelPortAddr"		TABLE
+"stdeq/parallel"	 "cpqSeParallelPortDesc"		TABLE
+
+table_index = 1
+"stdeq/floppyDisk"	 "cpqSeFloppyDiskIndex"			TABLE
+"stdeq/floppyDisk"	 "cpqSeFloppyDiskType"			TABLE
+
+table_index = 1
+"stdeq/fixedDisk"	 "cpqSeFixedDiskIndex" 			TABLE
+"stdeq/fixedDisk"	 "cpqSeFixedDiskType"			TABLE
+"stdeq/fixedDisk"	 "cpqSeFixedDiskCyls"			TABLE
+"stdeq/fixedDisk"	 "cpqSeFixedDiskHeads"			TABLE
+"stdeq/fixedDisk"	 "cpqSeFixedDiskSectors"		TABLE
+"stdeq/fixedDisk"	 "cpqSeFixedDiskCapacity"		TABLE
+
+"stdeq/sinfo"		 "cpqSiReboot"				SCALAR
+"stdeq/sinfo"		 "cpqSiSystemId"			SCALAR
+"stdeq/sinfo"		 "cpqSiSysSerialNum"			SCALAR
+"stdeq/sinfo"		 "cpqSiProductId"			SCALAR
+"stdeq/sinfo"		 "cpqSiProductName"			SCALAR
+"stdeq/sinfo"		 "cpqSiQuickTestRomDate"		SCALAR
+"stdeq/sinfo"	 	 "cpqSiAuxiliaryInput"			SCALAR
+"stdeq/sinfo"	 	 "cpqSiPowerOnPassword"			SCALAR
+"stdeq/sinfo"	 	 "cpqSiNetServerMode" 			SCALAR
+"stdeq/sinfo"	 	 "cpqSiQuickLockPassword"		SCALAR
+"stdeq/sinfo"	 	 "cpqSiQuickBlank"			SCALAR
+"stdeq/sinfo"	 	 "cpqSiDisketteBootControl"		SCALAR
+"stdeq/sinfo"	 	 "cpqSiSerialPortAControl"		SCALAR
+"stdeq/sinfo"	 	 "cpqSiSerialPortBControl"		SCALAR
+"stdeq/sinfo"	 	 "cpqSiParallelPortControl"		SCALAR
+"stdeq/sinfo"	 	 "cpqSiFloppyDiskControl"		SCALAR
+"stdeq/sinfo"	 	 "cpqSiFixedDiskControl"		SCALAR
+"stdeq/sinfo"	 	 "cpqSiFormFactor"			SCALAR
+
+table_index = 2
+"stdeq/memmodule"	 "cpqSiMemBoardIndex"			TABLE
+"stdeq/memmodule"	 "cpqSiMemModuleIndex"			TABLE
+"stdeq/memmodule"	 "cpqSiMemModuleSize"			TABLE
+"stdeq/memmodule"	 "cpqSiMemModuleType"			TABLE
+"stdeq/memmodule"	 "cpqSiMemModuleSpeed"			TABLE
+
+
+/* MIB II Ethernet NIC Variables */
+
+table_index = 1
+"transmission/dot3" 	 "dot3StatsIndex" 			TABLE
+"transmission/dot3" 	 "dot3StatsAlignmentErrors" 		TABLE
+"transmission/dot3" 	 "dot3StatsFCSErrors" 			TABLE
+"transmission/dot3" 	 "dot3StatsSingleCollisionFrames" 	TABLE
+"transmission/dot3" 	 "dot3StatsMultipleCollisionFrames" 	TABLE
+"transmission/dot3" 	 "dot3StatsSQETestErrors" 		TABLE
+"transmission/dot3" 	 "dot3StatsDeferredTransmissions" 	TABLE
+"transmission/dot3" 	 "dot3StatsLateCollisions" 		TABLE
+"transmission/dot3" 	 "dot3StatsExcessiveCollisions" 	TABLE
+"transmission/dot3" 	 "dot3StatsInternalMacTransmitErrors" 	TABLE
+"transmission/dot3" 	 "dot3StatsCarrierSenseErrors" 		TABLE
+"transmission/dot3" 	 "dot3StatsFrameTooLongs" 		TABLE
+"transmission/dot3" 	 "dot3StatsInternalMacReceiveErrors" 	TABLE
+
+/* MIB II Token Ring NIC Variables */
+
+table_index = 1
+"transmission/dot5" 	 "dot5IfIndex" 				TABLE
+"transmission/dot5" 	 "dot5Commands" 			TABLE
+"transmission/dot5" 	 "dot5RingStatus" 			TABLE
+"transmission/dot5" 	 "dot5RingState" 			TABLE
+"transmission/dot5" 	 "dot5RingOpenStatus" 			TABLE
+"transmission/dot5" 	 "dot5RingSpeed" 			TABLE
+"transmission/dot5" 	 "dot5UpStream" 			TABLE
+"transmission/dot5" 	 "dot5ActMonParticipate" 		TABLE
+"transmission/dot5" 	 "dot5Functional" 			TABLE
+"transmission/dot5" 	 "dot5StatsIfIndex" 			TABLE
+"transmission/dot5" 	 "dot5StatsLineErrors" 			TABLE
+"transmission/dot5" 	 "dot5StatsBurstErrors" 		TABLE
+"transmission/dot5" 	 "dot5StatsACErrors" 			TABLE
+"transmission/dot5" 	 "dot5StatsAbortTransErrors" 		TABLE
+"transmission/dot5" 	 "dot5StatsInternalErrors" 		TABLE
+"transmission/dot5" 	 "dot5StatsLostFrameErrors" 		TABLE
+"transmission/dot5" 	 "dot5StatsReceiveCongestions" 		TABLE
+"transmission/dot5" 	 "dot5StatsFrameCopiedErrors" 		TABLE
+"transmission/dot5" 	 "dot5StatsTokenErrors" 		TABLE
+"transmission/dot5" 	 "dot5StatsSoftErrors" 			TABLE
+"transmission/dot5" 	 "dot5StatsHardErrors" 			TABLE
+"transmission/dot5" 	 "dot5StatsSignalLoss" 			TABLE
+"transmission/dot5" 	 "dot5StatsTransmitBeacons" 		TABLE
+"transmission/dot5" 	 "dot5StatsRecoverys" 			TABLE
+"transmission/dot5" 	 "dot5StatsLobeWires" 			TABLE
+"transmission/dot5" 	 "dot5StatsRemoves" 			TABLE
+"transmission/dot5" 	 "dot5StatsSingles" 			TABLE
+"transmission/dot5" 	 "dot5StatsFreqErrors" 			TABLE
+
+/* Drive Array Variables */
+
+"ida/misc" 		 "cpqDaMibRevMajor" 			SCALAR 
+"ida/misc" 		 "cpqDaMibRevMinor" 			SCALAR 
+"ida/misc" 		 "cpqDaMibCondition" 			SCALAR 
+"ida/misc" 		 "cpqDaOsCommonPollFreq"		SCALAR 
+
+table_index = 1
+"ida/common" 		 "cpqDaOsCommonModuleIndex" 		TABLE
+"ida/common" 		 "cpqDaOsCommonModuleName" 		TABLE
+"ida/common" 		 "cpqDaOsCommonModuleVersion" 		TABLE
+"ida/common" 		 "cpqDaOsCommonModuleDate"		TABLE
+"ida/common" 		 "cpqDaOsCommonModulePurpose" 		TABLE
+
+table_index = 1
+"ida/ctlr" 		 "cpqDaCntlrIndex" 			TABLE 
+"ida/ctlr" 		 "cpqDaCntlrModel" 			TABLE   
+"ida/ctlr" 		 "cpqDaCntlrFWRev" 			TABLE  
+"ida/ctlr" 		 "cpqDaCntlrStndIntr" 			TABLE
+"ida/ctlr" 		 "cpqDaCntlrSlot" 			TABLE	
+"ida/ctlr" 		 "cpqDaCntlrCondition" 			TABLE
+
+table_index = 1
+"ida/accel" 		 "cpqDaAccelCntlrIndex" 		TABLE
+"ida/accel" 		 "cpqDaAccelStatus" 			TABLE
+"ida/accel" 		 "cpqDaAccelMemory" 			TABLE
+"ida/accel" 		 "cpqDaAccelBadData" 			TABLE
+"ida/accel" 		 "cpqDaAccelErrCode" 			TABLE
+"ida/accel" 		 "cpqDaAccelBattery" 			TABLE
+"ida/accel" 		 "cpqDaAccelReadErrs" 			TABLE
+"ida/accel" 		 "cpqDaAccelWriteErrs" 			TABLE
+"ida/accel" 		 "cpqDaAccelCondition" 			TABLE
+
+table_index = 2
+"ida/log" 		 "cpqDaLogDrvCntlrIndex" 		TABLE
+"ida/log" 		 "cpqDaLogDrvIndex" 			TABLE
+"ida/log" 		 "cpqDaLogDrvFaultTol" 			TABLE
+"ida/log" 		 "cpqDaLogDrvStatus" 			TABLE
+"ida/log" 		 "cpqDaLogDrvAutoRel" 			TABLE
+"ida/log" 		 "cpqDaLogDrvRebuildBlks" 		TABLE
+"ida/log" 		 "cpqDaLogDrvHasAccel" 			TABLE
+"ida/log" 		 "cpqDaLogDrvAvailSpares" 		TABLE
+"ida/log" 		 "cpqDaLogDrvSize" 			TABLE
+"ida/log" 		 "cpqDaLogDrvPhyDrvIDs" 		TABLE
+"ida/log" 		 "cpqDaLogDrvCondition" 		TABLE
+
+table_index = 2
+"ida/spare" 		 "cpqDaSpareCntlrIndex" 		TABLE
+"ida/spare" 		 "cpqDaSparePhyDrvIndex" 		TABLE
+"ida/spare" 		 "cpqDaSpareStatus" 			TABLE
+"ida/spare" 		 "cpqDaSpareReplacedDrv" 		TABLE
+"ida/spare" 		 "cpqDaSpareRebuildBlks" 		TABLE
+"ida/spare" 		 "cpqDaSpareCondition" 			TABLE
+"ida/spare" 		 "cpqDaSpareBusNumber" 			TABLE
+
+table_index = 2
+"ida/phys" 		 "cpqDaPhyDrvCntlrIndex" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvIndex" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvModel" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvFWRev" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvBay" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvStatus" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvFactReallocs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvUsedReallocs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvRefHours" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvHReads" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvReads" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvHWrites" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvWrites" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvHSeeks" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvSeeks" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvHardReadErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvRecvReadErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvHardWriteErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvRecvWriteErrs"  		TABLE
+"ida/phys" 		 "cpqDaPhyDrvHSeekErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvSeekErrs" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvSpinupTime" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvFunctTest1" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvFunctTest2" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvFunctTest3" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvDrqTimeouts" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvOtherTimeouts" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvSpinupRetries" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvBadRecvReads" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvBadRecvWrites" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvFormatErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvPostErrs" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvNotReadyErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvReallocAborts" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvThreshPassed" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvHasMonInfo" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvCondition" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvHotPlugCnt" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvMediaErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvHardwareErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvAbortedCmds" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvSpinUpErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvBadTargetErrs" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvLocation" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvSize" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvBusFaults" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvIrqDeglitches" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvHotPlug" 			TABLE
+"ida/phys" 		 "cpqDaPhyDrvPlacement" 		TABLE
+"ida/phys" 		 "cpqDaPhyDrvBusNumber" 		TABLE
+
+table_index = 3
+"ida/phys_err" 		 "cpqDaPhyDrvErrCntlrIndex" 		TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvErrIDIndex" 		TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvErrIndex" 			TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvErrType" 			TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvScsiOp" 			TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvScsiStatus" 		TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvCamStatus" 		TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvSenseKey" 			TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvQualifier" 		TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvSenseCode" 		TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvBlockValid" 		TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvBlock" 			TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvTime" 			TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvUserDesc" 			TABLE
+"ida/phys_err" 		 "cpqDaPhyDrvErrDesc" 			TABLE
+
+table_index = 2
+"ida/threshold" 	 "cpqDaPhyDrvThrCntlrIndex" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrIndex" 			TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrUsedReallocs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrRefHours" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrHardReadErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrRecvReadErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrHardWriteErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrRecvWriteErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrHSeekErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrSeekErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrSpinupTime" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrFunctTest1" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrFunctTest2" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrFunctTest3" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrDrqTimeouts" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrOtherTimeouts" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrSpinupRetries" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrBadRecvReads" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrBadRecvWrites" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrFormatErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrPostErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrNotReadyErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrReallocAborts" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrHotPlugCnt" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrMediaErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrHardwareErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrAbortedCmds" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrSpinUpErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrBadTargetErrs" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrViUsedReallocs"		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrViSpinupTime" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrViFunctTest1" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrViFunctTest2" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrViFunctTest3" 		TABLE
+"ida/threshold" 	 "cpqDaPhyDrvThrBusFaults" 		TABLE
+"ida/threshold"		 "cpqDaPhyDrvThrIrqDeglitches" 		TABLE
+
+/*
+ *	COMPAQ Storage Subsystem MIB
+ */
+"stsys/mib" 		 "cpqSsMibRevMajor" 			SCALAR
+"stsys/mib" 		 "cpqSsMibRevMinor" 			SCALAR
+
+table_index = 2
+"stsys/ss" 		 "cpqSsBoxBusIndex" 			TABLE
+"stsys/ss" 		 "cpqSsBoxCntlrIndex" 			TABLE
+"stsys/ss" 		 "cpqSsBoxCondition" 			TABLE
+"stsys/ss" 		 "cpqSsBoxFWRev" 			TABLE
+"stsys/ss" 		 "cpqSsBoxFanStatus" 			TABLE
+"stsys/ss" 		 "cpqSsBoxModel" 			TABLE
+"stsys/ss" 		 "cpqSsBoxType" 			TABLE
+"stsys/ss" 		 "cpqSsBoxVendor" 			TABLE
+"stsys/ss" 		 "cpqSsBoxTempStatus"	 		TABLE
+"stsys/ss" 		 "cpqSsBoxSidePanelStatus" 		TABLE
+"stsys/ss" 		 "cpqSsBoxFltTolPwrSupplyStatus"	TABLE
+
+/*	End COMPAQ Storage Subsystem MIB */
+
+
+/*
+ *	COMPAQ SCSI MIB	1.3
+ */
+/*	Fast-SCSI-2 Controller		*/
+table_index = 2
+"scsi/ha" 		 "cpqScsiCntlrIndex" 			TABLE
+"scsi/ha" 		 "cpqScsiCntlrBusIndex" 		TABLE
+"scsi/ha" 		 "cpqScsiCntlrBaseIOAddr" 		TABLE
+"scsi/ha" 		 "cpqScsiCntlrCondition" 		TABLE
+"scsi/ha" 		 "cpqScsiCntlrFWVers" 			TABLE
+"scsi/ha" 		 "cpqScsiCntlrHardResets" 		TABLE
+"scsi/ha" 		 "cpqScsiCntlrModel" 			TABLE
+"scsi/ha" 		 "cpqScsiCntlrSWVers" 			TABLE
+"scsi/ha" 		 "cpqScsiCntlrSlot" 			TABLE
+"scsi/ha" 		 "cpqScsiCntlrSoftResets" 		TABLE
+"scsi/ha" 		 "cpqScsiCntlrStatus" 			TABLE
+"scsi/ha" 		 "cpqScsiCntlrTimeouts" 		TABLE
+
+/*	SCSI Subsystem			*/
+"scsi/mib" 		 "cpqScsiMibCondition" 			SCALAR
+"scsi/mib" 		 "cpqScsiMibRevMajor" 			SCALAR
+"scsi/mib" 		 "cpqScsiMibRevMinor" 			SCALAR
+
+/*	OS Common (unimplemented)	*/
+table_index = 1
+"scsi/foo" 		 "cpqScsiOsCommonModuleIndex" 		TABLE
+"scsi/foo" 		 "cpqScsiOsCommonModuleName" 		TABLE
+"scsi/foo" 		 "cpqScsiOsCommonModulePurpose"		TABLE
+"scsi/foo" 		 "cpqScsiOsCommonModuleVersion"		TABLE
+
+/*	OS Common (unimplemented)	*/
+"scsi/foo" 		 "cpqScsiOsCommonPollFreq" 		SCALAR
+
+/*	SCSI Hard Drive			*/
+table_index = 3
+"scsi/hd" 		 "cpqScsiPhyDrvBusIndex" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvCntlrIndex" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvIndex" 			TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvCondition" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvEccCorrReads" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvFWRev"			TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvFuncTest1" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvFuncTest2" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvHardReadErrs" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvHardWriteErrs" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvHighReadSectors" 	TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvHighWriteSectors" 	TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvHotPlug"	 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvLocation" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvLowReadSectors" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvLowWriteSectors" 	TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvModel" 			TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvParent" 			TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvPlacement" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvPostErrCode" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvPostErrs" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvRecvReadErrs" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvRecvWriteErrs" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvScsiID" 			TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvSectorSize" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvSeekErrs" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvSerialNum" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvServiceHours" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvSize" 			TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvSpinupTime" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvStatsPreserved" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvStatus" 			TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvTimeouts" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvUsedReallocs" 		TABLE
+"scsi/hd" 		 "cpqScsiPhyDrvVendor" 			TABLE
+
+/* 	SCSI Target			*/
+table_index = 3
+"scsi/id" 		 "cpqScsiTargetBusIndex" 		TABLE
+"scsi/id" 		 "cpqScsiTargetCntlrIndex" 		TABLE
+"scsi/id" 		 "cpqScsiTargetScsiIdIndex" 		TABLE
+"scsi/id" 		 "cpqScsiTargetFWRev" 			TABLE
+"scsi/id" 		 "cpqScsiTargetLocation" 		TABLE
+"scsi/id" 		 "cpqScsiTargetModel" 			TABLE
+"scsi/id" 		 "cpqScsiTargetMsgRejects" 		TABLE
+"scsi/id" 		 "cpqScsiTargetNegPeriod" 		TABLE
+"scsi/id" 		 "cpqScsiTargetParityErrs" 		TABLE
+"scsi/id" 		 "cpqScsiTargetPhaseErrs" 		TABLE
+"scsi/id" 		 "cpqScsiTargetSelectTimeouts" 		TABLE
+"scsi/id" 		 "cpqScsiTargetType" 			TABLE
+"scsi/id" 		 "cpqScsiTargetVendor" 			TABLE
+
+/* 	SCSI Agent Poll Frequency		*/
+"scsi/poll"		"cpqScsiOsCommonPollFreq"		SCALAR
+
+/*	SCSI OS Software Modules		*/
+table_index = 1
+"scsi/mod"		"cpqScsiOsCommonModuleIndex"		TABLE
+"scsi/mod"		"cpqScsiOsCommonModuleName"		TABLE
+"scsi/mod"		"cpqScsiOsCommonModuleVersion"		TABLE
+"scsi/mod"		"cpqScsiOsCommonModuleDate"		TABLE
+"scsi/mod"		"cpqScsiOsCommonModulePurpose"		TABLE
+
+/*	End COMPAQ SCSI MIB 		*/
+
+
+/*
+ * Health MIB
+ */
+"health/misc"		"cpqHeMibRevMajor"			SCALAR
+"health/misc"		"cpqHeMibRevMinor"			SCALAR
+"health/misc"		"cpqHeMibCondition"			SCALAR
+"health/misc"		"cpqHeOsCommonPollFreq"			SCALAR
+
+table_index = 1
+"health/common"		"cpqHeOsCommonModuleIndex"		TABLE
+"health/common"		"cpqHeOsCommonModuleName"		TABLE
+"health/common"		"cpqHeOsCommonModuleVersion"		TABLE
+"health/common"		"cpqHeOsCommonModuleDate"		TABLE
+"health/common"		"cpqHeOsCommonModulePurpose"		TABLE
+
+"health/crit_log_status"	"cpqHeCritLogSupported"		SCALAR
+"health/crit_log_status"	"cpqHeCritLogCondition"		SCALAR
+
+table_index = 1
+"health/crit_log"	"cpqHeCriticalErrorIndex"		TABLE
+"health/crit_log"	"cpqHeCriticalErrorStatus"		TABLE
+"health/crit_log"	"cpqHeCriticalErrorType"		TABLE
+"health/crit_log"	"cpqHeCriticalErrorTime"		TABLE
+"health/crit_log"	"cpqHeCriticalErrorInfo"		TABLE
+"health/crit_log"	"cpqHeCriticalErrorDesc"		TABLE
+
+"health/corr_log_status"	"cpqHeCorrMemLogStatus"		SCALAR
+"health/corr_log_status"	"cpqHeCorrMemLogCondition"	SCALAR
+"health/corr_log_status"	"cpqHeCorrMemLogTotalErrs"	SCALAR
+
+table_index = 1
+"health/corr_log"	"cpqHeCorrMemErrIndex"			TABLE
+"health/corr_log"	"cpqHeCorrMemErrCount"			TABLE
+"health/corr_log"	"cpqHeCorrMemErrTime"			TABLE
+"health/corr_log"	"cpqHeCorrMemErrDdr"			TABLE
+"health/corr_log"	"cpqHeCorrMemErrSyndrome"		TABLE
+"health/corr_log"	"cpqHeCorrMemErrDesc"			TABLE
+
+"health/asr"		"cpqHeAsrStatus"			SCALAR
+"health/asr"		"cpqHeAsrMajorVersion"			SCALAR
+"health/asr"		"cpqHeAsrMinorVersion"			SCALAR
+"health/asr"		"cpqHeAsrTimeout"			SCALAR
+"health/asr"		"cpqHeAsrBaseIo"			SCALAR
+"health/asr"		"cpqHeAsrPost"				SCALAR
+"health/asr"		"cpqHeAsrReset"				SCALAR
+"health/asr"		"cpqHeAsrReboot"			SCALAR
+"health/asr"		"cpqHeAsrRebootLimit"			SCALAR
+"health/asr"		"cpqHeAsrRebootCount"			SCALAR
+"health/asr"		"cpqHeAsrPagerStatus"			SCALAR
+"health/asr"		"cpqHeAsrPagerNumber"			SCALAR
+"health/asr"		"cpqHeAsrCommPort"			SCALAR
+"health/asr"		"cpqHeAsrBaudRate"			SCALAR
+"health/asr"		"cpqHeAsrPagerMessage"			SCALAR
+"health/asr"		"cpqHeAsrBootFail"			SCALAR
+"health/asr"		"cpqHeAsrCondition"			SCALAR
+"health/asr"		"cpqHeAsrDialInStatus"			SCALAR
+"health/asr"		"cpqHeAsrDialOutStatus"			SCALAR
+"health/asr"		"cpqHeAsrDialOutNumber"			SCALAR
+"health/asr"		"cpqHeAsrNetworkAccessStatus"		SCALAR
+
+"health/ftps"	        "cpqHeFltTolPwrSupplyCondition"		SCALAR
+"health/ftps"	        "cpqHeFltTolPwrSupplyStatus"		SCALAR
+
+"health/thermal_status"	"cpqHeThermalCondition"			SCALAR
+"health/thermal_status"	"cpqHeThermalDegradedAction"		SCALAR
+"health/thermal_status"	"cpqHeThermalTempStatus"		SCALAR
+"health/thermal_status"	"cpqHeThermalSystemFanStatus"		SCALAR
+"health/thermal_status"	"cpqHeThermalCpuFanStatus"		SCALAR
+
+table_index = 1
+"health/fan"		"cpqHeThermalFanIndex"			TABLE
+"health/fan"		"cpqHeThermalFanRequired"		TABLE
+"health/fan"		"cpqHeThermalFanPresent"		TABLE
+"health/fan"		"cpqHeThermalFanCpuFan"			TABLE
+"health/fan"		"cpqHeThermalFanStatus"			TABLE
+
+"health/post_status"	"cpqHePostMsgCondition"			SCALAR
+
+table_index = 1
+"health/post"		"cpqHePostMsgIndex"			TABLE
+"health/post"		"cpqHePostMsgCode"			TABLE
+"health/post"		"cpqHePostMsgDesc"			TABLE
+
+"health/eisa"		"cpqHeSysUtilLifeTime"			SCALAR
+"health/eisa"		"cpqHeSysUtilEisaBusMin"		SCALAR
+"health/eisa"		"cpqHeSysUtilEisaBusFiveMin"		SCALAR
+"health/eisa"		"cpqHeSysUtilEisaBusThirtyMin"		SCALAR
+"health/eisa"		"cpqHeSysUtilEisaBusHour"		SCALAR
+
+/*
+ * UPS MIB
+ */
+"ups/misc"		"cpqUpsMibRevMajor"			SCALAR
+"ups/misc"		"cpqUpsMibRevMinor"			SCALAR
+"ups/misc"		"cpqUpsMibCondition"			SCALAR
+"ups/misc"		"cpqUpsOsCommonPollFreq"		SCALAR
+"ups/misc"	        "cpqUpsLineStatus"			SCALAR
+"ups/misc"	        "cpqUpsName"				SCALAR
+"ups/misc"	        "cpqUpsEstimatedBatteryLife"		SCALAR
+"ups/misc"	        "cpqUpsAutoShutdownDelay"		SCALAR
+
+table_index = 1
+"ups/common"		"cpqUpsOsCommonModuleIndex"		TABLE
+"ups/common"		"cpqUpsOsCommonModuleName"		TABLE
+"ups/common"		"cpqUpsOsCommonModuleVersion"		TABLE
+"ups/common"		"cpqUpsOsCommonModuleDate"		TABLE
+"ups/common"		"cpqUpsOsCommonModulePurpose"		TABLE

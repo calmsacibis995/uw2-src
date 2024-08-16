@@ -1,0 +1,386 @@
+#ident	"@(#)ktool:common/ktool/kstuff/README	1.5"
+#ident  "$Header:"
+
+NAME
+
+	kstuff - copy a UNIX SRV4.2MP kernel via the netowrk to a machine
+
+	kbundle - build bundles suitable for use with kstuff
+
+SYNOPSIS
+
+	kstuff [ -BFIKMQRSTbiqv# ] [ -c command ] [ -d db.file ] ... \
+               [ -n driver ] ... [ -N driver ] ... [ -Y driver ] ...
+               [ -r rename.file ] [ -t kname ] [ host[:kname] ]
+
+	kbundle [ -BFQT ] [ -d db.file ] ...
+
+DESCRIPTION
+
+	Augmenting the ID/TP kernel configuration tools for kernel
+	development purposes, kstuff copies a kernel built in a cross
+	environment to a target system, and then reshapes that kernel to
+	match the configuration of the target system.
+
+	kbundle builds a compressed cpio archive (called a bundle) suitable
+	for use with kstuff. kbundle sources its materials from the
+	installed portion of a cross environment based kernel build tree.
+
+	Unlike the pre-existing copymods command, kstuff does the idbuild
+	on the target system, thus freeing the developer from adjusting
+	System and Master files within the cross environment based build
+	tree (in the most typical development scenarios). There is no need
+	to execute an idbuild in the cross environment prior to kbundle; it
+	suffices to execute ``make -f unix.mk headinstall install'' (of
+	course adding the appropriate make options to the command tail).
+
+	By default, kstuff creates o kernel configuration tree on the
+	target host at /etc/conf.unix.<login-id> where <login-id> is the
+	login of the invoking user. Also by default, the kernel will be
+	installed at /stand/unix.<login-id>.
+
+	Kstuff has interactive (the default) and batch of operation
+	(selected by the -i and -b command options, respectively). In the
+	interactive mode, kstuff presents a menu of pre-built bundles and
+	kernel build trees (which are specified in the data base files (see
+	-d option below). Kstuff also looks for the tree located at
+	$ROOT/$MACH (taken from the environment), and if present, adds it
+	to the menu.
+
+	The batch mode is designed to be used under a cross environment. In
+	this mode, kstuff uses the tree located at $ROOT/$MACH. However,
+	the data base files are still consulted to locate the bundle. The
+	default bundle location is $ROOT/$MACH/etc/conf/kstuff.d/bundle.Z.
+
+	Kstuff also has verbose (and quiet) and quite modes of operation
+	(selected by the -v and -q command options, respectively). In the
+	verbose mode, kstuff guides the user through the entire operation.
+
+	Kstuff and kbundle both read command options from files
+	/int/bin/.kstuff.rc and $HOME/.kstuff.rc as well as the command
+	tail (in that order). When conflicting options appear, the last
+	option specified takes effect.
+
+KSTUFF OPTIONS
+
+        -B      Normal idbuild (defeats -F, -I, -K, -M, -Q, -S, -T and -#)
+		[default].
+
+	-F	Force a rebuild of the bundle from the source tree.
+		This option cannot be used with a pre-built bundle.
+
+	-I	Perform an idbuild on the remote system, and install the
+		newly built kernel under the specified name, but do not
+		send down a bundle. Any commands specified by the -c
+		option will not be executed.
+
+        -K      Do not delete the temporary configuration files and object
+                modules created by idbuild in the target hosts kernel
+		configuration tree. This option is passed to the idbuild
+		on the remote host.
+
+	-M	Send down a bundle, and merge configurations, but do not
+                perform an idbuild. Any command specified with the -c
+		option will be executed.
+
+	-N driver
+		Stuff the named driver even if it is not present in the
+		target, but make sure it is stubbed out (by changing
+		all ``Y'' characters to ``N'' in the System file).
+
+        -Q      Download pack.d/*/Driver.o files modified in the source
+		tree since the associated bundle was built, and then then
+		perform an ``idbuild -KQ'' on the target host. Use of this
+		option does not create a bundle, or modify the existing
+		bundle. This option can only be used in batch mode.
+
+	-R	Defeat all previously specified -N, -Y, -c, -n, and -r
+		options.
+
+	-S	Build a statically linked kernel.
+
+	-T	When building a bundle, include idtools. If idtools
+		are not already present in the source tree, then they are
+		sourced from the cross environment.
+
+	-Y driver
+		Stuff the named driver even if it is not present in the
+		target. Make sure that it is activated by chaning all ``N''
+		characters to ``Y'' in the System file.
+
+	-#	Enable verbose debugging for idbuild.
+
+        -b      Batch mode (defeats -i). Use of this options selects the
+		kernel built tree at $ROOT/$MACH. However, the data base
+		files are still consulted for an optional alternate
+		location of the bundle (default bundle location is
+		$ROOT/$MACH/etc/conf/kstuff.d/bundle.Z).
+
+	-c command
+		File containing a command to execute on the target system
+		after the merge of configurations, but before the idbuild.
+		If command is not a fully qualified path name, and
+		cannot be found relative to the current working directory,
+		then kstuff will look for it in the directory from which
+		kstuff was executed.
+
+		Kstuff executes the command with two arguments:
+
+			command <target-tree> <source-tree>
+
+		Where <target-tree> and <source-tree> are fully qualified
+		path names specifying the roots of the target and source
+		trees, respectively. The target-tree contains the
+		configuration kstuff is merging with (typically /etc/conf).
+		The source-tree is the tree build by kstuff. It is this
+		tree which the command will typically modify (though the
+		actions of the command are not constrained by kstuff).
+
+        -d db.file
+		File containing a data base of kernels. Each line has the
+		following format:
+
+                        root:mach:bundle-file:pre_built_flag:comment
+
+		``root'' and ``mach'' match $ROOT and $MACH, respectively,
+		of the cross environment based build tree. ``bundle'' gives
+		the pathname to the kbundle built bundle.  ``pre_built_flag''
+		should be 0 or 1. 1 signifies that the bundle is not be to
+		built or re-built by the user invoking kstuff. When
+		pre_built_flag is 1, the kernel build tree does not need to
+		be visible to the user invoking kstuff. The ``comment''
+		field, if present, is used to identify kernels in the
+		interactive kernel selection menu.
+
+        -i      Interactive mode [default].
+
+	-n driver
+		Stuff the named driver even if it is not present in the
+		target.
+
+        -q      Quiet mode (defeats -v).
+
+	-r rename.file
+		File containing a driver rename map. Each line has the
+		following format:
+
+			<old-name>	<new-name>
+
+	-t kname
+		Merge configurations with the configuration tree
+		corresponding to the named kernel [default=unix].
+
+        -v      Verbose mode. [default]
+
+        host    Remote host which will receive the kernel.
+
+        kname	Directly specifies the kernel name on the target host, plus
+		indirectly specifies the name of the kernel configuration
+		tree. If not specified, kname defaults to unix.<login-id>.
+		The kernel will be installed at /stand/<kname>. The
+		kernel configuration tree on the target host will be
+		located at /etc/conf.<kname> on the remote host. The
+		default kname is unix.<login-id>. If kname is ``unix'', then
+		special post processing takes place (see below).
+
+	Options are also read from /int/bin/.kstuff.rc and $HOME/.kstuff.rc.
+
+KBUNDLE OPTIONS
+
+        -B      Normal bundle build (defeats -F and -T) [default].
+
+	-F	Force a bundle rebuild.
+
+	-T	Include idtools
+
+        -d db.file
+
+		File containing a data base of kernels. The format that
+		described under the ``KSTUFF OPTIONS'' section.
+
+	Options are also read from /int/bin/.kstuff.rc and $HOME/.kstuff.rc.
+
+OPERATION
+
+	kstuff will build a bundle (via kbunlde) if one does not already
+	exist, if the bundle is older than the newest Driver.o, or if the
+	``-F'' command option is specified. However, the build is
+	suppressed for bundles marked as pre-build in one of the data
+	base files. Also, the command option ``-Q'', suppressed the
+	build of a bundle.
+
+	kstuff bundles always contains the kernel include files under
+	the ``include.d'' directory. These include files are used in
+	the idbuild command executed on the target (see below).
+
+	In the following discussion, drivers present in the cross
+	environment build tree are called ``source'' drivers. Those in the
+	target hosts /etc/conf tree are called ``target'' drivers. The
+	rules for merging source and target configurations follow.
+
+	TARGET ONLY DRIVERS
+
+		Of these drivers, only the hardware ones are incorporated
+		into the merged kernel configuration tree. These are the
+		drivers which either declare the ``$dversion'' directive in
+		the Master file, or have a characteristic of the following
+		characteristics: ``b'', ``c'', or ``h''.
+
+	DRIVERS PRESENT IN BOTH TARGET AND SOURCE
+
+		The System files are merged as follows: the entire file is
+		taken from the target, except that it is marked as loadable
+		iff it it is marked as loadable in both the source and
+		target. One special rule: a single ``#'' preceding a
+		``$loadable'' directive in the source System file is
+		ignored (making kstuff believe that such a driver is
+		declared as loadable).
+
+		The Master files are merged as follows: the entire file
+		is taken from the source, but use the major device numbers
+		and cpu binding specifications from the target. If the
+		source Master files declares a characteristic of keep,
+		and the major device numbers are changed, then a WARNING
+		message is generated to alert the user of the change.
+
+		If present, the Node file will be taken from the source.
+
+		If a hardware driver (see definition in the previous
+		section) is stubbed out in the source, but is configured
+		into the target, then the driver is taken from the target.
+
+	SOURCE ONLY DRIVERS
+
+		Normally, only the kerntp drivers (ktest, cdki, and bdki
+		drivers, if present) and drivers declaring a characteristic
+		of ``r'' (required) are incorporated into the merged kernel
+		configuration tree. However, the -n, -N, and -Y options
+		can be used to kstuff to include the driver. The -Y
+		option causes the driver to be configured in, the -N
+		causes it to be stubbed out.
+
+		If the major device number in a master files conflicts with
+		the any target driver, or with any node present in /dev,
+		then the number(s) are remapped into an available range
+		(and a warning is generated in the ``k'' [keep] case). If
+		this is impossible, then the driver is not incorporated
+		into the kernel build tree, and the user is alerted to this
+		fact by a WARNING.
+
+	MERGING OTHER CONFIGURATION FILES
+
+		init.d, sassign.d, rc.d, sd.d
+
+			All of these files are taken from the target.
+
+		cf.d/res_major
+
+			First, the cf.d/res_major is taken from the target.
+			Then an entry is added for each SOURCE only driver
+			incorporated into the merge configuration tree
+			declaring ``k'' (keep) in the Master file.
+
+	The merge of configurations is suppressed in the ``-Q'' case.
+	After configurations files are merged, an idbuild(1M) command
+	executes. The ``-K'' and ``-Q'' options, if present, are passed
+	to the idmknod. If a ``bin'' directory is present in the merged
+	configuration tree, then idbuild is executed from this directory.
+
+	If source only drivers have been incorporated into the merged
+	configuration tree, then idmknod(1M) is invoked to build the device
+	nodes specified therein. This idmknod command will never delete
+	existing device nodes.
+
+	If kname is ``unix'' then the new kernel is actually built in a
+	tree under /etc/.kbundle. In this case, the the following
+	processing takes place:
+
+	=> The /etc/conf.unix.old tree, if present, is deleted. /etc/conf
+	   is then renamed to /etc/conf.unix.old.
+
+	=> If /etc/conf.unix.old/include.d does not exist, then the kernel
+	   include files from /usr/include are copied into it.
+
+	=> The kernel include files from /etc/.kbundle/include.d are copied
+	   into /usr/include.
+
+	=> The old kernel /stand/unix is renamed as /stand/unix.old.
+
+	=> /etc/.kbundle is renamed as /etc/conf.
+
+	=> If idtools are not present in the new /etc/conf, they are moved
+	   in from /etc/conf.unix.old.
+
+	Finally, the newly built kernel is copied into /stand/<kname>.
+
+USAGE
+
+	Assuming that integration sets up one or more data bases of kernels
+	referenced by /int/bin/.stuff.rc, then typical users need do
+	nothing more than invoke:
+
+		kstuff
+
+	Then select a kernel and respond to the prompts. If it is actually
+	desired to replace /etc/conf and /stand/unix, then enter the
+	following in response to the ``hostname or hostname:kernelname''
+	prompt:
+
+		myhost:unix
+
+	Kernel developers will wish to enter the cross environment (setting
+	$ROOT and $MACH). Then to load the initial kernel use:
+
+		kstuff -bqK host
+
+	Assuming that no configuration files change, then subsequent driver
+	changes can be sent down using:
+
+		kstuff -bqKQ
+
+	Consequently, some kernel developers will wish to create a
+	$HOME/.kstuff.rc file containing:
+
+		-bqK
+
+LIMITATIONS:
+
+	Some drivers do not present a Node file in the source tree,
+	but instead create one in the postinstall script. If such a driver
+	is added into the target configuration by kstuff, then kstuff
+	will not be able to build the associated device nodes.
+
+	Kstuff does not yet have a machanism for selectively adding
+	specific drivers to a target configuration. Basically, the choice
+	is between adding required drivers and adding all drivers. However,
+	the user can work around this limitation by marking the driver
+	desired drivers as ``required''. This is done by editing in
+	characteristic ``r'' in the Master files.
+
+	If a driver has been renamed, so that the name in the source tree
+	differs from that in the target tree, then kstuff will not know
+	that it is supposed to replace the target driver with the one
+	from the source.
+
+	If kstuff is used to deposit a kernel into into /stand/unix.<login-id>
+	and /etc/conf.unix.<login-id>, the result may not be suitable for
+	simple movement to /stand/unix and /etc/conf, respectively. This is
+	due to possible include file mistmatches with /usr/include, and also
+	due to possibly missing tools from /etc/conf.unix.<login-id>/bin. In
+	this case, it may be advisable to do a second kstuff, specifying a
+	target kernel of ``unix''.
+
+FILES
+
+	/int/bin/.kstuff.rc, $HOME/.kstuff.rc
+
+		Files containing kstuff/kbundle command options.
+
+	klookup.awk, kprompt.awk, kstuff1, kstuff2
+
+		Must be present in the user's execution path in the
+		same directory as kstuff and kbundle.
+
+SEE ALSO
+
+	idbuild(1M), idmknode(1M), System(4), Master(4)

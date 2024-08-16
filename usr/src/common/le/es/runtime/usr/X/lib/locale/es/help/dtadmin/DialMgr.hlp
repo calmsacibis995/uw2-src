@@ -1,0 +1,767 @@
+#ident\t"@(#)dthelp:Admin.Tools/DialMgr.hlp     1.23"
+^*version^1
+^*title^Configuración de la conexión
+^:Config_Conexión
+^*width^70
+^+DesktopMgr/help.defs
+^?Configuración y gestión de la conexión de comunicaciones
+^0^Configuración de conexiones
+^$10
+Configuración de conexiones
+
+Use Configuración de la conexión para configurar las comunicaciones 
+sobre módem y conexiones directas.  Con Configuración de la conexión 
+puede hacer lo siguiente:
+
+\to\t\k(Configurar el acceso a un sistema remoto^^Configuración del acceso a un sistema remoto)
+\to\t\k(Configurar la entrada de un dispositivo de conexión^^Configuración de una entrada de dispositivo de conexión)
+\to\t\k(Copiar un dispositivo de conexión en una carpeta^^Copiado del icono de un dispositivo de conexión en una carpeta)
+\to\t\k(Copiar el icono de un sistema remoto en una carpeta^^Copiado del icono de un sistema remoto en una carpeta)
+\to\t\k(Borrar la entrada de un dispositivo de conexión^^Supresión de entrada de dispositivo de conexión)
+
+\to\t\k(Suprimir una entrada de sistema remoto^^Supresión de una entrada de sistema remoto)
+\to\t\k(Marcar un sistema aleatorio^^Conexión a un sistema aleatorio) es decir, un sistema no configurado
+\t \tpara acceso remoto)
+\to\t\k(Buscar entrada de sistema remoto^^Búsqueda de una entrada de sistema remoto)
+\to\t\k(Ver o modificar las propiedades de un dispositivo de conexión^^Visualización o modificación de propiedades de un dispositivo de conexión)
+\to\t\k(Ver o modificar las propiedades de un sistema remoto^^Visualización o modificación de propiedades de un sistema remoto)
+
+Véase también:
+\s(Uso de Configuración de conexiones^dhelp "pe.es" ownerhb  "Configuración de módems y otras comunicaciones en serie" "Uso de Configuración de conexiones" || helpLinkErr)
+
+^1^Configuración de una entrada de dispositivo de conexión
+^$20
+Configuración de una entrada de dispositivo de conexión
+
+Nota: Deberá tener
+\k(permiso para cambiar la Configuración de la conexión^dtadmin/user.hlp^Comprensión de los permisos) para poder
+configurar una entrada de dispositivo de conexión.
+
+Un dispositivo de conexión le permite llamar a otro sistema y entrar
+en él.
+
+Para configurar la entrada de un dispositivo de conexión en el 
+sistema, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, vaya al paso 2.  
+Si ya está en la carpeta de gestión de red, vaya al paso 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la 
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+4.\tHaga clic en Acciones=>Configurar dispositivos.  Aparecerá la
+  \t\k(ventana "Configuración de conexiones: Dispositivos"^^Ventana Configuración de conexiones: Dispositivos)
+
+5.\tHaga clic en Dispositivo=>Nuevo.  Aparecerá la ventana
+  \t"Configuración de dispositivos: Añadir nuevo dispositivo", con los
+  \tsiguientes campos:
+
+  \to\tPuerto: - Se trata de la conexión física del dispositivo al
+  \t \tcomputador.  Puede ser un puerto en serie (por ejemplo, COM1
+  \t \trepresenta el puerto en serie 1), u otro tipo de puerto.  Si
+  \t \thace clic en Otros, deberá teclear el nombre del puerto en el
+  \t \tcuadro de texto.  Por defecto, Puerto está definido como COM1.
+
+  \to\tConectado a: - Se trata del nombre del dispositivo, o módem, que
+  \t \testá usando.  Haga clic en la casilla de la flecha para abrir la
+  \t \tlista de tipos de dispositivos.  A continuación, haga clic en el
+  \t \ttipo de dispositivo deseado.
+
+  \t \tNota: Si necesita añadir un módem a la lista de dispositivos
+  \t \texistente, véase \s(Adición de entradas de marcadores^dhelp "pe.es" ownerhb "Configuración de módems y otras comunicaciones en serie" "Adición de entradas de marcadores" || helpLinkErr) del Manual del
+  \t \tpropietario del sistema, y consúltese el comando dtmodem(1M) de
+  \t \tla \s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr).
+
+  \to\tConfigurar puerto como: - Escoja una de las siguientes opciones:
+
+  \t \t-\tBidireccional - Para permitir llamadas de entrada y de salida
+  \t \t \tdel sistema.
+
+  \t \t \tNota: Si escoge Bidireccional, el sistema mostrará una
+  \t \t \tserie de velocidades de entrada.  Por defecto, la velocidad
+  \t \t \testá definida como 9600.  La velocidad de salida está definida
+  \t \t \tcomo Selección automática.  Si escoge 14.400 y 28.800, el
+  \t \t \tsistema redefinirá la velocidad como la velocidad válida
+  \t \t \tinmediatamente superior.  La velocidad de salida siempre está
+  \t \t \ten Selección automática.
+
+  \t \t-\tSólo salida - Para permitir que salgan llamadas del sistema, 
+  \t \t \tpero no entren a él.  Por defecto, la velocidad definida 
+  \t \t \tpara este tipo de módem es Selección automática.
+
+  \t \t-\tSólo entrada: Para permitir que las llamadas entren al sistema
+  \t \t \tpero no salgan de él.
+
+  \t \t \tNota: Si escoge Sólo entrada,el sistema mostrará una
+  \t \t \tserie de velocidades de entrada.  Por defecto, la velocidad
+  \t \t \testá definida como 9600.  La velocidad de salida está definida
+  \t \t \tcomo Selección automática.  Si escoge 14.400 y 28.800, el
+  \t \t \tsistema redefinirá la velocidad como la velocidad válida
+  \t \t \tinmediatamente superior.  La velocidad de salida siempre está
+  \t \t \ten Selección automática.
+
+  \t \t-\tEl puerto está: - Por defecto, este campo se define como 
+  \t \t \tActivado.  Si desea desactivarlo, haga clic en Desactivado.
+
+6.\tHaga clic en Añadir para añadir la entrada del dispositivo y
+  \tcerrar la ventana.  Aparecerá un icono que represente al
+  \tdispositivo en la ventana "Configuración de conexiones:
+  \tDispositivos". Si lo desea, puede copiar ese icono en otra
+  \tcarpeta. Véase \k(Copiado del icono de un dispositivo de conexión en una carpeta).
+
+  \tNota: También puede hacer clic en Redefinir para volver a los
+  \tvalores originales, o hacer clic en Cancelar para cerrar la
+  \tventana sin configurar el dispositivo.
+
+^1^Copiado del icono de un dispositivo de conexión en una carpeta
+^$30
+Copiado del icono de un dispositivo de conexión en una carpeta
+
+Para copiar el icono de un dispositivo de conexión en otra carpeta,
+haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, vaya al paso 2.  
+Si ya está en la carpeta de gestión de red, vaya al paso 3.
+
+1.\tHaga doble clic en Herramientas_de_Admin de la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare). Aparecerá ventana "Carpeta:
+  \tHerramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la
+  \t\k(ventana "Configuración de conexiones: Dispositivos"^^Ventana Configuración de conexiones: Dispositivos)
+
+4.\t\d(Haga doble clic^hacer doble clic) en la carpeta en la que
+  \tquiera copiar el icono del dispositivo de conexión.
+
+5.\t\d(Arrastre y suelte^arrastrar y soltar) el dispositivo deseado desde
+  \tla ventana "Configuración de la conexión: Dispositivos" hasta la
+  \tcarpeta abierta en el paso 4.
+
+  \tAhora puede hacer doble clic en el icono del dispositivo de
+  \tconexión para abrir la ventana
+  \t\k("Configuración de conexiones: Marcado abreviado"^^Conexión a un sistema aleatorio).
+
+Nota: También puede copiar un icono de dispositivo de conexión
+en una de las carpetas usando la opción \k(Copiar en carpeta).
+
+^2^Ventana Configuración de conexiones
+^$40
+Ventana Configuración de conexiones
+
+Esta es la ventana principal de las funciones de Configuración de
+conexiones.  Muestra el sistema remoto al que se puede conectar
+usando un módem u otro dispositivo.
+
+Nota: Estos sistemas están definidos en el archivo /etc/uucp/Systems.
+
+Para obtener más información acerca de los archivos del sistema UNIX,
+véase \s(Directorioes y archivos^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Ventana Configuración de conexiones: Dispositivos
+^$50
+Ventana Configuración de conexiones: Dispositivos
+
+Esta ventana muestra los dispositivos conectados al sistema que
+puede usar para conectarse a los sistemas remotos.
+
+Nota: Estos dispositivos están definidos en el archivo
+/etc/uucp/Devices.
+
+Para obtener más información acerca de los archivos del sistema UNIX,
+véase \s(Directorioes y archivos^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Ventana Configuración de conexiones: Añadir nuevo dispositivo
+^$60
+Ventana Configuración de conexiones: Añadir nuevo dispositivo
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \to\tPuerto: - Se trata de la conexión física del dispositivo al
+  \t \tcomputador.  Puede ser un puerto en serie (por ejemplo, COM1
+  \t \trepresenta el puerto en serie 1), u otro tipo de puerto.  Si
+  \t \thace clic en Otros, deberá teclear el nombre del puerto en el
+  \t \tcuadro de texto.  Por defecto, Puerto está definido como COM1.
+
+  \to\tConectado a: - Se trata del nombre del dispositivo, o módem, que
+  \t \testá usando.  Haga clic en la casilla de la flecha para abrir la
+  \t \tlista de tipos de dispositivos.  A continuación, haga clic en el
+  \t \ttipo de dispositivo deseado.
+
+  \t \tNota: Si necesita añadir un módem a la lista de dispositivos
+  \t \texistente, véase \s(Adición de entradas de marcadores^dhelp "pe.es" ownerhb "Configuración de módems y otras comunicaciones en serie" "Adición de entradas de marcadores" || helpLinkErr) del Manual del
+  \t \tpropietario del sistema, y consúltese el comando dtmodem(1M) de
+  \t \tla \s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr).
+
+  \to\tConfigurar puerto como: - Escoja una de las siguientes opciones:
+
+  \t \t-\tBidireccional - Para permitir llamadas de entrada y de salida
+  \t \t \tdel sistema.
+
+  \t \t \tNota: Si escoge Bidireccional, el sistema mostrará una
+  \t \t \tserie de velocidades de entrada.  Por defecto, la velocidad
+  \t \t \testá definida como 9600.  La velocidad de salida está definida
+  \t \t \tcomo Selección automática.  Si escoge 14.400 y 28.800, el
+  \t \t \tsistema redefinirá la velocidad como la velocidad válida
+  \t \t \tinmediatamente superior.  La velocidad de salida siempre está
+  \t \t \ten Selección automática.
+
+  \t \t-\tSólo salida - Para permitir que salgan llamadas del sistema, 
+  \t \t \tpero no entren a él.  Por defecto, la velocidad definida 
+  \t \t \tpara este tipo de módem es Selección automática.
+
+  \t \t-\tSólo entrada: Para permitir que las llamadas entren al sistema
+  \t \t \tpero no salgan de él.
+
+  \t \t \tNota: Si escoge Sólo entrada,el sistema mostrará una
+  \t \t \tserie de velocidades de entrada.  Por defecto, la velocidad
+  \t \t \testá definida como 9600.  La velocidad de salida está definida
+  \t \t \tcomo Selección automática.  Si escoge 14.400 y 28.800, el
+  \t \t \tsistema redefinirá la velocidad como la velocidad válida
+  \t \t \tinmediatamente superior.  La velocidad de salida siempre está
+  \t \t \ten Selección automática.
+
+  \t \t-\tEl puerto está: - Por defecto, este campo se define como 
+  \t \t \tActivado.  Si desea desactivarlo, haga clic en Desactivado.
+
+2.\tHaga clic en Añadir para añadir la entrada del dispositivo y
+  \tcerrar la ventana.  Aparecerá un icono que represente al
+  \tdispositivo en la ventana "Configuración de conexiones:
+  \tDispositivos". Si lo desea, puede copiar ese icono en otra
+  \tcarpeta. Véase \k(Copiado del icono de un dispositivo de conexión en una carpeta).
+
+Véase también:
+\k(Configuración de una entrada de dispositivo de conexión)
+
+^1^Supresión de entrada de dispositivo de conexión
+^$70
+Supresión de entrada de dispositivo de conexión
+
+Para borrar la entrada de un dispositivo de conexión, haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+ Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+4.\tHaga clic en Acciones=>Configurar dispositivos.  Aparecerá la
+  \t\k(ventana "Configuración de conexiones: Dispositivos"^^Ventana Configuración de conexiones: Dispositivos)
+
+5.\tHaga clic en el dispositivo que desee borrar.
+
+6.\tHaga clic en Dispositivo=>Suprimir.  El icono que representa al
+  \tdispositivo desaparecerá de la ventana Configuración de
+  \tconexiones: Dispositivos.
+
+
+^1^Configuración del acceso a un sistema remoto
+^$80
+Configuración del acceso a un sistema remoto
+
+Antes de configurar el acceso a un sistema remoto, deberá hacer lo
+siguiente:
+
+  o  \k(Configurar la entrada de un dispositivo de conexión^^Configuración de una entrada de dispositivo de conexión).
+
+  o  Obtener un registro de entrada y una contraseña para el sistema
+     al que desee conectarse.
+
+  o  Obtener el número de teléfono del sistema al que desee
+     conectarse.
+
+Para configurar el acceso a un sistema remoto, deberá hacer lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+ Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+5.\tHaga clic en Sistema=>Nuevo.  Aparecerá la ventana "Configuración
+  \tde conexiones: Añadir nuevo sistema" aparecerá con los siguientes
+  \tcampos:
+
+  \to\tNombre del sistema: - Teclee el nombre del sistema remoto al que
+  \t \tdesee conectarse.
+
+  \to\tConexión vía: - Haga clic en el tipo de dispositivo que esté
+  \t \tusando.
+
+  \to\tVelocidad: - Haga clic en la velocidad que coincida con la
+  \t \tvelocidad del módem o puerto.  Si no está seguro de qué
+  \t \tvelocidad seleccionar, escoja la selección automática.  Para
+  \t \tobtener una conexión directa, haga clic en 19200.
+
+  \to\tNúmero de teléfono: - Teclee el número de teléfono del sistema
+  \t \tal que desee conectarse, incluido un 9 para conectar con el
+  \t \texterior (si es necesario), el prefijo (si el número no
+  \t \tpertenece a la zona de su prefijo) y el número.  Por ejemplo,
+  \t \t92015551234.
+
+  \t \tNota: Este campo no está disponible para las conexiones
+  \t \tdirectas.
+
+5.\tHaga clic en Categoría=>Secuencia de entrada para obtener opciones
+  \tadicionales si piensa enviar correo o transferir archivos a otros
+  \tsistemas usando \k(UUCP^DesktopMgr/uucp.hlp^Uso de la casilla UUCP) con un dispositivo de conexión.
+
+  \tNota: Deberá tener \k(Permiso de Configuración de la conexión^dtadmin/user.hlp^Comprensión de los permisos) si
+  \tdesea cambiar la secuencia de entrada.
+
+  \tAparecerán las siguientes opciones adicionales.
+
+  \to\tIndicador: - Teclee la cadena de texto que espere que el sistema
+  \t \tremoto muestre como indicador.
+
+  \t \tNota: No es necesario que introduzca la cadena completa.
+
+  \to\tRespuesta: - Teclee la cadena de texto que se deberá enviar como
+  \t \trespuesta al indicador del sistema remoto.
+
+  \to\tSecuencia de entrada actual: - Recorra la lista para ver las
+  \t \tentradas posibles de Indicador y Respuesta.  Las entradas de
+  \t \testa lista deberán estar en el mismo orden en que el sistema
+  \t \tremoto muestre sus indicadores.  Haga clic en una de las
+  \t \tsiguientes opciones.
+
+  \t \t-\tAñadir: Para colocar el contenido actual de Indicador y
+  \t \t \tRespuesta en la lista desplegable.
+
+  \t \t-\tModificar: Para reemplazar la entrada actual de Secuencia
+  \t \t \tactual de entrada por el contenido actual de Indicador y/o
+  \t \t \tRespuesta.
+
+  \t \t-\tSuprimir: Para eliminar la entrada seleccionada de la lista
+  \t \t \tdesplegable.
+
+6.\tHaga clic en Añadir (de la ventana "Configuración de conexiones:
+  \tAñadir nuevo sistema").  Aparecerá la entrada correspondiente al
+  \tsistema remoto en la \k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+  \tNota: Para copiar el icono que representa al nuevo sistema en otra
+  \tcarpeta, véase \k(Copiado del icono de un sistema remoto en una carpeta).  A continuación
+  \tpodrá entrar en el sistema remoto haciendo doble clic en el icono,
+  \ty transferir archivos al sistema remoto
+  \t\d(arrastrando y soltando^arrastrar y soltar) los archivos hasta ese
+  \ticono.
+
+^2^Ventana Configuración de conexiones: Añadir nuevo sistema
+^$90
+Ventana Configuración de conexiones: Añadir nuevo sistema
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \to\tNombre del sistema: - Teclee el nombre del sistema remoto al que
+  \t \tdesee conectarse.
+
+  \to\tConexión vía: - Haga clic en el tipo de dispositivo que esté
+  \t \tusando.
+
+  \to\tVelocidad: - Haga clic en la velocidad que coincida con la
+  \t \tvelocidad del módem o puerto.  Si no está seguro de qué
+  \t \tvelocidad seleccionar, escoja la selección automática.  Para
+  \t \tobtener una conexión directa, haga clic en 19200.
+
+  \to\tNúmero de teléfono: - Teclee el número de teléfono del sistema
+  \t \tal que desee conectarse, incluido un 9 para conectar con el
+  \t \texterior (si es necesario), el prefijo (si el número no
+  \t \tpertenece a la zona de su prefijo) y el número.  Por ejemplo,
+  \t \t92015551234.
+
+  \t \tNota: Este campo no está disponible para las conexiones
+  \t \tdirectas.
+
+5.\tHaga clic en Categoría=>Secuencia de entrada para obtener opciones
+  \tadicionales si piensa enviar correo o transferir archivos a otros
+  \tsistemas usando \k(UUCP^DesktopMgr/uucp.hlp^Uso de la casilla UUCP) con un dispositivo de conexión.
+
+  \tNota: Deberá tener \k(Permiso de Configuración de la conexión^dtadmin/user.hlp^Comprensión de los permisos) si
+  \tdesea cambiar la secuencia de entrada.
+
+  \tAparecerán las siguientes opciones adicionales.
+
+  \to\tIndicador: - Teclee la cadena de texto que espere que el sistema
+  \t \tremoto muestre como indicador.
+
+  \t \tNota: No es necesario que introduzca la cadena completa.
+
+  \to\tRespuesta: - Teclee la cadena de texto que se deberá enviar como
+  \t \trespuesta al indicador del sistema remoto.
+
+  \to\tSecuencia de entrada actual: - Recorra la lista para ver las
+  \t \tentradas posibles de Indicador y Respuesta.  Las entradas de
+  \t \testa lista deberán estar en el mismo orden en que el sistema
+  \t \tremoto muestre sus indicadores.  Haga clic en una de las
+  \t \tsiguientes opciones.
+
+  \t \t-\tAñadir: Para colocar el contenido actual de Indicador y
+  \t \t \tRespuesta en la lista desplegable.
+
+  \t \t-\tModificar: Para reemplazar la entrada actual de Secuencia
+  \t \t \tactual de entrada por el contenido actual de Indicador y/o
+  \t \t \tRespuesta.
+
+  \t \t-\tSuprimir: Para eliminar la entrada seleccionada de la lista
+  \t \t \tdesplegable.
+
+6.\tHaga clic en Añadir. El sistema remoto aparecerá en la
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+Véase también:
+\k(Configuración del acceso a un sistema remoto)
+
+^1^Supresión de una entrada de sistema remoto
+^$100
+Supresión de una entrada de sistema remoto
+
+Para borrar la entrada de un sistema remoto, haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+ Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la 
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+4.\tHaga clic en el sistema que desee borrar.
+
+5.\tHaga clic en Sistema=>Suprimir.  La entrada del sistema
+  \tdesaparecerá de la ventana Configuración de conexiones.
+
+^1^Copiado del icono de un sistema remoto en una carpeta
+^$110
+Copiado del icono de un sistema remoto en una carpeta
+
+Puede copiar un icono que represente un sistema de conexión remota en
+una de las carpetas.  A continuación, podrá entrar remotamente a
+dicho sistema haciendo doble clic en el icono.
+
+Además, puede llevar archivos a ese sistema remoto con sólo
+\d(arastrar y soltar^arrastrar y soltar) el archivo sobre el icono del
+sistema remoto.
+
+Para copiar un sistema remoto en una de las carpetas, haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+ Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la 
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+4.\tHaga doble clic en la carpeta a la que desee copiar el icono 
+  \tdel sistema de conexión remota.
+
+5.\tArrastre y suelte el sistema deseado desde la ventana
+  \t"Configuración de conexiones" hasta la carpeta que abrió en el
+  \tpaso 4.
+
+Nota: También puede copiar el icono de un sistema remoto a una carpeta
+usando la opción \k(Copiar en carpeta).
+
+^2^Copiar en carpeta
+^$120
+Copiar en carpeta
+
+Para copiar el icono de un sistema remoto o de un dispositivo de
+conexión en una carpeta, haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+ Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la 
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+4.\tHaga clic en Acciones=>Configurar.  Aparecerá la ventana
+  \t\k("Configuración de la conexión: Dispositivos" window^^Ventana Configuración de conexiones: Dispositivos)
+
+5.\tHaga clic en el icono deseado de sistema remoto o dispositivo de
+  \tconexión.
+
+6.\tHaga clic en Sistema=>Copiar en carpeta.  Aparecerá la ventana
+  \t"Configuración de conexiones: Copiar en carpeta".
+
+7.\tHaga clic en el nombre de una carpeta o en la Carpeta padre de
+  \tla lista Carpeta(s), hasta que encuentre la carpeta deseada.
+
+8.\tHaga clic en Copiar.  Aparecerá el icono en la carpeta.
+
+^1^Ventana Configuración de conexiones: Copiar en carpeta
+^$130
+Ventana Configuración de conexiones: Copiar en carpeta
+
+Haga clic en el nombre de una carpeta o en la Carpeta padre de
+la lista Carpeta(s), hasta que encuentre la carpeta en la que
+desee copiar el icono del sistema de conexión remota.  A continuación,
+haga clic en Copiar.
+
+^1^Búsqueda de una entrada de sistema remoto
+^$140
+Búsqueda de una entrada de sistema remoto
+
+Si tiene varias entradas de sistemas remotos en la
+\k(ventana "Configuración de conexión"^^Ventana Configuración de conexiones), \k("Dialup Setup" window^^Ventana Configuración de conexiones)
+puede usar Buscar para buscar la entrada deseada.
+
+Para buscar la entrada de un sistema remoto, haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+ Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la 
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+4.\tHaga clic en Buscar.
+
+5.\tHaga clic en una de las siguientes opciones:
+
+  \to\tBuscar: Aparecerá la ventana "Configuración de conexiones:
+  \t \tBuscar". Teclee el nombre del sistema remoto que desee buscar y
+  \t \thaga clic en Buscar.  El nombre del sistema quedará resaltado en
+  \t \tla ventana "Configuración de conexiones"..
+
+  \t \tNota: Si el Escritorio no puede encontrar el nombre del sistema
+  \t \tremoto que está buscando, aparecerá una ventana de
+  \t \taparición instantánea con un mensaje de error.
+
+  \to\tPrimero:  El sistema seleccionará la primera entrada de
+  \t \tsistema remoto de la ventana "Configuración de conexiones".
+
+  \to\tUltimo: El sistema selecciona la última entrada de sistema
+  \t \tremoto de la ventana "Configuración de conexiones".
+
+^2^Ventana Configuración de conexiones: Buscar
+^$150
+Ventana Configuración de conexiones: Buscar
+
+Teclee el nombre del sistema deseado y haga clic en Buscar.  La
+entrada del sistema remoto quedará resaltada en la ventana
+"Configuración de conexiones".
+
+^1^Conexión a un sistema aleatorio
+^$160
+Conexión a un sistema aleatorio
+
+Para conectarse a un sistema remoto, es decir, a un sistema remoto que
+no esté configurado para acceso remoto, haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+ Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la 
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+4.\tHaga clic en Acciones=>Configurar dispositivos.  Aparecerá la
+  \t\k(ventana "Configuración de conexiones: Dispositivos"^^Ventana Configuración de conexiones: Dispositivos)
+
+5.\tHaga clic en el dispositivo a través del cual desee establecer la
+  \tconexión.
+
+6.\tHaga clic en Acciones=>Marcar.  Aparecerá la ventana
+  \t"Configuración de la conexión: Conexión rápida", con los
+  \tsiguientes campos:
+
+  \to\tNúmero de teléfono: - Teclee el número de teléfono del sistema
+  \t \tal que desee conectarse.  Este campo sólo es aplicable si el
+  \t \tdispositivo seleccionado es un módem.
+
+  \to\tVelocidad: - Haga clic en la velocidad que coincida con la
+  \t \tvelocidad del dispositivo de conexión.  Si no está seguro,
+  \t \tescoja la selección automática.
+
+  \to\tParidad: - Haga clic en \d(paridad) del sistema al que
+  \t \tse esté conectando.  Algunos sistemas usan la paridad para la
+  \t \tverificación de errores.  Si está llamando a un sistema UNIX,
+  \t \tseleccione Ninguna (None).
+
+  \to\tTamaño de caracteres: - Haga clic en 7 si está llamando a otro
+  \t \tsistema UNIX.  Si está llamando a un sistema que no ejecuta
+  \t \tUNIX, probablemente será necesario que haga clic en 8,
+  \t \taunque puede ocurrir que algunos usen 7 bits.
+
+  \to\tModo duplex: - Haga clic en Full o Half, según el software de
+  \t \tcomunicaciones que esté usando el sistema.  UnixWare opera en
+  \t \tmodo full duplex.
+
+  \t \tSi no está conectado directamente al sistema al que trata de
+  \t \tllamar, asegúrese de que el módem está configurado
+  \t \tpara full duplex.
+
+7.\tHaga clic en Marcar para llamar al sistema remoto.
+
+  \tNota: También puede hacer clic en Redefinir para volver a dejar
+  \tlos valores originales de los campos, o hacer clic en
+  \tCancelar si no desea realizar la conexión rápida de ningún
+  \totro sistema.
+
+^2^Ventana Configuración de conexiones: Conexión rápida
+^$170
+Ventana Configuración de conexiones: Conexión rápida
+
+En esta ventana, haga lo siguiente:
+
+1.\tDefina las opciones siguientes:
+
+  \to\tNúmero de teléfono: - Teclee el número de teléfono del sistema
+  \t \tal que desee conectarse.  Este campo sólo es aplicable si el
+  \t \tdispositivo seleccionado es un módem.
+
+  \to\tVelocidad: - Haga clic en la velocidad que coincida con la
+  \t \tvelocidad del dispositivo de conexión.  Si no está seguro,
+  \t \tescoja la selección automática.
+
+  \to\tParidad: - Haga clic en \d(paridad) del sistema al que
+  \t \tse esté conectando.  Algunos sistemas usan la paridad para la
+  \t \tverificación de errores.  Si está llamando a un sistema UNIX,
+  \t \tseleccione Ninguna (None).
+
+  \to\tTamaño de caracteres: - Haga clic en 7 si está llamando a otro
+  \t \tsistema UNIX.  Si está llamando a un sistema que no ejecuta
+  \t \tUNIX, probablemente será necesario que haga clic en 8,
+  \t \taunque puede ocurrir que algunos usen 7 bits.
+
+  \to\tModo duplex: - Haga clic en Full o Half, según el software de
+  \t \tcomunicaciones que esté usando el sistema.  UnixWare opera en
+  \t \tmodo full duplex.
+
+  \t \tSi no está conectado directamente al sistema al que trata de
+  \t \tllamar, asegúrese de que el módem está configurado
+  \t \tpara full duplex.
+
+2.\tHaga clic en Marcar para llamar al sistema remoto.
+
+Véase también:
+\k(Conexión a un sistema aleatorio)
+
+^1^Visualización o modificación de propiedades de un dispositivo de conexión
+^$180
+Visualización o modificación de propiedades de un dispositivo de conexión
+
+Para ver o modificar las propiedades de un dispositivo de conexión,
+haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la 
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+4.\tHaga clic en Acciones=>Configurar dispositivos.  Aparecerá la
+  \t\k(ventana "Configuración de conexiones: Dispositivos"^^Ventana Configuración de conexiones: Dispositivos)
+
+5.\tHaga clic en el dispositivo deseado.
+
+5.\tHaga clic en Dispositivo=>Propiedades.  Aparecerá la ventana
+  \t"Configuración de conexiones: Propiedades".
+
+  \tVéase el paso 6 de \k(Configuración de una entrada de dispositivo de conexión) para obtener
+  \tuna descripción de los campos de esta ventana (son
+  \tlos mismos que los de la
+  \t\k(ventana "Configuración de la conexión: Añadir nuevo dispositivo"^^Ventana Configuración de conexiones: Añadir nuevo dispositivo)).
+
+7.\tHaga clic en Cancelar si sólo está viendo las propiedades.
+  \tHaga clic en Aplicar si ha modificado las propiedades.
+
+^1^Visualización o modificación de propiedades de un sistema remoto
+^$190
+Visualización o modificación de propiedades de un sistema remoto
+
+Para ver o modificar las propiedades de un sistema remoto, haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_conexiones.  Aparecerá la 
+  \t\k(ventana "Configuración de conexiones"^^Ventana Configuración de conexiones).
+
+4.\tHaga clic en el sistema remoto deseado.
+
+5.\tHaga clic en Sistema=>Propiedades.  Aparecerá la ventana
+  \t"Configuración de conexiones: Propiedades del sistema remoto".
+
+  \tVéanse los pasos 4 y 5 de \k(Configuración del acceso a un sistema remoto) para
+  \tobtener una descripción de los campos de esta ventana (los campos
+  \tson iguales que los de la
+  \t\k(ventana "Configuración de conexiones: Añadir nuevo sistema"^^Ventana Configuración de conexiones: Añadir nuevo sistema).
+
+6.\tHaga clic en Cancelar si sólo está viendo las propiedades.
+  \tHaga clic en Aplicar si ha modificado las propiedades.

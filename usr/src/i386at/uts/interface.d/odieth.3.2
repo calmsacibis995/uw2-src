@@ -1,0 +1,83 @@
+#ident	"@(#)kern-i386at:interface.d/odieth.3.2	1.7"
+#ident	"$Header: $"
+
+# odieth.3.2 -- ODI Ethernet Version 3.2 (Assembly and C Drivers)
+
+$replace 3.1
+
+# These do not exist in version 3.2, and we really don't want to support
+# them going forward.
+
+LogicalToPhysical	$dropped
+PhysicalToLogical	$dropped
+CMsmProcessInt		$dropped
+lslHSMinit		$dropped
+CheckHardwareInterrupt	$dropped
+DoEndOfInterrupt	$dropped
+MSMRegisterSharedMemory	$dropped
+MSMDeRegisterSharedMemory $dropped
+
+# These do not exist in version 3.2, but we can support them, and we really
+# cannot impose a restriction on symbol usage yet, as Netware does not.
+
+#GetProcessorSpeedRating $dropped
+#GetCurrentTime		$dropped
+#IOConfigurationList	$dropped
+#GetHardwareBusType	$dropped
+#EnableHardwareInterrupt $dropped
+#DisableHardwareInterrupt $dropped
+
+# These are new for the C specification.
+
+CEtherTSMFastProcessGetRCB
+CEtherTSMFastRcvComplete
+CEtherTSMFastRcvCompleteStatus
+CEtherTSMFastSendComplete
+CEtherTSMGetHSMIFLevel
+CEtherTSMGetNextSend
+CEtherTSMGetRCB
+CEtherTSMProcessGetRCB
+CEtherTSMRcvComplete
+CEtherTSMRcvCompleteStatus
+CEtherTSMRegisterCHSM
+CEtherTSMSendComplete
+CEtherTSMUpdateMulticast
+
+CMSMAddToCounter
+CMSMAlloc
+CMSMAllocPages
+CMSMAllocateRCB
+CMSMDisableHardwareInterrupt
+CMSMDriverRemove
+CMSMEnableHardwareInterrupt
+CMSMEnablePolling
+CMSMFree
+CMSMFreePages
+CMSMGetCardConfigInfo
+CMSMGetCurrentTime
+CMSMGetDriverParameter
+CMSMGetHardwareBusType
+CMSMGetMicroTimer
+CMSMGetPhysical
+CMSMIncrCounter
+CMSMInitAlloc
+CMSMParseDriverParameters
+CMSMPrintString
+CMSMReadPhysicalMemory
+CMSMRegisterHardwareOptions
+CMSMRegisterMlid
+CMSMRegisterResource
+CMSMReturnDriverResources
+CMSMReturnRCB
+CMSMScheduleAes
+CMSMServiceEvents
+CMSMSetHardwareInterrupt
+CMSMWritePhysicalMemory
+
+# These are new for the assembly specification.
+
+EtherTSMGetASMHSMIFLevel
+EtherTSMFastRcvCompleteStatus
+
+MSMGetMicroTimer
+MSMGetPhysical

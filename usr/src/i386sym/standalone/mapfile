@@ -1,0 +1,14 @@
+#ident	"@(#)stand:i386sym/standalone/mapfile	1.1"
+#
+# link editor directives for Symmetry standalone programs.  
+# Load the 16-bit-mode startup code at location 0 and the 
+# rest of standalone at 16K.  The area between 8K and 16K
+# is reserved for the firmware's configuration table.
+#
+pstart	= LOAD ?RX V0x0 P0x0 L0x2000;
+text    = LOAD ?RX V0x4000 P0x4000;
+data    = LOAD ?RWX A0x1000;
+pstart  : ?A : i386/16start.o
+text    : $PROGBITS ?A!W;
+data    : $PROGBITS ?AW;
+data    : $NOBITS ?AW;

@@ -1,0 +1,126 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/report/Form.report	1.1.7.4"
+#ident  "$Header: Form.report 2.0 91/07/12 $"
+#	Module Name: Form.report
+
+form=Display Event Log
+
+framemsg=`readfile $INTFBASE/form.msg`
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+close=`rm -f $REPERR /tmp/$VPID.logfs /tmp/$VPID.replog`
+
+done=`set -l REPERR=/tmp/$VPID.reperr;
+	unset -l REPARGS;
+	getfrm |set -l FRAMEID;
+	test -n "$F2" && set -l REPARGS="-m $F2";
+	test  "$F3" = "oldest" && set -l REPARGS="$REPARGS -b";
+	if [ "$F4" = "no" ];
+	then
+		set -l CMD="OPEN FORM $OBJ_DIR/Form.rep2";
+	else
+		message -f "Please wait, saving specified output for specified event logs.";
+                if [ $TFADMIN ];
+                then
+                        $TFADMIN auditrpt $!REPARGS $!LOGFS >/tmp/$VPID.replog 2>$REPERR;
+                else
+                        auditrpt $!REPARGS $!LOGFS >/tmp/$VPID.replog 2>$REPERR;                fi;
+	        if [ "$RET" -ne "0" ];
+	        then
+	                set -l CMD="OPEN TEXT $OBJ_DIR/Text.repnok";
+	        elif [ -s "$REPERR" ];
+	        then
+	                set -l CMD="OPEN TEXT $OBJ_DIR/Text.repwok";
+	        else
+	                set -l CMD="OPEN TEXT $OBJ_DIR/Text.repok";
+		fi;
+	fi`$CMD
+
+# Get log file names
+`"$TFADMIN" find /var/audit -type f -print | sed '/\/var\/audit\/.*\//d' >/tmp/$VPID.logfs`
+
+#F1
+name=Event log file(s) to be displayed:
+lininfo=Form.report:logfile
+nrow=1
+ncol=3
+frow=1
+fcol=38
+rows=1
+columns=26
+scroll=TRUE
+rmenu=OPEN MENU $OBJ_DIR/Menu.logfs
+value=`unset -l AUDITLOG -l ASTATUS -l LOGFILE;
+	"$TFADMIN" auditlog | set -l AUDITLOG;
+	echo "$AUDITLOG" | fmlgrep "Current Status" | sed 's/^Current Status of Auditing:			//;s/ //g' | set -l ASTATUS;
+	if [ "$ASTATUS" = "ON" ];
+	then
+		echo "$AUDITLOG" | fmlgrep "Current Event" | awk '{print $NF}';
+		echo "$LOGFILE" >> /tmp/$VPID.logfs;
+		echo "$LOGFILE";
+	else
+		cat /tmp/$VPID.logfs | sort -r | sed '2,$s/^.*$//';
+	fi`
+#CAN NOT VALIDATE BECAUSE OF MLD's, DIR's NOT SYS_AUDIT, AND CURRENT LOG FILE?
+#		if regex -v "$F1" '.* .*';
+#		then
+#			valforloop "$F1" "grep \$i /tmp/$VPID.logfs";
+#		else
+#			fmlgrep "$F1" /tmp/$VPID.logfs;
+#		fi;
+valid=`if [ -n "$F1" ];
+	then
+		echo "$F1" | set -l LOGFS;
+	fi`
+invalidmsg= const "Error - Must enter the pathname to one or more log files."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+ 
+#F2
+name=Pathname of audit map file:
+lininfo=Form.report:mapfile
+nrow=2
+ncol=3
+frow=2
+fcol=31
+rows=1
+columns=25
+scroll=TRUE
+value=/var/audit/auditmap
+valid=`if [ -n "$F2" ];
+	then
+		if [ "$F2" != "/var/audit/auditmap" ];
+		then
+			regex -v "$F2" '^/[^ :]*$' && test -d "$F2";
+		fi;
+	fi`
+invalidmsg= const "Error - Must enter the absolute pathname to the audit map files."
+fieldmsg= const "Enter the absolute pathname to the auditmap files."
+
+#F3
+name=Order of event log(s) contents:
+lininfo=Form.report:logcontents
+nrow=3
+ncol=3
+frow=3
+fcol=35
+rows=1
+columns=10
+value=newest
+rmenu={ oldest newest }
+menuonly=TRUE
+invalidmsg=const "Error - Must enter either oldest or newest."
+fieldmsg=const "Enter either oldest or newest."
+
+#F4
+name=Do you wish to display the event log(s) in entirety?
+lininfo=Form.report:entirety
+nrow=4
+ncol=3
+frow=4
+fcol=56
+rows=1
+columns=4
+value=yes
+rmenu={ yes no }
+menuonly=TRUE
+invalidmsg=const "Error - Must enter either yes or no."
+fieldmsg=const "Enter either yes or no."

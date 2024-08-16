@@ -1,0 +1,28 @@
+/**/#ident	"@(#)r5misc:lib/Imakefile	1.16"
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+MITDIRS = Xau X Xt Xmu Xaw Xdmcp Berk nls
+USLDIRS = Memutil Xol Dt DnD Gizmo MGizmo
+
+MOTIFDIRS = Xm Mrm DtWidget
+
+LINTSUBDIRS = $(MITDIRS) $(USLDIRS) $(MOTIFDIRS)
+
+SUBDIRS = $(MITDIRS) $(USLDIRS) $(MOTIFDIRS)
+
+PFLAGS=-P
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+MakeLintLibSubdirs($(LINTSUBDIRS))
+MakeLintSubdirs($(LINTSUBDIRS),install.ln,install.ln)

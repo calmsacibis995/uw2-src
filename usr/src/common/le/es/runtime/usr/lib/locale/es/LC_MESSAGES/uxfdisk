@@ -1,0 +1,117 @@
+Uso: partsize [-s] [-d] [dispositivo_sin_refinar]\n
+Uso: %s [dispositivo_sin_refinar]\n
+Otros
+pre-5.0DOS
+DOS-DATA
+EXT-DOS
+DOS
+Sistema UNIX
+Activo
+      
+argumento desconocido: %s\n
+sólo puede usarse una opción.\n
+No puede abrirse el dispositivo por defecto (%s)\n
+El segundo disco no está instalado en su sistema.\n
+Use este comando para crear particiones y sistemas de archivos en el\nsegundo disco después de que haya sido instalado.\n
+no se puede abrir %s\n
+Asegúrese de que el disco está instalado debidamente\n
+SEGUNDO
+segundo
+dispositivo no válido - %s\n
+Sólo puede ejecutarse en un disco. \n
+Imposible obtener %d bytes de memoria temporal.\n
+error al leer tabla de particiones\n
+Nodo de dispositivo posiblemente erróneo; use un nodo que arranque desde el cilindro 0\n
+El particionamiento por defecto recomendado para su disco es:\n\n
+    %d%% \"Sistema UNIX\" -- permite ejecutar los programas de Sistema UNIX\n
+    %d%% \"DOS (v. 3.2 o posteriores) únicamente\" \n\n
+  partición 100%% de \"Sistema UNIX\". \n\n
+Para seleccionar esto, teclee \"s\".
+Para particionar su disco\nde forma distinta, teclee \"n\" y el programa \"fdisk\" le\npermitirá seleccionar otras particiones. 
+Responda \"s\" o \"n\": 
+Error al inicializar la partición DOS.\n
+error al escribir registro de arranque\n
+Introduzca la selección: 
+Teclee un número de un dígito entre 0 y 5
+La tabla de partición está llena \n
+Debe borrar una partición antigua antes de crear una nueva.\n
+No queda más espacio en el disco para otra partición.\n
+Indique el tipo de partición que desea crear\n
+(1=Sistema UNIX, 2=pre-5.0DOS, 3=post-4.0DOS, 4=System, 5=otros, x=Salir). 
+Selección no válida, inténtelo de nuevo.
+La partición %d es ahora la partición activa
+¿Quiere que se convierta ésta en la partición \"Activa\"? \n
+Las particiones deben estar en el estado \"Activo\" para que estén accesibles.\n
+Teclee \"s\" para marcar la partición \"Activa\" o \"n\". 
+\n¿Desea que esta partición sea la partición de arranque Activa?\n
+La partición de Sistema UNIX requiere al menos %d%% del disco.\n
+Indique el porcentaje del disco que desea que use esta\npartición (o teclee \"c\" para especificarlo en cilindros). 
+Se ha especificado un valor de porcentaje no válido\n
+Vuelva a crear la partición
+El porcentaje especificado es demasido grande, teclee un valor entre %d y 100.\n
+El porcentaje especificado es demasiado pequeño, teclee un valor entre %d y 100.\n
+El tamaño máximo de una partición  pre-5.0DOS es %d%%.\n
+El tamaño mínimo para una partición de Sistema UNIX es %d%%.\n
+La partición definida es demasiado grande - El tamaño máximo disponible es %d%%.\n
+Teclee el número de cilindro inicial: 
+Número no válido, vuelva a crear la partición
+Cilindro %d fuera de los límites, el máximo es %d\n
+La partición no puede crearse porque solapa una partición existente.\n
+El cilindro inicial de una partición debe ser menor que 1024.\n
+Teclee el tamaño de partición en cilindros: 
+El tamaño máximo para la partición de Sistema UNIX es %d cilindros.\n
+La partición definida es demasiado grande - El tamaño máximo disponible es %d cilindros (%d%%).
+Partición demasiado pequeña - el tamaño máximo es de 3 cilindros.
+             Tamaño total de disco es %d cilindros (%4.1f MB)\n\n
+                                        Cilindros                 Aprox\n
+Partición  Estado      Tipo        Inicio  Fin    Longitud  %%      MB\n
+=========   ======    ===========   =====   ===   ======   ===   ======
+\n    %d       %s    %-11.11s   %4d   %4d    %4d    %3d    %4.1f
+NO HAY NINGUNA PARTICIÓN DEFINIDA ACTUALMENTE
+ SELECCIONE UNO DE LOS SIGUIENTES: \n\n
+     1.   Crear una partición\n
+     2.   Cambiar partición activa (Arrancar desde)\n
+     3.   Suprimir una partición\n
+     4.   Salir (actualizar configuración de disco y salir)\n
+     5.   Cancelar (Salir sin actualizar configuración del disco)
+Teclee el número de la partición a la que desee acceder en el disco %s\n(o teclee 0 para ninguna): 
+Teclee el número de la partición desde la que desee arrancar\n(o teclee 0 para ninguna): 
+Respuesta no válida, dé un número entre 0 y 4\n
+Actualmente no hay ninguna partición Activa en el disco %s; no\npodrá acceder a los sistemas de archivos allí creados.
+Actualmente no hay ninguna partición activa.
+La partición no existe
+Una partición DOS-DATA o EXT_DOS no puede convertirse en activa.\n
+Seleccione otra partición.
+La partición %d es ahora la partición accesible en el disco %s.\n
+La partición %d es ahora la partición Activa.
+ Estará activada cuando reinicie su\nordenador o lo vuelva a enceder.\n
+Teclee el número de la partición que desee borrar\n(o teclee x para salir): 
+Respuesta no válida, vuélvalo a intentar\n
+La partición %d no existe.
+¿Desea borrar la partición %d?
+  Esto borrará todos los archivos \ny programas de esta partición (teclee \"s\" o \"n\"). 
+La partición %d ha sido borrada.
+  Esta era la partición activa.
+Si ha creado una partición Sistema UNIX o DOS, debe inicializar\nla partición para reflejar la nueva configuración.\n
+Para una partición de Sistema UNIX ejecute el comando disksetup(1m).\n
+Para una partición de DOS, ejecute el comando format de DOS.
+Los cambios\nlimitados al campo de estado \"Activo\" no\nrequieren ninguna acción adicional.\n
+Ha cambiado o asignado una partición de DOS.\n
+Ejecute el comando format de DOS para inicializar la partición.\n
+El código de arranque maestro del sistema se ha sobreescrito.\n
+Debe \"Actualizar\" para que el cambio surta efecto.
+     0.   Sobreescribir el código de arranque maestro del sistema\n
+ADVERTENCIA: No todos los sistemas operativos soportan las particiones\nde disco que empiecen o terminen por encima del cilindro 1023.
+  Véase la documentación para obtener información adicional.\n
+PART%d=\n
+PART%d=\"%d\t%s\t%s\t%d\t%d\t%d\t%d\t%f\"\n
+NPART=%d\n
+NUMCIL=%d\n
+NUMMB=%.1f\n
+MAXCIL=%d\n
+MAXPCT=%d\n
+El tamaño máximo para la partición 5.0DOS es %d cilindros.\n
+La partición del sistema (requiere arrancar en el cilindro 9) se superpone con la partición 1\nEl tamaño máximo disponible es %d%%.  
+La partición de configuración del sistema debe arrancar en el cilindro 0.\n
+Disco demasiado pequeño -- La partición de configuración del sistema requiere\n%d MB de almacenamiento.\n
+Sistema

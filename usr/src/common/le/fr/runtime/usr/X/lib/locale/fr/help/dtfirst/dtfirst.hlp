@@ -1,0 +1,238 @@
+#ident\t"@(#)dthelp:Admin.Tools/dtfirst.hlp     1.20"
+^*version^1
+^*title^Configuration de départ
+^:Configuration_de_départ
+^*width^70
+^+DesktopMgr/help.defs
+^?Configuration de départ
+^0^Configuration de départ
+^$10
+Configuration de départ
+
+Une fois que vous avez installé UnixWare, vous pouvez personnaliser
+l'environnement de votre système. Voici une liste des premières
+tâches de configuration que vous souhaiterez peut-être exécuter avant
+de commencer à utiliser UnixWare. Cliquez (c'est-à-dire appuyez sur le
+bouton gauche de la souris et relâchez-le rapidement) sur la tâche
+mise en surbrillance que vous voulez exécuter.
+
+Un écran d'aide apparaît, présentant une brève description de la tâche
+ou expliquant pourquoi vous devez l'exécuter. A partir de cet écran
+d'aide, vous pouvez exécuter les opérations suivantes :
+
+\to\tObtenir des informations et des instructions complémentaires
+\t \tconcernant l'exécution de la tâche, au moyen de l'aide en ligne ou
+\t \tde la documentation papier UnixWare.
+
+ \t\tRemarque : pour plus d'informations sur l'utilisation de l'aide en
+ \t\tligne, cliquez sur \k(Utilisation de l'aide^DesktopMgr/help.hlp^Utiliser l'aide).
+
+\to\tAppelez la tâche (le cas échéant).
+
+Remarque : vous n'êtes pas obligé d'exécuter toutes ces tâches de
+configuration. Choisissez les tâches qui sont adaptées à votre propre
+environnement. Si vous décidez de ne pas exécuter certaines tâches ou
+l'ensemble de ces tâches maintenant, vous pourrez toujours revenir à
+cet écran d'aide en cliquant deux fois (c'est-à-dire en appuyant sur
+le bouton gauche de la souris et en le relâchant rapidement deux fois)
+sur l'icône Configuration_de_départ de l'\k(Ecran d'aide^DesktopMgr/helpdesk.hlp^Présentation du bureau d'aide.).
+
+Cependant, même si vous décidez de pas accomplir toutes les autres
+tâches, nous vous recommandons d'exécuter la première tâche de cette
+liste, "Création des disquettes de reprise d'urgence".
+
+Remarque : si vous cliquez sur un des éléments de la liste suivante,
+et que vous décidez de revenir à cet écran d'aide, cliquez sur le
+bouton Backtrack figurant en haut de l'écran.
+
+\to\t\k(Création des disquettes de reprise d'urgence)
+\to\t\k(Augmentation de la résolution de votre écran)
+\to\t\k(Configuration de votre système en vue de la mise en réseau TCP/IP)
+\to\t\k(Configuration de votre système en vue de la mise en réseau des connexions)
+\to\t\k(Configuration de votre système en vue de l'envoi de courrier à des utilisateurs sur d'autres réseaux)
+\to\t\k(Configuration d'une imprimante)
+\to\t\k(Installation d'applications UNIX)
+\to\t\k(Installation de DOS et Windows)
+\to\t\k(Configuration de votre système en vue de l'accès à NetWare)
+\to\t\k(Création de bandes de reprise d'urgence)
+
+Lorsque vous aurez terminé votre première configuration, nous vous
+recommandons de lire la présentation générale du système. Cliquez sur
+\k(Introduction au Bureau UnixWare^DesktopMgr/desktop.hlp^Introduction au Bureau UnixWare).
+
+Remarque : pour obtenir une liste des marques déposées mentionnées
+dans ce système d'aide, cliquez sur \k(Marques déposées^DesktopMgr/trademark.hlp^Marques commerciales).
+
+
+^1^Création des disquettes de reprise d'urgence
+^$20
+Création des disquettes de reprise d'urgence
+
+La disquette de reprise d'urgence est adaptée à votre système. Si ce
+dernier était endommagé, cette disquette vous permettrait de restaurer
+le système UnixWare de telle sorte qu'il vous soit possible de le
+réparer.
+
+Pour obtenir des instructions concernant les disquettes de reprise
+d'urgence, reportez-vous à "Reprise en cas d'incident" dans le manuel
+du propriétaire système.
+
+Pour créer une disquette de sauvegarde maintenant, cliquez sur 
+\s(Créer disquette de sauvegarde^/usr/X/bin/xterm -t "`gettxt dtfirst2:10 \"Créer disquette de sauvegarde\"`" -E $XWINHOME/adm/dtexec -P root su root -c "'/sbin/emergency_disk -g diskette1'").
+
+^1^Augmentation de la résolution de votre écran
+^$30
+Augmentation de la résolution de votre écran
+
+Vous pouvez changer la résolution de votre écran pour augmenter le
+volume d'informations affichables sur votre écran et aussi pour
+augmenter le nombre de couleurs utilisées par le système.
+
+Pour plus d'informations, cliquez sur \k(Configuration de l'affichage^dtadmin/video.hlp^Configuration de l'affichage).
+
+Pour améliorer la résolution de votre affichage maintenant, cliquez
+sur \s(Configuration de l'affichage^/sbin/tfadmin gsetvideo -p || /usr/bin/gettxt dtfirst2:11 "Impossible d'améliorer la résolution de votre affichage." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Configuration de votre système en vue de la mise en réseau TCP/IP
+^$40
+Configuration de votre système en vue de la mise en réseau TCP/IP
+
+Si vous n'avez pas configuré le protocole TCP/IP (Transmission Control
+Protocol/Internet Protocol) durant l'installation initiale ou si votre
+environnement ne comprend pas un serveur bootp (informez-vous auprès
+de votre administrateur système), vous devez configurer TCP/IP pour
+pouvoir envoyer du courrier à des utilisateurs d'autres systèmes et
+pour avoir accès à des imprimantes associées à d'autres systèmes UNIX.
+
+Vous souhaiterez peut-être aussi configurer l'accès à un serveur DNS
+(Domain Name Service), un serveur NIS (Network Information Service),
+un routeur de réseau, etc. Vous pouvez exécuter toutes ces tâches de
+configuration, y compris la configuration de TCP/IP, au moyen de la
+fonction Configuration d'Internet.
+
+
+Pour plus d'informations, cliquez sur \k(Configuration d'Internet^dtadmin/inet.hlp^Configuration d'Internet).
+
+Pour configurer la gestion de réseau TCP/IP maintenant, cliquez sur
+\s(Configuration de TCP/IP^/sbin/tfadmin inet || /usr/bin/gettxt dtfirst2:12 "Impossible d'appeler la configuration de la gestion de réseau TCP/IP." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Configuration de votre système en vue de la mise en réseau des connexions
+^$50
+Configuration de votre système en vue de la mise en réseau des connexions
+
+Si vous devez accéder via un modem à un autre système connecté au
+réseau téléphonique (par exemple, vous êtes situé dans un bureau
+éloigné et vous devez vous connecter au site principal), vous devez
+configurer votre système en vue de la mise en réseau des connexions.
+
+Pour plus d'informations, cliquez sur \k(Configuration des connexions^dtadmin/DialMgr.hlp^Configuration de connexion).
+
+Pour configurer votre système en vue de la gestion des connexions via
+un modem maintenant, cliquez sur
+\s(Configuration de la gestion des connexions^/sbin/tfadmin dialup || /usr/bin/gettxt dtfirst2:13 "Impossible d'appeler la configuration de la gestion des connnexions." | /usr/X/desktop/rft/dtmsg).
+
+^1^Configuration de votre système en vue de l'envoi de courrier à des utilisateurs sur d'autres réseaux
+^$60
+Configuration de votre système en vue de l'envoi de courrier à des utilisateurs sur d'autres réseaux
+
+Si vous souhaitez configurer votre système pour contacter un serveur
+de courrier qui puisse envoyer du courrier à des systèmes UNIX
+figurant sur d'autres réseaux, vous devez utiliser la fonction
+Configuration du courrier pour configurer votre courrier. Pour de plus
+amples informations, cliquez sur \k(Configuration du courrier^Mail_Setup/Mail_Setup.hlp^Configuration courrier).
+
+Pour configurer votre courrier maintenant, cliquez sur
+\s(Configuration du courrier^/sbin/tfadmin Mail_Setup || /usr/bin/gettxt dtfirst2:14 "Impossible de configurer courrier." | /usr/X/desktop/rft/dtmsg).
+
+Si votre système est un Application Server et que vous souhaitez
+qu'il serve de passerelle entre les utilisateurs du courrier UNIX et
+les utilisateurs du courrier MHS (Message Handling Service), vous
+devez faire appel à Configuration MHS pour configurer le courrier.
+Pour plus d'informations, cliquez sur \k(Configuration_MHS^MHS_Setup/MHS_Setup.hlp^Configuration MHS).
+
+Pour configurer une passerelle MHS maintenant, cliquez sur
+\s(Configuration de la passerelle MHS^/sbin/tfadmin MHS_Setup || /usr/bin/gettxt dtfirst2:15 "Impossible de configurer une passerelle MHS." | /usr/X/desktop/rft/dtmsg).
+
+^1^Configuration d'une imprimante
+^$70
+Configuration d'une imprimante
+
+Avant de pouvoir envoyer des requêtes d'impression à une imprimante
+locale ou à distance, vous devez configurer l'accès à cette
+imprimante.
+
+Pour plus d'informations, voir \k(Configuration des imprimantes^dtadmin/Printer_Setup.hlp^Configuration des imprimantes).
+
+Pour configurer une imprimante maintenant, cliquez sur
+\s(Configuration de l'imprimante^/sbin/tfadmin prtsetup -o || /usr/bin/gettxt dtfirst2:16 "Impossible de configurer une imprimante." | /usr/X/desktop/rft/dtmsg).
+
+^1^Installation d'applications UNIX
+^$80
+Installation d'applications UNIX
+
+Vous souhaiterez peut-être installer d'autres applications ou paquets
+complémentaires UNIX sur votre système, une fois l'installation
+initiale d'UnixWare effectuée. Par exemple, vous pouvez installer le
+paquet ASdocs de façon à avoir accès à l'ensemble de la documentation
+en ligne relative au UnixWare Application Server.
+
+Pour plus d'informations, cliquez sur
+\k(Programme d'installation d'applications^dtadmin/App_Installer.hlp^Installateur d'applications).
+
+Pour installer une application UNIX maintenant, cliquez sur
+\s(Installation d'applications UNIX^/sbin/tfadmin PackageMgr || /usr/bin/gettxt dtfirst2:17 "Impossible d'installer une application UNIX." | /usr/X/desktop/rft/dtmsg).
+
+Remarque : vous ne pouvez pas utiliser le Programme d'installation
+d'applications pour ajouter des applications DOS ou Windows. Voir
+\k(Installation de DOS et Windows).
+
+^1^Installation de DOS et Windows
+^$90
+Installation de DOS et Windows
+
+Si vous souhaitez installer DOS ou Windows ou l'une de leurs
+applications sur votre système UnixWare, vous devez accéder à un
+environnement DOS en \d(cliquant deux fois ^cliquer deux fois) sur
+l'icône Win_Instal ou DOS.
+
+Pour plus d'informations, voir "Utilisation de DOS et Windows" dans le
+manuel de l'utilisateur du Bureau.
+
+
+^1^Configuration de votre système en vue de l'accès à NetWare
+^$100
+Configuration de votre système en vue de l'accès à NetWare
+
+Si vous avez accès à des serveurs NetWare, vous pouvez optimiser votre
+interfonctionnement avec NetWare en reconfigurant les paramètres du
+protocole de mise en réseau NetWare IPX/SPX. Par exemple, si votre
+système comporte plusieurs cartes réseau, vous pouvez les configurer
+en vue de la mise en réseau NetWare et du routage IPX NetWare.
+
+Vous pouvez également définir le statut des piles de réseau IPX/SPX
+NetWare de telle sorte que ces dernières soit testées et contrôlées à
+partir d'un autre système.
+
+Pour plus d'informations, voir \k(Configuration NetWare^NetWare_Setup/NetWare_Setup.hlp^Configuration NetWare).
+
+Pour configurer l'accès à NetWare maintenant, cliquez sur
+\s(Configuration de l'accès à NetWare^/sbin/tfadmin nwsetup || /usr/bin/gettxt dtfirst2:18 "Impossible de configurer l'accès à NetWare." | /usr/X/desktop/rft/dtmsg).
+
+^1^Création de bandes de reprise d'urgence
+^$110
+Création de bandes de reprise d'urgence
+
+Une fois tous les produits complémentaires et toutes les applications
+installés, sécurisez votre système en créant des bandes de reprise
+d'urgence.
+
+Pour obtenir des instructions concernant la création des bandes de
+reprise d'urgence, voir "Reprise en cas d'incident" dans le manuel du
+propriétaire système.
+
+Remarque : si vous avez installé une version mise à jour, vous devez
+aussi créer une sauvegarde complète de votre système. Voir
+\k(Sauvegarde-Restauration^dtadmin/backup.hlp^Sauvegarde-Restauration).
+

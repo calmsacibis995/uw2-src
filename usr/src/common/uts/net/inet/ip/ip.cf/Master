@@ -1,0 +1,10 @@
+#ident	"@(#)kern:net/inet/ip/ip.cf/Master	1.7"
+#ident	"$Header: $"
+$version 2
+$depend route inet icmp
+$interface ddi 6mp
+$interface base
+# non-conforming symbols:
+#   FSPIN_LOCK FSPIN_UNLOCK time_mutex
+# non-conforming due to inline expansion
+ip	ip	LSock	0	0	32

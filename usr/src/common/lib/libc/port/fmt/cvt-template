@@ -1,0 +1,579 @@
+#ident	"@(#)libc-port:fmt/cvt-template	1.10"	/* from the template file */
+$I	/* from the building program */
+/*CVT-IDENT*/
+
+/*
+* $O -- Generated floating to string conversion functions.
+*
+* This code assumes a two's-complement representation for negative integers
+* and that a right-shift of a negative quantity preserves the values of the
+* bits below the sign bit (whether it fills with 1s or 0s does not matter).
+*
+* The algorithm partitions the significand bits from the incoming floating
+* value into a series of longs (w1, w2, and so on--one more than is needed
+* to hold all the bits of the significand), each of which initially holds
+* $W-bits.  (The next-to-last long will have extra low-order 0 bits if the
+* significand is not a multiple of $W bits.)  The unbiased binary exponent
+* is kept in exp2.  The binary point is just above the $W bits of w1.
+*
+* Once the floating value is repackaged as a normalized series of $W-bit
+* longs, the value is multiplied by a power of 10 chosen so that no more
+* than a long's worth of integer value can be extracted by a shift--a
+* divide by a power of two--so that the remaining floating value has a
+* binary exponent of zero.  This integer value is then converted to a
+* sequence of decimal digits.
+*
+* If enough digits have been produced (at least one more than originally
+* requested), the result is appropriately rounded (see FLT_ROUNDS) and
+* returned.  Otherwise, the algorithm continues to multiply the remaining
+* floating value by 10^$F and appending $F more decimal digits to the result
+* until enough digits are produced.
+*
+* The multiplications are done through use of up to three precomputed tables
+* of binary floating powers of 10.  The multiplies use w<k> to contain the
+* carry into w<k-1>.  This is why only $W bits are held initially by each
+* long: each long must be able to hold values up to 2^(2+2*$W)-1.  Each table
+* also holds $W+1 bits in its highest-order packet as this gives one more
+* bit of precision to the precomputed values without affecting the algorithm.
+*
+* After each multiplication step, the binary point is now just above 2*$W
+* bits in w1.  (And, w1 can have more than 2*$W bits due to the additions
+* and the extra bit in the precomputed values.)  Generally, the extra bits
+* are left in w1 unless further multiplies are to be performed.
+*
+* The multiplications for the fractional digits are performed with one less
+* packet since at least 2*$W bits of significand have already been removed.
+* Moreover, the generated code knows how many nonzero packets there are in
+* 10^$F, and does not waste time performing multiplies by zero.
+*/
+#include "synonyms.h"
+#include <stdio.h>
+#include <stdarg.h>
+#include <limits.h>
+#include <float.h>
+#include <values.h>
+#include "stdiom.h"
+#include "format.h"
+#include "qstr.h"
+
+#define BIT(n)	((Ulong)1 << (n))
+#define LOW(n)	(~(~(Ulong)0 << (n)))
+#define HIGH(n)	(~(~(Ulong)0 >> (n)))
+
+#define WSIZE	$W
+#define WMASK	LOW(WSIZE)
+
+#define LOG2TO10(x)	(((x) * 30103L + 50000000L) / 100000L - 500)
+
+#if DBL_MANT_DIG != \
+/*CVTD-SIGNIFSIZE*/
+ #error "CVTD-SIGNIFSIZE != DBL_MANT_DIG"
+#endif
+
+#define DBL_NDIG_MAX	(3 + LOG2TO10(\
+/*CVTD-SIGNIFSIZE*/))
+
+#if DBL_NDIG_MAX > NDIG_DEC
+ #error "NDIG_DEC from format.h is too small for DBL_NDIG_MAX"
+#endif
+
+#if NDIG_EXP - 2 < LOG2TO10(\
+/*CVTD-EXPSIZE*/)
+ #error "NDIG_EXP from format.h is too small for CVTD-EXPSIZE"
+#endif
+
+#ifndef NO_LONG_DOUBLE
+ #if LDBL_MANT_DIG != \
+/*CVTL-SIGNIFSIZE*/
+  #error "CVTL-SIGNIFSIZE != LDBL_MANT_DIG"
+ #endif
+
+ #define LDBL_NDIG_MAX	(3 + LOG2TO10(\
+/*CVTL-SIGNIFSIZE*/))
+
+ #if LDBL_NDIG_MAX > NDIG_DEC
+  #error "NDIG_DEC from format.h is too small for LDBL_NDIG_MAX"
+ #endif
+
+ #if NDIG_EXP - 2 < LOG2TO10(\
+/*CVTD-EXPSIZE*/)
+  #error "NDIG_EXP from format.h is too small for CVTL-EXPSIZE"
+ #endif
+#endif /*NO_LONG_DOUBLE*/
+
+/*CVT-FILEDECL*/
+
+/*CVT-GEN-TABLES*/
+
+#define LONGDIGITS	($L)	/* digits in scaled integer */
+#define FRACDIGITS	($F)	/* digits in scaled fraction */
+
+static Uchar *
+#ifdef __STDC__
+hexstr(Cvt *cp, register Uchar *np)
+#else
+hexstr(cp, np)Cvt *cp; register Uchar *np;
+#endif
+{
+	register Uchar *bp;
+	register int n;
+	Uchar *ep;
+
+	n = cp->ndig;
+	np += n;		/* one past last nibble */
+	if (cp->len > n)	/* round to fewer (hex) digits */
+	{
+		Uchar *src = np - n;
+
+#ifndef NO_FLT_ROUNDS
+		if (FLT_ROUNDS != 1)	/* not to nearest */
+		{
+			/*
+			* 2 = round toward +inf, 3 = round toward -inf.
+			*/
+			if (FLT_ROUNDS - 2 == cp->sign)
+			{
+				if (*np == 0x0)
+					goto rnd_ifnonzero;
+				goto round;
+			}
+		}
+		else
+#endif /*NO_FLT_ROUNDS*/
+		if (*np > 0x8)
+		{
+		round:;
+			do
+			{
+				*np = 0;
+				if (np == src)	/* all 0xf's */
+				{
+					*--src = 0x1; /* needs extra byte */
+					cp->decpt += 4;
+					break;
+				}
+			} while (++*--np > 0xf);
+			np = src + n;
+		}
+		else if (*np == 0x8)
+		{
+#ifdef _IEEE
+			if ((np[-1] & 0x1) != 0)
+				goto round;
+#endif
+		rnd_ifnonzero:;
+			ep = src + cp->len;
+			while (--ep > np)
+			{
+				if (*ep != 0x0)
+					goto round;
+			}
+		}
+	}
+	/*
+	* Copy and convert the nibble values into hex digits,
+	* ignoring low-order 0s.
+	*/
+	bp = 0;		/* these three are probably changed below */
+	ep = cp->buf;
+	cp->len = 0;
+	do
+	{
+		if (*--np == 0)
+		{
+			if (bp != 0)
+				*--bp = '0';
+			continue;
+		}
+		if (bp == 0)
+		{
+			bp = ep = cp->buf + n;
+			cp->len = n;
+		}
+		if (cp->mode & CVT_CAPS)
+			*--bp = _str_uc_hex[*np];
+		else
+			*--bp = _str_lc_hex[*np];
+	} while (--n != 0);
+	return ep;
+}
+
+Uchar *
+#ifdef __STDC__
+_cvt(register Cvt *cp)	/* convert double to digit string */
+#else
+_cvt(cp)register Cvt *cp;
+#endif
+{
+/*CVTD-GEN-DECL*/
+/*CVTD-DECL*/
+	Uchar *bp, *ep;	/* start and 1-past end of digits */
+	int exp2;	/* unbiased binary exponent */
+	int scale;	/* multiply first by 10^scale, then normalize by it */
+	int intdigs;	/* targetted number of digits for integer portion */
+
+	/*
+	* Convert hardware floating double precision format into our
+	* internal WSIZE/packet extended range integer + exponent form.
+	*
+	* Sets cp->sign, handles zero and special cases like IEEE 754
+	* infinities and NaNs, and also CVT_A mode.
+	*/
+/*CVTD-EXPLODE*/
+	/*
+	* Estimate decpt, the number of decimal digits before the
+	* decimal point.  Bias toward an underestimate.
+	*/
+	cp->decpt = LOG2TO10(exp2 - 1) + 1;
+	if (cp->mode & CVT_F && (cp->ndig += cp->decpt) < 0)
+		cp->ndig = 0; /* can't ask for negative digits */
+	/*
+	* Get the first long's worth of digits.
+	* Request either the most that's safe for a long
+	* or at least one more than requested.
+	*/
+	if ((intdigs = cp->ndig + 1) > LONGDIGITS)
+		intdigs = LONGDIGITS;
+	scale = intdigs - cp->decpt;
+/*CVTD-GEN-MULT:scale*/
+	/*
+	* The binary point is now just below BIT(2*WSIZE) in w1.
+	* There are at least 2*WSIZE meaningful bits in w1.  Each
+	* other w<i> has WSIZE meaningful bits.  The above multiply
+	* by 10^scale has produced a value such that the magnitude
+	* of exp2 is less than <longsize>-1.
+	*
+	* Thus the integer value can be extracted from w1 (and,
+	* possibly, w2), as determined by the relative values of
+	* exp2 and 2*WSIZE.
+	*
+	* Leave the integer to convert in w1; remove any used bits
+	* from the rest of the w<i>.  If any bits are unused from w1,
+	* they are stored in w$E (which now is otherwise unused).
+	*/
+	if ((scale = exp2 - 2 * WSIZE) < 0)
+	{
+		w$E = w1 & ((1 << -scale) - 1);
+		w1 >>= -scale;
+	}
+	else if (scale > 0)
+	{
+		w1 <<= scale;
+		w1 |= w2 >> (WSIZE - scale);
+		w2 &= WMASK >> scale;
+	}
+	/*
+	* Convert to a digit sequence.
+	* Adjust if the number of digits generated was not as desired.
+	*/
+	ep = &cp->buf[2 + intdigs];
+#ifdef _ULTOS
+	bp = ep;
+	_ULTOS(bp, w1);
+#else
+	bp = _ultos(ep, w1);
+#endif
+	if ((cp->len = ep - bp) != intdigs)
+	{
+		intdigs = cp->len - intdigs;
+		cp->decpt += intdigs;
+		if (cp->mode & CVT_F)
+			cp->ndig += intdigs;
+	}
+	/*
+	* Check whether more digits are needed.
+	* Don't permit too many to be asked for.
+	*/
+	if (cp->len > cp->ndig)
+		goto chkrnd;
+	else if (cp->ndig > DBL_NDIG_MAX)
+		cp->ndig = DBL_NDIG_MAX;
+	/*
+	* Need more; we'll be dealing with the fractional part only from
+	* here on.  Do a single multiply with fewer packets for each.
+	* First: renormalize from initial scaling and extraction.
+	*/
+/*CVTD-GEN-MORE:scale*/
+	for (;;)
+	{
+/*CVTD-GEN-MULT*/
+		/*
+		* Change w1 to be the integer that represents the
+		* next fractional portion of the number.
+		*/
+#if $B != 2 * WSIZE
+#   if $B < 2 * WSIZE
+		w$E = w1 & ((1 << (2 * WSIZE - $B)) - 1);
+		w1 >>= (2 * WSIZE - $B);
+#   else
+		w1 <<= ($B - 2 * WSIZE);
+		w1 |= w2 >> (3 * WSIZE - $B);
+		w2 &= WMASK >> ($B - 2 * WSIZE);
+#   endif
+#endif
+	    {
+		register Uchar *p = &bp[cp->len += FRACDIGITS];
+
+#ifdef _ULTOS
+		_ULTOS(p, w1);
+#else
+		p = _ultos(p, w1);
+#endif
+		while (p > ep)
+			*--p = '0';
+		ep += FRACDIGITS;
+	    }
+		if (cp->len > cp->ndig)
+			goto chkrnd;
+/*CVTD-GEN-MORE*/
+	}
+chkrnd:;
+    {
+	register Uchar *p = &bp[cp->ndig];	/* one past requested digits */
+
+	/*
+	* Round (as appropriate) to the requested number of digits.
+	*/
+#ifndef NO_FLT_ROUNDS
+	if (FLT_ROUNDS != 1)	/* not to nearest */
+	{
+		/*
+		* 2 = round toward +inf, 3 = round toward -inf.
+		*/
+		if (FLT_ROUNDS - 2 == cp->sign)
+		{
+			if (*p == '0')
+				goto rnd_ifnonzero;
+			goto round;
+		}
+	}
+	else
+#endif /*NO_FLT_ROUNDS*/
+	if (*p > '5')
+	{
+	round:;
+		do
+		{
+			*p = '0';
+			if (p == bp)	/* all 9's */
+			{
+				*--bp = '1';
+				cp->decpt++;
+				if (cp->mode & CVT_F)
+					cp->ndig++;
+				break;
+			}
+		} while (++*--p > '9');
+		p = &bp[cp->ndig];
+	}
+	else if (*p == '5')
+	{
+#ifdef _IEEE
+		if ((p[-1] & 0x1) != ('0' & 0x1)) /* last digit is odd */
+			goto round;
+#endif
+	rnd_ifnonzero:;
+		while (--ep > p)
+		{
+			if (*ep != '0')
+				goto round;
+		}
+/*CVTD-GEN-ZERO*/
+	}
+	*p = '\0';
+    }
+	cp->len = cp->ndig;
+	return bp;
+}
+
+#ifndef NO_LONG_DOUBLE
+
+Uchar *
+#ifdef __STDC__
+_cvtl(register Cvt *cp)
+#else
+_cvtl(cp)register Cvt *cp;
+#endif
+{
+/*CVTL-GEN-DECL*/
+/*CVTL-DECL*/
+	Uchar *bp, *ep;	/* start and 1-past end of digits */
+	int exp2;	/* unbiased binary exponent */
+	int scale;	/* multiply first by 10^scale, then normalize by it */
+	int intdigs;	/* targetted number of digits for integer portion */
+
+	/*
+	* Convert hardware floating long double precision format into our
+	* internal WSIZE/packet extended range integer + exponent form.
+	*
+	* Sets cp->sign, handles zero and special cases like IEEE 754
+	* infinities and NaNs, and also CVT_A mode.
+	*/
+/*CVTL-EXPLODE*/
+	/*
+	* Estimate decpt, the number of decimal digits before the
+	* decimal point.  Bias toward an underestimate.
+	*/
+	cp->decpt = LOG2TO10(exp2 - 1) + 1;
+	if (cp->mode & CVT_F && (cp->ndig += cp->decpt) < 0)
+		cp->ndig = 0; /* can't ask for negative digits */
+	/*
+	* Get the first long's worth of digits.
+	* Request either the most that's safe for a long
+	* or at least one more than requested.
+	*/
+	if ((intdigs = cp->ndig + 1) > LONGDIGITS)
+		intdigs = LONGDIGITS;
+	scale = intdigs - cp->decpt;
+/*CVTL-GEN-MULT:scale*/
+	/*
+	* The binary point is now just below BIT(2*WSIZE) in w1.
+	* There are at least 2*WSIZE meaningful bits in w1.  Each
+	* other w<i> has WSIZE meaningful bits.  The above multiply
+	* by 10^scale has produced a value such that the magnitude
+	* of exp2 is less than <longsize>-1.
+	*
+	* Thus the integer value can be extracted from w1 (and,
+	* possibly, w2), as determined by the relative values of
+	* exp2 and 2*WSIZE.
+	*
+	* Leave the integer to convert in w1; remove any used bits
+	* from the rest of the w<i>.  If any bits are unused from w1,
+	* they are stored in w$M (which now is otherwise unused).
+	*/
+	if ((scale = exp2 - 2 * WSIZE) < 0)
+	{
+		w$M = w1 & ((1 << -scale) - 1);
+		w1 >>= -scale;
+	}
+	else if (scale > 0)
+	{
+		w1 <<= scale;
+		w1 |= w2 >> (WSIZE - scale);
+		w2 &= WMASK >> scale;
+	}
+	/*
+	* Convert to a digit sequence.
+	* Adjust if the number of digits generated was not as desired.
+	*/
+	ep = &cp->buf[2 + intdigs];
+#ifdef _ULTOS
+	bp = ep;
+	_ULTOS(bp, w1);
+#else
+	bp = _ultos(ep, w1);
+#endif
+	if ((cp->len = ep - bp) != intdigs)
+	{
+		intdigs = cp->len - intdigs;
+		cp->decpt += intdigs;
+		if (cp->mode & CVT_F)
+			cp->ndig += intdigs;
+	}
+	/*
+	* Check whether more digits are needed.
+	* Don't permit too many to be asked for.
+	*/
+	if (cp->len > cp->ndig)
+		goto chkrnd;
+	else if (cp->ndig > LDBL_NDIG_MAX)
+		cp->ndig = LDBL_NDIG_MAX;
+	/*
+	* Need more; we'll be dealing with the fractional part only from
+	* here on.  Do a single multiply with fewer packets for each.
+	* First: renormalize from initial scaling and extraction.
+	*/
+/*CVTL-GEN-MORE:scale*/
+	for (;;)
+	{
+/*CVTL-GEN-MULT*/
+		/*
+		* Change w1 to be the integer that represents the
+		* next fractional portion of the number.
+		*/
+#if $B != 2 * WSIZE
+#   if $B < 2 * WSIZE
+		w$M = w1 & ((1 << (2 * WSIZE - $B)) - 1);
+		w1 >>= (2 * WSIZE - $B);
+#   else
+		w1 <<= ($B - 2 * WSIZE);
+		w1 |= w2 >> (3 * WSIZE - $B);
+		w2 &= WMASK >> ($B - 2 * WSIZE);
+#   endif
+#endif
+	    {
+		register Uchar *p = &bp[cp->len += FRACDIGITS];
+
+#ifdef _ULTOS
+		_ULTOS(p, w1);
+#else
+		p = _ultos(p, w1);
+#endif
+		while (p > ep)
+			*--p = '0';
+		ep += FRACDIGITS;
+	    }
+		if (cp->len > cp->ndig)
+			goto chkrnd;
+/*CVTL-GEN-MORE*/
+	}
+chkrnd:;
+    {
+	register Uchar *p = &bp[cp->ndig];	/* one past requested digits */
+
+	/*
+	* Round (as appropriate) to the requested number of digits.
+	*/
+#ifndef NO_FLT_ROUNDS
+	if (FLT_ROUNDS != 1)	/* not to nearest */
+	{
+		/*
+		* 2 = round toward +inf, 3 = round toward -inf.
+		*/
+		if (FLT_ROUNDS - 2 == cp->sign)
+		{
+			if (*p == '0')
+				goto rnd_ifnonzero;
+			goto round;
+		}
+	}
+	else
+#endif /*NO_FLT_ROUNDS*/
+	if (*p > '5')
+	{
+	round:;
+		do
+		{
+			*p = '0';
+			if (p == bp)	/* all 9's */
+			{
+				*--bp = '1';
+				cp->decpt++;
+				if (cp->mode & CVT_F)
+					cp->ndig++;
+				break;
+			}
+		} while (++*--p > '9');
+		p = &bp[cp->ndig];
+	}
+	else if (*p == '5')
+	{
+#ifdef _IEEE
+		if ((p[-1] & 0x1) != ('0' & 0x1)) /* last digit is odd */
+			goto round;
+#endif
+	rnd_ifnonzero:;
+		while (--ep > p)
+		{
+			if (*ep != '0')
+				goto round;
+		}
+/*CVTL-GEN-ZERO*/
+	}
+	*p = '\0';
+    }
+	cp->len = cp->ndig;
+	return bp;
+}
+
+#endif /*NO_LONG_DOUBLE*/

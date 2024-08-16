@@ -1,0 +1,50 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5server:display/Imakefile	1.15"
+
+#include <Server.tmpl>
+
+#define IHaveSubdirs
+
+#if Distribute_Compaq_Src
+  SVGA = vga16 vga256 qv256
+#else /*Distribute_Compaq_Src */
+  SVGA = vga16 vga256 
+#endif /*Distribute_Compaq_Src */
+
+GROUP1 = s364 mach64 p9k mach S3
+
+GROUP2 = mga
+SAMPLE = ims33x
+
+SUBDIRS = $(GROUP1) $(SVGA)
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+clean::
+	(cd os_lfb; make clean)
+
+install::
+	(cd os_lfb; make install)
+
+#if !Distribute_Compaq_Src
+install:: 
+	@if [ -d $(DESTDIR)$(DISPLIBDIR) ]; then set +x; \
+	else (set -x; $(MKDIRHIER) $(DESTDIR)$(DISPLIBDIR)); fi
+	(cd qv256/banked; ../../$(INSTALL) $(INSTLIBFLAGS) libqv256bnk.so.2 $(DESTDIR)$(DISPLIBDIR));
+	(cd $(DESTDIR)$(DISPLIBDIR); $(RM) libqv256bnk.so; $(LN) libqv256bnk.so.2 libqv256bnk.so)
+	(cd qv256/common; ../../$(INSTALL) $(INSTLIBFLAGS) libqv256.so.2 $(DESTDIR)$(DISPLIBDIR));
+	(cd $(DESTDIR)$(DISPLIBDIR); $(RM) libqv256.so; $(LN) libqv256.so.2 libqv256.so)
+	(cd qv256/common; ../../$(INSTALL) $(INSTALLFLAGS) qv.vinfo $(DESTDIR)$(DISPLIBDIR))
+	(cd qv256/common; ../../$(INSTALL) $(INSTALLFLAGS) qv1024.256dat $(DESTDIR)$(DISPLIBDIR))
+	(cd qv256/common; ../../$(INSTALL) $(INSTALLFLAGS) qv1280.256dat $(DESTDIR)$(DISPLIBDIR))
+	(cd qv256/lfb; ../../$(INSTALL) $(INSTLIBFLAGS) libqv256lfb.so.2 $(DESTDIR)$(DISPLIBDIR));
+	(cd $(DESTDIR)$(DISPLIBDIR); $(RM) libqv256lfb.so; $(LN) libqv256lfb.so.2 libqv256lfb.so)
+#endif

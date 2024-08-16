@@ -1,0 +1,17 @@
+%% Networking Parameters
+%%% Transmission Control Protocol (TCP) Parameters
+% TCPTTL
+Specifies the IP (Internet Protocol) time-to-live value
+requested by tcp
+(this is, 
+the maximum number of intermediate hops a packet can go through).
+The default of 64 should be satisfactory,
+but it will need to be increased
+if connections are made to machines
+that are more than 64 hops away.
+% TCPWINDOW
+Specifies the receive window size to advertise to peers;
+that is, the limit on data buffered by tcp per connection.
+Default is 4096.
+With 16-bit Ethernet boards,
+this value should probably be raised to 24576.

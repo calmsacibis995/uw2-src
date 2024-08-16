@@ -1,0 +1,459 @@
+#ident	"@(#)proto:desktop/menus/nond_init	1.37"
+
+function nond_init
+{
+	[ -n "$SH_VERBOSE" ] && set -x
+	# initialize for non-destructive install possibilities
+	typeset _t WAIT_WIN
+	NOND='no'
+
+	[ "$DISK0_WAS_INSANE" = YES ] && return 1
+	[ -s /tmp/swap.rem ] && $(</tmp/swap.rem)
+	for swap_disk in 0 1
+	do
+		prtvtoc ${CHAR_DISK_NODES[swap_disk]} >/tmp/vtoc 2> /dev/null
+		grep SWAP /tmp/vtoc | IFS=':	 ' read a swap_slice b
+		[ -z "$swap_slice" ] || break
+	done
+	call unlink /tmp/vtoc
+	[ -n "$swap_slice" ] || return 1
+	/usr/sbin/swap -a ${BLOCK_DISK_NODES[swap_disk]%s0}s${swap_slice} || return 1
+	echo /usr/sbin/swap -d ${BLOCK_DISK_NODES[swap_disk]%s0}s${swap_slice} >/tmp/swap.rem
+	chmod 755 /tmp/swap.rem
+	$SILENT_INSTALL && return 1
+	display "$GET_TOOLS_WAIT"
+	WAIT_WIN=$CURWIN
+	footer "$GENERIC_WAIT_FOOTER"
+	get_fsmods
+	wclose $WAIT_WIN
+	mountloop -r ${BLOCK_DISK_NODES[0]%s0}s1 $HDROOT || return 1
+	if [ -f $HDROOT/$UNIX_REL ]
+	then
+		REL_VER=$(<$HDROOT/$UNIX_REL)
+	else
+		REL_VER=""
+	fi
+	if [ "$REL_VER" = "$RELEASE	$VERSION" ] 
+	then
+		PKGINSTALL_TYPE="OVERLAY"
+		NOND="poss"
+	elif [ "$REL_VER" = "4.2	1" ]
+	then
+		$BACK_END_MANUAL || {
+			PKGINSTALL_TYPE="UPGRADE"
+			NOND="poss"
+		}
+	else
+		display "$UNKREL_EXPLAIN" -bg $MAGENTA -fg $WHITE
+		_t=$CURWIN
+		askunk_rel
+		input_handler
+		wclose $_t
+		$DESTRUCT || halt
+		return 1
+	fi
+	[ -f $HDROOT/etc/vol/volboot ] && {
+		display "$ODM_UP_EXPLAIN" -below 6
+		EXWIN=$CURWIN
+		typeset OIFS="$IFS"
+		IFS="$nl"
+		set -A ODM_UP_OPT ${ODM_UP_CHOOSE}
+		IFS="$OIFS"
+		CHOOSE_FOOTER="$GENERIC_CHOOSE_FOOTER"
+		ODM_UP=$ODM_UP_CHOOSE
+		choose -f -e -help "helpwin odm.select" -exit ODM_exit -winparms "-below 0 -fg $COMBO2_FG -bg $COMBO2_BG" "$ODM_UP" "${ODM_UP_OPT[@]}"
+
+		input_handler
+		wclose $EXWIN
+		$DESTRUCT && {
+			NOND="no"
+			return 1
+		}
+		$CANCELIT && halt
+		ODM_UP=true
+		MESSAGE="$ODMINST_INSERT_FLOPPY"
+		DONE=0
+		ODM_FLOP_ERR=0
+		while [ ${DONE} -eq 0 ]
+		do
+			wclose $CURWIN
+			footer "$WELCOME_FOOTER"
+			if [ ${ODM_FLOP_ERR} != 0 ]
+			then
+				display -w "${MESSAGE}" -bg $ERROR_BG -fg $ERROR_FG
+			else
+				display -w "${MESSAGE}"
+			fi
+			input_handler
+			wclose $CURWIN
+			footer 
+
+		#
+		#  To make sure we have the right diskette
+		#  in the drive for ODM upgrade, read the ID
+		#  string.  If it's set right, go on.
+		#
+			sh_mount -r -F s5 /dev/dsk/f0t /flpy2 && {
+				read IDSTRING < /flpy2/id
+				if [ "${IDSTRING}" = "ODM 1.1 Upgrade" ]
+				then
+					DONE=1
+				else
+					sh_umount /flpy2
+				fi
+			}
+			MESSAGE=${ODMINST_INSERT_AGAIN}${ODMINST_INSERT_FLOPPY}
+			ODM_FLOP_ERR=1
+		done
+#ODM upgrade stuff here
+		display "$ODM_WAIT"
+		mkdir /etc/vx
+		cp /flpy2/odm_prepare /etc/vx
+		/etc/vx/odm_prepare
+		sh_umount /flpy2
+		wclose $CURWIN
+		display -w "$ODMINST_REMOVE_FLOPPY"
+		input_handler
+	}
+	error=0
+	$ODM_UP || while read special fsckdev mountp fstyp fsckpass automnt mountopts macceiling
+	do
+		case $mountp in
+		/)
+			[ "$fstyp" = "sfs" ] && error=1
+			ROOTFS=$fstyp
+			;;
+		/usr | /home )
+			if [ "$automnt" = "yes" ]
+			then
+				[ $PKGINSTALL_TYPE = "UPGRADE" ] && {
+					echo $special | grep "c0" >/dev/null && special=/dev/dsk/c0b0${special#/dev/dsk/c0}
+					echo $special | grep "c1" >/dev/null && special=/dev/dsk/c1b0${special#/dev/dsk/c1}
+					echo $fsckdev | grep "c0" >/dev/null && fsckdev=/dev/rdsk/c0b0${fsckdev#/dev/rdsk/c0}
+					echo $fsckdev | grep "c1" >/dev/null && fsckdev=/dev/rdsk/c1b0${fsckdev#/dev/rdsk/c1}
+				}
+				echo $special\\t$fsckdev\\t$mountp\\t$fstyp\\t$fsckpass\\t$automnt\\t$mountopts\\t$macceiling >>/tmp/new.vfstab
+				sh_mount -F$fstyp -r $special $HDROOT/$mountp || error=1
+			fi
+			;;
+		/stand | /var )
+			[ $PKGINSTALL_TYPE = "UPGRADE" ] && {
+				echo $special | grep "c0" >/dev/null && special=/dev/dsk/c0b0${special#/dev/dsk/c0}
+				echo $special | grep "c1" >/dev/null && special=/dev/dsk/c1b0${special#/dev/dsk/c1}
+				echo $fsckdev | grep "c0" >/dev/null && fsckdev=/dev/rdsk/c0b0${fsckdev#/dev/rdsk/c0}
+				echo $fsckdev | grep "c1" >/dev/null && fsckdev=/dev/rdsk/c1b0${fsckdev#/dev/rdsk/c1}
+			}
+				echo $special\\t$fsckdev\\t$mountp\\t$fstyp\\t$fsckpass\\t$automnt\\t$mountopts\\t$macceiling >>/tmp/new.vfstab
+			sh_mount -F$fstyp -r $special $HDROOT/$mountp || error=1
+			;;
+		*)
+			;;
+		esac
+	done <$HDROOT/etc/vfstab
+
+#Update 5 cannot be present without Update 6 for UPGRADE install
+	[ -d $HDROOT/var/sadm/pkg/update111 -a \
+	  ! -d $HDROOT/var/sadm/pkg/update112 ] && error=1
+
+#Update 7 cannot be present for UPGRADE install
+	[ -d $HDROOT/var/sadm/pkg/update113 ] && error=1
+
+#If Update 5&6 installed, special removal will have to be done
+	[ -d $HDROOT/var/sadm/pkg/update112 ] && REMOVE_UPDATE=true
+
+#If Japanese update 5 has been installed, do special removal
+	[ -d $HDROOT/var/sadm/pkg/update5j ] && REMOVE_UPDATE=true
+
+	if [ $error = 1 ]
+	then
+		display "$UNKREL_EXPLAIN" -bg $MAGENTA -fg $WHITE
+		_t=$CURWIN
+		askunk_rel
+		input_handler
+		wclose $_t
+		$DESTRUCT || halt
+		NOND="no"
+		return 1
+	else	
+		nond_space_check && return 0
+
+		eval display "\"$NOSPACE_EXPLAIN\"" -bg $MAGENTA -fg $WHITE
+		_t=$CURWIN
+		ask_nospace
+		input_handler
+		wclose $_t
+		$DESTRUCT || halt
+		NOND="no"
+		return 1
+	fi
+}
+function nond_space_check
+{
+#The following line has to be run in 'C' locale so that the decimal
+#point in the 'dfspace' output is a "." rather than a ","
+
+LANG=C chroot $HDROOT /sbin/dfspace / /usr /var >/tmp/dfs
+
+typeset -i avail=0 freespace needed root_needs=20 usr_needs=45 var_needs=5
+typeset has_usr=false i
+
+for i in  /usr /var /
+do
+	grep "^$i " /tmp/dfs|read a b c d freespace e 
+	(( freespace == 0 )) && continue
+	case $i in
+	/)
+		$has_usr || let root_needs+=usr_needs
+		(( freespace < root_needs )) && {
+			FS_BIG=$rootDESC
+			let FS_LACKS=root_needs-freespace
+			return 1
+		}
+		;;
+	/usr)
+		has_usr=true
+		(( freespace < usr_needs )) && {
+			FS_BIG=$usrDESC
+			let FS_LACKS=usr_needs-freespace
+			return 1
+		}
+		;;
+	/var)
+		(( freespace < var_needs )) && {
+			FS_BIG=$varDESC
+			let FS_LACKS=var_needs-freespace
+			return 1
+		}
+		;;
+	esac
+done
+return 0
+}
+
+function ODM_exit
+{
+	DESTRUCT=false
+	CANCELIT=false
+	if [ "$CHOICE" = "${ODM_UP_OPT[1]}" ]
+	then
+		DESTRUCT=true
+	elif [ "$CHOICE" = "${ODM_UP_OPT[2]}" ]
+	then
+		CANCELIT=true
+	fi
+}
+function ask_nospace_set
+{
+	DESTRUCT=false
+	if [ "$CHOICE" = "$NOSPACE_OPT" ]
+	then
+		DESTRUCT=true
+	fi
+}
+
+function ask_nospace
+{
+	[ -n "$SH_VERBOSE" ] && set -x
+	if [ -z "${NOSPACE_OPT}" ]
+	then
+		typeset OIFS="$IFS"
+		IFS="$nl"
+		set -A NOSPACE_OPT ${UNKREL_CHOOSE}
+		IFS="$OIFS"
+	fi
+	NOSPACE=$NOSPACE_OPT
+	CHOOSE_FOOTER="$GENERIC_FOOTER" CHOOSE_TITLE="$NOSPACE_ENTRY"
+	choose -f -e -exit 'ask_nospace_set' -winparms "-below 0 -fg $COMBO2_FG -bg $COMBO2_BG" "$NOSPACE" "${NOSPACE_OPT[@]}"
+	return
+}
+
+function askunk_rel_set
+{
+	DESTRUCT=false
+	if [ "$CHOICE" = "$UNKREL_OPT" ]
+	then
+		DESTRUCT=true
+	fi
+}
+
+function askunk_rel
+{
+	[ -n "$SH_VERBOSE" ] && set -x
+	if [ -z "${UNKREL_OPT}" ]
+	then
+		typeset OIFS="$IFS"
+		IFS="$nl"
+		set -A UNKREL_OPT ${UNKREL_CHOOSE}
+		IFS="$OIFS"
+	fi
+	UNKREL=$UNKREL_OPT
+	CHOOSE_FOOTER="$UNKREL_FOOTER" CHOOSE_TITLE="$UNKREL_ENTRY"
+	choose -f -e  -help "helpwin destruct" -exit 'askunk_rel_set' -winparms "-below 0 -fg $COMBO2_FG -bg $COMBO2_BG" "$UNKREL" "${UNKREL_OPT[@]}"
+	return
+}
+
+function pkgrm_set
+{
+	if [ "$CHOICE" = "$OBSPKG_OPT" ]
+	then
+		OBSPKG="yes"
+	else
+		OBSPKG="no"
+	fi
+	if [ "$OBSPKG" = "no" ]
+	then
+		return 1
+	fi
+}
+
+function askpkgrm
+{
+	[ -n "$SH_VERBOSE" ] && set -x
+	if [ -z "${OBSPKG_OPT}" ]
+	then
+		typeset OIFS="$IFS"
+		IFS="$nl"
+		set -A OBSPKG_OPT ${OBSPKG_CHOOSE}
+		IFS="$OIFS"
+	fi
+	OBSPKG=$OBSPKG_OPT
+	CHOOSE_FOOTER="$OBSPKG_FOOTER" CHOOSE_TITLE="$OBSPKG_ENTRY"
+	choose -f -e -exit 'pkgrm_set' -winparms "-below 0 -fg $COMBO2_FG -bg $COMBO2_BG" "$OBSPKG" "${OBSPKG_OPT[@]}"
+	return
+}
+
+function prep_for_nond
+{
+	[ -n "$SH_VERBOSE" ] && set -x
+	typeset _t i
+
+	if [ $NOND = "poss" ]
+	then
+		asknond
+		input_handler
+		if [ "$NOND" = "yes" ]
+		then
+			askautomrg
+			input_handler
+
+	#Set filesystem sizes to be what the filesystems are on the old system
+			grep "^/ " /tmp/dfs|read a b c d  e f g SLSIZE[1]  h
+			grep "^/usr " /tmp/dfs|read a b c d e f g SLSIZE[3] h
+			grep "^/var " /tmp/dfs|read a b c d  e f g SLSIZE[4] h
+
+			for i in 1 3 4
+			do
+				[ ${SLSIZE[i]} -gt 0 ] && SLTYPE[i]="on"
+			done
+
+	#Automatically set only currently-installed pkgs to be installed
+			ls $HDROOT/var/sadm/pkg >/tmp/pkgs
+			for i in $ALLPKGS
+			do
+				if grep "^$i\$" /tmp/pkgs >/dev/null 2>&1
+				then
+					let $i=1
+				else
+					let $i=0
+				fi
+			done
+
+			if (( dynatext ))
+			then
+				DOC_ROOT=/usr/doc
+				grep "^DOC_ROOT=" $HDROOT/var/sadm/pkg/dynatext/pkginfo >/tmp/dtext.tmp 2>/dev/null
+				. /tmp/dtext.tmp
+					if [ -f $HDROOT/$DOC_ROOT/lib/dtext ]
+					then
+						dtext_icon=0 #dynatext FULL installed
+					else
+						dynatext=0
+						dtext_icon=1 #dynatext studs only installed
+						grep -v "^dynatext\$" /tmp/pkgs >/tmp/pkgs.tmp
+						call unlink /tmp/pkgs
+						call rename /tmp/pkgs.tmp /tmp/pkgs 
+					fi
+			fi	
+
+			[ $PKGINSTALL_TYPE = "UPGRADE" ] && {
+		#Special cases, these packages changed names from 1.1 to 2.0
+				grep "^eth$" /tmp/pkgs >/dev/null 2>&1 && {
+					let nics=1
+					echo "nics" >>/tmp/pkgs
+				}
+				grep "^tok$" /tmp/pkgs >/dev/null 2>&1 && {
+					let nics=1
+					echo "nics" >>/tmp/pkgs
+				}
+				grep "^els$" /tmp/pkgs >/dev/null 2>&1 && {
+					let ls=1
+					echo "ls" >>/tmp/pkgs
+				}
+				grep "^nuc$" /tmp/pkgs >/dev/null 2>&1 && {
+					let nuc=0
+				}
+				[ $LANG != "C" ] &&
+				{
+					grep "^${LANG}ui" /tmp/pkgs >/dev/null 2>&1 || grep "^basej" /tmp/pkgs >/dev/null 2>&1 && {
+						let ${LANG}le=1
+						let ls=1
+						let acp=1
+						let nsu=1
+					}
+					grep "^merge" /tmp/pkgs >/dev/null 2>&1 && {
+						let ${LANG}merge=1
+						let merge=0
+						echo "${LANG}merge" >>/tmp/pkgs
+					}
+				}
+
+				OBSOLETE_PKGS="dtnet edebug flib license cmdref ddiprog ddiref fileref guiprog inetref motifref netpg nfsadmin nwapiref nwcprog nwxfrpg osapiref pdiguide progstdc sdtpg strpg sysadmin syscalls tcpadmin wdwingref xmpg xmstypg xscrnpg "
+				REMOVE_PKGS=""
+				for i in $OBSOLETE_PKGS
+				do
+					if grep "^$i\$" /tmp/pkgs >/dev/null 2>&1
+					then
+						REMOVE_PKGS="$REMOVE_PKGS $i"
+					fi
+				done
+				wclose $CURWIN
+				[ -z "$REMOVE_PKGS" ] || {
+					display "$OBSPKG_EXPLAIN" -bg $MAGENTA -fg $WHITE
+					_t=$CURWIN
+					askpkgrm
+					input_handler
+					wclose $_t
+					[ $OBSPKG = "no" ] && halt
+				}
+				MUST_REM_PKGS="frui itui deui esui els bns nuc merge"
+				if [ "$LANG" = "ja" ]
+				then
+					MUST_REM_PKGS="$MUST_REM_PKGS basej oadgkbd npsj lpj dtxtj desktopj cmdsj nucj bnsj inetj nfsj nvtj nlmsj mergej cmdrefj apirefj filerefj update6j fontj cdif libjcode libcd sonyft ankft sj3 vjeg "
+				fi
+
+				for i in $MUST_REM_PKGS
+				do
+					if grep "^$i\$" /tmp/pkgs >/dev/null 2>&1
+					then
+						REMOVE_PKGS="$REMOVE_PKGS $i"
+					fi
+				done
+			}
+			[ $PKGINSTALL_TYPE = "OVERLAY" ] && {
+				REMOVE_PKGS=""
+				for i in nuc nwnet
+				do
+					if grep "^$i\$" /tmp/pkgs >/dev/null 2>&1
+					then
+						let $i=0
+						REMOVE_PKGS="$REMOVE_PKGS $i"
+					fi
+				done
+			}
+		else
+			fix_partitions
+		fi
+	else
+		fix_partitions
+	fi
+}

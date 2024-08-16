@@ -1,0 +1,82 @@
+.pageno
+Page %d de %d
+.ul
+Installation du système UNIX
+.hhelp_ban
+Instructions
+.helpbanner
+Aide : configuration de la souris bus
+.ur
+Configuration de la souris bus
+.ll
+Entrez votre sélection.  Appuyez sur F1 pour obtenir de l'aide.
+.lr
+F1=Aide
+.top
+Pour utiliser votre souris bus, vous devez indiquer le vecteur
+d'interruption configuré pour votre carte contrôleur de souris bus. Vous
+pouvez choisir les périphériques qui ne sont pas utilisés par les autres
+périphériques connectés à votre ordinateur et connus du système UNIX.
+Vous devez également indiquer le nombre de boutons de votre souris.
+Consultez le guide d'installation pour de plus informations.
+`[ "$MSEINT" ] && echo ""`
+`[ "$MSEINT" ] && echo "Les valeurs ci-dessous décrivent une souris bus déjà configurée sur cet\nordinateur.  Si vous n'avez pas changé de souris, acceptez ces valeurs."`
+
+Entrez les renseignements suivants concernant votre souris bus.
+.form
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+`[ "${CNT}" = "1" ] && echo "2 1//${IVN1}//    Numéro du vecteur d'interruption :  //MSEINT//"`
+`[ "${CNT}" = "1" ] && echo "//Ceci est la seule option disponible//"`
+`[ "${CNT}" = "2" ] && echo "2 2//${IVN1}//${IVN2}//    Numéro du vecteur d'interruption :  //MSEINT//"`
+`[ "${CNT}" = "2" ] && echo "//Touches fléchées Gauche/Droite pour choix suivant (${CNT} options)//"`
+`[ "${CNT}" = "3" ] && echo "2 3//${IVN1}//${IVN2}//${IVN3}//    Numéro du vecteur d'interruption :  //MSEINT//"`
+`[ "${CNT}" = "3" ] && echo "//Touches fléchées Gauche/Droite pour choix suivant (${CNT} options)//"`
+`[ "${CNT}" = "4" ] && echo "2 4//${IVN1}//${IVN2}//${IVN3}//${IVN4}//    Numéro du vecteur d'interruption :  //MSEINT//"`
+`[ "${CNT}" = "4" ] && echo "//Touches fléchées Gauche/Droite pour choix suivant (${CNT} options)//"`
+#field options
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //2//3//    Nombre de boutons de la souris :  //MOUSEBUTTONS//
+#field options
+//Touches fléchées Gauche/Droite pour choix suivant (2 options)//
+#
+#
+.button
+Appliquer
+Réinitialiser
+.bottom
+Appuyez sur "TAB" pour faire passer le curseur d'un champ à un autre.
+Ensuite, placez le curseur sur "Appliquer" et appuyez sur "ENTREE" pour
+continuer.
+.help
+Pour obtenir des instructions détaillées, vous pouvez à tout moment
+appuyer sur la touche F1 (ou sur "?").
+`[ "$MSEINT" ] && echo ""`
+`[ "$MSEINT" ] && echo "Les valeurs par défaut inscrites sur cet écran sont celles d'une souris bus\nqui était reliée à votre système UNIX d'origine.  Si vous n'avez pas\nchangé de souris, acceptez ces valeurs."`
+
+VECTEUR D'INTERRUPTION
+
+Pour que votre souris bus fonctionne correctement avec le système UNIX,
+il faut indiquer à ce dernier le numéro de vecteur d'interruption
+configuré pour la carte contrôleur de la souris bus. Il est en général
+défini par le paramétrage d'un cavalier sur la carte contrôleur. Si la
+valeur entrée ici est incorrecte, la souris bus ne fonctionnera
+pas correctement.
+
+Pour plus de détails, voir le Guide d'installation.
+
+NOMBRE DE BOUTONS DE LA SOURIS
+
+Lorsque vous utilisez votre souris dans l'environnement utilisateur
+graphique du système UNIX, vous pouvez utiliser ses différents boutons
+pour exécuter diverses opérations, comme "faire glisser-déposer" des
+éléments, exécuter des doubles clics et faire apparaître des menus.
+Votre souris comporte deux ou trois boutons : entrez le chiffre
+approprié.
+.helpinst
+ECHAP=Quitter l'aide F1=Instructions 1=Page suiv. 2=Page préc.
+.hhelpinst
+ECHAP=Quitter les instructions 1=Page suiv. 2=Page préc.
+.working
+Chargement du pilote de souris...
+.end

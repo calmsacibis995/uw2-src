@@ -1,0 +1,51 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)dtcalc:Imakefile	1.12"
+
+#ifdef Release5
+#include <sv4Lib.tmpl>
+#endif
+
+           STAR = *
+
+#if defined(MacIIArchitecture) || defined(MotoR4Architecture)
+      IEEE_DEFS = -DIEEE
+#endif
+        DEFINES = $(IEEE_DEFS) $(SIGNAL_DEFINES)
+
+       INCLUDES = -I$(LIBSRC) -I$(XOLLIBSRC)
+
+DNDLIBSRC = $(LIBSRC)/DnD
+             DTLIBSRC = $(LIBSRC)/Dt
+      DTILIBSRC = $(USLCLIENTSRC)/libDtI
+          DTLIB = $(DTLIBSRC)/libDt.so
+         DTILIB = $(DTILIBSRC)/libDtI.so
+       GIZMOSRC = $(LIBSRC)/Gizmo
+       GIZMOLIB = $(GIZMOSRC)/libGizmo.so
+
+LOCAL_LIBRARIES = $(DTLIB) $(DTILIB) $(GIZMOLIB) XolClientLibs
+SYS_LIBRARIES = -lm -lgen
+
+SRCS = dtcalc.c actions.c math.c Icons.c
+OBJS = $(SRCS:.c=.o)
+
+            CMD = dtcalc
+          CLASS = DtCalc
+    APPLICATION = Calculator
+
+all::	$(CMD)
+
+ComplexProgramTarget($(CMD))
+
+InstallAppDefaults($(CLASS))
+
+InstallMsgCatalog(dtcalc)
+InstallDesktopClient($(BINDIR)/$(CMD),$(DESKTOPDIR)/Applications/$(APPLICATION))
+
+clobber:: clean

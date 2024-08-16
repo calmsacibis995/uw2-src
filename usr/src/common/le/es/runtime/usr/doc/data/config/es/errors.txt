@@ -1,0 +1,433 @@
+# $Id: errors.txt 1.47 1994/09/02 20:01:48 rll Exp $
+
+# Error database
+###################################
+# ERR_INFO	>= 0
+# ERR_WARNING	>= 2000
+# ERR_MINOR	>= 4000
+# ERR_SEVERE    >= 6000
+# ERR_FATAL     >= 8000 
+
+#### MULTI-LINE ERROR MESSAGES ARE SUPPORTED
+# Simply use '\' to "escape" the eol
+
+# global errors (0-99)
+###################################
+0000    Versión 2.0
+0001	ejecutando '%s'...
+0002	ejecutando '%s' en la línea '%d'...
+0003	advertencia
+# minor error
+0004	error
+# major error
+0005	error
+0006	error fatal
+2000	no se puede abrir el archivo '%s'
+2001	error en lectura desde archivo '%s'. Compruebe los permisos
+2002	error en escritura a archivo '%s'. Compruebe los permisos 
+2003	%s aún no soportado
+2004	error del sistema, %s
+2005	no se puede leer directorio '%s'
+2006	no se puede escribir en directorio '%s'
+2007    no se puede ejecutar el subproceso '%s'
+2008	el archivo '%s' ya existe
+2009	'%s' se ha devuelto sin éxito
+4000	no se puede registrar programa '%s' con servidor EBT
+4001	no se puede conseguir autorización desde el servidor EBT
+4002	no se puede suprimir archivo '%s'
+4003	no existe tal archivo '%s'
+4004	error en lectura desde archivo '%s'. Compruebe los permisos
+4005	error en escritura a archivo '%s'. Compruebe los permisos 
+4006    imposible asignar espacio para '%s'
+4007	no se puede abrir archivo, permisos insuficientes en archivo '%s'
+4008	duplica la aparición de '%s', utilizando la aparición de #%d
+4012	no se puede obtener autorización para la opción '%s'
+6001	No se puede responder a la llamada rpc '%s'
+6002	no se pueden registrar rutinas rpc
+6003    No se puede abrir el zócalo
+6004	no se puede conectar a %s servidor a '%s'
+6005	error rpc
+6006	imposible asignar espacio para %s
+6007	imposible liberar suficiente memoria
+6008    no se puede enviar llamada rpc '%s'
+6010	no se puede crear %s
+6011	error en línea %d de archivo '%s'
+6015	Empleo erróneo de mayúsculas o minúsculas en conmutación para %s
+6016	Falló la función '%s' al llamarla desde '%s'
+8000	imposible asignar espacio para %s
+8001	error en lectura desde archivo '%s'. Compruebe los permisos
+8002	error en escritura a archivo '%s'. Compruebe los permisos 
+8003	no se puede abrir el archivo '%s'
+8004	'%s' es una variable .ebtrc obligatoria
+8005	servicio de autorización '%s' no válido
+8006    No se puede abrir el zócalo
+8007    no se puede registrar rutina rpc
+8008    no es posible alcanzar este punto '%s'
+8009	no se puede responder a llamada rcp '%s'
+8010	no se puede crear %s
+8011	número mágico erróneo en %s
+8012	no se puede encontrar archivo '%s'
+
+
+# pcolors package (100-109)
+###################################
+2100	%s es un nombre de color demasiado largo
+2101	utilizando negro, no se ha podido analizar el color '%s'
+2102	utilizando negro, no se ha podido asignar el color '%s'
+2103	no se puede encontrar archivo '%s'
+
+# pfonts package (110-119)
+###################################
+6110	no se puede cargar la fuente por defecto '%s'
+4111	no se puede cargar xtab '%s', el juego de caracteres puede estar desactivado
+4112	en fuente '%s' falta juego de caracteres '%s'
+2111	utilizando '%s', no ha podido cargarse '%s'
+
+# pg package (120-129)
+###################################
+2120	No se puede leer archivo de asignación de bits '%s'
+8120	imposible abrir visualización
+
+# str,util package (130-139)
+###################################
+2130	carácter de nombre de atributo erróneo (aceptado) en '%s': '%c' (%d)
+2131	aparentemente falta indicador de valor en cadena de atributos '%s', a '%s'
+2132	indicador de valor múltiple (ignorado) en cadena de atributos '%s'
+2133	CR o LF dentro de valor de atributos entre comillas
+2134	estado de atributos de utilidades fsa no válido
+2135    error de cadena '%s'       
+2136	
+2137	buffer demasiado pequeño en decodificación huffman
+2138	buffer demasiado pequeño en codificación huffman
+4130	%d es demasiado largo para un buffer de atributos
+6130	asignaciones contradictorias de xtabunión para carácter '%d'
+8130	error de árbol huffman
+
+# raster package (140-149)
+###################################
+6140	no se puede abrir archivo de mapa de bits '%s'
+6141	imposible cargar imagen de mapa de bits
+
+# browser,toc, and render packages (150-169)
+############################################
+4151	
+4152	demasiados datos para copiar, copiando %d caracteres
+6150	no se puede cargar archivo de mapa de bits '%s', intentando valor por defecto
+6151    no se puede cargar icono por defecto '%s'       
+6160	'%s' no es válido en inicio de herramienta de consultas
+6161	llamando a la herramienta de consultas::inicio más de una vez
+6163	id de elemento de raíz erróneo '%s'
+8160	no se puede crear '%s'
+
+# et package (190-199)
+####################################
+2190	entidad desconocida en archivo '%s' en la línea #%ld
+2191	posible recurrencia infinita para entidad '%s'
+2192	modo de página no válido
+2193   
+2194    el texto de elementos no tiene una longitud de #%ld
+2195    el elemento no tiene atributos, es cdata #%ld
+4190	demasiadas recurrencias en documento virtual '%s'
+4191	no se puede reasignar dirección virtual
+4192	la función '%s' no debe llamarse con un documento virtual
+4193	no se puede reasignar dirección virtual tdir
+4194	documento virtual sin subdocumentos
+4195	no se puede abrir subdocumento '%s' desde la base de datos '%s'
+6190	encabezado erróneo en archivo '%s'
+6191	el número de versión edir coincide
+6192	el número de elementos en edir es inferior a 1
+6193	no se pueden leer etiquetas
+6194	no se puede leer directorio de elementos
+6195	el libro no tiene directorio de índice
+6196	Se ha llamado a ETgetEntity, no hay entidades de almacenamiento más largas
+8191	no se puede crear reserva de buffer BIO
+
+# image package (200-209)
+####################################
+2200	writeCALS aún no soportado
+2201	error en archivo '%s'
+2202    número mágico erróneo en archivo '%s'
+2203    anchura y/o altura errónea en archivo '%s'
+2204	writeTiff todavía no soportado
+2205	formato TIFF no soportado
+2206	no hay mapa de colores en archivo '%s'
+2207	no se soporta '%s' en el archivo '%s'
+4200	tabla de color de imagen demasiado grande
+4207	modo o código '%s' no soportado en o cerca de la línea %d
+
+# dtl, dtext, and closely associated modules (250-269)
+########################################################
+250	uso: %s [-col base_de_datos_de_libros] [-target guión] [-root guión] [nombre_del_libro]
+251	lo siento, '%s' está en la lista de parada
+252     hay una palabra en la lista de parada
+253	libro de evaluación desde '%s'
+254	no hay apariciones
+255	no se encontraron apariciones, pero hay palabra(s) en la lista de parada
+256	libro de evaluaciones
+2250	no se puede abrir conexión para External API
+2251	no se puede abrir libro '%s'
+2252	no existe tal libro '%s'
+2253	ventana padre no-mdi para funcionamiento
+2254	cdata sin texto
+2255	no se puede cargar estilo '%s'
+2256	el libro '%s' ya está abierto
+2257    el libro '%s' no está abierto
+2258	sistema de ayuda no disponible
+2259	no se puede abrir base de datos stream y/o estilo, abortando impresión
+2260	no se puede abrir libro de destino '%s'
+2261	no se pueden hacer enlaces cruzados en la ventana actual
+2262	no se puede crear '%s' visualización de destino
+2263	no hay visualización activa
+2264	no se puede crear tabla
+2265	las anotaciones y los historiales para '%s' podrían no estar actualizados
+2266	no se puede abrir base de datos de índice de texto completo '%s'
+2267	carácter de apóstrofe "'" en guión de anotaciones '%s'
+2268	índice de lectura de errores
+2270    no hay consulta activa en este momento
+4250	no autorizado para abrir el libro '%s'
+4251	no existe tal guión '%s'
+4252	error de impresión 
+4253	no hay parámetro '%s' para guión
+4254    no se puede crear imagen gráfica desde archivo '%s'
+4255	ejecutándose sin índice de texto completo, no se puede realizar '%s'
+4256	no se puede cargar archivo de notas '%s'
+4257    problemas de memoria, los resultados de la consulta son demasiado grandes
+4258    el guión '%s' no soporta impresión
+4259	'%s' tiene revisión %d, pero el elemento tiene revisión %d
+4260	no se puede añadir anotación
+4261	no se puede suprimir anotación
+4262	libro de evaluación '%s' caduca '%s'
+4263	expresión de consulta no válida
+4264	no se puede obtener guión para el elemento '%s'
+4265	no se puede encontrar elemento para desplazamiento de visualización a
+4266	no se puede encontrar raíz de nueva visualización 
+4267	sólo el propietario puede borrar una anotación
+4268	no ha proporcionado clave de autorización para el libro de seguridad '%s'
+6250	segmento nulo en buffer libre
+6251	la anotación ya está en tabla de hash, id de elemento %ld
+6252	no se puede cargar base de datos de estilo '%s'
+6253	el hostid de la licencia autónoma no es válido
+6254	no se puede leer el archivo de autorización o conectarse con el servidor EBT
+6255	la licencia de evaluación ha caducado
+6256	no se puede leer archivo de autorización '%s'
+6257	falló autorización, no es posible llegar al servidor EBT en '%s'
+6258	falló autorización: %s
+6259	servicio de autorización '%s' no válido
+6260	directorio de datos no válidos pasados a DTL
+6261	
+8250	
+8251	no se puede cargar estilo '%s'
+8252	
+8253	
+8254	no se puede inicializar interfaz - '%s'
+8258	anidamiento de estilos en índice, véase '%s'
+8259	no hay niveles 1's o 2's en el índice
+
+# ebt programs (290-300)
+######################################
+290	actualizando archivo '%s' ...
+291	uso: %s [-buildmap arch_asignación -db1 base_datos1 -db2 base_datos2 -b1 libro1 -b2 libro2 \
+                  [-private directorio] [-public directorio] arch_asignación
+292	uso:  %s %s [archivo] \
+      %s %s [archivo] \
+      %s %s [archivo] \
+      %s %s [archivo] \
+      %s %s [archivo] \
+      %s %s [archivo] \
+      %s %s [archivo] \
+      %s %s [archivo]
+
+# lwin package, lookups (300-305)
+######################################
+2300 imposible salvar archivo '%s'
+2301 imposible abrir el archivo '%s'
+2302 formulario de búsqueda '%s' no definido para este libro
+2303 falta expresión de consulta para formulario de búsqueda '%s'
+2304 falta(n) definición(es) de campo para formulario de búsqueda '%s'
+2305 falta atributo de nombre para formulario de búsqueda en la línea %ld del archivo '%s'
+
+# bwin package (306-315)
+######################################
+2306	base de datos de libro '%s' tiene tamaño cero 
+2307	Debe tener uno o más libros seleccionados
+2308	el libro '%s' no es válido
+
+# print and render packages (340-349)
+######################################
+2340	la ventana es más estrecha que el mínimo requerido por la hoja de estilo
+
+# index (380-389)
+######################################
+380	la palabra está en la lista de parada
+381	no existe esa palabra en el índice
+382	evacuación de índice nº%d, al elemento %ld...
+383	evacuación de índice nº%d, al final del libro
+384	fusión de datos realizada
+385	restructurando . . 
+386     reorganizando el vocabulario . . .
+387     restructuración realizada, limpiando . .
+388	%.1f%% realizado, en la palabra "%s"
+389     fusionando . . 
+2380	problema al abrir lista de parada, asegúrese de que la vía es la correcta 
+2381    problema al abrir lista de partida, asegúrese de que la vía es la correcta
+4380	no se puede borrar archivo
+4381	pasado parámetro erróneo
+4382	el índice no se ha abierto del modo correcto para operar
+4383	el subíndice no está activo en este índice
+4385	error en el subpaquete %s
+4386	no se puede renombrar archivo de '%s' a '%s'
+4387	el índice actual es nulo
+4388	el libro actual es nulo
+5380	tipos de datos incompatibles en operandos de un operador lógico
+5381	tipos de datos erróneos en el lado izquierdo del operador "contenedor"
+5382	tipo de datos erróneo en el lado derecho del operador "interior"
+6380    no se puede buscar pos %ld en archivo si %s
+6381	los caracteres requeridos no se encuentran en el archivo
+6382	no se puede leer en archivo
+6383	no se puede escribir al archivo
+6384	no se puede dividir en dos el archivo de vocabulario
+6385	registro de base de datos truncado para la palabra, '%s', causa: %s
+6386    stack de elemento vacía, no se puede cerrar elemento
+6387    método de compresión de datos desconocido %d
+6388	segmento de compresión fuera de rango: %d
+6389	INDEXflogCreate falló para %s
+6390	problema al leer desde archivo %s, compruebe los permisos
+6391	demasiados archivos de evacuación - intente redefinir el máximo de memoria
+6392	archivo '%s' no es un archivo de registro mkbook
+6393	la vía de acceso para el libro no coincide con el archivo de evacuación
+6394    registro de evacuación de longitud errónea en archivo de evacuación
+6395    un registro no válido en el archivo de evacuación
+6396	contador de evacuación sin sincronización       
+6397	problema al abrir el vocabulario en %s. \
+                 Intente rehacer el libro
+6398	problema al obtener los datos en %s. \
+    No existe el archivo o no está actualizado.  Intente rehacer el libro
+6399	el libro no se ha hecho recientemente.\
+                 Intente rehacer el libro
+
+# edit package (390-399)
+######################################
+2390	no hay texto en el Portapapeles para pegar
+2391	Imposible acceder a los datos del Portapapeles
+
+# os package (390-395) (regex is here)
+######################################
+
+# hist and annot package (430-434)
+######################################
+2430	revisión del archivo de anotación negativa, seguramente no está actualizada
+4430	etiqueta de inicio no válida '%s' en lista de eventos
+4431	la etiqueta 'TITLE' no está dentro de etiqueta 'EVENT' en lista de eventos
+4432	lista de eventos finalizada en la mitad de un evento
+4433	etiqueta de inicio no válida '%s' en archivo de etiquetado '%s'
+6430	imposible abrir analizador SGML en archivo '%s'
+
+# win, hwin and awin package (435-439)
+######################################
+435	no hay entradas diarias en el Portapapeles para pegar
+436	no hay entradas diarias seleccionadas para cortar
+437	no hay entradas diarias seleccionadas para copiar
+438     Nombre de filtro duplicado
+439     Valor de fecha especificado erróneo
+2434    No se puede editar este filtro
+2435	No se puede suprimir este filtro
+2436    Se requiere un nombre de filtro
+2437	Se debe seleccionar primero una anotación
+2438	Se debe seleccionar primero un filtro
+2439	Debe seleccionar exactamente un solo elemento para esta operación
+4435	Imposible acceder a los datos del Portapapeles
+4436	No se puede suprimir grupo de filtros '%s' porque no es el propietario
+
+# mklibidx package -- Making library level index (600-640)
+######################################
+# 
+#
+8600 imposible crear nuevo índice en el nivel de biblioteca,\
+                 compruebe los permisos en índice actual.
+8601 no se especificó colección en archivo .ebtrc
+8602 no se especificó directorio de datos en su archivo .ebtrc
+8605 uso: %s [-col colección] [-config lista_libros]\
+                [-nl] [-v(erbose)] [-data_dir dir_de_datos]
+8603 La biblioteca %s no existe
+8604 %s no es una biblioteca de libros ebt
+
+## Errors, in parsing file
+2610 Línea %2d de archivo de generación -- el grupo no tiene nombre,\
+                 se ignorarán todas las peticiones de índice para este grupo
+2611 Línea %2d de archivo de generación -- el grupo '%s' ya ha sido añadido,\
+                se ignorarán todas las peticiones para este grupo
+2612 Línea %2d de archivo de generación -- el libro no tiene nombre,\
+                se ignorarán todas las peticiones para este libro
+2613 Línea %2d de archivo de generación -- el libro '%s' ya ha sido añadido,\
+                se ignorarán todas las peticiones de índice
+2614 Línea %2d de archivo de generación -- elemento '%s' no reconocido
+2615 Línea %2d de archivo de generación -- no hay ningún grupo o libro abierto, se ignorará elemento INDEX
+2621 Línea %2d de archivo de generación -- nombre de etiqueta '%s' redefinido en libro '%s'
+2622 Línea %2d de archivo de generación -- nombre de etiqueta '%s' redefinido en grupo '%s'
+2628 Línea %2d de archivo de generación -- libro '%s', elemento de omisión de advertencia '%s' redefinido
+2629 Línea %2d de archivo de generación -- la línea de índice no especifica elemento
+
+## Errors, while building library-level index
+##
+2616 libro '%s' -- en grupo '%s', que no existe
+2617 No se pudo añadir libro '%s' -- intente rehacer antes de hacer el índice de bibliotecas
+2630 No se pudo añadir libro '%s' -- no encontrado en colección %s
+2631 No se pudo añadir libro virtual '%s' -- demasiados sublibros 
+2620 Nombre de etiqueta en conflicto en libro '%s' para etiqueta '%s' -- utilizando definición de libro
+4618 problema importante al añadir libro '%s'
+2625 el elemento de omisión debe aparecer sólo dentro de un libro
+2626 el elemento de omisión '%s' en libro '%s', no está en grupo '%s'
+2627 conflicto: elemento de omisión '%s' en libro '%s', también en lista de índice
+2607 problema al añadir libro '%s', el libro ya se ha añadido
+
+## Status Messages while building library-level index
+##
+4605 error al intentar añadir libro '%s'
+606 libro '%s' añadido
+608 generando índice de colección...
+609 Tiempo total de indexación de colección: %s 
+637 *** Indice de colección completado ***
+619 Añadiendo libro '%s'
+623 Archivo de configuración: %s
+634 Archivo de configuración: Utilizando booklist.txt
+635 Archivo de configuración: ninguno especificado -- indexando ALL BOOKS
+624 No se pudo encontrar archivo de configuración: %s
+631 Para el libro '%s', los elementos que se van a indexar son...
+632 -- suprimido %8s, no se va a indexar
+633 -- indexando %8s, bajo '%s'
+636 --------------------------------------------------------
+
+
+# Lswin package
+###############
+#
+#
+
+666 Lswin: La fila %d está fuera del borde de la matriz
+667 Lswin: Parámetro fuera de límites
+668 Lswin: La reasignación de memoria devolvió NULO
+669 Lswin: Intentando definir un elemento fuera de límites
+670 Lswin: Es necesario aumentar la memoria para añadir elemento, pero no se pudo
+
+# Inwin Package
+###############
+
+671 Seleccione una hoja de estilos o teclee un nuevo nombre de hoja de estilos.
+672 Seleccione una biblioteca y un libro
+673 Seleccione un libro.
+
+##################################################################
+#
+# DynaTag Error Messages (700-799)
+#
+##################################################################
+
+# General Errors
+################
+
+6700 memoria insuficiente
+6701 no se pudo abrir el archivo %s
+6702 no se pudo abrir el archivo %s para escritura
+6703 no se pudo crear archivo de seguridad %s
+
+

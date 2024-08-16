@@ -1,0 +1,217 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)S3:S3/Imakefile	1.11"
+
+/***
+ ***	NAME
+ ***	
+ ***		Imakefile : Makefile generation template for the MACH
+ ***					display library.
+ ***	
+ ***	SYNOPSIS
+ ***
+ ***		make Makefile 	: if in the X build environment.
+ ***
+ ***		imake -DUseInstalled  : if building outside the X
+ ***								environment.
+ ***	
+ ***	DESCRIPTION
+ ***
+ ***		The following options are available of customization at
+ ***	library build time.  These options are turned on or off using
+ ***	compile time flags.  This Imakefile contains only a summary of
+ ***	the available options.  Please read the documentation in the
+ ***	associated module for further caveats.
+ ***	
+ ***	RETURNS
+ ***
+ ***		Not Applicable.
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		OPTION			MODULE		DESCRIPTION
+ ***		~~~~~~			~~~~~~		~~~~~~~~~~~
+ ***		__DEBUG__   	*All* 		enable debugging and assertion
+ ***									checking.
+ ***		LIBRARY_NAME	global.h	prefix for library's messages.
+ ***		CHIPSET_NAME	global.h	name of the chipset
+ ***		LIBRARY_VERSION global.h 	library version
+ ***		ATBUS			s3.c		ATBUS specific code.
+ ***		USE_KD_GRAPHICS_MODE		Use KD driver ioctl's to switch
+ ***						s3.c		console modes.
+ ***		USE_SYSI86		s3.c		Use sysi86() for IOPL's
+ ***		PUBLIC			*All*		Marker for interface generation
+ ***									tools.
+ ***		STATIC			*All*		Define to "" for profiling.
+ ***		PROFILING		*All*		Defined on a profiling run.
+ ***
+ ***	FILES
+ ***
+ ***		Source for the S3 display library.
+ ***
+ ***	SEE ALSO
+ ***
+ ***		imake(1).
+ ***	
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	
+ ***	HISTORY
+ ***
+ ***	
+ ***/
+
+/*
+ * Bring in the rules for Imake.
+ */
+#include <sv4Lib.rules>
+
+
+/*
+ * Debugging the server with dynamically linked library is sometimes painful
+ * To statically link libvga256.a or libs3.a into the server:
+ *
+ * #undef XWINSharedDisplayLibrary
+ * and define a VENDOR_DIR; this can be any one of the directories under
+ * devices
+ *
+ * and do:
+ *	make clean
+ *	make Makefile
+ *	make
+ *	cd ../../.. (ie: to the server dir)
+ *	make Xwin_a (make sure SDD=.....libs3.a in the server/Makefile)
+ */
+
+/** #undef XWINSharedDisplayLibrary
+**/
+
+/*
+ * for archive, we have to include the objects from one of the directories
+ * under "devices", so that these objects are archived into libvga256.a
+ */ 
+#if XWINSharedDisplayLibrary
+VENDOROBJS =
+#else
+VENDOROBJS = ./devices/actix/?*.o
+DEF_VENDORDIR = ./devices/actix
+#endif
+
+/*
+ * Subdirectory control.
+ */
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS) S3_REVISION=$(S3_REVISION)'
+
+SUBDIRS = devices
+
+CDEBUGFLAGS=-O -v
+
+S3_REVISION = 1
+
+EXTRA_DEFINES=-DPUBLIC=  -DLIBRARY_NAME=\"LIBS3\"\
+			  -DLIBRARY_VERSION='"1.04"'\
+              -DCHIPSET_NAME=\"S3\" -DATBUS -DUSE_KD_GRAPHICS_MODE\
+              -DUSE_SYSI86 -DSTATIC=static
+
+
+#define VendorDisplayModuleRule()			@@\
+.c.o:							@@\
+	$(CC) -c $(CDEBUGFLAGS) $(EXTRA_DEFINES) -Xa -Dix86 $(ALLINCLUDES) $<; @@\
+							@@\
+all:: $(VENDORLIB) 					@@\
+$(VENDORLIB):: $(OBJS)					@@\
+	$(CC) $(YFLAGS) -G $(OBJS) -o $(VENDORLIB) -h $(VENDORLIB) -lm @@\
+	@echo $(VENDORLIB) generated. 			@@\
+							@@\
+install:: all						@@\
+	$(INSTALL) $(INSTLIBFLAGS) $(VENDORLIB) $(DISPLIBDIR)
+
+/*
+ * We need EXTRA_LIBS to link certain libraries with libmach.so. The
+ * current rule for SharedLibraryTarget1/NormalLibraryTarget does not 
+ * allow this.
+ */
+EXTRA_LIBS=-lc
+
+/*
+ * Instructions for profiling:
+ *
+ * define -DPROFILING in the EXTRA_DEFINES line.
+ * set ASM_PROFILING_OPTIONS to "-- -DPROFILING".
+ * Build the Archive library, if your CCS does not handle profiled
+ * shared objects.
+ */ 
+
+XCOMM	Include "s3_debug.[co]" if you wish to look at registers from a
+XCOMM 	debugger. 
+
+SRCS = 	debug.c g__init__.c g_colormap.c g_gs.c g_omm.c g_regs.c g_state.c\
+	generic.c s3.c s3__gs__.c s3__init__.c s3__vtin__.c s3__vtout__.c\
+	s3_arc.c s3_bitblt.c s3_cmap.c s3_cursor.c s3_fill.c s3_font.c\
+	s3_globals.c s3_gs.c s3_line.c s3_options.c s3_points.c s3_regs.c\
+	s3_sline.c s3_spans.c s3_state.c s3_asmblr.s s3_asm.c stdenv.c
+	
+OBJS = 	debug.o g__init__.o g_colormap.o g_gs.o g_omm.o g_regs.o g_state.o\
+	generic.o s3.o s3__gs__.o s3__init__.o s3__vtin__.o s3__vtout__.o\
+	s3_arc.o s3_bitblt.o s3_cmap.o s3_cursor.o s3_fill.o s3_font.o\
+	s3_globals.o s3_gs.o s3_line.o s3_options.o s3_points.o s3_regs.o\
+	s3_sline.o s3_spans.o s3_state.o s3_asmblr.o s3_asm.o stdenv.o
+	
+   INCLUDES = -I.  -I../../ddx/si -I../../../X11 -I../../include
+     LFLAGS = -buxz
+  VENDORLIB = libS3.so.$(S3_REVISION)
+
+#if XWINSharedDisplayLibrary
+VendorDisplayModuleRule()
+#else /* XWINSharedDisplayLibrary */
+CDEBUGFLAGS = ServerCDebugFlags
+NormalLibraryObjectRule()
+NormalLibraryTarget(S3,$(OBJS) $(VENDOROBJS))
+#endif /* XWINSharedDisplayLibrary */
+
+MakeSubdirs($(SUBDIRS))
+ForceSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+clean::
+	$(RM) *.so *.so.*
+
+DependTarget()
+
+InstallMultipleDestFlags(install,README.S3 LIBS3_OPTIONS,$(DISPLIBDIR),$(INSTDATFLAGS))
+
+/*
+ * We use the std XC macro to install the library, which creates the *.so
+ * link; this file (ex: libS3.so) is needed only if you link something with
+ * this library. We don't need this, so remove it
+ */
+install::
+	$(RM) $(DISPLIBDIR)/libS3.so
+
+.s.o:
+	$(AS)  -o $(@) -m $(ASM_PROFILING_OPTIONS) $(<)
+
+/*
+ * TEMP: In esmp, if s3.c compiling s3.c with -O option gives
+ * seg violation. At this point, (1/31/94) we are not sure if it is
+ * an optimizer problem or it is in this file. When this is resolved
+ * remove the next few lines
+ */
+s3.o: s3.c
+	$(RM) $@
+	${CC} $(CCOPTIONS) $(ALLDEFINES) -c s3.c
+
+lint: ${CFILES} ${LIBCFILES}
+	$(LINT) $(LFLAGS) -Cs3 $(INCLUDES) $(SRCS) >lint.out 2>&1

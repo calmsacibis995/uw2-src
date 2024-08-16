@@ -1,0 +1,83 @@
+#pragma ident	"@(#)s364:s364/devices/s364_init/makefile.stdenv	1.2"
+
+#	NAME
+#
+#		makefile : Make file.
+#
+#	SYNOPSIS
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	AUTHORS
+#
+#
+#	HISTORY
+#
+
+#
+# special files.
+#
+..source: 	s364i_msg.h	Imakefile
+..source:	stealth64.dat 9GXE64.dat 9GXEPRO.dat
+..special:	s364_init${LOGNAME}_g.so
+
+#	AM directives.
+
+
+c_files = s364i.c  
+o_files = ../../stdenv.o
+
+m_files = debug.m 
+
+cpp_options = -I../..
+
+# 	What are we building?
+
+..made_debug:	s364_init${LOGNAME}_g.so
+..made_optimized: s364_init${LOGNAME}_O.so
+..made_profiled: s364_init.a
+
+_cc_options_ = $(shell directory_to_make_option cc)
+_ld_options_ = $(shell directory_to_make_option ld) ../../libs364.so
+_as_options_ = $(shell directory_to_make_option as)
+_ar_options_ = $(shell directory_to_make_option ar)
+
+..made: $(shell directory_to_make_option made)
+
+#	Standard make include file.
+
+include ${std_make_include_file}
+
+__cc_options__ = -DLIBRARY_NAME=\"S364_INIT\" -DCHIPSET_NAME=\"S364\"\
+	-DLIBRARY_VERSION="\"1.01\""
+
+# 	Munch rules.
+$(munch_c_files) : $(non_munch_o_files)
+
+debug.c : debug.m $(non_munch_o_files)
+	$(munch) -d -i '^.*_debug$$' -f s364i_debug_control $(non_munch_o_files) > $(@)
+
+s364_init${LOGNAME}_g.so: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ld) $(LD_OPTIONS) -o $@ $(o_files) $(as_o_files)
+
+s364_init${LOGNAME}_O.so: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ld) $(LD_OPTIONS) -o $@ $(o_files) $(as_o_files)
+
+s364_init.a: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ar) $(AR_OPTIONS) $@ $(o_files) $(as_o_files)
+

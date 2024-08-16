@@ -1,0 +1,70 @@
+.ident	"@(#)dcu:locale/C/help/dcu.whatis	1.4"
+.related kbhelp dcu.main
+.title Guida: Cosa si può fare con DCU?
+INFORMAZIONI SU DCU
+L'Utility di Configurazione dei Dispositivi (DCU) consente di
+vedere ed aggiornare la configurazione dei driver di
+dispositivo del sistema. Le specifiche funzioni possibili sono:
+--- Elenco dei dispositivi hardware configurati nel sistema e
+    visualizzazione o modifica dei parametri dell'hardware (IRQ,
+    indirizzi di I/O, indirizzi di memoria e canale DMA) definiti
+    sui driver per questi dispositivi (questi termini verranno
+    definiti più oltre in questa guida)
+--- Configurazione/deconfigurazione di un driver di dispositivo
+--- Disattivazione di un dispositivo hardware
+--- Definizione di istanze multiple di un dispositivo hardware per ogni
+    driver
+                                   (CONTINUA)
+.page
+TERMINOLOGIA
+DRIVER DI DISPOSITIVO
+Un programma che attiva la comunicazione tra UnixWare e i
+dispositivi hardware.
+
+VETTORE DI INTERRUPT (IRQ)
+Un segnale che arresta l'esecuzione di un processo. Componenti
+hardware differenti devono avere interrupt distinti.
+
+INDIRIZZO DI I/O
+Una porzione della memoria condivisa riservata alle
+comunicazioni tra il sistema operativo del computer e una
+periferica hardware. Componenti hardware differenti devono
+avere serie di indirizzi di I/O distinte.
+                                   (CONTINUA)
+.page
+SERIE DI INDIRIZZI DI MEMORIA
+Una porzione di memoria riservata alle comunicazioni tra il
+sistema operativo del computer e una periferica hardware.
+Componeneti hardware differenti devono avere serie di
+indirizzi di memoria distinte.
+
+CANALE DMA
+Un canale designato per la trasmissione di dati.
+
+IPL
+Il livello di priorità dell'interrupt al quale viene eseguito il
+gestore di interrupt del dispositivo hardware.
+
+ITYPE
+Il tipo di condivisione dell'interrupt (se esiste) supportato
+dal dispositivo hardware.
+                                   (CONTINUA)
+.page 
+ID DELLA SCHEDA
+È il numero di ID assegnato dal costruttore e usato
+per determinare la mappatura tra driver e hardware.
+Viene letto dal manager di configurazione dalla NVRAM per
+schede EISA, MCA e PCI. Non è disponibile per schede ISA.
+
+CPU ASSOCIATA
+Se specificata, è la CPU a cui è associato il driver.
+
+NOME DI DISPOSITIVO
+È il nome completo del dispositivo, se è disponibile.
+Se non è possibile stabilire il nome completo, coincide
+con il nome del driver.
+
+USCITA DALLA GUIDA
+Premere <Esc> per tornare al menu principale
+dell'Utility di configurazione dei dispositivi.
+Premere <F1> per ulteriori informazioni.

@@ -1,0 +1,102 @@
+.pageno
+Seite %d von %d
+.ul
+UNIX Systeminstallation
+.hhelp_ban
+Anweisungen
+.helpbanner
+Hilfe: Eigentümerkonto
+.ur
+Eigentümerkonto
+#.ll
+#THIS SPACE LEFT INTENTIONALLY BLANK
+.lr
+F1=Hilfe
+.top
+< /tmp/err.login
+Richten Sie ein Anmeldekonto für den Zugriff des Eigentümers auf den 
+Computer ein. Informationen über die einzelnen Felder finden Sie auf 
+dem Hilfebildschirm.
+
+.form
+#TYPE_REGEXP <min length> <max length>//regexp//field label//
+5 3 25//^[^:]+$//Name des Eigentümers://USERNAME//
+#field options
+//Geben Sie Vor- und Nachnamen des Eigentümers ein//
+#
+#
+#TYPE_ALPHA <min length> <max length> //field label//
+1 2 8 //Anmeldename des Eigentümers://USERID//
+#field options
+//Geben Sie den Anmeldenamen des Eigentümers ein//
+#
+#
+#TYPE_REGEXP <min length> <max length>//regexp//field label//
+3 0 101 60000 //Benutzernummer des Eigentümers://USERNUM//
+#field options
+//Benutzernummer des Eigentümers eingeben (101 oder größer)//
+#
+`[ "${DESKTOP_PRESENT}" = "Yes" ] && echo "2 2//MOTIF::Motif//NONE::Keine//Benutzerumgebung des Eigentümers://DESKTOP// "`
+#field options
+`[ "${DESKTOP_PRESENT}" = "Yes" ] && echo "//NACH-RECHTS-/NACH-LINKS-Taste für weitere Optionen//"`
+#
+#
+.button
+Anwenden
+Zurücksetzen
+.bottom
+Drücken Sie 'TAB', um den Cursor zwischen den Feldern zu bewegen. Nach 
+Beendigung der Eingaben bewegen Sie den Cursor auf "Anwenden" und 
+drücken anschließend 'ENTER', um fortzufahren.
+.help
+Wenn Sie detaillierte Informationen benötigen, können Sie jederzeit 
+die 'F1'- (oder '?') drücken.
+
+Das UNIX System unterstützt mehrere Benutzer. Zur Anmeldung auf dem 
+Computer werden der Anmeldename des Benutzers und ein Paßwort benötigt.
+in Benutzer fungiert als der "Eigentümer" des Computers. Das 
+Eigentümerkonto verfügt über die Berechtigung, administrative Aufgaben 
+wie das Hinzufügen von neuen Benutzerkonten und das Verwalten des  
+Netzwerks durchzuführen. Anderen Benutzern kann über das "Benutzer-Setup"
+im Desktop-Manager das Recht eingeräumt werden, solche Aufgaben 
+auszuführen.
+
+VOR- UND NACHNAME DES EIGENTÜMERS
+
+Geben Sie den vollständigen Namen des Eigentümers ein. Zusätzlich 
+können  Sie eine Zimmernummer oder Telefonnummer angeben. In diesem 
+Feld können Sie jedes druckbare Zeichen außer dem Doppelpunkt (:) 
+verwenden.
+
+ANMELDENAME DES EIGENTÜMERS
+
+Wählen Sie einen Anmeldenamen aus, mit dem Sie sich bei der "Login:"- 
+Eingabeaufforderung im UNIX System anmelden, nachdem dieses vollständig 
+installiert wurde.
+
+Für den Anmeldenamen müssen Kleinbuchstaben verwendet werden; Tabs oder 
+Leerzeichen sind nicht gestattet. Als Benutzername werden häufig die 
+Initialen des Benutzers oder sein Vor- oder Nachname verwendet. Zum 
+Beispiel könnte eine Susanne Meier "sm", "susanne" oder auch "smeier" 
+als Anmeldename wählen.
+
+BENUTZERNUMMER DES EIGENTÜMERS
+
+Benutzt dieser Computer Dateien oder Ordner gemeinsam mit anderen 
+Computern über ein Netzwerk, dann ist es sinnvoll, wenn jeder Computer 
+für denselben Benutzer die gleiche Benutzernummer verwendet. Verfügt 
+der Eigentümer schon über eine Benutzernummer auf einem anderen UNIX 
+System, so erlaubt die Eingabe der gleichen Nummer hier diese 
+gemeinsame Nutzung. Wenn Sie die Benutzernummer des Eigentümers auf 
+dem anderen Computer nicht kennen, können Sie diese mit Hilfe des 
+Befehls "id" auf dem anderen Computer anzeigen.
+
+Falls der Eigentümer auf dem anderen Computer nicht über ein Konto 
+verfügt, müssen Sie die Standardvoreinstellung akzeptieren.
+.helpinst
+ESC=Hilfe verlassen  F1=Anweisungen  1=Vor  2=Zurück
+.hhelpinst
+ESC=Anweisungen verlassen  1=Vor  2=Zurück
+.working
+Wird bearbeitet...
+.end

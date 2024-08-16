@@ -1,0 +1,66 @@
+#!/sbin/sh
+
+#ident	"@(#)dtadmin:floppy/privindex	1.1"
+#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+# This file constructs a file in /tmp which contains information about
+# the privileges associated with files in a list.  The list is typically
+# a file passed via the -f option as an argument to this program.  
+# The name of the file constructed is always priv_index.XX where XX is 
+# replaced by either the current process ID or the argument passed to
+# this program via the -p option.  This program is used by MediaMgr
+# during backup to preserve a record of the privileges associated with
+# files being backed up.
+
+
+PID=$$
+LIST=""
+VERBOSE=""
+FILEPRIV=/sbin/filepriv
+FINISHLINE="privindex-done"
+
+while getopts f:p:v opt
+do
+	case $opt in
+	f)	LIST=$OPTARG
+		;;
+	p)	PID=$OPTARG
+		;;
+	v)	VERBOSE=yes
+		;;
+	esac
+done
+
+PRIVINDEXFILE=/tmp/priv_index.$PID
+
+if [ "$LIST" = "" ]
+then
+	LIST=/tmp/FFILES.$PID
+fi
+if [ ! -f $LIST ]
+then
+	echo "usage: $0 -f [find output file] [ -p <pid> ] [ -v ]"
+	echo $FINISHLINE
+	exit 1
+fi
+> $PRIVINDEXFILE
+cat $LIST | while read fname
+do
+	if [ -f "$fname" ]
+	then
+		LINE=`$FILEPRIV "$fname" 2>/dev/null` 
+		if [ "x$LINE" != "x" ]
+		then
+			PRIVS=`echo "$LINE" | cut -f2`
+			echo "$fname///$PRIVS" >> $PRIVINDEXFILE
+		fi
+	fi
+done
+echo $FINISHLINE

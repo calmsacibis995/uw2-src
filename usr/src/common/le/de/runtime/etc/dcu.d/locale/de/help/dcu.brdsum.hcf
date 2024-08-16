@@ -1,0 +1,109 @@
+.ident	"@(#)dcu:locale/C/help/dcu.brdsum	1.8"
+.related kbhelp dcu.whatis
+.title Hilfe: Hardware-Gerätekonfiguration
+ZU DIESEM MENÜ 
+Im Bildschirm Hardware-Gerätekonfiguration werden alle 
+Controller (Hardware-Geräte) gelistet, die auf dem System 
+konfiguriert sind. Von diesem Fenster aus haben Sie folgende 
+Möglichkeiten:
+   --- Alle Hardware-Geräte, die auf dem System konfiguriert 
+       sind, sowie die aktuellen Einstellungen der 
+       Gerätetreiberparameter anzeigen
+   --- Zusätzliche Informationen über die Liste der gültigen 
+       Werte der einzelnen Gerätetreiberparameter erhalten
+   --- Parameter eines Hardware-Geräts ändern
+                                    (FORTSETZUNG)
+.page
+INFORMATIONEN ZU DEN HARDWARE-GERÄTEN
+Für jedes Hardware-Gerät ist eine eigene Reihe vorhanden. 
+Im zweiten Feld ist der Name des Hardware-Geräts enthalten.
+
+Wird im Feld Gerätename 'nicht verwendet' angezeigt, ist das 
+entsprechende Hardware-Gerät vorübergehend nicht aktiv. Das 
+heißt, daß Sie später ein Hardware-Gerät mit den aufgeführten 
+Gerätetreiber-Einstellungen zuweisen (aktivieren) können. 
+(Die Konfigurationsdaten bleibt in der Datei der Systemressourcendaten.)
+
+HINWEIS:  Wird ein Hardware-Gerät, das von UnixWare automatisch 
+          entdeckt werden kann (Beispiele: unterstützte EISA-, 
+          MCA- und PCI-Geräte), aus dem System entfernt, werden 
+          die entsprechenden Einträge der Gerätetreiberparameter 
+          aus der Datei der Systemressourcendaten entfernt.
+                                    (FORTSETZUNG)
+.page
+INFORMATIONEN ZU DEN HARDWARE-GERÄTEN (FORTSETZUNG)
+Links vom Namen des Hardware-Geräts kann der Wert J oder N 
+angezeigt sein.  J bedeutet, daß das Hardware-Gerät vom System 
+verwendet wird. N bedeutet, daß das Hardware-Gerät nicht aktiv 
+ist und daß die zugehörigen Daten aus der Datei der 
+Systemressourcendaten entfernt werden, sobald Sie die 
+DCU-Änderungen anwenden.
+
+Rechts vom Gerätenamen finden sich folgende Wert für die Parameter 
+der Hardware-Konfiguration:
+  - IRQ
+  - Startadresse des E/A-Adreßbereichs
+  - Endadresse des E/A-Adreßbereichs
+  - Startadresse des Speicheradressenbereichs
+  - Endadresse des Speicheradressenbereichs
+  - DMA-Kanal
+                                   (FORTSETZUNG)
+.page
+WERTE ÄNDERN
+Die Hardware-Werte, die geändert werden können, sind 
+hervorgehoben. Sie können diese Werte wie folgt ändern:
+    1.  Gehen Sie mit den Tasten <Tab> oder <Pfeil-nach-oben/unten> 
+        zum gewünschten Feld. 
+    2.  Drücken Sie die Taste <F2>, um die Alternativen anzuzeigen.
+    3.  Bewegen Sie das Sternzeichen (*) mit den Tasten <Tab>
+        oder <Pfeil-nach-oben/unten> zur gewünschten Alternative.
+    4.  Wenn Sie Ihre Wahl eingegeben haben, drücken Sie die 
+        Eingabetaste, um zum Fenster Hardware-Gerätekonfiguration
+        zurückzukehren. 
+    5.  Wenn Sie einen Wert geändert haben, drücken Sie <F4>, 
+        um die neuen Einstellungen der Gerätetreiberparameter zu 
+        überprüfen. 
+HINWEIS:  Manche Werte können nicht geändert werden, da ihre 
+          Einstellungen verbindlich sind oder weil 
+          hardwarespezifische Konfigurationsdienstprogramme 
+          oder -prozeduren ausgeführt werden müssen. Einzelheiten 
+          entnehmen Sie der jeweiligen Hardware-Dokumentation. 
+                                   (FORTSETZUNG)
+.page
+ZUSÄTZLICHE HARDWARE-GERÄTEINFORMATIONEN
+Folgende Informationen stehen durch Drücken von <F6> zur Verfügung:
+   --- der Hardware-Treibername
+   --- der Hardware-Gerätename
+   --- gültige Werte für Einheitennummer
+   --- gültige Werte für den IPL
+   --- gültige Werte für den ITYPE
+   --- gültige Werte für den IRQ
+   --- gültige Werte für den E/A-Adressenbereich
+   --- gültige Werte für den Speicheradressenbereich
+   --- gültige Werte für den DMA-Kanal
+   --- gültige Werte für die Bind-CPU
+   --- die Karten-ID
+   --- den Karten-Bustyp
+Nachdem Sie sich die zusätzlichen Hardware-Geräteinformationen
+angesehen haben, drücken Sie die <Eingabetaste>, um zum
+Bildschirm Hardware-Gerätekonfiguration zurückzukehren.
+                                   (FORTSETZUNG)
+.page
+ERWEITERTE PARAMETERBEARBEITUNG
+Drücken Sie <F7>, um sowohl andere Parameter (BINDCPU,
+Einheitennummer, IPL, ITYPE) wie auch kartenspezifische Parameter
+(falls vorhanden) zu bearbeiten.
+
+KONFLIKTE 
+Manche Hardware-Geräte unterstützen gemeinsam benutzte IRQ-Werte. 
+Von diesen Geräten abgesehen ist es entscheidend, daß Sie für 
+alle anderen Hardware-Komponenten eindeutige Hardware-Werte wählen.
+
+Falls der Bildschirm Hardware-Gerätekonfiguration angibt,
+daß zwei Geräte denselben IRQ, überlappende E/A-
+Adressen- oder Speicherbereiche und/oder denselben DMA-Kanal haben,
+aktualisieren Sie die Konfigurationsdaten und lösen Sie den Konflikt.
+
+HILFE VERLASSEN 
+Drücken Sie <Esc>, um zum Fenster Hardware-Gerätekonfiguration 
+zurückzukehren. Drücken Sie <F1> für weitere Hilfe.

@@ -1,0 +1,8 @@
+CLASS System_Monitor
+BEGIN
+	_LPATTERN       System_Monitor;
+	_ICONFILE       sysmon32.icon;
+        _FILETYPE       EXEC;
+        MENU _Open 	'(if /sbin/tfadmin -t System_Monitor 2>/dev/null;\
+			then /sbin/tfadmin System_Monitor -p;else exec "%F";fi)&';
+END

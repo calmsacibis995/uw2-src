@@ -1,0 +1,9 @@
+#ident	"@(#)kern:io/nullzero/nullzero.cf/Master	1.5"
+#ident	"$Header: $"
+$version 2
+$interface ddi 6mp
+$interface base
+# non-conforming symbols:
+#   segvn_create as_unmap segdz_create as_map map_addr
+$entry open close read write segmap ioctl chpoll
+nullzero	nz	kKc	0	0	39

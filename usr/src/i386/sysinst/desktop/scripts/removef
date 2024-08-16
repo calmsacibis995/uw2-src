@@ -1,0 +1,17 @@
+#!/tmp/winxksh
+#ident	"@(#)proto:desktop/scripts/removef	1.1"
+{
+	case " $* " in
+	*" - "*)
+		args=$*
+		args=${args% -}
+		IFS=
+		while read line
+		do
+			echo "removef $args $line"
+		done
+		;;
+	*)
+		echo removef $*
+	esac
+} >> /tmp/installf.out

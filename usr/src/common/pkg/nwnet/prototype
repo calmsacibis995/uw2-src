@@ -1,0 +1,179 @@
+#ident	"@(#)pkg.nw:prototype	1.31"
+#ident	"$Id: prototype,v 1.51.2.1 1994/10/18 21:50:28 vtag Exp $"
+
+i pkginfo
+i depend
+i request
+i preinstall
+i preremove
+i postinstall
+i postremove
+i copyright
+i nwnetconfig
+i nwservices
+
+#
+#	nwnet directories
+#
+d base /dev ? ? ? ? ? ?
+d base /etc ? ? ? ? ? ?
+d base /etc/dinit.d ? ? ? ? ? ?
+d base /etc/inet ? ? ? ? ? ?
+d base /etc/init.d ? ? ? ? ? ?
+d base /etc/netware 0775 root sys
+d base /etc/netware/conf 0775 root sys
+d base /etc/rc0.d ? ? ? ? ? ?
+d base /etc/rc1.d ? ? ? ? ? ?
+d base /etc/rc2.d ? ? ? ? ? ?
+d base /usr ? ? ? ? ? ?
+d base /usr/bin ? ? ? ? ? ?
+d base /usr/sbin ? ? ? ? ? ?
+d base /usr/lib ? ? ? ? ? ?
+d base /usr/lib/locale ? ? ? ? ? ?
+d base /usr/lib/locale/C ? ? ? ? ? ?
+d base /usr/lib/locale/C/LC_MESSAGES ? ? ? ? ? ?
+d base /var ? ? ? ? ? ?
+d base /var/netware 0775 root sys
+d base /var/spool 0775 root sys
+d base /var/spool 0775 root sys
+d base /var/spool/sap 0775 root sys
+d base /var/spool/sap/in 0775 root sys
+d base /var/spool/sap/out 0775 root sys
+
+
+#
+#	nwnet message files, nwcm validation libraries
+#
+f base /usr/lib/locale/C/LC_MESSAGES/nwcmmsgs.cat 0755 root bin 
+f base /usr/lib/locale/C/LC_MESSAGES/nwcmmsgs.cat.m 0755 root bin 
+f base /usr/lib/locale/C/LC_MESSAGES/npsmsgs.cat 0755 root bin 
+f base /usr/lib/locale/C/LC_MESSAGES/npsmsgs.cat.m 0755 root bin 
+f base /usr/lib/novell_nwnet.so 0755 root sys
+f base /usr/lib/libnwnetval.so 0755 root sys
+
+#
+#	nwnet files
+#
+f base /etc/netware/saptypes 0444 root sys
+f base /etc/netware/conf/nwnet.bin 0444 root sys
+
+f base /etc/init.d/nw 0444 root sys
+l base /etc/rc0.d/K74nw=/etc/init.d/nw
+l base /etc/rc1.d/K74nw=/etc/init.d/nw
+l base /etc/rc2.d/S25nw=/etc/init.d/nw
+
+f base /etc/init.d/nprinter 0444 root sys
+l base /etc/rc0.d/K19np=/etc/init.d/nprinter
+l base /etc/rc1.d/K19np=/etc/init.d/nprinter
+l base /etc/dinit.d/S81np=/etc/init.d/nprinter
+
+f base /usr/bin/drouter 0775 root sys
+f base /usr/bin/ipxinfo 0775 root sys
+f base /usr/bin/nwsapinfo 0775 root sys
+f base /usr/bin/ripinfo 0775 root sys
+f base /usr/bin/spxinfo 0775 root sys
+
+f base /usr/sbin/npsd 0775 root sys
+f base /usr/sbin/nucsapd 0775 root sys
+f base /usr/sbin/nwcm 0775 root sys
+f base /usr/sbin/nwdiagd 0775 root sys
+f base /usr/sbin/nwdiscover 0775 root sys
+f base /usr/sbin/nwsaputil 0775 root sys
+f base /usr/sbin/nvtd 0775 root sys
+f base /usr/sbin/rrouter 0775 root sys
+f base /usr/sbin/sapd 0775 root sys
+f base /usr/sbin/startnps 0775 root sys
+f base /usr/sbin/statnps 0775 root sys
+f base /usr/sbin/stopnps 0775 root sys
+f base /usr/sbin/startsapd 0775 root sys
+f base /usr/sbin/stopsapd 0775 root sys
+f base /usr/sbin/track 0775 root sys
+
+#
+#	nwnet kernel files
+#
+d base /tmp 1777 bin bin 1 NULL NULL
+d base /tmp/nwnet 0775 root sys
+d base /tmp/nwnet/ipx 0775 root sys
+d base /tmp/nwnet/nspx 0775 root sys
+d base /tmp/nwnet/ripx 0775 root sys
+
+v base /tmp/nwnet/ipx/Driver.o=/mp/etc/conf/pack.d/ipx/Driver.o 0664 root sys
+v base /tmp/nwnet/ipx/ipx_tune.h=/usr/include/sys/ipx_tune.h 0664 bin bin
+v base /tmp/nwnet/ipx/Space.c=/etc/conf/pack.d/ipx/space.c 0664 root sys
+v base /tmp/nwnet/ipx/Node=/etc/conf/node.d/ipx 0664 root sys
+v base /tmp/nwnet/ipx/System=/etc/conf/sdevice.d/ipx 0664 root sys
+v base /tmp/nwnet/ipx/Master=/etc/conf/mdevice.d/ipx 0664 root sys
+
+v base /tmp/nwnet/nspx/Driver.o=/mp/etc/conf/pack.d/nspx/Driver.o 0664 root sys
+v base /tmp/nwnet/nspx/spx_tune.h=/usr/include/sys/spx_tune.h 0664 bin bin
+v base /tmp/nwnet/nspx/Space.c=/etc/conf/pack.d/nspx/space.c 0664 root sys
+v base /tmp/nwnet/nspx/Node=/etc/conf/node.d/nspx 0664 root sys
+v base /tmp/nwnet/nspx/System=/etc/conf/sdevice.d/nspx 0664 root sys
+v base /tmp/nwnet/nspx/Master=/etc/conf/mdevice.d/nspx 0664 root sys
+
+v base /tmp/nwnet/ripx/Driver.o=/mp/etc/conf/pack.d/ripx/Driver.o 0664 root sys
+v base /tmp/nwnet/ripx/Node=/etc/conf/node.d/ripx 0664 root sys
+v base /tmp/nwnet/ripx/System=/etc/conf/sdevice.d/ripx 0664 root sys
+v base /tmp/nwnet/ripx/Master=/etc/conf/mdevice.d/ripx 0664 root sys
+
+#
+#	nwnet header Files
+#
+d base /usr ? ? ? ? ? ?
+d base /usr/include ? ? ? ? ? ?
+d base /usr/include/sys ? ? ? ? ? ?
+f base /usr/include/sys/diag_app.h 0444 bin bin
+f base /usr/include/sys/ipx_app.h 0444 bin bin
+f base /usr/include/sys/ipxspx_diag.h 0444 bin bin
+f base /usr/include/sys/ipx_tune.h 0444 bin bin
+f base /usr/include/sys/lipmx_app.h 0444 bin bin
+f base /usr/include/sys/nwtdr.h 0444 bin bin
+f base /usr/include/sys/nwportable.h 0444 bin bin
+f base /usr/include/sys/ripx_app.h 0444 bin bin
+f base /usr/include/sys/sap_app.h 0444 bin bin
+f base /usr/include/sys/sap_dos.h 0444 bin bin
+f base /usr/include/sys/sap.h 0444 bin bin
+f base /usr/include/sys/spx_app.h 0444 bin bin
+f base /usr/include/sys/spx_tune.h 0444 bin bin
+
+#
+# NPRINTER files and directories
+#
+d nwext /etc/netware/nprinter 0775 root sys
+
+f nwext /usr/sbin/nprinter 0775 root sys
+f nwext /usr/sbin/stopnp 0775 root sys
+f nwext /usr/sbin/restartnp 0775 root sys
+v nwext /etc/netware/nprinter/PRTConfig 0775 root sys
+v nwext /etc/netware/nprinter/RPConfig 0775 root sys
+v nwext /etc/netware/nprinter/RPControl 0775 root sys
+f nwext /etc/netware/conf/nprinter.bin 0444 root sys
+
+f nwext /usr/lib/locale/C/LC_MESSAGES/prntmsgs.cat 0755 root bin 
+f nwext /usr/lib/locale/C/LC_MESSAGES/prntmsgs.cat.m 0755 root bin 
+
+#
+#	dirs for nwsetup GUI
+#
+d DTMadmin /usr ? ? ? ? ? ?
+d DTMadmin /usr/X ? ? ? ? ? ?
+d DTMadmin /usr/X/bin ? ? ? ? ? ?
+d DTMadmin /usr/X/desktop ? ? ? ? ? ?
+d DTMadmin /usr/X/desktop/Admin_Tools ? ? ? ? ? ?
+d DTMadmin /usr/X/desktop/Admin_Tools/Networking ? ? ? ? ? ?
+d DTMadmin /usr/X/lib ? ? ? ? ? ?
+d DTMadmin /usr/X/lib/bitmaps ? ? ? ? ? ?
+d DTMadmin /usr/X/lib/classdb ? ? ? ? ? ?
+d DTMadmin /usr/X/lib/pixmaps ? ? ? ? ? ?
+
+#
+#	nwsetup GUI files
+#
+f DTMadmin /usr/X/lib/bitmaps/nwsetup.icon 644 bin bin
+f DTMadmin /usr/X/lib/classdb/nwsetup.cdb 664 bin dtadmin
+f DTMadmin /usr/X/lib/pixmaps/nwsetup.icon 664 bin bin
+f DTMadmin /usr/X/lib/pixmaps/connect.xpm 644 bin bin
+f DTMadmin /usr/X/lib/pixmaps/noconnect.xpm 644 bin bin
+f DTMadmin /usr/X/bin/nwsetup 4755 root sys 1 setuid,driver NULL
+s DTMadmin /usr/X/desktop/Admin_Tools/Networking/NetWare_Setup=/usr/X/bin/nwsetup

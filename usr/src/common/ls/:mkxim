@@ -1,0 +1,62 @@
+#!/bin/sh
+#ident	"@(#)langsup:common/ls/:mkxim	1.2"
+#		Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#		Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.
+#		  All Rights Reserved
+
+#		THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#		The copyright notice above does not evidence any
+#		actual or intended publication of such source code.
+
+#
+#  Build script for the X stuff
+#
+
+Root=$1
+Mach=$2
+Work=$3
+Tools=$4
+Cpu=$5
+
+shift 5
+
+ROOT=${Root}
+MACH=${Mach}
+TOOLS=${Tools}
+export MACH ROOT TOOLS
+
+
+if [ ! -d $PKGDIR/usr/X/lslib ] ; then
+	mkdir -p $PKGDIR/usr/X/lslib
+fi
+
+if [ ! -d $PKGDIR/usr/lib/locale/C/MSGFILES ] ; then
+	mkdir -p $PKGDIR/usr/lib/locale/C/MSGFILES
+fi
+if [ ! -d $PKGDIR/usr/X/lib/Xsi ]
+then
+	mkdir -p $PKGDIR/usr/X/lib/Xsi
+fi
+
+echo "Making Open Look Input Method library"
+(cd Xim/lslib/ol; \
+	$Tools/usr/ccs/bin/${Cpu}env i386make; \
+	$Tools/usr/ccs/bin/${Cpu}env i386make clean)
+#
+echo "Copying Open Look Input Method library and catalog"
+cp Xim/lslib/ol/libolim.so.1 $PKGDIR/usr/X/lslib
+cp Xim/lslib/ol/lsim.str $PKGDIR/usr/lib/locale/C/MSGFILES
+rm -f Xim/lslib/ol/libolim.so.1
+
+echo "Copying Xsi files"
+cp -r Xim/Xsi/lsXsi/* $PKGDIR/usr/X/lib/Xsi
+if [ ! -f $PKGDIR/usr/X/lib/Xsi/C/nls.dir ] ; then
+		[ ! -d $PKGDIR/usr/X/lib/Xsi/C ] && mkdir -p $PKGDIR/usr/X/lib/Xsi/C
+        cp -r Xim/Xsi/nls/* $PKGDIR/usr/X/lib/Xsi/C 1>/dev/null 2>& 1
+	mkdir -p $PKGDIR/usr/X/lib/Xsi/C/local_im_tbl
+> $PKGDIR/usr/X/lib/Xsi/C/local_im_tbl/lt_LN.bit8
+
+fi
+
+echo "Complete"
+echo ""

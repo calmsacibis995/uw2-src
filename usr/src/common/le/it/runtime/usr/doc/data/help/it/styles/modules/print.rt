@@ -1,0 +1,145 @@
+<!-- /lfs/doc/DMG/Projects/sgml/sccs/styles/modules/s.print.rt 1.10 94/10/16 -->
+<style name="BOOK" group="bodytype">
+   <left-indent>	&textlt; </>
+   <right-indent>	&textrt; </>
+</style>
+
+<style name="BOOK,TITLE">
+   <font-family>	&ttlfam; </>
+   <font-size>		&tbsize; </>
+   <line-spacing>	&tbspac; </>
+   <font-weight>	bold </>
+   <foreground>		&bigtclr; </>
+   <break-before>	line </>
+   <space-before>	&lead3; </>
+   <space-after>        &lead4; </>
+   <justification>	center </>
+</style>
+
+<style name="BOOKINFO">
+   <break-before>       line </>
+   <space-before>       &lead3; </>
+   <space-after>        &lead1; </>
+    <text-before>&dicap;</>
+</style>
+
+<style name="BOOKINFO,#text-before">
+   <font-family>        &ttlfam; </>
+   <font-size>          &s2size; </>
+   <line-spacing>       &s2spac; </>
+   <space-before>       &s2fore; </>
+   <space-after>        &s2aft; </>
+   <font-slant>         &bodslan; </>
+   <font-weight>        bold </>
+   <break-before>       line </>
+   <left-indent>        &ctin; </>
+</style>
+
+<style name="FOOTNOTE">
+   <hide>		all </>
+</style>
+
+<style name="INFORMALTABLE">
+   <break-before>	line </>
+   <space-before>       &lead4; </>
+   <space-after>        &lead4; </>
+   <left-indent>        +=&in2; </>
+</style>
+
+<style name="TABLE">
+   <break-before>	line </>
+   <space-before>       &lead3; </>
+   <break-after>	line </>
+   <space-after>        &lead4; </>
+   <text-before>&tblwd; attr(LABEL). content(typechild(TITLE))</>
+</style>
+
+<style name="TABLE,#text-before">
+   <font-slant>		&bodslan; </>
+   <break-before>	line </>
+   <break-after>	line </>
+   <space-after>        &lead2; </>
+</style>
+
+<style name="TABLE,TITLE"> <hide> all </> </style>
+
+<style name="ROW">
+   <break-before>	line </>
+   <space-after>	3 </>
+   <hrule>		surround </>
+   <vrule>		children </>
+</style>
+
+<style name="ENTRY">
+   <column>		true </>
+   <width>		div(tableinfo(cals, width, 30), 2.33) </>
+   <left-indent>	+=div(tableinfo(cals, left-indent, 30), 2.33) </>
+   <justification>	left </>
+</style>
+
+<style name="ENTRY,PARA">
+   <break-before>	if(eq(cnum(),1),none,line) </>
+   <space-before>	if(eq(cnum(),1),0,2) </>
+</style>
+
+<style name="THEAD,ROW,ENTRY,PARA">
+   <break-before>	if(eq(cnum(),1),none,line) </>
+   <space-after>	&lead2; </>
+   <font-weight>	bold </>
+</style>
+
+<style name="INDEXTERM"> <hide> all</> </style>
+
+<group name="cverbatim">
+   <font-family>        &codfam; </>
+   <font-size>		&bodsize; </>
+   <break-before>       line </>
+   <break-after>        line </>
+   <space-before>       &lead1; </>
+   <space-after>        &lead1; </>
+   <left-indent>        +=&in2; </>
+   <right-indent>       -600 </>
+   <justification>      verbatim </>
+</group>
+
+<style name="LITERALLAYOUT" group="cverbatim"> </style>
+<style name="PROGRAMLISTING" group="cverbatim"> </style>
+<style name="SCREEN" group="cverbatim"> </style>
+
+<style name="#HEADER" group="bodytype">
+   <text-before>content(typechild(TITLE,ancestor(BOOK)))</>
+   <justification>	left </>
+   <font-slant>		&bodslan; </>
+   <left-indent>	&ctin; </>
+   <space-after>	&lead3; </>
+</style>
+
+<style name="#FOOTER" group="bodytype">
+   <text-before>&pgwd; pagenum() &prtref;</>
+   <justification>	right </>
+   <font-slant>		&bodslan; </>
+   <space-before>	&lead3; </>
+</style>
+
+<style name="#ANNOT">
+   <font-family>        &annfam; </>
+   <font-size>          &bodsize; </>
+   <line-spacing>       &bodspac; </>
+   <font-weight>        medium </>
+   <font-slant>         &annslan; </>
+   <right-indent>	240 </>
+   <break-before>	line </>
+   <space-before>	&lead3; </>
+   <break-after>	line </>
+   <space-after>	&lead3; </>
+</style>
+
+<!-- This style is added to accomodate ODM books only.  NO OTHER BOOKS USE -->
+<style name="FIGURE,INFORMALTABLE">
+   <break-before>	line </>
+   <space-before>	&lead3; </>
+   <space-after>	&lead4; </>
+   <left-indent>	+=&in2; </>
+   <foreground>		&figclr; </>
+</style>
+<!-- End ODM addition -->

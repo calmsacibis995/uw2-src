@@ -1,0 +1,9 @@
+#ident	"@(#)kern-nuc:io/NWam/NWam.cf/Master	1.7"
+#ident	"$Header: /SRCS/esmp/usr/src/nw/uts/io/NWam/NWam.cf/Master,v 1.3 1994/09/20 23:56:23 ram Exp $"
+$version 2
+$interface ddi 1
+$interface base
+# non-conforming symbols:
+#   NWtlPSemaphore NWtlCreateAndSetSemaphore NWtlDestroySemaphore
+$entry init open close ioctl
+NWam	NWam	oc	0	0	0

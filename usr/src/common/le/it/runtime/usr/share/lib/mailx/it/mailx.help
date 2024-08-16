@@ -1,0 +1,81 @@
+                comandi mailx
+
+!,shell [comando]                    escape shell
+alias,group utente ...               dichiara alias per nomi di utente
+alternates utente                    dichiara nomi alternativi per il login
+bedit [listamsg]                     modifica messaggi binari
+bprint [listamsg]                    stampa messaggi binari
+Bprint [listamsg]                    stampa messaggi binari con tutte le
+                                     intestazioni
+btop [listamsg]                      stampa le prime $toplines righe dei
+                                     messaggi binari
+bvisual [listamsg]                   modifica messaggi binari con
+                                     l'editor $VISUAL
+cd,chdir [directory]                 cambia alla directory o, in assenza di
+                                     indicazioni, a home
+copy [listamsg] file                 salva messaggi nel file senza marcarli come
+                                     salvati
+Copy [listamsg]                      uguale a copy, usa il file con il nome
+                                     dell'autore
+delete [listamsg]                    cancella messaggi
+discard,ignore intestaz              scarta il campo di intestazione nella
+                                     stampa del messaggio
+dp,dt [listamsg]                     cancella messaggi e stampa messaggio
+                                     successivo
+echo stringa                         stampa la stringa
+edit [listamsg]                      modifica messaggi
+folder,file nomefile                 cambia mailbox a nomefile
+folders                              elenca file nella directory della cartella
+                                     attuale
+followup,followupall [messaggio]     rispondi al messaggio e salva la copia
+Followup,Followupall [listamsg]      rispondi ai messaggi e salva la copia
+forward,Forward [listamsg] [utenti]  inoltra messaggi agli utenti
+from [listamsg]                      dà righe di intestazione messaggi
+header [messaggio]                   stampa pagina intestazioni del messaggio
+                                     attivo
+Headers [listamsg]                   stampa intestazioni messaggio in formato
+                                     illimitato
+help,?                               stampa questo messaggio di guida
+hold,preserve [listamsg]             mantieni messaggi nella mailbox
+list                                 elenca tutti i comandi (senza spiegazioni)
+mail,mailall utente                  posta per un utente specifico
+Mail,Mailrecord utente               posta per un utente specifico, salva copia
+mbox [listamsg]                      all'uscita i messaggi entreranno nella mbox
+newmail,inc                          cerca nuova posta
+New,Unread [listamsg]                marca i messaggi come mai visti (nuovi)
+next [messaggio]                     vai al prossimo messaggio e visualizzalo
+pipe,| [listamsg] [cmd-shell]        esegui pipe dei messaggi al comando shell
+Pipe [listamsg] [cmd-shell]          esegui pipe dei messaggi al comando, ignora
+                                     intestazioni
+print,type [listamsg]                stampa messaggi
+Print,Type [listamsg]                stampa messaggi con tutte le intestazioni
+quit                                 esce, conserva messaggi non letti
+reply,respond,replyall [messaggio]   rispondi all'autore e ai destinatari del
+                                     messaggio
+Reply,Respond,replysender [listamsg] rispondi agli autori dei messaggi
+retain header                        mantieni campo intestazione stampando il
+                                     messaggio
+save [msglist] file                  salva (aggiungi) messaggi nel file
+Save [listamsg]                      salva messaggi nel file con il nome\n                                     dell'autore
+set [no]variabile[=valore]           imposta variabile a valore
+showheaders listamsg listaintest     mostra intestazioni indicate dei messaggi
+                                     indicati
+size [listamsg]                      stampa dimensioni dei messaggi
+source file                          leggi comandi dal file
+top [listamsg]                       stampa le prime $toplines righe di messaggi
+touch [listamsg]                     forza il salvataggio di messaggi all'uscita
+unalias utente                       rimuovi alias
+undelete [listamsg]                  ripristina messaggi cancellati
+undiscard,unignore header            riaggiungi campo intestazione alla lista
+                                     stampata
+unretain intestaz                    riaggiungi campo intestazione alla lista
+                                     ignorata
+version                              stampa la versione
+visual [listamsg]                    modifica la lista con editor $VISUAL
+write [listamsg] file                scrivi messaggi senza intestazioni
+xit,exit                             esci, conservando tutti i messaggi
+z [+/-]                              visualizza pagina successiva [precedente]
+                                     di 10 intestazioni
+
+[listamsg] è opzionale e specifica messaggi per numero, autore, soggetto o
+tipo. Il messaggio di default è quello attuale.

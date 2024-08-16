@@ -1,0 +1,91 @@
+#ident	"@(#)proto:desktop/menus/clean_ramd	1.4"
+
+function clean_ramd
+{
+	# This is not a complete list of all the files that could be
+	# removed from ramdisk.
+	sh_rm -rf \
+	/etc/dcu.d \
+	/etc/inst/locale/C/menus/help \
+	/etc/inst/locale/C/menus/txtstrings \
+	/etc/inst/locale/keyboards \
+	/etc/inst/scripts/allinit \
+	/etc/inst/scripts/dcuprompt \
+	/etc/inst/scripts/fd \
+	/etc/inst/scripts/fdinit \
+	/etc/inst/scripts/floppy2 \
+	/etc/inst/scripts/fs \
+	/etc/inst/scripts/helpwin \
+	/etc/inst/scripts/ii_choice \
+	/etc/inst/scripts/ii_hw_config \
+	/etc/inst/scripts/ii_hw_select \
+	/etc/inst/scripts/ii_net_config \
+	/etc/inst/scripts/ii_spx_config \
+	/etc/inst/scripts/netinst \
+	/etc/inst/scripts/nond_init \
+	/etc/inst/scripts/pkgs \
+	/etc/inst/scripts/scr_init \
+	/etc/inst/scripts/start \
+	/etc/inst/scripts/useanswers \
+	/etc/inst/scripts/winrc \
+	/sbin/autopush \
+	/sbin/getcylsize \
+	/sbin/memsize \
+	/sbin/modadmin \
+	/sbin/setclk \
+	/sbin/tapeop \
+	/tmp/swapA* \
+	/usr/bin/kb_remap \
+	/usr/bin/sflop \
+	/usr/bin/uncompress \
+	/usr/sbin/adpt_type \
+	/usr/sbin/partsize \
+	/usr/sbin/fdisk \
+	/usr/sbin/prtvtoc
+}
+
+function clean_memfs
+{
+	sh_rm -rf \
+	/.extra.d/bin/sap_nearest \
+	/.extra.d/config \
+	/.extra.d/etc/conf/bin/idmodreg \
+	/.extra.d/etc/conf/mod_register \
+	/.extra.d/etc/conf/sdev_list \
+	/.extra.d/etc/strcf \
+	/.extra.d/usr/sbin/bootp \
+	/.extra.d/usr/sbin/ifconfig \
+	/.extra.d/usr/sbin/mknod \
+	/.extra.d/usr/sbin/nwcm \
+	/.extra.d/usr/sbin/nwdiscover \
+	/.extra.d/usr/sbin/ping \
+	/.extra.d/usr/sbin/resmgr \
+	/.extra.d/usr/sbin/route \
+	/.extra.d/usr/sbin/slink
+}
+
+function add_ramd_swap
+{
+	typeset swapname swaplen
+
+	/sbin/big_file -m 50 | read swapname swaplen
+	[ -n "$swapname" ] || {
+		faultvt "$0: Internal Error: big_file failed."
+		halt
+	}
+	call unlink /sbin/big_file
+	/usr/sbin/swap -a $swapname 0 $swaplen
+	print $swapname >> /tmp/ramd.swap
+}
+
+function del_ramd_swap
+{
+	typeset swapname
+
+	while read swapname
+	do
+		/usr/sbin/swap -d $swapname 0
+		call unlink $swapname
+	done < /tmp/ramd.swap
+	call unlink /tmp/ramd.swap
+}

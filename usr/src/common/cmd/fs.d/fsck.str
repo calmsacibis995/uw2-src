@@ -1,0 +1,418 @@
+#ident	"@(#)fs.cmds:common/cmd/fs.d/fsck.str	1.4"
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+Usage:\n%s [-F %s] [generic options] [-y | -n] special\n
+%s: can not stat\n
+%s: mounted file system\n
+%s file system is mounted as a block device, ignored\n
+%s is not a block or character device\n
+can not open special file %s\n
+%s is not a %s file system\n
+Checking %s:\n
+%s not okay\n
+%s okay\n
+File system was modified.\n
+File system was not modified.\n
+File system was in the middle of compaction.\n
+Complete compaction? 
+Finishing compaction of file (inode %ld)\n
+%ld total blocks\n%ld free blocks\n%ld total inodes\n
+%ld free inodes\n
+Usage:\n%s [-F %s] [generic_options] [special ...]\n%s [-F %s] [generic_options] [-y] [-n] [-p] [-sX] [-SX] [-t file] [-l] [-q] [-D] [-f] [special ...]\n
+Could not allocate space for pathname\n
+%c Bad -t option\n
+%c Illegal scratch file <%s>\n
+%c Incompatible options: -n and -s\n
+%c Incompatible options: -n and -q\n
+Incompatible options: cannot use -m with other options\n
+%s is not an s5 file system\n
+fsck quitting\n
+%c Cannot get memory\n
+%c Cannot fstat standard input\n
+%c %s** Phase 1 - Check Blocks and Sizes\n
+%c %sUNKNOWN FILE TYPE I=%u
+ (NOT EMPTY)
+CLEAR
+CLEARED
+%c %sLINK COUNT TABLE OVERFLOW
+CONTINUE
+EXITING, RUN FSCK MANUALLY
+%c %sPARTIALLY ALLOCATED INODE I=%u
+%c %s** Phase 1b - Rescan For More DUPS\n
+%c %s** Phase 2 - Check Pathnames\n
+%c %sROOT INODE UNALLOCATED. TERMINATING.\n
+%c %sROOT INODE NOT DIRECTORY
+FIX
+%c %sDUPS/BAD IN ROOT INODE\n
+%c %s** Phase 3 - Check Connectivity\n
+%c %s** Phase 4 - Check Reference Counts\n
+UNREF
+BAD/DUP
+%c %sFREE INODE COUNT WRONG IN SUPERBLK
+\n%c %sFIXED\n
+FIXED
+%c %s** Phase 5 - Check Free List 
+(Ignored)\n
+%c %s%d BAD BLKS IN FREE LIST\n
+%c %s%d DUP BLKS IN FREE LIST\n
+%c %s%ld BLK(S) MISSING\n
+%c %sFREE BLK COUNT WRONG IN SUPERBLK
+%c %sBAD FREE LIST
+\n%c %sSALVAGED\n
+SALVAGE
+SALVAGED
+%c %s** Phase 6 - Salvage Free List\n
+SET FILE SYSTEM STATE TO OKAY
+FILE SYSTEM STATE SET TO OK
+%c %sFILE SYSTEM STATE NOT SET TO OKAY\n
+%c %sFILE SYSTEM STATE SET TO OKAY\n
+%c %s%ld files %ld blocks %ld free\n
+\n%c %s*** ROOT FILE SYSTEM WAS MODIFIED ***\n
+%c %s*** FILE SYSTEM WAS MODIFIED ***\n
+%c %sNO VALID '.' in DIR I = %u\n
+%c %sNO VALID '..' in DIR I = %u\n
+%c %sMISSING '.' or '..' in DIR I = %u\n
+%c %sBLK %ld 
+\n%c %sDIR=%s\n\n
+%c %sBAD DIR ENTRY I = %u\n
+BAD
+%c %sEXCESSIVE BAD BLKS I=%u
+DUP
+%c %sEXCESSIVE DUP BLKS I=%u
+%c %sDUP TABLE OVERFLOW.
+I OUT OF RANGE
+UNALLOCATED
+DUP/BAD
+%c %sEXCESSIVE BAD BLKS IN FREE LIST.
+%c %sEXCESSIVE DUP BLKS IN FREE LIST.
+\n%c %sNAME=%s\n
+REMOVE
+REMOVED
+DIR
+FILE
+ (NOT EMPTY)\n
+ (EMPTY)
+ -- REMOVED\n
+\n%c %sNAME=%s
+%c %sLINK COUNT %s
+\n%c %sCOUNT %d SHOULD BE %d
+ADJUST
+ADJUSTED
+ -- CLEARED
+chkempt: blk %d out of range\n
+chkempt: Cannot find blk %d\n
+%c %sCannot stat root\n
+%c %sCannot stat %s\n
+%c %s%s is a mounted file system, ignored\n
+%c %s%s is pipedev, ignored
+%c %s%s is not a block or character device\n
+ (NO WRITE)
+%c %sSize check: fsize %ld isize %d\n
+%c %sFile System: %.6s Volume: %.6s\n\n
+\n%c %sNEED SCRATCH FILE (%ld BLKS)\n
+%c %sENTER FILENAME:\n
+%c %sCannot create %s\n
+%c %sCannot open %s\n
+\n%c %s%s? 
+ no\n\n
+ yes\n\n
+%c %sAnswer 'y' or 'n' (yes or no)\n
+%c %sInvalid -s argument, defaults assumed\n
+%c %sFatal I/O error\n
+SEEK
+READ
+WRITE
+\n%c %sCAN NOT %s: BLK %ld
+EXITING
+%c %sProgram terminated\n
+ OWNER=
+MODE=%o\n
+%c %sSIZE=%ld 
+%b %e %H:%M %Y
+MTIME=%s\n
+%c %sBAD FREEBLK COUNT\n
+%c %sDefault free list spacing assumed\n
+%c %sUNREF %s 
+ MUST reconnect\n
+ Cleared\n
+RECONNECT
+RECONNECTED
+%c %sSORRY. NO lost+found DIRECTORY\n\n
+%c %sSORRY. NO SPACE IN lost+found DIRECTORY\n\n
+%c %sDIR I=%u CONNECTED. 
+%c %sPARENT WAS I=%u\n\n
+%c %sDIRECTORY MISALIGNED I=%u\n
+RECOVER
+RECOVERED
+%s SIZE ERROR I=%u\n
+DELETE OR RECOVER EXCESS DATA\n
+RECOVER EXCESS BLOCKS
+RECOVERED EXCESS BLOCKS
+DELETE EXCESS BLOCKS
+DELETED EXCESS BLOCKS
+%c %sSUPER BLOCK, ROOT INODE, OR ROOT\n%c %sDIRECTORY MAY BE CORRUPTED.\n
+fsck CANNOT DETERMINE\n%c %sLOGICAL BLOCK SIZE OF %s.\n
+%c %sBLOCK SIZE COULD BE 512, 1024, OR 2048 BYTES.\n
+%c %sRE-RUN fsck WITHOUT -y OR -n OPTION AND YOU\n%c %sWILL BE PROMPTED FOR BLOCK SIZE.\n
+%c %sSUPER BLOCK, ROOT INODE, OR ROOT\n%d %sDIRECTORY MAY BE CORRUPTED.
+%c %sRE-RUN fsck FOR %s WITHOUT\n%c %sINVOKING THROUGH dfsck AND YOU WILL BE PROMPTED\n%c %sFOR BLOCK SIZE.\n
+SUPER BLOCK, ROOT INODE, OR ROOT DIRECTORY ON %s MAY\nBE CORRUPTED. \n
+fsck CANNOT DETERMINE LOGICAL BLOCK SIZE OF %s\nBLOCK SIZE COULD BE 512, 1024, OR 2048 BYTES. \n\n
+ENTER LOGICAL BLOCK SIZE OF %s IN BYTES (NOTE: INCORRECT\nRESPONSE COULD DAMAGE FILE SYSTEM BEYOND REPAIR!)\n
+ENTER 512, 1024, OR 2048 OR ENTER s TO SKIP THIS FILE SYSTEM:  
+\nENTER 512, 1024, 2048, OR s: 
+sanity check failed : cannot stat %s\n
+sanity check: root file system needs checking\n
+sanity check: root file system okay\n
+sanity check: %s already mounted\n
+sanity check: %s needs checking\n
+sanity check: %s okay\n
+illegal option -- %c\n
+option requires an argument -- %c\n
+Failure to allocate new node in fcorr_path\n
+Allocate of new pathname failed\n
+Possibly damaged files found by fsck\n
+%c %sDIR pathname too deep\n
+%c %sDIR pathname is <%s>\n
+BAD INODE %d TO DESCEND
+ZERO LENGTH DIRECTORY
+DIRECTORY TOO SHORT
+DIRECTORY %d: LENGTH %d NOT MULTIPLE OF %d\n
+ (ADJUSTED)\n
+wrong type to dirscan %d\n
+DIRECTORY CORRUPTED
+NAME=%s\n
+LINK COUNT %s
+COUNT %d SHOULD BE %d\n
+LINK COUNT INCREASING\n
+UNREF %s 
+ (RECONNECTED)\n
+NO lost+found DIRECTORY\n
+CREATE
+ (CREATED)\n
+SORRY. CANNOT CREATE lost+found DIRECTORY\n\n
+lost+found IS NOT A DIRECTORY\n
+REALLOCATE
+SORRY. NO lost+found DIRECTORY\n\n
+SORRY. NO SPACE IN lost+found DIRECTORY\n\n
+DIR I=%u CONNECTED. 
+PARENT WAS I=%u\n
+NO SPACE LEFT IN %s
+ (EXPANDED)\n
+EXPAND
+PARTIALLY TRUNCATED INODE I=%d
+Bad inode number %d for ginode\n
+ (CLEARED)\n
+SIZE=%ld
+%b %d %H:%M
+%Y
+MTIME=%s %s
+BAD STATE %d TO BLKERR\n
+Alternate super block location: %d\n
+not writeable '%s'\n
+Cannot open checklist file: %s\n
+fork: %s\n
+CANNOT CHECK FILE SYSTEM.
+** Currently Mounted on %s\n
+** Last Mounted on %s\n
+** Phase 1 - Sanity Check only\n
+** Phase 1 - Check Blocks and Sizes\n
+INTERNAL ERROR: dups with -p
+** Phase 1b - Rescan For More DUPS\n
+** Phase 2 - Check Pathnames\n
+** Phase 3 - Check Connectivity\n
+** Phase 4 - Check Reference Counts\n
+** Phase 5 - Check Cyl groups\n
+%d files, %d used, %d free 
+(%d frags, %d blocks, %.1f%% fragmentation)\n
+%d files missing\n
+%d blocks missing\n
+The following duplicate blocks remain:
+The following zero link count inodes remain:
+%s FILE SYSTEM STATE NOT SET TO OKAY\n
+%s FILE SYSTEM STATE SET TO OKAY\n
+***** FILE SYSTEM WAS MODIFIED *****\n
+Cannot stat root\n
+Cannot stat %s\n
+%s is not a character device\n
+Cannot make sense out of name %s\n
+time=%x, state=%x\n
+Usage: %s [-F %s] [generic options] [-o p,b=#,w] [special ....]\n
+PARTIALLY ALLOCATED INODE I=%u\n
+bad size %d:
+BAD MODE: MAKE IT A FILE
+bad direct addr: %d\n
+bad indirect addr: %d\n
+LINK COUNT TABLE OVERFLOW\n
+INCORRECT BLOCK COUNT I=%u (%ld should be %ld)\n
+ (CORRECTED)\n
+CORRECT
+UNKNOWN FILE TYPE I=%u\n
+EXCESSIVE BAD BLKS I=%u\n
+ (SKIPPING)\n
+EXCESSIVE DUP BLKS I=%u\n
+DUP TABLE OVERFLOW.\n
+%ld ACL BAD I=%u\n
+%ld ACL DUP I=%u\n
+ROOT INODE UNALLOCATED\n
+ALLOCATE
+CANNOT ALLOCATE ROOT INODE\n
+DUPS/BAD IN ROOT INODE\n
+%s: DCLEAR\n
+ROOT INODE NOT DIRECTORY\n
+%s: FSTATE/FCLEAR\n
+BAD STATE %d FOR ROOT INODE\n
+BAD INODE NUMBER FOR '.'
+MISSING '.'
+CANNOT FIX, FIRST ENTRY IN DIRECTORY CONTAINS %s\n
+CANNOT FIX, INSUFFICIENT SPACE TO ADD '.'\n
+BAD INODE NUMBER FOR '..'
+MISSING '..'
+CANNOT FIX, SECOND ENTRY IN DIRECTORY CONTAINS %s\n
+CANNOT FIX, INSUFFICIENT SPACE TO ADD '..'\n
+EXTRA '.' ENTRY
+EXTRA '..' ENTRY
+NAME TOO LONG %s%s\n
+%s IS AN EXTRANEOUS HARD LINK TO DIRECTORY %s\n
+ (IGNORED)\n
+BAD RETURN STATE %d FROM DESCEND
+BAD STATE %d FOR INODE I=%d\n
+DUP/BAD/INVALID ACL
+CG %d: BAD MAGIC NUMBER\n
+BLK(S) MISSING IN BIT MAPS\n
+SUMMARY INFORMATION BAD\n
+FREE BLK COUNT(S) WRONG IN SUPERBLK\n
+file is not a block or character device; OK
+%s is mounted, fsck on BLOCK device ignored\n
+Cannot open %s\n
+NO WRITE ACCESS\n
+MAGIC NUMBER WRONG
+NCG OUT OF RANGE
+CPG OUT OF RANGE
+NCYL DOES NOT JIVE WITH NCG*CPG
+SIZE PREPOSTEROUSLY LARGE
+UNDEFINED OPTIMIZATION IN SUPERBLOCK
+SET TO DEFAULT
+IMPOSSIBLE MINFREE=%d IN SUPERBLOCK
+TRASHED VALUES IN SUPER BLOCK
+cannot alloc %d bytes for blockmap\n
+cannot alloc %d bytes for statemap\n
+cannot alloc %d bytes for lncntp\n
+cannot alloc %d bytes for secstatemap\n
+BAD SUPER BLOCK: %s\nUSE -b OPTION TO FSCK TO SPECIFY LOCATION OF AN ALTERNATE\nSUPER-BLOCK TO SUPPLY NEEDED INFORMATION; SEE fsck(1M).\n
+bad file type 0%o\n
+INTERNAL ERROR: GOT TO reply()
+%s? 
+WRITING ZERO'ED BLOCK %d TO DISK\n
+CANNOT %s: BLK %ld
+Program terminated\n
+THE FOLLOWING SECTORS COULD NOT BE READ:
+THE FOLLOWING SECTORS COULD NOT BE WRITTEN:
+returning to single-user after filesystem check\n
+ (SALVAGED)\n
+UNKNOWN INODESC FIX MODE %d\n
+%s: UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY.\n
+INTERNAL INCONSISTENCY:
+cannot open %s\n
+%s is nfs mounted - ignored\n
+ran out of memory!\n
+%s is a mounted file system, ignored\n
+too many arguments\n
+more than one fstype specified\n
+Fstype %s exceeds %d characters\n
+cannot open vfstab\n
+FSType cannot be identified\n
+cannot fork.  Try again later\n
+bad wait\n
+the following command (process %d) was stopped by signal %d\n
+the following command (process %d) was terminated by signal %d\n\t\t and dumped core\n
+the following command (process %d) was terminated by signal %d\n
+cannot execute %s - permission denied\n
+operation not applicable to FSType %s\n
+line in vfstab exceeds %d characters\n
+line in vfstab has too few entries\n
+line in vfstab has too many entries\n
+Usage:\n%s [-P] [-m] [-b] [-L] [-F FSType] [-V] [-m] [special ...]\n%s [-P] [-m] [-b] [-L] [-F FSType] [-V] [current_options] [-o specific_options] [special ...]\n
+BAD STATE %d FOR INODE DIRECTORY\n
+UNEXPECTED INCONSISTENCY; RUN fsck MANUALLY. \n
+NO SPACE LEFT IN lost+found DIRECTORY\n
+%s HAS AN EXTRANEOUS HARD LINK TO DIRECTORY INODE %d\n
+FIX '.'
+FIX '..'
+Cannot read data block\n
+No space\n
+blk %d < cgdmin %d;
+ blk+cnt %d > cgsbase %d\n
+blk %d >= cgdmin %d;
+ blk+cnt %d > sblock.fs_fpg %d\n
+ I=%u OWNER= %s MODE=%o\n
+%s: 
+SIZE=%ld MTIME=%s %s\n
+ I=%u OWNER= %d MODE=%o\n
+%ld %s I=%u\n
+ %d,
+cannot alloc dirmap\n
+cannot alloc dblist\n
+** %s: NO WRITE\n
+Cannot get the semaphore key =%d\n
+Cannot get the semaphore id \n
+Cannot get the semaphore\n
+Cannot release the semaphore
+BAD STATE %d FOR INODE DIRECTORY %d\n
+Bad file size %d:
+%s: INCORRECT BLOCK COUNT I=%u (%ld should be %ld) (CORRECTED)\n
+UNKNOWN FILE TYPE OR BAD SIZE I=%u\n
+%s? 
+Cannot open a semaphore file\n
+Cannot get a key for semaphore\n
+Cannot create semaphore\n
+Cannot initialize the semaphore\n
+dlistp NULL when it should not be\n
+Orphan process\n
+No -w option. Environment is corrupted\n
+Cannot read %s\n
+Cannot write %s\n
+Usage:\n%s [-F %s] [-m] [-y | -n] special\n
+calloc failed\n
+\n%s ** Phase 1 - Check FATs\n
+\n%s ** Phase 2 - Check directory entries (pass 1)\n
+\n%s ** Phase 3 - Cross reference Check\n
+\n%s ** Phase 4 - Check directory entries (pass 2)\n
+msync failed with return error code %d\n
+\n%s *** FILE SYSTEM WAS MODIFIED ***\n
+mmap failed with return error code %d\n
+%s CAN NOT ACCESS BLK %ld\n
+%s CAN NOT SEEK BLK %ld\n
+malloc failed\n
+%s ERROR reading FAT %d blk %ld\n
+%s All FATs are partially unreadable
+%s FATs are out of synch\n
+Found a lost allocation unit\n
+'..' cluster number does not match parent dir\n
+'.' cluster number does not match current dir\n
+File Size for %s is incorrect\n
+Start cluster for %s is out of range\n
+FAT entry for %s is out of range\n
+Fix it? Please enter 'y' or 'n' (yes or no):
+\n
+Volume %s   Created %s-%.2d-%.4d  %2d:%.2d\n\n
+Volume in drive %s does not have a label\n\n
+\n%ld lost allocation unit(s)\n\n
+% 10lu bytes total File system space\n
+% 10ld bytes in % 4ld hidden file(s)\n
+% 10ld bytes in % 4ld subdirectories\n
+% 10ld bytes in % 4ld regular file(s)\n
+% 10lu bytes available in File system\n\n
+% 10d bytes in each allocation unit\n
+% 10ld total allocation units on File system\n
+% 10ld available allocation units on File system\n
+\n%ld reserved allocation unit(s)\n\n
+\n%ld allocation unit(s) marked bad\n\n
+%s: %d directory enries claiming allocation unit %d\n
+%s CAN NOT READ BLK %ld\n

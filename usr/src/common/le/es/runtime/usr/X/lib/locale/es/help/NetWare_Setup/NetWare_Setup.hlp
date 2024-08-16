@@ -1,0 +1,273 @@
+#ident\t"@(#)dthelp:Admin.Tools/NetWare_Setup.hlp       1.28"
+^*version^1
+^*title^Configuración de NetWare
+^:Config_NetWare
+^*width^70
+^+DesktopMgr/help.defs
+^?Configuración de NetWare
+^0^Configuración de NetWare
+^$10
+Configuración de NetWare
+
+Use Configuración de NetWare para configurar o volver a configurar
+el protocolo de \d(Intercambio de paquetes de interred^IPX)
+IPX y las tarjetas de red de área local (LAN) para poder usar NetWare.
+
+Si instaló una tarjeta LAN en su sistema al instalar UnixWare,
+el software detectó automáticamente la tarjeta y la dirección y
+configuró Internetwork Package Exchange (IPX).
+
+Si no instaló una tarjeta LAN al instalar UnixWare o si decide
+añadir más tarjetas, necesitará utilizar Configurar NetWare para
+configurar, o volver a configurar, las tarjetas IPX y LAN.
+
+Nota: Deberá tener \k(permiso para acceder a Configuración de NetWare^dtadmin/user.hlp^Comprensión de los permisos)
+para usar Configuración de NetWare.  Además, deberá tener
+conocimientos amplios de NetWare y de administración de redes antes de
+realizar cambios con Configuración de NetWare.
+
+Para configurar el sistema a fin de utilizar NetWare, haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).
+  \t   Aparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_NetWare.  Aparecerá la ventana
+  \t"Configuración de NetWare", con las siguientes opciones:
+
+  \to\tNombre del servidor: - Muestra el nombre del sistema.
+
+  \to\tCliente NetWare UNIX: - Haga clic en Sí si desea activar
+  \t \tlos servicios de cliente NetWare UNIX (NUC). Haga clic en No
+  \t \tpara desactivarlos.
+
+  \to\tActivar autodetección de IPX: - Esta opción está activada cuando
+  \t \tse instale UnixWare por primera vez, a fin de detectar las
+  \t \ttarjetas de red instaladas en el sistema.  También comprueba la
+  \t \tconfiguración de la red cada vez que se arranque el sistema.
+
+  \to\tDirección IPX de Lan interna: - Teclee la dirección (máx. 8
+  \t \tcaracteres) de la tarjeta de red interna.  Esta dirección tiene
+  \t \tcomo prefijo los caracteres "0x".  Por ejemplo, 0x01010348.
+
+  \to\tSaltos máximos IPX: - Teclee el número máximo de sistemas, o 
+  \t \tnodos, a los que desee transferir datos.
+
+  \t \tEsta opción le permite limitar el tráfico que llega a través de
+  \t \tsu red. Por ejemplo, si introduce 5 como número máximo de
+  \t \tsaltos, el sistema rechaza cualquier
+  \t \t\d(grupo de bits^paquete) que exceda de cinco saltos. Si
+  \t \tno es un administrador del sistema, le sugerimos que deje el
+  \t \tvalor por defecto, 16 saltos.
+
+  \to\tConfiguración de LAN lógica: - Pulse en esta casilla si quiere
+  \t \tvisualizar y definir las opciones para la configuración de LAN.
+  \t \tVea \k(Configuración de la LAN lógica).
+
+  \to\tSPX: - Haga clic en este cuadro si desea mostrar y definir las
+  \t \topciones de \d(Intercambio de paquetes secuenciales "SPX"^SPX)
+  \t \t"SPXII". Véase \k(Configuración de SPXII).
+
+  \to\tComunicación par a par: - Haga clic en Sí si desea
+  \t \t\d(anunciar) la aplicación a otros usuarios.  Véase
+  \t \t\k(Comunicación par a par).
+
+  \t \tPor defecto, esta opción está desactivada.
+
+  \to\tGestión de red: - Haga clic en este cuadro si desea mostrar y
+  \t \tdefinir las opciones de la gestión de red de Stack de
+  \t \tprotocolo NetWare (NPS) y el Tiempo de trap de la gestión de
+  \t \tred. Véase \k(Gestión de la red).
+
+  \to\tDaemon de diagnósticos: - Pulse en esta casilla si desea
+  \t \tejecutar el daemon de diagnósticos. Por defecto, esta opción
+  \t \testá desactivada.
+
+ \to\tAutenticación automática de NUC remoto: - Por defecto, esta
+ \t \topción se define como Sí, y muestra el \k(panel de autenticación^Auto_Authenticator/xauto.hlp^Ventana Autenticador_autom)
+ \t \tcuando es necesario.  Cuando está definida como No, los usuarios
+ \t \tdeberán usar nwlogin para acceder a los servidores NetWare.
+
+  \t \tPara más información sobre autenticación, vea \k(Acceso a NetWare^NetWare_Access/NetWare_Access.hlp^Acceso a NetWare).
+
+  \to\tActivar entrada NetWare sencilla: - Haga clic en Sí para que
+  \t \tlos usuarios puedan acceder a los sistemas remotos sin indicar
+  \t \tel ID de entrada ni la contraseña (siempre que sean iguales para
+  \t \tambos sistemas).
+
+4.\tPulse en Guardar parámetros actuales para guardar los cambios.
+
+  \tNota: También puede pulsar en Restaurar parámetros anteriores
+  \tpara recuperar éstos o en Restaurar opción por defecto, para
+  \trecuperar los parámetros que se definireron al instalar UnixWare.
+
+  \tSi decide no realizar ningún cambio, no pulse en Guardar
+  \tparámetros actuales, sino en Salir.
+
+
+^1^Configuración de la LAN lógica
+^$20
+Configuración de la LAN lógica
+
+Cuando seleccione la opción Configuración de LAN lógica de la ventana
+"Configuración de NetWare", aparece la ventana "Configuración de LAN
+lógica". Esta ventana muestra el estado de LAN lógica numerado de uno
+a ocho. Aparece una casilla para cada LAN. Sin una LAN está inactiva
+actualmente pero disponible para su uso, esta casilla estará marcada
+con una "X."
+
+Para configurar una LAN lógica, haga lo siguiente:
+
+1.\tVaya al campo Dirección de LAN interna de IPX y teclee la
+  \tdirección de la LAN deseada.
+
+2.\tPulse en las opciones de LAN (la casilla rectangular junto al
+  \tcampo de configuración de LAN lógica). Se abrirá una ventana de
+  \taparición instantánea con una lista de LANs lógicas.
+
+3.\tHaga clic en la LAN deseada.  Aparecerá una ventana para la 
+  \tLAN seleccionada con los siguientes campos:
+
+  \to\tDispositivo de LAN de IPX: - Pulse en la casilla rectangular
+  \t \tpara que aparezca una lista de dispositivos disponibles, luego,
+  \t \tpulse en el dispositivo deseado (por ejemplo, /dev/wd_0).
+
+  \to\tTipo de trama de LAN de IPX: - Pulse en la casilla rectangular
+  \t \tpara que aparezca una lista de tipos de tramas disponibles;
+  \t \tluego, pulse en el tipo deseado (por ejemplo, Ethernet II).
+
+  \to\tDirección de LAN externa de IPX: - Teclee la dirección asignada
+  \t \tpor su administrador de red.  \t
+
+  \to\tVelocidad de LAN (kilobytes/segundo): - Teclee la velocidad de
+  \t \ttransferencia en kilobytes deseada. Por defecto, este campo está
+  \t \tdefinido en 10000.
+
+4.\tPulse en OK para aplicar los parámetros.
+
+5.\tRepita los pasos del 2 al 4 para cualquier otra LAN lógica que
+  \tdesea configurar.
+
+6.\tHaga clic en Cerrar para cerrar la ventana y guardar los cambios.
+
+^2^Ventana Configuración de LAN lógica para <LAN>
+^$30
+Ventana Configuración de LAN lógica para <LAN>
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \to\tDispositivo de LAN de IPX: - Pulse en la casilla rectangular
+  \t \tpara que aparezca una lista de dispositivos disponibles, luego,
+  \t \tpulse en el dispositivo deseado (por ejemplo, /dev/wd_0).
+
+  \to\tTipo de trama de LAN de IPX: - Pulse en la casilla rectangular
+  \t \tpara que aparezca una lista de tipos de tramas disponibles;
+  \t \tluego, pulse en el tipo deseado (por ejemplo, Ethernet II).
+
+  \to\tDirección de LAN externa de IPX: - Teclee una dirección única
+  \t \tpara esta LAN, con un máximo de diez caracteres (por ejemplo,
+  \t \t0x89413000).
+
+  \to\tVelocidad de LAN (kilobytes/segundo): - Teclee la velocidad de
+  \t \ttransferencia en kilobytes deseada. Por defecto, este campo está
+  \t \tdefinido en 10000.
+
+2.\tPulse en OK para aplicar los parámetros y cerrar la ventana.
+
+Vea también:
+\k(Configuración de la LAN lógica)
+
+^1^Configuración de SPXII
+^$40
+Configuración de SPXII
+
+Cuando se seleccione Sí para la opción \d(SPX^SPX) de la
+ventana "Configuración de NetWare", aparecerá la ventana "SPX".
+
+Para configurar el número máximo de conexiones SPXII y
+\d{sockets^zócalo (socket)}, y para activar el Terminal virtual
+NetWare (NVT) para uso remoto, haga lo siguiente:
+
+1.\tDefina las opciones siguientes:
+
+  \to\tEntrada remota de red SPX (NVT): - Pulse en Activar si quiere
+  \t \tpermitir una entrada de NVT remota o en Desactivar ni no lo
+  \t \tdesea.
+
+  \to\tConexiones SPX máximas: - Teclee el número máximo de 
+  \t \tconexiones que desee permitir para SPXII.
+
+  \to\tZócalos SPX máximos: - Teclee el número máximo de zócalos
+  \t \t(sockets) que puede usar SPXII simultáneamente para la escucha
+  \t \tde peticiones de entrada de conexión procedentes de los puntos
+  \t \tfinales.
+
+2.\tPulse en OK para aplicar los parámetros y cerrar la ventana.
+
+  \tNota: También puede pulsar en Cancelar para cerrar la ventana
+  \tsin realizar ningún cambio.
+
+^1^Comunicación par a par
+^$50
+Comunicación par a par
+
+Cuando se selecciona Sí para la opción Comunicación par a par de 
+la ventana "Configuración de NetWare", aparece la ventana "SAP".
+
+Para especificar el número de servicios de \d(anunciar), haga lo siguiente:
+
+1.\tTeclee el número máximo de servidores que desee que el protocolo 
+  \tSAP reconozca dentro del campo de texto.
+
+  \tPor defecto, este campo está definido en 3000.
+
+2.\tPulse en OK para aplicar los parámetros y cerrar la ventana.
+
+  \tNota: También puede pulsar en Cancelar para cerrar la ventana
+  \tsin realizar ningún cambio.
+
+^1^Gestión de la red
+^$60
+Gestión de la red
+
+Cuando se selecciona Sí para la opción Gestión de red de la ventana
+"Configuración de NetWare", aparece la ventana "Gestión_de_redes".
+Esta ventana proporciona varias vías para que un
+administratdor de redes experto pueda realizar el seguimiento
+de las redes.
+
+Por defecto, las opciones de esta ventana están inactivas.
+
+Nota: Debe tener algún tipo de consola de gestión de red (por ejemplo,
+Netview o Open View) para utilizar estas herramientas de gestión de
+red.
+
+Para activar los servicios de gestión de red, haga lo siguiente:
+
+1.\tDefina las opciones siguientes:
+
+  \to\tGestión de red NWUMPS: - Pulse en Activar para permitir la
+  \t \tsupervisión del NetWare para el Stack de protocolo de gestión
+  \t \tUNIX.
+
+  \to\tTiempo del mensaje de alerta para gestión de red: - Teclee un valor para el tiempo del mensaje de alerta.
+
+  \t \tNota: El tiempo del mensaje de alerta es la frecuencia con la
+  \t \tque el sistema envía eventos de red e información de alerta a la
+  \t \tconsola de gestión de red.
+
+  \t \tPor defecto, este campo está definido en 5 segundos.
+
+2.\tPulse en OK para aplicar los parámetros y cerrar la ventana.
+
+  \tNota: También puede pulsar en Cancelar para cerrar la ventana
+  \tsin realizar ningún cambio.

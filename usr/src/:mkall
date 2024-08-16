@@ -1,0 +1,94 @@
+#ident	"@(#)mk::mkall	1.5.2.8"
+#ident	"$Header: $"
+
+#
+#	The mkmerge command must be executed to create a
+#	work directory.  Since the first two ports have
+#	the mk source in the bus-specific sub-tree, we
+#	hope everyone will follow.  The build procedure
+#	will always be slightly site-specific.
+#
+#	We'll look for :mkmerge and the mkmerge command
+#	in the bus-specific sub-tree.  After the merge,
+#	we'll look for :mk in $WORK
+#
+
+bad=0
+for i in ROOT MACH WORK SPOOL TOOLS REL CPU PFX \
+	PARALLEL KTOOL PROTO CH REL_FULLNAME
+do
+	if eval [ -z \"\${$i}\" ]
+	then
+        	echo "$i" is not set.
+        	bad=1
+	fi
+done
+[ $bad -eq 1 ] && exit 1
+
+/usr/bin/pkginfo acp base ccs cmds nsu softint 2>/dev/null | awk ' { print $2 }
+' > /tmp/$$.pkgs
+
+cmp -s /tmp/$$.pkgs $ROOT/usr/src/req_pkgs
+if [ $? != 0 ]
+then
+	echo
+	echo "ERROR: All required packages are not installed"
+	echo "ERROR: See build instructions for more details"
+	echo
+	echo "INFO: packages required are:"
+	cat $ROOT/usr/src/req_pkgs
+	echo
+	echo "INFO:installed packages are:"
+	cat /tmp/$$.pkgs
+	exit 1
+fi
+
+
+(cd ${MACH}/mkmerge; make -f mkmerge.mk )
+
+echo "Merge started   `date`"
+
+chmod 0755 ./${MACH}/:mkmerge
+chmod 0755 ./${MACH}/make*uts
+chmod 0755 ./${MACH}/build/tools/*
+
+#
+#	The arguments to the :mkmerge script should be edited
+#	to suit the needs at your particular site.
+#
+
+# do merge for main build
+
+./${MACH}/:mkmerge common ${CPU} ${MACH} ${WORK} >merge.out 2>&1
+
+# do merges for MP kernel build
+#
+# create a dummy directory i386atmp.
+#
+# During SCP creation, we'll place MP Drivers.o under this directory.
+# we need a 4th subdir becuase the UP Drivers.o placed under i386at tree need
+# to get overwritten. Note that Driver.o's get placed in the src tree
+# when Novell is not allowed to ship src for a partiulcar driver.
+#
+# We need to create this empty subdir now, so mkmerge will not complain
+# during official integration, when this subdir will be empty.
+#
+# WE ONLY LINK IN THIS 4th BRANCH WHEN MERGING THE $WORK/mp TREE.
+#
+[ -d i386atmp ] || mkdir i386atmp
+./${MACH}/:mkmerge -d uts common ${CPU} ${MACH} i386atmp ${WORK}/mp >>merge.out 2>&1
+./${MACH}/:mkmerge -d cmd/crash common ${CPU} ${MACH} ${WORK}/mp >>merge.out 2>&1
+
+echo "Merge completed `date`"
+
+chmod 0755 ${WORK}/:mk*
+
+cd ${WORK}
+
+echo "Build started   `date`"
+
+./:mk
+
+echo "Build completed `date`"
+
+exit 0

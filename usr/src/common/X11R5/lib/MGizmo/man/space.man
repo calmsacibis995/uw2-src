@@ -1,0 +1,70 @@
+'\"ident        "@(#)MGizmo:man/space.man	1.1"
+.TH SpaceGizmo 3L
+.SH NAME
+\f(CBSpaceGizmo\f1 \- an abstract data type (ADT) that specifies a blank area.
+The \f(CBSpaceGizmo\fP is typically used to put space between two Gizmos.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/SpaceGizmo.h>
+.ft
+.fi
+.SH "DESCRIPTION"
+A \f(CBSpaceGizmo\fP is created by populating a \f(CBSpaceGizmo\fP data
+structure
+and placing it's address in a \f(CBGizmoRec\fP structure.
+Ultimately, a \f(CBGizmoRec\fP structure is placed in one of the container
+Gizmos and the display is created by making a call to the function
+\f(CBCreateGizmo\fP(3L).
+Following is the definition of the \f(CBSpaceGizmo\fP data type:
+.PP
+.nf
+.ft CB
+typedef struct _SpaceGizmo {
+        char *          name;
+        Dimension       height;       /* In mm */
+        Dimension       width;        /* In mm */
+} SpaceGizmo;
+.fi
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the \fBRectObj\fP widget.
+.SH "USAGE"
+.nf
+.ft CB
+InputGizmo      input1 = {
+        NULL, "input1", "Name:", "David Dougherty", 29
+};
+
+SpaceGizmo      space1 = {
+        100,
+        100
+};
+
+InputGizmo      input2 = {
+        NULL, "input2", "Name:", "Dave Francis", 42
+};
+
+GizmoRec        record1[] = {
+        {InputGizmoClass, &input1},
+        {SpaceGizmoClass, &space1},
+        {InputGizmoClass, &input2}
+};
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", NULL, record1, 1
+};
+
+main()
+{
+        Gizmo   handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP,
+InputGizmo\f(CW(3L)\fP

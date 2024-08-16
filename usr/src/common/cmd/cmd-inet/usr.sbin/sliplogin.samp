@@ -1,0 +1,11 @@
+#! /bin/ksh -p
+#ident	"@(#)cmd-inet:common/cmd/cmd-inet/usr.sbin/sliplogin.samp	1.1"
+#ident	"$Header: $"
+
+PATH=/usr/sbin:/bin:/usr/bin:
+TTY=`tty`
+LOCAL_ADDRESS=198.242.199.2
+REMOTE_ADDRESS=198.242.199.1
+OPTIONS="+c +v"
+
+exec slattach $OPTIONS $TTY $LOCAL_ADDRESS $REMOTE_ADDRESS > slip.log 2>&1

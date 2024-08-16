@@ -1,0 +1,33 @@
+#ident	"@(#)cs:cs/cs_tpconfig.dfl	1.2"
+
+# This is the file "cs_tpconfig".  It is used to disable "trusted
+# path" semantics on specific devices used by the connection server.
+#
+# The following example illustrates how this is done.
+#
+# In this example, the connection server will open "/dev/tty00"
+# without establishing a "trusted path" connection.  The other
+# devices will be opened using a "trusted path" connection.
+#
+#	/dev/tty00=no
+#	/dev/term/01=yes
+#	/dev/tty02=
+#
+# The device name specifed must match the device name used by
+# the connection server.  This information is stored in the file:
+#
+#	/etc/uucp/Devices
+#
+# If the specified device is not listed in the "cs_tpconfig" file, the
+# connection is established according to the value of TPDEFAULT.  Also,
+# any device listed in this file for non-trusted path use must be
+# explicitly disabled in the port monitor file.
+#
+# The "defadm" command should be used as the interface to add data to
+# this file.  For example, the following command will turn off the
+# "trusted path" semantics for "/dev/tty00":
+#
+#	defadm cs_tpconfig /dev/tty00=no
+#
+# For all NAME=value strings any value other than ``no'' defaults to
+# ``yes'' (including a NULL value).

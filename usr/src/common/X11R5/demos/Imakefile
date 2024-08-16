@@ -1,0 +1,29 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5misc:demos/Imakefile	1.6"
+
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#if BuildPexClients
+PEXDIRS = auto_box beach_ball gpc
+#endif
+
+MOTIFDIRS = motifshell periodic clipboard \
+	    motifanim motifburger hellomotif \
+	    helloint xmtravel xmpiano \
+	    xmsamplers motifgif uilsymdump \
+	    view textedit DragAndDrop
+
+SUBDIRS = puzzle x11perf xeyes xgc ico \
+	  $(MOTIFDIRS) $(PEXDIRS) 
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

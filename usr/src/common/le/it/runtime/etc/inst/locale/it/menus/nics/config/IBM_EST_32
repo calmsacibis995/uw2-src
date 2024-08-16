@@ -1,0 +1,43 @@
+NAME=IBM_EtherStreamer_MC_32
+
+DRIVER_NAME=IBMEST
+
+BOARD_IDS="0x8FA8"
+
+BUS=MCA
+
+CLASS=IBMEST
+
+IDTUNE_NUM=5
+
+IDTUNE_ARRAY[1]="MSM_1KCHUNKS 4"
+IDTUNE_ARRAY[2]="MSM_2KCHUNKS 36"
+IDTUNE_ARRAY[3]="MSM_6KCHUNKS 3"
+IDTUNE_ARRAY[4]="MSM_10KCHUNKS 0"
+IDTUNE_ARRAY[5]="MSM_36KCHUNKS 0"
+
+ETHER=true
+
+DEPEND=toktsm
+
+CUSTOM_NUM=2
+
+CUSTOM[1]='
+ODISTR1
+TXBUFFERS=4 TXBUFFERS=8
+4 8
+Buffer di trasmissione
+/etc/inst/locale/C/menus/nics/help/tx_buf_num
+Selezionare il numero di buffer di trasmissione
+'
+
+CUSTOM[2]='
+ODISTR2
+RXBUFFERS=4 RXBUFFERS=8
+4 8
+Buffer di ricezione
+/etc/inst/locale/C/menus/nics/help/rx_buf_num
+Selezionare il numero di buffer di ricezione
+'
+
+REBOOT=true

@@ -1,0 +1,98 @@
+'\"ident        "@(#)MGizmo:man/numeric.man	1.2"
+.TH NumericGizmo 3L
+.SH NAME
+\f(CBNumericGizmo\f1 \- an abstract data type (ADT) that specifies a
+spin button: an area where numeric data (integer and decimal) is displayed.
+Two arrow buttons are
+used to manipulate the data, one for increment, the other for decrement.
+The \f(CBNumericGizmo\fP consists of a data structure and a set of
+functions that operate on this data structure.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/NumericGizmo.h>
+
+void    SetNumericGizmoValue(Gizmo \fIg\fP, int \fIvalue\fP);
+int     GetNumericGizmoValue(Gizmo \fIg\fP);
+void    SetNumericInitialValue(Gizmo\fIg\fP, int \fIvalue\fP);
+.ft
+.fi
+.SH "DESCRIPTION"
+A \f(CBNumericGizmo\fP is created by populating a \f(CBNumericGizmo\fP data
+structure and placing it's address in a \f(CBGizmoRec\fP
+structure.  Ultimately, a \f(CBGizmoRec\fP structure is placed in one of the
+container
+Gizmos and the display is created by making a call to the function
+\f(CBCreateGizmo\fP(3L).
+Following is the definition of the \f(CBNumericGizmo\fP data type:
+.PP
+.nf
+.ft CB
+typedef struct _NumericGizmo {
+        HelpInfo *      help;
+        char *          name;
+        int             value;          /* Initial value */
+        int             min;            /* XmNminimum */
+        int             max;            /* XmNmaximum */
+        int             inc;
+        int             radix;          /* XmNdecimalPoints */
+} NumericGizmo;
+.fi
+.PP
+\fIvalue\fP specifies the initial value of the spin button.
+\fImin\fP and \fImax\fP specify the minimum and maximum values, respectively,
+that the spin button can have.
+\fIinc\fP specifies the value by which the spin button will incremented.
+\fIradix\fP specifies an optional number of decimal places in the value being
+displayed.
+.PP
+\f(CBSetNumericGizmoValue\fP is used primarily to set the initial
+value of the SpinBox widget,
+although it may be used at any time to select an arbitrary
+value.
+.PP
+\f(CBSetNumericInitialValue\fP is used to set the initial
+value of the Numeric Gizmo.
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBNumericGizmo\fP:
+.IP \fBGetGizmoWidget\fP 25
+Returns the spin button widget id.
+.IP \fBGetGizmoGizmo\fP 25
+Returns the handle to the \f(CBNumericGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 25
+Returns the current value of the Gizmo.
+.IP \fBGetGizmoPreviousValue\fP 25
+Returns the previous value of the Gizmo.
+.PP
+\f(CBGetNumericGizmoValue\fP is used to retrieve the current value of the Gizmo.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the spin button.
+.SH "USAGE"
+.nf
+.ft CB
+NumericGizmo    num1 = {
+        NULL, "num1", 50, 1, 100, 1, 0
+};
+
+GizmoRec        record1[] = {
+        {NumericGizmoClass, &num1}
+};
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", NULL, record1, 1
+};
+
+main()
+{
+        Gizmo        handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP

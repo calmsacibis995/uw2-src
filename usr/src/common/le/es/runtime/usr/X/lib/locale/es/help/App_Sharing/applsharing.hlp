@@ -1,0 +1,138 @@
+#ident\t"@(#)dthelp:Admin.Tools/applsharing.hlp 1.13"
+^*version^1
+^*title^Compartimiento de aplicaciones
+^:Compartir_Aplic.
+^*width^70
+^+DesktopMgr/help.defs
+^?Compartir aplicaciones
+^0^Compartimiento de aplicaciones
+^$10
+Compartimiento de aplicaciones
+
+Utilice Compartimiento de aplicaciones para \d(anunciar) otros sistemas UnixWare
+ donde posea aplicaciones disponibles para su uso.
+
+Compartimiento de aplicaciones le ofrece las siguientes posibilidades:
+
+\to\t\k(Configurar el sistema para compartimiento de aplicaciones^^Configuración del sistema para el compartimiento de aplicaciones)
+\to\t\k(Suprimir aplicaciones de la lista de aplicaciones compartidas^^Supresión de una aplicación compartida)
+\to\t\k(Personalizar el guión shell de arranque de las aplicaciones compartidas^^Personalización de un guión de shell de arranque de aplicaciones compartidas)
+\to\t\k(Cambiar los tipos de aplicaciones^^Modificación de los tipos de aplicación)
+
+
+^1^Configuración del sistema para el compartimiento de aplicaciones
+^$20
+Configuración del sistema para el compartimiento de aplicaciones
+
+Antes de que los usuarios remotos puedan acceder a las aplicaciones
+compartidas, deberá activar \d(comunicación par a par). Además, el
+propietario del sistema remoto deberá activar la comunicación par a
+par en el sistema remoto (véase \k(Configuración de NetWare^NetWare_Setup/NetWare_Setup.hlp^Configuración de NetWare)).
+
+Además, deberá tener \k(permiso para Compartir aplicaciones^dtadmin/user.hlp^Comprensión de los permisos).
+
+Para configurar Compartimiento de aplicaciones, proceda de la siguiente manera:
+
+1.\tAbra la ventana que contiene la aplicación que desee
+  \t\d(anunciar)
+ \tpara otros usuarios.
+
+  \tNota: Si ya está en la carpeta Herramientas_de_Admin, vaya al paso 3.
+
+2.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la \k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+3.\tHaga doble clic en Compartición_de_aplicaciones.  Aparecerá la
+  \tventana "Compartición_de_aplicaciones".
+
+4.\t\d(Arrastre y suelte^arrastrar y soltar) el archivo o carpeta de la
+  \taplicación seleccionada en el paso 1 hasta la ventana
+  \t"Compartición de aplicaciones - Aplicaciones compartidas".
+
+5.\tHaga clic en Cancelar para cerrar la ventana.  Ahora el
+  \tejecutable del archivo o carpeta de la aplicación está disponible
+  \tpara otros usuarios.
+
+Nota: Basta con seguir este procedimiento para configurar aplicaciones
+compartidas para programas simples, tal como xclock. Sin embargo, para
+la mayoría de las aplicaciones deberá modificar el guión de la shell
+de arranque. Véase \k(Personalización de un guión de shell de arranque de aplicaciones compartidas).
+
+^1^Supresión de una aplicación compartida
+^$30
+Supresión de una aplicación compartida
+
+Para suprimir (no anunciar) una aplicación de la lista de
+Compartimiento de aplicaciones, proceda de la siguiente manera:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Compartición_de_aplicaciones.  Aparecerá la
+  \tventana "Compartición_de_aplicaciones".
+
+3.\tHaga clic en la aplicación que desee suprimir.
+
+4.\tHaga clic en Suprimir.  El sistema eliminará la aplicación de la
+  \tlista Compartición de aplicaciones.
+
+^1^Personalización de un guión de shell de arranque de aplicaciones compartidas
+^$40
+Personalización de un guión de shell de arranque de aplicaciones compartidas
+
+Para personalizar el guión de la shell de arranque de las aplicaciones
+compartidas, proceda de la siguiente manera:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Compartición_de_aplicaciones.  Aparecerá la
+  \tventana "Compartición_de_aplicaciones".
+
+3.\tHaga clic en la aplicación que desee editar.
+
+4.\tHaga clic en Editar.  Aparecerá la ventana "Editor de textos" que
+  \tcontendrá el guión de la aplicación.
+
+5.\tRealice las modificaciones que desee.  Véase \k(The Text Editor^dtedit/edit.hlp^El Editor de textos) para
+  \tobtener información acerca de la edición de textos.
+
+Nota: La edición del guión por defecto que arranca las aplicaciones
+compartidas constituye una función relativamente compleja. No haga uso
+del Editor por defecto a menos que esté familiarizado con la
+programación de la shell del sistema UNIX.
+
+^1^Modificación de los tipos de aplicación
+^$50
+Modificación de los tipos de aplicación
+
+Compartimiento de aplicaciones soporta los siguientes dos tipos de
+aplicaciones:
+
+\to\tAplicación de texto - Una aplicación que arranca dentro de la
+\t \t\k(ventana terminal^xterm/term.hlp^Terminal).
+
+\to\tX Aplicación - Una aplicación que dispone de su propia ventana
+\t \tterminal.
+
+Para pasar de un tipo a otro de estas dos aplicaciones, proceda de la
+siguiente manera:
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Compartición_de_aplicaciones.  Aparecerá la
+  \tventana "Compartición_de_aplicaciones".
+
+3.\tHaga clic en la aplicación deseada.
+
+4.\tHaga clic en Cambiar Tipo.  Si se trataba de una aplicación X,
+  \tpasará a ser una aplicación de texto, y viceversa.
+

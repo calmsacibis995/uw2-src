@@ -1,0 +1,85 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)remapps:Imakefile	1.13"
+#ident  "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/Remote_Applications/Imakefile,v 1.18.2.1 1994/10/28 18:39:08 plc Exp $"
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+PROGS 	    = Remote_Apps
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+
+          SRCS = \
+		ra_buildscr.c \
+		ra_callbacks.c \
+		ra_genscrn.c \
+		ra_getlists.c \
+		ra_item.c \
+		ra_login.c \
+		ra_sort.c \
+		ra_names.c \
+		ra_remappl.c
+          OBJS = \
+		ra_buildscr.o \
+		ra_callbacks.o \
+		ra_genscrn.o \
+		ra_getlists.o \
+		ra_item.o \
+		ra_login.o \
+		ra_sort.o \
+		ra_names.o \
+		ra_remappl.o
+           HEADERS = \
+		ra_hdr.h \
+		ra_saptypes.h
+
+   DTCLIENTSLIB = $(USLCLIENTSRC)/libDtI
+       DTLIBSRC = $(LIBSRC)/Dt
+      DTILIBSRC = $(DTCLIENTSLIB)
+         DTILIB = $(DTILIBSRC)/libDtI.so
+          DTLIB = $(DTLIBSRC)/libDt.so
+
+       INCLUDES = -I. -I../libdlist -I$(LIBSRC) -I$(LIBSRC)/Xol -I$(DTILIBSRC)  -I$(USLCLIENTSRC)
+LOCAL_LIBRARIES = ../libdlist/libdlist.a $(DTILIB) $(DTLIB) XolClientLibs 
+        DEPLIBS = $(DTILIB) $(DTLIB) XolClientDepLibs
+
+  SYS_LIBRARIES = -lm -liaf -lxchoose -lgen -L../../../cmd/cmd-nw/lib -lnwutil -lthread 
+
+  CC = LD_RUN_PATH=/usr/X/lib $(PFX)cc
+
+all:: libdlist $(PROGS)
+
+ComplexProgramTarget(Remote_Apps)
+
+libdlist:
+	( cd ../libdlist; \
+	make -f Makefile;)
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 4550)
+
+InstallAppDefaults(Remote_Apps)
+
+InstallNonExecFile(Remote_Apps.icon, $(USRLIBDIR)/pixmaps)
+
+InstallNonExecFile(remAppl16.xpm, $(USRLIBDIR)/pixmaps)
+
+InstallNonExecFile(remApplServer16.xpm, $(USRLIBDIR)/pixmaps)
+
+InstallNonExecFile(bitmaps/Remote_Apps.icon,$(USRLIBDIR)/bitmaps)
+
+InstallNonExecFile(bitmaps/remAppl16.xpm,$(USRLIBDIR)/bitmaps)
+
+InstallMsgCatalog(remappl)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()

@@ -1,0 +1,321 @@
+#!/sbin/sh
+#ident	"@(#)pkg.nuc:postinstall	1.33"
+#ident	"$Header: /SRCS/esmp/usr/src/nw/pkg/nuc/postinstall,v 1.44.2.6 1995/02/13 20:21:21 hashem Exp $"
+
+SCRIPTS=/usr/sbin/pkginst
+
+ERR=/tmp/nuc.err
+CWD=/tmp/novell
+
+PFMT1="The installation cannot be completed due to an error in the driver installation.  The file %s contains the errors.\n"
+
+PKGMSG=uvlnuc
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]; then
+	if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	     -d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]; then
+		cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+		   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+	fi
+fi
+
+
+if [ ! -d ${CWD} ]
+then
+	pfmt -s error -g ${PKGMSG}:364 "No /tmp/novell.\n"
+	exit 1
+fi
+
+
+cd ${CWD}
+for i in `ls`
+do
+	cd ${i}
+	/etc/conf/bin/idinstall -k -P nuc -u ${i} > ${ERR} 2>&1
+	if [ $? -ne 0 ]
+	then
+		/etc/conf/bin/idinstall -k -P nuc -a ${i} > ${ERR} 2>&1
+		if [ $? -ne 0 ]
+		then
+			message `pfmt -s error -g ${PKGMSG}:365 "$PFMT1" "${ERR}"`
+			exit 1
+		fi
+	fi
+	cd ${CWD}
+done
+
+rm -f ${ERR}
+
+rm -rf /etc/rc2.d/S72nuc > /dev/null 2>&1
+rm -rf /etc/rc2.d/S27nuc > /dev/null 2>&1
+rm -rf /etc/rc1.d/K72nuc > /dev/null 2>&1
+rm -rf /etc/rc0.d/K72nuc > /dev/null 2>&1
+ln /etc/init.d/nuc /etc/rc2.d/S27nuc
+ln /etc/init.d/nuc /etc/rc0.d/K72nuc
+ln /etc/init.d/nuc /etc/rc1.d/K72nuc
+
+#	Set Single Login default to on.
+/usr/sbin/nwcm -q -s "netware_single_login=on"
+chmod 444 /etc/.slogin >/dev/null 2>&1
+
+if [ -d /usr/X/lib/classdb ]
+then
+
+	/usr/bin/grep "INCLUDE nuc\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE nuc.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE asterix\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE asterix.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE autocad\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE autocad.cdb;" >> /usr/X/lib/classdb/dtadmin
+        fi
+
+	/usr/bin/grep "INCLUDE coreldraw\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE coreldraw.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE dbase\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE dbase.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE framemaker\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE framemaker.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE island\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE island.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE lotus123\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE lotus123.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE msword\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE msword.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE wingz\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE wingz.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE wp\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE wp.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+
+	/usr/bin/grep "INCLUDE digi\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "INCLUDE digi.cdb;" >> /usr/X/lib/classdb/dtadmin
+	fi
+fi
+
+# Get rid of dtmg prompt when user selects netware icon
+sed -e '/2.0.1/D' /usr/X/lib/classdb/system >/tmp/system
+cp /tmp/system /usr/X/lib/classdb/system
+
+#  Add MHS_Setup (if not there) to the PrivTable, and give it its required privileges.
+/usr/bin/grep "MHS_Setup" /usr/X/desktop/LoginMgr/PrivTable > /dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	echo "nucdt:9:Administer MHS Mail	MHS_Setup:/usr/X/bin/MHS_Setup:setuid" >> /usr/X/desktop/LoginMgr/PrivTable
+fi
+
+# Add App_Sharing (if not there) to the PrivTable, and give it special privileges.
+/usr/bin/grep "App_Sharing" /usr/X/desktop/LoginMgr/PrivTable >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	echo "nucdt:11:Share Applications	App_Sharing:/usr/X/bin/App_Sharing:audit:dacread:dacwrite:dev:macread:macwrite:owner:setflevel:setuid" >> /usr/X/desktop/LoginMgr/PrivTable
+fi
+
+
+#################### HELP DESK #########################
+
+# Add NetWare_Access (if not there) to the Help_Desk.
+/usr/bin/grep "NetWare_Access" /usr/X/desktop/Help_Desk>/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	echo "NetWare_Access194,201{_HELPFILE=\"NetWare_Access/NetWare_Access.hlp\";_ICONLABEL=\"NetWare_Access\";_DESCRP=\"Accessing NetWare servers.\";_ICONFILE=\"xnetware.icon\"}">>/usr/X/desktop/Help_Desk
+fi
+
+#  Add MHS_Setup (if not there) to the Help_Desk.
+/usr/bin/grep "MHS_Setup" /usr/X/desktop/Help_Desk>/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	echo "MHS_Setup194,201{_HELPFILE=\"MHS_Setup/MHS_Setup.hlp\";_ICONLABEL=\"MHS_Setup\";_DESCRP=\"Setting up and managing a gateway between Novell's Message Handling System (MHS) and UNIX (RFC 822) mail.\";_ICONFILE=\"mhs.stp32\"}">>/usr/X/desktop/Help_Desk
+fi
+
+# Add App_Share (if not there) to the Help_Desk.
+/usr/bin/grep "App_Sharing" /usr/X/desktop/Help_Desk >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	echo "App_Sharing194,201{_HELPFILE=\"App_Sharing/applsharing.hlp\";_ICONLABEL=\"App_Sharing\";_DESCRP=\"Sharing Applications with Remote Systems.\";_ICONFILE=\"App_Sharing.icon\"}">>/usr/X/desktop/Help_Desk
+fi
+
+# Add Remote_Apps (if not there) to the Help_Desk.
+/usr/bin/grep "Remote_Apps" /usr/X/desktop/Help_Desk >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	echo "Remote_Apps194,201{_HELPFILE=\"Remote_Apps/remappl.hlp\";_ICONLABEL=\"Remote_Apps\";_DESCRP=\"Running remote applications.\";_ICONFILE=\"Remote_Apps.icon\"}">>/usr/X/desktop/Help_Desk
+fi
+
+# Add Open_Application (if not there) to the Help_Desk.
+/usr/bin/grep "Open_Application" /usr/X/desktop/Help_Desk >/dev/null 2>&1
+if [ $? -ne 0 ]
+then
+	echo "Open_Application194,201{_HELPFILE=\"Launch_Application/Open_Application.hlp\";_ICONLABEL=\"Open_Application\";_DESCRP=\"Running a remote application.\";_ICONFILE=\"remoteApplication.xpm\"}">>/usr/X/desktop/Help_Desk
+fi
+
+####  Creating the links for the folders on the desktop with the executable
+ 
+/usr/X/adm/upgrade/dtgetusers | while read line
+do	
+	HOMEDIR=`echo $line | /usr/bin/cut -f2 -d:`
+	VARNAME=`echo $HOMEDIR | /usr/bin/cut -f2 -d/`
+	
+	# check if deskop environment has Admin_Tools/Networking  setup
+	if [ -d $HOMEDIR/Admin_Tools/Networking ] 
+	then
+
+		[ ! -s $HOMEDIR/Admin_Tools/Networking/NetWare_Access ] && {
+		ln -s /usr/X/bin/NetWare_Access $HOMEDIR/Admin_Tools/Networking/NetWare_Access 2>/dev/null
+		}
+		
+		[ ! -s $HOMEDIR/Admin_Tools/Networking/NetWare_Setup ] && {
+			ln -s /usr/X/bin/nwsetup $HOMEDIR/Admin_Tools/Networking/NetWare_Setup 2>/dev/null
+		}
+	fi
+
+	# check if deskop environment has Admin_Tools setup
+	if [ -d $HOMEDIR/Admin_Tools ] 
+	then
+		[ ! -s $HOMEDIR/Admin_Tools/MHS_Setup ] && {
+			ln -s /usr/X/bin/MHS_Setup $HOMEDIR/Admin_Tools/MHS_Setup 2>/dev/null
+		}
+
+		[ ! -s $HOMEDIR/Admin_Tools/Mail_Setup ] && {
+			ln -s /usr/X/bin/Mail_Setup $HOMEDIR/Admin_Tools/Mail_Setup 2>/dev/null
+		}
+
+		[ ! -s $HOMEDIR/Admin_Tools/App_Sharing ] && {
+			ln -s /usr/X/bin/App_Sharing $HOMEDIR/Admin_Tools/App_Sharing 2>/dev/null
+		}
+
+	fi
+
+	# check if deskop environment has Applications  setup
+	if [ -d $HOMEDIR/Applications ] 
+	then
+		[ ! -s $HOMEDIR/Applications/Remote_Apps ] && {
+			ln -s /usr/X/bin/Remote_Apps $HOMEDIR/Applications/Remote_Apps 2>/dev/null
+		}
+
+	fi
+
+	# link the /.Netware directory to the home directory of each user
+	if [ "$HOMEDIR" != "" ] && [ "$HOMEDIR" != "/" ] &&  [ "$VARNAME" != "var" ] && [ "$VARNAME" != "usr" ] && [ "$VARNAME" != "etc" ]
+	then
+		if [ ! -d $HOMEDIR/netware ] 
+		then
+			ln -s /.NetWare $HOMEDIR/netware
+		fi
+	fi
+
+done 
+#############
+
+cd /
+
+/etc/conf/bin/idbuild
+
+while read a
+do
+	removef ${PKGINST} ${a}
+done <<EOT
+/tmp/novell/nuc/System
+/tmp/novell/nuc/Space.c
+/tmp/novell/nuc/Node
+/tmp/novell/nuc/Master
+/tmp/novell/nuc/Driver_atup.o
+/tmp/novell/nuc/Driver_mp.o
+/tmp/novell/nuc/Mtune
+/tmp/novell/nuc/Dtune
+/tmp/novell/nuc
+/tmp/novell/nucfs/System
+/tmp/novell/nucfs/Space.c
+/tmp/novell/nucfs/Master
+/tmp/novell/nucfs/Driver_atup.o
+/tmp/novell/nucfs/Driver_mp.o
+/tmp/novell/nucfs
+/tmp/novell/nucam/System
+/tmp/novell/nucam/Space.c
+/tmp/novell/nucam/Master
+/tmp/novell/nucam/Driver_atup.o
+/tmp/novell/nucam/Driver_mp.o
+/tmp/novell/nucam/Mtune
+/tmp/novell/nucam
+/tmp/novell/NWam/System
+/tmp/novell/NWam/Node
+/tmp/novell/NWam/Master
+/tmp/novell/NWam/Driver_atup.o
+/tmp/novell/NWam/Driver_mp.o
+/tmp/novell/NWam
+/tmp/novell
+/tmp
+EOT
+
+# modify netconfig to add the nuc name resolver
+sed -e 's/^\(ipx[ \t][ \t]*.*[ \t][ \t]*\)\/usr\/lib\/novell_nwnet.so/\1\/usr\/lib\/novell.so/' \
+-e 's/^\(spx[ \t][ \t]*.*[ \t][ \t]*\)\/usr\/lib\/novell_nwnet.so/\1\/usr\/lib\/novell.so/' \
+/etc/netconfig >/tmp/nucnetconfig
+cp /tmp/nucnetconfig /etc/netconfig
+
+removef -f ${PKGINST}
+
+cd /
+rm -fr ${CWD}
+
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = "YES" ] && set -x
+
+if [ "$PKGINSTALL_TYPE" != "NEWINSTALL" ]
+then
+        VER=`cat /etc/inst/save.user/${PKGINST}.ver 2>/dev/null`
+        if [ "x${VER}" = "x2.0" ]
+        then
+                for RFILE in `cat /var/sadm/pkg/${PKGINST}/install/rem.files`
+                do
+                        rm -rf ${RFILE}
+                done
+
+                removef ${PKGINST} - < /var/sadm/pkg/${PKGINST}/install/rem.files >/dev/null 2>&1
+                removef -f ${PKGINST}
+        fi
+fi
+
+exit 0

@@ -1,0 +1,76 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)mach:mach/devices/ultra/Imakefile	1.15"
+
+/**/#
+/**/# If the Makefile is lost or corrupted, to generate a new Makefile:
+/**/# 
+/**/#  /usr/X/bin/imake -DUseInstalled -DTOPDIR=. -DCURDIR=. -I/usr/X/lib/config
+/**/#
+/**/# change SRCFILE to your file name
+/**/#
+
+/**/# Please see ../../Imakefile for more information on compile time
+/**/# options.
+
+CDEBUGFLAGS=-O -v
+EXTRA_DEFINES=-DPUBLIC= -DSTATIC= -DATBUS -DUSE_KD_GRAPHICS_MODE\
+	 -DUSE_SYSI86 -DLIBRARY_NAME=\"ULTRA\"\
+	 -DLIBRARY_VERSION='"1.04"'\
+	 -DCHIPSET_NAME=\"ATI-ULTRA-LFB\"
+
+#define VendorDisplayModuleRule()			@@\
+.c.o:							@@\
+	$(CC) -c $(CDEBUGFLAGS) $(EXTRA_DEFINES) -Xa -Dix86 $(ALLINCLUDES) $<; @@\
+							@@\
+all:: $(VENDORLIB) 					@@\
+$(VENDORLIB):: $(OBJS)					@@\
+	$(CC) $(YFLAGS) -G $(OBJS) -o $(VENDORLIB) $(CORELIB) -lm @@\
+	@echo $(VENDORLIB) generated. 			@@\
+							@@\
+install:: all						@@\
+	$(INSTALL) $(INSTLIBFLAGS) $(VENDORLIB) $(DISPLIBDIR)
+
+
+       SRCS = debug.c l__gs__.c l__pi__.c l__po__.c l_arc.c l_bitblt.c\
+	      l_gs.c l_opt.c l_points.c ultra.c
+       OBJS = debug.o l__gs__.o l__pi__.o l__po__.o l_arc.o l_bitblt.o\
+	      l_gs.o l_opt.o l_points.o ultra.o
+  VENDORLIB = ultra.so.1
+    ARCHLIB = ultra.a
+
+MODE_FILES = ultrapro.dat \
+		 unisys.dat \
+		 ultraplus.dat \
+		 ultra.dat \
+		 vantage.dat
+
+
+#if UseInstalled
+    CORELIB = /usr/X/lib/libmach.so
+   INCLUDES = -I.. -I../../include -I/usr/X/include/X11 -I../../../os_lfb
+#else
+    CORELIB = ../../libmach.so
+   INCLUDES = -I./ -I../.. -I$(TOP)/server/ddx/si -I$(TOP)/server/include -I$(TOP)/X11 -I../../../os_lfb
+#endif
+     LFLAGS = -buxz
+
+#if XWINSharedDisplayLibrary
+VendorDisplayModuleRule()
+#else
+NormalLibraryObjectRule()
+NormalLibraryTarget (ultra, $(OBJS))
+#endif /* XWINSharedDisplayLibrary */
+
+InstallMultipleDestFlags(install,$(MODE_FILES) ULTRA_OPTIONS,$(DISPLIBDIR),$(INSTDATFLAGS))
+
+clean::
+	$(RM) *.so *.so.*
+
+DependTarget()

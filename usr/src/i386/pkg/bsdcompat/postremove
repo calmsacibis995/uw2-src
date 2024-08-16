@@ -1,0 +1,14 @@
+#ident	"@(#)pkg.bsdcompat:postremove	1.5"
+#ident	"$Header: $"
+
+
+rm -f /etc/ucbmail/aliases.dir
+rm -f /etc/ucbmail/aliases.pag
+
+
+/usr/bin/pkginfo acp > /dev/null 2>&1 && [ ! -f /usr/bin/lpr ] && {
+	installf acp /usr/bin/lpr=/usr/bin/lp s > /dev/null 2>&1
+	installf -f acp 
+}
+
+exit 0

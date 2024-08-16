@@ -1,0 +1,65 @@
+#ident	"@(#)kern-i386at:interface.d/mki.1	1.6.1.5"
+#ident	"$Header: $"
+#
+# mki.1 -- Merge-to-kernel interface version 1 (UnixWare 2.0)
+# Note: It is assumed that Merge will also access DDI interfaces
+#
+as_gap
+as_map
+as_rdlock_func
+as_unlock_func
+as_unmap
+as_wrlock_func
+block_preemption
+cl_trapret
+CMOSread
+exhd_read
+freectty
+fubyte
+fushort
+fuword
+mrg_getparm
+mrg_post_evt
+mrg_set_vm86_flg
+mrg_clr_vm86_flg
+mrg_chk_vm86_flg
+myengnum
+Nengine
+pm_denied
+process_trapret
+restore_std_idt
+set_private_dt
+set_private_idt
+set_special_sp
+subyte
+sushort
+suword
+trap_err_code
+unblock_preemption
+upointer
+vm86_idtp
+yield
+
+# segment driver stuff
+segvn_create
+zfod_argsp
+segwrap_create
+segwrap_args
+ksegwrap_args
+
+# modbit tracking interfaces
+modbit_cancel
+modbit_check
+modbit_track
+
+# Direct attach stuff which is not used but is referenced.  It is left in as
+# a reminder of missing functionality that needs new interface definitions.
+clkstart	nulldev
+disableint	nulldev
+enableint	nulldev
+ivect		nulldev
+
+# These are (or were) referenced, but are not (yet) officially sanctioned.
+# Currently under investigation by Locus.
+egafont_p
+fp_kind

@@ -1,0 +1,60 @@
+#ident	"@(#)pkg.kdb:prototype	1.6.3.8"
+#ident 	"$Header: $"
+
+#	Copyright (c) 1990  Intel Corporation
+#	All Rights Reserved
+#
+#	INTEL CORPORATION PROPRIETARY INFORMATION
+#
+#	This software is supplied to AT & T under the terms of a license
+#	agreement with Intel Corporation and may not be copied nor
+#	disclosed except in accordance with the terms of that agreement.
+
+!CONFDIR=etc/conf
+!PACKDIR=/$CONFDIR/pack.d
+
+i kdb/menu.kdb=menu.kdb
+i pkginfo
+i request
+i postinstall
+i preremove
+i copyright=../acp/copyright
+i depend
+
+!default 0644 bin bin
+
+d none /etc	? ? ?
+d none /etc/conf	? ? ?
+d none /etc/conf/bin	? ? ?
+
+d none /sbin	? ? ?
+d none /tmp	? ? ?
+d none /tmp/kdb_util	0775 bin bin
+d none /tmp/kdb		0775	bin	bin
+d none /usr	? ? ?
+d none /usr/include	? ? ?
+d none /usr/include/sys	? ? ?
+
+v none /tmp/kdb_util/Driver_atup.o=/$PACKDIR/kdb_util/Driver.o
+v none /tmp/kdb_util/Driver_mp.o=/mp/$PACKDIR/kdb_util/Driver.o
+v none /tmp/kdb_util/Modstub.o=/$PACKDIR/kdb_util/Modstub.o
+v none /tmp/kdb_util/Space.c=/$PACKDIR/kdb_util/space.c
+v none /tmp/kdb_util/Stubs.c=/$PACKDIR/kdb_util/stubs.c
+v none /tmp/kdb_util/Master=/$CONFDIR/mdevice.d/kdb_util
+v none /tmp/kdb_util/System=/$CONFDIR/sdevice.d/kdb_util
+v none /tmp/kdb_util/Mtune=/$CONFDIR/mtune.d/kdb_util
+f none /tmp/kdb_util/Dtune=/$CONFDIR/dtune.d/kdb_util
+
+v none /tmp/kdb/Driver_atup.o=/$PACKDIR/kdb/Driver.o
+v none /tmp/kdb/Driver_mp.o=/mp/$PACKDIR/kdb/Driver.o
+v none /tmp/kdb/Master=/$CONFDIR/mdevice.d/kdb
+v none /tmp/kdb/System=/$CONFDIR/sdevice.d/kdb
+
+f none /sbin/kdb	0755 bin bin 
+
+!default 0444 bin bin
+
+f none /usr/include/sys/kdebugger.h
+
+f none /usr/include/sys/xdebug.h
+

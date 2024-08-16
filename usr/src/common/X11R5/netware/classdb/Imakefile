@@ -1,0 +1,45 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994, 1995 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)nwclassdb:Imakefile	1.5"
+#ident "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/classdb/Imakefile,v 1.3 1994/11/01 14:50:34 hashem Exp $"
+
+/**/#	Copyright (c) 1993 Novell
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+/**/#	Novell.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#include    <Motif.tmpl>
+#include    <Motif.rules>
+
+PROGS = nuc.cdb
+
+all::
+
+depend::
+
+InstallMultiple(nuc.cdb,$(USRLIBDIR)/classdb)
+InstallMultiple(nwsetup.cdb,$(USRLIBDIR)/classdb)
+InstallMsgCatalog(nucdt)
+
+InstallMultiple(pixmaps/Server48.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(pixmaps/Volume48.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(pixmaps/netwareServer.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(pixmaps/netwareVolume.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(pixmaps/netwareVolumeNot.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(pixmaps/netware.xpm,$(USRLIBDIR)/pixmaps)
+
+InstallMultiple(bitmaps/Server48.icon,$(USRLIBDIR)/bitmaps)
+InstallMultiple(bitmaps/Volume48.icon,$(USRLIBDIR)/bitmaps)
+InstallMultiple(bitmaps/netwareServer.icon,$(USRLIBDIR)/bitmaps)
+InstallMultiple(bitmaps/netwareVolume.icon,$(USRLIBDIR)/bitmaps)
+InstallMultiple(bitmaps/netwareVolumeNot.icon,$(USRLIBDIR)/bitmaps)
+

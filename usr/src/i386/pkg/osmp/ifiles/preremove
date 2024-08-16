@@ -1,0 +1,41 @@
+#ident	"@(#)pkg.osmp:ifiles/preremove	1.1.1.2"
+
+FAILURE=1
+
+#now check to see whether a PSM installed by OSMP is already
+#configured
+
+for i in ast pcmp cbus compaq tricord olivetti
+do
+	/etc/conf/bin/idcheck -p $i
+	rc=$?
+	[ "$UPDEBUG" = YES ] && {
+	  echo "idcheck of " $i " returned " ${rc}
+	  goany
+	}
+
+	[ "${rc}" != "0" -a "${rc}" != "100" ] && {
+	  # driver was configured;  remove it if sdevice contains
+	  # $interface psm (watch out for silly name conflict)
+
+	  if grep interface /etc/conf/mdevice.d/$i | grep psm
+	  then
+		/etc/conf/bin/idinstall -P osmp -d $i
+	  fi 1>/dev/null 2>/dev/null
+	}
+done
+
+/usr/bin/ed /usr/X/lib/classdb/dtadmin > /dev/null 2>&1 << EOT
+g/INCLUDE osmp.cdb;/d
+w
+q
+EOT
+
+# reset kernel build type to single-processor and rebuild kernel
+/etc/conf/bin/idtype atup 1>/dev/null 2>/dev/null
+/etc/conf/bin/idbuild 1>/dev/null 2>/dev/null
+[ "$?" != "0" ] && {
+	exit ${FAILURE}
+}
+
+exit 10

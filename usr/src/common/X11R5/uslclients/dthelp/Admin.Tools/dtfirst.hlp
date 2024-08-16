@@ -1,0 +1,204 @@
+#ident\t"@(#)dthelp:Admin.Tools/dtfirst.hlp	1.20"
+^*version^1
+^*title^First Time Setup
+^:1st_Time_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?First Time Setup
+^0^First Time Setup
+^$10
+First Time Setup
+
+After installing UnixWare, you can customize your system environment.
+Following is a list of first time setup tasks that you may want to
+perform before you begin using UnixWare. Click (that is, quickly press and
+release the left mouse button) on the highlighted task you want to perform.
+
+A help screen appears with a brief description of the task, or an explanation
+of why you should perform the task. From this help screen, you can do the
+following:
+
+\to\tGet additional information and instructions for performing the task,
+\t \teither from online help or from your UnixWare hardcopy documentation.
+
+ \t\tNote: For information on how to use online help, click on \k(Using Help^DesktopMgr/help.hlp^Using Help).
+
+\to\tInvoke the task (where possible).
+
+Note: You do not have to perform all of these setup tasks. Choose the setup
+tasks appropriate for your own environment. If you decide not to set up some
+or all of the tasks now, you can always come back to this help screen by
+double-clicking (that is, quickly pressing and releasing the left mouse
+button twice) on the 1st_Time_Setup icon in the \k(Help Desk^DesktopMgr/helpdesk.hlp^Overview of the Help Desk).
+
+However, even if you decide to skip all other tasks, we recommend that you
+perform the first task in this list, "Creating Emergency Recovery Diskettes."
+
+Note: If you click on any items in the following list, and then decide you
+want to come back to this help screen, click on the Backtrack button at
+the top of your screen.
+
+\to\t\k(Creating Emergency Recovery Diskettes)
+\to\t\k(Increasing Your Display Resolution)
+\to\t\k(Configuring Your System for TCP/IP Networking)
+\to\t\k(Configuring Your System for Dialup Networking)
+\to\t\k(Configuring Your System to Send Mail to Users on Other Networks)
+\to\t\k(Setting Up a Printer)
+\to\t\k(Installing UNIX Applications)
+\to\t\k(Installing DOS and Windows)
+\to\t\k(Configuring Your System for NetWare Access)
+\to\t\k(Creating Emergency Recovery Tapes)
+
+After you complete first time setup, we recommend you read the overview
+information about the system. Click on \k(Introduction to the UnixWare Desktop^DesktopMgr/desktop.hlp^Introduction to the UnixWare Desktop).
+
+Note: For a list of trademarks mentioned in this help system, click
+on \k(Trademarks^DesktopMgr/trademark.hlp^Trademarks).
+
+
+^1^Creating Emergency Recovery Diskettes
+^$20
+Creating Emergency Recovery Diskettes
+
+The emergency recovery diskette is a customized diskette for your system. 
+Should your system become corrupted, this diskette lets you bring your
+UnixWare system to a state where you can repair the damage. 
+
+For instructions on creating emergency recovery diskettes, see "Recovering
+Your System" in the System Owner Handbook. 
+
+To create an emergency recovery diskette now, click on
+\s(Create Emergency Recovery Diskette^/usr/X/bin/xterm -t "`gettxt dtfirst2:10 \"Create Emergency Diskette\"`" -E $XWINHOME/adm/dtexec -P root su root -c "'/sbin/emergency_disk -g diskette1'").
+
+^1^Increasing Your Display Resolution
+^$30
+Increasing Your Display Resolution
+
+You can change the resolution of your video display to increase the amount
+of information you see on your screen, and also to increase the number of
+colors the system uses on your screen.
+
+For more information, click on \k(Display Setup^dtadmin/video.hlp^Display Setup).
+
+To increase your video resolution now, click on \s(Setup Display^/sbin/tfadmin gsetvideo -p || /usr/bin/gettxt dtfirst2:11 "Could not increase your video." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Configuring Your System for TCP/IP Networking
+^$40
+Configuring Your System for TCP/IP Networking
+
+If you did not configure Transmission Control Protocol/Internet Protocol
+(TCP/IP) during initial installation, or if you do not have a bootp server
+in your environment (check with your system administrator), you must set up
+TCP/IP to be able to send mail to users on other systems and to access
+printers on other UNIX systems.
+
+You may also want to set up access to a Domain Name Service (DNS) server,
+a Network Information Service (NIS) server, a network router, and so forth.
+You perform all of these setup tasks, including configuring TCP/IP, using
+the Internet Setup feature.
+
+
+For more information, click on \k(Internet Setup^dtadmin/inet.hlp^Internet Setup).
+
+To configure TCP/IP networking now, click on \s(Setup TCP/IP^/sbin/tfadmin inet || /usr/bin/gettxt dtfirst2:12 "Could not invoke TCP/IP Networking Setup." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Configuring Your System for Dialup Networking
+^$50
+Configuring Your System for Dialup Networking
+
+If you need to access another system across the telephone network via a modem
+(for example, you are located in a remote office and need to connect to your
+home office), you must configure your system for dialup networking. 
+
+For more information, click on \k(Dialup Setup^dtadmin/DialMgr.hlp^Dialup Setup).
+
+To configure your system for dialup networking via a modem now, click
+on \s(Setup Dialup Networking^/sbin/tfadmin dialup || /usr/bin/gettxt dtfirst2:13 "Could not invoke Dialup Networking Setup." | /usr/X/desktop/rft/dtmsg).
+
+^1^Configuring Your System to Send Mail to Users on Other Networks
+^$60
+Configuring Your System to Send Mail to Users on Other Networks
+
+If you want to configure your system to contact a mail server that knows
+how to send mail to UNIX systems on other networks, you must use Mail
+Setup to configure mail. For more information, click on \k(Mail Setup^Mail_Setup/Mail_Setup.hlp^Mail Setup).
+
+To configure Mail now, click on \s(Setup Mail^/sbin/tfadmin Mail_Setup || /usr/bin/gettxt dtfirst2:14 "Could not configure Mail." | /usr/X/desktop/rft/dtmsg).
+
+If your system is an Application Server and you want it to be a gateway
+between UNIX system mail users and NetWare Message Handling Service
+(MHS) mail users, you must use MHS Setup to configure mail. For more
+information, click on \k(MHS_Setup^MHS_Setup/MHS_Setup.hlp^MHS Setup).
+
+To configure an MHS gateway now, click on \s(Setup MHS Gateway^/sbin/tfadmin MHS_Setup || /usr/bin/gettxt dtfirst2:15 "Could not configure an MHS gateway." | /usr/X/desktop/rft/dtmsg).
+
+^1^Setting Up a Printer
+^$70
+Setting Up a Printer
+
+Before you can send print requests to a local or remote printer, you must
+configure access to that printer.
+
+For more information, see \k(Printer Setup^dtadmin/Printer_Setup.hlp^Printer Setup).
+
+To configure a printer now, click on \s(Setup Printer^/sbin/tfadmin prtsetup -o || /usr/bin/gettxt dtfirst2:16 "Could not configure a printer." | /usr/X/desktop/rft/dtmsg). 
+
+^1^Installing UNIX Applications
+^$80
+Installing UNIX Applications
+
+You may want to install other UNIX applications or add-on packages onto your
+system after initial UnixWare installation. For example, you may want to
+install the ASdocs package so that you have access to the full set of UnixWare
+Application Server online documentation.
+
+For more information, click on \k(Application Installer^dtadmin/App_Installer.hlp^Application Installer).
+
+To install a UNIX application now, click on \s(Install UNIX Applications^/sbin/tfadmin PackageMgr || /usr/bin/gettxt dtfirst2:17 "Could not install a UNIX application." | /usr/X/desktop/rft/dtmsg).
+
+Note: You cannot use Application Installer to add DOS or Windows applications.
+See \k(Installing DOS and Windows).
+
+^1^Installing DOS and Windows
+^$90
+Installing DOS and Windows
+
+If you want to install DOS or Windows onto your UnixWare system, or any DOS
+or windows applications, you must access a DOS environment by \d(double-clicking^double-click)
+on either the Win_Setup or DOS icon.
+
+For more information, see "Working with DOS and Windows" in the Desktop
+User Handbook.
+
+
+^1^Configuring Your System for NetWare Access
+^$100
+Configuring Your System for NetWare Access
+
+If you have access to NetWare servers, you can enhance your connectivity to
+NetWare by reconfiguring NetWare IPX/SPX networking protocol parameters. For
+example, if your system has multiple networking boards, you can configure
+these boards for both NetWare networking and for NetWare IPX routing.
+
+You can also enable status of the NetWare IPX/SPX network stacks to be
+monitored and controlled from another system.
+
+For more information, see \k(NetWare Setup^NetWare_Setup/NetWare_Setup.hlp^NetWare Setup).
+
+To configure NetWare Access now, click on \s(Setup NetWare Access^/sbin/tfadmin nwsetup || /usr/bin/gettxt dtfirst2:18 "Could not configure NetWare Access." | /usr/X/desktop/rft/dtmsg).
+
+^1^Creating Emergency Recovery Tapes
+^$110
+Creating Emergency Recovery Tapes
+
+After you install all add-on products and applications, protect your system 
+by creating emergency recovery tapes.
+
+For instructions on creating emergency recovery tapes, see "Recovering
+Your System" in the System Owner Handbook. 
+
+Note: If you performed an upgrade installation, you should also create a
+new full backup of your system. See \k(Backup-Restore^dtadmin/backup.hlp^Backup-Restore).
+

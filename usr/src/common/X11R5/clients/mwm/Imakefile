@@ -1,0 +1,148 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)mclients:mwm/Imakefile	1.26"
+XCOMM 
+XCOMM (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+XCOMM ALL RIGHTS RESERVED 
+XCOMM 
+XCOMM 
+XCOMM Motif Release 1.2.1
+XCOMM 
+XCOMM   $RCSfile: Imakefile,v $ $Revision: 1.8.5.3 $ $Date: 92/07/10 21:05:22 $
+
+#include	<Motif.tmpl>
+#include	<Motif.rules>
+
+INCLUDES = -I. -I$(INCLUDESRC) -I$(MINCLUDESRC) AutoIncludes
+DEPLIBS1 = XmClientDepLibs
+LOCAL_LIBRARIES = $(AUTOUTILLIB) XmClientLibs  $(SYSLIBS)
+
+
+OBJS1=	WmCDecor.o\
+	WmColormap.o\
+	WmCDInfo.o\
+	WmCEvent.o\
+	WmCPlace.o\
+	WmError.o\
+	WmEvent.o\
+	WmFeedback.o\
+	WmFunction.o\
+	WmGraphics.o\
+	WmIconBox.o\
+	WmIDecor.o\
+	WmImage.o\
+	WmInitWs.o\
+	WmIPlace.o\
+	WmKeyFocus.o\
+	WmMain.o\
+	WmManage.o\
+	WmMenu.o\
+	WmProperty.o\
+	WmProtocol.o\
+	WmResCvt.o\
+	WmResource.o\
+	WmResParse.o\
+	WmSignal.o\
+	WmWinConf.o\
+	WmWinInfo.o\
+	WmWinList.o\
+	WmWinState.o\
+	WmOL.o\
+	version.o
+
+
+SRCS1=	WmCDecor.c\
+	WmColormap.c\
+	WmCDInfo.c\
+	WmCEvent.c\
+	WmCPlace.c\
+	WmError.c\
+	WmEvent.c\
+	WmFeedback.c\
+	WmFunction.c\
+	WmGraphics.c\
+	WmIconBox.c\
+	WmIDecor.c\
+	WmImage.c\
+	WmInitWs.c\
+	WmIPlace.c\
+	WmKeyFocus.c\
+	WmMain.c\
+	WmManage.c\
+	WmMenu.c\
+	WmProperty.c\
+	WmProtocol.c\
+	WmResCvt.c\
+	WmResource.c\
+	WmResParse.c\
+	WmSignal.c\
+	WmWinConf.c\
+	WmWinInfo.c\
+	WmWinList.c\
+	WmWinState.c\
+	WmOL.c\
+	version.c
+
+
+PROGRAMS=mwm
+#if HasBuiltinExtension
+        CCOPTIONS = DefaultCCOptions $(PICFLAGS)
+ EXTRA_LOAD_FLAGS = -G -lc -Wl,-Bexport="main" -Bsymbolic
+
+all:: mwm
+
+install:: mwm
+	$(RM) $(BINDIR)/mwm
+#else /*HasBuiltinExtension*/
+#if UslLocalityTuning
+        CCOPTIONS = $(FURCCOPTIONS)
+#endif
+#endif /*HasBuiltinExtension*/
+
+#if BuildMotif
+NormalLibraryObjectRule()
+
+MComplexProgramTarget_1(mwm,$(LOCAL_LIBRARIES),NullParameter)
+#else /* BuildMotif */
+all::
+includes::
+depend::
+InstallProgram(mwm,$(BINDIR))
+lint::
+#endif /* BuildMotif */
+
+#if UslLocalityTuning
+#if BuildMotif
+FurMComplexProgramTarget_1(mwm,$(LOCAL_LIBRARIES),NullParameter)
+#endif /* BuildMotif */
+
+install:: mwm
+	$(INSTALL) -c $(INSTPGMFLAGS) mwm.F $(BINDIR)
+	$(MV) -f $(BINDIR)/mwm $(BINDIR)/mwm.nf
+	$(MV) -f $(BINDIR)/mwm.F $(BINDIR)/mwm
+#endif
+#if HasBuiltinExtension
+install:: mwm
+	$(MV) -f $(BINDIR)/mwm $(USRLIBDIR)/mwm.so
+	ln $(BINDIR)/dtbuiltin $(BINDIR)/mwm
+#else
+SpecialObjectRule(WmMain.o,,-DNOT_BUILTIN)
+#endif
+SpecialObjectRule(WmFunction.o,,-DPORT_NOVFORK)
+SpecialObjectRule(WmResParse.o,$(ICONFIGFILES),-DLIBDIR=\"$(XWINLIBDIR)\")
+SpecialObjectRule(WmResource.o,$(ICONFIGFILES),-DBITMAPDIR=\"$(XWINHOME)/include/X11/bitmaps/\")
+
+InstallNonExecFile(system.mwmrc,$(LIBDIR))
+InstallAppDefaults(Mwm)
+
+#if BuildMotif
+#ifdef UseVista
+VistaMapRule(mwm.M,$(PROGRAMS))
+#endif
+#endif /* BuildMotif */

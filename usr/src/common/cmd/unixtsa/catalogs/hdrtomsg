@@ -1,0 +1,57 @@
+#ident	"@(#)unixtsa:common/cmd/unixtsa/catalogs/hdrtomsg	1.1"
+#!/bin/sh
+# This shell script converts the header file given in $1 to a message file
+# in the X/Open format with numeric message numbers.
+
+INPUT=$1
+SETLINE=`fgrep '#define MSG_SET' $1`
+[ "$SETLINE" ] && set $SETLINE
+SET=$3
+
+echo "\$set ${SET:-1}"
+echo "\$quote \""
+nawk '
+# This nawk script reads a header file and produces lines of the form:
+#
+#	code_value	string
+#
+# where code_value is the value assigned to code_symbol by #define and string
+# is the value assigned to message_symbol by #define.  This matching only 
+# occurs if code_symbol and message_symbol are identical except for the leading
+# characters where the leading character for code_symbol is "E" and the leading
+# character for message_symbol is "M".
+
+BEGIN {
+	ecnt = 0
+	mcnt = 0
+      }
+
+$1 == "#define" {
+		   if ((index($2, "C_") == 1) || (index($2, "N_") == 1)) {
+			C_line[ecnt] = $2
+			for (i=3; i<=NF; i++)
+				C_value[ecnt] = C_value[ecnt] $i
+			gsub(/\(/, "", C_value[ecnt])
+			gsub(/\)/, "", C_value[ecnt])
+			if (split(C_value[ecnt], a, "+") > 1)
+				C_value[ecnt] = a[1] + a[2]
+			ecnt++
+		   }
+
+		   if (index($2, "M_") == 1) {
+			M_line[mcnt] = $2
+			M_value[mcnt] = $3
+			for (i=4; i<=NF; i++)
+				M_value[mcnt] = M_value[mcnt] " " $i
+			mcnt++
+		   }
+		}
+
+END {
+	for (j=0; j<=ecnt-1; j++) {
+		for (k=0; k<=mcnt-1; k++) {
+			if (substr(C_line[j], 3) == substr(M_line[k], 3))
+				print C_value[j] " " M_value[k]
+		}
+	}
+    }' < $INPUT

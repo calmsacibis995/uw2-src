@@ -1,0 +1,42 @@
+#!/bin/sh
+#ident	"@(#)langsup:i386/ls/:mkfont	1.2"
+#
+
+echo "Compiling fonts"
+SRC_DIR=`pwd`
+
+CODESET="pc850 pc860 pc863 pc865 8859-1"
+
+if [ ! -d $PKGDIR/etc/fonts ] ; then
+	mkdir -p $PKGDIR/etc/fonts
+fi
+
+/bin/cp $SRC_DIR/font/ROMfont $PKGDIR/etc/fonts
+
+for j in $CODESET
+do
+	/bin/cp $SRC_DIR/font/$j $PKGDIR/etc/fonts
+done
+	
+cd $SRC_DIR/font/allchar/bin
+if [ ! -d ../machine ] 
+then
+	mkdir -p ../machine
+fi
+
+for i in 8x8 8x14 8x16 9x16
+do
+	if [ -f allchar.$i ] ; then
+		echo "Compiling allchar.$i"
+		$PKGDIR/usr/lbin/fcomp -m $i allchar.$i ../machine/allchar.$i
+	fi
+
+done
+
+cd ../machine
+/bin/cp * $PKGDIR/etc/fonts
+/bin/rm -f *
+cd ..
+echo "Complete"
+echo ""
+

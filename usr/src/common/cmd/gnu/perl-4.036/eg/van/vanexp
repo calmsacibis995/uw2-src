@@ -1,0 +1,21 @@
+#!/usr/bin/perl
+
+# $Header: /SRCS/esmp/usr/src/nw/cmd/gnu/perl-4.036/eg/van/vanexp,v 1.1.1.1 1993/10/11 20:26:22 ram Exp $
+
+# This is for running from a find at night to expire old .deleteds
+
+$can = $ARGV[0];
+
+exit 1 unless $can =~ /.deleted$/;
+
+($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,
+   $blksize,$blocks) = stat($can);
+
+exit 0 unless $size;
+
+if (time - $mtime > 2 * 24 * 60 * 60) {
+    `/bin/rm -rf $can`;
+}
+else {
+    `find $can -ctime +2 -exec rm -f {} \;`;
+}

@@ -1,0 +1,21 @@
+#ident	"@(#)pkg.platform:i386/pkg/platform/preinstall	1.1"
+#ident "$Header: $"
+
+############# Begin UPGRADE AND OVERLAY #######################
+
+SCRIPTS=/usr/sbin/pkginst
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = YES ] && set -x
+
+#  The volatile files saved for ${PKGINST} will be listed in 
+#  /var/sadm/upgrade/${PKGINST}.sav
+
+
+[ "$PKGINSTALL_TYPE" != NEWINSTALL  -a "$PLATFORM" = compaq ] && {
+
+	${SCRIPTS}/pkgsavfiles ${PKGINST}
+}
+
+############# End  UPGRADE AND OVERLAY #######################
+
+exit 0

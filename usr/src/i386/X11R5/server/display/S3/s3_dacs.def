@@ -1,0 +1,334 @@
+#ident	"@(#)S3:S3/s3_dacs.def	1.7"
+/***
+ ***	NAME
+ ***
+ ***		s3_dacs.def : DAC's supported by the S3 chipset.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***		#define DEFINE_DAC(NAME, ENUMVALUE,
+ ***					INITFUNC, UNINITFUNC,
+ ***					GETCOLORMAP, SETCOLORMAP,
+ ***					MAXCLOCK, 
+ ***					FLAGS16, FLAGS24, FLAGSRGB)
+ ***		#include "S3_dacs.def"
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		__DEBUG__ : Enable debugging and assertion checking.
+ ***
+ ***	FILES
+ ***
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	HISTORY
+ ***
+ ***/
+
+DEFINE_DAC(S3_DAC_NULL, 0, 
+		   NULL,NULL,
+		   0, 0, 
+		   0, 
+		   0, 
+		   0, 
+		   0,
+		   "null dac"),
+/* 
+ * ATT 20C491 True/Hi color video dacs.
+ */
+DEFINE_DAC(S3_DAC_ATT20C491, 1, 
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   110000, 
+		   (S3_DAC_16_BIT_5_5_5_SUPPORTED |
+			S3_DAC_16_BIT_5_6_5_SUPPORTED),
+		   (S3_DAC_24_BIT_R_G_B_SUPPORTED),
+		   (S3_DAC_BITS_PER_RGB_8 | 
+			S3_DAC_BITS_PER_RGB_6),
+		   "AT&T 20C491 dac"),
+
+/*
+ * Sierra SC15025CV Hi-Color-24 dacs.
+ * Note: Till we get further information about this dac we could assume
+ * that this is compatible to ATT 20C491 dac.
+ * Generally Sierra dacs are pin to pin compatible with their ATT 
+ * counterparts.(refer: Tech Note from S3).
+ */
+
+DEFINE_DAC(S3_DAC_SC15025, 2, 
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   110000, 
+		   (S3_DAC_16_BIT_5_5_5_SUPPORTED |
+			S3_DAC_16_BIT_5_6_5_SUPPORTED),
+		   (S3_DAC_24_BIT_R_G_B_SUPPORTED),
+		   (S3_DAC_BITS_PER_RGB_8 | 
+			S3_DAC_BITS_PER_RGB_6),
+		   "Sierra SC15025 dac"),
+
+/* 
+ * Sierra SC11481 Hi color dac.
+ */
+DEFINE_DAC(S3_DAC_SC11481_486_482_483, 3,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   S3_DAC_16_BIT_5_5_5_SUPPORTED,
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "Sierra SC11481/486/482/483 dac"),
+
+/* 
+ * Sierra SC11485 Hi color dac.
+ */
+DEFINE_DAC(S3_DAC_SC11485_487, 4,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   (S3_DAC_16_BIT_5_5_5_SUPPORTED|S3_DAC_16_BIT_5_6_5_SUPPORTED),
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "Sierra SC11485/487 dac"),
+
+/*
+ * Sierra SC11484 Hi color video dac.
+ */
+DEFINE_DAC(S3_DAC_SC11484_488, 5,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   S3_DAC_16_BIT_5_5_5_SUPPORTED,
+		   0,
+		   (S3_DAC_BITS_PER_RGB_6| S3_DAC_BITS_PER_RGB_8),
+		   "Sierra SC11484/488 dac"),
+
+/*
+ * Sierra SC11489 Hi color video dac.
+ */
+DEFINE_DAC(S3_DAC_SC11489, 6,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   (S3_DAC_16_BIT_5_5_5_SUPPORTED|S3_DAC_16_BIT_5_6_5_SUPPORTED),
+		   0,
+		   (S3_DAC_BITS_PER_RGB_6| S3_DAC_BITS_PER_RGB_8),
+		   "Sierra SC11489 dac"),
+
+/*
+ * Sierra SC11471 256 color dacs.
+ */
+DEFINE_DAC(S3_DAC_SC11471_476, 7,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   0,
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "Sierra SC11471/476 dac"),
+
+/*
+ * Sierra SC11478  256 color dacs.
+ */
+DEFINE_DAC(S3_DAC_SC11478, 8,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   0,
+		   0,
+		   (S3_DAC_BITS_PER_RGB_6|S3_DAC_BITS_PER_RGB_8),
+		   "Sierra SC11478 dac"),
+
+/*
+ * Inmos IMSG171 Dac.
+ */
+DEFINE_DAC(S3_DAC_IMSG171, 9,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   50000, 
+		   0,
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "Inmos Semiconductors  IMSG171 dac"),
+
+/*
+ * Inmos IMSG176 Dac.
+ */
+DEFINE_DAC(S3_DAC_IMSG176, 10,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   65000, 
+		   0,
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "Inmos Semiconductors IMSG176 dac"),
+
+/*
+ * Inmos IMSG178 Dac.
+ */
+DEFINE_DAC(S3_DAC_IMSG178, 11,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   0,
+		   0,
+		   (S3_DAC_BITS_PER_RGB_6|S3_DAC_BITS_PER_RGB_8),
+		   "Inmos Semiconductors IMSG178 dac"),
+
+/*
+ * Brooktree BT471/476 Dac.
+ */
+DEFINE_DAC(S3_DAC_BT471_476, 12,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   0,
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "Brooktree BT471/476 dac"),
+
+/*
+ * Brooktree BT478 Dac.
+ */
+DEFINE_DAC(S3_DAC_BT478, 13,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   0,
+		   0,
+		   (S3_DAC_BITS_PER_RGB_6|S3_DAC_BITS_PER_RGB_8),
+		   "Brooktree BT478 dac"),
+
+/*
+ * Brooktree BT485 Dac.
+ * TODO: Init for this dac. In which case the max frequency can go 
+ * much beyond 80MHZ and could support 16/24 bit colors.
+ * All information for this dac should be updated properly.
+ */
+DEFINE_DAC(S3_DAC_BT485, 14,
+		   s3_dac_initialize_bt485_dac, s3_dac_uninitialize_bt485_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   110000, 
+		   (S3_DAC_16_BIT_5_5_5_SUPPORTED|S3_DAC_16_BIT_5_6_5_SUPPORTED),
+		   0,
+		   (S3_DAC_BITS_PER_RGB_6|S3_DAC_BITS_PER_RGB_8),
+		   "Brooktree BT485 dac"),
+
+/*
+ * Winbond 82C478 Dac.
+ */
+DEFINE_DAC(S3_DAC_W82C478, 15,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   100000, 
+		   0,
+		   0,
+		   (S3_DAC_BITS_PER_RGB_6|S3_DAC_BITS_PER_RGB_8),
+		   "Winbond 82C478 dac"),
+
+/*
+ * Winbond 82C476 Dac.
+ */
+DEFINE_DAC(S3_DAC_W82C476, 16,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   100000, 
+		   0,
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "Winbond 82C476 dac"),
+
+/*
+ * Winbond 82C490 Truecolor Dac.
+ * Information from X386 file to be verified.
+ */
+DEFINE_DAC(S3_DAC_W82C490, 17,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   110000, 
+		   (S3_DAC_16_BIT_5_5_5_SUPPORTED|S3_DAC_16_BIT_5_6_5_SUPPORTED),
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "Winbond 82C490 dac"),
+
+/*
+ * Music TR9C1710 Dac
+ */
+DEFINE_DAC(S3_DAC_TR9C1710, 18,
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   110000, 
+		   0,
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "Music TR9C1710 dac"),
+
+/* 
+ * ATT 20C490 True/Hi color video dacs.
+ * DATA INCOMPLETE. 
+ */
+DEFINE_DAC(S3_DAC_ATT20C490, 19, 
+		   s3_dac_initialize_generic_dac, s3_dac_uninitialize_generic_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   80000, 
+		   0,
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "AT&T 20C490 dac"),
+
+/* 
+ * Diamond stpro card's dac.
+ * SS2410
+ * DATA INCOMPLETE. 
+ */
+DEFINE_DAC(S3_DAC_SS2410, 20, 
+		   s3_dac_initialize_ss2410_dac, s3_dac_uninitialize_ss2410_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   126000, 
+		   (S3_DAC_16_BIT_5_5_5_SUPPORTED|S3_DAC_16_BIT_5_6_5_SUPPORTED),
+		   0,
+		   S3_DAC_BITS_PER_RGB_6,
+		   "dac on diamond stpro card SS2410"),
+
+
+DEFINE_DAC(S3_DAC_TI3020, 21,
+		   s3_dac_initialize_ti_dac, s3_dac_uninitialize_ti_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   135000, 
+		   (S3_DAC_16_BIT_5_5_5_SUPPORTED|S3_DAC_16_BIT_5_6_5_SUPPORTED|
+											S3_DAC_16_BIT_6_6_4_SUPPORTED),
+		   0,
+		   (S3_DAC_BITS_PER_RGB_6|S3_DAC_BITS_PER_RGB_8),
+		   "Texas Viewpoint 3020 dac"),
+
+DEFINE_DAC(S3_DAC_TI3025, 22,
+		   s3_dac_initialize_ti_dac, s3_dac_uninitialize_ti_dac, 
+		   s3_dac_pseudocolor_get_color, s3_dac_pseudocolor_set_color, 
+		   135000, 
+		   (S3_DAC_16_BIT_5_5_5_SUPPORTED|S3_DAC_16_BIT_5_6_5_SUPPORTED|
+											S3_DAC_16_BIT_6_6_4_SUPPORTED),
+		   0,
+		   (S3_DAC_BITS_PER_RGB_6|S3_DAC_BITS_PER_RGB_8),
+		   "Texas Viewpoint 3025 dac"),
+
+/*
+ * Something totally unknown.
+ */
+DEFINE_DAC(S3_DAC_UNKNOWN, 23, 
+		   s3_dac_initialize_unknown_dac,s3_dac_uninitialize_unknown_dac,
+		   0, 0, 
+		   0, 
+		   0, 
+		   0, 
+		   0,
+		   "unknown dac")

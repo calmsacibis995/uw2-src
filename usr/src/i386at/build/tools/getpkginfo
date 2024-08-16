@@ -1,0 +1,101 @@
+
+#	Copyright (c) 1990, 1991, 1992, 1993, 1994, 1995 Novell, Inc. All Rights Reserved.
+#	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+#ident	"@(#)mk:i386at/build/tools/getpkginfo	1.10"
+
+#fields
+#	1 pkgname
+#	2 built by integration
+#	3 default blocksize
+#	4 type, pkg=Unix pkg, Xpkg=graphics pkg, set=SIP
+#	5 is locale specific
+
+GREP()
+{
+cat <<-EOF  | grep "$1"
+base	yes	2876	pkg	no
+lp	yes	2876	pkg	no
+nsu	yes	2876	pkg	no
+acp	yes	2876	pkg	no
+desktop	yes	2876	Xpkg	no
+atm	yes	2876	Xpkg	no
+dtxt	yes	2876	Xpkg	no
+display	yes	2876	Xpkg	no
+nics	yes	2876	pkg	no
+netmgt	yes	2876	pkg	no
+terminf	yes	2876	pkg	no
+cmds	yes	2876	pkg	no
+bsdcompat	yes	2876	pkg	no
+oam	yes	2876	pkg	no
+bkrs	yes	2876	pkg	no
+dtclients	yes	2876	Xpkg	no
+dtxtfonts	yes	2876	Xpkg	no
+softint	yes	2876	pkg	no
+ccs	yes	2876	pkg	no
+c++	yes	2876	pkg	no
+stdcomps	yes	2876	pkg	no
+kdb	yes	2876	pkg	no
+edebug	yes	2876	pkg	no
+dtxtdev	yes	2876	Xpkg	no
+desksup	yes	2876	Xpkg	no
+mdev	yes	2876	Xpkg	no
+nmsdk	yes	2876	pkg	no
+ihvkit	yes	2876	pkg	no
+ls	yes	2876	pkg	no
+inet	yes	2876	pkg	no
+dfs	yes	2876	pkg	no
+rpc	yes	2876	pkg	no
+nfs	yes	2876	pkg	no
+nis	yes	2876	pkg	no
+audit	yes	2876	pkg	no
+acl	yes	2876	pkg	no
+crypt	yes	2366	pkg	no
+nwnet	yes	2876	pkg	no
+osmp	yes	2876	pkg	no
+esle	yes	2876	pkg	no
+dele	yes	2876	pkg	no
+jale	yes	2876	pkg	no
+jasup	yes	2876	pkg	no
+jadicopft	yes	2876	pkg	no
+frle	yes	2876	pkg	no
+itle	yes	2876	pkg	no
+server	yes	2876	pkg	no
+nwsup	yes	2876	pkg	no
+nuc	yes	2876	pkg	no
+platform	yes	2876	pkg	no
+mpu	yes	2876	pkg	no
+pe	yes	2876	set	yes
+as	yes	2876	set	yes
+sdk	yes	2876	set	no
+dynatext	no	2876	pkg	no
+manpages	no	2876	pkg	no
+ASdocs	no	2876	pkg	no
+deASdocs	no	2876	pkg	no
+esASdocs	no	2876	pkg	no
+frASdocs	no	2876	pkg	no
+itASdocs	no	2876	pkg	no
+jaASdocs	no	2876	pkg	no
+SDKdocs	no	2876	pkg	no
+jaSDKdocs	no	2876	pkg	no
+PEdocs	no	2876	pkg	no
+dePEdocs	no	2876	pkg	no
+esPEdocs	no	2876	pkg	no
+frPEdocs	no	2876	pkg	no
+itPEdocs	no	2876	pkg	no
+jaPEdocs	no	2876	pkg	no
+merge	no	2876	pkg	no
+demerge	no	2876	pkg	no
+esmerge	no	2876	pkg	no
+frmerge	no	2876	pkg	no
+itmerge	no	2876	pkg	no
+jamerge	no	2876	pkg	no
+umerge	no	2876	pkg	no
+EOF
+}

@@ -1,0 +1,467 @@
+Avertissement : 
+Erreur : 
+Erreur bloquante : 
+Erreur bloquante : erreur interne dans %s à la ligne %d\n
+Erreur : erreur interne dans %s à la ligne %d ; anomalies dans le contenu du message suivant\n
+Syntaxe :\n%s [options_courantes] [[-f all|none|procs] [-r] ligne_cmd]\n
+%s [options_courantes] [-f all|none|procs] [-l chargement_fichier] processus...\n
+%s [options_courantes] -c fichier_image_mémoire objet\n
+       options_courantes : [-V] [-i c|x] [-X opt] [-d valeurs_par_défaut] [-s chemin] [-Ya|f|g,rép]\n
+Nouveau programme %s (processus %s) créé\n
+%s détruit\n
+Processus %s exécuté ; nouvel exécutable : %s, programme %s\n
+Exécution de fork sur le processus %s ; nouveau processus %s contrôlé\n
+Image mémoire de %s (processus %s) créée\n
+Nouveau programme %s (processus %s) sélectionné pour le traitement\n
+E/S du programme redirigées vers le pseudo-terminal %s\n
+Programme   ID         PID Etat     Fonction   Emplacement     Commande\n
+%s%-10.10s %-7.7s %6d Image mémoire  %-10.10s %-15.15s %s\n
+ %-10.10s             -1 Mort                                %s\n
+ %-10.10s             -1 Libéré                              %s\n
+%s%-10.10s %-7.7s %6d Exécution                           %s\n
+%s%-10.10s %-7.7s %6d Exécution pas à pas                 %s\n
+%s%-10.10s %-7.7s %6d Inconnu                            %s\n
+%s%-10.10s %-7.7s %6d Arrêté   %-10.10s %-15.15s %s\n
+Table des adresses de %s\n Champ d'adresses\t\tTaille\t\tAccès\tFichier objet\n
+Evénements associés à %s, programme %s\n
+Evénements associés au programme %s (mort) \n
+  ID      Type       Condition de comptage                Liste de commandes\n
+  ID      Type       Condition de comptage\n
+[%.4d]%s%s ARRET      %5d %-30s %s\n
+[%.4d]%s%s ARRET      %5d %s\n\tListe d'objets :\t%s\n\tCommande :\t%s\n
+[%.4d]%s%s SYSCALL %-2s %5d %-30s %s\n
+[%.4d]%s%s SYSCALL %-2s %5d %s\n\tListe d'objets :\t%s\n\tCommande :\t%s\n
+[%.4d]%s%s SIGNAL           %-30s %s\n
+[%.4d]%s%s SIGNAL           %s\n\tListe d'objets :\t%s\n\tCommande :\t%s\n
+[%.4d] %s ONSTOP                                          %s\n
+[%.4d] %s ONSTOP\n\tListe d'objets :\t%s\n\tCommande :\t%s\n
+Disposition des signaux correspondant à %s, programme %s\n
+%4d\tsig%-7s\tdétecté\n
+%4d\tsig%-7s\tignoré\n
+EVENEMENT [%d] assigné\n
+EXECUTE PAS A PAS %s
+EXECUTE PAS A PAS %s
+%s SUSPENDU
+%d (%s) SIGNALE dans %s
+ENTREE DE L'APPEL SYSTEME %d (%s) dans %s
+SORTIE DE L'APPEL SYSTEME %d (%s) dans %s
+FICHIER IMAGE MEMOIRE
+ARRET DE L'EVENEMENT DECLENCHE : %s%s dans %s
+Signal : %s\n
+Signal : %s\tAdresse erronée : %#x\n
+Le processus actuel est %s, programme %s\n
+Plus de processus\n
+Interruption du processus %s\n
+Libération et exécution du processus %s\n
+Libération et suspension du processus %s\n
+Libération de l'image mémoire %s\n
+ [%s dans %s]\n
+%d :\t<aucun texte source disponible>\n
+Désassemblage de %s, Programme %s\n
+Enregistrement du contenu de %s, programme %s\n
+Vidage brut de %s, Programme %s\n
+Suivi de pile correspondant à %s, Programme %s\n
+%s présumé : %#x
+Symboles de %s, Programme %s\nNom                  Emplacement      Ligne\n
+Symboles de %s, Programme %s\nNom                  Emplacement      Type de ligne\n
+Symboles de %s, Programme %s\nNom                  Emplacement      Type de ligne       Valeur\n
+Symboles de %s, Programme %s\nNom                  Emplacement      Valeur de la ligne\n
+%-20.20s %-15.15s %5.5s  %s (par défaut)\n
+%-20.20s %-15.15s %5.5s  %-11s (valeur entière utilisée par défaut)\n
+%-20.20s %-15.15s %5.5s  %-3.3s (par défaut)     %s\n
+Incohérence dans la fonction %s à la ligne %d\n
+Exécution pas à pas %s permettant d'examiner l'expression d'arrêt\n
+Impossible de lancer %s, il est déjà en cours d'exécution\n
+Impossible de lancer %s, c'est un fichier image mémoire\n
+Impossible d'arrêter %s, c'est un fichier image mémoire\n
+Impossible de relancer l'exécution de %s\n
+Impossible d'arrêter %s\n
+Impossible de définir l'état du signal dans %s\n
+Impossible de repérer les appels système dans %s\n
+Impossible de définir la détection d'erreurs dans %s\n
+Impossible de définir le point de rupture au niveau de %#x dans %s\n
+Impossible de supprimer le point de rupture défini au niveau de %#x dans %s\n
+Une adresse incorrecte est associée au point de rupture dans %s : %#x\n
+Impossible d'annuler signal dans processus %s\n
+Impossible d'exécuter le processus de suivi (%s) : %s\n
+Echec de fork lors de la création du processus : %s\n
+Exécution de fork sur le processus %s : impossible de contrôler le processus enfant : %s\n
+Exécution de vfork sur le processus ; relancez les processus parent et enfant pour éviter le blocage\n
+Processus %s exécuté : impossible de contrôler le nouvel exécutable\n
+Nom de programme %s déjà utilisé ; utilisation de %s\n
+Impossible d'accéder à %s\n
+Aucun événement actif n'est associé à l'id %d\n
+Structure incorrecte de l'id événement : \"%s\"\n
+Impossible de configurer le pseudo-terminal : %s\n
+Impossible de lire à partir du pseudo-terminal %s : %s\n
+Impossible de lire la table de mémoire des processus : %s\n
+Impossible de trouver la table des connexions dans %s\n
+Impossible d'évaluer l'expression d'arrêt dans %s\n
+Impossible de trouver la portée de l'expression d'arrêt dans %s\n
+Impossible de trouver l'adresse de retour associée à la fonction\ndans le processus %s\n
+Format du fichier image mémoire incorrect\n
+Problème d'accès au fichier image mémoire %s\n
+Fichier image mémoire tronqué\n
+Impossible d'écrire dans les registres du fichier image mémoire\n
+Impossible de lire les registres de %s\n
+Impossible d'écrire dans les registres de %s\n
+Problème lié à la lecture du processus %s, adresse %#x\n
+Problème d'écriture dans le processus %s, adresse %#x\n
+L'ordre d'arrêt du processus %d a été interrompu\nLe processus est en cours d'exécution, mais va être arrêté\n
+Impossible de trouver le segment de mémoire associé à l'adresse\n%#x dans le processus %s\n
+Aucun objet ne correspond à l'élément figurant dans la liste des processus : %s\n
+Impossible d'ouvrir la bibliothèque partagée %s : %s\n
+Impossible de contrôler le processus %d : il a exécuté un programme setuid ou setgid\n
+Erreur d'E/S au niveau du processus %d\n
+Erreur système lors d'une tentative de contrôle du processus %d\n
+Point de rupture défini dans l'adresse de données %#x de %s\n
+Point de surveillance défini dans l'adresse textuelle %#x de %s\n
+Impossible de copier événement %d dans processus %s\n
+Impossible de réinitialiser événement %d dans processus %s\n
+Non pris en charge : variable débogueur %s définie comme valeur de la\nvariable débogueur %s\n
+Informations de débogage non reconnues au niveau du décalage %#x\n
+Informations de débogage non reconnues\n
+Description de l'emplacement trop complexe\n
+Version du fichier objet %d inconnue\n
+Type du fichier objet %d incorrect\n
+Absence d'informations de débogage dans %s\n
+Impossible de lire %d octets dans le fichier objet au niveau du décalage %#x\n
+Conversion forcée de types de pointeurs incompatibles\n
+Aucune information concernant le type n'est associée à %s, valeur entière\nutilisée par défaut\n
+Format du fichier objet incorrect\n
+Fichier objet associé à un type de machine incorrect\n
+Impossible de créer la description du type\n
+Impossible d'appeler %s (Interface Window)\n
+Spécification d'interface non autorisée : -i%s\n
+%s plus récent que %s\n
+Pas de mise en attente pendant la boucle\n
+Commande non autorisée exécutée sur %s\n
+Liste d'événements manquante sur %s\n
+Impossible d'évaluer l'expression\n
+Pas de processus\n
+Journalisation déjà activée\n
+Aucune commande d'ouverture de session n'a été entrée précédemment\n
+Impossible de créer %s : %s\n
+Impossible d'ajouter à %s : %s\n
+Ligne trop longue\n
+\"%s\" est un nom d'alias\n
+\"%s\" est un nom de commande intégrée\n
+Crochets non fermés\n
+Parenthèses non fermées\n
+Accolades non fermées\n
+Liste de processus mal structurée\n
+%s : pas d'alias de ce type\n
+Un seul objet actif est autorisé avec l'option -l\n
+Pas de commande antérieure permettant le remplacement !\n
+Echec de la commande shell avec le signal %d\n
+Echec de la commande shell avec le signal %d - mémoire vidée\n
+Variable utilisateur %s non définie\n
+Option -i non autorisée avec la commande associée\n
+Caractère non reconnu au niveau de %s\n
+Guillemets non fermés au niveau de %s\n
+Constante numérique mal structurée au niveau de %s\n
+Constante de caractère mal structurée au niveau de %s\n
+Nom de fichier NULL au niveau de %s\n
+Commande shell attendue au niveau de %s\n
+Redirection d'E/S multiples au niveau de %s\n
+Option en double au niveau de %s\n
+Option %s incorrecte au niveau de %s\n
+Option attendue au niveau de %s\n
+Options %s et %s incompatibles\n
+Les options %s et %s ne peuvent être associées\n
+Argument non autorisé avec -f\n
+Nom de processus attendu au niveau de %s\n
+Chaîne attendue au niveau de %s\n
+Nombre décimal attendu au niveau de %s\n
+Emplacement attendu au niveau de %s\n
+Argument attendu au niveau de %s\n
+Nom de fichier attendu au niveau de %s\n
+Commande attendue au niveau de %s\n
+Signal attendu au niveau de %s\n
+Expression attendue au niveau de %s\n
+Expression entre parenthèses attendue au niveau de %s\n
+Commande ou bloc attendus au niveau de %s\n
+Numéro d'événement attendu au niveau de %s\n
+Commande ou numéro d'événement attendus au niveau de %s\n
+Identificateur attendu au niveau de %s\n
+Les noms utilisateur du débogueur doivent être précédés de '$'\n
+Trop d'arguments au niveau de %s\n
+Erreur de syntaxe d'emplacement au niveau de %s\n
+Signal en double au niveau de %s\n
+Spécification d'appel système incorrecte au niveau de %s\n
+Argument inattendu au niveau de %s\n
+Argument incorrect au niveau de %s\n
+Expression d'événement attendue au niveau de %s\n
+Etat incorrect dans l'analyseur au niveau de %s\n
+Exécution de la commande non terminée\n
+Récurrence de l'alias au niveau de %s\n
+Erreur de syntaxe au niveau de %s\n
+Mot-clé non reconnu au niveau de %s\n
+'}' inattendue\n
+Aucun événement actif n'est associé à l'identificateur précisé\n
+Comptage ignoré pour les événements onstop et signal\n
+Impossible de déterminer le répertoire de travail actuel : %s\n
+Impossible de passer du répertoire de travail dans %s : %s\n
+Répertoire non indiqué et HOME non défini\n
+Impossible d'ouvrir le fichier des alias par défaut %s : %s\n
+Plusieurs options %s ont été indiquées ; utilisation de la première option\n
+débogage : erreur interne - reprise impossible\n
+%s : les options %s et %s ne peuvent être associées\n
+%s : l'option -l ne peut être associée à une ligne de commande\n
+%s : l'option -r ne peut être associée à un processus actif\n
+%s : argument non autorisé dans l'option %s\n
+Impossible d'ouvrir %s : %s\n
+Impossible de sélectionner %s pour le traitement\n
+Impossible de modifier l'événement %d ; un de ses processus n'est pas actif\n
+L'option %s n'est pas autorisée pour ce type d'événement\n
+Aucune commande create n'a été entrée précédemment\n
+Impossible de créer le tube : %s\n
+La commande create a échoué : destruction de tous les processus résultants\n
+Impossible de déterminer l'ordre des octets du système hôte\n
+Pseudo-terminal inexistant : %s\n
+Objet nommé %s inexistant\n
+Aucun pseudo-terminal n'est associé à ce programme\n
+Fichier source %s introuvable\n
+Spécification d'emplacement incorrecte pour la commande list\n
+Aucun fichier source actif\n
+Pas de lignes dans %s\n
+%d lignes seulement dans %s\n
+Expression régulière sans correspondance\n
+Expression régulière incorrecte\n
+Aucune expression régulière n'a été précédemment indiquée\n
+Trame numéro %d hors limites pour le processus %s\n
+Impossible de détruire le processus %s : %s\n
+Entrée \"%s"\ inexistante\n
+Utilisation de %s à la place de %s : il existe peut-être d'autres cas de surdéfinition\n
+Aucune information source n'est indiquée pour %s\n
+Langage source inconnu : %s\n
+Nom de programme \"%s\" déjà employé\n
+Aucun processus actif n'est associé au programme %s\n
+échec de l'évaluation
+Etiquette symbolique %d inattendue\n
+Impossible d'obtenir les informations relatives aux symboles pour le processus %s\n
+Echec de l'évaluation de %s\n
+Le numéro de l'expression définie est incorrect\n
+La variable débogueur %s est accessible en lecture seulement\n
+La valeur de la variable débogueur %s est incorrecte\n
+Les informations concernant le fichier %s ligne %d n'indiquent aucune adresse\n
+Impossible d'obtenir l'adresse associée au symbole %s\n
+Variable débogueur %s incorrecte dans la spécification de l'emplacement\n
+Aucune fonction active n'est nommée %s\n
+Opération incorrecte sur l'objet actif %s\n
+Opération incorrecte sur le processus mort %s\n
+Opération incorrecte sur le fichier image mémoire %s\n
+Impossible d'utiliser la concaténation dans cette affectation\n
+Chaîne requise dans ce contexte\n
+L'emplacement indiqué pour %s est situé hors des limites de la fonction en cours.\n
+Chaîne de format non autorisée pour la commande print : %s\n
+Dépassement de la largeur de champ requise dans la commande print : %d\n
+Adresse textuelle incorrecte %#x\n
+Code opérateur inconnu au niveau de l'adresse %#x\n
+Problème lors du désassemblage ne portant probablement pas sur une section texte\n
+Aucune valeur n'est indiquée à gauche de l'opérateur %s\n
+Aucune valeur n'est indiquée à droite de l'opérateur %s\n
+Aucune valeur n'est attribuée à l'opérande de l'opérateur %s\n
+Le paramètre situé à gauche de l'opérateur %s n'est pas un nombre entier\n
+Le paramètre situé à droite de l'opérateur %s n'est pas un nombre entier\n
+L'opérande de l'opérateur %s n'est pas un nombre entier\n
+Le paramètre situé à gauche de l'opérateur %s n'est pas de type arithmétique\n
+Le paramètre situé à droite de l'opérateur %s n'est pas de type arithmétique\n
+L'opérande de l'opérateur %s n'est pas de type arithmétique\n
+Le paramètre situé à gauche de l'opérateur %s n'est pas de type scalaire\n
+Le paramètre situé à droite de l'opérateur %s n'est pas de type scalaire\n
+L'opérande de l'opérateur %s n'est pas de type scalaire\n
+Le paramètre situé à gauche de l'opérateur %s n'est pas une valeur autorisée à\ncet endroit 
+Le paramètre situé à gauche de l'opérateur %s n'est pas un pointeur\n
+Le paramètre situé à gauche de l'opérateur %s ne correspond pas à un type de structure\n
+L'opérande de l'opérateur %s correspond à un type incorrect\n
+L'opérande de l'opérateur %s n'est pas un pointeur\n
+Impossible de déterminer l'adresse de l'opérande de l'opérateur %s\n
+Le paramètre situé à gauche de l'opérateur %s n'est ni un pointeur, ni un vecteur\n
+Le paramètre situé à gauche de l'opérateur binaire %s correspond à un type incorrect\n
+Le paramètre situé à droite de l'opérateur binaire %s correspond à un type incorrect\n
+Les opérandes de l'opérateur %s sont des pointeurs indiquant des types incompatibles\n
+Soustraction du pointeur non autorisée\n
+Les opérandes de l'opérateur %s correspondent à des types incompatibles\n
+L'opérande affectée à l'opérateur %s est une valeur située à gauche ne pouvant\nêtre modifiée\n
+Aucune information concernant le type n'est associée à "%s"\n
+L'expression conditionnelle présente dans l'opérateur "?:" n'est pas de type\nscalaire\n
+'condition ? a : b', les types de a et de b sont incompatibles\n
+Le paramètre situé à gauche de cast ne correspond pas à un type autorisé\n
+Aucune valeur n'a été attribuée au paramètre situé à droite de cast\n
+Impossible de convertir l'opérande de droite au type de l'opérande de gauche\n
+Type incorrect\n
+'%s' n'est pas une fonction, appel impossible\n
+Les arguments transmis à %s ne correspondent pas aux types de paramètres\nformels\n
+Trop d'arguments dans l'appel transmis à %s\n
+Pas assez d'arguments dans l'appel transmis à %s\n
+Variable débogueur inconnue : %s\n
+Aucune information concernant les symboles n'est associée à '%s'\n
+'%s' n'est pas le nom d'une structure ou d'une union\n
+'%s' n'est pas le nom d'une énumération\n
+L'opérateur %s n'est pas pris en charge\n
+Conversion de types non autorisée dans ANSI/ISO C\n
+Impossible d'évaluer l'argument de l'appel de fonction\n
+Problème lors de la définition de la pile associée à l'appel de fonction dans %s\n
+Impossible de restaurer correctement la pile après l'appel de fonction dans %s\n
+Spécificateur de format %s non autorisé\n
+Chaîne print formatée trop longue, donc tronquée\n
+Erreur au niveau de la virgule flottante ; évaluation impossible\n
+La constante de caractère ou de chaîne n'a pas de fin\n
+Séquence d'échappement \\%s non standard\n
+Présence d'un retour chariot dans la constante de chaîne\n
+Constante de virgule flottante mal structurée\n
+%s au niveau de ^\n
+Opérateur %s non autorisé dans l'expression d'arrêt\n
+Constante d'adresse de la fonction ; paramètre non autorisé dans ce type\nd'expression d'arrêt\n
+Impossible d'exporter %s ; il ne s'agit pas d'une variable définie par l'utilisateur\n
+Impossible d'ajouter %s dans l'environnement\n
+Dépassement de la constante entière : %s\n
+Commentaire mal structuré\n
+Structure de la variable débogueur non autorisée\n
+Les points de suspension du type \'..\' ne sont pas autorisés - Utilisez \'...\'\n
+La constante octale affiche un ou plusieurs chiffres non autorisés\n
+Caractère %s non autorisé\n
+Aucune information concernant les types n'est associée aux paramètres de %s\n
+Opérateur %s non pris en charge ; opérateur ignoré\n
+Prototype de fonction non autorisé\n
+Le paramètre situé à gauche de l'opérateur %s ne correspond pas à un objet classe\n
+Le paramètre situé à droite de l'opérateur %s n'est pas un pointeur\n
+Expression a->*b ; impossible d'évaluer b\n
+Qualification de l'identificateur incorrecte\n
+La fonction %s du qualificateur n'est pas une fonction active\n
+Le qualificateur de trame %d dépasse les limites des trames de la pile active\n
+Aucune information source n'est associée au bloc à la ligne %d\n
+Le numéro de ligne %d n'indique pas un bloc\n
+Le numéro de ligne %d n'indique pas un bloc dans la fonction en cours\n
+L'identificateur %s ne correspond pas à typedef\n
+Appel ambigu vers la fonction %s surdéfinie\n
+Classe de stockage de l'objet ignorée\n
+Impossible d'effectuer la conversion des types\n
+L'indice du vecteur %d dépasse la limite supérieure du vecteur (%d)\n
+Aucune valeur n'est associée à la constante d'énumération %s\n
+Impossible de déterminer l'adresse ou le type de %s\n
+Impossible d'obtenir la valeur du paramètre de gauche de l'instruction d'affectation\n
+Impossible d'obtenir la valeur du paramètre de droite de l'instruction d'affectation\n
+Impossible de supprimer la référence au pointeur\n
+Impossible de déterminer l'emplacement permettant d'intégrer l'objet parmi les\nmembres sélectionnés\n
+Impossible de gérer la structure ou l'union dans le registre\n
+Impossible de définir l'emplacement du membre %s\n
+Le membre sélectionné ne représente pas un champ autorisé dans la structure, la\nclasse ou l'union\n
+La taille de l'élément du vecteur est inconnue\n
+Impossible d'obtenir la valeur de l'indice du vecteur\n
+Impossible de calculer la taille de l'objet\n
+Impossible d'obtenir l'adresse de registre\n
+Impossible d'obtenir la valeur de l'opérande à gauche de %s\n
+Impossible d'obtenir la valeur de l'opérande à droite de %s\n
+Impossible d'obtenir la valeur de l'opérande de %s\n
+Impossible de calculer le pointeur sur un opérande de taille inconnue\n
+Impossible de déterminer la taille de l'objet ; %d est utilisé par défaut\n
+Syntaxe non autorisée pour la commande fc\n
+Numéro hors limites pour la commande fc\n
+Commande précédente introuvable\n
+Commandes du débogueur :\n
+Autres sujets :\n
+Signaux corrects :\n
+Noms des appels système corrects :\n
+Tapez \'alias\' pour afficher les alias actuels.\n
+Tapez \'help <topic>\' pour plus de détails sur une commande ou sur un sujet précis.\n
+Commande ou sujet inexistant : %s\n
+Aucune aide disponible sur %s\n
+Image mémoire du chemin d'exécution %d (%s) créée\n
+Nouveau chemin d'exécution %d créé (%s)\n
+Le chemin d'exécution %s a été interrompu\n
+Le chemin d'exécution %s a créé un chemin d'exécution %s\n
+Création de %d chemin(s) d'exécution pour le processus %s\n
+Création d'image(s) mémoire de %d chemin(s) d'exécution pour le processus %s\n
+Le chemin d'exécution actuel est désormais %s, programme %s\n
+Le chemin d'exécution multiplexé %s a abandonné son LWP\n
+Le chemin d'exécution multiplexé %s a été sélectionné par un LWP\n
+Le chemin d'exécution %s a été suspendu\n
+Le chemin d'exécution %s a été relancé\n
+Le chemin d'exécution %s a été relancé\n
+%s ARRETE
+La commande fork a été exécuté sur le processus %s (chemin d'exécution %s) ;\nnouveau processus %s actuellement contrôlé\n
+Problème lors de l'accès aux données du chemin d'exécution dans le fichier image\nmémoire, processus %s\n
+Problème lors de l'accès aux données du chemin d'exécution dans le processus %s\n
+Impossible de contrôler le processus léger %d associé au processus %s\n
+Opération incorrecte effectuée sur le chemin d'exécution %s inactif\n
+Problème lié à la configuration du chemin d'exécution permettant la prise en charge\n
+Impossible de trouver les informations relatives au fichier image mémoire du LWP %d\n
+Incohérence de l'interface associée à la bibliothèque de chemins d'exécution du\nprocessus %s\n
+Problème lié à la lecture des signaux en attente de %s\n
+Problème lié à l'annulation des signaux dans %s\n
+Impossible de trouver le LWP indiqué dans le descripteur du chemin d'exécution : %s\n
+Impossible de contrôler le chemin d'exécution %d du processus %s\n
+Impossible de contrôler le nouveau chemin d'exécution créé dans le processus %s\n
+Une adresse non autorisée est associée à la fonction de lancement du chemin\nd'exécution dans l'unité créée pour le processus %s\n
+Le nom de processus a une structure non autorisée : %s\n
+Le nom du chemin d'exécution a une structure non autorisée : %s\n
+Erreur système lors de la tentative de contrôle du processus léger %d\n
+Action incorrecte sur le chemin d'exécution suspendu %s\n
+Contenu du registre incohérent : chemin d'exécution %s dans le switch de\ncontexte\n
+Impossible d'écrire dans les registres : unité d'exécution %s dans le switch de\ncontexte\n
+Impossible de contrôler le processus de débogage\n
+Expression : %s ne génère pas une valeur située à gauche\n
+Le drapeau -s à libérer est ignoré pour le chemin d'exécution : %s\n
+Le processus %s comporte des chemins d'exécution : id de chemin d'exécution\nrequis dans ce contexte\n
+LWP manquant pour %s non attaché à un chemin d'exécution utilisateur\n
+%4d\tsig%-7s\tdétecté\t%#x\n
+%4d\tsig%-7s\tignoré\t%#x \n
+ARRETE (LWP déconnecté) %s)
+'%s' ne fait pas partie des choix autorisés\n
+%s est surchargé. Entrez le chiffre associé à la fonction à utiliser, ou 0\n(zéro) pour annuler : %s
+%s est surchargé. Entrez le chiffre correspondant à la fonction à utiliser,\nou 0 [zéro] pour annuler :\n%s %d\tTout ce qui précède\n
+Appel de %s en cours\n
+%s (ou %s)\n
+%sstatique %s=%s\n
+Impossible de supprimer la référence au pointeur void *\n
+Impossible de restaurer correctement les registres après l'appel de fonction\ndans %s\n
+Dépassement de la constante en virgule flottante : %s\n
+Dépassement négatif de la constante en virgule flottante : %s\n
+La fonction %s ne dispose pas d'un pointeur \"this\" ; arrêt de tous les appels\n
+Disposition de la table des fonctions virtuelles inconnue\n
+L'opérande de %s ne peut être une énumération\n
+Pas d'informations relatives aux symboles pour '%s' dans '%s'\n
+L'opérande de sizeof ne peut pas être function ou bitfield\n
+L'opérateur %s n'est pas supporté dans les expressions C\n
+Objet ou pointeur d'objet manquant dans membre %s\n
+%s n'est pas une classe de base de %s\n
+Les fonctions de conversion ne sont pas encore supportées\n
+Aucune valeur n'est affectée à l'argument de la fonction\n
+Pas de fichier source actuel pour %s\n
+Le numéro de ligne doit être une valeur positive\n
+Programme  ID         Pid Thread Etat           Fonction   Emplacement    Commande\n
+%s%-9.9s %-7.7s %6d %6d Image mémoire  %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Exécution                                %s\n
+%s%-9.9s %-7.7s %6d %6d Exécution pas à pas                      %s\n
+%s%-9.9s %-7.7s %6d %6d Inconnu                                 %s\n
+%s%-9.9s %-7.7s %6d %6d Arrêté         %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d LWP désactivé  %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Core Off LWP   %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Image mémoire interrompue %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Interrompu     %-10.10s %-14.14s %s\n
+Syntaxe :\n%s [options_courantes] [[-f all|none|procs] [-r] [-l empl_dép] ligne_cmd]\n
+       options_courantes : [-V] [-i c|x] [-X opt] [-d valeurs_défaut] [-s chemin] [-Ya|g,rép]\n
+***** Erreur - code opérateur erroné\n
+Nombre hexadécimal attendu au niveau de %s\n
+Liste des sources pour %s, Programme %s\n
+%4d\tsig%-7s\tdétecté\t%s\n
+%4d\tsig%-7s\tignoré\t%s \n
+Libération et exécution de %s\n
+Libération et suspension de %s\n
+Impossible de trouver adresse de retour pour la fonction figurant dans %s\n
+Impossible de copier événement %d dans %s\n
+Impossible de restaurer événement %d dans %s\n
+Impossible de changer événement %d ; un de ses objets n'est pas actif\n
+Numéro de trame %d hors limites pour %s\n
+Opération incorrecte sur objet mort %s\n
+Appel ambigu d'une fonction surchargée. Choix possibles :\n%s
+Impossible d'obtenir l'adresse du symbole %s : alloué à un registre\n
+Le numéro de ligne %d ne spécifie pas de bloc dans l'échelle courante\n
+Expression régulière %s incorrecte\n
+Expression d'emplacement incorrecte\n
+%s ARRETE
+Commande non supportée à partir de l'interface graphique\n
+Impossible de prendre en charge le changement d'état de l'unité d'exécution\ndurant le lancement du processus : %s\n
+Constante entière requise pour les bornes du vecteur\n

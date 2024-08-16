@@ -1,0 +1,382 @@
+#ident\t"@(#)dthelp:Admin.Tools/backup.hlp	1.26"
+^*version^1
+^*title^Backup-Restore
+^:Backup-Restore
+^*width^70
+^+DesktopMgr/help.defs
+^?Backing up and restoring your files
+^0^Backup-Restore
+^$10
+Backup-Restore
+
+Use Backup-Restore to do the following:
+
+\to\t\k(Backup data^^Backing Up Files) from your system's hard drive to removable media (such as
+\t \tfloppy disk or cartridge tape) or to another file.
+\to\t\k(Restore data^^Restoring Files) back to your system's hard drive.
+\to\t\k(Save a backup script^^Saving a Backup Script).
+
+See also:
+\k(Overview of the Disks-etc Folder^dtadmin/disk.hlp^Overview of the Disks-etc Folder)
+\s(The Backup Service^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(The Restore Service^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^1^Backing Up Files
+^$20
+Backing Up Files
+
+Before you back up, make sure you label the floppy or tape and date it
+for future reference.
+
+To back up files from your system, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Backup-Restore.
+ 
+  \tNote: You can also go directly to the \k(Disks-etc folder^dtadmin/disk.hlp^Overview of the Disks-etc Folder) and press and
+  \thold the right mouse button on the icon that represents your media
+  \t(for example, tape, CD-ROM, or disk). Then, click on Backup.
+
+  \tThe "Backup" window appears with the following options:
+
+  \to\tBackup To: - Click on the arrow for a list of other choices, such as
+  \t \ta floppy disk (for example, Disk A), a file on your hard drive (File),
+  \t \tand so forth. Click on the appropriate option.
+
+  \t \tIf you select File, a Target Field appears. Type in the full \d(path)
+  \t \tto which you want to back up your files and folders (use this option if
+  \t \tyou want to back up to a file or folder on your hard disk, or if you
+  \t \twant to back up to a disk on a remote system that you have access to).
+
+  \t \tNote: If you are backing up to floppy disk or cartridge tape, insert
+  \t \tthe disk or tape into the appropriate drive now. If you are using a
+  \t \tfloppy disk, be sure it is formatted properly. For more information on
+  \t \tformatting, see \k(Formatting Floppy Disks^dtadmin/floppy.hlp^Formatting Floppy Disks).
+
+  \to\tBackup Class: - This option available only to users with system
+  \t \towner permissions (see \k(Understanding Permissions^dtadmin/user.hlp^Understanding Permissions)). 
+
+  \t \tClick on one of the following:
+
+  \t \t-\tFull System - To back up the entire file system. Note that the
+  \t \t \tbackup facility uses the /etc/ignore file to determine which directories
+  \t \t \tto ignore (not back up) during a Full System backup. Before you 
+  \t \t \tstart a Full Backup, be sure to check the /etc/ignore file.
+  \t \t \tIf it contains any directories that you do want to back up,
+  \t \t \tremove those entries from the file.
+
+  \t \t \tNote: Selecting a Full System Backup is not a substitute for
+  \t \t \tcreating an emergency recovery tape or diskette. You cannot
+  \t \t \trestore your entire system from a Full System Backup.
+  \t \t \tFor information on creating emergency recovery tapes and
+  \t \t \tdiskettes, see "Recovering Your System" in the System Owner
+  \t \t \tHandbook.
+
+  \t \t-\tPersonal Files - To back up the files and folders in your own
+  \t \t \t\d(home folder^home directory).
+
+  \t \t-\tOther Users' Files - To back up files for other users. Click on
+  \t \t \t\k(User List^^Backup: User List Window) and click on the desired user ID(s).
+     
+  \t \t \tNote: Backing up another user's files backs up only their home folder
+  \t \t \tand all its contents, not every file on the system owned by that user.
+
+  \to\tType: -  Click on one of the following:
+
+  \t \t-\tComplete - To back up all the files in the selected backup class.
+
+  \t \t-\tIncremental - To back up only those files that changed since the
+  \t \t \tlast complete backup.
+
+  \t \t \tWarning: If you are the \k(system owner^dtadmin/user.hlp^Understanding Permissions) and are backing up files
+  \t \t \tfor other users on your system, note that the system views the last
+  \t \t \tbackup as the last time a backup was run on the system for any user,
+  \t \t \tnot the last time a backup was run for a particular user. For
+  \t \t \texample, say, as the system owner, you start an incremental backup
+  \t \t \tfor userA at 10:00 a.m. and the backup completes at 10:30 a.m.
+  \t \t \tYou then start an incremental backup for userB. The system will
+  \t \t \tbackup only those files that userB changed between 10:00 a.m.
+  \t \t \tand 10:30 a.m. (the time of the last backup). It will not back up
+  \t \t \tany other files that userB changed since the last backup of
+  \t \t \tuserB's files. 
+
+  \t \t \tNote: If you move a file to a new location after the last complete
+  \t \t \tbackup, the system will not pick up this file in the new location
+  \t \t \tin the subsequent incremental backup. This is because the 
+  \t \t \tmodification date on a moved file is not changed, so the system does
+  \t \t \tnot view it as a changed file.
+
+  \t \t-\tSelected Files - To back up only those files and folder that you
+  \t \t \t\d(drag-and-drop) to the "Backup" window
+
+  \t \t \tYou also click on \k(Edit=>Exclude^^Exclude) to remove files and folders from
+  \t \t \tthe backup list.
+
+  \to\tCreate Backup Log: - Click on this box if you want the system to
+  \t \tcreate a file that lists all of the files and folders you are
+\t  \tbacking up.
+
+  \to\tBackup Local Files Only: - click on this box if you want to skip
+  \t \tall files that physically reside on a remote system.
+
+3.\tClick on Backup Now if you want to start the backup immediately.
+
+  \tIf you want to schedule the backup for a later time, click on
+  \tBackup Later and fill in the desired information in the
+  \t\k("Task Scheduler: Add Task" window^^Task Scheduler: Add Task Window).
+
+  \tThe "Backup: Confirmation Notice" window appears. Click on Continue to
+  \tgo ahead with the backup, or Cancel if you decide you do not want
+  \tto go ahead with the backup.
+
+  \tNote: If the tape or floppy disk you have in the drive contains any files,
+  \tthe "Backup: Overwrite Data?" window appears. Click on overwrite if you
+  \tdo not care if the system destroys the files that are on the disk, or
+  \tremove the current disk and replace it with another disk before you
+  \tclick on Overwrite.
+
+  \tThe \k("Backup in Progress" window^^Backup in Progress Window) appears. As the system
+  \tcopies files to the floppy disks, it displays the names of these files in
+  \tthe footer of the "Backup" window.
+
+  \tWhen complete, the following message appears in the footer of the "Backup"
+  \twindow: Backup complete.
+
+  \tNote: You may want to back up the same files using the same options at
+  \tanother time. See \k(Saving a Backup Script).
+
+4.\tRemove the tape or floppy disk from the drive.
+
+See also:
+\s(The Backup Service^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(Creating Emergency Recovery Diskettes^dhelp "" ownerhb "Recovering Your System" "Creating Emergency Recovery Diskettes" || helpLinkErr)
+\s{Creating Emergency Recovery Tape(s)^dhelp "" ownerhb "Recovering Your System" "Creating Emergency Recovery Tape(s)" || helpLinkErr}
+
+^2^Backup: User List Window
+^$30
+Backup: User List Window
+
+This window pops-up when you click on Other Users' Files. To add a user to
+the back up list, do the following:
+
+1.\tClick on the desired user ID.
+
+2.\tClick on OK to add the user to the list and dismiss the window, or Apply
+  \tto add the user to the back up list without dismissing the pop-up window
+  \t(or click on Cancel if you decide you do not want to add the user to the
+  \tback up list).
+
+  \tThe home folder icon for the user appears in the "Backup" window.
+
+Note: When you select a user from the list, the system backs up only the
+files in that user's \d(home directory). That is, if the user owns files in
+a directory not in his or her home directory, the system will not
+automatically back up those files.
+
+^2^Exclude
+^$50
+Exclude
+
+To remove files and folders from the back up list, do the following:
+
+1.\tClick on the files and folders in your "Backup" window that you do not
+  \twant to include in the backup.
+
+2.\tClick on Edit=>Exclude. The system removes files and folders from the
+  \tbackup list.
+
+^2^Backup: Confirmation Notice Window
+^$70
+Backup: Confirmation Notice Window
+
+This window appears when you start your back up. Click on Continue to go
+ahead with the back up, or Cancel if you decide not to go ahead with the
+back up.
+
+^2^Backup: Overwrite Data? Window
+^$80
+Backup: Overwrite Data? Window
+
+This window appears when you are backing up to a tape or floppy disk that
+already contains files.
+
+Do one of the following:
+
+\to\tClick on Overwrite if you do not care if the system destroys the files
+\t \ton the disk.
+
+\to\tRemove the disk if you do not want to destroy the files. Then, insert
+\t \ta new disk and click on Overwrite. Be sure you want to write over
+\t \tany information on the new disk you insert. The system will not
+\t \tprompt you again with the Overwrite warning message.
+
+\to\tClick on Exit to stop the backup procedure. Then, restart the back up
+\t \twith another tape or floppy disk.
+
+^2^Backup in Progress Window
+^$90
+Backup in Progress Window
+
+This window appears when the system is creating the index for your backup
+archive. Click on Cancel if you decide to stop the backup.
+
+^2^Task Scheduler: Add Task Window
+^$100
+Task Scheduler: Add Task Window
+
+This window appears when you select Backup Later. Note that the system
+already filled in the Task field. Set the options in this window as follows:
+
+\to\tTime - Type in the time you want the backup to run (in hours and
+\t \tminutes, based on a 24-hour clock). For example, if you want the
+\t \tprogram to run at 6:00 p.m., type in 18:00.
+
+\to\tEvery - Click on Hour or Minute to override the time value and have
+\t \tthe program run every hour or minute.
+
+\to\tWhen -  Choose to have the program run on a particular day of the week
+\t \tor a specific date as follows:
+
+\t \t- If you click on Day of the Week, go down to the next box (also marked
+\t \t \tDay of the Week) and click on the arrow box for a pull-down menu
+\t \t \tof days. Click on the desired day. For example, Every Day, Sunday,
+\t \t \tMonday, and so forth.
+
+\t \t-\tIf you click on Date, a Month and a Date box appear. Click on the
+\t \t \tarrow boxes within the Month and Day boxes for a pull-down menu
+\t \t \tof months and days. Click on the desired month and day. For example,
+\t \t \tEvery Month on the first Monday.
+
+When complete, click on Add Task(1).
+ 
+^1^Restoring Files
+^$120
+Restoring Files
+
+To restore files, do the following:
+
+1.\tInsert into the appropriate drive the cartridge tape or diskette that
+  \tcontains the files you want to restore.
+
+2.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+3.\tDouble-click on Backup-Restore. The "Restore" window appears with the
+  \tfollowing fields:
+ 
+  \tNote: You can also go directly to the \k(Disks-etc folder^dtadmin/disk.hlp^Overview of the Disks-etc Folder) and double-click
+  \ton the appropriate device icon to bring up the "Restore" window. 
+
+  \to\tRestore From: - Click on the medium from which you are restoring.
+  \t \tFor example, File, Cartridge Tape, Disk_A or Disk_B.
+
+  \t \tNote: If you choose File, the Target File box appears.
+  \t \tType in the full \d(path) name of the file you are restoring from.
+
+  \to\tOverwrite files if they exist: - Click on this box if you want the
+  \t \trestore to replace any existing files with the same names.
+
+  \to\tShow Files: - Click on this box if you want to see a list of the
+  \t \tfiles and folders on the tape, diskette, or in the file you are
+  \t \trestoring from. Select the files you want to restore.
+
+5.\tClick on restore. The \k("Restore in Progress" window^^Restore in Progress Window) appears. As the system
+  \trestores your files, the file names appear in the footer of the Restore
+  \twindow.
+
+  \tWhen complete, the following message appears in the footer of your
+  \t"Restore" window: Restore complete.
+
+See also:
+\s(The Restore Service^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^2^Restore in Progress Window
+^$130
+Restore in Progress Window
+
+This window appears to let you know that the system is restoring
+your files. If you decide you do not want to continue with the
+restore, click on Cancel.
+
+^1^Saving a Backup Script
+^$140
+Saving a Backup Script
+
+You can save the backup files and the selected backup options to a backup
+script. Later, when you are ready to run the same backup again, you can
+simply call in this script to run it.
+
+To save the backup script, do the following in the "Backup" window:
+
+1.\tClick on File=>Save As. The "Backup: Save Script" window appears.  
+
+2.\tType in the name of the file to which you want to save the file list.
+  \tFor example, if you are saving the list for a daily backup, you
+  \tmight want to call the file "daily." 
+
+3.\tClick on Save. The system saves the backup script, including the backup
+  \toptions, to the file you specified with the suffix .bkup. For example,
+  \tif you called the file "daily," the system saves the backup script as
+  \tdaily.bkup.
+ 
+4.\tUse this script the next time you want to back up the same set of files.
+  \tSee \k(Using a Backup Script).
+
+^2^Backup: Save Script Window
+^$150
+Backup: Save Script Window
+
+For information on filling in the options in this window, see
+\k(Saving a Backup Script).
+
+See also: \k(Using a Backup Script)
+
+^1^Using a Backup Script
+^$160
+Using a Backup Script
+
+To run a backup from a saved backup script, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+ 
+2.\tDouble-click on Backup-Restore. The "Backup" window appears.
+
+3.\tClick on File=Open. The "Backup: Open Script" window appears.
+
+4.\tUse the arrows to move up and down through the folder to find the
+  \tfile that contains the desired backup script.
+
+5.\tClick on the file name. The name appears in the File text box.
+
+6.\tClick on Open. The file names and selected options from the backup
+  \tscript appear in the "Backup" window.
+
+7.\tClick on Backup. The system backs up the files designated in the backup
+  \tscript.
+
+  \tNote: You can also click on Backup later if you want to schedule the back
+  \tup for another time.
+
+^2^Backup: Open Script Window
+^$170
+Backup: Open Script Window
+
+In this window, do the following:
+
+1.\tUse the arrows to move up and down through the folder to find the file
+  \tthat contains the desired backup script.
+
+2.\tClick on the file name. The name appears in the File text box.
+
+3.\tClick on Open. The file names and selected options from the backup
+  \tscript appear in the "Backup" window.
+
+4.\tClick on Backup. The system backs up the files designated in the
+  \tbackup script.

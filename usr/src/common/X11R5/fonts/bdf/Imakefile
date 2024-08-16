@@ -1,0 +1,40 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)r5fonts:bdf/Imakefile	1.3"
+
+XCOMM $Header: /home/x_cvs/mit/fonts/bdf/Imakefile,v 1.2 1992/05/26 13:20:26 dawes Exp $
+XCOMM $XConsortium: Imakefile,v 1.8 91/07/16 23:03:51 gildea Exp $
+#define IHaveSubdirs
+#define PassCDebugFlags /* as nothing */
+
+/*
+ * NOTE: BE CAREFUL if you turn these ON; when you install, the fonts.dir
+ * file from these directories overwrite the ones from 75dpi and 100dpi
+ * respectively - so be CAREFUL
+ */
+#define BuildUtopia75dpi	NO
+#define BuildUtopia100dpi	NO
+
+#if Build75Dpi
+DIR75 = 75dpi
+#endif
+#if Build100Dpi
+DIR100 = 100dpi
+#endif
+#if BuildUtopia75dpi
+DIRU75 = Utopia.75dpi
+#endif
+#if BuildUtopia100dpi
+DIRU100 = Utopia.100dpi
+#endif
+
+        SUBDIRS = misc Xol $(DIR75) $(DIR100) $(DIRU75) $(DIRU100)
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

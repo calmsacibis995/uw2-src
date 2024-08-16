@@ -1,0 +1,89 @@
+#ident	"@(#)olpkg.oam:display/postinstall	1.7"
+
+PKGMSG=${PKG}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+        cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+           /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+
+do_install () {
+
+	${CONFBIN}/idinstall -P ${PKGINST} -a ${1} > ${ERR} 2>&1
+	RET=$?
+	if [ ${RET} != 0 ]
+	then
+		${CONFBIN}/idinstall -P ${PKGINST} -u ${1} > ${ERR} 2>&1
+		RET=$?
+	fi
+
+	if [ ${RET} != 0 ]
+	then
+		message -d `pfmt -s error -g ${PKGMSG}:1 "The installation cannot be completed due to an error in the driver installation during the installation of the %s module of the %s.  The file %s contains the errors.\n" "${1}" "${NAME}" "${ERR}" 2>&1`
+			exit ${FAILURE}
+	fi
+}
+
+HOW_INSTALL=PKGADD
+[ -f /etc/inst/scripts/postreboot.sh ] && HOW_INSTALL=BOOT_FLOP
+[ -f /etc/rc2.d/S02POSTINST ] && HOW_INSTALL=POSTREBOOT
+
+FAILURE=1	# fatal error
+
+CONFDIR=/etc/conf
+CONFBIN=${CONFDIR}/bin
+ERR=/tmp/err.out
+
+for MODULE in lfb
+do
+	cd /tmp/${MODULE}
+	do_install ${MODULE}
+done
+
+#
+# Add Display_Setup icon to all the existing users with desktop.
+# First, get the list of users; /usr/bin/listusers cannot be used 
+# because it is not in the base package.  (This is the same mechanism
+# used for Internet icon as part of pkg.inet postinstall.)
+#
+
+rm -f /tmp/USERS_LIST
+while read line 
+do 
+	uid=`echo $line | cut -f 3 -d ":"` 
+	[ "$uid" -lt 100 ] && continue
+	name=`echo $line | cut -f 1 -d ":"` 
+	echo "$name" >> /tmp/USERS_LIST
+done < /etc/passwd
+
+sort -o /tmp/USERS_LIST /tmp/USERS_LIST 
+
+while read name 
+do
+	HOMEDIR=`egrep "^$name:" /etc/passwd|cut -f 6 -d ":"`
+
+	# check if desktop environment is setup
+	[ -d $HOMEDIR/Admin_Tools ] && {
+		[ ! -s $HOMEDIR/Admin_Tools/Display_Setup ] && {
+			ln -s /usr/X/bin/gsetvideo $HOMEDIR/Admin_Tools/Display_Setup  2>/dev/null
+			installf $PKGINST $HOMEDIR/Admin_Tools/Display_Setup=/usr/X/bin/gsetvideo s
+		}
+	}
+done < /tmp/USERS_LIST
+
+rm -f /tmp/USERS_LIST
+
+###
+
+installf -f $PKGINST 
+
+removef ${PKGINST} /tmp/lfb/Driver.o /tmp/lfb/Space.c /tmp/lfb/Master /tmp/lfb/System /tmp/lfb/Node /tmp/lfb >/dev/null 2>&1
+removef -f ${PKGINST} >/dev/null 2>&1
+
+[ "$HOW_INSTALL" = "PKGADD" ] && ${CONFBIN}/idbuild -M lfb

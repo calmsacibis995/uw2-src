@@ -1,0 +1,264 @@
+#ident\t"@(#)dthelp:Admin.Tools/printuse.hlp    1.12"
+^*version^1
+^*title^Imprimante
+^:Imprimante
+^*width^70
+^+DesktopMgr/help.defs
+^?Envoi, vérification, suppression et modification des requêtes d'impression
+^0^Utilisation de votre imprimante
+^$10
+Utilisation de votre imprimante
+
+Avant d'envoyer des requêtes d'impression à une imprimante locale ou à
+distance, vous devez configurer cette imprimante. Pour de plus amples
+informations sur la configuration de votre imprimante, reportez-vous à
+\k(Configuration des imprimantes^dtadmin/Printer_Setup.hlp^Configuration des imprimantes).
+
+Après avoir configuré une imprimante, vous pouvez effectuer les
+opérations suivantes :
+
+\to\t\k(Imprimer un fichier^^Impression d'un fichier)
+\to\t\k(Afficher les requêtes d'impression^^Affichage des requêtes d'impression)
+\to\t\k(Visualiser les caractéristiques d'une requête d'impression^^Visualisation des caractéristiques d'une requête d'impression)
+\to\t\k(Modifier les caractéristiques d'une requête d'impression^^Changement des caractéristiques d'une requête d'impression)
+\to\t\k(Effacer une requête d'impression^^Suppression d'une requête d'impression)
+
+Voir également :
+\s(Impression^dhelp "pe.fr" userhb "Impression" "" || helpLinkErr)
+
+
+^1^Impression d'un fichier
+^$20
+Impression d'un fichier
+
+Si vous souhaitez imprimer un fichier créé avec une application tierce
+(par exemple, une application de traitement de texte ou un tableur),
+utilisez le système de menus de cette application pour imprimer.
+
+Si vous souhaitez imprimer un fichier texte en ASCII (ou tout autre
+fichier créé sur un système UnixWare ou sur un autre système UNIX),
+procédez comme suit :
+
+1.\t\d(Faites glisser^faire glisser) le fichier sur l'icône de
+  \tl'imprimante désirée. La fenêtre "Imprimante : caractéristiques de
+  \tla requête" correspondant à cette imprimante apparaît.
+
+2.\tDéfinissez les options suivantes :
+
+   \to\tTitre de la bannière : - Tapez le titre qui doit figurer
+   \t \tsur votre bannière). Par défaut, le système imprime le nom du
+   \t \tfichier sur cette page.
+
+  \to\tExemplaires : - Entrez le nombre d'exemplaires que vous souhaitez
+  \t \timprimer.
+
+  \to\tEnvoyer un courrier une fois l'opération terminée -
+  \t \tCliquez sur Oui si vous souhaitez que le système envoie un
+  \t \tcourrier à votre \k(dossier Boîte à lettres^DesktopMgr/Mailbox.hlp^Présentation du dossier Boîte à lettres) lorsque l'impression de
+  \t \tla tâche est terminée ou sur Non dans le cas contraire.
+
+  \to\tImprimer bannière : - Cliquez sur Oui pour imprimer une bannière
+  \t \ten tête de votre document, ou sur Non si vous ne souhaitez pas
+  \t \tque votre document comporte de bannière.
+
+  \to\tFichier à imprimer : - Par défaut, ce champ est paramétré sur
+  \t \tTexte. Cliquez sur la case fléchée, puis sur l'une des options
+  \t \tsuivantes :
+
+  \t \t-\tTexte - Permet d'imprimer des fichiers texte (parfois appelés
+  \t \t \tfichiers ASCII). Ces fichiers ne contiennent pas d'informations
+  \t \t \trelatives au formatage. Il s'agit simplement de fichiers
+  \t \t \tcontenant des caractères tapés sur un clavier. Par exemple,
+  \t \t \t\k(l'Editeur de texte^dtedit/edit.hlp^Editeur de texte) génère ce type de fichiers.
+
+  \t \t-\tTexte (pas de retour à la ligne automatique) - En fonction de
+  \t \t \tl'imprimante, les lignes qui ne tiennent pas sur la page sont
+  \t \t \tsoit renvoyées à la ligne suivante (coupure du texte au milieu
+  \t \t \td'un mot), soit tronquées.
+
+ \t \t-\tPostScript - Permet d'imprimer des fichiers en langage
+ \t \t \tPostScript. Pour utiliser cette option, votre imprimante doit
+ \t \t \têtre une imprimante PostScript. Certaines applications vous
+ \t \t \tpermettent d'imprimer un document (ou un autre fichier de
+ \t \t \tdonnées) dans un fichier au format PostScript.
+
+ \t \t-\tHP PCL - Permet d'imprimer des fichiers créés pour des
+ \t \t \timprimantes utilisant l'émulation HP PCL, telle que l'imprimante
+ \t \t \tHP Laserjet.
+
+ \t \t-\tSortie troff - Permet d'imprimer des fichiers créés à l'aide du
+ \t \t \tformat de commande troff UNIX.
+
+\t \t-\tAutre - Permet de spécifier un autre type de fichier ne figurant
+\t \t \tpas dans le menu. Le filtre associé à ce type de fichier doit être
+\t \t \tchargé sur votre système.
+
+  \t \t \tSi vous sélectionnez Autre, la case de texte Type de fichiers
+  \t \t \tapparaît. Complétez ce champ.
+
+\t \t \tSi vous souhaitez définir des options complémentaires pour une
+\t \t \timprimante PostScript (telles que la longueur ou la largeur des
+\t \t \tpages, etc.), reportez-vous à \k(Imprimante : autres options).
+
+3.\tCliquez sur Imprimer pour envoyer la requête à l'imprimante. La
+  \tfenêtre "Imprimante : message" apparaît pour vous informer que
+  \tvotre tâche a été acceptée et pour vous fournir l'id requête
+  \tcorrespondant à cette dernière. Notez cette information pour
+  \tpouvoir vous y référer ultérieurement. Ensuite, cliquez sur
+  \tContinuer pour imprimer la tâche.
+
+  \tLa fenêtre "Configuration des imprimantes : caractéristiques" se
+  \treferme.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \trétablir les options précédentes, ou sur Annuler pour refermer la
+  \tfenêtre sans modifier les options et sans envoyer la requête
+  \td'impression.
+
+Voir également :
+\s(Impression au niveau de la ligne de commande^dhelp "pe.fr" ownerhb "Définition et configuration des imprimantes" "Impression au niveau de la ligne de commande" || helpLinkErr)
+
+^2^Imprimante : autres options
+^$30
+Imprimante : autres options
+
+Si vous utilisez une imprimante PostScript, et que votre document
+requiert des paramètres spéciaux, vous pouvez définir des options
+d'impression complémentaires. Par exemple, vous aurez peut-être besoin
+d'imprimer un document contenant plus de caractères par pouce que
+l'imprimante par défaut ne peut en supporter. Vous pourrez alors
+paramétrer la fenêtre "Pas des caractères de l'imprimante : options
+associées au filtre" pour forcer le système à accepter un plus grand
+nombre de caractères par ligne.
+
+Vous pouvez définir les options correspondant à ce qui suit dans
+la fenêtre "Imprimante : autres options".
+
+\to\tLongueur de page : - Sélectionnez l'unité désirée (pouces,
+\t \tcentimètres, ou caractères), puis entrez la longueur de page
+\t \tdésirée (dans la case de texte correspondante).
+
+\to\tLargeur de page : - Sélectionnez l'unité désirée (pouces,
+\t \tcentimètres, ou caractères), puis entrez la largeur de page
+\t \tdésirée (dans la case de texte correspondante).
+
+\to\tPas des caractères : - Sélectionnez l'unité souhaitée (pouces,
+\t \tcentimètres, ou caractères), puis entrez la largeur souhaitée pour
+\t \tchaque caractère (dans la case de texte correspondante).
+
+\to\tInterligne : - Sélectionnez l'unité souhaitée (pouces,
+\t \tcentimètres, ou caractères), puis entrez la hauteur de ligne
+\t \tsouhaitée (dans la case correspondante).
+
+\to\tPréférence locale : - Cliquez sur la préférence locale souhaitée.
+
+\t \tRemarque : selon le type de préférence locale que vous
+\t \tsélectionnez, l'option Jeu de caractères n'est plus disponible
+\t \t(elle apparaît en grisé).
+
+\to\tJeu de caractères : - Cliquez sur la case fléchée pour obtenir la
+\t \tliste des jeux de caractères disponibles. Sélectionnez ensuite
+\t \tcelui qui vous convient.
+
+\to\tOptions diverses : - Entrez les options associées à la commande lp
+\t \tUNIX.
+
+\t \tPour de plus amples informations, voir lp (1M) dans
+\t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+Voir également :
+\s(Génération de filtres^dhelp as sysag "Providing Print Services" "Providing Filters" || helpLinkErr)
+\s(Imprimantes PostScript^dhelp as sysag "Providing Print Services" "PostScript Printers" || helpLinkErr)
+
+
+^1^Affichage des requêtes d'impression
+^$40
+Affichage des requêtes d'impression
+
+Pour afficher toutes les requêtes d'impression en attente sur une
+imprimante donnée, procédez comme suit :
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur l'icône de cette
+  \timprimante. La fenêtre "Imprimante : <nom d'imprimante>" apparaît
+  \t(où nom d'imprimante correspond au nom de votre imprimante).
+
+  \tChaque requête d'impression est identifiée par l'ID d'ouverture de
+  \tsession de l'utilisateur qui a soumis la requête.
+
+2.\tCliquez sur Actions=>Quitter pour refermer la fenêtre.
+
+Pour visualiser les caractéristiques d'une requête d'impression,
+reportez-vous à \k(Visualisation des caractéristiques d'une requête d'impression).
+
+Pour modifier les caractéristiques d'une requête d'impression,
+reportez-vous à \k(Changement des caractéristiques d'une requête d'impression).
+
+Pour effacer une requête d'impression, reportez-vous à
+\k(Suppression d'une requête d'impression).
+
+^1^Visualisation des caractéristiques d'une requête d'impression
+^$50
+Visualisation des caractéristiques d'une requête d'impression
+
+Pour visualiser les caractéristiques associées à une requête
+d'impression, procédez comme suit :
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur l'icône de l'imprimante.
+  \tLa fenêtre "Imprimante : <nom d'imprimante>" apparaît.
+
+2.\tCliquez sur la requête d'impression souhaitée.
+
+3.\tCliquez sur Imprimer requête=>Caractéristiques. La fenêtre
+  \t"Imprimante : caractéristiques de la requête" associée à cette
+  \timprimante apparaît. Reportez-vous à l'étape 2 de
+  \t\k(Impression d'un fichier) pour obtenir une description des options de
+  \tcette fenêtre.
+
+4.\tCliquez sur OK ou sur Annuler pour refermer la fenêtre.
+
+Voir également :
+\k(Changement des caractéristiques d'une requête d'impression)
+
+^1^Changement des caractéristiques d'une requête d'impression
+^$50
+Changement des caractéristiques d'une requête d'impression
+
+Pour modifier les caractéristiques associées à une requête
+d'impression, procédez comme suit :
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur l'icône de l'imprimante.
+  \tLa fenêtre "Imprimante : <nom d'imprimante>" apparaît.
+
+2.\tCliquez sur la requête d'impression souhaitée.
+
+3.\tCliquez sur Requête d'impression=>Caractéristiques. La fenêtre
+  \t"Imprimante : caractéristiques de la requête" associée à cette
+  \timprimante apparaît.
+
+4.\tEffectuez les modifications souhaitées. Reportez-vous à l'étape 2
+  \tde \k(Impression d'un fichier) pour obtenir une description des options
+  \tde cette fenêtre.
+
+5.\tCliquez sur OK pour appliquer les modifications et refermer la
+  \tfenêtre.
+
+ \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+ \trétablir les options précédentes, ou sur Annuler pour refermer la
+ \tfenêtre sans modifier les caractéristiques.
+
+^1^Suppression d'une requête d'impression
+^$60
+Suppression d'une requête d'impression
+
+Pour effacer une requête d'impression, procédez comme suit :
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur l'icône de l'imprimante.
+  \tLa fenêtre "Imprimante : <nom d'imprimante>" apparaît.
+
+2.\tCliquez sur la requête d'impression que vous souhaitez effacer.
+
+3.\tCliquez sur Requête d'impression=>Caractéristiques. La fenêtre de
+  \tconfirmation "Imprimante : effacer" s'affiche instantanément, vous
+  \tdemandant de confirmer si vous souhaitez effacer la requête.
+  \tCliquez sur Effacer pour effectuer la suppression, ou sur Annuler
+  \tsi vous décidez de ne pas supprimer la requête.

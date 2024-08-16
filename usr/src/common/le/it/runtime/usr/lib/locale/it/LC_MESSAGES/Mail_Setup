@@ -1,0 +1,54 @@
+Configurazione Posta UNIX
+Configurazione Posta
+Aggiungere una riga \'Data:\'?
+No
+Sì
+Se un messaggio creato sulla macchina locale non presenta una riga di intestazione \'Data:\' RFC822 e questa variabile è impostata su Sì, verrà aggiunta una riga di intestazione \'Data:\' RFC822.
+Aggiungere una riga \'Da:\'?
+Se un messaggio creato sulla macchina locale non presenta una riga di intestazione \'Da:\' RFC822 e questa variabile è impostata su Sì, verrà aggiunta una riga di intestazione \'Da:\' RFC822.
+Aggiungere una riga \'Ricevuto:\'?
+Se un messaggio ricevuto non presenta una riga di intestazione \'Ricevuto:\' e questa variabile è impostata su Sì, verrà aggiunta una riga di intestazione \'Ricevuto:\'.
+
+
+Nome cluster:
+Per individuare una serie di sistemi strettamente accoppiati da un nome su tutti gli altri sistemi, impostare questo campo sul nome cluster. Questa stringa viene usata al posto del nome nodo del sistema locale da uname(2) per elaborare i messaggi di posta.
+Mailsurr Mailcnfg variabili:
+Una lista separata da virgola di variabili di configurazione di posta da passare attraverso i comandi mailsurr come variabili di ambiente.
+Livello di debug:
+Questa variabile prende gli stessi valori dell'opzione di posta \-x riga di comando. Fornisce il modo per impostare un livello di debug/tracing valido per tutto il sistema. Al momento del debugging, è di solito impostata su 2, fornendo la diagnostica minima per il debugging della posta e dei relativi errori. Il valore dell'opzione \-x riga di comando posta annullerà qualsiasi valore introdotto.
+Vuoi cancellare file di posta vuoti?
+Se questa variabile è impostata su Default, mail e rmail cancellano i file di posta vuoti se i permessi del file sono 0660 e li tratteranno altrimenti. Se si seleziona Sì, i file di posta vuoti verranno comunque cancellati indipendentemente dai permessi. Se si seleziona No, i file di posta non verranno cancellati.
+Nome del dominio:
+Questa stringa viene utilizzata per sostituire il nome del dominio del sistema con uno da usare solo per la posta. Questo nome di dominio verrà utilizzato come nome di dominio del sistema ai fini della posta.
+Sistema di inoltro a prova di guasto:
+Nel caso in cui si abbia accesso alla directory /var/mail via NFS e l'accesso non sia possibile quando viene consegnata la posta, questa verrà inoltrata verso il sistema d'inoltro a prova di guasto. Questa variabile deve essere impostata sul nome del sistema da cui è montata la directory /var/mail. Se la directory /var/mail non viene montata via NFS, lasciare il campo vuoto.
+Vuoi compilare il file Mailsurr?
+Di solito, la posta crea una versione compilata del file di configurazione dell'istradamento per ridurre il tempo di inizializzazione per chiamate future della posta ogni volta che il file di configurazione cambia. Se si seleziona No, la posta ignora il file compilato.
+Stringa \'Remoto da:\':
+Questa stringa può essere configurata se si desidera utilizzare una stringa leggermente diversa dal nome cluster o il nome sistema nelle informazioni ...remoto da...nella riga di intestazione timbro postale di UNIX.
+Host intelligente:
+Questa stringa può essere impostata sul nome del sistema di posta con alias ed instradamento migliori disponibili rispetto al sistema locale. Tutta la posta che il sistema locale non può instradare verrà inviata all'host intelligente.
+Variabili ambiente Mailsurr:
+Una lista di variabili d'ambiente separata da una virgola da passare mediante i comandi mailsurr. Di solito viene lasciata vuota.
+
+
+
+
+Vuoi instradare tutti i messaggi all'host intelligente?
+Se viene selezionato Sì, tutti i messaggi non locali verranno instradati attraverso l'host intelligente.
+Vuoi eseguire il log dei messaggi?
+Se viene selezionato Sì, una voce per ogni messaggio di posta che passa attraverso il sistema verrà posta sia in /var/mail/:log/<giorno-della-settimana> sia /var/mail/:errors/<giorno-della-settimana>.
+Vuoi aggiungere una riga \'ID messaggio:\'?
+Se un messaggio creato sulla macchina locale non ha la riga di intestazione \'ID messaggio:\' RFC822 e viene selezionato Sì, verrà aggiunta una riga di intestazione \'ID messaggio:\'.
+Vuoi convertire in intestazioni a 7 bit?
+Se viene selezionato Sì, la posta converte le intestazioni ad 8 bit in formato a 7 bit. Poiché i caratteri a 8 bit sono consentiti solo nelle porzioni di commento delle righe di intestazione \'A:\', \'Cc:\' e \'Bcc:\', queste righe di intestazione con caratteri ad 8 bit trovate nelle sezioni non di commento, verranno cambiate in \'A non ammesso:\', \'Cc non ammesso:\' e \'Bcc non ammesso:\'.
+Vuoi convertire in MIME a 7 bit?
+Se viene selezionato Sì, quando un messaggio di posta non MIME (Multi-Purpose Internet Message Extensions) viene convertito in formato MIME, un corpo di messaggio ad 8 bit viene converito in formato a 7 bit usando le codifiche di trasferimento stampabili o base64.
+Vuoi convertire non MIME in MIME?
+Se viene selezionato Sì, un messaggio ricevuto in formato non MIME viene convertito in formato MIME.
+Vuoi aggiungere una riga \'A:\'?
+Se viene selezionato Sì, verrà aggiunta una riga di intestazione \'A:\' RFC822 ad un messaggio inviato senza da un utente di una macchina locale.
+Accetti la posta indirizzata al dominio?
+Se viene selezionato Sì, i messaggi indirizzati al dominio locale senza nomi di sistema verranno considerati come se fossero indirizzati al sistema locale.
+Instradare messaggi locali attraverso MHS?
+Se è stato scelto Sì, gli indirizzi postali relativi a un utente che si presume sia su questo sistema e che non esistono vengono instradati attraverso il gateway MHS, sempre che sia stato configurato. Se il gateway MHS non è stato configurato, la posta viene instradata verso l'host più intelligente configurato, altrimenti viene respinta.

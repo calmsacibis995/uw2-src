@@ -1,0 +1,62 @@
+#ident	"@(#)bkrs:common/cmd/bkrs/basic.d/sched/Menu.sched	1.2"
+#ident	"$Header: $"
+
+menu="Schedule Backup to Tape"
+
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+name=Add
+lininfo=sched:add
+itemmsg=const "Move to an item with the arrow keys and strike ENTER to select."
+action=`indicator -w; shell "
+	if [ -r /dev/rmt ]
+	then if [ \`/usr/sadm/sysadm/bin/prtask -b -l -A /tmp/addbk.$VPID\` = 2 ]
+	     then echo 3
+	     else echo 2
+	     fi 
+	else echo 1
+	fi" | regex -e 
+	    '^3$' 'open $OBJ_DIR/sched/Text.already /tmp/addbk.$VPID'
+	    '^2$' 'open $OBJ_DIR/sched/Form.add'
+	    '^1$' 'open $OBJ_DIR/sched/Text.notape'
+	    '^0$' 'open $OBJ_DIR/sched/Text.privil add'`
+
+name=Change
+lininfo=sched:change
+itemmsg=const "Move to an item with the arrow keys and strike ENTER to select."
+action=`indicator -w; shell "
+	if [ \`/usr/sadm/sysadm/bin/prtask -b -l -C /tmp/chgbk.$VPID /tmp/bkchg.$VPID\` = 2 ]
+	then if [ -r /dev/rmt ]
+   	     then echo 3
+	     else echo 2
+	     fi 
+	else echo 1
+	fi" | regex -e 
+	    '^3$' 'open $OBJ_DIR/sched/Menu.chg /tmp/chgbk.$VPID'
+	    '^2$' 'open $OBJ_DIR/sched/Text.notape'
+	    '^1$' 'open $OBJ_DIR/sched/Text.nosched'
+	    '^0$' 'open $OBJ_DIR/sched/Text.privil change'`
+
+name=Delete
+itemmsg=const "Move to an item with the arrow keys and strike ENTER to select."
+lininfo=sched:delete
+action=`indicator -w; shell "
+	if [ \`/usr/sadm/sysadm/bin/prtask -b -l -D /var/tmp/delbk.$VPID /var/tmp/bkdel.$VPID\` = 2 ]
+	then echo 3
+	else echo 1
+	fi" | regex -e
+	    '^3$' 'OPEN MENU $OBJ_DIR/sched/Menu.del /var/tmp/delbk.$VPID /var/tmp/bkdel.$VPID'
+	    '^1$' 'OPEN TEXT $OBJ_DIR/sched/Text.nosched'`
+
+name=Display
+lininfo=sched:display
+itemmsg=const "Move to an item with the arrow keys and strike ENTER to select."
+action=`indicator -w; /usr/sadm/sysadm/bin/display /tmp/dplbk.$VPID | regex 
+		'^1$' 'open $OBJ_DIR/sched/Text.display /tmp/dplbk.$VPID'
+		'^0$' 'open $OBJ_DIR/sched/Text.nosched'`
+
+name=""
+button=8
+action=nop
+
+`indicator -w`

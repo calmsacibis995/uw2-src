@@ -1,0 +1,22 @@
+%% Networking Parameters
+%%% Internet Protocol (IP) Parameters
+% IPCKSUM
+Controls whether IP (Internet Protocol) checksumming is enabled.
+By default, IP checksumming is turned on (set to 1).
+Except when the underlying hardware
+guarantees correct and uncorrupted delivery of all packets,
+this parameter should remain turned on.
+% IPFORWARDING
+If IPFORWARDING is set, hosts will act as gateways.
+Controls whether ip will forward packets;
+that is, whether it will act as a gateway.
+This parameter should be turned on (set to 1)
+only if the machine is intended to be a gateway.
+% IPSENDREDIRECTS
+Controls whether ip will generate ICMP (Internet Control Message Protocol)
+redirect messages
+when forwarding packets to a destination
+that the sender should be able to reach directly.
+This should be turned on (set to 1)
+only if needed to support diskless workstations,
+or if the machine is acting as a router or gateway.

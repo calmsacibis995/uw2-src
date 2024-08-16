@@ -1,0 +1,199 @@
+#ident\t"@(#)dthelp:Admin.Tools/video.hlp        1.17"
+^*version^1
+^*title^Configurazione Schermo
+^:Cfg_Schermo
+^*width^70
+^+DesktopMgr/help.defs
+^?Configurazione dello schermo video
+^0^Configurazione Schermo
+^$10
+Configurazione Schermo
+
+Utilizzare Configurazione schermo per le seguenti operazioni:
+
+\to\t\k(Visualizzare le scelte per lo schermo video^^Visualizzazione delle scelte per lo schermo)
+\to\t\k(Configurare lo schermo video^^Configurazione dello schermo)
+
+Nota: Si deve possedere il
+\k(permesso di Modifica configurazione schermo video^dtadmin/user.hlp^Comprensione dei permessi) per cambiare le
+impostazioni dello schermo video.
+
+Vedi anche:
+setvideomode(1M) nel \s(Riferimento dei comandi^dhelp refman uarm "" "" || helpLinkErr)
+
+^1^Configurazione dello schermo
+^$20
+Configurazione dello schermo
+
+Per configurare lo schermo video, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_schermo. Appare la finestra
+  \t"Configurazione schermo".
+
+  \tIl sistema cerca di determinare che tipo di hardware è presente,
+  \tpoi visualizza la finestra "Configurazione schermo" con i
+  \tseguenti campi:
+
+  \to\tMostra: - Vedi \k(Visualizzazione delle scelte per lo schermo)
+
+  \to\tCostruttore, Chipset, Descrizione: - Utilizzare i tasti
+  \t \tfreccia per scorrere la lista e selezionare l'hardware
+  \t \tcorrispondente a quello installato nel sistema.
+
+  \to\tModello, Risoluzione, Monitor, Colori: - Utilizzare i tasti
+  \t \tfreccia per scorrere la lista e selezionare le specifiche
+  \t \tcorrispondenti.
+
+  \t \tNota: Se si sceglie una risoluzione che richiede più memoria di
+  \t \tquanto specificato o se si seleziona un modello
+  \t \tprima di selezionare un costruttore, appare una
+  \t \t\k(finestra "Configurazione schermo: Avviso"^^Configurazione schermo: Finestra Avviso).
+
+  \to\tMemoria video (Megabyte): Fare clic sulla dimensione di
+  \t \tmemoria corretta. Il campo Memoria video rilevata sotto questa
+  \t \topzione mostra la dimensione della memoria rilevata dal sistema.
+
+  \t \tNota:Se si sceglie una dimensione di memoria maggiore
+  \t \to minore di quella rilevata o se si seleziona la memoria
+  \t \tprima di selezionare il modello, appare la
+  \t \t\k(finestra "Configurazione schermo: Avviso"^^Configurazione schermo: Finestra Avviso).
+
+  \to\tDimensioni monitor: - Utilizzare i tasti freccia per scorrere
+  \t \tla lista e selezionare le dimensioni corrette del monitor. La
+  \t \tlista contiene selezioni relative alle otto dimensioni di
+  \t \tmonitor più diffuse e un'opzione Altro.
+
+  \t \tSelezionando Altro, occorrerà anche impostare i campi
+  \t \tLarghezza e Altezza specificando se in (pollici) o cm
+  \t \t(centimetri).
+
+3.\tFare clic su Test in fondo allo schermo. Se le impostazioni sono
+  \tvalide, compare un monoscopio.
+
+  \tSe le impostazioni non concordano con l'hardware, viene
+  \tvisualizzata una finestra di \k(avviso^^Configurazione schermo: Finestra Test).
+
+4.\tAttendere la fine del test.
+
+5.\tFare clic su Salva in fondo allo schermo se le impostazioni sono
+  \tsoddisfacenti. Appare la finestra "Configurazione schermo: Salva".
+
+  \tNota: Si può anche fare clic su VGA Standard per tornare alle
+  \t impostazioni di default del sistema, fare clic su Ripristina
+  \t per tornare alle impostazioni precedenti o su Annulla per
+  \t chiudere la finestra senza fare alcuna modifica.
+
+
+^2^Configurazione schermo: Finestra Avviso
+^$30
+Configurazione schermo: Finestra Avviso
+
+Questa finestra appare per uno dei seguenti motivi:
+
+\to\tE stata selezionata una dimensione di memoria più grande o più
+\t \tpiccola di quella che il sistema ha rilevato nel computer.
+
+\t \tTornare indietro e selezionare la dimensione di memoria corretta..
+
+\to\tE stata selezionata la memoria prima di selezionare il modello.
+
+\t \tSelezionare prima il modello e poi la memoria.
+
+\to\tE stata selezionata una risoluzione di schermo che richiede più
+\t \tmemoria di quella selezionata.
+
+\t \tTornare indietro e selezionare la risoluzione corretta.
+
+\to\tE stato selezionato un modello prima del costruttore.
+
+\t \tSelezionare prima il costruttore e poi il modello.
+
+Fare cklic su OK per liberare la finestra.
+
+^2^Configurazione schermo: Finestra Test
+^$40
+Configurazione schermo: Finestra Test
+
+Questa finestra appare con un avviso quando le impostazioni non
+corrispondono all'hardware rilevato.
+
+***Si prega di notare che effettuare il test con impostazioni errate può
+   danneggiare l'hardware.***
+
+Fare clic su Test se si vuole procedere con il test (e si è sicuri che
+le impostazioni non provocheranno guasti hardware) o su Annulla per
+arrestare il test (e mantenere le impostazioni precedenti).
+
+
+^2^Configurazione schermo: Finestra Salva
+^$50
+Configurazione schermo: Finestra Salva
+
+Questa finestra appare quando si fa clic su Azioni=>Salva. Se si è
+sicuri di voler salvare le impostazioni dello schermo video, fare clic
+su Salva. Se si decide di non volere le nuove impostazioni fare clic
+su Annulla.
+
+^2^Configurazione schermo: Finestra Test necessario
+^$60
+Configurazione schermo: Finestra Test necessario
+
+Questa finestra appare se si cerca di salvare le nuove impostazioni
+dello schermo video senza l'esecuzione del test. Procedere come segue:
+
+\to\tFare clic su Continua per visualizzare un monoscopio.
+
+\to\tAspettare che il test finisca.
+
+\to\tFare clic su Azioni=>Salva per applicare le nuove impostazioni.
+
+^2^Configurazione schermo: Finestra Uscita
+^$70
+Configurazione schermo: Finestra Uscita
+
+Questa finestra appare se si cerca di uscire da Configurazione schermo
+senza salvare le nuove impostazioni.
+
+***Si prega di notare che usare impostazioni errate può danneggiare
+   l'hardware.***
+
+Fare clic su Sì se si vogliono salvare le impostazioni, su No se non
+si vogliono salvare le impostazioni prima di uscire o Annulla se non
+si vogliono salvare le impostazioni ma non si vuole uscire da questa
+finestra.
+
+
+^1^Visualizzazione delle scelte per lo schermo
+^$80
+Visualizzazione delle scelte per lo schermo
+
+Per mostrare le voci relative a tutte le schede video supportate,
+procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_schermo. Appare la finestra
+  \t"Configurazione schermo".
+
+3.\tFare clic sul rettangolo nella casella a fianco del campo Mostra,
+  \tpoi fare clic su una delle seguenti opzioni:
+
+  \to\tTutte le scelte - Il sistema aggiorna la lista
+  \t \tcostruttore/modello con le voci di tutte le schede video
+  \t \tsupportate, senza tener conto dell'hardware rilevato.
+
+  \to\tScelte rilevate - Il sistema aggiorna la lista in modo
+  \t \tche contenga solo le scelte compatibili con l'hardware rilevato.
+  \t \tSe fallisce la rilevazione hardware, resta visualizzato solo
+  \t \tSTDVGA.
+

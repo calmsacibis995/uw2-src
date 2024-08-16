@@ -1,0 +1,12 @@
+#ident	"@(#)winxksh:libwin/menu	1.2"
+. scr_init
+call -n create_window 10 10 50 20 2 $COLOR_WHITE $COLOR_BLUE 0
+MYMENUWID=$_RETD
+open_menu -sbg $COLOR_RED -sfg $COLOR_WHITE
+add_menu_item -select '. form' "^hello"
+add_menu_item -select 'msg goodbye' "^goodbye"
+#add_menu_item -invisible "hi"
+add_menu_item -select 'msg see-ya' "^see-ya"
+add_menu_item -select 'msg see-ya2' "see-ya2"
+run_menu
+call Wclose $MYMENUWID

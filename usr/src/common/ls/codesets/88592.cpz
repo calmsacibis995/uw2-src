@@ -1,0 +1,218 @@
+#	Copyright (c) 1989 AT&T
+#	  All Rights Reserved  
+#
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T
+#	The copyright notice above does not evidence any   
+#	actual or intended publication of such source code.
+#
+#ident "%W%"
+
+# 1989/01 AT&T-UEL
+# To compose ISO 8859-2 characters
+# Derived from: AT&T terminal compose sequences
+# Notes:	"compose"
+
+map sparse (88592.cpz) {
+
+	define(compose "")	# compose character is cntrl T
+	compose("" "")
+
+	compose("  " " ")	# NBSP
+	compose("\" " "\"")	# quotation mark
+        compose(" \"" "\"")	# quotation mark
+	compose("++" "#")	# number sign
+	compose("' " "'")	# apostrophe
+	compose(" '" "'")	# apostrophe
+	compose("AA" "@")	# commercial at
+	compose("((" "[")	# opening bracket
+	compose("//" "\\")	# backslash
+	compose("/<" "\\")	# backslash
+	compose("</" "\\")	# backslash
+	compose("))" "]")	# closing bracket
+	compose("^ " "^")	# circumflex accent
+	compose(" ^" "^")	# circumflex accent
+	compose("> " "^")	# circumflex accent
+	compose(" >" "^")	# circumflex accent
+	compose("` " "`")	# grave accent
+	compose(" `" "`")	# grave accent
+	compose("(-" "{")	# opening brace
+	compose("-(" "{")	# opening brace
+	compose("/^" "|")	# vertical line
+	compose("^/" "|")	# vertical line
+	compose("LV" "|")	# vertical line
+	compose("lv" "|")	# vertical line
+	compose("VL" "|")	# vertical line
+	compose("vl" "|")	# vertical line
+	compose(")-" "}")	# closing brace
+	compose("-)" "}")	# closing brace
+	compose("~ " "~")	# tilde
+	compose(" ~" "~")	# tilde
+	compose("- " "~")	# tilde
+	compose(" -" "~")	# tilde
+
+	compose("A," "¡")	# A cedilla
+	compose(",A" "¡")	# A cedilla
+	compose("L/" "£")	# L slash
+	compose("/L" "£")	# L slash
+	compose("xo" "¤")	# currency sign
+	compose("ox" "¤")	# currency sign
+	compose("XO" "¤")	# currency sign
+	compose("OX" "¤")	# currency sign
+	compose("xO" "¤")	# currency sign
+	compose("Ox" "¤")	# currency sign
+	compose("Xo" "¤")	# currency sign
+	compose("oX" "¤")	# currency sign
+	compose("x0" "¤")	# currency sign
+	compose("0x" "¤")	# currency sign
+	compose("X0" "¤")	# currency sign
+	compose("0X" "¤")	# currency sign
+	compose("S'" "¦")	# S acute
+	compose("'S" "¦")	# S acute
+	compose("So" "§")	# section sign
+	compose("oS" "§")	# section sign
+	compose("SO" "§")	# section sign
+	compose("OS" "§")	# section sign
+	compose("sO" "§")	# section sign
+	compose("Os" "§")	# section sign
+	compose("so" "§")	# section sign
+	compose("os" "§")	# section sign
+	compose("S0" "§")	# section sign
+	compose("0S" "§")	# section sign
+	compose("s0" "§")	# section sign
+	compose("0s" "§")	# section sign
+	compose("!s" "§")	# section sign
+	compose("!S" "§")	# section sign
+	compose("S!" "§")	# section sign
+	compose("s!" "§")	# section sign
+
+	compose("\"\"" "¨")	# diaeresis
+	compose("S," "ª")	# S cedilla
+	compose(",S" "ª")	# S cedilla
+	compose("Z'" "¼")	# Z acute
+	compose("'Z" "¼")	# Z acute
+	compose("--" "­")	# SHY 
+
+	compose("0^" "°")	# Degree sign
+	compose("^0" "°")	# Degree sign
+	compose("0*" "°")	# Degree sign
+	compose("*0" "°")	# Degree sign
+	compose("a," "±")	# a cedilla
+	compose(",a" "±")	# a cedilla
+	compose("l/" "³")	# l slash
+	compose("/l" "³")	# l slash
+	compose("''" "´")	# acute accent
+	compose("s'" "¶")	# s acute
+	compose("'s" "¶")	# s acute
+
+	compose(",," "¸")	# cedilla
+	compose("s," "º")	# s cedilla
+	compose(",s" "º")	# s cedilla
+	compose("z'" "¼")	# z acute
+	compose("'z" "¼")	# z acute
+
+	compose("R'" "À")	# R acute
+	compose("'R" "À")	# R acute
+	compose("A'" "Á")	# A acute
+	compose("'A" "Á")	# A acute
+	compose("A^" "Â")	# A circumflex
+	compose("^A" "Â")	# A circumflex
+	compose("A>" "Â")	# A circumflex
+	compose(">A" "Â")	# A circumflex
+	compose("A\"" "Ä")	# A umlaut
+	compose("\"A" "Ä")	# A umlaut
+	compose("L'" "Å")	# L acute
+	compose("'L" "Å")	# L acute
+	compose("C'" "Æ")	# C acute
+	compose("'C" "Æ")	# C acute
+	compose("C," "Ç")	# C cedilla
+	compose(",C" "Ç")	# C cedilla
+
+	compose("E'" "É")	# E acute
+	compose("'E" "É")	# E acute
+	compose("E\"" "Ë")	# E umlaut
+	compose("\"E" "Ë")	# E umlaut
+	compose("I'" "Í")	# I acute
+	compose("'I" "Í")	# I acute
+	compose("I^" "Î")	# I circumflex
+	compose("^I" "Î")	# I circumflex
+	compose(">I" "Î")	# I circumflex
+	compose("I>" "Î")	# I circumflex
+
+	compose("-D" "Ð")	# capital Iclandic eth
+	compose("D-" "Ð")	# capital Iclandic eth
+	compose("N'" "Ñ")	# N acute
+	compose("'N" "Ñ")	# N acute
+	compose("O'" "Ó")	# O acute
+	compose("'O" "Ó")	# O acute
+	compose("O^" "Ô")	# O circumflex
+	compose("^O" "Ô")	# O circumflex
+	compose("O>" "Ô")	# O circumflex
+	compose(">O" "Ô")	# O circumflex
+	compose("O\"" "Ö")	# O umlaut
+	compose("\"O" "Ö")	# O umlaut
+	compose("xx" "×")	# muliiply
+
+	compose("U*" "Ù")	# U circle
+	compose("*U" "Ù")	# U circle
+	compose("U'" "Ú")	# U acute
+	compose("'U" "Ú")	# U acute
+	compose("U\"" "Ü")	# U umlaut
+	compose("\"U" "Ü")	# U umlaut
+	compose("Y'" "Ý")	# Y acute
+	compose("'Y" "Ý")	# Y acute
+	compose("ss" "ß")	# sharp s
+
+	compose("r'" "à")	# r acute
+	compose("'r" "à")	# r acute
+	compose("a'" "á")	# a acute
+	compose("'a" "á")	# a acute
+	compose("a^" "â")	# a circumflex
+	compose("^a" "â")	# a circumflex
+	compose("a>" "â")	# a circumflex
+	compose(">a" "â")	# a circumflex
+	compose("a\"" "ä")	# a umlaut
+	compose("\"a" "ä")	# a umlaut
+	compose("l'" "å")	# l acute
+	compose("'l" "å")	# l acute
+	compose("c'" "æ")	# c acute
+	compose("'c" "æ")	# c acute
+	compose("c," "ç")	# c cedilla
+	compose(",c" "ç")	# c cedilla
+
+	compose("e'" "é")	# e acute
+	compose("'e" "é")	# e acute
+	compose("e\"" "ë")	# e umlaut
+	compose("\"e" "ë")	# e umlaut
+	compose("i'" "í")	# i acute
+	compose("'i" "í")	# i acute
+	compose("i^" "î")	# i circumflex
+	compose("^i" "î")	# i circumflex
+	compose("i>" "î")	# i circumflex
+	compose(">i" "î")	# i circumflex
+
+	compose("-d" "ð")	# small Iclandic eth
+	compose("d-" "ð")	# small Iclandic eth
+	compose("n'" "ñ")	# n acute
+	compose("'n" "ñ")	# n acute
+	compose("o'" "ó")	# o acute
+	compose("'o" "ó")	# o acute
+	compose("o^" "ô")	# o circumflex
+	compose("^o" "ô")	# o circumflex
+	compose("o>" "ô")	# o circumflex
+	compose(">o" "ô")	# o circumflex
+	compose("o\"" "ö")	# o umlaut
+	compose("\"o" "ö")	# o umlaut
+	compose("-:" "÷")	# divides
+	compose(":-" "÷")	# divides
+	compose("-;" "÷")	# divides
+	compose(";-" "÷")	# divides
+
+	compose("u*" "ù")	# u circle
+	compose("*u" "ù")	# u circle
+	compose("u'" "ú")	# u acute
+	compose("'u" "ú")	# u acute
+	compose("u\"" "ü")	# u umlaut
+	compose("\"u" "ü")	# u umlaut
+	compose("y'" "ý")	# y acute
+	compose("'y" "ý")	# y acute
+}

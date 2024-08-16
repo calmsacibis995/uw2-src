@@ -1,0 +1,191 @@
+#ident\t"@(#)dthelp:Admin.Tools/MHS_Setup.hlp   1.12"
+^*version^1
+^*title^MHS-Setup
+^:MHS-Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?MHS (Message Handling Service) einrichten
+^0^MHS-Setup
+^$10
+MHS-Setup
+
+Verwenden MHS-Setup, um die UnixWare Seite eines Gateway zwischen MHS
+und UnixWare zu konfigurieren.
+
+Sie müssen über die \k(Berechtigung zur Verwaltung des MHS-Gateway^dtadmin/user.hlp^Mit Berechtigungen umgehen können)
+verfügen, um MHS-Setup verwenden zu können.
+
+Bevor Sie MHS einrichten, sollten Sie unter folgenden Hilfethemen
+nachschlagen:
+
+\to\t\k(Entscheiden, ob Sie einen MHS-Gateway einrichten müssen)
+\to\t\k(MHS-Gateway konfigurieren)
+
+Siehe auch:
+\s(MHS-Setup verwenden^dhelp "pe.de" ownerhb "Post einrichten und konfigurieren" "MHS-Setup verwenden" || helpLinkErr)
+
+^1^Entscheiden, ob Sie einen MHS-Gateway einrichten müssen
+^$20
+Entscheiden, ob Sie einen MHS-Gateway einrichten müssen
+
+Bevor Sie ein MHS-Gateway einrichten, sollten Sie verstehen, was das
+ist und wann es eingesetzt wird.
+
+Die folgenden Fragen können Ihnen dabei helfen, herauszufinden, ob die
+Einrichtung eines Gateway für Ihre Zwecke sinnvoll ist:
+
+\to\tWas ist ein MHS Gateway?
+
+\t \tDas MHS Gateway von UnixWare ist ein Satz von Programmen, die 
+\t \tUnixWare Post gestatten, mit einem MHS-Postsystem (MHS = Message
+\t \tHandling Service) Nachrichten auszutauschen. Zu diesem Zweck 
+\t \tübersetzt das Gateway die Daten aus dem Internet-Postformat 
+\t \tRFC-822 in das MHS-Postformat SMF-71 und umgekehrt. Er stellt 
+\t \tSMF-71-Nachrichten in die MHS-Warteschlange für ausgehende Post 
+\t \tund nimmt SMF-71-Nachrichten, die für UNixWare bestimmt sind, aus
+\t \teiner Warteschlange für eingehende Post in Empfang.
+
+\to\tWann sollten Sie ein MHS Gateway verwenden?
+
+\t \tSie sollten das Gateway verwenden, wenn Sie Nachrichten zwischen 
+\t \tdem UnixWare Postsystem und einem MHS Postsystem austauschen 
+\t \tmüssen.
+
+\to\tMuß ein MHS Gateway auf jedem UnixWare System an Ihrem Standort \t
+\t \tkonfiguriert werden?
+
+\t \tNein. Pro Standort ist nur ein MHS Gateway erforderlich.
+
+\to\tMuß MHS-Setup auf jedem UnixWare Desktop ausgeführt werden?
+
+\t \tNein. Verwenden Sie das Programm MHS-Setup nur auf dem als 
+\t \tMHS Gateway konfigurierten System. Verwenden Sie in
+\t \t\k(Post-Setup^Mail_Setup/Mail_Setup.hlp^Post-Setup) 
+\t \tdie Variable intelligenter Host, um alle
+\t \tanderen Systeme so einzurichten, daß für MHS bestimmte Post an
+\t \tdas Gateway-System gesendet wird.
+
+\to\tWelchen NetWare_Benutzernamen sollten Sie für den in MHS-Setup
+\t \tverlangten Anmeldenamen verwenden?
+
+\t \tSie sollten den Anmeldenamen verwenden, den MHS für die 
+\t \tNachrichtenübertragung zwischen MHS-Hosts verwendet. Den
+\t \trichtigen Anmeldenamen und das Paßwort erhalten Sie von Ihrem
+\t \tMHS-Verwalter.
+
+^1^MHS-Gateway konfigurieren
+^$30
+MHS-Gateway konfigurieren
+
+Ein MHS Gateway, das mit einem NetWare Server konfiguriert wurde,
+fungiert als Übertragungswerkzeug für Post, die über NetWare und
+UnixWare ein- und ausgeht.
+
+Wenn Post bei einem MHS Netzwerk eingeht, leitet der MHS Host die Post
+automatisch an eine Ablage (ein Gateway-Verzeichnis) auf einem Server
+weiter. UnixWare nimmt die Post beim Server in Empfang, übersetzt das
+MHS Postformat SMF-71 in das \k(Internet-Format^dtadmin/inet.hlp^Internet-Setup)
+RFC-822 und übergibt sie an das Postprogramm von UnixWare (/bin/mail),
+das die Endzustellung übernimmt.
+
+Um ein MHS Gateway zu konfigurieren, gehen Sie wie folgt vor:
+
+\to\t\k(NetWare System für das MHS Gateway einrichten^^NetWare Seite des MHS-Gateway einrichten)
+\to\t\k(UnixWare System für das MHS Gateway einrichten^^UnixWare Seite des MHS-Gateway einrichten)
+
+^2^NetWare Seite des MHS-Gateway einrichten
+^$40
+NetWare Seite des MHS-Gateway einrichten
+
+Um die NetWare Seite eines MHS Gateway einzurichten, gehen Sie wie
+folgt vor:
+
+\to\tGewissern Sie sich, daß die erforderlichen NLMs auf Ihrem  
+\t\tNetWare Server installiert sind (siehe \k(NetWare_Setup^NetWare_Setup/NetWare_Setup.hlp^NetWare Setup)).
+
+\to\tErstellen Sie ein neues Gateway auf dem MHS Host (verwenden Sie 
+\t \tGateway Version 71 oder SMF71, je nach Ihrer MHS Software).
+
+\to\tRichten Sie MHS Routes für die Benutzer des UnixWare Postsystems 
+\t \tein, die MHS Post über das Gateway empfangen werden.
+
+^2^UnixWare Seite des MHS-Gateway einrichten
+^$50
+UnixWare Seite des MHS-Gateway einrichten
+
+Um die UnixWare-Seite eines MHS Gateway so einzurichten, daß es MHS
+Post senden und empfangen kann, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im \k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop).
+  \tDas Fenster "Ordner:Verwaltungs_Tools" erscheint.
+
+2.\tDoppelklicken Sie auf MHS_Setup. Das Fenster "MHS Post-Setup" erscheint.
+
+3.\tStellen Sie die gewünschten Variablen ein (wenden Sie sich an
+  \tIhren NetWare_ oder Netzwerkverwalter, wenn Sie weitere
+  \tInformationen zu diesen Variablen benötigen).
+
+  \tVerwenden Sie die Tabulatortaste, um von Feld zu Feld zu springen.
+
+  \tHinweis: Wenn Sie das Etikett einer Variablen anklicken, werden
+  \tim Feld Beschreibung ausführliche Informationen zu dieser
+  \tVariablen angezeigt.
+
+4.\tKlicken Sie Ok an, um diese Einstellungen anzuwenden.
+
+  \tHinweis: Wenn Sie zu den vorherigen Einstellungen zurückkehren
+  \tmöchten, klicken Sie Zurücksetzen an, wenn Sie das Fenster
+  \tverlassen möchten, ohne Änderungen vorzunehmen, klicken Sie
+  \tAbbrechen an.
+
+Siehe auch:
+\k(UnixWare Post-Setup^Mail_Setup/Mail_Setup.hlp^Post-Setup)
+\k(MHS-Post verwenden)
+
+^1^MHS-Post verwenden
+^$60
+MHS-Post verwenden
+
+Nachstehend einige Beispiele für Adressen, die Sie verwenden können,
+wenn Sie Post über ein MHS Gateway senden:
+
+\to\tSie können einer der folgenden Adressen verwenden, um Post von MHS
+\t \tan UnixWare zu senden:
+
+\t \t-\t<Benutzer>@<Gateway>
+
+\t \t-\t<Benutzer>@<Arbeitsgruppe>
+
+\t \t-\t<xxx>@<Gateway> {<rfc-822 Adresse>}
+
+ \t \tDabei ist xxx ein Platzhalter, der dem Standard SMF-71 entspricht
+ \t \t(und unter den anderen Adressen in der Nachricht einmalig ist) und
+ \t \trfc-822 Adresse steht für die Adresse des Benutzers auf der
+ \t \tanderen Seite des Gateway.
+
+\to\tUm von einem UnixWare System, das keinen Domainnamen hat, Post 
+\t \tan MHS zu senden, verwenden Sie:
+
+\t \t-\t<Benutzer>[.<Anw>]@[<Arbeitsgruppe>.]<Internet-Gateway>
+
+\t \tDabei sind Anw und Arbeitsgruppe optional. Der Standardwert für
+\t \tArbeitsgruppe ist die Arbeitsgruppe des MHS-Servers, der
+\t \tStandardwert für Anw ist die Standardanwendung des Benutzers und
+\t \tInternet-Gateway ist der Wert, der in MHS-Setup im Feld
+\t \tInternet-Gateway eingetragen ist.
+
+\to\tUm von einem UnixWare System, das einen Domainnamen hat, Post an
+\t \tMHS zu senden, verwenden Sie:
+
+ \t \t-\t<Benutzer>[.<Anw>]@[<Arbeitsgruppe>.]<Internet-Gateway>.[<Domäne>]
+
+\t \tDabei sind Anw, Arbeitsgruppe und Domain optional.
+\t \tDer Standardwert für Arbeitsgruppe ist die Arbeitsgruppe des 
+\t \tMHS-Servers, der Standardwert für Anw ist die
+\t \tStandardanwendung des Benutzers, Internet-Gateway ist der 
+\t \tWert, der in MHS-Setup im Feld Internet-Gateway
+\t \teingetragen ist, und der Standardwert für Domain ist die Domain des 
+\t \tUnixWare Host.
+

@@ -1,0 +1,148 @@
+
+
+$quote "
+
+
+
+$
+$ Copyright 1991, 1992 Novell, Inc.
+$ All Rights Reserved.
+$
+$ This work is subject to U.S. and International copyright laws and
+$ treaties.  No part of this work may be used, practiced, performed,
+$ copied, distributed, revised, modified, translated, abridged,
+$ condensed, expanded, collected, compiled, linked, recast,
+$ transformed or adapted without the prior written consent
+$ of Novell.  Any use or exploitation of this work without
+$ authorization could subject the perpetrator to criminal and
+$ civil liability.
+$
+
+$  DEVELOPERS:  Do NOT add messages or constants to this file
+$
+$  You must go to file "nls/English/nprinter/printmsg.m4" and make additions there.
+$
+$
+$ The text in this file may be translated and the
+$ corresponding catalog file rebuilt for other languages.
+$ Rebuilding a catalog file is done with the following:
+$  % gencat printmsgs.cat printmsgs.msg
+$        where printmsgs.cat is the new catalog file.
+$
+$set 1  MSG_PRINT_REV_SET
+$ Do NOT touch the following REV string. (MUST match msgtable.h)
+1 "@@(#)$Encabezado: /SRCS/esmp/usr/src/nw/lib/libnutil/nls/English/nprinter/printmsg.m4,v 1.7 1994/08/30 15:28:40 mark Exp $"
+#ident	"@(#)libnwutil:common/lib/libnutil/nls/English/nprinter/nprinter.m4      1.1"
+$
+$ Messages used by nprinter
+$
+$set 3  MSG_NPRINT_SET
+
+
+$
+$ Normal Messages
+$
+1 "Iniciando el sistema"
+2 "Cerrando el sistema"
+3 "Sistema cerrado"
+4 "Terminado"
+5 "%s"
+
+$
+$ Verbose messages
+$
+10 "La impresora está arrancando. El nombre de la impresora host es: %s."
+11 "La impresora está lista para las tareas de impresión."
+12 "La impresora se está parando. El nombre de la impresora host es %s."
+13 "La impresora está arrancando de nuevo. El nombre de la impresora host es %s."
+14 "El nuevo nombre de la impresora host es  %s."
+$
+$ Warning messages
+$
+20 "NPRINTER-4.02-20: PSERVER no está anunciando."
+21 "NPRINTER-4.02-21: No se puede establecer una conexión cliente con el servidor de impresoras."
+22 "NPRINTER-4.02-22: No se puede establecer una conexión remota con el servidor de impresoras."
+23 "NPRINTER-4.02-23: No existe la ranura de NPRINTER en el servidor de impresoras."
+24 "NPRINTER-4.02-24: La ranura de NPRINTER ya está en uso en el servidor de impresoras."
+25 "NPRINTER-4.02-25: El servidor de impresión ha terminado la conexión."
+$
+$ Error messages
+$
+30 "NPRINTER-4.02-30: Demasiadas impresoras."
+31 "NPRINTER-4.02-31: No se puede abrir el transporte IPX."
+32 "NPRINTER-4.02-32: No se puede abrir el transporte SPX."
+33 "NPRINTER-4.02-33: No se puede encontrar el archivo %s."
+34 "NPRINTER-4.02-34: No se puede abrir el archivo %s."
+35 "NPRINTER-4.02-35: Conmutación no válida: %s (ignorado)"
+36 "NPRINTER-4.02-36: La línea del archivo de control de la impresora remota está incompleta:\n%s"
+37 "NPRINTER-4.02-37: La línea del archivo de control de la impresora remota no empieza con un tipo de NPRINTER válido:\n%s"
+38 "NPRINTER-4.02-38: La línea del archivo de configuración de la impresora remota está incompleta:\n%s"
+39 "NPRINTER-4.02-39: La línea del archivo de configuración de la impresora remota no es un parámetro de configuración válido:\n%s"
+40 "NPRINTER-4.02-40: La línea del archivo PRTConfig está incompleta:\n%s"
+41 "NPRINTER-4.02-41: La línea del archivo de PRTConfig no empieza por un tipo de impresora host válido:\n%s"
+42 "NPRINTER-4.02-42: No se puede localizar el nombre de la impresora host %s en el archivo PRTControl."
+43 "NPRINTER-4.02-43: No se pueden escribir los datos de la tarea de impresión."
+44 "NPRINTER-4.02-44: El identificador de impresora interna %ld no es válido."
+45 "NPRINTER-4.02-45: Petición no válida sin una tarea de impresión activa."
+46 "NPRINTER-4.02-46: Ninguna cola de host acepta tareas."
+47 "NPRINTER-4.02-47: El nombre de destino %s en PRTConfig no es válido."
+$
+$ Debug messages
+$
+60 "La dirección del servidor de impresión es %s"
+61 "Socket de PSERVER/NPRINTER: %04lX"
+62 "Se ha producido un error interno mientras se esperaba la entrada de PSERVER."
+63 "NPRINTER no pudo comunicar el estado a PSERVER."
+64 "No se pudo recibir el comando desde PSERVER."
+65 "Enviado comando NPRINTER erróneo desde PSERVER: %ld."
+66 "Estado de entrada de NPRINTER no válido: %ld."
+67 "Cambio del estado de entrada de NPRINTER no válido: %ld."
+68 "Tarea de impresión nuevo (expansión de tab: %ld)."
+69 "Tarea de impresión terminada (tamaño de la tarea: %ld)."
+70 "Tarea de impresión terminada por expiración de tiempo (tamaño de la tarea: %ld)."
+71 "Tarea de impresión terminada a causa de tarea nueva (tamaño de la tarea: %ld)."
+72 "Tarea de impresión abortada"
+73 "Tarea de impresión en pausa"
+74 "Tarea de impresión reactivada"
+75 "Tarea de impresión lateral"
+76 "Nuevo estado de impresora: %ld"
+
+$
+$  Errors on nwcm access
+$
+100 "NPRINTER-4.02-100: No se puede localizar el archivo de configuración de NPRINTER %s.\n"
+101 "NPRINTER-4.02-101: No se puede crear el directorio de configuración de NPRINTER %s.\n"
+$
+$ For stopnp.c
+$
+200 "NPRINTER-4.02-200: No se puede abrir el archivo de identificación de proceso de NPRINTER %s.\n"
+201 "NPRINTER-4.02-201: No se puede leer el archivo de identificación de proceso de NPRINTER %s.\n"
+202 "NPRINTER-4.02-202: No se puede parar NPRINTER.\n"
+
+$
+$ NPRINTER Helps and Parameter Descriptions
+$
+$set 4  MSG_NPRINT_DH_SET
+$
+$ Descriptions Messages
+$
+1 "Nombre del dispositivo de consola para mensajes NPRINTER"
+2 "Nombre del directorio de configuración de NPRINTER"
+3 "Nombre de archivo de control de la impresora local NPRINTER"
+4 "Nombre de archivo de control del servidor de impresión local NPRINTER"
+5 "Nombre de archivo de configuración de NPRINTER"
+$
+$ Help Messages
+$
+$
+$        Note to translators.  Any occurrence of the string \047 in the
+$ following text is a representation of a quote character,
+$ i.e., the four character sequence \047 is displayed as a quote character.
+$
+10 "Este parámetro especifica si se enviarán mensajes de consola y de error de NPRINTER.\n\nLongitud máxima: 127\nValor por defecto: \047\047"
+11 "Este parámetro especifica el nombre del directorio que contiene los archivos de configuración de NPRINTER.  \n\nLongitud máxima: 127\nValor por defecto: \047nprinter\047"
+12 "Este parámetro especifica el nombre del archivo de control de configuración de impresión local \n\nLongitud máxima: 127\nValor por defecto: \047PRTConfig\047"
+13 "Este parámetro especifica el nombre del archivo de control del servidor de impresión remoto."
+14 "Este parámetro especifica el nombre del archivo de configuración NPRINTER.\n\nLongitud máxima: 127\nValor por defecto: \047RPConfig\047"
+
+$ ************************* end of file *********************

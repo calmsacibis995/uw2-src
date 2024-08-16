@@ -1,0 +1,376 @@
+#ident\t"@(#)dthelp:Admin.Tools/NetWare_Access.hlp      1.13"
+^*version^1
+^*title^Accesso NetWare
+^:Accesso_NetWare
+^*width^70
+^+DesktopMgr/help.defs
+^?Accesso ad un server NetWare su un altro sistema UnixWare
+^0^Accesso NetWare
+^$10
+Accesso NetWare
+
+Usare l'accesso NetWare per connettersi ad un server NetWare
+su un altro sistema UnixWare.
+
+Con l'accesso NetWare è possibile fare quanto segue:
+
+\to\t\k(Login a un server NetWare^^Login ad un server NetWare)
+\to\t\k(Logout da un server NetWare^^Logout da un server netWare)
+\to\t\k(Cambiare la parola d'ordine su un server NetWare^^Modifica della parola d'ordine NetWare)
+\to\t\k(Salvare una lista di server^^Salvataggio di una lista di server NetWare)
+\to\t\k(Attivare il login ad accesso singolo per tutti gli utenti del sistema^^Abilitazione o disabilitazione di login singoli)
+\to\t\k(Disattivare l'accesso al login singolo per tutti gli utenti del sistema^^Abilitazione o disabilitazione di login singoli)
+
+\to\t\k(Imposta un server primario^^Impostazione di un server primario)
+\to\t\k(Salva una lista di server^^Salvataggio di una lista di server NetWare)
+\to\t\k(Mostra una lista di utenti su un server NetWare^^Visualizzazione degli utenti su un server NetWare)
+\to\t\k(Mostra una lista di volumi su un server NetWare^^Visualizzazione dei volumi su un server NetWare)
+\to\t\k(Mostra il proprio indirizzo di rete e di nodo^^Visualizzazione dell'indirizzo di rete e dell'indirizzo di nodo)
+
+Vedi anche:
+\s(Accesso a NetWare^dhelp "pe.it" userhb "Accesso" "" || helpLinkErr)
+\s(Impostazione e configurazione della connettività NetWare^dhelp "pe.it" ownerhb "Impostazione e configurazione della connettività NetWare" "" || helpLinkErr)
+
+^1^Login ad un server NetWare
+^$20
+Login ad un server NetWare
+
+Nota: Prima di accedere al server NetWare da un sistema UnixWare, si
+deve ottenere un login ed una parola d'ordine su quel server NetWare.
+
+Per eseguire il login ad un server NetWare da un sistema UnixWare,
+fare quanto segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Accesso a NetWare.
+  \tAppare la \k(finestra "Accesso a NetWare per <utente>"^^Finestra Accesso a NetWare per <utente>), che visualizza
+  \tuna lista di server NetWare che sono connessi o che
+  \tpotrebbero essere connessi al proprio sistema UnixWare.
+
+4.\tFare clic sull'icona che rappresenta il server a cui si vuole
+  \teseguire il login.
+
+5.\tFare clic su Login. Appare la finestra "Pannello di
+  \tautentificazione".
+
+6.\tConfigurare le seguenti opzioni:
+
+  \to\tDigitare il nome di login sul server NetWare.
+
+  \t \tVedi anche: \k(Login ad un server NetWare usando un altro <utente>)
+
+  \to\tImmettere la parola d'ordine per il login sul server NetWare.
+
+7.\tFare clic su Applica per eseguire il login e chiudere la
+  \tfinestra, o su Annulla se si decide di non volere più eseguire il
+  \tlogin al server.
+
+8.\tChiudere la finestra "Accesso a NetWare per <utente>" dopo
+  \taver effettuato il login al server NetWare.
+
+  \tNota: Se il server NetWare che si tenta di raggiungere è fermo
+  \to sconnesso, il Desktop visualizza un orologio che dopo 45
+  \tsecondi viene sostituito dal messaggio seguente: Impossibile
+  \tcollegarsi al server.
+
+   \tPer sapere perché il server è fermo o non connesso, rivolgersi
+   \tall' amministratore del sistema e riprovare.
+
+Vedi anche:
+\k(Accesso al server NetWare mediante un altro sistema UnixWare)
+\s(Impostazione e configurazione della connettività NetWare^dhelp "pe.it" ownerhb "Impostazione e configurazione della connettività NetWare" "" || helpLinkErr)
+
+
+^2^Finestra Accesso a NetWare per <utente>
+^$30
+Finestra Accesso a NetWare per <utente>
+
+Questa finestra visualizza i server NetWare a cui il proprio sistema
+UnixWare è o potrebbe essere connesso (<utente> viene sostituito dal
+proprio login).
+
+Per aggiornare la lista dei server, fare clic su Azioni=>Aggiorna
+server. Appare una lista aggiornata, in cui è possibile vedere se un
+server è fermo o in funzione da quando si è aperta l'ultima volta
+questa finestra.
+
+Vedi anche:
+\k(Login ad un server NetWare usando un altro <utente>)
+\k(Logout da un server netWare)
+\k(Modifica della parola d'ordine NetWare)
+\k(Salvataggio di una lista di server NetWare)
+
+^2^Finestra Pannello di autenticazione
+^$40
+Finestra Pannello di autenticazione
+
+Questa finestra appare quando si tenta di accedere ad un server
+NetWare remoto da Desktop UnixWare. Per potervi accedere, bisogna
+avere un login ed una parola d'ordine.
+
+Inserire il login e la parola d'ordine e fare clic su Applica.
+
+^2^Login ad un server NetWare usando un altro <utente>
+^$50
+Login ad un server NetWare usando un altro <utente>
+
+Nota: Prima di poter fare login su un server NetWare usando un
+altro utente bisogna avere il login e la parola d'ordine di
+quell'utente, oltre al premesso dell'utente che possiede quel conto.
+
+Per fare login su un server NetWare dal proprio sistema UnixWare
+usando un altro utente valido (diverso da sè stessi),
+procedere come segue dalla \k(finestra "Accesso a NetWare per <utente>"^^Finestra Accesso a NetWare per <utente>):
+
+1.\tFare clic su Azioni=>Nuovo utente. Appare la finestra "Scegli
+  \tutente".
+
+2.\tFare clic sull'utente desiderato nella lista degli
+  \tutenti validi del proprio sistema UnixWare.
+
+   \tNota: Se si vuole aggiungere un utente al sistema, vedere
+  \t\k(Aggiunta di un nuovo utente^dtadmin/user.hlp^Aggiunta di un nuovo utente).
+
+3.\tDigitare la parola d'ordine di login per quell'utente.
+
+4.\tFare clic su Annulla per chiudere la finestra della parola
+  \td'ordine.
+
+5.\tFare clic su Annulla per chiudere la finestra "Scegli utente".
+
+6.\tAndare a \k(Login ad un server NetWare).
+
+
+^2^Finestra Scegli utente
+^$60
+Finestra Scegli utente
+
+Questa finestra contiene una lista di utenti validi sul server
+UnixWare.
+
+Vedere \k(Login ad un server NetWare usando un altro <utente>) per
+maggiori informazioni su questa finestra.
+
+^2^Accesso al server NetWare mediante un altro sistema UnixWare
+^$70
+Accesso al server NetWare mediante un altro sistema UnixWare
+
+Per accedere al server NetWare dal proprio sistema attraverso un altro
+Application Server o Personal Edition, fare quanto segue dopo la
+connessione al sistema UnixWare remoto:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Accesso_a _NetWare nella cartella Rete.
+  \tAppare la \k(finestra "Accesso a NetWare per <utente>"^^Finestra Accesso a NetWare per <utente>) appears.
+
+4.\tEseguire il login al server NetWare desiderato (come descritto in
+  \t\k(Login ad un server NetWare)).
+
+Nota: Se si accede a distanza a un Personal Edition o Application
+Server (ad esempio, mediante telnet o un altro metodo non grafico) per
+avere accesso al file server NetWare, si deve prima \k(autentificare^^Finestra Pannello di autenticazione) il
+Personal Edition o l'Application Server sul server NetWare.
+
+
+^1^Logout da un server netWare
+^$80
+Logout da un server netWare
+
+Per fare logout da uno o più server NetWare, procedere come segue nella 
+\k(finestra "Accesso a NetWare per <utente>"^^Finestra Accesso a NetWare per <utente>):
+
+1.\tFare clic sui server da cui si vuole eseguire il logout.
+
+2.\tFare clic su Logout. Ora si è scollegati dai server NetWare
+  \tspecificati, e il proprio utente scompare dalla colonna Autenticato come
+  \tdella finestra "Accesso a NetWare per <utente>".
+
+^1^Modifica della parola d'ordine NetWare
+^$90
+Modifica della parola d'ordine NetWare
+
+Per cambiare la propria parola d'ordine NetWare, procedere come segue
+nella finestra \k("Accesso a NetWare per <utente>"^^Finestra Accesso a NetWare per <utente>):
+
+1.\tFare clic sul server NetWare per cui si desidera cambiare la
+  \tparola d'ordine.
+
+2.\tFare clic su Parola d'ordine. Appare la finestra "Modifica parola
+  \td'ordine".
+
+3.\tDigitare la vecchia (corrente) parola d'ordine e fare clic su
+  \tApplica.
+
+4.\tDigitare la nuova parola d'ordine e fare clic su Applica. Appare
+  \tun'altra finestra in cui viene chiesto di reinserire la parola
+  \td'ordine.
+
+5.\tReinserire la nuova parola d'ordine e fare clic su Applica. La
+  \tfinestra si chiude. Usare la nuova parola d'ordine al login
+  \tsuccessivo al server.
+
+^1^Salvataggio di una lista di server NetWare
+^$100
+Salvataggio di una lista di server NetWare
+
+Può essere opportuno salvare una lista di server in modo che la prossima
+volta che si fa login appaiano solo i server selezionati. Per salvare
+una lista di server, procedere come segue nella
+\k(finestra "Accesso a NetWare per <utente>"^^Finestra Accesso a NetWare per <utente>):
+
+1.\tFare clic sui server che si desidera salvare nella lista.
+
+2.\tFare clic su Seleziona.
+
+3.\tFare clic su Azioni=>Salva selezione. Il sistema salva i server
+  \tselezionati in una lista. Quando si rifà doppio-clic su
+  \tAccesso_NetWare appariranno solo i server selezionati.
+
+  \tNota: Per visualizzare tutti i server, fare clic su Azioni=>Mostra
+  \ttutti.
+
+^1^Abilitazione o disabilitazione di login singoli
+^$105
+Abilitazione o disabilitazione di login singoli
+
+Perché gli utenti possano abilitare e disabilitare i login singoli,
+bisogna avere attivato "Abilita login singoli a NetWare" in
+\k(Configurazione NetWare^NetWare_Setup/NetWare_Setup.hlp^Configurazione NetWare).
+
+Se la propria ID di login e la propria parola d'ordine sono
+sincronizzate tra il proprio sistema UnixWare e un server NetWare,
+Login singolo fa il login "silenzioso" a qualsiasi server. In altre
+parole, consente il login a un server NetWare senza fornire la propria
+ID di login e la parola d'ordine, purché queste siano le stesse nel
+proprio sistema UnixWare e nel server NetWare a cui si sta tentando di
+connettersi. Per default, Login singolo è abilitato per tutti gli
+utenti.
+
+Per abilitare e disabilitare l'accesso con login singolo, procedere
+come segue:
+
+Nota: Se ci si trova già nella cartella Admin Tools, passare al Punto 2.
+Se ci si trova già nella cartella Rete, passare al Punto 3.
+
+1.  \d(Doppio clic^doppio clic) su Strumenti_Ammin nella
+    \k(finestra "UnixWare Desktop" ^DesktopMgr/desktop.hlp^Introduzione al Desktop UnixWare). Appare la finestra "Cartella:
+    Strumenti_Ammin.".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare clic su una delle voci seguenti:
+
+  \to\tAzioni=Abilita Login singolo (pone Login singolo a Sì).
+  \to\tAzioni=Disabilita Login singolo (pone Login singolo a No).
+
+^1^Impostazione di un server primario
+^$107
+Impostazione di un server primario
+
+Normalmente, gli utenti vedono una lista di server collegati al server
+più vicino. Impostando un server primario, si consente agli utenti di
+vedere un'ulteriore lista di server NetWare (visibili da questo server
+primario) che altrimenti non sarebbero visibili dal server più vicino.
+
+Per impostare un server primario, procedere come
+segue nella \k(finestra Accesso a NetWare per <utente>^^Finestra Accesso a NetWare per <utente>):
+
+1.\tFare clic su Azione=>Imposta server primario. Appare la finestra
+  \t"Imposta server primario" con il seguente campo:
+
+  \tServer primario: - Immettere il nome del server desiderato.
+
+2.\tFare clic su Applica.
+
+3.\tFare clic su Azione=>Aggiorna. Il sistema aggiorna la lista dei
+  \tserver, che ora comprende anche i server visibili dal server
+  \tprimario appena specificato.
+
+
+^1^Visualizzazione degli utenti su un server NetWare
+^$110
+Visualizzazione degli utenti su un server NetWare
+
+Per visualizzare una lista di utenti su un server NetWare, fare quanto
+segue:
+
+1.\tEseguire il login ad un server NetWare come descritto in
+\t \k(Login ad un server NetWare).
+
+2.\tFare clic su Lista utenti nella \k(finestra "Accesso a NetWare per <utente>"^^Finestra Accesso a NetWare per <utente>).
+
+  \tAppare una finestra a comparsa con le seguenti informazioni su
+  \togni utente sul server:
+
+  \to\tID di connessione NetWare
+
+  \to\tNome utente
+
+  \to\tOra di login al server NetWare
+
+3.\tFare clic su Annulla per chiudere questa finestra.
+
+^1^Visualizzazione dei volumi su un server NetWare
+^$120
+Visualizzazione dei volumi su un server NetWare
+
+Per visualizzare una lista di volumi sul server NetWare, fare quanto
+segue:
+
+1.\tEseguire il login ad un server NetWare come descritto in
+\t \k(Login ad un server NetWare).
+
+2.\tFare clic su Lista volumi nella \k(finestra "Accesso a NetWare per <utente>"^^Finestra Accesso a NetWare per <utente>).
+
+  \tAppare una finestra a comparsa contenente le informazioni seguenti su
+  \togni volume a cui si ha accesso sul server NetWare:
+
+  \to\tNome del volume
+
+  \to\tSpazio disco totale sul volume
+
+  \to\tSpazio disco disponibile sul volume
+
+  \to\tNumero totale delle directory sul volume
+
+  \to\tDirectory disponibili sul volume
+
+^1^Visualizzazione dell'indirizzo di rete e dell'indirizzo di nodo
+^$130
+Visualizzazione dell'indirizzo di rete e dell'indirizzo di nodo
+
+La finestra "Accesso alla rete" visualizza per default i nomi dei
+server nella colonna File Server ed i nomi degli utenti nella colonna
+Autentificato come.
+
+È possibile cambiare la visualizzazione perché comprenda il proprio
+indirizzo di rete e di nodo procedendo come segue nella
+\k(finestra "Accesso a NetWare per <utente>"^^Finestra Accesso a NetWare per <utente>):
+
+1.\tFare clic su Mostra=>Formato=>Lungo. Il sistema visualizza ogni
+  \tindirizzo del server ed il nome del file server e dell'utente
+  \tautentificato.
+
+2.\tFare clic su Visualizza=>Formato=>Breve per tornare alla
+  \tvisualizzazione di default.
+
+

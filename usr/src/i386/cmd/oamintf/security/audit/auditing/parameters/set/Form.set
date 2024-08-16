@@ -1,0 +1,170 @@
+#ident	"@(#)oamintf:i386/cmd/oamintf/security/audit/auditing/parameters/set/Form.set	1.2"
+#ident  "$Header: Form.set 2.0 91/07/12 $"
+#	Module Name: Form.set
+form="Set Event Log Parameters"
+
+framemsg=`readfile $INTFBASE/form.msg`
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+close=`rm -f $SLOGERR`
+
+`unset -l ASTATUS -l VHIGH -l PPATH -l PNODE -l MAXSIZE -l ONFULL`;
+`"$TFADMIN" auditlog|set -l AUDITLOG`
+`echo "$AUDITLOG" | fmlgrep "Current Status" | sed 's/^Current.*:	*//;s/ //g' | set -l ASTATUS`
+
+`echo "$AUDITLOG" | fmlgrep "Current Audit" | sed 's/^Current.*:		//;s/ bytes//' | set -l VHIGH`
+
+`echo "$AUDITLOG" | fmlgrep "Current Event" | sed 's/^Current.*:				//g;s/\/MMDD.*//' | set -l PPATH`
+
+`echo "$AUDITLOG" | fmlgrep "Current Event" | sed 's/^Current.*:				//;s/.*MMDD\#\#\#//' | set -l PNODE`
+
+`echo "$AUDITLOG" | fmlgrep "Current Maximum" | sed 's/^Current.*:		//;s/ blocks//' | set -l MAXSIZE`
+
+`echo "$AUDITLOG" | fmlgrep "Action To Be Taken Upon Full" | sed 's/^Action.*disabled/disable/' | sed 's/^Action.*shutdown/shutdown/' | sed 's/^Action.*switch/switch/' | set -l ONFULL`
+
+done=`set -l SLOGERR=/tmp/$VPID.seterr;
+	getfrm |set -l FRAMEID;
+	unset -l SLOGARGS;
+	if [ -n "$F1" ];
+	then
+		set -l SLOGARGS="-v $F1";
+	fi;
+	if [ -n "$F2" -a "$ASTATUS" = "OFF" ];
+	then
+		 set -l SLOGARGS="$SLOGARGS -P $F2";
+	fi;
+	if [ -n "$F3" -a "$ASTATUS" = "OFF" ];
+	then
+		 set -l SLOGARGS="$SLOGARGS -p $F3";
+	fi;
+	if [ -n "$F4" ];
+	then
+		if [ "$F4" = "none" ];
+		then
+			set -l F4="0";
+		fi;
+		set -l SLOGARGS="$SLOGARGS -x $F4";
+	fi;
+	if [ "$F5" = "shutdown" ];
+	then
+		set -l SLOGARGS="$SLOGARGS -s";
+	elif [ "$F5" = "disable" ];
+	then
+		set -l SLOGARGS="$SLOGARGS -d";
+	fi;
+	if [ "$F5" = "switch" ];
+	then
+		set -l CMD="OPEN FORM $OBJ_DIR/Form.log";
+	else
+		message -f "Setting event log parameters.";
+	
+		shell "$TFADMIN auditlog $SLOGARGS" >/dev/null 2>$SLOGERR;
+		if [ $RET -ne 0 ];
+		then
+			set -l CMD="OPEN TEXT $OBJ_DIR/Text.setnok";
+		elif [ -s "$SLOGERR" ];
+		then
+			set -l CMD="OPEN TEXT $OBJ_DIR/Text.setwok";
+		else
+			set -l CMD="OPEN TEXT $OBJ_DIR/Text.setok";
+		fi;
+fi`$CMD
+
+#F1
+name=Audit buffer high water mark:
+lininfo=Form.set:watermark
+nrow=1
+ncol=3
+frow=1
+fcol=33
+rows=1
+columns=11
+`cat /etc/conf/mtune.d/audit | grep "^ADT_BSIZE" | cut -f4|sed 's/^ //'|set -l TOPVAL`
+value="$VHIGH"
+valid=`if [ -n "$F1" ];
+	then
+ 		regex -v "$F1" '^[0-9]+$' && test "$F1" -ge 0 -a "$F1" -le "$TOPVAL";
+	else
+		echo TRUE;
+	fi`
+
+invalidmsg= const "Error - Must enter an integer value between 0 and $TOPVAL, inclusive."
+fieldmsg= const "Enter an integer value between 0 and $TOPVAL, inclusive."
+
+#F2
+name=Event log path to be used:
+lininfo=Form.set:eventlog
+nrow=2
+ncol=3
+frow=2
+fcol=31
+rows=1
+columns=30
+scroll=TRUE
+value="$PPATH"
+invalidmsg= const "Error - Enter a full pathname to a directory or character special device."
+fieldmsg= const "Enter a full pathname to a directory or character special device."
+
+#F3
+name=String to append to defined log file:
+lininfo=Form.set:logstring
+nrow=3
+ncol=3
+frow=3
+fcol=41
+rows=1
+columns=7
+value=`if [ "$ASTATUS" = "OFF" ];
+	then
+		echo "$PNODE";
+	else
+		echo "";
+	fi`
+valid=`if [ -n "$F3" ];
+	then
+		if [ "$ASTATUS" = "OFF" ];
+		then
+			valstr -r '[!/;-9;-z]\{0,7\}$' "$F3"; 
+		else
+			echo FALSE;
+		fi;
+	else
+		echo TRUE;
+	fi`
+invalidmsg= const "Error - More than 7 characters or '/' in string or auditing enabled."
+fieldmsg= const "Specify a string to be appended to the event log file."
+
+#F4
+name=Maximum block size of event log:
+lininfo=Form.set:blocksize
+nrow=4
+ncol=3
+frow=4
+fcol=36
+rows=1
+columns=10
+`expr "$TOPVAL" / 512 | set -l XVAL`
+value="$MAXSIZE"
+valid=`if [ -n "$F4" ];
+	then
+		regex -v "$F4" '^[0-9]+$' && test "$F4" -ge "$XVAL" || test "$F4" = "0" || test "$F4" = "none";
+	else
+		echo TRUE;
+	fi`
+invalidmsg= const "Error - Must enter 0 or an integer value greater than or equal to $XVAL."
+fieldmsg= const "Enter \"none\", \"0\" or an integer value greater than or equal to $XVAL."
+
+#F5
+name=Action to be taken when event log becomes full:
+lininfo=Form.set:fullaction
+nrow=5
+ncol=3
+frow=5
+fcol=51
+rows=1
+columns=10
+value="$ONFULL"
+rmenu={ shutdown disable switch }
+menuonly=TRUE
+invalidmsg= const "Error - Must enter shutdown, disable, or switch."
+fieldmsg= const "Enter shutdown, disable, or switch."

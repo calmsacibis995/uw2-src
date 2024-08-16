@@ -1,0 +1,93 @@
+#ident	"@(#)mach64:mach64/devices/turbopro/makefile.stdenv	1.3"
+
+#	NAME
+#
+#		makefile : Make file.
+#
+#	SYNOPSIS
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	AUTHORS
+#
+#
+#	HISTORY
+#
+
+#
+# special files.
+#
+..source: 	apt_msg.h
+..source:	turboPro.dat
+..special:	apt_init${LOGNAME}_g.so
+
+#	AM directives.
+
+
+c_files = apt_init.c  
+o_files = ../../stdenv.o
+
+m_files = debug.m 
+
+cpp_options = -I../..
+
+# 	What are we building?
+
+..made_debug:	apt_init${LOGNAME}_g.so
+..made_optimized: apt_init${LOGNAME}_O.so
+..made_profiled: apt_init.a
+
+_cc_options_ = $(shell directory_to_make_option cc)
+_ld_options_ = $(shell directory_to_make_option ld) ../../libm64.so
+_as_options_ = $(shell directory_to_make_option as)
+_ar_options_ = $(shell directory_to_make_option ar)
+
+..made: $(shell directory_to_make_option made)
+
+#	Standard make include file.
+
+include ${std_make_include_file}
+
+__cc_options__ = -DLIBRARY_NAME=\"TURBOPROINIT\" -DCHIPSET_NAME=\"MACH64\"\
+	-DLIBRARY_VERSION="\"0.0\""
+
+# 	Munch rules.
+$(munch_c_files) : $(non_munch_o_files)
+
+debug.c : debug.m $(non_munch_o_files)
+	$(munch) -d -i '^.*_debug$$' -f apt_init_debug_control $(non_munch_o_files) > $(@)
+
+apt_init${LOGNAME}_g.so: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ld) $(LD_OPTIONS) -o $@ $(o_files) $(as_o_files)
+
+apt_init${LOGNAME}_O.so: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ld) $(LD_OPTIONS) -o $@ $(o_files) $(as_o_files)
+
+apt_init.a: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ar) $(AR_OPTIONS) $@ $(o_files) $(as_o_files)
+
+##$(am)
+
+apt_init.o : apt_init.c ../../stdenv.h ../../messages.h ../../defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m64_state.h ../../m64_opt.h ../../global.h ../../m64_regs.h ../../g_regs.h ../../m64.h apt_msg.h
+debug.o : debug.c
+apt_init.d : apt_init.c ../../stdenv.h ../../messages.h ../../defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m64_state.h ../../m64_opt.h ../../global.h ../../m64_regs.h ../../g_regs.h ../../m64.h apt_msg.h
+debug.d : debug.c
+apt_init.ln : apt_init.c ../../stdenv.h ../../messages.h ../../defaults.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m64_state.h ../../m64_opt.h ../../global.h ../../m64_regs.h ../../g_regs.h ../../m64.h apt_msg.h
+debug.ln : debug.c
+
+##$(am)

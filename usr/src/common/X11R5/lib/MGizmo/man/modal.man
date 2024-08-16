@@ -1,0 +1,123 @@
+'\"ident        "@(#)MGizmo:man/modal.man	1.1"
+.TH ModalGizmo 3L
+.SH NAME
+\f(CBModalGizmo\f1 \- an abstract data type (ADT) that specifies the contents
+and the creation of a modal popup window.
+The \f(CBModalGizmo\fP consists of a data
+structure and a set of functions that operate on this data structure.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/ModalGizmo.h>
+
+Widget  GetModalGizmoShell(Gizmo \fIg\fP);
+Widget  GetModalGizmoDialogBox(Gizmo \fIg\fP);
+void    SetModalGizmoMessage(Gizmo \fIg\fP, char *\fImessage\fP);
+.ft
+.fi
+.SH "DESCRIPTION"
+A \f(CBModalGizmo\fP is created by populating a \f(CBModalGizmo\fP data
+structure and calling \f(CBCreateGizmo(3L)\fP.
+The \f(CBGizmoRec\fP that can be provided in the \f(CBModalGizmo\fP data
+structure is used to specify the contents of the modal window.
+Minimally, a modal window will have a title at the top of the window
+and a command menu at the bottom of the window.
+Optionally, the window can also contain any number of Gizmos in its working
+area.
+.PP
+There are six types of modal Gizmos that can be created.
+They are: \fBError\fP, \fBInformation\fP, \fBMessage\fP, \fBQuestion\fP,
+\fBWarning\fP, and \fBWorking\fP.
+The type of modal is defined by setting \fItype\fP in the \f(CBModalGizmo\fP
+data structure to one of the following:
+.PP
+.nf
+.ft CB
+        XmDIALOG_ERROR,
+        XmDIALOG_INFORMATION,
+        XmDIALOG_MESSAGE,
+        XmDIALOG_QUESTION,
+        XmDIALOG_WARNING, or
+        XmDIALOG_WORKING.
+.fi
+.ft
+.PP
+The following is the definition if the \f(CBModalGizmo\fP data structure:
+.nf
+.ft CB
+
+typedef struct _ModalGizmo {
+        HelpInfo *  help;       /* Help information */
+        char *      name;       /* Name of the shell */
+        char *      title;      /* Title of the window */
+        MenuGizmo * menu;       /* Pointer to menu info */
+        char *      message;    /* Message for stext (Notice case) */
+        GizmoArray  gizmos;     /* Gizmos for the upper area */
+        int         numGizmos;  /* Number of Gizmos */
+        int         style;      /* XmNdialogStyle */
+        int         type;       /* XmNdialogType */
+} ModalGizmo;
+.fi
+.PP
+\f(CBSetModalGizmoMessage\fP sets the message being displayed to
+\fImessage\fP.
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBModalGizmo\fP:
+.IP \fBGetGizmoWidget\fP 28
+Returns the shell widget id for the \f(CBModalGizmo\fP.
+.IP \fBGetGizmoGizmo\fP 28
+Returns the handle to the \f(CBModalGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 28
+Undefined.
+.IP \fBGetGizmoPreviousValue\fP 28
+Undefined.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the message box widget.
+If no match is found and the \f(CBModalGizmo\fP has a
+\f(CBGizmoArray\fP then the array is queried for the named Gizmo.
+.PP
+\f(CBGetModalGizmoShell\fP returns the shell widget id for \fIg\fP.
+.PP
+\f(CBGetModalGizmoDialogBox\fP returns the message box widget id for \fIg\fP.
+This is the widget displaying the message within the shell.
+.SH "USAGE"
+.PP
+.nf
+.ft CB
+static MenuItems        menuItems[] = {
+        {True, "Okay",   "O",  I_PUSH_BUTTON, NULL, NULL, False},
+        {True, "Cancel", "C",  I_PUSH_BUTTON, NULL, NULL, False},
+        {True, "Help",   "H",  I_PUSH_BUTTON, NULL, NULL, False},
+        {NULL, NULL}
+};
+
+extern void     menuCB();
+
+static MenuGizmo        menu = {
+        NULL, "modalMenu", NULL, menuItems, menuCB, NULL, XmVERTICAL, 1, 0
+};
+
+extern GizmoArray        gizmoArray;
+
+ModalGizmo modal = {
+        NULL, "modal", "Modal Window", menu, "File does not exist",
+        gizmoArray, 5, XmDIALOG_FULL_APPLICATION_MODAL, XmDIALOG_ERROR
+};
+
+main ()
+{
+        Gizmo      handle;
+
+        handle = CreateGizmo(toplevel, ModalGizmoClass, &modal, NULL, 0);
+}
+.ft
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP,
+MenuGizmo\f(CW(3L)\fP
+.ft

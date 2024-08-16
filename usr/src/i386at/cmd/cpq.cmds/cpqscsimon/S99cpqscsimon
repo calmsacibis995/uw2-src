@@ -1,0 +1,152 @@
+: /bin/sh script
+#ident	"@(#)cpq.cmds:cpqscsimon/S99cpqscsimon	1.2"
+########################################################
+# Copyright 1993, Compaq Computer Corporation
+########################################################
+#
+# Title   : $RCSfile: cpqscsimon,v $
+#
+# Version : $Revision: 1.6 $
+#
+# Date    : $Date: 1993/08/26 21:10:40 $
+#
+########################################################
+#
+#    This is the start and stop script for the
+#	Compaq Fast-SCSI-2 Monitor
+#
+#    It normally lives in /etc and is also linked to
+#	/etc/rc0.d and /etc/rc2.d so that it is executed
+#	to start as the system enters multiuser mode
+#	and executed to stop at shutdown time.
+#
+########################################################
+
+# kill_agent
+
+# Attempts to kill the agent using one of three possible methods:
+
+# 1) Gets the pid via a ps on the current kernel . . . or
+# 2) Gets the pid via a ps on the previous kernel . . . or
+# 3) Gets the pid from a file created by this script . . . or
+# 4) Does nothing
+
+kill_agent()
+{
+    # Find other agent processes (even with long names) pid in col 2
+    pid=`/bin/su root -c "/bin/ps -ef 2>/dev/null |
+	sed -n -e '/ start/d' -e '/ stop/d' \
+	    -e '/[ /]$agent /s/^[ ]*[^ ][^ ]*[ ]*\([^ ]*\).*/\1/p'"`
+    [ "$pid" ] ||
+    {
+	# Found nothing so try again as above using /unix.old kernel
+	pid=`/bin/su root -c "/bin/ps -enf /unix.old 2>/dev/null |
+	    sed -n -e '/ start/d' -e '/ stop/d' \
+		-e '/[ /]$agent /s/^[ ]*[^ ][^ ]*[ ]*\([^ ]*\).*/\1/p'"`
+        [ "$pid" ] ||
+	{
+	    # Still found nothing maybe neither kernel is the right one
+	    # Use saved process id from the last start
+	    [ -f /tmp/.${agent}Pid -a ! "$Sprefix" ] &&
+		pid=`cat /tmp/.${agent}Pid` || :
+	}
+    }
+
+    # If there's something to kill, does it.
+
+    [ "$pid" ] &&
+    {
+        echo "Stopping the $agent_name \c"
+        kill -15 $pid 2>/dev/null && {
+	    # give agent a chance to clean up before returning
+	    for i in 1 2 3 4 5;do
+	        [ -d $check_dir ] && sleep 3
+		echo ".\c"
+	    done
+	    [ ! -d $check_dir ] && echo " Stopped." || echo " Stop Failed."
+        }  || echo " ... Already Stopped."
+	# The process is stopped, remove the process id file.
+	rm -f /tmp/.${agent}Pid 2>/dev/null
+        return 0
+    } || :
+    return 1
+}
+
+# main
+
+agent=`expr "\`basename $0\`" : "[KS0-9]*\([a-zA-Z]*\)"`
+Sprefix=`expr "\`basename $0\`" : "\([S0-9]*\)[a-zA-Z]*"`
+cpq_base="/usr/bin/compaq"
+log_dir="${cpq_base}"
+log="${log_dir}/agenterrs.log"
+agent_dir=$cpq_base/diags/cpqscsi
+check_dir=$cpq_base/registry/scsi
+share_dir=$cpq_base/registry/stsys
+other_dir=$cpq_base/registry/ida
+agent_name="Compaq Fast-SCSI-2 Monitor"
+default_poll=30
+min_poll=5
+
+# Forces at least the start/stop argument.
+
+[ "$1" ] ||
+{
+    echo "$agent: usage: $0 {start,stop} [poll period (seconds)]"
+    exit 0
+}
+
+# Poll time in seconds is optional.
+
+[ "$2" ] &&
+{
+    # Forces the minimum poll time if the one specified is less than
+    # the minimum.
+
+    [ $2 -gt $min_poll ] && poll_time=$2 || poll_time=$min_poll
+} || poll_time=$default_poll
+
+
+case $1 in
+
+    start)
+
+	# This assumes that when someone issues agent start, they mean it.
+	# It kills the agent if it's running and starts a new one.
+	# This is the equivalent of agent stop and agent start, issued
+	# back-to-back.
+
+	kill_agent
+
+	echo "Starting the $agent_name \c"
+	# Ensure the full path for the $log file is present.
+	[ ! -d $log_dir ] && mkdir $log_dir
+	# Clean up private directory if left by skipping shutdown.
+	[ -d $check_dir ] && rm -rf $check_dir
+	# Clean up shared directory if other agent has cleaned up.
+	[ -d $share_dir -a ! -d $other_dir ] && rm -rf $share_dir
+	cd ${agent_dir}
+	# -i Ignore shutdown of cpqsmuxd
+	# -t OK (NOT_OK) to forward alarm traps via cpqsmuxd to SNMP
+	# -s OK (NOT_OK) to permit poll time to be set via SNMP
+	# -p seconds between polls to the drivers for current state
+	./$agent -i -t OK -s OK -p $poll_time 1>>$log 2>&1 &
+	pid=$!
+	echo $pid >/tmp/.${agent}Pid
+	# Wait for agent to create its directory.
+	for i in 1 2 3 4 5; do
+		[ ! -d $check_dir ] && sleep 3
+		echo ".\c"
+	done
+	# If no directory yet, report failure.
+	[ -d $check_dir ] && echo " Started." || echo " Start Failed."
+	;;
+
+    stop)
+	kill_agent || echo "$agent_name not running."
+	;;
+
+    *)
+	echo "Usage: $0 [ start | stop ]"
+	exit 1
+	;;
+esac

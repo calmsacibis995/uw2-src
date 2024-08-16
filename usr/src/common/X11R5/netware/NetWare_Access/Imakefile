@@ -1,0 +1,92 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994, 1995 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)nwaccess:Imakefile	1.13"
+#ident  "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/NetWare_Access/Imakefile,v 1.19.4.1 1994/12/16 18:24:36 renuka Exp $"
+
+/**/#	Copyright (c) 1990, 1991, 1992 UNIX System Laboratories, Inc.
+/**/#	Copyright (c) 1988, 1989, 1990 AT&T
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+/**/#	UNIX System Laboratories, Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ifdef Release5
+#include <sv4Lib.tmpl>
+#endif
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+XLIBDIR     =  $(ROOT)/$(MACH)/usr/X/lib
+
+         SRCS = \
+		main.c \
+		scrolled.c\ 
+		misc.c \
+		nwslist.c\ 
+		nwlogout.c\ 
+		ulist.c \
+		nwlogin.c\ 
+		nwvolumes.c\ 
+		nwchgpwd.c \
+		newuser.c \
+		setprim.c \
+		update.c
+         OBJS = \
+		main.o \
+		scrolled.o \
+		misc.o \
+		nwslist.o \
+		nwlogout.o \
+		nwlogin.o \
+		ulist.o \
+		nwvolumes.o \
+		nwchgpwd.o \
+		newuser.o \
+		setprim.o \
+		update.o
+         HDRS = \
+		main.h \
+		scroll.h
+         PROGS  = NetWare_Access 
+
+   DTCLIENTSLIB = $(USLCLIENTSRC)/libDtI
+       DTLIBSRC = $(LIBSRC)/Dt
+      DTILIBSRC = $(DTCLIENTSLIB)
+         DTILIB = $(DTILIBSRC)/libDtI.so
+          DTLIB = $(DTLIBSRC)/libDt.so
+
+       INCLUDES = -DN_PLAT_UNIX -I../../../head -I$(INC)/inc -I$(INC)/nw -I$(LIBSRC) -I$(DTILIBSRC) -I$(USLCLIENTSRC) 
+        DEPLIBS = $(DTILIB) $(DTLIB)  XolClientDepLibs
+LOCAL_LIBRARIES = $(DTILIB) $(DTLIB)  XolClientLibs 
+
+#SYS_LIBRARIES = -lnct -liaf -lNwCal -lNwLoc -lNwClnt -lNwNcp -lgen -lm -lnwutil -lthread
+  SYS_LIBRARIES = -lnct -liaf -lNwClnt -lNwCal -lNwLoc \
+		-lNwNcp -lNwClnt -lNwNcp -lnwutil -lsl -lthread -lgen 
+
+  CC = LD_RUN_PATH=/usr/X/lib $(PFX)cc
+
+ComplexProgramTarget(NetWare_Access)
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 0755)
+InstallNonExecFile(xnetware.icon, $(XLIBDIR)/pixmaps )
+InstallAppDefaults(NetWare_Access)
+
+InstallMsgCatalog(xnetware)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()

@@ -1,0 +1,27 @@
+#!/sbin/sh
+
+#ident	"@(#)ktool:common/ktool/idtools/idtarg/idreboot	1.4"
+#ident	"$Header:"
+#
+# Reboot script for installable drivers. Forces the user to
+# reboot in a consistent manner.
+#
+
+umask 022
+
+LABEL=UX:idreboot
+CATALOG=uxidtools
+
+sync
+message -cu `gettxt $CATALOG:190 "To complete the install/remove process a shutdown is being initiated\nautomatically.  If you have other packages to install/remove you may\ncancel this shutdown and wait to perform a shutdown until you have\nfinished with all your packages.\n"`
+
+if  [ "$?" = "0" ]
+then
+	message -t `gettxt $CATALOG:191 "Make sure your floppy drive is empty.\nIf you are installing or removing controller boards, you\nmay power down the system after the shutdown has completed.\n"`
+
+	cd /
+	/etc/shutdown -g0 -y
+	exec sleep 100
+else
+	message -d `gettxt $CATALOG:192 "When all package install/remove operations are completed,\nyou should shutdown as soon as possible to include the changes in the UNIX\nOperating System kernel.\n"`
+fi

@@ -1,0 +1,57 @@
+.pageno
+Página %d de %d
+.ul
+Instalación del sistema UNIX
+.hhelp_ban
+Instrucciones
+.helpbanner
+Ayuda: Eliminar paquete
+.ur
+Eliminar paquete
+.ll
+.lr
+F1=Ayuda
+.top
+`[ "$ALL_NEW" ] &&  echo "ADVERTENCIA: Hay instaladas versiones más recientes de todos los paquetes."`
+`[ "$ALL_NEW" ] ||  echo "ADVERTENCIA: Hay instaladas versiones más recientes de algunos paquetes."`
+
+`[ "$ALL_NEW" ] &&  echo "Las versiones más recientes de todos los paquetes seleccionados en el conjunto\n'${SETINST}' están instalados en el computador.  Está instalando versiones\nmás antiguas de estos paquetes.\nPulse la tecla 'F1' (o '?')  para ver\nuna lista de los paquetes cuyas versiones más recientes ya estén instaladas."`
+`[ "$ALL_NEW" ] ||  echo "Las versiones más recientes de algunos paquetes seleccionados en el conjunto \n'${SETINST}' están instaladas en computador.  Está instalando versiones más \nantiguas de estos paquetes.  Pulse la tecla 'F1' (o '?') para ver una \nlista de los paquetes cuyas nuevas versiones ya están instaladas."`
+
+Antes de poder instalar una versió más antigua de un paquete, deberá
+eliminar la versión más reciente.  Es conveniente guardar la
+configuración de los archivos de configuración antes de eliminar el
+(los) paquete(s) más reciente(s).
+
+El (los) paquete(s) no se instalará(n) en esta ocasión.
+`[ "$ALL_NEW" ] &&  echo "La instalación de este conjunto se terminará en este momento."`
+Véase la documentación para obtener más información.
+.form
+ENTER
+.selection
+Pulse <Intro> para continuar.
+.help
+Para obtener instrucciones detalladas, pulse <F1> (o '?') en cualquier
+momento.
+
+`[ "$ALL_NEW" ] || echo "Versiones más recientes de algunos paquetes del conjunto '${SETINST}' están"`
+`[ "$ALL_NEW" ] && echo "Versiones más recientes de todos los paquetes del conjunto '${SETINST}' están"`
+ya instaladas en el computador.  Estos paquetes incluyen:
+
+`cat $PKG_RM`
+
+Estos paquetes no se pueden sobreescribir, y es necesario eliminarlos
+antes de poder instalar la versión anterior
+
+Es importante que los paquetes más recientes se eliminen antes de
+instalar los paquetes más antiguos.  Es conveniente guardar los archivos
+de configuración antes de eliminar los paquetes más recientes.
+
+Véase la documentación para obtener más información.
+.helpinst
+ESC=Salir de Ayuda  F1=Instrucciones  1=AvPág  2=RePág
+.hhelpinst
+ESC=Salir de instrucciones  1=AvPág  2=RePág
+.working
+Operando...
+.end

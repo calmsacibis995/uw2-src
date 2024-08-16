@@ -1,0 +1,249 @@
+#ident\t"@(#)dthelp:Admin.Tools/printuse.hlp    1.12"
+^*version^1
+^*title^Stampante
+^:Stampante
+^*width^70
+^+DesktopMgr/help.defs
+^?Invio, controllo, cancellazione e modifica di richieste di stampa.
+^0^Uso della stampante
+^$10
+Uso della stampante
+
+Prima di poter inviare richieste di stampa a una stampante locale o
+remota, occorre configurare la stampante. Per informazioni dettagliate
+sulla configurazione delle stampanti, vedi \k(Configurazione stampante^dtadmin/Printer_Setup.hlp^Configurazione stampante).
+
+Dopo aver configurato una stampante si può fare quanto segue:
+
+\to\t\k(Stampare un file^^Stampa di un file)
+\to\t\k(Visualizzare le richieste di stampa^^Visualizzazione delle richiesta di stampa)
+\to\t\k(Mostrare le proprietà di una richiesta di stampa^^Visualizzazione delle proprietà di una richiesta di stampa)
+\to\t\k(Cambiare le proprietà di una richiesta di stampa^^Modifica delle proprietà di una richiesta di stampa)
+\to\t\k(Cancellare una richiesta di stampa^^Cancellazione di una richiesta di stampa)
+
+Vedi anche:
+\s(Stampa^dhelp "pe.it" userhb "Stampa" "" || helpLinkErr)
+
+
+^1^Stampa di un file
+^$20
+Stampa di un file
+
+Per stampare un file creato con un'applicazione di terzi (ad esempio
+un'applicazione di videoscrittura o di foglio elettronico), usare il
+sistema di menu di quella applicazione.
+
+Per stampare un file di testo ASCII (o qualunque file creato su
+UnixWare o su un altro sistema UNIX), procedere come segue:
+
+1.\t\d(Trascinare e rilasciare^trascinare e rilasciare) il file sull'icona di
+  \tstampante desiderata. Compare la finestra "Stampante:
+  \tProprietà richiesta" per quella stampante.
+
+2.\tImpostare le seguenti opzioni:
+
+  \to\tTitolo della pagina di intestazione: - Immettere il titolo che
+  \t \tsi vuole appaia sulla pagina di intestazione). Per default,
+  \t \tsulla pagina di intestazione il sistema stampa il nome del file.
+
+  \to\tcopie: - Immettere il numero di copie che si vogliono stampare.
+
+  \to\tInvio posta alla fine? - Fare clic su Sì se si desidera che
+  \t \til sistema invii la posta alla propria \k(cartella Mailbox^DesktopMgr/Mailbox.hlp^Introduzione alla cartella Mailbox.) al
+  \t \tcompletamento del lavoro di stampa, o su No se non
+  \t \tsi desidera che il sistema invii la posta al termine del lavoro
+  \t \tdi stampa.
+
+  \to\tStampa Pagina di intestazione: - Fare clic su Sì per
+  \t \tstampare una pagina di intestazione in testa al documento, o
+  \t \tsu No per omettere la pagina di intestazione dal documento.
+
+  \to\tFile da stampare è: - Per default, questo campo è
+  \t \timpostato a Testo. Fare clic sulla casella freccia e quindi su
+  \t \tuna delle seguenti voci:
+
+  \t \t-\tTesto - Per stampare file di testo (talvolta denominati
+  \t \t \tfile ASCII o piatti). I file di questo tipo non contengono
+  \t \t \tinformazioni di formattazione. Sono semplicemente file
+  \t \t \tcontenenti i caratteri digitati sulla tastiera. Ad esempio,
+  \t \t \tl'\k(Editor di testi^dtedit/edit.hlp^L'Editor di testi) produce file di questo tipo.
+
+  \t \t-\tTesto (senza avvolgimento) - Le righe che non stanno nella
+  \t \t \tpagina vengono avvolte al bordo della pagina
+  \t \t \t (a metà parola) o troncate, a seconda della stampante.
+
+  \t \t-\tPostScript - Per stampare file in linguaggio PostScript. La
+  \t \t \tstampante deve essere una stampante PostScript per poter
+  \t \t \tusare questa opzione. Alcune applicazioni permettono di
+  \t \t \tstampare un documento (o altro file di dati) in un file in
+  \t \t \tformato PostScript.
+
+  \t \t-\tHP PCL - Per stampare file creati per stampanti con
+  \t \t \temulazione HP PCL, quali la stampante HP Laserjet.
+
+  \t \t-\tOutput Troff - Per stampare file creati con il formato
+  \t \t \tdel comando troff di UNIX.
+
+  \t \t-\tAltro - Per specificare un file di tipo diverso da quelli
+  \t \t \telencati nel menu. Occorre aver caricato nel sistema il filtro
+  \t \t \tper questo tipo di file.
+
+  \t \t \tSelezionando Altro, appare la casella di testo
+  \t \t \tSpecifica il tipo. Immettere il tipo di file.
+
+  \t \t \tPer impostare ulteriori opzioni per una stampante
+  \t \t \tPostScript (quali lunghezze di pagina, larghezze di pagina e
+  \t \t \tcosì via), vedi (Stampante: Altre opzioni).
+
+3.\tFare clic su Stampa per inviare la richiesta alla stampante. Viene
+  \tvisualizzata la finestra "Stampante: Messaggio" per informare
+  \tche il lavoro è stato accettato e per fornire la ID della
+  \trichiesta per quel lavoro. Può convenire segnare a parte questa ID
+  \tper eventuale uso successivo. Quindi fare clic su Continua per
+  \tstampare il lavoro.
+
+  \tLa finestra "Configurazione stampante: Proprietà" scompare.
+
+  \tNota: Si può anche fare clic su Ripristina per riportare le
+  \topzioni ai valori precedenti o su Annulla per chiudere la
+  \tfinestra senza cambiare le opzioni e senza inviare la richiesta
+  \tdi stampa.
+
+Vedi anche:
+\s(Stampa dalla riga di comando^dhelp "pe.it" ownerhb "Impostazione e configurazione delle stampanti" "Stampa dalla riga di comando" || helpLinkErr)
+
+^2^Stampante: Altre opzioni
+^$30
+Stampante: Altre opzioni
+
+Se si usa una stampante PostScript e il documento richiede delle
+impostazioni speciali, è possibile impostare opzioni aggiuntive. Se si
+ha, per esempio, l'esigenza di stampare un documento con più caratteri
+per pollice di quanto non sia stato impostato per la stampante di
+default, Si può impostare l'opzione "Passo di stampa" nella finestra
+"Stampante: Opzioni filtro" per far stipare più caratteri sulla riga.
+
+Nella finestra "Stampante: Altre opzioni" è possibile impostare
+le opzioni per quanto segue:
+
+\to\tLunghezza di pagina: - Selezionare l'unità di misura desiderata
+\t \t(pollici, centimetri o caratteri) e quindi digitare (nella casella
+\t \tdi testo) la lunghezza di pagina desiderata.
+
+\to\tLarghezza di pagina: - Selezionare l'unità di misura desiderata
+\t \t(pollici, centimetri o caratteri) e quindi digitare (nella casella
+\t \tdi testo) la larghezza di pagina desiderata.
+
+\to\tPasso di stampa: - Selezionare l'unità di misura desiderata
+\t \t(pollici, centimetri o caratteri) e quindi digitare (nella casella
+\t \tdi testo) la larghezza desiderata per ogni carattere.
+
+\to\tPasso riga: - Selezionare l'unità di misura desiderata (pollici,
+\t \tcentimetri o caratteri) e quindi digitare (nella casella di
+\t \ttesto) l'altezza desiderata per ogni riga.
+
+\to\tAmbiente locale: - Fare clic sull'ambiente locale desiderato.
+
+\t \tNota: A seconda dell'ambiente locale scelto, l'opzione Set di
+\t \tcaratteri può risultare non disponibile (appare in grigio).
+
+\to\tSet di caratteri: - Fare clic sulla casella freccia per avere la
+\t \tlista dei set di caratteri disponibili. Quindi fare clic sul set
+\t \tdesiderato.
+
+\to\tOpzioni Varie: - Digitare le opzioni del comando lp del sistema
+\t \tUNIX.
+
+\t \tPer ulteriori informazioni, vedi lp (1M) nel \s(Riferimento dei comandi^dhelp refman uarm "" "" || helpLinkErr).
+
+Vedi anche:
+\s(Fornire filtri^dhelp as sysag "Providing Print Services" "Providing Filters" || helpLinkErr)
+\s(Stampanti PostScript^dhelp as sysag "Providing Print Services" "PostScript Printers" || helpLinkErr)
+
+
+^1^Visualizzazione delle richiesta di stampa
+^$40
+Visualizzazione delle richiesta di stampa
+
+Per visualizzare tutte le richieste di stampa per una particolare
+stampante, procedere come segue:
+
+1.\t\d(Fare doppio clic^doppio clic) sull'icona della stampante.
+  \tAppare la finestra "Stampante: <nome-stampante>" dove
+  \tnome-stampante è il nome della propria stampante).
+
+  \tOgni richiesta di stampa viene identificata dalla ID di login
+  \tdella persona che ha sottoposto la richiesta.
+
+2.\tFare clic su Azioni=>Esci per liberare la finestra.
+
+Per mostrare le proprietà di una richiesta di stampa, vedi
+\k(Visualizzazione delle proprietà di una richiesta di stampa).
+
+Per cambiare le proprietà di una richiesta di stampa, vedi
+\k(Modifica delle proprietà di una richiesta di stampa).
+
+Per cancellare una richiesta di stampa, vedi \k(Cancellazione di una richiesta di stampa).
+
+^1^Visualizzazione delle proprietà di una richiesta di stampa
+^$50
+Visualizzazione delle proprietà di una richiesta di stampa
+
+To view the properties of a print request, procedere come segue:
+
+1.\t\d(Fare doppio clic^doppio clic) sull'icona della stampante.
+  \tAppare la finestra "Stampante: <nome-stampante>".
+
+2.\tFare clic sulla richiesta di stampa desiderata.
+
+3.\tFare clic su Richiesta di stampa=>Proprietà. Appare la finestra
+  \t"Stampante: Proprietà richiesta" relativa alla stampante. Vedi il
+  \tPunto 2 di \k(Stampa di un file) per una descrizione delle
+  \topzioni nella finestra.
+
+4.\tFare clic su OK o su Annulla per liberare la finestra.
+
+Vedi anche:
+\k(Modifica delle proprietà di una richiesta di stampa)
+
+^1^Modifica delle proprietà di una richiesta di stampa
+^$50
+Modifica delle proprietà di una richiesta di stampa
+
+Per cambiare le proprietà di una richiesta di stampa, procedere come
+segue:
+
+1.\t\d(Fare doppio clic^doppio clic) sull'icona della stampante.
+  \tAppare la finestra "Stampante: <nome-stampante>".
+
+2.\tFare clic sulla richiesta di stampa desiderata.
+
+3.\tFare clic su Richiesta di stampa=>Proprietà. Appare la finestra
+  \t"Stampante: Proprietà richiesta" relativa alla stampante
+
+4.\tApportare le modifiche desiderate. Vedi il Punto 2 di
+  \t\k(Stampa di un file) per una descrizione delle opzioni nella
+  \tfinestra.
+
+5.\tFare clic su OK per applicare le modifiche e liberare la finestra.
+
+  \tNota: Si può anche fare clic su Ripristina per tornare
+  \talle opzioni precedenti, o su Annulla per liberare la finestra
+  \tsenza modificare alcuna proprietà.
+
+^1^Cancellazione di una richiesta di stampa
+^$60
+Cancellazione di una richiesta di stampa
+
+Per cancellare una richiesta di stampa, procedere come segue:
+
+1.\t\d(Fare doppio clic^doppio clic) sull'icona della stampante.
+  \tAppare la finestra "Stampante: <nome-stampante>".
+
+2.\tFare clic sulla richiesta di stampa da cancellare.
+
+3.\tFare clic su Richiesta di stampa=>Proprietà. Appare la
+  \tfinestra di conferma a comparsa "Stampante: Cancella" che chiede
+  \tla conferma della cancellazione della richiesta. Fare clic
+  \tsu Cancella per procedere con la rimozione della richiesta di
+  \tstampa o su Annulla se si decide di non volere la rimozione.

@@ -1,0 +1,77 @@
+#ident	"@(#)kern:net/nw/spx/test/tli/README	1.2"
+#ident	"$Header: /SRCS/esmp/usr/src/nw/uts/net/nw/spx/test/tli/README,v 1.1 1994/01/28 17:52:38 vtag Exp $"
+The SPX TLI test tsolo tests the TLI interface locally (not over the net).
+ 
+The usage is:
+
+	tsolo [/r#] [/p#] [/v] [[/b#] | [/s#] [#] ...]
+
+	r = repeat # times
+
+	p = protocol	1	= spx
+					2	= ipx
+					-1	= ipx and spx
+
+	v = verbose
+
+	b = start tests at #
+
+	s +#  = use verbose on #
+	s -#  = do not use verbose on #
+	note:	the tests are run in order on the command line	
+			verbose is default if no - is present 
+			/v has no effect when /s is present
+			/b has no effect when /s is present
+			the
+
+	example:
+			tsolo /r5 /s-1 -8 +5	repeat tests 1,8,5 five times, with
+									test 5 in verbose mode.
+			
+			tsolo /r5 /p1 /v /b4	repeat tests starting at test 4
+									five times with spx protocol. All
+									in verbose mode.
+
+The SPX TLI test tsrvr tests the TLI interface against 
+	another over the net.
+
+The usage is:
+
+	tserver [/r#] [/p#] [/v] [[/b#] | [/s#] [#] ...] /nxxxxxxxx yyyyyyyy
+
+	r = repeat # times
+
+	p = protocol	1	= spx
+					2	= ipx
+					-1	= ipx and spx
+
+	v = verbose
+
+	b = start tests at #
+
+	n	xxxxxxxx =  first network number
+
+		yyyyyyyy = 	second network number
+	
+
+
+The SPX TLI test tclnt tests the TLI interface against 
+	another over the net.
+
+The usage is:
+
+	tclient [/r#] [/p#] [/v] [[/b#] | [/s#] [#] ...] /nxxxxxxxx yyyyyyyy
+
+	r = repeat # times
+
+	p = protocol	1	= spx
+					2	= ipx
+					-1	= ipx and spx
+
+	v = verbose
+
+	b = start tests at #
+
+	n	xxxxxxxx =  first network number
+
+		yyyyyyyy = 	second network number

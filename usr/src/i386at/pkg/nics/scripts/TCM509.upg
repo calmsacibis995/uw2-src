@@ -1,0 +1,56 @@
+#ident	"@(#)pkg.nics:scripts/TCM509.upg	1.2"
+
+# make sure that this script is being run by ksh
+[[ "$RANDOM" = "$RANDOM" ]] && exec /usr/bin/xksh $0 $*
+
+exec 2>>/tmp/509.err
+echo ############################# Starting Fresh ##########################
+set -x
+
+# function to convert hex numbers to decimal
+function hex2dec
+{
+set -x
+	integer LEN N DEC
+	HEX=$1
+	LEN=${#HEX}
+	N=0
+	DEC=0
+	while (( N < LEN ))
+	do
+		let N+=1
+		DIGIT=`echo $HEX | cut -c${N}`
+		case $DIGIT in
+			a|A)	DIGIT=10
+				;;
+			b|B)	DIGIT=11
+				;;
+			c|C)	DIGIT=12
+				;;
+			d|D)	DIGIT=13
+				;;
+			e|E)	DIGIT=14
+				;;
+			f|F)	DIGIT=15
+				;;
+		esac
+		let DEC="$DEC * 16 + $DIGIT"
+	done
+	echo $DEC
+}
+
+# main
+
+# Both IO and Memory addresses are passed in - but we only need to
+# process the io address.
+
+read sio eio sma ema < /tmp/nic.upg.check
+
+integer Nsio
+
+Nsio=`hex2dec $sio`
+
+# If the Starting IO Addresses is greater than '0' and is less than/equal to
+# '1024', then this this is an 3Com 509 Card.  The script that calls this
+# function checks the output to be either 1 (for true) or 0 (for false).
+(( Nsio > 0 && Nsio <= 1024 )) && exit 1 || exit 0

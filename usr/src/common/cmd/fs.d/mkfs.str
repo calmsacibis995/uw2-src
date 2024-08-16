@@ -1,0 +1,146 @@
+#ident	"@(#)fs.cmds:common/cmd/fs.d/mkfs.str	1.1"
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+Usage:\n%s [-F %s] [-m] special #blocks [#inodes]\n
+%s: cannot stat\n
+%s: mounted file system\n
+maximum # of inodes is %d\n
+%d is not big enough\n
+file system size should be at least %d\n
+%d bytes per block\n
+%d total blocks\n
+%d total inodes\n
+%d free blocks\n
+%d free inodes\n
+%d blocks for inodes\n
+start byte  %d\nend byte  %d\n
+Could not create %s.\n
+Cannot open special file %s\n
+read of special file %s failed\n
+%s is not a bfs file system\n
+%d is invalid logical block size\n
+cannot stat %s\n
+cannot open %s\n
+%s: *** MOUNTED FILE SYSTEM\n
+cannot create %s\n
+cannot open proto file '%s'\n
+cannot open boot program '%s'\n
+'%s' too big\n
+error writing boot-block\n
+Cannot elf_begin %s\n
+Cannot get Phdr %s\n
+unknown block size\n
+bytes per logical block = %d\n
+total logical blocks = %ld\n
+total inodes = %ld\n
+gap (physical blocks) = %d\n
+cylinder size (physical blocks) = %d \n
+%ld/%ld: bad ratio\n
+write error: super-block\n
+Available blocks = %ld\n
+cannot allocate space for ib\n
+%c/%s: bad octal mode digit\n
+file too large\n
+%c/%s: bad mode\n
+%s: bad number\n
+EOF\n
+read error: %ld\n
+write error: %ld\n
+seek error: %ld\n
+out of free space\n
+too many bad blocks\n
+ilist too small\n
+triple indirect blocks not handled\n
+bad ftype %o\n
+Usage:\n%s [-F %s] [generic_options] special\n%s [-F %s] [generic_options] [-b block_size] special blocks[:inodes] [gap blocks/cyl]\n%s [-F %s] [generic_options] [-b block_size] special proto [gap blocks/cyl]\n
+cannot read superblock\n
+%s is not an %s file system\n
+bad file system type %ld\n
+illegal option: %s\n
+cannot specify both -o C and -o L\n
+%s: cannot open\n
+%s: cannot create\n
+%s is not special device\n
+%s is mounted, cannot mkfs\n
+invalid size %d\n
+invalid ntrak %d\n
+invalid nsect %d\n
+invalid rotations per second %d\n
+invalid rotational delay %d\n
+block size must be a power of 2, not %d\n
+fragment size must be a power of 2, not %d\n
+fragment size %d is too small, minimum is %d\n
+block size %d is too small, minimum is %d\n
+block size %d is too big, maximum is %d\n
+block size (%d) cannot be smaller than fragment size (%d)\n
+fragment size %d is too small, minimum with block size %d is %d\n
+maximum block size with nsect %d and ntrak %d is %d\n
+cylinder groups must have at least 1 cylinder\n
+cylinder groups are limited to %d cylinders\n
+cylinder groups must have a multiple of %d cylinders\n
+file systems must have at least one cylinder\n
+insufficient space in super block for\nrotational layout tables with nsect %d and ntrak %d.\n
+File system performance may be impaired.\n
+too many sectors per cylinder (%d sectors)\n
+nsect %d, and ntrak %d, requires block size of %d,\n\tand fragment size of %d\n
+cylinder group too large (%d cylinders); 
+max: %d cylinders per group\n
+nsect %d, ntrak %d, cpg %d is not tolerable\nas this would would have cyl groups whose size\nis not a multiple of %d; exiting!\n
+%s: invalid nbpi reset to %d\n
+%d: invalid nbpi reset to %d\n
+inode blocks/cyl group (%d) >= data blocks (%d)\n
+number of cylinders per cylinder group must be increased\n
+inode blocks/cyl group (%d) >= data blocks (%d) in last\ncylinder group.
+ This implies %d sector(s) cannot be allocated.\n
+%d sector(s) in last cylinder unallocated\n
+%s: invalid minfree reset to %d%%\n
+%d: invalid minfree reset to %d%%\n
+%s: invalid optimization preference reset to time\n
+%c: invalid optimization preference reset to time\n
+%s:\t%d sectors in %d cylinders of %d tracks, %d sectors\n
+\t%.1fMb in %d cyl groups (%d c/g, %.2fMb/g, %d i/g)\n
+super-block backups (for fsck -b#) at:
+cg 0: bad magic number\n
+first cylinder group ran out of space\n
+internal error: cannot find block in cyl 0\n
+inode value out of range (%d).\n
+rdfs: %s\n
+wtfs: %s\n
+isblock bad fs_frag %d\n
+clrblock bad fs_frag %d\n
+setblock bad fs_frag %d\n
+Usage: %s [-F %s] [-V] [-m] [-o options] special size\n
+options:\nnsect=xx,ntrack=xx,bsize=xx,fragsize=xx,cgsize=xx\n
+free=xx,rps=xx,nbpi=xx,opt=x,apc=xx,gap=x\n
+M=make root of file system a Multi-level directory\n
+C=3.2 compatability; L=ignore 3.2 compatability\n
+[not currently a valid file system]\n
+argument out of range: \"%lu\"\n
+bad numeric arg: \"%s\"\n
+cannot open /dev/tty\n
+\nThis file system is able to support more\nthan 32,768 files.
+Some older applications (written for UNIX System V\nRelease 3.2 or before) may not work correctly on such a file system,\neven if fewer than 32,768 files are actually present.
+If you wish to run such applications (without recompiling them),\nyou should restrict the maximum number of files that may be created\nto fewer than 32,768.\n\n
+Your choices are:\n\n
+1. Restrict this file system to fewer than 32,768 files.\n
+2. Allow this file system to contain more than 32,768 files\n   (not compatible with some older applications).\n\n
+Press '1' or '2' followed by 'ENTER':\n
+No input received; assuming '1'\n
+Input not understood. Try again.\n\n
+Cannot specify both -o C and -o L\n
+%s is not special device, cannot mkfs\n
+inode blocks/cyl group (%d) >= data blocks (%d) in last cylinder group.\n
+This implies %d sector(s) cannot be allocated.\n
+[L|C]\n
+\nThis file system is able to support more\nthan 65,536 files.
+Some older applications (written for UNIX System V\nRelease 3.2 or before) may not work correctly on such a file system,\neven if fewer than 65,536 files are actually present.
+If you wish to run such\napplications (without recompiling them), you should restrict the maximum\nnumber of files that may be created to fewer than 65,536.\n\n
+1. Restrict this file system to fewer than 65,536 files.\n
+2. Allow this file system to contain more than 65,536 files\n   (not compatible with some older applications).\n\n
+Input not understood. Try again.\n

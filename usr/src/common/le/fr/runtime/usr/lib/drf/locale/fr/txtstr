@@ -1,0 +1,240 @@
+FOOTER_HEIGHT=2
+Yes=oui
+No=non
+MiniWelcome="
+Bienvenue dans le mode de récupération d'urgence.
+
+Vous ne pouvez utiliser que quelques utilitaires dans ce mode.
+Les utilitaires disponibles sont vi, fsck, cpio, dd, grep, ls, etc.
+Si votre disque dur est en état de marche, vous pouvez monter les
+systemes de fichier sur le disque dur, sous /mnt en utilisant la
+commande mountall. Vous pouvez les démonter en utilisant la commande
+unmountall.
+
+Pour sortir du shell de récupération d'urgence, tapez 'exit'.
+"
+DRF_NEXT_FLP="
+
+        Insérez la deuxième disquette de
+
+            récupération d'urgence et appuyez sur ENTREE. 
+
+"
+DRF_HARD_MODS_WAIT="
+
+        Veuillez patienter pendant que le systeme
+
+        charge les pilotes de périphérique matériel. 
+
+"
+DRF_SOFT_MODS_WAIT="
+
+        Veuillez patienter pendant que le systeme
+
+        charge les programmes de pilote de périphérique. 
+
+"
+DRF_UNMNT_MSG="
+
+        Démontage de tous les systemes de fichiers de /mnt. 
+
+        Veuillez patienter.
+"
+DRF_MNT_MSG="
+
+        Montage des systemes de fichiers sur le disque 
+
+        dur, sous /mnt. Veuillez patienter.
+"
+DRF_DSK_GOOD="
+        Le disque dur est en état de marche. 
+
+        Appuyez sur ENTREE pour continuer.
+"
+DRF_DSK_BAD="
+        Le disque dur n'est PAS en état de marche. 
+
+        Appuyez sur ENTREE pour continuer.
+"
+DSK_SETUP="
+
+        Configuration du (des) disque(s) dur(s)
+
+        pour revenir a la configuration originale. 
+
+"
+DSK_SETUP_ERR="
+
+          Une erreur s'est produite pendant la configuration 
+
+                          du disque dur.
+
+                  Appuyez sur ENTREE pour continuer.
+"
+DSK_RST_ERR="
+
+          Erreur pendant la restauration
+
+                    du disque.
+
+         Appuyez sur ENTREE pour continuer. 
+"
+DSK_RST_MSG="
+
+         Restauration du (des) disuqe(s).
+
+   (Cette opération va prendre plusieurs minutes). 
+
+"
+RESTORE_SUCCESS="
+
+         Restauration du, ou des, disque(s) terminée. 
+
+            Appuyez sur ENTREE pour continuer
+
+"
+MAIN_TITLE="Menu de récupération d'urgence"
+SH_PROMPT="Accès au shell UnixWare"
+MNT_PROMPT="Montage des systèmes de fichiers du disque dur sous /mnt"
+UNMNT_PROMPT="Démontage des systèmes de fichiers monté sous /mnt"
+RESTORE_PROMPT="Restauration à partir d'une bande de restauration d'urgence"
+REBOOT_PROMPT="Redémarrage du système"
+DRF_SHELL="Accès au shell UnixWare"
+DRF_MOUNT="Montage des systèmes de fichiers"
+DRF_UNMOUNT="Démontage des systèmes de fichiers"
+DRF_RESTORE="Restauration du (des) disque(s)"
+DRF_REBOOT="Redémarrage"
+GENERIC_FORM_FOOTER="Appuyez sur F1 pour obtenir de l'aide"
+GENERIC_MENU_FOOTER="Utilisez les touches flêchées haut/bas et ENTREE pour sélectionner ;
+Appuyez sur F1 pour obtenir de l'aide"
+GENERIC_WAIT_FOOTER="Veuillez patienter."
+GENERIC_HEADER="UnixWare 2 - Récupération d'urgence"
+
+# For use in 'helpwin' script
+FIRST_PAGE_FOOTER="F1=Aide supplémentaire, Page suiv., Echap. pour quitter l'aide"
+MIDDLE_PAGE_FOOTER="F1=Aide supplémentaire, Page suiv. Page préc., Echap. pour quitter l'aide"
+LAST_PAGE_FOOTER="F1=Aide supplémentaire, Page préc., Echap. pour quitter l'aide"
+ONLY_PAGE_FOOTER="F1=Aide supplémentaire, Echap. pour quitter l'aide"
+MOREHELP_FOOTER="Utilisez les touches flêchées haut/bas pour sélectionner
+ou Echap. pour quitter l'aide."
+MOREHELP_TITLE="Sujets d'aide associés"
+
+TAPE_PROMPT="
+Veuillez insérer la bande dans le lecteur et appuyer sur
+'ENTREE' lorsque vous êtes prêt. Si vous avez plusieurs lecteurs
+de bande, assurez-vous qu'ils sont tous vides, sauf celui qui
+contient la bande de récupération d'urgence.
+
+Si la bande est déjà dans le lecteur, appuyez sur 'ENTREE'.
+"
+TAPE_OPEN_ERROR="
+Aucune bande n'a été détectée dans le lecteur de bande.
+Vérifiez que la bande est correctement introduite dans le lecteur, que
+le levier (s'il y en a un) est dans la bonne position, et que le
+lecteur de bande est bien allumé.
+
+             Appuyez sur ENTREE pour continuer."
+TAPE_READ_ERROR="
+La bande se trouvant dans le lecteur de bande est illisible.
+Vérifiez que la bande est correctement introduite dans le lecteur,
+que le loquet (s'il y en a un) est dans la bonne position, et que le
+lecteur de bande est bien allumé.
+
+              Appuyez sur ENTREE pour continuer."
+NEXT_TAPE_PROMPT="
+   Enlevez la bande du lecteur et insérez
+
+   la bande suivante.
+
+            Appuyez sur ENTREE pour continuer."
+#for use in Color_Console
+MONITOR_TYPE="
+Sur un moniteur couleur, cet écran affiche le texte en blanc sur fond bleu.
+Si tel n'est pas le cas, il faut considérer qu'il s'agit d'un écran
+monochrome.  Quel est le type du moniteur relié à l'ordinateur ?
+
+"
+MONITOR_FOOTER="Utilisez les touches flêchées pour sélectionner un type de
+moniteur et appuyez ensuite sur 'ENTREE'."
+MONITOR_ENTRY="Sélectionnez un type de moniteur"
+
+REBOOT_MSG="
+
+  **VERIFIEZ QUE L'UNITE DE DEMARRAGE (DISQUETTE OU CD-ROM) EST VIDE**
+
+  Lorsque vous appuyez sur 'ENTREE' le systeme sera arrêté et
+  redémarré.
+"
+SERIAL_FIELD="Le numéro de série : "
+SERIAL_PROMPT="Entrez le numéro de série de votre copie UnixWare et appuyez sur F10"
+SERIAL_TITLE="Ecran Numéro de série"
+INCORRECT_SNUM="Le numéro de série entré n'est pas correct.
+Entrez-le à nouveau et appuyez sur F10"
+SNUM_FATAL="
+
+        Le numéro de série n'a pas été entré correctement, et le 
+        nombre maximum d'essai a été dépassé. La machine va etre
+        redémarrée lorsque vous allez appuyer sur 'ENTREE'.
+
+"
+COLOR_PROMPT="
+
+                Sélection du type de moniteur
+
+  UnixWare n'a pas pu déterminer si votre ordinateur était équipé
+  d'un écran couleur ou monochrome.     
+
+  Pour etre sur que vous pouvez lire tous les écrans pendant
+  l'installation, UnixWare doit savoir quel est le type de moniteur
+  que vous possédez.
+
+  Sur un écran couleur, cet écran devrait afficher un texte blanc
+  sur un fond bleu. Autrement, votre écran doit etre considéré comme
+  un écran monochrome.
+  Quel est le type de moniteur qui est relié a votre ordinateur ?     
+  
+  Les choix possibles sont les suivants :
+
+  1. Moniteur couleur.
+  2. Moniteur monochrome.
+
+  Veuillez appuyer sur '1' ou sur '2', puis sur 'ENTREE' : "
+
+RETENSION_WAIT="
+
+        Rembobinage de la bande.
+
+   Cette opération devrait prendre environ trois minutes.
+
+"
+FLPY2_READ_ERROR_1="
+   Une erreur est survenue à la lecture de la deuxième disquette
+de secours. Vérifiez que vous avez les bonnes
+disquettes et recommencez la procédure de démarrage depuis
+le début. Sans la bonne deuxième disquette,
+vous pourrez continuer mais avec moins de possibilités.
+
+             Appuyez sur ENTREE pour continuer."
+FLPY2_READ_ERROR_2="
+   Une erreur est survenue à la lecture de la deuxième disquette
+de secours. Vérifiez que vous avez les bonnes
+disquettes et recommencez la procédure de démarrage depuis
+le début. Sans la bonne deuxième disquette,
+vous pourrez continuer mais avec moins de possibilités.
+
+             Appuyez sur ENTREE pour continuer."
+FS_MOD_LOAD_ERROR="
+   Une erreur est survenue au chargement des modules
+du système de fichiers. Vérifiez que vous avez les bonnes
+disquettes et recommencez la procédure de démarrage depuis
+le début. Sans la bonne deuxième disquette,
+vous pourrez continuer mais avec moins de possibilités.
+
+             Appuyez sur ENTREE pour continuer."
+DISK_INFO_READ_MSG="
+
+         Lecture des informations concernant la configuration
+
+           du(des) disque(s) original(aux).
+
+"

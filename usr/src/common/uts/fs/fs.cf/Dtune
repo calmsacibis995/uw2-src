@@ -1,0 +1,113 @@
+%% File System Parameters
+%%% Generic File System Parameters
+% FDFLUSHR
+Specifies the time interval, in seconds,
+for checking the need to write
+the buffer caches and file system pages to disk.
+% FLCKREC
+This parameter controls
+the number of record locking structures used by
+the system.
+% NAUTOUP
+Specifies the time, in seconds,
+for automatic file system updates
+(for both the buffer cache and file system pages).
+A system buffer is written to the hard disk when it has
+been memory-resident for the interval specified by the
+NAUTOUP
+parameter.
+Specifying a smaller limit increases system reliability
+(by writing the buffer caches and file system pages
+to disk more frequently)
+and decreases system performance.
+Specifying a larger limit increases
+system performance at the expense of reliability.
+% NC_HASH_SIZE
+Specifies the number of hash buckets
+used for lookup in the DNLC.
+The default value of 64 should be sufficient
+unless the number of entries is increased dramatically.
+% ROOTFSTYPE
+Default root file system type.
+% RSTCHOWN
+Specifies restricted file ownership changes flag.
+Only 0 and 1 are valid values for
+RSTCHOWN.
+A value of 0 is the Release 3 compatibility mode.
+As in Release 3, the owner
+of a file can change the user ID and group ID
+of the file to any value,
+including non-existent user IDs and group IDs.
+When set to
+1,
+RSTCHOWN
+specifies the FIPS/BSD compatibility mode.
+This restricts the ability to change ownership of a file.
+Only the user with appropriate privilege or
+root processes (those whose UID is 0) can change
+the ownership of a file.
+The owner of the file
+may change only the group ID of the file
+to one group
+in which the owner has membership.
+[See
+getgroups(2)].
+A user with appropriate privilege and root processes
+may change the group ID of any file to any value.
+%%% Buffer Cache Parameters
+% NBUF
+Buffer cache
+I/O
+uses both buffers and buffer headers.
+(See BUFHWM.)
+Whenever a buffer header is needed,
+but none is available,
+the system dynamically allocates more buffer
+headers in chunks of
+NBUF
+headers at a time.
+There is no limit to the number of
+buffer headers in the system, but the tunable
+BUFHWM
+limits the number of kilobytes
+that may be used by buffers
+and thus effectively limits
+the number of buffer headers that will be allocated.
+
+Once allocated, buffer header space cannot
+be freed for other uses.
+Therefore, take care when you raise
+the value of
+NBUF.
+A higher value of
+NBUF
+decreases the number of times
+the Kernel Memory Allocator
+must be called to allocate space for buffer
+headers, but this can result in the
+allocation of headers that are not used.
+% NHBUF
+Specifies the size of the hash table
+used to locate a buffer,
+given a device number and a block number.
+The value must be a power of 2 from 32 to 1024, inclusive.
+This value should be about
+one quarter of the total buffers available.
+A value between 1/8 and 1/4 of
+BUFHWM
+is typically sufficient.
+% NPBUF
+Specifies the number of physical I/O buffers to allocate;
+one is needed for each active physical read or write.
+There is not a rule for adjusting
+NPBUF .
+However, if you expect a lot of I/O
+and file system activity,
+improvement may be gained by raising
+NPBUF .
+In test cases, raising
+NPBUF
+to 40 improved system performance.
+% NPGOUTBUF
+Specifies the number of buffer headers reserved for the
+pageout daemon to avoid deadlock.

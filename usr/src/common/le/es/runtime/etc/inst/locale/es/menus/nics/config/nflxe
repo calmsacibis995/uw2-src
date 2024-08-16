@@ -1,0 +1,28 @@
+NAME=Compaq_Netflex_Ether_Family
+
+DRIVER_NAME=nflxe
+
+CLASS="nflxe nflx"
+
+ETHER=true
+
+VERIFY=true
+
+BUS=EISA
+
+UNIT=1
+
+POST_SCRIPT="nflxe_post"
+
+EXTRA_FILES="/etc/netflex/cet_start
+/etc/netflex/cet_end
+/etc/netflex/unieth.bin
+/etc/netflex/uniethf.bin"
+
+CONFIG_CMDS="/etc/netflex/cet_start nflxe /etc/netflex 0"
+
+BOARD_IDS="CPQ6100 CPQ6101"
+
+UPGRADE_CHECK=scripts/nflxe.upg
+
+OLD_DRIVER_NAME=nflxe

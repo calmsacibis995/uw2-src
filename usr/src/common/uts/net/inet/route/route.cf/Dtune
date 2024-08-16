@@ -1,0 +1,29 @@
+%% Networking Parameters
+%C Networking Parameters
+These tunable parameters include those for General Networking,
+as well as for the
+Address Resolution Protocol (ARP),
+Asynchronous High Level Datalink Control (ASYH),
+Internet Control Message Protocol (ICMP),
+Internet Protocol (IP),
+Packet Routing,
+Point-to-Point Protocol (PPP),
+Remote Procedure Call (RPC),
+Transport Control Protocol (TCP),
+and User Datagram Protocol (UDP).
+%%% Packet Routing Parameters
+% RTSUBNETSARELOCAL
+Typically, the Internet Protocol
+limits the size of packets sent through a gateway
+to 576 bytes (as per RFC 1122).
+If RTSUBNETSARELOCAL is nonzero,
+this restriction is not applied
+to destinations that are on non-connected subnets of a network
+to which the machine is connected.
+In other words,
+this assumes that any gateway
+to a subnet of a connected network can handle large packets.
+This parameter should be tuned on in a configuration in
+which all subnets are connected
+by high-bandwidth gateways and media
+(such as several Ethernets connected by routers).

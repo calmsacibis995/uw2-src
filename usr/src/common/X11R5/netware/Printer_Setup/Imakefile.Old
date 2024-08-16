@@ -1,0 +1,198 @@
+#ident	"@(#)Imakefile	6.3 "
+#ident "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/Printer_Setup/Imakefile,v 1.2 1994/02/16 18:15:37 eric Exp $"
+
+/**/#	Copyright (c) 1993 Univel
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+/**/#	Univel.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#include    <Motif.tmpl>
+#include    <Motif.rules>
+#EXTRA_LOAD_FLAGS = -z nodefs
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+XLIBDIR     =  $(ROOT)/$(MACH)/usr/X/lib
+
+XLIB = $(EXTENSIONLIB) -L$(XLIBSRC) -L$(TOOLS)/usr/X/lib -lOlit -lX11 -lDnD -L/export/ESMP/xenv/q2/usr/X/lib -lMDtI -lXimp -L/work/i386at/usr/ucblib -lucb
+
+XLIBS = ../libclasses/libuw.a ../libcomponents/libuwc.a $(XMLIB) $(XTOOLLIB) $(XLIB) $(XMEXTRA_LIBS) $(XLIB) $(XTOOLLIB) $(XMULIB) $(DTLIB) -lgen 
+
+LIST_LIB = -L../libdlist -ldlist
+NW_LIBS =  ../libclasses/libuw.a ../libcomponents/libuwc.a -L../../../cmd/cmd-nw/lib -L../../../cmd/cmd-nw/lib -lnwutil -L../../../lib/libmas -lm -lmas
+
+XM_LIB = ../.././lib/Xm/libXm.so
+X_LIBS = -L../.././lib/Xt -lXt -L../.././extensions/lib -lXext -L../.././lib/X -L$(TOOLS)/usr/X/lib -lOlit -lX11 -lDnD -lMDtI -lXimp -L../.././lib/Xmu -lXmu ../.././lib/Dt/libDt.so 
+UCB_LIB = -L/work/i386at/usr/ucblib -lucb
+NET_LIBS = -L/work/i386at/usr/X/lib -lnsl 
+EXTRA_LIBS = -lgen -L$(TOOLS)/usr/lib -lnpt -lNwCal -lNwAtb -lNwClnt -lNwNcp 
+LP_LIBS = -L/tmp -llpacc -llpbsd -llpcls -llpflt -llpfrm -llpNet -llpmsg -llpprt -llpreq -llpsec -llpsys -llpusr -llp -llpoam 
+
+EXTRA_LIBRARIES = $(LIST_LIB) $(NW_LIBS) $(XM_LIBS) $(X_LIBS) $(UCB_LIB) $(NET_LIBS) $(EXTRA_LIBS) $(LP_LIBS)
+LD_RUN_PATH =  /usr/X/lib
+
+LDOPTIONS = $(CDEBUGFLAGS) $(CCOPTIONS) $(LOCAL_LDFLAGS) 
+
+          DEBUG =  -O
+    CDEBUGFLAGS = -O
+
+
+SRCS =	ps_application.c 		\
+		dispInfo.c 				\
+		FileSelTest.c			\
+		string.c				\
+		memory.c				\
+		directory.c				\
+		iconObj.c				\
+		iconList.c				\
+		iconWin.c				\
+		ps_printer.c			\
+		ps_printerWin.c			\
+		ps_draw.c				\
+		menuItem.c				\
+		menuBar.c				\
+		menuPulldown.c			\
+		ps_i18n.c				\
+		ps_actions.c			\
+		ps_actionsCB.c			\
+		toolbar.c				\
+		ps_xpmbutton.c			\
+		action.c				\
+		ps_main.c 				\
+		ps_openlook.c 			\
+		ps_ctrlprinter.c 		\
+		ps_useracc.c 			\
+		ps_dialog.c 			\
+		printUser.c 			\
+		ps_win.c 				\
+		ps_local.c 				\
+		ps_netware.c 			\
+		ps_unix.c 				\
+		ps_msg.c 				\
+		ps_question.c 			\
+		ps_nprinter.c 			\
+		ps_remote.c 			\
+		bindery.c 				\
+		ps_copy.c 				\
+		ps_mainwin.c  			\
+		lppsys.c
+
+HDRS =	ps_application.h 		\
+		dispInfo.h 				\
+		FileSel.h				\
+		string.h				\
+		memory.h				\
+		directory.h				\
+		iconObj.h				\
+		iconList.h				\
+		iconWin.h	 			\
+		ps_printer.h			\
+		ps_printerWin.h			\
+		ps_draw.h				\
+		menuItem.h				\
+		menuBar.h				\
+		menuPulldown.h			\
+		ps_i18n.h				\
+		ps_actions.h			\
+		toolbar.h				\
+		ps_xpmbutton.h			\
+		action.h				\
+		ps_hdr.h 				\
+		ps_ctrlprinter.h 		\
+		ps_useracc.h 			\
+		ps_dialog.h 			\
+		printUser.h 			\
+		ps_win.h 				\
+		ps_copy.h	 			\
+		ps_local.h 				\
+		ps_netware.h 			\
+		ps_unix.h 				\
+		ps_msg.h 				\
+		ps_question.h 			\
+		ps_nprinter.h 			\
+		ps_remote.h 			\
+		bindery.h 				\
+		ps_mainwin.h 			\
+		lpsys.h
+
+OBJS =	ps_application.o 		\
+		dispInfo.o 				\
+		FileSelTest.o			\
+		memory.o				\
+		string.o				\
+		directory.o				\
+		iconObj.o				\
+		iconList.o				\
+		iconWin.o				\
+		ps_printer.o			\
+		ps_printerWin.o			\
+		menuItem.o				\
+		menuBar.o				\
+		menuPulldown.o			\
+		ps_i18n.o				\
+		ps_actions.o			\
+		ps_actionsCB.o			\
+		toolbar.o				\
+		ps_xpmbutton.o			\
+		action.o				\
+		ps_main.o 				\
+		ps_openlook.o 			\
+		ps_ctrlprinter.o		\
+		ps_useracc.o 			\
+		ps_dialog.o				\
+		printUser.o 			\
+		ps_win.o 				\
+		ps_local.o 				\
+		ps_netware.o 			\
+		ps_unix.o 				\
+		ps_msg.o 				\
+		ps_question.o 			\
+		ps_nprinter.o 			\
+		ps_remote.o 			\
+		bindery.o 				\
+		ps_mainwin.o 			\
+		ps_copy.o	 			\
+		lpsys.o
+
+          PROGS = PrinterSetup 
+
+
+       DTLIBSRC = $(LIBSRC)/Dt
+          DTLIB = $(DTLIBSRC)/libDt.so
+
+       INCLUDES = -DN_PLAT_UNIX -I../include -I$(INC)/nw -I$(LIBSRC) -I$(LIBSRC)/Dt 
+ EXTRA_INCLUDES = -I../../uslclients/libMDtI -I../../uslclients -I../../../cmd/lp/include -I../../../lib/libnpt -I$(INCLUDESRC) -I$(INC)
+
+          XLIBS = -lOlit ../libclasses/libuw.a ../libcomponents/libuwc.a XmClientLibs $(XLIB) $(XTOOLLIB) $(XMULIB) $(DTLIB) -lgen -lm -L../../../lib/libmas -lmas
+       C++FLAGS = $(DEBUG) -DX_WCHAR -DFUNCPROTO -DXTFUNCPROTO 
+             CC = $(PFX)CC
+             CC = CC
+
+all:: $(PROGS)
+
+SpecialObjectRule(ps_local.o,,-I$(LIBSRC))
+
+NormalProgramTarget($(PROGS),$(OBJS),$(LLIBS),$(XLIBS),$(SYS_LIBS))
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 555)
+
+InstallMultiple(alarm16.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(options24.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(playback24.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(setalarm24.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(sysmon32.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(sysmon48.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(sysmon48alt.icon,$(USRLIBDIR)/pixmaps)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()
+

@@ -1,0 +1,729 @@
+#ident\t"@(#)dthelp:Admin.Tools/FileShar.hlp    1.26"
+^*version^1
+^*title^Archivos compartidos
+^:Archivos_Compartidos
+^*width^70
+^+DesktopMgr/help.defs
+^?Acceso a los archivos desde sistemas remotos
+^0^Compartimiento de archivos...
+^$10
+Compartimiento de archivos...
+
+Use Compartición de archivos para acceder a los archivos desde sistemas 
+remotos como si estuviesen en su propio sistema, y para configurar el 
+sistema de modo que otros sistemas puedan acceder a los 
+archivos y carpetas de éste.
+
+Una vez configurada la compartición de archivos, no tiene que hacer
+nada especial para poder usar los archivos remotos.  Podrá abrir
+carpetas remotas, arrancar aplicaciones remotas y usar datos remotos
+como si fuesen locales.
+
+Puede hacer lo siguiente con Compartición de archivos:
+
+\to\t\k(Aceder a elementos compartidos remotos^^Acceso a elementos compartidos remotos) desde otro sistema
+\to\t\k(Crear elementos compartidos locales^^Creación de elementos compartidos locales) para que puedan usarlos otros
+\t \tsistemas o \k(Ver y modificar las propiedades de los elementos compartidos remotos^^Visualización y modificación de propiedades de elementos compartidos remotos) o
+\t \t\k(Ver y modificar las propiedades de los elementos compartidos locales^^Visualización y modificación de elementos compartidos locales) o \k(Desconectar o
+\t \suprimir elementos compartidos remotos^^Desconexión y supresión de elementos compartidos remotos) desde su
+\t \tsistema o \k(No anunciar o suprimir elementos compartidos locales^^Cancelación de anuncios y supresión de elementos compartidos locales)
+\t \tdesde su sistema
+
+Véase también:
+\s(Compartimiento de archivos y carpetas remota NFS^dhelp "pe.es" ownerhb "Compartimiento de archivos y carpetas remota NFS" "" || helpLinkErr)
+
+^1^Acceso a elementos compartidos remotos
+^$20
+Acceso a elementos compartidos remotos
+
+Nota: Deberá tener \k(permiso para conectarse a carpetas/archivos remotos^dtadmin/user.hlp^Comprensión de los permisos)
+para poder configurar el acceso a los elementos compartidos remotos.
+Para configurar el sistema de modo que acceda a los
+\d(elementos compartidos^elemento compartido) remotos, haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana "Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Compartición_de_archivos.  Aparecerá la ventana
+  \t"Configuración de compartición de archivos" (para los
+  \telementos compartidos remotos o locales, según la visualización
+  \tque seleccionase por última vez).
+
+4.\tHaga clic en Acciones=>Estado.  Aparecerá la
+  \t\k(ventana "Compartición de archivos: Estado"^^Ventana Compartimiento de archivos: Estado)
+
+5.\tCompruebe si NFS se está ejecutando.  Si no se está ejecutando, 
+  \thaga clic en Arrancar NFS.  Cuando se inicie NFS, aparecerá un mensaje 
+  \ty el botón Arrancar NFS quedará de color gris claro.
+
+  \tNota: NFS tardará unos instantes en arrancar.
+
+6.\tHaga clic en Cancelar en la ventana "Compartición de archivos:
+  \tEstado".
+
+7.\tHaga clic en Ver=>Remotos.  Aparecerá la ventana "Configuración 
+  \tde compartición de archivos: Elementos compartidos remotos".
+
+  \tNota: Es posible que la ventana Elementos compartidos remotos ya esté 
+  \ten pantalla, puesto que es la visualización por defecto.
+
+8.\tHaga clic en Elemento compartido=>Nuevo.  Aparecerá la ventana
+  \t"Compartición de archivos: Añadir nuevo elemento compartido -
+  \tremoto", con los siguientes campos:
+
+  \to\tNombre del sistema remoto: - Teclee el nombre del sistema que 
+  \t \ttiene el elemento compartido al que desee acceder, o haga clic 
+  \t \ten Buscar para abrir la \k(ventana "Buscar en el sistema remoto"^^Ventana Búsqueda de sistema remoto),
+  \t \tseleccione el sistema en una lista de sistemas disponibles, y 
+  \t \thaga clic en OK (es posible que el sistema tarde unos instantes
+  \t \ten mostrar el listado si está configurado para
+  \t \t \k(DNS^dtadmin/inet.hlp^Acceso a DNS)).
+
+  \to\tMostrar elementos compartidos disponibles: - Haga clic en
+  \t \tel botón Mostrar elementos compartidos disponibles
+  \t \tpara abrir una lista de elementos compartidos disponibles
+  \t \ten el sistema seleccionado (si seleccionó Buscar
+  \t \tnombre del sistema remoto, el sistema mostrará esta lista
+  \t \tautomáticamente.
+
+  \t \tHaga clic en el elemento compartido que desee usar.
+
+  \to\tNombre del icono: - Muestra el nombre del icono que representa
+  \t \tal elemento compartido (de la ventana "Compartición de
+  \t \tarchivos")
+
+  \to\tElemento compartido a conectar: - Muestra la \d(vía de acceso^vía de acceso) 
+  \t \tcompleta del elemento compartido seleccionado.
+
+  \to\tCarpeta local a de conexión: - Teclee el nombre de la carpeta
+  \t \tdel sistema desde la que desee acceder al elemento compartido,
+  \t \to haga clic en Buscar carpeta para abrir la
+  \t \t  \k(ventana "Compartición de archivos: Carpetas"^^Ventana Compartimiento de archivos: Carpetas).
+
+  \t \tNota: Si el nombre de carpeta tecleado no existe, el sistema 
+  \t \tle preguntará si desea crearla haciendo clic en Añadir.  
+  \t \tVéase \k(Creación de mensaje de carpeta).  Si el nombre de carpeta tecleado 
+  \t \tcorresponde a una carpeta que no está vacía, el sistema 
+  \t \temitirá un mensaje de advertencia.  Véase \k(Mensaje de carpeta no vacía).
+
+  \to\tConectar elemento compartido como: - Haga clic en Sólo lectura si 
+  \t \tdesea poder usar los archivos y carpetas del elemento 
+  \t \tcompartido, pero no cambiarlos.  Haga clic en Lectura y escritura 
+  \t \tsi desea poder usar los archivos y carpetas del elemento compartido 
+  \t \ty, además, poder cambiarlos.
+
+  \t \tNota: Si selecciona Lectura y escritura, pero el sistema remoto 
+  \t \tanuncia este elemento compartido como de sólo 
+  \t \tlectura, no podrá escribir en él.
+
+  \to\t¿Conectar al arrancar NFL?: Pulse en Sí para conectar el elemento 
+  \t \tcompartido ahora y siempre que arranque NFS; haga clic 
+  \t \ten No para conectar el elemento compartido sólo en este 
+  \t \tmomento.
+
+  \to\tOpciones extendidas: Haga clic en esta opción para que
+  \t \taparezcan estas opciones adicionales:
+
+  \t \t-\tConexión: - Haga clic en \k(conexión física o lógica^^Conexiones físicas y lógicas).
+
+  \t \t-\tOtras opciones de la línea de comandos: - Teclee las opciones
+  \t \t \tde la línea de comandos del comando mount.  Véase
+  \t \t \tla opción mount(1M) de la \s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr).
+
+9.\tHaga clic en Añadir.  Aparecerá el icono que representa al elemento 
+  \tcompartido en la ventana "Configuración de compartición de archivos: 
+  \tElementos compartidos remotos".
+
+  \tNota: Si decide que no desea añadir este elemento compartido, 
+  \thaga clic en Cancelar.
+
+Véase también:
+\s(Uso de Compartimiento de archivos^dhelp "pe.es" ownerhb "Compartimiento de archivos y carpetas remota NFS" "Uso de Compartimiento de archivos" || helpLinkErr)
+\s{Introducción a la administración del sistema de archivos de red (NFS)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Creación de mensaje de carpeta
+^$24
+Creación de mensaje de carpeta
+
+El nombre de la carpeta introducido en el cuadro de texto "Carpeta
+local a la que conectar:" no existe.  Haga clic en una de las
+siguientes opciones.
+
+\to\tCrear: Para crear la carpeta.
+
+\to\tCancelar: Para cancelar la petición de creación de la carpeta.  En 
+\t \tese caso, deberá especificar otra carpeta local a la que conectar 
+\t \tel elemento compartido remoto.
+
+^2^Mensaje de carpeta no vacía
+^$25
+Mensaje de carpeta no vacía
+
+El nombre de la carpeta tecleado en "Carpeta local a la que conectar"
+ya contiene archivos y/o carpetas.  Estos archivos y
+carpetas no estarán disponibles cuando se conecte
+\d(elemento compartido).  Esto puede hacer que las aplicaciones del
+sistema, o incluso partes del sistema propiamente dicho,
+queden inoperativas.
+
+Haga clic en una de las siguientes opciones:
+
+\to\tAñadir: Para añadir el nuevo elemento compartido, incluso en el caso 
+\t \tde que las carpetas y archivos de esta carpeta no estén 
+\t \tdisponibles cuando añada este elemento compartido.
+
+\to\tCancelar: Para cancelar la petición de creación de la carpeta.  En 
+\t \tese caso, deberá especificar otra carpeta local a la que conectar 
+\t \tel elemento compartido remoto.
+
+^2^Ventana Búsqueda de sistema remoto
+^$30
+Ventana Búsqueda de sistema remoto
+
+Desde esta ventana, puede buscar y seleccionar un sistema de una 
+de estas dos visualizaciones:
+
+\to\t\k(Lista de dominio^^Listado de dominios): Esta es la visualización por defecto si tiene
+\t \tDNS configurado en el sistema.
+
+\to\t\k(Lista de sistemas): Esta es la visualización por defecto si no tiene 
+\t \tDNS configurado en el sistema.  Muestra el contenido del archivo 
+\t \t/etc/hosts.
+
+Si tieen una lista DNS y la lista de sistemas contiene otras entradas 
+además del nombre del sistema local, puede pasar de una 
+visualización a la otra haciendo clic en Ver=>Listado de dominios o 
+Ver=>Lista de sistemas.
+
+Véase también:
+\k(Acceso a DNS^dtadmin/inet.hlp^Acceso a DNS)
+\s(Directorios y archivos^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^3^Listado de dominios
+^$40
+Listado de dominios
+
+Para mostrar el listado de dominios, haga clic en Ver=>Listado de
+dominios.
+
+Por defecto, el listado de dominios muestra los sistemas del dominio
+local.
+
+Para ver y seleccionar otros dominios (y subdominios), haga lo
+siguiente:
+
+1.\tTeclee el nombre de dominio deseado (es decir, el nombre del
+  \tdominio en el que reside el sistema que esté buscando) en el
+  \tcuadro de texto Nombre de dominio.
+
+2.\tHaga clic en Actualizar listado.
+
+  \tSi existen subdominios bajo el dominio especificado, aparecerán en
+  \tla parte superior del listado de dominios.
+
+3.\tVer el contenido de un subdomino
+  \t\d(haciendo doble clic^hacer doble clic) en la entrada del
+  \tsubdominio. Aparece a la derecha una nueva lista que presenta el
+  \tcontenido de ese subdominio.
+
+  \tPuede seguir haciendo doble clic en subdominios para que aparezcan
+  \tmás subdominios hasta que no queden más. Sin embargo, sólo pueden
+  \taparecer tres niveles de subdominios en su pantalla cada vez. Si
+  \ttiene más de res niveles, use las flechas a la izquierda y derecha
+  \tdel centro de su pantalla para avanzar y retroceder a través de
+  \tlas listas.
+
+4.\tBusque por las listas hasta localizar el sistema deseado. Después,
+  \thaga clic en la entrada de ese sistema.
+
+5.\tHacer clic en OK.
+
+^3^Lista de sistemas
+^$50
+Lista de sistemas
+
+Para ver la lista de sistemas, haga clic en Visualizar=>Lista de
+sistemas
+
+Nota: Si /etc/hosts contiene sólo una entrada para su sistema y no paa
+otros, esta visualización no estará disponible.
+
+La lista de sistemas muestra los sistemas de su archivo /etc/hosts. 
+Haga clic en el sistema deseado y después en OK.
+
+Véase también:
+\s(Directorios y archivos^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^2^Ventana Compartimiento de archivos: Carpetas
+^$60
+Ventana Compartimiento de archivos: Carpetas
+
+Realice una acción de las siguientes:
+
+\to\tHaga clic en un nombre de carpeta o en la Carpeta padre de la
+\t \tlista Carpeta(s) hasta localizar la carpeta deseada.
+
+\to\tTeclee \d(vía de acceso) para la carpeta deseada.
+
+^1^Creación de elementos compartidos locales
+^$70
+Creación de elementos compartidos locales
+
+Nota: Deberá tener \k(permiso para anunciar carpetas/archivos locales^dtadmin/user.hlp^Comprensión de los permisos)
+para poder crear elementos compartidos locales.
+
+Cree un elemento compartido local cuando quiera que los usuarios y
+sistemas remotos puedan acceder a los archivos y carpetas de su
+sistema.
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana "Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Compartición_de_archivos.  Aparecerá la ventana
+  \t"Configuración de compartición de archivos" (para los
+  \telementos compartidos remotos o locales, según la visualización
+  \tque seleccionase por última vez).
+
+4.\tHaga clic en Acciones=>Estado.  Aparecerá la
+  \t\k(ventana "Compartición de archivos: Estado"^^Ventana Compartimiento de archivos: Estado)
+
+5.\tComprobar si NFS está ejecutándose. Si no es así, haga clic en Iniciar 
+  \tNFS. Cuando se inicie NFS, aparecerá un mensaje y el 
+  \tbotón Iniciar NFS se difuminará.
+
+  \tNota: Puede llevar unos minutos iniciar NFS.
+
+6.\tHaga clic en Cancelar en la ventana "Compartición de archivos:
+  \tEstado".
+
+7.\tHaga clic en Ver=>Locales para ver los elementos
+  \tcompartidos locales.  Deberá mostrar una visualización local
+  \tantes de poder \d(anunciar) un elemento compartido.
+
+8.\tHaga clic en Elemento compartido=>Nuevo. Aparece la ventana
+  \tCompartición de archivos: Añadir nuevo elemento compartido -
+  \tLocal" con los campos siguientes:
+
+  \to\tCarpeta/archivo compartido: - Haga clic en Buscar.  Aparecerá
+  \t \tla ventana  \k("Compartición de archivos: Elemento compartido"^^Ventana Compartimiento de archivos: Elemento compartido), que
+  \t \tmostrará los archivos y carpetas de la
+  \t \t\d(carpeta personal^directorio personal).
+
+  \t \tRealice una acción de las siguientes:
+
+  \t \t-\tHaga clic en un nombre de carpeta o en la Carpeta padre de la
+  \t \t \tlista Carpeta(s) hasta que localice la carpeta deseada.
+
+  \t \t-\tTeclee el \d(vía de acceso) para la carpeta deseada.
+
+  \to\tNombre de icono: - Teclee un nombre para identificar el elemento 
+  \t \tcompartido. Por defecto, el sistema usa el nombre del archivo 
+  \t \to carpeta introducido en Carpeta/Archivo a compartir.
+
+  \to\t¿Anunciar cuando se inicie NFS? - Haga clic en Sí para anunciar
+  \t \tel elemento compartido ahora y cada vez que inicie NFS, o haga
+  \t \tclic en No para anunciar el elemento compartido sólo ahora
+  \t \t(automáticamente cuando el sistema se reinicie).
+
+  \to\tPara anunciar como: - Haga clic en una de las opciones
+  \t \tsiguientes:
+
+  \t \t-\tSólo lectura - Para permitir que los demás sistemas usen, 
+  \t \t \tpero no cambien, el elemento compartido.
+
+  \t \t-\tLectura y escritura - Para permitir el acceso pleno a los
+  \t \t \telementos compartidos.
+
+  \t \t-\tNingún acceso:  Para limitar el acceso sólo a los sistemas
+  \t \t \tde la lista Excepciones.
+
+  \t \t \tTeclear las excepciones: campo Nombre del sistema.  El nombre
+  \t \t \tdel (de los) sistema(s) que desee compartir.  También puede
+  \t \t \thacer clic en Buscar para abrir la
+  \t \t \t\k(ventana "Búsqueda de sistema remoto"^^Ventana Búsqueda de sistema remoto).
+
+  \t \t \tDespués, haga clic en Insertar sólo lectura o Insertar lectura
+  \t \t \ty escritura para añadirlo a la lista Excepciones.
+
+  \t \t \tNota: Para borrar un sistema de la lista Excepciones, haga
+  \t \t \tclic en ese sistema y después en Borrar. Para borrar todos los
+  \t \t \tsistemas de la lista Excepciones, haga clic en Borrar todo.
+
+  \to\tOpciones extendidas: - Haga clic en este cuadro para que
+  \t \taparezcan las opciones adicionales:
+
+  \t \t-\tOtras opciones de la línea de comandos: - Teclee las opciones
+  \t \t \tde la línea de comandos del comando share.  Véase
+  \t \t \tla \s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr) para obtener información acerca
+  \t \t \tde las opciones de la línea de comandos.
+
+9.\tHacer clic en Añadir. Un icono que representa el elemento
+  \tcompartido local aparece en la ventana "Definición de compartición
+  \tde archivos: Elementos compartidos locales".
+
+  \tNota: Si decide que no desea añadir este elemento compartido, 
+  \thaga clic en Cancelar.
+
+Véase también:
+\s(Uso de Compartimiento de archivos^dhelp "pe.es" ownerhb "Compartimiento de archivos y carpetas remota NFS" "Uso de Compartimiento de archivos" || helpLinkErr)
+\s{Introducción a la administración del sistema de archivos de red (NFS)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Ventana Compartimiento de archivos: Estado
+^$80
+Ventana Compartimiento de archivos: Estado
+
+La información de la ventana "Compartición de archivos: Estado"
+muestra lo siguiente:
+
+\to\tSi se está ejecutando actualmente NFS.
+
+\to\tSi el sistema está listo para archivos \d(anunciar) o
+\t \t\d(conectar).
+
+\to\tSi cualquiera de sus \d(elementos compartidos^elemento compartido)
+\t \tlocales lo están usando sistemas remotos (si los elementos
+\t \tcompartidos están en uso), el Escritorio los muestra en el cuadro
+\t \tde lista Carpeta/archivo local de la ventana).
+
+Para iniciar NFS, haga clic en Iniciar NFS.
+
+Para para NFS, haga clic en \k(Parar NFS^^Ventana Parar NFS).
+
+Véase también:
+
+\s{Introducción a la administración del sistema de archivos de red (NFS)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Ventana Parar NFS
+^$85
+Ventana Parar NFS
+
+Asegúrese de que realmente quiere parar NFS en su sistema.
+
+Al parar NFS, el sistema desconecta todos los elementos compartidos
+remotos y todos los \d(elementos compartidos^elemento compartido) locales
+dejan de estar disponibles para los sistemas remotos. Esto puede
+llevar algunos minutos.
+
+Si decide parar NFS, haga clic en Para NFS en la ventana de mensajes
+de aparición instantánea. Si decide parar NFS, haga clic en
+Cancelar en dicha ventana.
+
+Véase también:
+
+\s{Introducción a la administración del sistema de archivos de red (NFS)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+
+^2^Conexiones físicas y lógicas
+^$90
+Conexiones físicas y lógicas
+
+Use sólo una conexión de hardware si es esencial que la 
+información que está escribiendo en el sistema remoto no se pierda.
+
+Una conexión de hardware hace que el sistema espere a que el elemento
+compartido remoto se reconecte si se produce una desconexión. 
+Esencialmente, el sistema queda bloqueado y no es utilizable. Sin embargo,
+con una conexión de software, si, después de un breve tiempo en que el
+sistema remoto no responde, la escritura falla y el sistema vuelve a
+estar utilizable de nuevo. Tendrá que guardar los datos localmente y
+tratar de enviarlos al sistema remoto posteriormente.
+
+^2^Ventana Compartimiento de archivos: Elemento compartido
+^$100
+Ventana Compartimiento de archivos: Elemento compartido
+
+Esta ventana muestra una lista de los
+\d(elementos compartidos^elemento compartido) disponibles. Use la barra de
+desplazamiento para subir y bajar por la lista. Haga clic en el
+elemento compartido deseado. El sistema rellena el campo
+Carpeta/archivo a compartir: de la ventana "Compartición de archivos:
+Añadir nuevo elemento compartido":
+
+
+^1^Visualización y modificación de propiedades de elementos compartidos remotos
+^$120
+Visualización y modificación de propiedades de elementos compartidos remotos
+
+Para ver o modificar propiedades remotas \d(elemento compartido), haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana "Carpeta: Gestión_de_redes".
+
+3.\tHacer doble clic en Compartición_archivos. Aparece la ventana
+  \t"Definición de compartición de archivos" (para elementos
+  \tcompartidos remotos o locales, según la última
+  \tvisualización seleccionada).
+
+  \tSi está definida la visualización para elementos compartidos
+  \tremotos, vaya al paso 5.  Si está definida la visualización
+  \tpara elementos compartidos locales, vaya al paso siguiente.
+
+4.\tHacer clic en Visualizar=Remoto. Aparece la ventana "Definición de 
+  \tcompartición de archivos: Elementos compartidos remotos".
+
+5.\tHacer clic en el elemento compartido remoto.
+
+6.\tHacer clic en Elemento compartido=>Propiedades. Aparece la 
+  \t \tventana "Compartición de archivos: Propiedades de elementos 
+  \t \tcompartidos - Remotos" con los campos siguientes:
+
+  \to\tNombre de sistema remoto: - Muestra el nombre del sistema en 
+  \t \tdonde reside el elemento compartido.
+
+  \to\tNombre de icono: - Muestra el nombre del icono que representa el
+  \t \te lemento compartido seleccionado.
+
+  \to\tElemento compartido a conectar: - Muestra la
+  \t \t\d(vía de acceso^vía de acceso) completa del elemento
+  \t \tcompartido seleccionado.
+
+  \to\tCarpeta local para conectar a: - Muestra el nombre de la 
+  \t \tcarpeta del sistema en donde reside el elemento compartido.
+
+  \to\tConectar elementos compartidos como: - Si está seleccionado 
+  \t \tSólo lectura, puede usar, pero no hacer cambios, el elemento 
+  \t \tcompartido. Si está seleccionado Lectura y escritura, tiene pleno 
+  \t \tacceso al elemento compartido y puede hacer cambios en el mismo 
+  \t \t(siempre que el sistema remoto avise que el elemento compartido 
+  \t \tes de lectura y escritura).
+
+  \to\t¿Conectar cuando se inicie NFS? - Si se selecciona Sí, el sistema se
+  \t \tconecta al elemento compartido cada vez que se inicie NFS. Si se 
+  \t \tselecciona No, el sistema no se conecta automáticamente al elemento 
+  \t \tcompartido cuando se inicie NFS.
+
+  \to\tOpciones extendidas - Haga clic en esta opción para que
+  \t \taparezcan estas opciones adicionales:
+
+  \t \t-\tLa conexión es: - Muestra si la conexión es una
+  \t \t \t\k(conexión de software o hardware^^Conexiones físicas y lógicas).
+
+  \t \t-\tOtras opciones de la línea de comandos: - Muestra las opciones
+  \t \t \tde la línea de comandos del comando mount(1M).
+
+7.  Hacer los cambios deseados (si los hay) y en Aplicar, o en Cancelar 
+    para volver a la ventana "Definición de compartición de archivos: 
+    Elementos compartidos remotos" sin realizar ningún cambio.
+
+
+Véase también:
+\s(Uso de Compartimiento de archivos^dhelp "pe.es" ownerhb "Compartimiento de archivos y carpetas remota NFS" "Uso de Compartimiento de archivos" || helpLinkErr)
+\s{Introducción a la administración del sistema de archivos de red (NFS)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+
+^1^Visualización y modificación de elementos compartidos locales
+^$130
+Visualización y modificación de elementos compartidos locales
+
+Para ver o modificar propiedades locales \d(elemento compartido), haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana "Carpeta: Gestión_de_redes".
+
+"3.\tHacer doble clic en Compartición_archivos. Aparece la ventana 
+  \t"Definición de compartición de archivos" (para elementos 
+  \tcompartidos remotos o locales, según la última 
+  \tvisualización seleccionada)."
+
+  \tSi se ha definido la visualización para los elementos
+  \tcompartidos locales, vaya al paso 5. Si se ha definido la
+  \tvisualización para los elementos compartidos remotos,
+  \tvaya al paso siguiente.
+
+4.\tHacer clic en Visualizar=>Local. Aparece la ventana "Definición
+  \tdel archivo compartido: Elementos compartidos locales".
+
+5.\tHacer clic en el elemento compartido remoto.
+
+6.\tHacer clic en Elemento compartido=>Propiedades.  Aparece la v
+  \tentana "Compartición de archivos: Propieades de elementos 
+  \tcompartidos" con los campos siguientesd:
+
+  \to\tCarpeta/archivo a compartir: - Muestra el nombre del archivo
+  \t \to carpeta que está compartiendo con otros sistemas.
+
+  \to\tNombre de icono: - Muestra el nombre del icono que representa el
+  \t \telemento compartido.
+
+  \to\t¿Anunciar cuando se inicie NFS? - Si está seleccionado Sí, el sistema 
+  \t \tanuncia el elemento compartido cada vez que inicie NFS. Si está 
+  \t \tseleccionar No, el sistema no anuncia automáticamente 
+  \t \tel elemento compartido al iniciar NFS.
+
+  \to\tPara anunciar como - Si está seleccionado Sólo lectura, otros 
+  \t \tsistemas pueden usar, pero no cambiar, el elemento compartido. 
+  \t \tSi está seleccionado Lectura y escritura, otros sistemas
+  \t \ttendrán pleno acceso a los elementos compartidos. Si está s
+  \t \teleccionado Ningún acceso, los sistemas de la lista Excepciones tienen 
+  \t \tacceso al elemento compartido.
+
+  \to\tOpciones extendidas - Haga clic en esta opción para que
+  \t \taparezcan estas opciones adicionales:
+
+  \t \t-\tOtras opciones de la línea de comandos: - Muestra las opciones
+  \t \t \tde la línea de comandos del comando share(1M).  Véase
+  \t \t \tla \s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr) para obtener información acerca
+  \t \t \tde las opciones de la línea de comandos.
+
+7.\tHacer los cambios deseados (si los hubiera) y hacer clic en
+  \tAplicar o en Cancelar para volver a la ventana "Definición de
+  \tcompartición de archivos: Elementos compartidos locales" sin
+  \trealizar cambios.
+
+Véase también:
+\s(Uso de Compartimiento de archivos^dhelp "pe.es" ownerhb "Compartimiento de archivos y carpetas remota NFS" "Uso de Compartimiento de archivos" || helpLinkErr)
+\s{Introducción a la administración del sistema de archivos de red (NFS)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Desconexión y supresión de elementos compartidos remotos
+^$140
+Desconexión y supresión de elementos compartidos remotos
+
+Para desconectar o borrar un \d(elemento compartido) remoto, haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana "Carpeta: Gestión_de_redes".
+
+3.\tHacer doble clic en Compartición_archivos. Aparece la ventana 
+  \t"Definición de compartición de archivos" (para elementos 
+  \tcompartidos remotos o locales, según la última 
+  \tvisualización seleccionada).
+
+  \tSi está definida la visualización para elementos compartidos
+  \tremotos, vaya al paso 5.  Si está definida la visualización
+  \tpara elementos compartidos locales, vaya al paso siguiente.
+
+4.\tHacer clic en Visualizar=Remoto. Aparece la ventana "Definición de 
+  \tcompartición de archivos: Elementos compartidos remotos".
+
+5.\tHacer clic en el elemento compartido conectado que vaya a
+  \tdesconectar o borrar.
+
+6.\tRealice una acción de las siguientes:
+
+  \to\tPara desconectarse - Haga clic en Acciones=>Desconectar.
+
+  \t \tEl elemento compartido seleccionado ya no está conectado, es decir, 
+  \t \tya no puede usar más los archivos asociados al elemento compartido. 
+  \t \tSin embargo, el elemento compartido sigue en la ventana listo 
+  \t \tpara reconectarse la siguiente vez que inicie NFS.
+
+  \to\tPara borrar - Haga clic en Elemento compartido=>Borrar.
+
+  \t \tAparece de forma instantánea la \k(ventana de confirmación^^Ventana Supresión de la confirmación). Haga clic en 
+  \t \tBorrar dentro de esta ventana, si desea no anunciar y eliminar 
+  \t \tpermanentemente el elemento compartido de su sistema. 
+  \t \tHaga clic en Cancelar si decide no borrar permanentemente 
+  \t \tel elemento compartido.
+
+Véase también:
+\s(Uso de Compartimiento de archivos^dhelp "pe.es" ownerhb "Compartimiento de archivos y carpetas remota NFS" "Uso de Compartimiento de archivos" || helpLinkErr)
+\s{Introducción a la administración del sistema de archivos de red (NFS)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Cancelación de anuncios y supresión de elementos compartidos locales
+^$150
+Cancelación de anuncios y supresión de elementos compartidos locales
+
+Nota: Antes de no anunciar o borrar un \d(elemento compartido) local,
+asegúrese de que el elemento compartido no está en uso. La
+\k(ventana "Archivo compartido: Estado"^^Ventana Compartimiento de archivos: Estado) muestra todos los sistemas
+remotos conectados al elemento compartido. Si un sistema remoto está
+usando el elemento compartido, póngase en contacto con el
+administrador o propietario del sistema para asegurarse de que es
+conveniente desconectarlo.
+
+Para no anunciar o borrar un elemento compartido local, haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al
+punto 2. Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana "Carpeta: Gestión_de_redes".
+
+3.\tHacer doble clic en Compartición_archivos. Aparece la ventana 
+  \t"Definición de compartición de archivos" (para elementos 
+  \tcompartidos remotos o locales, según la última 
+  \tvisualización seleccionada).
+
+  \tSi se ha definido la visualización para los elementos
+  \tcompartidos locales, vaya al paso 5. Si se ha definido la
+  \tvisualización para los elementos compartidos remotos,
+  \tvaya al paso siguiente.
+
+4.\tHacer clic en Visualizar=Local. Aparece la ventana "Definición de "
+  \tcompartición de archivos".
+
+5.\tHacer clic en el elemento compartido avisado que quiera dejar de
+  \tavisar o borrar.
+
+6.\tRealice una acción de las siguientes:
+
+  \to\tPara no avisar - Haga clic en Acciones=>No avisar.
+
+  \t \tEl elemento compartido seleccionado ya no es avisado, es decir,
+  \t \tlos sistemas ya no pueden acceder al archivo. Sin embargo, el
+  \t \telemento compartido sigue en la ventana listo para avisar la
+  \t \tsiguiente vez que se inicie NFS.
+
+  \to\tPara borrar - Haga clic en Elemento compartido=>Borrar.
+
+  \t \tAparece una \k(ventana de confirmación^^Ventana Supresión de la confirmación). Haga clic en Borrar en esta
+  \t \tventana si desea no anunciar y eliminar permanentemente el
+  \t \telemento compartido de la ventana "Compartición de archivos.
+  \t \tHaga clic en Cancelar si no quiere eliminar permanentemente el
+  \t \telemento compartido.
+
+Véase también:
+\s(Uso de Compartimiento de archivos^dhelp "pe.es" ownerhb "Compartimiento de archivos y carpetas remota NFS" "Uso de Compartimiento de archivos" || helpLinkErr)
+\s{Introducción a la administración del sistema de archivos de red (NFS)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Ventana Supresión de la confirmación
+^$160
+Ventana Supresión de la confirmación
+
+Asegúrese de que desea borrar permanentemente el elemento compartido
+de la ventana "Compartición de archivos". El sistema no eliminará los
+archivos asociados con el elemento compartido, sino sólo la
+posibilidad de que los sistemas remotos accedan a los archivos.
+
+Si decide no eliminar el elemento compartido, haga clic en Cancelar y
+no se borrará nada. De otro modo, haga clic en Borrar para seguir 
+con la eliminación.
+
+
+

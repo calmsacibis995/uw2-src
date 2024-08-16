@@ -1,0 +1,44 @@
+#ident	"@(#)mach:mach/devices/makefile.stdenv	1.3"
+
+#	NAME				-*-Mode: Makefile; -*-
+#
+#		makefile : Make file.
+#
+#	SYNOPSIS
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	AUTHORS
+#
+#		Joseph Koshy.
+#
+#	HISTORY
+#
+#		1.0.0 23_July_1993 Joseph Koshy : First coding.
+
+#	AM directives.
+
+..include : ultra				# LOCALBUS & ATBUS 
+..special : ultra-no-lfb				# ONLY ATBUS 
+..source : Imakefile
+..source : mach.vinfo
+
+#	Standard make include file.
+
+include ${std_make_include_file}
+##$(am)
+
+
+##$(am)

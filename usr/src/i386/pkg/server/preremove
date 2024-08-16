@@ -1,0 +1,66 @@
+#ident	"@(#)pkg.inetinst:preremove	1.3"
+
+#
+#  Preremove for Server Utilities package
+#
+
+#
+#  We're politically correct
+#
+# NLSPATH=$NSLPATH:$DOT/libs/locale/%l/LC_MESSAGES/%N.cat
+# LANG=C
+# export NLSPATH LANG
+
+SPX_PORT="1006"
+SPX_PORT_HEX="0x3ee"
+SPX_SERVICE="1006"
+SPX_SERVICE_HEX="0x3ee"
+UW_SERVICE_HEX="0x3e4"
+MY_HOSTNAME=`/bin/uname -n`
+
+#
+#  Stop SAPping this service
+#
+if [ -f /var/spool/sap/out/${SPX_SERVICE_HEX} ]
+then
+	rm -f /var/spool/sap/out/${SPX_SERVICE_HEX}
+	SAPDPID=`ps -luroot | grep " sapd$" | awk '{print $4}'`
+	[ ! -z "${SAPDPID}" ] && kill -HUP ${SAPDPID}
+	[ ! -z "${SAPDPID}" ] && kill -14 ${SAPDPID}
+fi
+[ -f /usr/sbin/nwsaputil ] && {
+	nwsaputil -d -t ${SPX_SERVICE_HEX} -n ${MY_HOSTNAME} -s ${SPX_PORT_HEX}
+}
+
+#
+#  Remove entries from /etc/inet/inetd.conf, if there
+#
+grep '^inetinst' /etc/inet/inetd.conf > /dev/null
+[ $? -eq 0 ] && {
+	INETTMP=/var/tmp/inetinst.$$
+	grep -v '^inetinst' /etc/inet/inetd.conf >${INETTMP}
+	cat ${INETTMP} >/etc/inet/inetd.conf
+	rm -f ${INETTMP}
+}
+#
+#  Remove entries from /etc/nwnetd.conf, if there
+#
+grep '^inetinst' /etc/nwnetd.conf > /dev/null
+[ $? -eq 0 ] && {
+	INETTMP=/var/tmp/inetinst.$$
+	grep -v '^inetinst' /etc/nwnetd.conf >${INETTMP}
+	cat ${INETTMP} >/etc/nwnetd.conf
+	rm -f ${INETTMP}
+}
+
+#
+#  Give the inetd a kick to make sure the new configuration is used
+#
+INETPID=`ps -luroot | grep " inetd$" | awk '{print $4}'`
+kill -HUP ${INETPID}
+
+#
+#  Give the nwnetd a kick to make sure the new configuration is used
+#
+INETPID=`ps -luroot | grep " nwnetd$" | awk '{print $4}'`
+kill -HUP ${INETPID}

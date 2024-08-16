@@ -1,0 +1,38 @@
+.TH SNFTOBDF 1 "1 October 1991" "snftobdf" "X Version 11 Release 5"
+.SH NAME
+snftobdf - SNF to BDF font decompiler for X11
+.SH SYNOPSIS
+.B "snftobdf"
+[-p#] [-u#] [-m] [-l] [-M] [-L] [snf-file]
+.SH DESCRIPTION
+.PP
+.B snftobdf
+reads a Server Normal Format (SNF) font from the
+specified file and writes an X11 Bitmap Distribution Format (BDF) to
+standard output.
+.SH OPTIONS
+.TP 8
+.B \-p#
+Force the glyph padding to a specific number.  The legal
+values are 1, 2, 4, and 8.
+.B \-u#
+Force the scanline unit padding to a specific number.  The legal
+values are 1, 2, and 4.
+.TP 8
+.B \-m
+Force the bit order to most significant bit first.
+.TP 8
+.B \-l
+Force the bit order to least significant bit first.
+.TP 8
+.B \-M
+Force the byte order to most significant bit first.
+.TP 8
+.B \-L
+Force the byte order to least significant bit first.
+.SH "SEE ALSO"
+X(1), Xserver(1), bdftosnf(1)
+.br
+"Bitmap Distribution Format 2.1"
+.SH AUTHOR
+mleisher@nmsu.edu (Mark Leisher)

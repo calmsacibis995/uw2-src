@@ -1,0 +1,158 @@
+.ident	"@(#)proto:locale/C/menus/help/filesys	1.9"
+.related kbhelp genhelp initdisk
+.title Help: File System Configuration
+ABOUT THIS OPTION
+Select this option to check and change how file systems are
+configured.  (A description of each file system is presented
+later in this help message.)
+
+CAUTIONS:  If you delete any file system(s), all files in the
+           deleted file system(s) are destroyed.
+
+           If you change the type or size of a file system, all
+           files in that file system are destroyed.
+
+           Backup your system before changing partitions or file
+           systems.
+Unless you are an experienced system administrator, consult the
+Installation Handbook before changing file system allocations.
+                                   (CONTINUED)
+.page
+USING THIS OPTION
+The File Systems option has three fields you can edit: Type,
+Size, and Disk (if more than one hard disk is present).
+
+Do the following to change the Type or Disk:
+    1.  Use the <Tab> or up/down arrow keys to move to the
+        desired field.
+    2.  Press <F2> to view the choices for that field.
+    3.  Use the <Tab> or up/down arrow keys to move the asterisk
+        (*) to your choice.
+    4.  After selecting your choice, press <Enter> to return to
+        the File Systems menu.
+                                   (CONTINUED)
+.page
+USING THIS OPTION (CONTINUED)
+Do the following to change the Size:
+    1.  Use the <Tab> or up/down arrow keys to move to the
+        desired field.
+    2.  Type in the value.
+                                   (CONTINUED)
+.page
+FILE SYSTEMS
+File systems are used to divide the active partition of your
+hard disk into smaller sections.  This allows you to limit, for
+example, the size of the users' home directories.  The following
+file systems are available:
+        Root (/)                   User (/home)
+        Swap (/dev/swap)       2nd User (/home2)
+        Boot (/stand)          Add-ons (/var)
+                              Temporary (/tmp and /var/tmp)
+                                    usr (/usr)
+                                   Dump (/dev/dump)
+                    VxVM Private Volume (/dev/volprivate)
+                             ALTS TABLE
+The Root, Swap, Boot, and ALTS TABLE file systems cannot
+be deleted; you can add or delete other file systems.
+                                   (CONTINUED)
+.page
+ROOT FILE SYSTEM
+This is the foundation (root) of the UnixWare operating
+system.  It requires most of the disk in the simplest
+configuration.
+
+BOOT FILE SYSTEM
+This file system holds the system startup files.  It
+must be 5 MB or greater and must be a bfs file system type.
+
+SWAP SLICE
+This slice contains the data that runs the machine.  The
+swap slice should be two times the size of your RAM.
+Since this slice does not contain files, the file system
+type must be designated as 'slice'.
+                                   (CONTINUED)
+.page
+HOME FILE SYSTEM
+This file system is used to hold users' files.
+Creating this file system helps ensure that users don't
+deplete all the space in the root file system.
+
+If you have a second disk, the default setup creates
+the user file system on the secondary disk.
+
+2ND HOME FILE SYSTEM
+This file system is used to hold an additional set of users'
+files.  It is used when there are two  different groups of
+users and ensures that both user groups have their own area.
+                                   (CONTINUED)
+.page
+ADD-ONS FILE SYSTEM
+This file system creates a place for data files used by
+add-on packages and administration. 
+
+TEMPORARY FILE SYSTEMS
+These file systems are used as a place to hold temporary
+files.  The /tmp and /var/tmp directories are available to
+any user.  Using this temporary storage space helps avoid
+file space problems on the root file system.
+
+USR FILE SYSTEM
+This file system contains the executables and some of the
+data files used by application software.
+                                   (CONTINUED)
+.page
+DUMP SLICE
+This slice has no files but provides a storage area where
+development or support personnel can store an image of
+the running system.  The dump slice should be the size
+of your RAM and have a slice file system type.
+
+VxVM PRIVATE VOLUME
+This slice is reserved for the VERITAS Volume Manager
+and must be allocated if you intend to later install the
+On-Line Data Manager (an add-on product to the Personal
+Edition or Application Server) VERITAS Volume Manager
+package.
+                                   (CONTINUED)
+.page
+ALTS TABLE
+This slice contains a mapping of the bad blocks to good
+blocks and is used by the disk driver.  The ALTS TABLE
+slice must be at least one cylinder (1 MB on SCSI systems) 
+and have a slice file system type.
+
+TYPE
+The following are the choices for the types of file systems:
+      vxfs       s5       s52k       ufs
+
+Note: Types are not an option for the boot, swap, dump, and
+      ALTS TABLE file systems.
+                                   (CONTINUED)
+.page
+SIZE
+A size is automatically assigned to the file system
+depending on your hard disk's capacity.  You can change
+this size by typing over the displayed size.
+
+Most file systems have a minimum and maximum size.  If you
+go beyond these limits, an error message informs you of the
+minimum or maximum size.
+
+DISK
+This field appears in systems with more than one hard
+disk.  Use this field to choose the disk where the file
+system will be placed.
+                                   (CONTINUED)
+.page
+DISK (CONTINUED)
+If you do not want the file system, leave the Disk field
+blank.
+
+EXITING THE FILE SYSTEMS OPTION
+When you are finished viewing or changing file system
+information, press <F10> to return to the Disk
+Configuration menu.
+
+EXITING HELP
+Press <Esc> to return to the Disk Configuration menu.
+Press <F1> for more help.

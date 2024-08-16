@@ -1,0 +1,22 @@
+#!/usr/bin/perl
+
+# $Header: /SRCS/esmp/usr/src/nw/cmd/gnu/perl-4.036/eg/dus,v 1.1.1.1 1993/10/11 20:26:15 ram Exp $
+
+# This script does a du -s on any directories in the current directory that
+# are not mount points for another filesystem.
+
+($mydev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,
+   $blksize,$blocks) = stat('.');
+
+open(ls,'ls -F1|');
+
+while (<ls>) {
+    chop;
+    next unless s|/$||;
+    ($dev,$ino,$mode,$nlink,$uid,$gid,$rdev,$size,$atime,$mtime,$ctime,
+       $blksize,$blocks) = stat($_);
+    next unless $dev == $mydev;
+    push(@ary,$_);
+}
+
+exec 'du', '-s', @ary;

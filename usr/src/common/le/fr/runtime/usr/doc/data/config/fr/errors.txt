@@ -1,0 +1,430 @@
+# $Id: errors.txt 1.47 1994/09/02 20:01:48 rll Exp $
+
+# Error database
+###################################
+# ERR_INFO	>= 0
+# ERR_WARNING	>= 2000
+# ERR_MINOR	>= 4000
+# ERR_SEVERE    >= 6000
+# ERR_FATAL     >= 8000 
+
+#### MULTI-LINE ERROR MESSAGES ARE SUPPORTED
+# Simply use '\' to "escape" the eol
+
+# global errors (0-99)
+###################################
+0000    Version 2.0
+0001	exécution de '%s'...
+0002	exécution de '%s' à la ligne '%d'...
+0003	avertissement
+# minor error
+0004	erreur
+# major error
+0005	erreur
+0006	erreur irrémédiable
+2000	impossible d'ouvrir le fichier '%s'
+2001	erreur lors de la lecture à partir du fichier '%s', veuillez vérifier les autorisations
+2002	erreur lors de l'écriture dans le fichier '%s', veuillez vérifier les autorisations 
+2003	%s pas encore pris en charge
+2004	erreur système, %s
+2005	impossible de lire le répertoire '%s'
+2006	impossible d'écrire dans le répertoire '%s'
+2007    impossible d'exécuter le sous-processus '%s'
+2008	le fichier '%s' existe déjà
+2009	génération de '%s' n'a pas abouti
+4000	impossible d'enregistrer le programme '%s' avec le serveur EBT
+4001	impossible d'obtenir une autorisation depuis le serveur EBT
+4002	impossible de supprimer le fichier '%s'
+4003	aucun fichier du type '%s'
+4004	erreur lors de la lecture à partir du fichier '%s', veuillez vérifier les autorisations
+4005	erreur lors de l'écriture dans le fichier '%s', veuillez vérifier les autorisations 
+4006    impossible d'allouer de l'espace pour '%s'
+4007	impossible d'ouvrir le fichier, autorisations insuffisantes associées au fichier '%s'
+4008	occurence associée à '%s' dupliquée, utilisation de l'occurrence n°%d
+4012	impossible d'obtenir l'autorisation associée à l'option '%s'
+6001	impossible de répondre à l'appel rpc '%s'
+6002	impossible d'enregistrer les routines rpc
+6003    impossible d'ouvrir le socket
+6004	impossible de se connecter au serveur %s au niveau '%s'
+6005	erreur rpc
+6006	impossible d'allouer de l'espace à %s
+6007	impossible de libérer suffisamment de mémoire
+6008    impossible d'envoyer l'appel rpc '%s'
+6010	impossible de créer %s
+6011	erreur à la ligne %d dans le fichier '%s'
+6015	Majuscule/Minuscule erronée dans le switch associé à %s
+6016	La fonction '%s' a échoué lorsqu'elle a été appelée depuis '%s'
+8000	impossible d'allouer de l'espace à %s
+8001	erreur lors de la lecture à partir du fichier '%s', veuillez vérifier les autorisations
+8002	erreur lors de l'écriture dans le fichier '%s', veuillez vérifier les autorisations 
+8003	impossible d'ouvrir le fichier '%s'
+8004	'%s' est une variable .ebtrc obligatoire
+8005	service d'autorisation incorrect '%s'
+8006    impossible d'ouvrir le socket
+8007    impossible d'enregistrer la routine rpc
+8008    impossible d'atteindre ce point '%s'
+8009	impossible de répondre à l'appel rpc '%s'
+8010	impossible de créer %s
+8011	chiffre magique erroné dans %s
+8012	impossible de trouver le fichier '%s'
+
+
+# pcolors package (100-109)
+###################################
+2100	%s est un nom de couleur trop long
+2101	utilisation du noir, impossible d'analyser la couleur '%s'
+2102	utilisation du noir, impossible d'affecter la couleur '%s'
+2103	impossible de trouver le fichier '%s'
+
+# pfonts package (110-119)
+###################################
+6110	impossible de charger la police par défaut '%s'
+4111	impossible de charger xtab '%s', le jeu de caractères peut-être inactif
+4112	absence du jeu de caractères '%2$s' dans la police '%1$s'
+2111	utilisation de '%s', impossible de charger '%s'
+
+# pg package (120-129)
+###################################
+2120	impossible de lire le fichier bitmap '%s'
+8120	impossible d'activer l'affichage
+
+# str,util package (130-139)
+###################################
+2130	caractère associé au nom de l'attribut erroné (accepté) dans '%s' : '%c' (%d)
+2131	indicateur de valeur apparemment manquant dans la chaîne d'attributs '%s', au niveau de '%s'
+2132	indicateur de valeurs multiples (ignoré) dans la chaîne d'attributs '%s'
+2133	Retour chariot (CR) ou interligne (LF) a cité la valeur attr
+2134	état util attr fsa incorrect
+2135    erreur au niveau de la chaîne '%s'       
+2136	
+2137	tampon trop petit dans le decode huffman
+2138	tampon trop petit dans l'encode huffman
+4130	%d est trop long pour un tampon d'attribut
+6130	affectations xtabunion contradictoires associées au caractère '%d'
+8130	erreur d'arborescence huffman
+
+# raster package (140-149)
+###################################
+6140	impossible d'ouvrir le fichier bitmap '%s'
+6141	impossible de charger l'image bitmap
+
+# browser,toc, and render packages (150-169)
+############################################
+4151	
+4152	trop de données à copier, copie de %d caractères
+6150	impossible de charger le fichier bitmap '%s', test sur le paramètre par défaut
+6151    impossible de charger l'icône par défaut '%s'       
+6160	'%s' est incorrect dans le programme de lecture init
+6161	appel de Browser::init plus d'une fois
+6163	id d'élément racine erroné '%s'
+8160	impossible de créer '%s'
+
+# et package (190-199)
+####################################
+2190	entité inconnue dans le fichier '%s' à la ligne n°%ld
+2191	possibilité d'une récursion infinie pour l'entité '%s'
+2192	mode page incorrect
+2193   
+2194    le texte de l'élément n'a pas la longueur #%ld
+2195    l'élément n'a pas d'attribut, est cdata #%ld
+4190	trop de récursion dans le document virtuel '%s'
+4191	impossible de réassigner l'adresse virtuelle
+4192	la fonction '%s' ne devrait pas être appelée avec un document virtuel
+4193	impossible de réassigner l'adresse tdir virtuelle
+4194	document virtuel ne contenant pas de sous-documents
+4195	impossible d'ouvrir sous-document '%s' depuis la base de données '%s'
+6190	en-tête erroné dans le fichier '%s'
+6191	le numéro de version edir ne correspond pas
+6192	le nombre d'éléments contenus dans edir est inférieur à 1
+6193	impossible de lire les étiquettes
+6194	impossible de lire le répertoire des éléments
+6195	le manuel ne comporte pas de répertoire contenant la table des matières
+6196	ETgetEntity appelé, il ne s'agit plus d'entités de stockage
+8191	impossible de créer pool de tampon BIO
+
+# image package (200-209)
+####################################
+2200	writeCALS pas encore pris en charge
+2201	erreur dans le fichier '%s'
+2202    numéro magique erroné dans le fichier '%s'
+2203    largeur et/ou hauteur erronée dans le fichier '%s'
+2204	writeTiff pas encore pris en charge
+2205	format TIFF non pris en charge
+2206	absence de palette de couleurs dans le fichier '%s'
+2207	ne prend pas '%s' en charge dans le fichier '%s'
+4200	table des couleurs d'images trop grande
+4207	mode ou code non pris en charge '%s' à la ligne %d ou au niveau de cette dernière
+
+# dtl, dtext, and closely associated modules (250-269)
+########################################################
+250	syntaxe : %s [-col base_de_données_manuels] [-target script] [-root script] [nom_du_manuel]
+251	désolé, '%s' figure dans la liste des rebuts
+252     un terme figure dans la liste des rebuts
+253	manuel d'évaluation à partir de '%s'
+254	aucune occurrence trouvée
+255	aucune occurrence n'a été trouvée, mais un(des) mot(s) figure(nt) sur la liste des exclusions
+256	manuel d'évaluation
+2250	impossible d'établir une connexion pour l'API externe
+2251	impossible d'ouvrir le manuel '%s'
+2252	pas de manuel du type '%s'
+2253	fenêtre parent non-mdi pour l'exploitation
+2254	cdata sans texte
+2255	impossible de charger le style '%s'
+2256	le manuel '%s' est déjà ouvert
+2257    le manuel '%s' n'est pas ouvert
+2258	système d'aide non disponible
+2259	impossible d'ouvrir le flux d'impression et/ou la base de données des styles, abandon de l'impression
+2260	impossible d'ouvrir le manuel cible '%s'
+2261	impossible d'établir des références croisées avec la fenêtre actuelle
+2262	impossible de créer '%s' la vue cible
+2263	pas de vue active
+2264	impossible de créer la table
+2265	les annotations et les histoires associées à '%s' pourraient être périmées
+2266	impossible d'ouvrir la base de données des index fulltext '%s'
+2267	caractère guillemet unique "'" dans le script d'annotation '%s'
+2268	erreur lors de la lecture de l'index
+2270    il n'existe pas de requête active actuellement
+4250	non autorisé à ouvrir le manuel '%s'
+4251	pas de script du type '%s'
+4252	erreur d'impression 
+4253	pas de paramètre '%s' transmis au script
+4254    impossible de créer une image graphique à partir du fichier '%s'
+4255	exécution sans index fulltext, impossible d'exécuter '%s'
+4256	impossible de charger le fichier de notes '%s'
+4257    problèmes mémoire, les résultats de la requête sont trop grands
+4258    le script '%s' ne prend pas en charge l'impression
+4259	'%s' est assorti de la révision %d, mais l'élément est assorti de la révision %d
+4260	impossible d'ajouter l'annotation
+4261	impossible de supprimer l'annotation
+4262	manuel d'évaluation '%s' a expiré le '%s'
+4263	expression de requête incorrecte
+4264	impossible d'obtenir le script associé à l'élément %s'
+4265	impossible de trouver l'élément permettant de faire défiler l'affichage de
+4266	impossible de trouver la racine de la nouvelle vue 
+4267	seul le propriétaire peut effacer une annotation
+4268	vous n'avez pas indiqué le code d'autorisation pour le manuel sécurisé '%s'
+6250	segment null dans le tampon disponible
+6251	annot figurant déjà dans la table hash, id élément %ld
+6252	impossible de charger la base de données des styles '%s'
+6253	la licence autonome est assortie d'un id hôte incorrect
+6254	impossible de lire le fichier des autorisations ou de se connecter au serveur EBT
+6255	la licence d'évaluation a expiré
+6256	impossible de lire le fichier d'autorisation '%s'
+6257	l'autorisation a échoué, impossible d'atteindre le serveur EBT sur '%s'
+6258	l'autorisation a échoué : %s
+6259	service d'autorisation incorrect '%s'
+6260	data_dir incorrect transmis à DTL
+6261	
+8250	
+8251	impossible de charger le style '%s'
+8252	
+8253	
+8254	impossible d'initialiser l'interface - '%s'
+8258	imbrication de styles dans la table des matières, reportez-vous à '%s'
+8259	pas de niveau 1 ni 2 dans la table des matières
+
+# ebt programs (290-300)
+######################################
+290	mise à jour du fichier '%s' ...
+291	syntaxe : %s [-buildmap mapfile -db1 bookdb1 -db2 bookdbr -b1 manuel1 -b2 manuel2 \
+         [-private répertoire] [-public répertoire] mapfile
+292	syntaxe :  %s %s [fichier] \
+           %s %s [fichier] \
+           %s %s [fichier] \
+           %s %s [fichier] \
+           %s %s [fichier] \
+           %s %s [fichier] \
+           %s %s [fichier] \
+           %s %s [fichier]
+
+# lwin package, lookups (300-305)
+######################################
+2300 impossible de sauvegarder le fichier '%s'
+2301 impossible d'ouvrir le fichier '%s'
+2302 la forme de recherche '%s' n'est pas définie pour ce manuel
+2303 expression de recherche manquante pour la forme de recherche '%s'
+2304 définition(s) de champ(s) manquante(s) pour la forme de recherche '%s'
+2305 attribut du nom manquant pour la forme de recherche à la ligne %ld du fichier '%s'
+
+# bwin package (306-315)
+######################################
+2306	la base de données des manuels '%s' est assortie de la taille zéro 
+2307	Vous devez avoir un ou plusieurs manuels sélectionnés
+2308	le manuel '%s' n'est pas un manuel valable
+
+# print and render packages (340-349)
+######################################
+2340	la fenêtre est plus étroite que le minimum requis par la feuille de style
+
+# index (380-389)
+######################################
+380	terme figurant dans la liste des rebuts
+381	ce mot ne figure pas dans l'index
+382	vidage de l'index n°%d, au niveau de l'élément %ld...
+383	vidage de l'index n°%d, à la fin du manuel
+384	fusion des données terminée
+385	restructuration . . 
+386     réorganisation du vocabulaire . . .
+387     restructuration terminée, élimination des erreurs . .
+388	%.1f%% terminé, au niveau du mot "%s"
+389     fusion . . 
+2380	problème survenu lors de l'ouverture de la liste des éléments à exclure, vérifiez que le chemin d'accès est correct 
+2381    problème survenu lors de l'ouverture de la liste des éléments à inclure, vérifiez que le chemin d'accès est correct
+4380	impossible de supprimer le fichier
+4381	transmission d'un paramètre incorrect
+4382	l'index n'a pas été ouvert en respectant la procédure appropriée
+4383	sous-index non actif dans cet index
+4385	erreur survenue dans le sous-paquet %s
+4386	impossible de renommer le fichier de '%s' en '%s'
+4387	l'index actuel est nul
+4388	le manuel est actuellement nul
+5380	types de données incompatibles dans les opérandes d'un opérateur logique
+5381	type de données incorrect à gauche de l'opérateur "contenant"
+5382	type de données incorrect à droite de l'opérateur "interne"
+6380    impossible de rechercher pos %ld dans le fichier quand %s
+6381	caractère requis non détecté dans le fichier
+6382	impossible de lire le fichier
+6383	impossible d'écrire dans le fichier
+6384	impossible de diviser en deux le fichier vocab
+6385	enregistrement de la base de données erroné pour le mot '%s, cause : %s
+6386    pile d'éléments vide, impossible de refermer l'élément
+6387    méthode de compression de données %d inconnue
+6388	segment de compression hors limites : %d
+6389	échec de INDEXflogCreate pour %s
+6390	problème survenu lors de la lecture du fichier %s, vérifiez les autorisations
+6391	trop de fichiers temporaires - essayez de redéfinir l'espace mémoire maximal
+6392	le fichier '%s' n'est pas un fichier-journal mkbook
+6393	le nom de chemin associé au manuel ne correspond pas au fichier temporaire
+6394    enregistrement-temporaire de longueur incorrecte dans le fichier temporaire
+6395    un enregistrement du fichier temporaire est incorrect
+6396	compteur de fichiers temporaires désynchronisé       
+6397	problème survenu lors de l'ouverture du vocabulaire dans %s. Essayez de recréer le manuel
+6398	problème survenu lors de la tentative de données dans %s. \
+   Ce fichier n'existe pas ou n'est pas mis à jour. Essayez de recréer
+   le manuel
+6399	le manuel n'a pas été créé récemment. Essayez de le recréer
+
+# edit package (390-399)
+######################################
+2390	pas de texte à coller dans le presse-papiers
+2391	Impossible d'accéder aux données du presse-papiers
+
+# os package (390-395) (regex is here)
+######################################
+
+# hist and annot package (430-434)
+######################################
+2430	révision du fichier d'annotations négative, elle est peut-être périmée
+4430	étiquette de début '%s' incorrecte dans la liste d'événements
+4431	l'étiquette 'TITLE' ne figure pas dans l'étiquette 'EVENT' de la liste des événements
+4432	liste des événements terminée au milieu d'un événement
+4433	étiquette de début '%s' incorrecte dans le fichier d'annotations '%s'
+6430	impossible d'ouvrir l'analyseur SGML associé au fichier '%s'
+
+# win, hwin and awin package (435-439)
+######################################
+435	aucune Entrée de journal à coller dans le presse-papiers
+436	aucune Entrée de journal sélectionnée pour être coupée
+437	aucune Entrée de journal sélectionnée pour être copiée
+438     Nom de filtre en double
+439     Valeur associée à la date incorrecte
+2434    Ce filtre ne peut être modifié
+2435	Ce filtre ne peut être supprimé
+2436    Nom de filtre requis
+2437	Vous devez d'abord sélectionner une annotation
+2438	Vous devez d'abord sélectionner un filtre
+2439	Vous devez sélectionner exactement un élément pour exécuter cette opération
+4435	Impossible d'accéder aux données du presse-papiers
+4436	Impossible de supprimer le groupe de filtres '%s' étant donné que vous n'en n'êtes pas propriétaire.
+
+# mklibidx package -- Making library level index (600-640)
+######################################
+# 
+#
+8600 impossible de créer un index de niveau de bibliothèque : vérifiez les autorisations d'accès associées à l'index actuel.
+8601 pas de collection indiquée dans le fichier .ebtrc
+8602 aucun répertoire de données n'est indiqué dans votre fichier .ebtrc
+8605 syntaxe : %s [-col collection] [-config liste_de_livres]\
+              [-nl] [-v(erbose)] [-data_dir rép_données]
+8603 La bibliothèque %s n'existe pas
+8604 %s n'est pas une bibliothèque de manuels ebt
+
+## Errors, in parsing file
+2610 Ligne %2d du fichier de création -- le groupe n'a pas de nom, toutes les requêtes de ce groupe qui sont liées à l'index seront ignorées
+2611 Ligne %2d du fichier de création -- le groupe '%s' a déjà été ajouté,\
+                toutes les requêtes de ce groupe qui sont liées à
+                l'index seront ignorées
+2612 Ligne %2d du fichier de création -- le manuel n'a pas de nom, toutes les requêtes qui sont liées à l'index de ce livre seront ignorées
+2613 Ligne %2d du fichier de création -- le manuel '%s' a déjà été ajouté,\
+       toutes les requêtes liées à l'index seront ignorées
+2614 Ligne %2d du fichier de création -- élément '%s' non identifié
+2615 Ligne %2d du fichier de création -- aucun groupe ou manuel n'est ouvert, l'élément INDEX est ignoré
+2621 Ligne %2d du fichier de création -- nom d'étiquette '%s' redéfini dans le manuel '%s'
+2622 Ligne %2d du fichier de création -- nom d'étiquette '%s' redéfini dans le groupe '%s'
+2628 Ligne %2d du fichier de création -- manuel '%s', avertissement relatif à la redéfinition de l'élément omis '%s'
+2629 Ligne %2d du fichier de création -- la ligne d'index ne spécifie pas l'élément
+
+## Errors, while building library-level index
+##
+2616 manuel '%s' -- dans le groupe '%s' qui n'existe pas
+2617 Impossible d'ajouter le manuel '%s' -- essayez de le recréer avant de générer l'index de bibliothèque
+2630 Impossible d'ajouter le manuel '%s' -- introuvable dans la collection %s
+2631 Impossible d'ajouter le manuel virtuel '%s' -- trop de sous-manuels 
+2620 Conflit au niveau des noms d'étiquettes dans le manuel '%s' associé à l'étiquette '%s' -- utilisation de la définition du manuel
+4618 grave problème lors de l'ajout du manuel '%s'
+2625 l'élément omis doit figurer uniquement dans un manuel
+2626 élément omis '%s' dans le manuel '%s', mais non dans le groupe '%s'
+2627 conflit : élément '%s' omis dans le manuel '%s', ainsi que dans la liste des index
+2607 problème survenu lors de l'ajout du manuel '%s' : ce manuel a déjà été ajouté
+
+## Status Messages while building library-level index
+##
+4605 erreur survenue lors de la tentative d'ajout du manuel '%s'
+606 manuel '%s' ajouté
+608 création de l'index de la collection...
+609 Durée totale d'indexation de la collection : %s 
+637 *** Index de la collection terminé ***
+619 Ajout du manuel '%s'
+623 Fichier de configuration : %s
+634 Fichier de configuration : utilisation de booklist.txt
+635 Fichier de configuration : aucun fichier spécifié -- Indexation de TOUS LES MANUELS
+624 Fichier de configuration introuvable : %s
+631 Pour le manuel '%s', les éléments à indexer sont...
+632 -- %8s supprimé, ne fera pas partie de l'index
+633 -- indexation de %8s, sous '%s'
+636 --------------------------------------------------------
+
+
+# Lswin package
+###############
+#
+#
+
+666 Lswin : la ligne %d est placée au-delà du bord de la matrice
+667 Lswin : paramètre hors limites
+668 Lswin : realloc a généré NULL
+669 Lswin : tentative de définition d'un élément hors limites
+670 Lswin : il est nécessaire d'augmenter l'espace mémoire disponible pour ajouter l'élément, mais cette opération est impossible
+
+# Inwin Package
+###############
+
+671 Sélectionnez une feuille de style ou entrez un nouveau nom de feuille de style.
+672 Sélectionnez une bibliothèque et un manuel.
+673 Sélectionnez un manuel.
+
+##################################################################
+#
+# DynaTag Error Messages (700-799)
+#
+##################################################################
+
+# General Errors
+################
+
+6700 mémoire insuffisante
+6701 Impossible d'ouvrir fichier %s
+6702 impossible d'ouvrir le fichier %s en écriture
+6703 impossible de créer le fichier de sauvegarde %s
+
+

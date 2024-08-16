@@ -1,0 +1,12 @@
+#ident	"@(#)kern-i386at:interface.d/ddi.6mp	1.2"
+#ident	"$Header: $"
+# ddi.6mp -- DDI/DKI version 6mp (version 6 for multi-threaded drivers)
+$replace 6
+# The following were mapped to special versions for single-threaded drivers,
+# but multi-threaded drivers get to use the real thing:
+bufcall
+esballoc
+esbbcall
+itimeout
+# Not allowed for multi-threaded drivers:
+sleep		$dropped

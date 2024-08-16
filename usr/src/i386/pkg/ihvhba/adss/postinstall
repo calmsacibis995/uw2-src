@@ -1,0 +1,142 @@
+#ident	"@(#)pkg.ihvhba:i386/pkg/ihvhba/adss/postinstall	1.8"
+
+do_extract () {
+
+	###
+	# Extract Driver.o from loadable module
+	###
+	mv /tmp/$PKGINST/$PKGINST /tmp/$PKGINST/Driver.o
+
+	for sec in data data1 rodata rodata1 text
+	do
+		mcs -n .drv_$sec -d Driver.o
+		mcs -n .rel.drv_$sec -d Driver.o
+	done
+
+	mcs -n .mod_dep -d Driver.o
+	mcs -n .rel.mod_dep -d Driver.o
+
+	###
+	# remove .comment because it is now about 2k.  Really it should be 
+	# pstamped note that all our loadable drivers have large .comment 
+	# sections that should be pstamped.
+	###
+
+	mcs -d Driver.o
+}
+
+do_install () {
+
+	${CONFBIN}/idinstall -P ${PKGINST} -a ${1} > ${ERR} 2>&1
+	RET=$?
+	if [ ${RET} != 0 ]
+	then
+		${CONFBIN}/idinstall -P ${PKGINST} -u ${1} > ${ERR} 2>&1
+		RET=$?
+	fi
+
+	if [ ${RET} != 0 ]
+	then
+		message -d ${FAIL_INST}
+		exit ${FAILURE}
+	else
+		rm -f ${ERR}
+	fi
+	mv disk.cfg /etc/conf/pack.d/${1}
+	mv ${1}.h /usr/include/sys
+	chown bin /etc/conf/pack.d/${1}/disk.cfg /usr/include/sys/${1}.h
+	chgrp bin /etc/conf/pack.d/${1}/disk.cfg /usr/include/sys/${1}.h
+}
+
+register() {
+installf -c none $PKGINST - << !!EOF
+/etc/conf/pack.d/${PKGINST}/disk.cfg
+/usr/include/sys/${PKGINST}.h
+/etc/loadmods
+!!EOF
+installf -f $PKGINST
+}
+# Messaging related stuff
+PKGMSG=hba.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+# Check if we're installing during initial system installation.
+# If so, set ROOT=/mnt; otherwise ROOT is null.  Make sure that
+# we're not pkgadd'ing over a pkg that was installed during that
+# first system installation (i.e., check UPDATE).
+ROOT=
+[ "$SETNAME" = "from_loadhba" -a "$UPDATE" != "yes" ] && ROOT="/mnt"
+LC_MESSAGES=$ROOT/usr/lib/locale/$LOCALE
+
+if [ ! -f ${LC_MESSAGES}/LC_MESSAGES/${PKGMSG} ]
+then
+	if [ -f ${REQDIR}/inst/locale/${LOCALE}/$PKGMSG} -a \
+		-d ${ROOT}/usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+	then
+		cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+			${LC_MESSAGES}/LC_MESSAGES
+	fi
+fi
+PREV_INST=`pfmt -s WARNING -g ${PKGMSG}:1 "It appears the %s driver has either been previously installed or another driver is using the same name.  Installation will continue" "${PKGINST}" 2>&1`
+FAIL_INST=`pfmt -s ERROR -g ${PKGMSG}:2 "The installation cannot be completed due to an error in the driver installation during the installation of the %s module.  The file %s contains the errors." "${PKGINST}" "${ERR}" 2>&1`
+
+
+FAILURE=1	# fatal error
+
+CONFDIR=/etc/conf
+CONFBIN=${CONFDIR}/bin
+ERR=/tmp/err.out
+
+cd /tmp/${PKGINST}
+do_extract
+do_install ${PKGINST}
+
+if test -f /bin/grep
+then
+	if grep $PKGINST /etc/loadmods >/dev/null
+	then
+		message -d ${PREV_INST}
+	else
+		cat /tmp/$PKGINST/loadmods >>/etc/loadmods
+	fi
+else
+	cat /tmp/$PKGINST/loadmods >>/etc/loadmods
+fi
+
+# Register changes made to system into the contents file
+register
+
+# Cleanup temporary files and directories
+rm -fr /tmp/${PKGINST} /tmp/hba.cpio.z >/dev/null 2>&1
+removef ${PKGINST} /tmp /tmp/${PKGINST} /tmp/${PKGINST}/Drvmap \
+	/tmp/${PKGINST}/mod.cpio.z /tmp/hba.cpio.z /tmp/${PKGINST}/Master \
+	/tmp/${PKGINST}/System >/dev/null 2>&1
+removef -f ${PKGINST} >/dev/null 2>&1
+
+# If this package is being added as an add-on package (not being installed 
+# from the initial system installation via loadhba), then for non-ISA cards
+# which have boardids run 'dcu -s'.
+if [ "$ROOT" != "/mnt" ]
+then
+	cat /etc/conf/drvmap.d/${PKGINST} | awk -F'|' '
+		BEGIN {
+			BOARDID = 1
+		}
+	
+		{
+			if (NF > 1) {
+				if ($2 !~ /Y/)
+					if ($2 !~ /N/)
+						if($3 != "") {
+							BOARDID = 0
+							exit
+						}
+			}
+		}
+	
+		END {
+			exit BOARDID 
+		}'
+	[ $? -eq 0 ] && /sbin/dcu -s
+fi
+/etc/conf/bin/idbuild
+exit 0

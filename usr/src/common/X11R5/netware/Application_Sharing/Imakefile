@@ -1,0 +1,99 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)appshare:Imakefile	1.12"
+#ident  "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/Application_Sharing/Imakefile,v 1.18.2.1 1994/10/28 18:49:01 plc Exp $"
+
+/**/#	Copyright (c) 1990, 1991, 1992 UNIX System Laboratories, Inc.
+/**/#	Copyright (c) 1988, 1989, 1990 AT&T
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+/**/#	UNIX System Laboratories, Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+PROGS       = App_Sharing
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+
+          SRCS = \
+		as_buildlist.c \
+		as_callbacks.c \
+		as_main.c \
+		as_sort.c
+          OBJS = \
+		as_buildlist.o \
+		as_callbacks.o \
+		as_main.o \
+		as_sort.o
+          HEADERS = \
+		as_listhdr.h
+
+   DTCLIENTSLIB = $(USLCLIENTSRC)/libDtI
+       DTLIBSRC = $(LIBSRC)/Dt
+      DTILIBSRC = $(DTCLIENTSLIB)
+         DTILIB = $(DTILIBSRC)/libDtI.so
+          DTLIB = $(DTLIBSRC)/libDt.so
+        DTAMLIB = $(USLCLIENTSRC)/dtadmin/dtamlib/libdtam.a
+
+
+       INCLUDES = -I. -I../libdlist -I$(LIBSRC) -I$(LIBSRC)/Xol -I$(DTILIBSRC) -I$(USLCLIENTSRC)
+LOCAL_LIBRARIES = ../libdlist/libdlist.a $(DTAMLIB) $(DTILIB) $(DTLIB) XolClientLibs 
+        DEPLIBS = $(DTAMLIB) $(DTILIB) $(DTLIB) XolClientDepLibs
+
+  SYS_LIBRARIES = -lgen -lm -lgen -liaf -lelf -L../../../cmd/cmd-nw/lib  -lnwutil -lthread 
+
+  CC = LD_RUN_PATH=/usr/X/lib $(PFX)cc
+
+all:: libdlist $(PROGS)
+
+ComplexProgramTarget(App_Sharing)
+
+libdlist: 
+	( cd ../libdlist; \
+	make -f Makefile;)
+
+install::
+		if [ -d $(DESKTOPDIR)/Admin_Tools ]; \
+		then set +x; \
+		else \
+		(set -x; $(MKDIRHIER) $(DESKTOPDIR)/Admin_Tools);\
+		fi
+		( cd ../libdlist; \
+		make -f Makefile;)
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 755)
+
+InstallDesktopClient($(BINDIR)/$(PROGS),$(DESKTOPDIR)/Admin_Tools/$(PROGS))
+
+InstallNonExecFile(App_Sharing.icon, $(USRLIBDIR)/pixmaps)
+
+InstallNonExecFile(sharedAppl16.xpm, $(USRLIBDIR)/pixmaps)
+
+InstallNonExecFile(bitmaps/App_Sharing.icon, $(USRLIBDIR)/bitmaps)
+
+InstallNonExecFile(bitmaps/sharedAppl16.xpm, $(USRLIBDIR)/bitmaps)
+
+InstallNonExecFile(Xterm, $(ROOT)/$(MACH)/usr/X/lib/app-defaults/.exportApps)
+
+InstallNamedNonExec(exportTemp,.exportTemp, $(ROOT)/$(MACH)/usr/X/lib/app-defaults/.exportApps)
+
+InstallNamedNonExec(exportUTemp,.exportUTemp, $(ROOT)/$(MACH)/usr/X/lib/app-defaults/.exportApps)
+
+InstallMsgCatalog(expappl)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()

@@ -1,0 +1,38 @@
+#!/bin/sh
+#ident	"@(#)sc:local/lib/domake	3.4" 
+###############################################################################
+#
+# C++ Standard Components, Release 3.0.
+#
+# Copyright (c) 1991, 1992 AT&T and Unix System Laboratories, Inc.
+# Copyright (c) 1988, 1989, 1990 AT&T.  All Rights Reserved.
+#
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T and Unix System
+# Laboratories, Inc.  The copyright notice above does not evidence
+# any actual or intended publication of such source code.
+#
+###############################################################################
+
+# This script is only called by the top-level SC makefile.
+
+chmod +x ./aux/*
+
+root=`pwd`
+PATH=$root/aux:`pwd`/bin:$PATH
+SLELIB=$root/aux
+SLEBIN=$root/aux
+HYMANLIB=$root/src/hyman/hymanlib
+export SLELIB SLEBIN PATH HYMANLIB
+SC_COMPLISTFILE=${SC_COMPLISTFILE-$root/aux/complist}
+opts=$1
+CC=$2
+bsd=$3
+F="$4"
+
+BOPT=
+if [ $bsd -eq 1 ]; then
+	BOPT=-b
+fi
+
+echo "buildprod $opts $BOPT SCFOPTS=\"$F\" -C $CC" 1>&2
+SCFOPTS="$F" buildprod -l $SC_COMPLISTFILE $opts $BOPT -C $CC 

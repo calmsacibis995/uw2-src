@@ -1,0 +1,205 @@
+#	Copyright (c) 1989 AT&T
+#	  All Rights Reserved  
+#
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T
+#	The copyright notice above does not evidence any   
+#	actual or intended publication of such source code.
+#
+#ident "%W%"
+
+# 1989/01 AT&T-UEL
+# To compose PC 437 characters
+# Derived from: AT&T terminal compose sequences
+# Notes:	"compose"
+
+map sparse (437.cpz) {
+
+	define(compose "")	# compose character is cntrl T
+	compose("" "")
+
+	compose("\" " "\"")	# quotation mark
+	compose(" \"" "\"")	# quotation mark
+	compose("++" "#")	# number sign
+	compose("' " "'")	# apostrophe
+	compose(" '" "'")	# apostrophe
+        compose("AA" "@")	# commercial at
+	compose("((" "[")	# opening bracket
+	compose("//" "\\")	# backslash
+	compose("/<" "\\")	# backslash
+	compose("</" "\\")	# backslash
+	compose("))" "]")	# closing bracket
+	compose("^ " "^")	# circumflex accent
+	compose(" ^" "^")	# circumflex accent
+	compose("> " "^")	# circumflex accent
+	compose(" >" "^")	# circumflex accent
+	compose("` " "`")	# grave accent
+	compose(" `" "`")	# grave accent
+	compose("(-" "{")	# opening brace
+	compose("-(" "{")	# opening brace
+	compose("/^" "|")	# vertical line
+	compose("^/" "|")	# vertical line
+	compose("LV" "|")	# vertical line
+	compose("lv" "|")	# vertical line
+	compose("VL" "|")	# vertical line
+	compose("vl" "|")	# vertical line
+	compose(")-" "}")	# closing brace
+	compose("-)" "}")	# closing brace
+	compose("~ " "~")	# tilde
+	compose(" ~" "~")	# tilde
+	compose("- " "~")	# tilde
+	compose(" -" "~")	# tilde
+
+	compose("!!" "≠")	# inverted !
+	compose("c/" "õ")	# cent sign
+	compose("/c" "õ")	# cent sign
+	compose("C/" "õ")	# cent sign
+	compose("/C" "õ")	# cent sign
+	compose("c|" "õ")	# cent sign
+	compose("|c" "õ")	# cent sign
+	compose("C|" "õ")	# cent sign
+	compose("|C" "õ")	# cent sign
+	compose("l-" "ú")	# pound sign
+	compose("-l" "ú")	# pound sign
+	compose("L-" "ú")	# pound sign
+	compose("-L" "ú")	# pound sign
+	compose("l=" "ú")	# pound sign
+	compose("=l" "ú")	# pound sign
+	compose("L=" "ú")	# pound sign
+	compose("=L" "ú")	# pound sign
+	compose("y-" "ù")	# yen sign
+	compose("-y" "ù")	# yen sign
+	compose("Y-" "ù")	# yen sign
+	compose("-Y" "ù")	# yen sign
+	compose("y=" "ù")	# yen sign
+	compose("=y" "ù")	# yen sign
+	compose("Y=" "ù")	# yen sign
+	compose("=Y" "ù")	# yen sign
+
+	compose("a_" "¶")	# Female Ordinal
+	compose("_a" "¶")	# Female Ordinal
+	compose("A_" "¶")	# Female Ordinal
+	compose("_A" "¶")	# Female Ordinal
+	compose("<<" "Æ")	# left angle quotation mark
+	compose("-," "™")	# logical not
+	compose(",-" "™")	# logical not
+
+	compose("0^" "¯")	# Degree sign
+	compose("^0" "¯")	# Degree sign
+	compose("0*" "¯")	# Degree sign
+	compose("*0" "¯")	# Degree sign
+	compose("+-" "Ò")	# Plus minus
+	compose("-+" "Ò")	# Plus minus
+	compose("2^" "˝")	# Superscript 2
+	compose("^2" "˝")	# Superscript 2
+	compose("2S" "˝")	# Superscript 2
+	compose("S2" "˝")	# Superscript 2
+	compose("2s" "˝")	# Superscript 2
+	compose("s2" "˝")	# Superscript 2
+	compose("/u" "Ê")	# micron sign
+	compose("u/" "Ê")	# micron sign
+	compose("/U" "Ê")	# micron sign
+	compose("U/" "Ê")	# micron sign
+	compose(".^" "˙")	# middle dot
+	compose("^." "˙")	# middle dot
+	compose(".." "˙")	# middle dot
+
+	compose("o_" "ß")	# Masculine Ordinal
+	compose("_o" "ß")	# Masculine Ordinal
+	compose("_O" "ß")	# Masculine Ordinal
+	compose("O_" "ß")	# Masculine Ordinal
+	compose(">>" "Ø")	# right angle quotation mark
+	compose("14" "¨")	# one quarter
+	compose("12" "´")	# one half
+	compose("??" "®")	# inverted ?
+
+	compose("A\"" "é")	# A umlaut
+	compose("\"A" "é")	# A umlaut
+	compose("A*" "è")	# A circle
+	compose("*A" "è")	# A circle
+	compose("AE" "í")	# AE dipthong
+	compose("C," "Ä")	# C cedilla
+	compose(",C" "Ä")	# C cedilla
+
+	compose("E'" "ê")	# E acute
+	compose("'E" "ê")	# E acute
+
+	compose("N~" "•")	# N tilde
+	compose("~N" "•")	# N tilde
+	compose("N-" "•")	# N tilde
+	compose("-N" "•")	# N tilde
+	compose("O\"" "ô")	# O umlaut
+	compose("\"O" "ô")	# O umlaut
+
+	compose("U\"" "ö")	# U umlaut
+	compose("\"U" "ö")	# U umlaut
+	compose("ss" "·")	# sharp s
+
+	compose("a`" "Ö")	# a grave
+	compose("`a" "Ö")	# a grave
+	compose("a'" "†")	# a acute
+	compose("'a" "†")	# a acute
+	compose("a^" "É")	# a circumflex
+	compose("^a" "É")	# a circumflex
+	compose("a>" "É")	# a circumflex
+	compose(">a" "É")	# a circumflex
+	compose("a\"" "Ñ")	# a umlaut
+	compose("\"a" "Ñ")	# a umlaut
+	compose("a*" "Ü")	# a circle
+	compose("*a" "Ü")	# a circle
+	compose("ae" "ë")	# ae dipthong
+	compose("c," "á")	# c cedilla
+	compose(",c" "á")	# c cedilla
+
+	compose("e`" "ä")	# e grave
+	compose("`e" "ä")	# e grave
+	compose("e'" "Ç")	# e acute
+	compose("'e" "Ç")	# e acute
+	compose("e^" "à")	# e circumflex
+	compose("^e" "à")	# e circumflex
+	compose("e>" "à")	# e circumflex
+	compose(">e" "à")	# e circumflex
+	compose("e\"" "â")	# e umlaut
+	compose("\"e" "â")	# e umlaut
+	compose("i`" "ç")	# i grave
+	compose("`i" "ç")	# i grave
+	compose("i'" "°")	# i acute
+	compose("'i" "°")	# i acute
+	compose("i^" "å")	# i circumflex
+	compose("^i" "å")	# i circumflex
+	compose("i>" "å")	# i circumflex
+	compose(">i" "å")	# i circumflex
+	compose("i\"" "ã")	# i umlaut
+	compose("\"i" "ã")	# i umlaut
+
+	compose("n~" "§")	# n tilde
+	compose("~n" "§")	# n tilde
+	compose("n-" "§")	# n tilde
+	compose("-n" "§")	# n tilde
+	compose("o`" "ï")	# o grave
+	compose("`o" "ï")	# o grave
+	compose("o'" "¢")	# o acute
+	compose("'o" "¢")	# o acute
+	compose("o^" "ì")	# o circumflex
+	compose("^o" "ì")	# o circumflex
+	compose("o>" "ì")	# o circumflex
+	compose(">o" "ì")	# o circumflex
+	compose("o\"" "î")	# o umlaut
+	compose("\"o" "î")	# o umlaut
+	compose("-:" "ˆ")	# divides
+	compose(":-" "ˆ")	# divides
+	compose("-;" "ˆ")	# divides
+	compose(";-" "ˆ")	# divides
+
+	compose("u`" "ó")	# u grave
+	compose("`u" "ó")	# u grave
+	compose("u'" "£")	# u acute
+	compose("'u" "£")	# u acute
+	compose("u^" "ñ")	# u circumflex
+	compose("^u" "ñ")	# u circumflex
+	compose("u>" "ñ")	# u circumflex
+	compose(">u" "ñ")	# u circumflex
+	compose("u\"" "Å")	# u umlaut
+	compose("\"u" "Å")	# u umlaut
+	compose("y\"" "ò")	# y umlaut
+	compose("\"y" "ò")	# y umlaut
+}

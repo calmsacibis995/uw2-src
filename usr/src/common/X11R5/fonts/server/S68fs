@@ -1,0 +1,60 @@
+#!/bin/sh
+#ident	"@(#)r5fonts:server/S68fs	1.10"
+
+if [ -z "$LC_ALL" -a -z "$LC_MESSAGES" ]
+then
+	if [ -z "$LANG" ]
+	then
+		LNG=`defadm locale LANG 2>/dev/null`
+		if [ "$?" != 0 ]
+		then LANG=C
+		else eval $LNG
+		fi
+	fi
+	export LANG
+fi
+LABEL="UX:$0"
+CAT=uxrc
+
+USAGE="/etc/init.d/fs {start|stop}"
+
+#
+# Start X Font Server
+#
+#
+XWINHOME=/usr/X	export XWINHOME	#!@ (or your mount point) !@
+PATH=$PATH:$XWINHOME/bin export PATH	#!@ Do not edit this line !@
+LD_LIBRARY_PATH=$LD_LIBRARY_PATH:$XWINHOME/lib export LD_LIBRARY_PATH	#!@ Do not edit this line !@
+
+mldmode > /dev/null 2>&1	# shell built-in
+if [ "$?" = "0" ]	
+then				# Enhanced Security running
+	exit			# exit Enhanced Security does not support graphics
+fi
+
+case "$1" in
+  'start')
+        /sbin/rm -f /dev/X/xfont.7000
+	if test -x ${XWINHOME}/bin/fs; then
+		 ${XWINHOME}/bin/fs &
+	fi
+        ;;
+
+  'stop')
+
+	# On auto-shutdown, let the killall take care of things.
+	if [ -z "$_AUTOKILL" ]	
+	then
+		pid=`/usr/bin/ps -e | /usr/bin/grep fs | /usr/bin/grep -v 'fs.' | /usr/bin/sed -e 's/^  *//' -e 's/ .*//'`
+	fi
+	if [ "${pid}" != "" ]
+	then
+		/usr/bin/kill -15 ${pid}
+	fi
+        ;;
+
+  *)
+	pfmt -l $LABEL -s action -g $CAT:4 "Usage: %s\n" "$USAGE"
+        ;;
+esac
+

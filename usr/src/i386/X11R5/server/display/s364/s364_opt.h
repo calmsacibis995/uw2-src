@@ -1,0 +1,396 @@
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1993 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+#pragma ident	"@(#)s364:s364/s364_opt.h	1.3"
+#if (! defined(__S364_OPT_INCLUDED__))
+
+#define __S364_OPT_INCLUDED__
+
+
+
+#include "stdenv.h"
+#include "global.h"
+
+
+enum s364_options_si_interface_version
+{
+	S364_OPTIONS_SI_INTERFACE_VERSION_1_0,
+	S364_OPTIONS_SI_INTERFACE_VERSION_1_1,
+	S364_OPTIONS_SI_INTERFACE_VERSION_AUTO_CONFIGURE,
+	s364_options_si_interface_version_end_enumeration
+};
+
+enum s364_options_monitor_sync_type
+{
+	S364_OPTIONS_MONITOR_SYNC_TYPE_COMPOSITE_SYNC,
+	S364_OPTIONS_MONITOR_SYNC_TYPE_SYNC_ON_GREEN,
+	S364_OPTIONS_MONITOR_SYNC_TYPE_SEPARATE_SYNC,
+	s364_options_monitor_sync_type_end_enumeration
+};
+
+enum s364_options_vsync_polarity
+{
+	S364_OPTIONS_VSYNC_POLARITY_POSITIVE,
+	S364_OPTIONS_VSYNC_POLARITY_NEGATIVE,
+	S364_OPTIONS_VSYNC_POLARITY_DEFAULT,
+	s364_options_vsync_polarity_end_enumeration
+};
+
+enum s364_options_hsync_polarity
+{
+	S364_OPTIONS_HSYNC_POLARITY_POSITIVE,
+	S364_OPTIONS_HSYNC_POLARITY_NEGATIVE,
+	S364_OPTIONS_HSYNC_POLARITY_DEFAULT,
+	s364_options_hsync_polarity_end_enumeration
+};
+
+enum s364_options_framebuffer_access_for_core_server
+{
+	S364_OPTIONS_FRAMEBUFFER_ACCESS_FOR_CORE_SERVER_YES,
+	S364_OPTIONS_FRAMEBUFFER_ACCESS_FOR_CORE_SERVER_NO,
+	s364_options_framebuffer_access_for_core_server_end_enumeration
+};
+
+enum s364_options_chipset_name
+{
+	S364_OPTIONS_CHIPSET_NAME_VISION864,
+	S364_OPTIONS_CHIPSET_NAME_VISION964,
+	S364_OPTIONS_CHIPSET_NAME_AUTO_DETECT,
+	s364_options_chipset_name_end_enumeration
+};
+
+enum s364_options_clock_chip_name
+{
+	S364_OPTIONS_CLOCK_CHIP_NAME_CHRONTEL_CH9204C,
+	S364_OPTIONS_CLOCK_CHIP_NAME_CHRONTEL_CH9204G,
+	S364_OPTIONS_CLOCK_CHIP_NAME_ICD_2061A,
+	S364_OPTIONS_CLOCK_CHIP_NAME_TVP3025,
+	S364_OPTIONS_CLOCK_CHIP_NAME_USE_BUILTIN,
+	s364_options_clock_chip_name_end_enumeration
+};
+
+enum s364_options_bus_kind
+{
+	S364_OPTIONS_BUS_KIND_VLB,
+	S364_OPTIONS_BUS_KIND_PCI,
+	S364_OPTIONS_BUS_KIND_AUTO_DETECT,
+	s364_options_bus_kind_end_enumeration
+};
+
+enum s364_options_video_clock_delay
+{
+	S364_OPTIONS_VIDEO_CLOCK_DELAY_YES,
+	S364_OPTIONS_VIDEO_CLOCK_DELAY_NO,
+	s364_options_video_clock_delay_end_enumeration
+};
+
+enum s364_options_video_clock_invert
+{
+	S364_OPTIONS_VIDEO_CLOCK_INVERT_YES,
+	S364_OPTIONS_VIDEO_CLOCK_INVERT_NO,
+	s364_options_video_clock_invert_end_enumeration
+};
+
+enum s364_options_dac_name
+{
+	S364_OPTIONS_DAC_NAME_ATT21C498,
+	S364_OPTIONS_DAC_NAME_BT485KPJ110,
+	S364_OPTIONS_DAC_NAME_BT485KPJ135,
+	S364_OPTIONS_DAC_NAME_TVP3020_135MDN,
+	S364_OPTIONS_DAC_NAME_TVP3020_175MDN,
+	S364_OPTIONS_DAC_NAME_TVP3020_200MDN,
+	S364_OPTIONS_DAC_NAME_PTVP3025_135MDN,
+	S364_OPTIONS_DAC_NAME_PTVP3025_175MDN,
+	S364_OPTIONS_DAC_NAME_PTVP3025_200MDN,
+	S364_OPTIONS_DAC_NAME_USE_BUILTIN,
+	s364_options_dac_name_end_enumeration
+};
+
+enum s364_options_dac_rgb_width
+{
+	S364_OPTIONS_DAC_RGB_WIDTH_6,
+	S364_OPTIONS_DAC_RGB_WIDTH_8,
+	s364_options_dac_rgb_width_end_enumeration
+};
+
+enum s364_options_dac_32_bit_color_mode
+{
+	S364_OPTIONS_DAC_32_BIT_COLOR_MODE_RGBA,
+	S364_OPTIONS_DAC_32_BIT_COLOR_MODE_ABGR,
+	S364_OPTIONS_DAC_32_BIT_COLOR_MODE_ARGB,
+	S364_OPTIONS_DAC_32_BIT_COLOR_MODE_BGRA,
+	s364_options_dac_32_bit_color_mode_end_enumeration
+};
+
+enum s364_options_dac_16_bit_color_mode
+{
+	S364_OPTIONS_DAC_16_BIT_COLOR_MODE_555,
+	S364_OPTIONS_DAC_16_BIT_COLOR_MODE_565,
+	S364_OPTIONS_DAC_16_BIT_COLOR_MODE_664,
+	s364_options_dac_16_bit_color_mode_end_enumeration
+};
+
+enum s364_options_cursor_type
+{
+	S364_OPTIONS_CURSOR_TYPE_SOFTWARE_CURSOR,
+	S364_OPTIONS_CURSOR_TYPE_CHIPSET_CURSOR,
+	S364_OPTIONS_CURSOR_TYPE_DAC_CURSOR,
+	S364_OPTIONS_CURSOR_TYPE_AUTO_CONFIGURE,
+	s364_options_cursor_type_end_enumeration
+};
+
+enum s364_options_pci_9gxe64_1280_modes
+{
+	S364_OPTIONS_PCI_9GXE64_1280_MODES_YES,
+	S364_OPTIONS_PCI_9GXE64_1280_MODES_NO,
+	s364_options_pci_9gxe64_1280_modes_end_enumeration
+};
+
+enum s364_options_vlb_964_line_workaround
+{
+	S364_OPTIONS_VLB_964_LINE_WORKAROUND_YES,
+	S364_OPTIONS_VLB_964_LINE_WORKAROUND_NO,
+	s364_options_vlb_964_line_workaround_end_enumeration
+};
+
+
+#define	S364_OPTIONS_SCREEN_VISUAL_LIST_STATIC_GRAY	1
+#define	S364_OPTIONS_SCREEN_VISUAL_LIST_GRAY_SCALE	2
+#define	S364_OPTIONS_SCREEN_VISUAL_LIST_STATIC_COLOR	4
+#define	S364_OPTIONS_SCREEN_VISUAL_LIST_PSEUDO_COLOR	8
+#define	S364_OPTIONS_SCREEN_VISUAL_LIST_TRUE_COLOR	16
+#define	S364_OPTIONS_SCREEN_VISUAL_LIST_DIRECT_COLOR	32
+
+
+#define	S364_OPTIONS_RECTFILL_OPTIONS_USE_SOLID_FILL_RECT	1
+#define	S364_OPTIONS_RECTFILL_OPTIONS_USE_TILE_FILL_RECT	2
+#define	S364_OPTIONS_RECTFILL_OPTIONS_USE_STIPPLE_FILL_RECT	4
+#define	S364_OPTIONS_RECTFILL_OPTIONS_USE_GE_MONO_PATFILL	8
+#define	S364_OPTIONS_RECTFILL_OPTIONS_USE_OFFSCREEN_MEMORY	16
+#define	S364_OPTIONS_RECTFILL_OPTIONS_USE_TILE_SHRINK	32
+#define	S364_OPTIONS_RECTFILL_OPTIONS_NONE	64
+
+
+#define	S364_OPTIONS_BITBLT_OPTIONS_USE_SS_BITBLT	1
+#define	S364_OPTIONS_BITBLT_OPTIONS_USE_MS_BITBLT	2
+#define	S364_OPTIONS_BITBLT_OPTIONS_USE_SM_BITBLT	4
+#define	S364_OPTIONS_BITBLT_OPTIONS_USE_MS_STPLBLT	8
+#define	S364_OPTIONS_BITBLT_OPTIONS_NONE	16
+
+
+#define	S364_OPTIONS_LINEDRAW_OPTIONS_USE_LINE_DRAW	1
+#define	S364_OPTIONS_LINEDRAW_OPTIONS_USE_LINE_RECTANGLES	2
+#define	S364_OPTIONS_LINEDRAW_OPTIONS_USE_SEGMENT_DRAW	4
+#define	S364_OPTIONS_LINEDRAW_OPTIONS_USE_DASHED_LINE	8
+#define	S364_OPTIONS_LINEDRAW_OPTIONS_NONE	16
+
+
+#define	S364_OPTIONS_SPANSFILL_OPTIONS_USE_SOLID_FILL	1
+
+
+#define	S364_OPTIONS_POINTDRAW_OPTIONS_USE_PLOT_POINT	1
+#define	S364_OPTIONS_POINTDRAW_OPTIONS_NONE	2
+
+
+#define	S364_OPTIONS_FONTDRAW_OPTIONS_DRAW_NON_TERMINAL_FONTS	1
+#define	S364_OPTIONS_FONTDRAW_OPTIONS_DRAW_TERMINAL_FONTS	2
+#define	S364_OPTIONS_FONTDRAW_OPTIONS_ASSEMBLE_GLYPHS	4
+
+
+#define	S364_OPTIONS_ARCDRAW_OPTIONS_DRAW_ONE_BIT_ARCS	1
+
+
+
+
+struct s364_options_structure
+{
+	int arc_cache_size;
+	unsigned int arcdraw_options;
+	unsigned int bitblt_options;
+	enum s364_options_bus_kind bus_kind;
+	enum s364_options_chipset_name chipset_name;
+	int chipset_revision_number;
+	enum s364_options_clock_chip_name clock_chip_name;
+	int clock_doubler_threshold;
+	int crtc_sync_timeout_count;
+	char *cursor_max_size;
+	enum s364_options_cursor_type cursor_type;
+	enum s364_options_dac_16_bit_color_mode dac_16_bit_color_mode;
+	enum s364_options_dac_32_bit_color_mode dac_32_bit_color_mode;
+	int dac_max_frequency;
+	enum s364_options_dac_name dac_name;
+	enum s364_options_dac_rgb_width dac_rgb_width;
+	unsigned int fontdraw_options;
+	enum s364_options_framebuffer_access_for_core_server framebuffer_access_for_core_server;
+	int framebuffer_physical_address;
+	char *glyph_cache_size;
+	int graphics_engine_loop_timeout_count;
+	int graphics_engine_micro_delay_count;
+	enum s364_options_hsync_polarity hsync_polarity;
+	unsigned int linedraw_options;
+	int max_number_of_glyphs_in_downloadable_font;
+	int maximum_offscreen_downloadable_bitmap_height;
+	int maximum_offscreen_downloadable_bitmap_width;
+	int memory_clock_frequency;
+	char *modedb_string;
+	enum s364_options_monitor_sync_type monitor_sync_type;
+	int number_of_downloadable_cursors;
+	int number_of_downloadable_fonts;
+	int number_of_graphics_states;
+	int omm_full_coalesce_watermark;
+	int omm_hash_list_size;
+	int omm_horizontal_constraint;
+	char *omm_named_allocation_list;
+	int omm_neighbour_list_increment;
+	int omm_vertical_constraint;
+	enum s364_options_pci_9gxe64_1280_modes pci_9gxe64_1280_modes;
+	unsigned int pointdraw_options;
+	unsigned int rectfill_options;
+	char *register_values_string;
+	unsigned int screen_visual_list;
+	enum s364_options_si_interface_version si_interface_version;
+	int small_stipple_conversion_threshold;
+	unsigned int spansfill_options;
+	char *static_colormap_description_file;
+	char *stipple_best_size;
+	char *tile_best_size;
+	int verbose_startup;
+	enum s364_options_video_clock_delay video_clock_delay;
+	enum s364_options_video_clock_invert video_clock_invert;
+	enum s364_options_vlb_964_line_workaround vlb_964_line_workaround;
+	enum s364_options_vsync_polarity vsync_polarity;
+	int vt_switch_save_lines;
+
+};
+
+/*
+ * Names of the option defaults
+ */
+
+#define S364_OPTIONS_ARC_CACHE_SIZE_DEFAULT\
+	16
+#define S364_OPTIONS_ARCDRAW_OPTIONS_DEFAULT\
+	( S364_OPTIONS_ARCDRAW_OPTIONS_DRAW_ONE_BIT_ARCS )
+#define S364_OPTIONS_BITBLT_OPTIONS_DEFAULT\
+	( S364_OPTIONS_BITBLT_OPTIONS_USE_SS_BITBLT |S364_OPTIONS_BITBLT_OPTIONS_USE_MS_BITBLT |S364_OPTIONS_BITBLT_OPTIONS_USE_SM_BITBLT |S364_OPTIONS_BITBLT_OPTIONS_USE_MS_STPLBLT )
+#define S364_OPTIONS_BUS_KIND_DEFAULT\
+	S364_OPTIONS_BUS_KIND_AUTO_DETECT
+#define S364_OPTIONS_CHIPSET_NAME_DEFAULT\
+	S364_OPTIONS_CHIPSET_NAME_AUTO_DETECT
+#define S364_OPTIONS_CHIPSET_REVISION_NUMBER_DEFAULT\
+	-1
+#define S364_OPTIONS_CLOCK_CHIP_NAME_DEFAULT\
+	S364_OPTIONS_CLOCK_CHIP_NAME_USE_BUILTIN
+#define S364_OPTIONS_CLOCK_DOUBLER_THRESHOLD_DEFAULT\
+	-1
+#define S364_OPTIONS_CRTC_SYNC_TIMEOUT_COUNT_DEFAULT\
+	100000
+#define S364_OPTIONS_CURSOR_MAX_SIZE_DEFAULT 0
+#define S364_OPTIONS_CURSOR_TYPE_DEFAULT\
+	S364_OPTIONS_CURSOR_TYPE_AUTO_CONFIGURE
+#define S364_OPTIONS_DAC_16_BIT_COLOR_MODE_DEFAULT\
+	S364_OPTIONS_DAC_16_BIT_COLOR_MODE_555
+#define S364_OPTIONS_DAC_32_BIT_COLOR_MODE_DEFAULT\
+	S364_OPTIONS_DAC_32_BIT_COLOR_MODE_ARGB
+#define S364_OPTIONS_DAC_MAX_FREQUENCY_DEFAULT\
+	0
+#define S364_OPTIONS_DAC_NAME_DEFAULT\
+	S364_OPTIONS_DAC_NAME_USE_BUILTIN
+#define S364_OPTIONS_DAC_RGB_WIDTH_DEFAULT\
+	S364_OPTIONS_DAC_RGB_WIDTH_8
+#define S364_OPTIONS_FONTDRAW_OPTIONS_DEFAULT\
+	( S364_OPTIONS_FONTDRAW_OPTIONS_DRAW_NON_TERMINAL_FONTS |S364_OPTIONS_FONTDRAW_OPTIONS_DRAW_TERMINAL_FONTS |S364_OPTIONS_FONTDRAW_OPTIONS_ASSEMBLE_GLYPHS )
+#define S364_OPTIONS_FRAMEBUFFER_ACCESS_FOR_CORE_SERVER_DEFAULT\
+	S364_OPTIONS_FRAMEBUFFER_ACCESS_FOR_CORE_SERVER_NO
+#define S364_OPTIONS_FRAMEBUFFER_PHYSICAL_ADDRESS_DEFAULT\
+	120
+#define S364_OPTIONS_GLYPH_CACHE_SIZE_DEFAULT\
+	"64X64"
+#define S364_OPTIONS_GRAPHICS_ENGINE_LOOP_TIMEOUT_COUNT_DEFAULT\
+	200000
+#define S364_OPTIONS_GRAPHICS_ENGINE_MICRO_DELAY_COUNT_DEFAULT\
+	40
+#define S364_OPTIONS_HSYNC_POLARITY_DEFAULT\
+	S364_OPTIONS_HSYNC_POLARITY_DEFAULT
+#define S364_OPTIONS_LINEDRAW_OPTIONS_DEFAULT\
+	( S364_OPTIONS_LINEDRAW_OPTIONS_USE_LINE_DRAW |S364_OPTIONS_LINEDRAW_OPTIONS_USE_LINE_RECTANGLES |S364_OPTIONS_LINEDRAW_OPTIONS_USE_SEGMENT_DRAW |S364_OPTIONS_LINEDRAW_OPTIONS_USE_DASHED_LINE )
+#define S364_OPTIONS_MAX_NUMBER_OF_GLYPHS_IN_DOWNLOADABLE_FONT_DEFAULT\
+	256
+#define S364_OPTIONS_MAXIMUM_OFFSCREEN_DOWNLOADABLE_BITMAP_HEIGHT_DEFAULT\
+	256
+#define S364_OPTIONS_MAXIMUM_OFFSCREEN_DOWNLOADABLE_BITMAP_WIDTH_DEFAULT\
+	256
+#define S364_OPTIONS_MEMORY_CLOCK_FREQUENCY_DEFAULT\
+	57
+#define S364_OPTIONS_MODEDB_STRING_DEFAULT 0
+#define S364_OPTIONS_MONITOR_SYNC_TYPE_DEFAULT\
+	S364_OPTIONS_MONITOR_SYNC_TYPE_COMPOSITE_SYNC
+#define S364_OPTIONS_NUMBER_OF_DOWNLOADABLE_CURSORS_DEFAULT\
+	1
+#define S364_OPTIONS_NUMBER_OF_DOWNLOADABLE_FONTS_DEFAULT\
+	17
+#define S364_OPTIONS_NUMBER_OF_GRAPHICS_STATES_DEFAULT\
+	4
+#define S364_OPTIONS_OMM_FULL_COALESCE_WATERMARK_DEFAULT\
+	2
+#define S364_OPTIONS_OMM_HASH_LIST_SIZE_DEFAULT\
+	0
+#define S364_OPTIONS_OMM_HORIZONTAL_CONSTRAINT_DEFAULT\
+	0
+#define S364_OPTIONS_OMM_NAMED_ALLOCATION_LIST_DEFAULT\
+	""
+#define S364_OPTIONS_OMM_NEIGHBOUR_LIST_INCREMENT_DEFAULT\
+	0
+#define S364_OPTIONS_OMM_VERTICAL_CONSTRAINT_DEFAULT\
+	0
+#define S364_OPTIONS_PCI_9GXE64_1280_MODES_DEFAULT\
+	S364_OPTIONS_PCI_9GXE64_1280_MODES_NO
+#define S364_OPTIONS_POINTDRAW_OPTIONS_DEFAULT\
+	( S364_OPTIONS_POINTDRAW_OPTIONS_USE_PLOT_POINT )
+#define S364_OPTIONS_RECTFILL_OPTIONS_DEFAULT\
+	( S364_OPTIONS_RECTFILL_OPTIONS_USE_SOLID_FILL_RECT |S364_OPTIONS_RECTFILL_OPTIONS_USE_STIPPLE_FILL_RECT |S364_OPTIONS_RECTFILL_OPTIONS_USE_OFFSCREEN_MEMORY |S364_OPTIONS_RECTFILL_OPTIONS_USE_GE_MONO_PATFILL |S364_OPTIONS_RECTFILL_OPTIONS_USE_TILE_FILL_RECT |S364_OPTIONS_RECTFILL_OPTIONS_USE_TILE_SHRINK )
+#define S364_OPTIONS_REGISTER_VALUES_STRING_DEFAULT\
+	""
+#define S364_OPTIONS_SCREEN_VISUAL_LIST_DEFAULT 0
+#define S364_OPTIONS_SI_INTERFACE_VERSION_DEFAULT\
+	S364_OPTIONS_SI_INTERFACE_VERSION_AUTO_CONFIGURE
+#define S364_OPTIONS_SMALL_STIPPLE_CONVERSION_THRESHOLD_DEFAULT\
+	32
+#define S364_OPTIONS_SPANSFILL_OPTIONS_DEFAULT\
+	( S364_OPTIONS_SPANSFILL_OPTIONS_USE_SOLID_FILL )
+#define S364_OPTIONS_STATIC_COLORMAP_DESCRIPTION_FILE_DEFAULT 0
+#define S364_OPTIONS_STIPPLE_BEST_SIZE_DEFAULT\
+	"64X64"
+#define S364_OPTIONS_TILE_BEST_SIZE_DEFAULT\
+	"64X64"
+#define S364_OPTIONS_VERBOSE_STARTUP_DEFAULT\
+	0
+#define S364_OPTIONS_VIDEO_CLOCK_DELAY_DEFAULT\
+	S364_OPTIONS_VIDEO_CLOCK_DELAY_NO
+#define S364_OPTIONS_VIDEO_CLOCK_INVERT_DEFAULT\
+	S364_OPTIONS_VIDEO_CLOCK_INVERT_NO
+#define S364_OPTIONS_VLB_964_LINE_WORKAROUND_DEFAULT\
+	S364_OPTIONS_VLB_964_LINE_WORKAROUND_NO
+#define S364_OPTIONS_VSYNC_POLARITY_DEFAULT\
+	S364_OPTIONS_VSYNC_POLARITY_DEFAULT
+#define S364_OPTIONS_VT_SWITCH_SAVE_LINES_DEFAULT\
+	8072
+
+
+#if (defined(__DEBUG__))
+extern boolean	s364_options_debug ;
+#endif
+
+
+extern struct s364_options_structure *
+s364_options_parse (struct s364_options_structure *option_struct_p,
+			   const char *option_string_p)
+;
+
+
+#endif

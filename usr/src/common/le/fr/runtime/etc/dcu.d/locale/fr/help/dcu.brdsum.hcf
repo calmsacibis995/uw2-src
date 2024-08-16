@@ -1,0 +1,113 @@
+.ident	"@(#)dcu:locale/C/help/dcu.brdsum	1.8"
+.related kbhelp dcu.whatis
+.title Aide : configuration du périphérique matériel
+A PROPOS DE CE MENU
+L'écran Configuration du périphérique matériel répertorie tous les
+contrôleurs (périphériques matériels) configurés sur votre système. A
+partir de cet écran, vous pouvez :
+   --- Visualiser tous les périphériques matériels configurés sur votre
+       système ainsi que les paramètres correspondant aux pilotes de
+       périphériques actuels
+   --- Obtenir de plus amples informations indiquant les valeurs
+       correspondant à chaque pilote de périphériques
+   --- Changer les pilotes de périphériques associés à un
+       périphérique matériel
+                                   (A SUIVRE)
+.page
+INFORMATIONS RELATIVES AUX PERIPHERIQUES MATERIELS
+Chaque périphérique matériel peut être indiqué sur une ligne séparée. Le
+deuxième champ répertorie le nom des périphériques matériels.
+
+Si "non utilisé" s'affiche dans le champ Nom du
+périphérique, cela signifie que le périphérique matériel est
+temporairement inactif ; vous pourrez affecter ultérieurement un
+périphérique matériel des paramètres associés aux
+pilotes de périphériques répertoriés (de façon à l'activer). (Les
+données de configuration sont conservées dans le fichier des ressources
+système.)
+
+REMARQUE :
+           Si un périphérique matériel détectable automatiquement par
+           UnixWare (par exemple, des périphériques EISA, MCA et PCI
+           supportés) est supprimé du système, les pilotes de
+           périphériques associés sont effacés du fichier des ressources
+           système.
+                                   (A SUIVRE)
+.page
+INFORMATIONS RELATIVES AUX PERIPHERIQUES MATERIELS (A SUIVRE)
+Il se peut que la valeur O ou N soit affichée à gauche du nom du
+périphérique matériel. O indique que le périphérique matériel est
+utilisé par le système ; N indique que le périphérique matériel est
+inactif et que les données correspondantes vont être supprimées du
+fichier des ressources système lors de l'application des modifications
+DCU.
+
+Les valeurs suivantes qui correspondent aux paramètres de 
+configuration matérielle sont indiquées à droite du nom du périphérique :
+ - IRQ
+ - Adresse de départ associée au registre d'adresses d'E/S
+ - Adresse de fin associée au registre d'adresses d'E/S
+ - Adresse de début associée au registre d'adresses mémoire
+ - Adresse de fin associée au registre d'adresses mémoire
+ - Canal DMA
+                                   (A SUIVRE)
+.page
+COMMENT MODIFIER LES VALEURS
+Les valeurs du matériel modifiables sont mises en
+surbrillance. Exécutez les opérations suivantes pour changer ces
+valeurs :
+  1. Utilisez la touche <Tab> ou les flèches vers le haut/vers le bas
+     pour vous placer sur le champ de votre choix.
+  2. Appuyez sur la touche <F2> pour visualiser les options.
+  3. Utilisez la touche <Tab> ou les flèches vers le haut/vers le bas
+     pour placer l'astérisque (*) sur votre choix.
+  4. Une fois votre sélection effectuée, appuyez sur <Entrée> pour
+     revenir à l'écran Configuration du périphérique matériel.
+  5. Si vous avez changé une valeur, appuyez sur <F4> pour vérifier les
+     nouveaux paramètres associés aux pilotes de périphériques.
+REMARQUE : certaines valeurs du matériel ne peuvent être modifiées parce
+     qu'elles sont nécessaires ou parce que des utilitaires/procédures
+     de configuration spécifiques au matériel doivent être exécutés.
+     Pour plus de détails, consultez la documentation relative au
+     matériel.
+                                   (A SUIVRE)
+.page
+INFORMATIONS COMPLEMENTAIRES RELATIVES AU PERIPHERIQUE MATERIEL
+Vous obtenez ces informations en appuyant sur la touche <F6> : 
+   --- Nom du pilote matériel
+   --- Nom du périphérique matériel
+   --- Valeurs correctes pour le numéro d'unité
+   --- Valeurs correctes associées au niveau des priorités
+       d'interruption IPL (Interrupt Priority Level)
+   --- Valeurs ITYPE correctes
+   --- Valeurs IRQ correctes
+   --- Valeurs correctes associées au registre d'adresses d'E/S
+   --- Valeurs correctes associées au registre d'adresses mémoire
+   --- Valeurs correctes pour le canal DMA
+   --- Valeurs correctes pour la liaison CPU
+   --- ID carte
+   --- Type du bus de la carte
+Lorsque vous avez revu les informations complémentaires relatives
+au périphérique matériel, appuyez sur 
+<Entrée> pour revenir à l'écran Configuration du périphérique matériel.
+                                   (A SUIVRE)
+.page
+MODIFICATION DES PARAMETRES EVOLUES
+Appuyez sur la touche <F7> pour modifier d'autres paramètres (BINDCPU.
+Numéro d'unité, IPL, ITYPE), ainsi que des paramètres spécifiques à la
+carte (s'il en existe).
+
+CONFLITS
+Certains périphériques matériels supportent des valeurs IRQ partagées.
+Excepté pour ces périphériques, vous devez sélectionner des valeurs
+spécifiques pour tous les autres composants matériels.
+
+Si l'écran Configuration du périphérique matériel indique que deux
+périphériques sont associés au même IRQ, aux registres d'adresses d'E/S
+ou aux registres d'adresses mémoire qui se chevauchent, et/ou au même
+canal DMA, mettez les données de configuration à jour et résolvez le
+conflit.
+
+QUITTER L'AIDE
+Appuyez sur <Echap> pour revenir à l'écran Configuration du périphérique
+matériel. Appuyez sur <F1> pour obtenir de plus amples informations.

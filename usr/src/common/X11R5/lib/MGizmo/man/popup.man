@@ -1,0 +1,95 @@
+'\"ident        "@(#)MGizmo:man/popup.man	1.2"
+.TH PopupGizmo 3L
+.SH NAME
+\f(CBPopupGizmo\f1 \- an abstract data type (ADT) that specifies the contents
+and the creation of a popup window.
+The \f(CBPopupGizmo\fP consists of a data
+structure and a set of functions that operate on this Gizmo.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/PopupGizmo.h>
+
+Widget  GetPopupGizmoShell(Gizmo \fIg\fP);
+void    BringDownPopup(Widget \fIwid\fP)
+.ft
+.fi
+.SH "DESCRIPTION"
+A \f(CBPopupGizmo\fP is created by populating a \f(CBPopupGizmo\fP data
+structure and calling \f(CBCreateGizmo(3L)\fP.
+The \f(CBGizmoRec\fP that can be provided in the \f(CBPopupGizmo\fP data
+structure is used to specify the contents of the popup window.
+Minimally, a popup window will have a title at the top of the window
+and a command menu at the bottom of the window.
+Optionally, the window can also contain any number of Gizmos in its working
+area and a message area just below the command menu.
+.PP
+The following is the definition if the \f(CBPopupGizmo\fP data structure:
+.PP
+.nf
+.ft CB
+typedef struct _PopupGizmo {
+        HelpInfo *       help;      /* Help information */
+        char *           name;      /* Name of the shell */
+        char *           title;     /* Title (for the wm) */
+        MenuGizmo *      menu;      /* Pointer to menu info */
+        GizmoArray       gizmos;    /* The Gizmo list */
+        int              numGizmos; /* Number of Gizmos */
+} PopupGizmo;
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBPopupGizmo\fP:
+.IP \fBGetGizmoWidget\fP 25
+Returns the row column widget id for the work area within the
+\f(CBPopupGizmo\fP.
+.IP \fBGetGizmoGizmo\fP 25
+Returns the handle to the \f(CBPopupGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 25
+Undefined.
+.IP \fBGetGizmoPreviousValue\fP 25
+Undefined.
+.PP
+If no match is found and the \f(CBPopupGizmo\fP has a menu then the menu
+is queried.
+If no match is found in the menu and the \f(CBPopupGizmo\fP has a
+\f(CBGizmoArray\fP then the array is queried for the named Gizmo.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the dialog shell.
+.SH "USAGE"
+.nf
+.ft CB
+
+static MenuItems        menuItems[] = {
+        {True, "Button 1", "1",  I_PUSH_BUTTON},
+        {True, "Button 2", "2",  I_PUSH_BUTTON},
+        {True, "Button 3", "3",  I_PUSH_BUTTON},
+        {NULL, NULL}
+};
+
+extern void     menuCB();
+
+static MenuGizmo        menu = {
+        NULL, "popupMenu", NULL, menuItems, menuCB, NULL, XmVERTICAL, 1
+};
+
+extern GizmoArray        gizmoArray;
+
+PopupGizmo popup = {
+        NULL, "popup", "Popup Window", menu, gizmoArray, 5
+};
+
+main ()
+{
+        Gizmo      handle;
+
+        handle = CreateGizmo(toplevel, PopupGizmoClass, &popup, NULL, 0);
+}
+.ft
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP
+.ft

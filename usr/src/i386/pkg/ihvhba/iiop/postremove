@@ -1,0 +1,13 @@
+#ident	"@(#)pkg.ihvhba:i386/pkg/ihvhba/iiop/postremove	1.1"
+
+# Replace the version of atup/space.c installed by the iiop package
+# with the one originally installed via the base package.
+
+if [ ! -f /etc/conf/pack.d/atup/space.c.base ]
+then
+	mv /etc/conf/pack.d/atup/space.c.base /etc/conf/pack.d/atup/space.c
+fi
+installf -c none $PKGINST /etc/conf/pack.d/atup/space.c >/dev/null 2>&1
+installf -f $PKGINST >/dev/null 2>&1
+removef base /etc/conf/pack.d/atup/space.c.base >/dev/null 2>&1
+removef -f base >/dev/null 2>&1

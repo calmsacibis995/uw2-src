@@ -1,0 +1,47 @@
+<!-- Annotation manager main window -->
+
+<menu label="Anmerkung" mnemonic="A" command="annot">
+
+<item label="Anzeigen" mnemonic="n" command="show" parent="annot">
+<menu label="Gehe zu" mnemonic="G" command="goto" parent="annot">
+<item label="Voriges" mnemonic="V" command="goto-prev" parent="goto">
+<item label="Aktuell" mnemonic="A" command="goto-current" parent="goto">
+<item label="Nächstes" mnemonic="N" command="goto-next" parent="goto">
+
+<item label="sep" genre=separator parent="annot">
+<item label="Löschen" mnemonic="L" command="delete" parent="annot">
+
+<item label="sep" genre=separator parent="annot">
+<item label="Export..." mnemonic="E" command="export" parent="annot">
+<item label="Fenster schließen" mnemonic="c" command="close" parent="annot">
+
+
+<menu label="Filtergruppe" mnemonic="F" command="fgroup">
+
+<item label="Neue Gruppe" mnemonic="N" command="new" parent="fgroup">
+<item label="Öffnen..." mnemonic="f" command="open" parent="fgroup">
+
+<item label="sep" genre=separator parent="fgroup">
+<item label="Speichern" mnemonic="S" command="save" parent="fgroup">
+<item label="Speichern als..." mnemonic="a" command="save-as" parent="fgroup">
+
+<item label="sep" genre=separator parent="fgroup">
+<item label="Löschen..." mnemonic="L" command="remove" parent="fgroup">
+
+
+<menu label="Sortieren" mnemonic="S" command="sortby" genre=exclusive>
+
+<item label="Titel" mnemonic="T" command="title" parent="sortby" genre=radio>
+<item label="Eigentümer" mnemonic="E" command="owner" parent="sortby" genre=radio>
+<item label="Zugriff" mnemonic="Z" command="access" parent="sortby" genre=radio>
+<item label="Datum" mnemonic="D" command="date" parent="sortby" genre=radio>
+<item label="Typ" mnemonic="y" command="type" parent="sortby" genre=radio>
+<item label="Position" mnemonic="P" command="location" parent="sortby" genre=radio>
+
+<menu label="Hilfe" mnemonic="H" command="help">
+<item label="Kontextabhängige Hilfe" command="help-context" parent="help">
+<item label="Mit Anmerkungen arbeiten" command="help-working-annots" 
+	parent="help">
+<item label="Anmerkungs-Manager verwenden" command="help-annotmgr-using" 
+	parent="help">
+

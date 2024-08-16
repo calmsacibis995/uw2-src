@@ -1,0 +1,497 @@
+#!/bin/sh
+#ident	"@(#)sc:local/bin/buildprod	3.13" 
+###############################################################################
+#
+# C++ Standard Components, Release 3.0.
+#
+# Copyright (c) 1991, 1992 AT&T and Unix System Laboratories, Inc.
+# Copyright (c) 1988, 1989, 1990 AT&T.  All Rights Reserved.
+#
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T and Unix System
+# Laboratories, Inc.  The copyright notice above does not evidence
+# any actual or intended publication of such source code.
+#
+###############################################################################
+
+#set -x
+root=`pwd`
+#root=$HOME/lib/build
+complist=$root/complist
+easytests=0
+MAKE=make
+IGNORE=
+BSD=0
+SYS=SYSV
+CC=CC
+Cc=${ccC-/bin/cc}
+EXTRACCFLAGS=
+SHELL=${SHELL-/bin/sh}
+export SHELL
+
+# what to build
+buildalllisted=0
+buildregressions=0
+buildhypertext=0
+builddemos=0
+clean=0
+clobber=0
+
+tmp=$root/tmpdir
+cleanup() {
+	rm -rf $tmp
+	exit $1
+}
+trap 'cleanup 1' 1 2 3 15
+rm -rf $tmp
+mkdir $tmp
+
+error() {
+        echo "`basename $0`: $@"
+        cleanup 1
+}
+
+badargs=0
+set -- `getopt al:cKbdtTiphrC:F:x $*`
+if [ $? -ne 0 ]; then
+ 	badargs=1
+fi
+for i
+do
+ 	case $i in
+	-F)
+		EXTRACCFLAGS="$2"
+		shift; shift;;
+	-C)
+		CC="$2"
+		shift; shift;;
+	-x)
+		set -x
+		shift;;
+	-d)
+		builddemos=1
+		shift;;
+	-K)
+		clobber=1
+		clean=1
+		shift;;
+	-c)
+		clean=1
+		shift;;
+	-l)
+		case $2 in
+		/*)	complist=$2;;
+		*)	complist=$root/$2;;
+		esac
+		shift; shift;;
+	-h)
+		buildhypertext=1
+		shift;;
+	-a)
+		buildalllisted=1
+		shift;;
+	-b) 
+		BSD=1
+		SYS=BSD
+		shift;;
+	-i)
+		IGNORE=-i
+		shift;;
+	-t)
+		easytests=1
+		shift;;
+	-T)
+		buildregressions=1
+		shift;;
+	--)	shift; break;;
+	-*)	shift;;
+	esac
+done
+if test $badargs -eq 1; then
+        echo "
+usage: buildprod [-abKcdhitT] [-l complist] [-C CC] [-F CCFLAGS]
+        -a = build all components listed in complist
+        -h = build hypertext manual
+        -d = do demos on all components listed in complist
+        -T = do regression tests on all components listed in complist
+        -t = run checkios(1C++) and linkspace(1C++) on components in complist
+        -c = don't build, just clean up the remains of a previous build
+        -K = don't build, clobber the results of a previous build
+        none of -dhTtc implies 'build all components listed in complist'
+        -b = this is a BSD-like machine
+        -i = ignore compiler errors
+        -l complist; defaults to ./complist
+        -C CC; CC with which to do the build (defaults to CC)
+        -F CCFLAGS; append CCFLAGS to built-in CC options
+
+        The following environment variables can be used:
+        SC_COMPLISTFILE can be used to override the name of the complist.
+        SC_COMPLIST can be used to override the list of components in complist.
+        SCFOPTS can be used to pass a list of CCFLAGS on to the compiler.
+        " 1>&2
+	cleanup 2
+fi
+
+if [ $builddemos -eq 0 -a $buildhypertext -eq 0 -a $buildregressions -eq 0 -a $clean -eq 0 -a $easytests -eq 0 ]; then
+	buildalllisted=1
+fi
+
+components=${SC_COMPLIST:-`cat ${SC_COMPLISTFILE:-$complist}`}
+
+checkfordupdotos() {
+	as="$*"
+	dups=`nm $as | egrep "\.o:" | sort | uniq -d`
+	if [ "$dups" != "" ]; then
+		echo "buildprod: library internal consistency error: the following file names are duplicated" 1>&2
+		echo "	among $as: $dups" 1>&2
+		echo "	Sorry." 1>&2
+		cleanup 2
+	fi
+}
+
+echoifexists() {
+	if [ -f $1 ]; then
+		echo $1
+	fi
+}
+
+# echo a list of all the .a's that should be melded into lib++.a; 
+# link all others to $root/lib
+lndotas() {
+	list=
+	for i in $root/src/*/*.a; do
+		case `basename $i` in
+		libfs.a|libg2++.a|libGA.a|libGraph.a)
+			rm -f $root/lib/`basename $i`
+			ln $i $root/lib;;
+		*)	list="$list $i";;
+		esac
+	done
+	echo $list
+}
+
+# echo a list of all the .a's in $root/lib, in the order they must appear when linking
+liblist() {
+	list=
+	for i in g2++ GA Graph ++; do
+		lib=$root/lib/lib$i.a
+		if [ -f $lib ]; then
+			list="$list $lib"
+		fi	
+	done
+	echo $list
+}
+
+# crack the .a's $* into the current directory
+crackhere() {
+	for i in $*; do
+		ar x $i
+	done
+}
+
+# lib++.a is out of date, build it
+dobuildlpp() {
+	meld="$*"
+	echo "buildprod: hold on while I build a lib++.a..." 1>&2
+	if [ $easytests -eq 1 ]; then
+		checkfordupdotos $meld
+	fi
+	cd $tmp
+	rm -f * 
+	crackhere $meld
+	lpp=$root/lib/lib++.a
+	rm -f $lpp
+	if [ -f /usr/bin/ranlib ]; then
+		ar cr $lpp *.o
+		ranlib $lpp
+	else
+		oorder=`lorder *.o | tsort 2>/dev/null`
+		ar cr $lpp $oorder
+	fi
+	#rm -f *
+	cd $root
+}
+
+#return 0 if any of $2, $3, ... are newer than $1
+anynewer() {
+	f=$1
+	shift
+	for i in $*
+	do
+		$root/aux/fnewer $i $f
+		if [ $? -eq 0 ]; then
+			return 0
+		fi
+	done
+	return 1
+}
+
+# build lib++.a, libfs.a, etc. from all the $root/src/*/*.a
+# don't bother building lib++.a if it's not out of date
+buildlpp() {
+	meld="`lndotas`"
+	anynewer $root/lib/lib++.a $meld
+	if [ $? -eq 0 ]; then
+		dobuildlpp $meld
+	fi
+}
+
+fixmakefile() {
+	# some versions of make (e.g., on pre-4.0 SunOS) don't expand environment variables in include statements
+	rm -f Makefile
+	sed "s%^include \$(SLELIB)%include $SLELIB%" makefile >Makefile
+}
+
+fixasserth() {
+	# some old assert.h's incorrectly #include <iostream.h> even when NDEBUG is defined
+	rm -f assert.h
+	echo "#define assert(e) ((void)0)" > assert.h
+}
+
+# -c = making (non-tool) component
+# -t = making tool
+# -d = making demo/test
+makethisdir() {
+	ccflags=
+	if [ "$1" = "-c" ]; then
+		ccflags="$ccflags -DBUILDING_LIBRARY"
+	fi
+	if [ "$1" = "-c" -o "$1" = "-t" ]; then
+		fixasserth
+		ccflags="$ccflags -DNDEBUG"
+	fi
+	ccflags="$ccflags -D$SYS -I. -I$root/incl $EXTRACCFLAGS"
+	libs="`liblist`"
+	fixmakefile
+
+	if [ "$2" = "-cc" ]; then
+		echo $MAKE $IGNORE SYS=$SYS $SYS=1 BSD=$BSD CC=$CC Cc=$Cc CCFLAGS=\"$ccflags $SCFOPTS\" LIBS=\"$libs\"
+		$MAKE -f Makefile $IGNORE SYS=$SYS $SYS=1 BSD=$BSD CC=$CC Cc=$Cc CCFLAGS="$ccflags $SCFOPTS" LIBS="$libs" 2>&1 
+	else
+		echo $MAKE $IGNORE SYS=$SYS $SYS=1 BSD=$BSD CC=$CC CCFLAGS=\"$ccflags $SCFOPTS\" LIBS=\"$libs\"
+		$MAKE -f Makefile $IGNORE SYS=$SYS $SYS=1 BSD=$BSD CC=$CC CCFLAGS="$ccflags $SCFOPTS" LIBS="$libs" 2>&1 
+	fi
+}
+
+lncontents() {
+	from=$1
+	to=$2
+	files=`ls $from/* 2>/dev/null`
+	if [ "$files" != "" ]; then
+		for i in $files; do
+			# don't move up the CC shell script
+			if [ `basename $i` != "CC" ]; then
+				rm -f $to/`basename $i`
+				ln $i $to
+			fi
+		done
+	fi
+}
+
+copyup() {
+	#archive=`ls *.a 2>/dev/null`
+	#if [ "$archive" != "" ]; then
+	#	rm -f $root/lib/$archive
+	#	ln $archive $root/lib/$archive
+	#fi
+	lncontents bin $root/bin
+	chmod +x $root/bin/* 2>/dev/null
+	lncontents lib $root/lib
+}
+
+# -c = (non-tool) component
+# -t = tool
+buildcomp() {
+	flag=$1
+	comp=$2
+	usecc=$3
+	echo 1>&2
+	echo "buildprod: building $comp component" 1>&2
+	echo 1>&2
+	cd $root/src/$comp
+	if [ -f makefile ]; then
+		makethisdir $flag $usecc
+	fi
+	# some components generate header files during the build
+	# mv -f incl/* $root/incl 2>/dev/null
+	cp incl/* $root/incl 2>/dev/null
+	copyup
+	cd $root
+}	
+
+# make sure the archives $* define each global symbol no more than once
+checkfordupglobals() {
+	dups=`nm $* | awk '{ if ($2 == "T" || $2 == "D") print $3; }' | sort | uniq -d`
+	if [ "$dups" != "" ]; then
+		echo "buildprod: library internal consistency error: the following global symbols are multiply defined in $*: $dups" 1>&2
+		echo "Sorry."
+		cleanup 2
+	fi
+}
+		
+hymangen() {
+	$root/bin/hymangen -xCXh -I $root/incl
+	if [ -f hyman ]; then
+		rm -f $root/bin/hyman
+		ln hyman $root/bin
+	fi
+}
+
+if [ $clean -eq 1 ]; then
+	rm -f $root/fnewer.o
+	if [ $clobber -eq 1 ]; then
+	    rm -f $root/aux/fnewer $root/incl/g2mach.h $root/incl/g2values.h
+	    rm -f $root/lib/* $root/bin/*
+	fi
+	for comp in $components; do
+		if [ -d $root/src/$comp ]; then
+			echo "buildprod: cleaning $comp" 1>&2
+			cd $root/src/$comp
+			rm -f assert.h core
+		        if [ $clobber -eq 1 ]; then
+				$MAKE clobber 2>/dev/null
+			else
+				$MAKE clean 2>/dev/null
+			fi
+#			for d in tests demos; do
+#				if [ -d $d ]; then
+#					cd $d
+#					rm -f *.[Eor] core
+#		        		if [ $clobber -eq 1 ]; then
+#						$MAKE clobber 2>/dev/null
+#					else
+#						$MAKE clean 2>/dev/null
+#					fi
+#					cd ..
+#				fi
+#			done
+		fi
+	done
+	cleanup 0
+fi
+
+firsttoolmade=
+checknotoolsyet() {
+	comp=$1
+	if [ "$firsttoolmade" != "" ]; then
+		echo "buildprod: components must be listed before tools in $complist" 1>&2
+		echo "   Earlier you built $firsttoolmade, and now you're trying to build $comp" 1>&2
+		exit 2
+	fi
+}
+
+if [ $buildalllisted -eq 1 ]; then
+	for comp in $components; do
+		case $comp in
+		local)	;;
+		ipc)
+			checknotoolsyet $comp
+			if [ $BSD -eq 0 ]; then
+				buildcomp -c $comp
+			fi
+			;;
+		String|Pool|CC)
+			checknotoolsyet $comp
+			if [ $buildalllisted -eq 1 ]; then
+				buildcomp -c $comp
+			fi
+			;;
+		demangle|aoutdem|fs|G2++|hier|hyman|incl|publik)
+			# before building any tools, build a bootstrap version of lib++.a
+			if [ "$firsttoolmade" = "" ]; then
+				buildlpp  # bootstrap version
+				firsttoolmade=$comp
+			fi
+			if [ $comp = "demangle" ]; then
+				buildcomp -t $comp -cc
+			else
+				buildcomp -t $comp
+			fi
+			if [ $comp = "G2++" ]; then
+			    files=`ls $root/src/G2++/*.a 2>/dev/null`
+			    if [ "$files" != "" ]; then
+				rm -f lib/libg2++.a
+				ln $root/src/G2++/libg2++.a lib
+			    fi
+			    files=`ls $root/src/G2++/g2++comp 2>/dev/null`
+			    if [ "$files" != "" ]; then
+				rm -f bin/g2++comp
+				ln $root/src/G2++/g2++comp bin
+			    fi
+			fi
+			if [ $comp = "hyman" ]; then
+				buildhypertext=1
+			fi
+			;;
+		Path|Regex)	
+			checknotoolsyet $comp
+			buildcomp -c $comp -cc
+			;;
+		*)	
+			checknotoolsyet $comp
+			buildcomp -c $comp
+			;;
+		esac
+	done
+	buildlpp  # final version
+fi
+if [ $buildhypertext -eq 1 ]; then
+	cd $root/man
+	hymangen
+fi
+cd $root
+
+# run linkspace and checkios on *.a
+dotatests() {
+	as=`ls *.a 2>/dev/null`
+	if [ "$as" != "" ]; then
+		linkspace
+		checkios
+	fi
+}
+
+if [ $easytests -eq 1 ]; then
+	checkfordupglobals $root/lib/*.a
+	for comp in $components; do
+		if [ $BSD -eq 0 -o $comp != "ipc" ]; then
+			echo "" 1>&2
+			echo "Checking linkspace and iostream pull-in of $comp" 1>&2
+			cd $root/src/$comp
+			dotatests
+		fi
+	done
+fi
+
+dotests() {
+	dir=$1
+	for comp in $components; do
+		if [ -d $root/src/$comp/$dir ]; then
+			if [ $BSD -eq 0 -o $comp != "ipc" ]; then
+				echo "" 1>&2
+				echo "Doing $dir for $comp" 1>&2
+				echo "" 1>&2
+				cd $root/src/$comp/$dir
+				makethisdir -d
+			fi
+		fi
+		if [ $comp = "G2++" ]; then
+			echo "" 1>&2
+			echo "Doing $dir for $comp" 1>&2
+			echo "" 1>&2
+			cd $root/src/$comp
+			ccflags="$ccflags -D$SYS -I. -I$root/incl $EXTRACCFLAGS"
+			libs="`liblist`"
+			fixmakefile
+			echo $MAKE $IGNORE SYS=$SYS $SYS=1 BSD=$BSD CC=$CC CCFLAGS=\"$ccflags $SCFOPTS\" LIBS=\"$libs\" $dir
+			$MAKE -f Makefile $IGNORE SYS=$SYS $SYS=1 BSD=$BSD CC=$CC CCFLAGS="$ccflags $SCFOPTS" LIBS="$libs" $dir 2>&1 
+		fi
+	done
+}
+
+if [ $builddemos -eq 1 ]; then
+	dotests demos
+fi
+if [ $buildregressions -eq 1 ]; then
+	dotests tests
+fi
+cd $root
+cleanup 0

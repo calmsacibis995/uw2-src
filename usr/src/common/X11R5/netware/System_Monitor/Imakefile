@@ -1,0 +1,137 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)systemmon:Imakefile	1.13"
+#ident "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/System_Monitor/Imakefile,v 1.28 1994/09/14 22:59:13 renuka Exp $"
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#include    <Motif.tmpl>
+#include    <Motif.rules>
+#include    <C++.tmpl>
+#include    <C++.rules>
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+XLIBDIR     =  $(ROOT)/$(MACH)/usr/X/lib
+
+
+          DEBUG =  -O
+    CDEBUGFLAGS = -O
+
+
+SRCS =		Application.C \
+		main.C  \
+		WorkArea.C \
+		MenuBar.C \
+		IconBox.C \
+		SarList.C \
+		Options.C \
+		Question.C \
+		Prompt.C \
+		Alarm.C \
+		Play.C \
+		Select.C \
+		Graph.C
+
+HDRS =		Application.h \
+		main.h  \
+		WorkArea.h \
+		MenuBar.h \
+		IconBox.h \
+		SarList.h \
+		Options.h \
+		Question.h \
+		Prompt.h \
+		Alarm.h \
+		Play.h \
+		Select.h \
+		Graph.h
+
+OBJS =		Application.o \
+		main.o  \
+		WorkArea.o \
+		MenuBar.o \
+		IconBox.o \
+		SarList.o \
+		Options.o \
+		Question.o \
+		Prompt.o \
+		Alarm.o \
+		Play.o \
+		Select.o \
+		Graph.o
+
+          PROGS = System_Monitor 
+
+       DTLIBSRC = $(LIBSRC)/Dt
+          DTLIB = $(DTLIBSRC)/libDt.so
+      DTILIBSRC = $(USLCLIENTSRC)/libMDtI
+         DTILIB = $(DTILIBSRC)/libMDtI.so
+      MGIZMOSRC = $(LIBSRC)/MGizmo
+      MGIZMOLIB = $(MGIZMOSRC)/libMGizmo.so
+    DTWIDGETSRC = $(LIBSRC)/DtWidget
+    DTWIDGETLIB = $(DTWIDGETSRC)/libDtWidget.so
+
+
+       INCLUDES = -I../include -I$(LIBSRC) -I$(DTLIBSRC) -I$(DTILIBSRC) -I$(MGIZMOSRC) -I$(DTWIDGETSRC)
+
+          XLIBS = XmClientLibs $(DTLIB) $(DTILIB) $(MGIZMOLIB) $(DTWIDGETLIB) \
+		 ../libclasses/libuw.a ../libcomponents/libuwc.a $(XMULIB) \
+		$(XLIB)
+
+  SYS_LIBRARIES = -lgen -lm -L../../../lib/libmas -lmas
+
+       C++FLAGS = $(DEBUG) -DX_WCHAR -DXTFUNCPROTO $(ALLDEFINES) 
+           C++C = LD_RUN_PATH=/usr/X/lib $(PFX)CC
+      LDOPTIONS = $(CDEBUGFLAGS) $(CCOPTIONS) $(LOCAL_LDFLAGS) 
+   
+
+
+all:: $(PROGS)
+
+NormalCPlusPlusProgramTarget($(PROGS),$(OBJS),$(LLIBS),$(XLIBS),$(SYS_LIBS))
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 555)
+
+InstallAppDefaults(System_Monitor)
+
+/* Install all the pixmaps for the app */
+InstallMultiple(alarm16.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(options24.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(playback24.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(setalarm24.icon,$(USRLIBDIR)/pixmaps)
+
+/* Install Process Icon and mask */
+InstallMultiple(pixmaps/sysmon48.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/sysmon48.icon,$(USRLIBDIR)/bitmaps)
+InstallMultiple(bitmasks/sysmon48.icon,$(USRLIBDIR)/bitmasks)
+InstallMultiple(pixmasks/sysmon48.icon,$(USRLIBDIR)/pixmasks)
+InstallMultiple(pixmaps/sysmon48alt.icon,$(USRLIBDIR)/pixmaps)
+
+/* 	Install folder Icon and mask */
+InstallMultiple(pixmaps/sysmon32.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(pixmasks/sysmon32.icon,$(USRLIBDIR)/pixmasks)
+
+/* 	Install drag n drop Icon and mask */
+InstallMultiple(bitmaps/sysmon32.icon,$(USRLIBDIR)/bitmaps)
+InstallMultiple(bitmasks/sysmon32.icon,$(USRLIBDIR)/bitmasks)
+
+InstallMsgCatalog (System_Monitor)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()
+

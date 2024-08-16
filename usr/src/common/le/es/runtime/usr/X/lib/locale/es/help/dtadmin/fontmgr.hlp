@@ -1,0 +1,754 @@
+#ident\t"@(#)dthelp:Preferences/fontmgr.hlp     1.20"
+^*version^1
+^*title^Uso de fuentes en UnixWare
+^:Fuentes
+^*width^70
+^+DesktopMgr/help.defs
+^?Uso de Fuentes en UnixWare
+^0^Fuentes
+^$10
+Fuentes
+
+Use Tipos de letra para ver todos los tipos de letra del sistema,
+instalar los tipos de letra \d(Type 1^Fuentes Adobe Type 1) desde los
+disquetes de DOS/Windows, borrar los que no necesite, y cambiar el
+tipo de letra usado en el Escritorio.
+
+Una vez instalados, pueda usar los tipos de letra Type 1 en cualquier 
+aplicación del Escritorio UnixWare que use el mecanismo X de tipos 
+de letra, y la aplicación podrá enviar estos tipos de letra a las 
+impresoras Postscript.
+
+Con el menú Tipos de letra, puede hacer lo siguiente:
+
+\to\t\k(Ver las fuentes instaladas^^Visualización de fuentes instalados)
+\to\t\k(Instalar las fuentes Type 1 desde disquete^^Instalación de fuentes Type 1)
+\to\t\k(Suprimir fuentes^^Suprimiendo fuentes)
+\to\t\k(Cambiar las fuentes usadas para el texto de las ventanas "Escritorio" y "Terminal"^^Modificación de fuentes)
+\to\t\k(Restaurar las fuentes por defecto de las ventanas "Escritorio" y "Terminal"^^Restauración de las fuentes por defecto)
+
+Para obtener información básica acerca de los tipos de letra, véase:
+
+\k(Familias de caracteres, caracteres tipográficos y fuentes)
+\k(Fuentes de mapa de bits y vectoriales)
+\k(Ejemplos de resolución de fuentes)
+
+
+^1^Familias de caracteres, caracteres tipográficos y fuentes
+^$20
+Familias de caracteres, caracteres tipográficos y fuentes
+
+Una familia de caracteres tipográficos describe el diseño básico 
+de un grupo de tipos de letra sin especificar un 
+estilo en particular (por ejemplo, Helvetica).
+
+Un carácter tipográfico es un miembro de una familia que tiene
+un estilo en particular, por ejemplo, Helvetica Bold (Helvetica en
+negrilla).
+
+Un tipo de letra es un carácter tipográfico con un tamaño en puntos
+determinado, por ejemplo, Helvetica Bold a 11 puntos.  No obstante, en
+general el término "tipo de letra" se usa para referirse a cualquiera
+de estos tres términos.
+
+^2^Fuentes de mapa de bits y vectoriales
+^$30
+Fuentes de mapa de bits y vectoriales
+
+El sistema guarda los tipos de letra en el disco de las siguientes
+formas:
+
+\to\t\d(Tipos de letra de mapa de bits^fuente de mapa de bits)
+\to\t\d(Tipos de letra vectoriales^fuente vectorial) (o tipos de letra
+\t \tescalables)
+
+El sistema guarda los tipos de letra de mapa de bits como un conjunto
+de puntos que conforma cada carácter.  Cada uno de estos tipos de letra
+de mapa de bits se crea para un tamaño en puntos y resolución determinados.
+En UnixWare, la mayor parte de los tipos de letra de mapa de bits se han
+creado para 75 y 100 ppp (puntos por pulgada), que son las resoluciones de
+monitor más comunes.
+
+Cuando se muestran en una resolución distinta de aquélla para
+la que fué creado, el tipo de letra de mapa de bits aparece más
+grande o más pequeño, y puede ocurrir que esté ligeramente
+distorsionado.
+
+Aunque los tipos de letra de mapa de bits se pueden escalar a 
+un tamaño en puntos mayor, los puntos quedarán demasiado 
+grandes, y las letras tendrán huecos en blanco y muescas.
+
+El sistema guarda los tipos de letra vectoriales como instrucciones.  
+Cuando se necesita un tamaño en puntos en particular, 
+el sistema crea de forma dinámica un tipo de letra de mapa 
+de bits para dicho tamaño y para la resolución de la pantalla.  
+Esto lo hace usando un \d(trazador de fuente vectorial).  En UnixWare, este trazador es 
+\d(Adobe Type Manager), y puede procesar cualquier tipo de letra Type 1,
+incluso aquéllos que instale usted mismo desde disquetes DOS/Windows 
+(véase \k(Instalación de fuentes Type 1)).
+
+A continuación se indican algunas notas importantes acerca de
+los tipos de letra vectoriales:
+
+\to\tPuesto que el sistema tiene que interpretar las instrucciones,
+\t \tlos tipos de letra vectoriales tardan más en
+\t \taparecer en pantalla que los mapas de mapa de bits.  No
+\t \tobstante, una vez trazados, el sistema los almacena
+\t \ten memoria para que la próxima vez aparezcan más rápido.
+
+\to\tDebido a que no es necesario almacenar en disco cada tamaño 
+\t \tde tipo de letra independientemente, los tipos de 
+\t \tletra vectoriales requieren menos espacio de almacenamiento 
+\t \ten disco que los tipos de letra de mapa de bits.
+
+\to\tEs posible que algunas de las aplicaciones antiguas no puedan 
+\t \tbeneficiarse de los tipos de letra vectoriales.
+
+Véase también:
+\k(Ejemplos de resolución de fuentes)
+
+^2^Ejemplos de resolución de fuentes
+^$35
+Ejemplos de resolución de fuentes
+
+La ventana de aparición instantánea "Mostrar resolución" muestra
+la forma en que los \d(tipos de letra de mapa de bits^fuente de mapa de bits)
+pueden ser aparentemente de distintos tamaños cuando se
+desarrollan para distintas resoluciones.  Para ver estos ejemplos,
+haga lo siguiente:
+
+Nota: Si ya está en la carpeta Preferencias, pase al punto 2.
+
+1.\t\d(Pulse dos veces^hacer doble clic) en Preferencias de la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare) y aparecerá la ventana "Carpeta:
+  \tPreferencias".
+
+2.\tHaga doble clic en Tipos de letra.  Aparecerá la ventana "Tipos de
+  \tletra".
+
+3.\tHaga clic en Acción=>Mostrar resolución.  Aparecerá la 
+  \tventana "Mostrar resolución".
+
+  \tObsérvese que las dos primeras líneas le proporcionan información
+  \tespecífca para la pantalla (puntos por pulgada, resolución y
+  \tdimensiones). El sistema computa puntos por pulgada usando las
+  \tdimensiones del monitor (por ejemplo, 640 x 480) y el tamañó del
+  \tmonitor, que se configuran durante la instalación inicial de
+  \tUnixWare,
+  \to usando \k(Configuración de  visualización^dtadmin/video.hlp^Configuración de visualización).
+
+  \tSi no se indica correctamente el tamaño del monitor, y no refleja
+  \tel tamaño físico real del mismo, es posible que las cifras de
+  \tresolución de PPP sean incorrectos, y puede afectar a la
+  \tposibilidad de usar algunos de los tipos de letra.
+
+
+^1^Visualización de fuentes instalados
+^$40
+Visualización de fuentes instalados
+
+El Escritorio UnixWare incluye numerosos
+\d(tipos de letra de mapa de bits^fuente de mapa de bits) y 13
+\d(tipos de letra vectoriales^fuente vectorial) Adobe Type 1.
+
+Puede instalar además tantos tipos de letra Type 1 desde disquete como
+desee.  Los tipos de letra Type 1 están ampliamente disponibles a través
+de proveedores (al por menor y de venta por correo) de tipos de letra
+(además, en el paquete Graphics Supplemental Fonts, que no se instala
+por defecto en Pesonal Edition, están disponibles más tipos de letra).
+
+Para ver los tipos de letra que están instalados en el sistema,
+haga lo siguiente:
+
+Nota: Si ya está en la carpeta Preferencias, pase al punto 2.
+
+1.\t\d(Pulse dos veces^hacer doble clic) en Preferencias de la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare) y aparecerá la ventana "Carpeta:
+  \tPreferencias".
+
+2.\tHaga doble clic en Tipos de letra.  Aparecerá la ventana "Tipos de
+  \tletra".
+
+3.\tPara ver un tipo de letra:
+
+  \to\tEn la lista de las distintas \d(familias^familia de cars. tipográficos), haga
+  \t \tclic en el tono que desee ver.  Los estilos disponibles para
+  \t \tdicha familia aparecerán en la lista de estilos.
+
+  \to\tEn la lista de \d(Estilos^carácter tipográfico) disponibles para la
+  \t \tfamilia, haga clic en el que desee ver.
+
+  \to\tSeleccione el \d(tamaño) que desee ver del control
+  \t \tde Tamaño en puntos.
+
+  \t \tSi el carácter tipográfico seleccionado es un tipo de letra de
+  \t \tmapa de bits, aparecerá una lista desplegable con los tamaños
+  \t \tdisponibles.  Haga clic en el tamaño deseado.
+
+  \t \tNota: Es posible que en la lista aparezca el mismo tamaño más de
+  \t \tuna vez.  Esto puede ocurrir si el promedio de la anchura de dos
+  \t \ttipos de letra es diferente, o si los dos tipos de letra tienen
+  \t \tjuegos de caracteres diferentes.  para ver las diferencias de
+  \t \tlos tipos de letra, haga clic en Ver=>Juego de caracteres.  Otra
+  \t \trazón de que aparezcan duplicados los tamaños en puntos puede
+  \t \tser que es posible que un tipo de letra creado para 14 puntos
+  \t \tcon 75 ppp puede tener exactamente el mismo tamaño que uno
+  \t \tcreado para 10 puntos con 100 ppp.
+
+  \t \tSi el carácter tipográfico que seleccione es un tipo de letra 
+  \t \tvectorial, aparecerá un campo numérico.  Teclee el tamaño en 
+  \t \tpuntos que desee ver (de 6 a 100 puntos), o haga clic en las 
+  \t \tflechas arriba/abajo para modificar este valor.
+
+  \t \tDespués de cada selección, el sistema muestra el tipo de letra
+  \t \tseleccionado en el panel de la ventana.  Recuerde que es posible
+  \t \tque los tipos de letra vectoriales pueden tardar algunos
+  \t \tinstantes en aparecer por primera vez.
+
+4.\tCambie el texto mostrado en el panel de la ventana tal y 
+  \tcomo se indica a continuación:
+
+  \to\tPara poder teclear los caracteres que desee ver del tipo de
+  \t \tletra seleccionado, haga clic en Ver=>Frase.  Entonces, podrá
+  \t \tteclear en el panel de la ventana, donde aparecen las palabras
+  \t \t"Teclear aquí".
+
+  \to\tPara mostrar el conjunto completo de caracteres imprimibles del
+  \t \ttipo de letra seleccionado, haga clic en Ver=>Juego de
+  \t \tcaracteres. El nombre de este conjunto de caracteres, si es
+  \t \tdistinto del usual ISO8859-1, aparecerá en el área de pié de
+  \t \tpágina cuando esté en efecto la opción Ver=>Nombre abreviado de
+  \t \ttipo de letra.
+
+5.\tPara cambiar el nombre de tipo de letra mostrado en el área 
+  \tde pié de página de la ventana, haga lo siguiente:
+
+  \to\tPara mostrar el nombre abreviado que identifica el tipo de 
+  \tletra, haga clic en Ver=>Nombre abreviado de tipo de letra.
+
+  \t \tLa información proporcionada en el área de pié de página para
+  \t \tlos tipos de letra vectoriales incluye lo siguiente:
+
+  \t \t-\tEl nombre del tipo de letra tal y como lo entienden las
+  \t \t \timpresoras PostScript, que es distinto del nombre que usa
+  \t \t \tUnixWare (este nombre PostScript suele incluir la familia y el
+  \t \t \testilo).
+
+  \t \t-\tEl tamaño en puntos del tipo de letra de la pantalla.
+
+  \t \t-\tSi se trata de un tipo de letra monoespaciado (de ancho fijo).
+
+  \t \t-\tEl juego de caracteres contenido en el tipo de letra (si no se
+  \t \t \ttrata de ISO8859-1).
+
+  \t \tLa información proporcionada en el área de pié de página para
+  \t \tlos tipos de letra de mapa de bits incluye lo siguiente:
+
+  \t \t-\tEl nombre de la familia.
+
+   \t\t-\tOtros atributos de la familia (si los hay).
+
+   \t\t-\tLa intensidad del carácter tipográfico.
+
+   \t\t-\tLa inclinación del carácter tipográfico, si no es Roman.
+
+   \t\t-\tEl tamaño en puntos del tipo de letra de la pantalla.
+
+  \t \t-\tLa resolución de la pantalla para la que se diseñó el tipo de
+  \t \t \tletra, que suele ser 75 ó 100 ppp (puntos por pulgada).
+
+  \t \t-\tSi se trata de un tipo de letra monoespaciado (de ancho fijo)
+  \t \t \to un tipo de letra proporcional.
+
+  \t \t-\tEl ancho medio de todos los caracteres del tipo de letra.
+
+  \t \t-\tEl juego de caracteres contenido en el tipo de letra (si no se
+  \t \t \ttrata de ISO8859-1).
+
+  \to\tPara mostrar el nombre interno de X Windows \d(XLFD)
+  \t \t(que es largo) que identifica el tipo de letra, haga clic en
+  \t \tVer=>Nombre XLFD. Para los tipos de letra de mapa de bits, este
+  \t \tnombre muestra la resolución (que suele ser "-75-75-" ó
+  \t \t"-100-100-") para la que se creó el tipo de letra.
+
+Nota: Si piensa que puede haber un problema con los tipos de letra
+(por ejemplo, si aparece un mensaje como "No se puede mostrar el tipo
+de letra ..." en el área de pié de página) deberá comprobar la
+integridad de las bibliotecas de tipos de letra.  Para obtener más
+información, véase \k(Comprobación de la integridad de las fuentes).
+
+
+^1^Instalación de fuentes Type 1
+^$50
+Instalación de fuentes Type 1
+
+Numerosas aplicaciones conocidas de procesamiento de textos y de 
+gráficos usan \d(tipos de letra Type 1^Fuentes Adobe Type 1) escalables.  Aunque la mayor parte 
+de las aplicaciones que usan estos tipos de letra Type 1 se 
+suministran con un juego de tipos de letra estándar, es posible 
+mejorar la selección de tipos de letra instalando otros tipos Type 1 
+adicionales desde disquetes de DOS.  Los tipos de letra están 
+ampliamente disponibles a través de proveedores minoristas y de 
+venta por correo.
+
+Para instalar tipos de letra Type 1 adicionales desde disquete,
+haga lo siguiente:
+
+1.\tEntre como usuario con
+  \t\k(Permiso para añadir/suprimir tipos de letra^dtadmin/user.hlp^Comprensión de los permisos).
+
+2.\t\d(Haga doble clic^hacer doble clic) en Preferencias, de la
+  \t\k(ventana del "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare). Aparecerá la ventana "Carpeta:
+  \tPreferencias".
+
+3.\tHaga doble clic en Tipos de letra.  Aparecerá la ventana "Tipos de
+  \tletra".
+
+4.\t Inserte el disquete de Type 1 de DOS en la unidad de disquete.
+
+  \tNota: Puede usar disquetes de 3,5 pulgadas o 5,25 pulgadas, según
+  \tel tipo de unidad(es) de disquete que soporte el sistema
+  \t(para obtener más información acerca de discos, unidades de disco.
+  \tetc., véase \k(Discos-etc^dtadmin/disk.hlp^Descripción general de la carpeta Discos-etc)).
+
+5.\tHaga clic en Acciones=>Instalar.  Aparecerá la ventana "Instalar
+  \ttipos de letra Type 1 desde disquete".
+
+6.\tRealice una acción de las siguientes:
+
+  \to\tHaga clic en cada uno de los tipos de letra que desee instalar,
+  \t \ty haga clic en Instalar.
+
+   \t\tNota: Si no selecciona ningún tipo de letra para su instalación
+  \t\tantes de hacer clic en Instalar, aparecerá un mensaje de error y
+  \t \tpodrá volver a intentarlo.
+
+  \to\tHaga clic en Instalar todos para instalar todos los tipos de 
+  \t \tletra que están en el disquete.
+
+Nota: También puede instalar tipos de letra usando
+\d(arrastrar y soltar). Por ejemplo, si el disquete de tipos de letra está
+en la unidad de disco A, haga clic en el icono Disco_A (de la
+\k(carpeta Disco-etc^dtadmin/disk.hlp^Descripción general de la carpeta Discos-etc)), arrastre el icono Disco_A hasta el icono (o
+ventana) de tipos de letra, y suéltelo.  Aparecerá la ventana
+"Instalar tipos de letra Type 1 desde disquete".
+
+^2^Aviso: inserte un disquete DOS
+^$60
+Aviso: inserte un disquete DOS
+
+Aparecerá este mensaje de error si el sistema no puede detectar un
+disquete en la unidad.  Inserte el disquete de DOA que contenga los
+tipos de letra Type 1 en la unidad adecuada.  Puede usar disquetes de
+3,5 pulgadas, o de 5,25 pulgadas.  Si es necesario, el sistema busca
+el disquete en ambas unidades.
+
+^2^Aviso: no es un disquete DOS
+^$70
+Aviso: no es un disquete DOS
+
+Obtendrá este mensaje de error si el disquete insertado no es un
+disquete formateado para DOS (por ejemplo, si se trata de un disquete
+UnixWare).  Cambie este disquete por el disquete de DOS que contiene
+los tipos de letra Type 1, y haga clic en Continuar.
+
+Si no puede encontrar un disquete de DOS y desea salir del proceso de
+instalación, haga clic en Cancelar.
+
+
+^2^Aviso: fuentes Type 1 no reconocibles
+^$80
+Aviso: fuentes Type 1 no reconocibles
+
+Aparecerá este mensaje de error si el sistema no puede encontrar
+ningún tipo de letra Type 1 en el disquete insertado.  Asegúrese de
+que el disquete instalado es un disquete de DOS con los tipos Type 1.
+
+En ocasiones, los proveedores de tipos de letra suministran el
+software de DOS con los tipos de letra correspondientes.  Sólo deberá
+insertar los disquetes etiquetados como "Tipos de letra", y no los
+disquetes etiquetados como "Disco de fundición", o "Disco de
+programa".
+
+Después de insertar el disquete correcto en la unidad, haga clic en
+Continuar.
+
+Si no puede encontrar un disquete de DOS y desea salir del proceso de
+instalación, haga clic en Cancelar.
+
+^2^Aviso: Faltan archivos AFM para las fuentes instaladas
+^$85
+Aviso: Faltan archivos AFM para las fuentes instaladas
+
+Aparecerá este mensaje de advertencia si algunos de los tipos de letra
+Type 1 que acaba de instalar no cuentan con un archivo de
+Adobe Font Metrics (AFM) en el disquete.  Aunque estos tipos de
+letra se habrán instalado y funcionarán, es posible que algunas
+aplicaciones que necesiten las métricas detalladas disponibles en
+los archivos AFM no funcionen tan bien como deberían.
+
+^2^Aviso: Insertar fuentes complementarias
+^$87
+Aviso: Insertar fuentes complementarias
+
+Aparecerá este aviso si los tipos de letra que ha seleccionado están
+en el segundo o siguiente disquete de un juego de tipos de letra de
+varios disquetes.
+
+Inserte el siguiente disquete del juego multidisquete, y haga clic en
+Continuar.
+
+Si no puede encontrar un disquete de DOS y desea salir del proceso de
+instalación, haga clic en Cancelar.
+
+^1^Suprimiendo fuentes
+^$90
+Suprimiendo fuentes
+
+Los tipos de letra ocupan cantidades significativas de espacio en
+el disco duro del sistema.  Esto especialmente cierto en el
+caso de los tipos de letra de mapa de bits.  Si el espacio disponible
+en el disco se convierte en un problema, es posible que
+desee suprimir los tipos de letra que no use regularmente.
+
+Para borrar tipos de letra individuales de mapa de bits o vectoriales 
+de un sistema, haga lo siguiente:
+
+1.\tEntre como usuario con
+  \t\k(Permiso para añadir/suprimir tipos de letra^dtadmin/user.hlp^Comprensión de los permisos).
+
+2.\t\d(Haga doble clic^hacer doble clic) en Preferencias, de la
+  \t\k(ventana del "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare). Aparecerá la ventana "Carpeta:
+  \tPreferencias".
+
+3.\tHaga doble clic en Tipos de letra.  Aparecerá la ventana "Tipos de
+  \tletra".
+
+4.\tHaga clic en Acciones=>Suprimir.
+
+5.\tHaga clic en \d(Mapa de bits^fuente de mapa de bits) o
+  \t\d(Vectoriales^fuente vectorial). Nota: Al borrar un tipo de letra
+  \tde mapa de bits, se suprimirá un solo tipo de letra: un tamaño, un
+  \testilo, una familia.  No obstante, al borrar un tipo de letra
+  \tvectorial, suprimirá un carácter tipográfico completo (todos los
+  \ttamaños en puntos de una combinación de familia/estilo).
+
+6.\tHaga clic en el tipo de letra que desee suprimir.  El sistema
+  \tresaltará cada tipo de letra cuando haga clic sobre él.
+
+7.\tHaga clic en Suprimir.  Aparecerá la
+  \t\k(ventana "Aviso: Confirmar supresión de tipos de letra"^^Aviso: Confirme la supresión de las fuentes).
+
+  \tNota: Si no selecciona ningún tipo de letra para borrarlo antes de
+  \thacer clic en Suprimir, aparecerá un mensaje de error y podrá
+  \tvolver a intentarlo.
+
+8.\tHaga clic en Continuar para suprimir el tipo de letra o en
+  \tCancelar para finalizar esta operación sin suprimir ningún tipo de
+  \tletra.
+
+^2^Aviso: Confirme la supresión de las fuentes
+^$92
+Aviso: Confirme la supresión de las fuentes
+
+Aparecerá este mensaje de advertencia para permitirle confirmar si
+desea suprimir los tipos d letra.  Haga clic en Continuar si realmente
+desea eliminar los tipos de letra.
+
+Haga clic en Cancelar para finalizar esta operación sin eliminar
+ningún tipo de letra.
+
+^2^Aviso: No se puede suprimir ninguna fuente
+^$94
+No se puede suprimir ningún tipo de letra
+
+Aparecerá este mensaje de error si no hay ningún tipo de letra (de
+mapa de bits o vectorial, según el tipo que esté tratando de borrar)
+disponible para borrarlo.  Esto ocurrirá si no ha instalado los tipos
+de letra en el sistema, o si los ha suprimido previamente.
+
+Nota: Algunos tipos de letra de mapa de bits son vitales para el 
+funcionamiento del Escritorio y no se pueden borrar.
+
+^1^Modificación de fuentes
+^$95
+Modificación de fuentes
+
+Puede cambiar el tipo de letra usado para el texto de las ventanas del
+Escritorio, y también puede cambiar el tipo de letra usado para
+el texto de las ventanas de los terminales.
+
+Véase:
+
+\to\t\k(Modificación de la fuente del escritorio)
+\to\t\k(Modificación de la fuente del terminal)
+
+^2^Modificación de la fuente del escritorio
+^$96
+Modificación de la fuente del escritorio
+
+El Escritorio usa un tipo de letra por defecto para el texto de las
+ventanas (el título de la ventana, el texto de los menús, las
+etiquetas de los iconos, etc.).  Este tipo de letra es Helvetica
+Medium, generalmente a 12 puntos.  No obstante, puede cambiar este
+tipo de letra por defecto por otro diferente, siempre que no sea
+superior a 20 puntos.
+
+Cuando se abre por primera vez la aplicación Tipos de letra, el tipo
+de letra que aparece en las listas desplegables Familia, Estilo y
+Tamaño, así como el que aparece en el panel de texto de muestra, es el
+tipo de letra del Escritorio.
+
+Nota: Si cambia el tipo de letra por defecto por un tipo relativamente
+grande (por ejemplo, de 14 a 20 puntos), algunos programas del
+Escritorio pueden aparecer ligeramente distorsionados hasta la próxima
+vez que entre en el Escritorio.
+
+También es posible que desee cambiar el tipo de letra de la ventana
+"Terminal" para que le resulte más fácil leerlo.  Véase
+\k(Modificación de la fuente del terminal).
+
+Si decide que desea recuperar los valores por defecto para los tipos
+de letra, consulte los procedimientos \k(Restauración de las fuentes por defecto).
+
+Nota: Siempre que cambie un tipo de letra (es decir, que seleccione
+Aplicar a ventanas, Cambiar tipo de letra del terminal, o Restaurar
+valores por defecto), el sistema realizará una verificación para
+garantizar que es posible cambiar los tipos de letra en la
+nacionalidad actual.  Si no es posible, aparecerá una ventana con un
+mensaje de error.
+
+Si la nacionalidad permite cambiar los tipos de letra, el sistema
+verificará que el tipo de letra contiene el juego de caracteres
+correcto.  Si no es así, aparecerá otra ventana con un mensaje de
+error.
+
+Nota: No todas las nacionalidades pueden cambiar los tipos de letra.
+Esta funcionalidad sólo está disponible para las nacionalidades de los
+idiomas de Europa occidental y el idioma inglés.
+
+Para cambiar el tipo de letra del nombre de la ventana "Escritorio",
+haga lo siguiente:
+
+1.\t\d(Pulse dos veces^hacer doble clic) en Preferencias de la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare) y aparecerá la ventana "Carpeta:
+  \tPreferencias".
+
+2.\tHaga doble clic en Tipos de letra.  Aparecerá la ventana "Tipos de
+  \tletra".
+
+3.\tSeleccione los tipos de letra deseados (véase
+  \t\k(Visualización de fuentes instalados)).
+
+4.\tHaga clic en Tipos de letra=>Aplicar a ventanas.  Todo el texto
+  \tdel Escritorio (etiquetas, títulos, etc.) cambiará al nuevo tipo
+  \tde letra. Estos cambios permanecerán en vigor la próxima vez que
+  \tentre en el Escritorio.
+
+Nota: Si cambia el tipo de letra por defecto por un tipo relativamente
+grande (por ejemplo, de 14 a 20 puntos), algunos programas del
+Escritorio pueden aparecer ligeramente distorsionados.  Por ejemplo,
+la colocación del texto del título de la ventana, los botones, y de
+las áreas de pie de página, pueden no estar bien justificados,
+truncado por la parte inferior y por la derecha, y puede quedar
+superpuesto. La mayor parte de estos problemas desaparecerán cuando
+vuelva a arrancar la aplicación o el Escritorio.  El solapamiento de
+las etiquetas de los iconos de los archivos puede usar 
+\k(Preferencias de Escritorio^DesktopMgr/dskpref.hlp^Modificación de las propiedades del escritorio básico)
+para cambiar el tamaño de cuadrícula correspondiente a
+las carpetas de archivos.
+
+También es posible que desee cambiar el tipo de letra de la ventana
+"Terminal" para que le resulte más fácil leerlo.  El tipo de letra por
+defecto para la ventana "Escritorio" es Lucidatypewriter Medium,
+generalmente a 12 puntos.  Véase \k(Modificación de la fuente del terminal).
+
+Si decide que desea recuperar los valores por defecto para los tipos
+de letra, consulte los procedimientos \k(Restauración de las fuentes por defecto).
+
+Nota: Siempre que cambie un tipo de letra (es decir, que seleccione
+Aplicar a ventanas, Cambiar tipo de letra del terminal, o Restaurar
+valores por defecto), el sistema realizará una verificación para
+garantizar que es posible cambiar los tipos de letra en la
+nacionalidad actual.  Si no es posible, aparecerá una ventana con un
+mensaje de error.
+
+Si la nacionalidad permite cambiar los tipos de letra, el sistema
+verificará que el tipo de letra contiene el juego de caracteres
+correcto.  Si no es así, aparecerá otra ventana con un mensaje de
+error.
+
+
+^2^Modificación de la fuente del terminal
+^$102
+Modificación de la fuente del terminal
+
+Puede cambiar el tipo de letra del terminal del Escritorio por
+cualquier tipo de letra monoespaciado (de anchura fija) disponible en
+el sistema.  Este tipo de letra se usará en las ventanas de terminales
+y en todas las aplicaciones del Escritorio que precisen usar un tipo
+de letra monoespaciado para obtener una salida correctamente alineada.
+
+Para ver si un tipo de letra es monoespaciado, lea el nombre abreviado
+del área de pie de página (usando la opción Ver=>Nombre abreviado
+de tipo de letra).  Véase \k(Visualización de fuentes instalados).
+
+Para cambiar el tipo de letra de la ventana "Terminal", haga lo
+siguiente:
+
+1.\t\d(Pulse dos veces^hacer doble clic) en Preferencias de la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare) y aparecerá la ventana "Carpeta:
+  \tPreferencias".
+
+2.\tHaga doble clic en Tipos de letra.  Aparecerá la ventana "Tipos de
+  \tletra".
+
+3.\tHaga clic en el tipo de letra monoespaciado que desee.
+
+4.\tHaga clic en Tipo de letra=>Cambiar tipo de letra de terminal.
+  \tTodas las ventanas "Terminal" que abra usarán el nuevo tipo de
+  \tletra por defecto.
+
+  \tNota: La aplicación Terminal no será probablemente la única del
+  \tsistema que use un tipo de letra monoespaciado.  Por ejemplo,
+  \tCorreo y Depurador también usan tipos de letra monoespaciados.  Al
+  \tseleccionar Cambiar tipo de letra de terminal, también aparecerá
+  \tel nuevo tipo de letra solicitado en las demás ventanas de
+  \taplicaciones del sistema que usen tipos de letra monoespaciados.
+
+Si decide que desea recuperar los valores por defecto para los tipos
+de letra, consulte los procedimientos \k(Restauración de las fuentes por defecto).
+
+Nota: Siempre que cambie un tipo de letra (es decir, que seleccione
+Aplicar a ventanas, Cambiar tipo de letra del terminal, o Restaurar
+valores por defecto), el sistema realizará una verificación para
+garantizar que es posible cambiar los tipos de letra en la
+nacionalidad actual.  Si no es posible, aparecerá una ventana con un
+mensaje de error.
+
+Si la nacionalidad permite cambiar los tipos de letra, el sistema
+verificará que el tipo de letra contiene el juego de caracteres
+correcto.  Si no es así, aparecerá otra ventana con un mensaje de
+error.
+
+
+^2^Restauración de las fuentes por defecto
+^$103
+Restauración de las fuentes por defecto
+
+Para restaurar los valores por defecto de los tipos de letra de las
+ventanas (incluidas las ventanas "Terminal"), haga lo siguiente:
+
+1.\t\d(Pulse dos veces^hacer doble clic) en Preferencias de la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare) y aparecerá la ventana "Carpeta:
+  \tPreferencias".
+
+2.\tHaga doble clic en Tipos de letra.  Aparecerá la ventana "Tipos de
+  \tletra".
+
+3.\tHaga clic en Tipos de letra=>Restaurar valores por defecto.  El
+  \tsistema restaurará todos los tipos de letra de la ventanas con los
+  \tvalores por defecto de los mismos (es decir, con los tipos de
+  \tletra que usaba el sistema cuando lo instaló).
+
+  \tNo obstante, los tipos de letra de las ventanas "Terminal" que
+  \testén abiertas actualmetne en el Escritorio no cambiarán.  Sólo
+  \tusarán el tipo de letra por defecto las ventanas "Terminal" nuevas
+  \tque abra a partir de ese momento.
+
+Nota: Siempre que cambie un tipo de letra (es decir, que seleccione
+Aplicar a ventanas, Cambiar tipo de letra del terminal, o Restaurar
+valores por defecto), el sistema realizará una verificación para
+garantizar que es posible cambiar los tipos de letra en la
+nacionalidad actual.  Si no es posible, aparecerá una ventana con un
+mensaje de error.
+
+^2^Aviso: La fuente del terminal debe ser monoespaciada
+^$104
+Aviso: La fuente del terminal debe ser monoespaciada
+
+Aparecerá este mensaje de error si trata de cambiar el tipo de letra
+de terminal por un tipo proporcional.  El tipo de letra de terminal
+debe ser monoespaciado (es decir, todos los caracteres del mismo
+deberán tener el mismo ancho).
+
+Para ver si un tipo de letra es monoespaciado, lea el nombre abreviado
+del área de pie de página (usando la opción Ver=>Nombre abreviado
+de tipo de letra).  Véase \k(Visualización de fuentes instalados).
+
+Los tipos de letra monoespaciados suministrados con UnixWare
+incluyen Courier, Fixed, y LucidaTypewriter.
+
+^2^Aviso: Nacionalidad no soportada
+^$106
+Aviso: Nacionalidad no soportada
+
+Aparecerá este mensaje de error si trata de cambiar el tipo de letra
+para las ventanas "Escritorio" o "Terminal" y la nacionalidad definida
+no soporta esta funcionalidad.
+
+Puede cambiar el tipo de letra sólo en las nacionalidades de los
+idiomas de Europa occidental y del inglés.
+
+^2^Aviso: El tamaño es demasiado grande para su uso en el escritorio
+^$107
+Aviso: El tamaño es demasiado grande para su uso en el escritorio
+
+Aparecerá este mensaje de error si trata de cambiar la fuente
+del escritorio o terminal a un \d(tamaño) superior a 20
+puntos.  Los tamaños en puntos superiores a 20 puntos distorsionarán
+el aspecto del Escritorio, y lo dejarán inutilizable.  Para esta
+función, es conveniente usar un tamaño entre 10 y 14 puntos.  Si
+selecciona un tamaño inferior de la misma fuente y vuelve a
+intentarlo, el cambio se llevará a efecto.
+
+^2^Aviso: Juego de caracteres no coincidente
+^$108
+Aviso: Juego de caracteres no coincidente
+
+Aparecerá este mensaje de error si trata de cambiar el tipo de letra a
+uno que contenga un juego de caracteres que no coincida con el
+necesario para la nacionalidad especificada. Por ejemplo, algunos
+tipos de letra sólo contienen el juego de caracteres ASCII (conocido
+oficialmente como ISO646.1991-IRV), pero las nacionalidades de Europa
+occidental requieren el juego de caracteres ISO8859-1, que contiene
+los caracteres ASCII y, además, los caracteres acentuados.
+
+Para averiguar qué juego de caracteres está contenido en un tipo de
+letra, véase el nombre abreviado del área de pie de página de la
+ventana (usando la opción Ver=>Nombre abreviado de tipo de letra).
+Véase \k(Visualización de fuentes instalados).
+
+^1^Comprobación de la integridad de las fuentes
+^$110
+Comprobación de la integridad de las fuentes
+
+Cada vez que usted añade o suprime tipos de letra, el sistema
+actualiza automáticamente las bibliotecas de tipos de letra.  No
+obstante, si cree que existe algún problema con los tipos de letra, es
+posible que pueda arreglarlo forzando al sistema a verificar las
+bibliotecas de tipos de letra.
+
+Para forzar al sistema a verificar las bibliotecas de tipos de letra,
+haga lo siguiente:
+
+1.\tEntre como usuario con
+  \t\k(Permiso para añadir/suprimir tipos de letra^dtadmin/user.hlp^Comprensión de los permisos).
+
+2.\t\d(Haga doble clic^hacer doble clic) en Preferencias, de la
+  \t\k(ventana del "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare). Aparecerá la ventana "Carpeta:
+  \tPreferencias".
+
+3.\tHaga doble clic en Tipos de letra.  Aparecerá la ventana "Tipos de
+  \tletra".
+
+4.\tHaga clic en Acción=>Verificación de integridad.  Aparecerá un
+  \taviso que le preguntará si desea continuar (este proceso lleva
+  \talgunos minutos).
+
+  \tTambién aparecerá una ventana de aviso que le indicará que la
+  \tverificación ha finalizado.
+
+Esta verificación de las bibliotecas de tipos de letra no resuelve
+todos los problemas con los tipos de letra.  Si piensa que el problema
+persiste, póngase en contacto con el administrador del sistema.

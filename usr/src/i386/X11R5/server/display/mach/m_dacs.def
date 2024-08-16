@@ -1,0 +1,211 @@
+/***									-*-Mode: C; tab-width: 4; -*-
+ ***	NAME
+ ***
+ ***		mach_dacs.def : DAC's supported by the MACH controller.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***		#define DEFINE_DAC(NAME, ENUMVALUE,
+ ***					INITFUNC, UNINITFUNC,
+ ***					GETCOLORMAP, SETCOLORMAP,
+ ***					MAXCLOCK, 
+ ***					FLAGS16, FLAGS24, FLAGSRGB, DESCRIPTION)
+ ***		#include "m_dacs.def"
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	This file contains definitions for the various DAC's known to
+ ***	the MACH display library, and their various properties.  Each
+ ***	DAC is associated with an enumeration name, a value for this
+ ***	enumeration, pointers to functions handling initialization and
+ ***	de-initialization, get- and set- colormap functions, the
+ ***	maximum clock frequency that the DAC can safely handle, bits
+ ***	fields specifying the kinds of the 16 bit support, kinds of 24
+ ***	bit pixel support, RGB wieghtage.  The last field of the DAC
+ ***	description is a string suitable for printing out when the SDD
+ ***	initializes giving the DAC's `name'.
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***	FILES
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	HISTORY
+ ***	
+ ***/
+
+#ident	"@(#)mach:mach/m_dacs.def	1.2"
+
+/* 
+ * ATI's ATI-68830 DAC.
+ */
+DEFINE_DAC(MACH_DAC_ATI_68830, 0, 
+		   mach_dac_initialize_ims_g176, mach_dac_uninitialize_ims_g176, 
+		   mach_dac_pseudocolor_get_color, mach_dac_pseudocolor_set_color, 
+		   8000, 
+		   (MACH_DAC_16_BIT_5_5_5_SUPPORTED |
+			MACH_DAC_16_BIT_5_6_5_SUPPORTED | 
+			MACH_DAC_16_BIT_6_5_5_SUPPORTED |
+			MACH_DAC_16_BIT_6_6_4_SUPPORTED),
+		   0,					/* No 24 bit support */
+		   MACH_DAC_BITS_PER_RGB_6,
+		   "ATi 68830"), /* CHECK THIS */
+
+/* 
+ * The SC1148{3|6|8} DAC's.
+ * Synonyms for this DAC are : ATT20C491
+ */
+DEFINE_DAC(MACH_DAC_SIERRA_SC11, 1, 
+		   mach_dac_initialization_failed, mach_dac_initialization_failed, 
+		   mach_dac_pseudocolor_get_color, mach_dac_pseudocolor_set_color, 
+		   -1,					/* CHECK THIS ... */
+		   0, 
+		   0, 
+		   0,
+		   "Sierra SC11 series"),	
+
+/* 
+ * Texas Instruments 34075
+ * Synonyms for this DAC are : ATI-68875-BFN.  The CFN version of the
+ * DAC will allow frequencies upto 135 Mhz
+ */
+DEFINE_DAC(MACH_DAC_TI_TLC_34075, 2, 
+		   mach_dac_initialize_tlc34075, mach_dac_uninitialize_tlc34075, 
+		   mach_dac_pseudocolor_get_color, mach_dac_pseudocolor_set_color, 
+		   11000, 
+		   (MACH_DAC_16_BIT_5_5_5_SUPPORTED |
+			MACH_DAC_16_BIT_5_6_5_SUPPORTED | 
+			MACH_DAC_16_BIT_6_5_5_SUPPORTED |
+			MACH_DAC_16_BIT_6_6_4_SUPPORTED),
+		   (MACH_DAC_24_BIT_R_G_B_SUPPORTED |
+			MACH_DAC_24_BIT_B_G_R_SUPPORTED |
+			MACH_DAC_24_BIT_A_B_G_R_SUPPORTED |
+			MACH_DAC_24_BIT_R_G_B_A_SUPPORTED),
+		   (MACH_DAC_BITS_PER_RGB_6 | 
+			MACH_DAC_BITS_PER_RGB_8),
+		   "Texas Instruments TLC-34075"),
+
+/* 
+ * BrookTree BT478.
+ * Synonyms for this DAC are : IMS-178.  This DAC can support 8 bit
+ * RGB output as well as the standard 6 bit RGB output.
+ * See also BT476/IMSJ176 below.
+ */
+DEFINE_DAC(MACH_DAC_BT_478, 3,
+		   mach_dac_initialize_ims_g176, mach_dac_uninitialize_ims_g176, 
+		   mach_dac_pseudocolor_get_color, mach_dac_pseudocolor_set_color, 
+		   8000, 
+		   0, 
+		   0,
+		   (MACH_DAC_BITS_PER_RGB_8 | 
+			MACH_DAC_BITS_PER_RGB_6),
+		   "Brooktree Bt478"),
+
+/* 
+ * BrookTree BT481/BT482 : For now, the same as the IMS chip.  This
+ * will break 16 bit modes, though.  Later, when we have information
+ * on this dac, we will fill in the correct routine.
+ */
+DEFINE_DAC(MACH_DAC_BT_481, 4, 
+		   mach_dac_initialize_ims_g176, mach_dac_uninitialize_ims_g176, 
+		   mach_dac_pseudocolor_get_color, mach_dac_pseudocolor_set_color, 
+		   8500, 
+		   (MACH_DAC_16_BIT_5_5_5_SUPPORTED |
+			MACH_DAC_16_BIT_5_6_5_SUPPORTED),
+		   (MACH_DAC_24_BIT_R_G_B_SUPPORTED),
+		   (MACH_DAC_BITS_PER_RGB_8 | 
+			MACH_DAC_BITS_PER_RGB_6),
+		   "Brooktree Bt481"),
+
+/*
+ * We don't have information about this DAC as of now, apart from the
+ * name.
+ */
+DEFINE_DAC(MACH_DAC_ATI_68860, 5, 
+		   mach_dac_initialization_failed, mach_dac_initialization_failed, 
+		   0, 0,
+		   0, 
+		   0, 
+		   0, 
+		   0,
+		   "ATI 68860"),
+
+/*
+ * Reserved dacs.
+ */
+DEFINE_DAC(MACH_DAC_RESERVED_6, 6, 
+		   mach_dac_initialization_failed, mach_dac_initialization_failed, 
+		   0, 0, 
+		   0, 
+		   0, 
+		   0, 
+		   0,
+		   "unknown dac type 6"),
+
+DEFINE_DAC(MACH_DAC_RESERVED_7, 7, 
+		   mach_dac_initialization_failed, mach_dac_initialization_failed, 
+		   0, 0, 
+		   0, 
+		   0, 
+		   0, 
+		   0,
+		   "unknown dac type 7"),
+
+/* 
+ * These DAC entries are not directly deducable from the MACH32's
+ * config_status_1 register.  However, these entries are given for
+ * OEM's for more accurate initialization.
+ */
+
+/* 
+ * MACH8 DAC : seems to be a Bt476 (IMS-G176)
+ */
+DEFINE_DAC(MACH_DAC_IMS_G176J_80Z, 8, 
+		   mach_dac_initialize_ims_g176, mach_dac_uninitialize_ims_g176,
+		   mach_dac_pseudocolor_get_color, mach_dac_pseudocolor_set_color, 
+		   8000,
+		   0,					/* No 16 bit support */
+		   0,					/* No 24 bit support */
+		   MACH_DAC_BITS_PER_RGB_6,	/* only 6 bits of RGB output */
+		   "Inmos G176-80J / Bt476"),
+
+/*
+ * The ATI-68875-CFN DAC : This is similar to the TI-TLC-34075 DAC but
+ * allows pixel clock frequencies upto 135 Mhz.  Unfortunately there
+ * is no way of distinguishing between a 68875-BFN dac and a 68875-CFN
+ * dac automagically.  In order to reduce the damage an unwary user
+ * can suffer, the default is assumed to be the 68875-BFN dac.
+ */
+
+DEFINE_DAC(MACH_DAC_ATI_68875_CFN, 9, 
+		   mach_dac_initialize_tlc34075, mach_dac_uninitialize_tlc34075, 
+		   mach_dac_pseudocolor_get_color, mach_dac_pseudocolor_set_color, 
+		   13500, 
+		   (MACH_DAC_16_BIT_5_5_5_SUPPORTED |
+			MACH_DAC_16_BIT_5_6_5_SUPPORTED | 
+			MACH_DAC_16_BIT_6_5_5_SUPPORTED |
+			MACH_DAC_16_BIT_6_6_4_SUPPORTED),
+		   (MACH_DAC_24_BIT_R_G_B_SUPPORTED |
+			MACH_DAC_24_BIT_B_G_R_SUPPORTED |
+			MACH_DAC_24_BIT_A_B_G_R_SUPPORTED |
+			MACH_DAC_24_BIT_R_G_B_A_SUPPORTED),
+		   (MACH_DAC_BITS_PER_RGB_6 | 
+			MACH_DAC_BITS_PER_RGB_8),
+		   "ATI 68875-CFN"),
+
+DEFINE_DAC(MACH_DAC_UNKNOWN, 10, 
+		   mach_dac_initialization_failed, mach_dac_initialization_failed, 
+		   0, 0, 
+		   0, 
+		   0, 
+		   0, 
+		   0,
+		   "unknown dac")
+

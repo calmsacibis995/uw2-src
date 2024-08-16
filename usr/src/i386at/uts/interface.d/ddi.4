@@ -1,0 +1,59 @@
+#ident	"@(#)kern-i386at:interface.d/ddi.4	1.4"
+#ident	"$Header: $"
+# ddi.4 -- DDI/DKI version 4 (SVR4.2,UnixWare 1.x + non-DDI/DKI extensions)
+$replace 2
+#
+# These interfaces were added in SVR4.2:
+bioreset
+drv_gethardware
+mod_drvattach
+mod_drvdetach
+mod_drv_ops
+mod_str_ops
+mod_misc_ops
+# We might see symbols remapped by an SVR4.2MP smap file, so add them here:
+bufcall_u
+esballoc_u
+esbbcall_u
+_Compat_kseg
+_Compat_unkseg
+_Compat_getcpages
+_Compat_freepage
+_Compat_sptalloc
+_Compat_sptfree
+_Compat_pio_breakup
+_Compat_phystokv
+_Compat_spinwait
+_Compat_tenmicrosec
+_Compat_spl0s
+_Compat_spl1s
+_Compat_spl2
+_Compat_spl2s
+_Compat_spl3
+_Compat_spl3s
+_Compat_spl4s
+_Compat_spl5s
+_Compat_spl6s
+_Compat_spl7s
+_Compat_splhis
+_Compat_splstrs		_Compat_spl6s
+_Compat_splttys		_Compat_spl6s
+_Compat_splx
+_Compat_splxs
+_Compat_Hz
+_Compat_nswap
+_Compat_swapdev
+_Compat_merge386enable
+spl0_h
+spl1_h
+spl4_h
+spl5_h
+spl6_h
+spl7_h
+splhi_h
+splstr_h		spl6_h
+spltty_h		spl6_h
+totalmem
+# We also need wrapper symbols from early UnixWare 2.0:
+_Compat_kmem_alloc
+_Compat_kmem_zalloc

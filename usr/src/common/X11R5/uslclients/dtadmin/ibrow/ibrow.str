@@ -1,0 +1,57 @@
+Get Inet Browser
+The Graphics Utilities Package must be installed before running GetInetBrowser.\n
+Install
+Uninstall
+Info
+Copyrights
+Get Documentation
+Exit
+Help
+Help
+OK
+Stop
+Get Internet Browser
+Internet Browser Installation
+Uninstall Internet Browser
+Internet Browser Information
+Internet Browser Copyrights
+Internet Browser Documentation
+Internet Browser Help
+Internet Browsers help you locate and retrieve network resources\n(documents, data, software, etc) from all over the Internet.  Typically,\nyou navigate through the Internet by following hyperlinks -- terms,\nicons or images in documents that point to related documents.\n\nThere are several browsers available on the Internet; click Info\nfor a description of the Internet Browser that will be installed\non your system.\n\nClick Copyrights to display any copyrights that apply to this\nInternet Browser.  UnixWare 2 licensees who use this Browser\nmust comply with the terms and conditions of the copyright.\n
+\nWhen you click Install, a copy of an Internet Browser for\nUnixWare 2 will be retrieved from the Novell anonymous ftp site\nat %s.  You must have a working Domain\nName Server and Internet connection for the installation to succeed.\n\nThe Internet Browser is not part of the UnixWare 2 Product.\nIt is neither supported nor endorsed by Novell, but is provided only\nfor your convenience.\n
+Retrieving files via anonymous ftp.  Please wait ...
+Uncompressing files.  Please wait ...
+Installing Internet Browser.  Please wait ...
+Uninstalling Internet Browser.  Please wait ...\n
+The %s package has been installed on your system.\n
+The %s package has been uninstalled from your system.\n
+Introductory documentation for the Internet Browser has been placed in:\n\n%s\n
+ERROR: Cannot create temporary directory %s.\nPlease check permissions.
+ERROR: Ftp failed to find the Network Address of %s.\nThe probable cause is that Domain Name Service (DNS) has not been\ninstalled, or is improperly configured.  If this is the case, use\nInternet Setup to set up DNS on your machine.\n\nThe error message from ftp was:\n\n%s\n
+ERROR: Ftp failed to connect to %s.   The probable\ncause is a network outage, or problems on the remote host.\n\nThe error message from ftp was:\n\n%s\n
+ERROR: Ftp to %s failed.\n\nThe error message from ftp was:\n\n%s\n
+ERROR: Failed to uncompress Browser files.\n\n%s\n
+ERROR: Installation of Browser failed.\n\n%s\n
+ERROR: Cannot determine Browser package name.\n
+ERROR: Pkgrm of %s failed.\n\n%s\n
+ERROR: Package %s is already installed.\n
+ERROR: Package %s is not installed.\n
+ERROR: Cannot open %s.\n
+transfer complete
+unknown host
+timed out
+refused
+Reading files.  Please wait ...\n
+Click OK to invoke the Application Installer.\n\nThen use the Install From pull-down menu to\nselect media 'Other'.\n\nEnter %s for the Folder Name.\n\nDo not exit Get Inet Browser until you are finished\nwith the Application Installer.
+Click OK to invoke the Application Installer.\n\nThen select %s in the set of currently installed applications, and\nclick 'Remove' to uninstall it.
+Use the Install From pull-down menu to\n select media 'Other'.\n\nEnter %s for the Folder Name.\n\nDo not exit Get Inet Browser until you are finished\nwith the Application Installer.
+Internet Browsers help you locate and retrieve network resources\n(documents, data, software, etc) from all over the Internet.  Typically,\nyou navigate through the Internet by following hyperlinks -- terms,\nicons or images in documents that point to related documents.\n\n
+An Internet Browser is available from the anonymous ftp site\nat %s.  It is not part of the UnixWare 2\nProduct, and is neither supported nor endorsed by Novell.\nIt is provided only for your convenience.\nYou must have a working Domain Name Server and\nInternet connection in order to retrieve the Internet Browser.\n\nClick Instructions to display information on how to retrieve and\ninstall the Internet Browser.
+\ \ \ \ \ \ Instructions\ \ \ \ \ \ 
+\ \ \ \ \ \ \ \ Exit\ \ \ \ \ \ \ \ 
+\ \ \ \ \ \ \ \ Help\ \ \ \ \ \ \ \ 
+These instructions will guide you through installing the Internet Browser.\n\nStep 1 retrieves a compressed Internet Browser file from the\nanonymous ftp site, then uncompresses and reads the file.\nStep 2 uses the App Installer to install the Internet Browser;\nStep 3 removes temporary files after installation is complete.\nStep 4 closes the Terminal window, and Step 5 runs the Internet Browser.\n\nNOTE: Steps 1 and 3 require that you enter several commands\nin a Terminal window.  Each command is preceded by a comment,\nbeginning with #, that describes what the command does.  The\nactual command follows and is preceded by the label 'ENTER:'.\nAfter reading the comment, type in the command that follows\n'ENTER:', then press the Enter key on your keyboard.\n\n
+\n1. Double-click on the Terminal icon in the Applications folder\nand enter the following commands:\n\n\ \ \ \ \ \ \ #make a temporary directory for the installation\n\ \ \ \ \ \ \ ENTER:\ \ mkdir ${HOME}/tmp_dir\n\n\ \ \ \ \ \ \ #go to the temporary directory\n\ \ \ \ \ \ \ ENTER: cd ${HOME}/tmp_dir\n\n\ \ \ \ \ \ \ #connect to the ftp site\n\ \ \ \ \ \ \ ENTER: ftp %s\n\n\ \ \ \ \ \ \ #log in as user ftp\n\ \ \ \ \ \ \ ENTER: ftp\n\n\ \ \ \ \ \ \ #use your mail address as password\n\ \ \ \ \ \ \ ENTER: %s\n\ \n\n
+\ \ \ \ \ \ \ #go to the Browser directory\n\ \ \ \ \ \ \ ENTER: cd %s\n\n\ \ \ \ \ \ \ #ask for binary-mode transfers\n\ \ \ \ \ \ \ ENTER: binary\n\n\ \ \ \ \ \ \ #get the file\n\ \ \ \ \ \ \ ENTER: get %s\n\n\ \ \ \ \ \ \ #log out\n\ \ \ \ \ \ \ ENTER: quit\n\n\ \ \ \ \ \ \ #uncompress and read the file\n\ \ \ \ \ \ \ ENTER: zcat %s | tar -xmof -\n\ \n\n
+2. When the uncompress completes, double-click on the App Installer\n\ \ \ \ icon in the Admin Tools folder.  Use the Install From pull-down\n\ \ \ \ menu to select media Other.  Enter %s/tmp_dir for the\n\ \ \ \ Folder Name, then click on Update View to display the icon for\n\ \ \ \ the InetBrows (Internet Browser) package.  Click on the InetBrows\n\ \ \ \ package icon and then on Install.  This will install the Internet\n\ \ \ \ Browser on your system.  See the System Owner'\''s Handbook\n\ \ \ \ for more information on using the App Installer.\n\n3. After the installation is complete, return to the terminal window\n\ \ \ \ and entering the following commands:\n\ \ \ \ \ \ \ #go to your HOME directory\n\ \ \ \ \ \ \ \ \ \ \ cd\n\ \ \ \ \ \ \ #remove the temporary directory\n\ \ \ \ \ \ \ \ \ \ \ rm -rf tmp_dir\n\ \ \ \ This will remove all temporary files created during Step 1.\n\ \n\n
+4. Close the Terminal window.\n\n5. To use the Internet Browser, go to your Applications folder and\n\ \ \ \ double-click on Inet_Browser.\n\n

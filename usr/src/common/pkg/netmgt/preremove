@@ -1,0 +1,32 @@
+#!/bin/sh
+#ident	"@(#)pkg-nm:preremove	1.1"
+#ident	"$Header: /SRCS/esmp/usr/src/nw/pkg/netmgt/preremove,v 1.1 1994/08/04 16:06:37 cyang Exp $"
+
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ];
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ];
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+
+CONTENTS=/var/sadm/install/contents
+FAILURE=1	#can not proceed.
+
+CIM_DEPEND=`pfmt -s -error -g ${PKGMSG}:1 " The system monitoring \
+agents are installed on the system and depend on the package \
+being removed.  If removal of this package occurs, it will render \
+the system monitoring agents inoperative.  Removal of this package requires \
+that the Advanced Platform Support package be removed first." ${NAME} 2>&1`
+
+grep "cpqcimactive" $CONTENTS >/dev/null 2>&1 && { 
+	message ${CIM_DEPEND}
+	exit $FAILURE
+}
+exit 0
+

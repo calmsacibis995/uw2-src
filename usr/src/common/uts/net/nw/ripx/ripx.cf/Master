@@ -1,0 +1,24 @@
+#ident	"@(#)kern:net/nw/ripx/ripx.cf/Master	1.7"
+#ident	"$Id: Master,v 1.6 1994/06/08 21:35:36 vtag Exp $"
+#
+# Copyright 1991, 1992 Novell, Inc.
+# All Rights Reserved.
+#
+# This work is subject to U.S. and International copyright laws and
+# treaties.  No part of this work may be used, practiced, performed,
+# copied, distributed, revised, modified, translated, abridged,
+# condensed, expanded, collected, compiled, linked, recast,
+# transformed or adapted without the prior written consent
+# of Novell.  Any use or exploitation of this work without
+# authorization could subject the perpetrator to criminal and
+# civil liability.
+#
+
+$version 2
+$depend ipx
+$interface ddi 6mp
+$interface base
+# non-conforming due to inline expansion
+
+$entry init
+ripx	ripx	LSc	0	0	0

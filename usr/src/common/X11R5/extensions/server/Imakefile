@@ -1,0 +1,72 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5extensions:server/Imakefile	1.8"
+
+XCOMM $Header: /home/x_cvs/mit/extensions/server/Imakefile,v 1.3 1992/09/01 13:19:51 dawes Exp $
+XCOMM $XConsortium: Imakefile,v 5.15.1.1 92/09/09 15:32:22 rws Exp $
+#include <Server.tmpl>
+
+#if BuildXInputExt || BuildPexExt || BuildPexClients || BuildXTrapExt || BuildBuiltinExt
+#define IHaveSubdirs
+#endif
+
+#if BuildXInputExt
+  XINPUTDIRS = xinput
+#endif
+#if BuildPexExt
+  PEXDIRS = PEX
+#if BuildPexClients
+  PEXDIRS = PEX/dipex/swap
+#endif
+#endif
+#if BuildXTrapExt
+  XTRAPDIRS = xtrap
+#endif
+#if HasShm
+  SHMSRCS = shm.c
+  SHMOBJS = shm.o
+#endif
+#if BuildXYZExt
+  XYZSRCS = xyzext.c
+  XYZOBJS = xyzext.o
+#endif
+
+#if BuildXIdleExt
+  XIDLESRCS = xidle.c
+  XIDLEOBJS = xidle.o
+#endif
+
+#if BuildBuiltinExt
+  BUILTINDIRS = builtin
+#endif
+
+       SRCS = shape.c $(SHMSRCS) multibuf.c mitmisc.c sleepuntil.c \
+	xtest.c /* xtest1di.c xtest1dd.c */ $(XYZSRCS) $(XIDLESRCS)
+       OBJS = shape.o $(SHMOBJS) multibuf.o mitmisc.o sleepuntil.o \
+	xtest.o /* xtest1di.o xtest1dd.o*/ $(XYZOBJS) $(XIDLEOBJS)
+   INCLUDES = -I../include -I$(INCLUDESRC) -I$(SERVERSRC)/include
+   LINTLIBS = ../../server/dix/llib-ldix.ln ../../server/os/4.2bsd/llib-los.ln
+        SUBDIRS = $(XINPUTDIRS) $(PEXDIRS) $(XTRAPDIRS) $(BUILTINDIRS)
+
+NormalLibraryObjectRule()
+NormalLibraryTarget(ext,$(OBJS))
+LintLibraryTarget(ext,$(SRCS))
+NormalLintTarget($(SRCS))
+
+DependTarget()
+
+#ifdef IHaveSubdirs
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+#endif
+
+#if HasSaberC
+saber_src:
+	/**/#load $(CFLAGS) $(SRCS)
+#endif

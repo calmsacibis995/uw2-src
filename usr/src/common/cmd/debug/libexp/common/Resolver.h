@@ -1,0 +1,210 @@
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1988, 1990 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+/* $Copyright: $
+ * Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990, 1991
+ * Sequent Computer Systems, Inc.   All rights reserved.
+ *  
+ * This software is furnished under a license and may be used
+ * only in accordance with the terms of that license and with the
+ * inclusion of the above copyright notice.   This software may not
+ * be provided or otherwise made available to, or used by, any
+ * other person.  No title to or ownership of the software is
+ * hereby transferred.
+ */
+
+#ifndef RESOLVER_H
+#define RESOLVER_H
+
+#ident	"@(#)debugger:libexp/common/Resolver.h	1.19"
+
+
+#include "Iaddr.h"
+#include "Symbol.h"
+#include "utility.h" // for Symtype
+#include "Language.h"
+#include "Source.h"
+
+class ProcObj;
+class ClassTree;
+class Evaluator;
+class Symtab;
+
+//-- Resolver provides a map between identifiers and symbol table
+//   entries.  It attempts to hide all language dependent scope
+//   rules and various details of symbol table structure.
+//   Languages that need their own versions derive them from Resolver
+
+
+// mFULL_SEARCH: search outward from current location useing normal language
+//			visibility rules
+// mLOCAL_ONLY:	 searching for names within a restricted scope (i.e. for x.y,
+//			look for y only within members of struct/class/union x
+// mNON_LOCAL:	 searching for file statics or globals visible from current scope
+// mSEARCH_OBJ:	 similar to mNON_LOCAL, but looking for file statics and globals
+//			within an object, specified by symtab
+enum searchType {mFULL_SEARCH, mLOCAL_ONLY, mNON_LOCAL, mSEARCH_OBJ};
+
+class Resolver
+{
+protected:
+	searchType	mode;
+	ProcObj		*pobj;
+	Symbol		curScope;
+	Symbol		top_scope;
+	Symbol		curSymbol;
+	Symtab		*symtab;
+
+	int		find_global(const char *id);
+	virtual int	cmpName(const char *search_id, const char *sym_name);
+	int		find_static(const char *id, Symtype );
+	int		searchOutwardToTopScope(const char*, Symbol&, 
+				Symbol&, Symtype);
+	virtual int	searchSiblingChain(const char*, const Symbol&, 
+				Symtype);
+	int		find_enumlit(Symbol& enumtype, const char * id, 
+				Symbol& litsym);
+	int		getEnclosingFunc(Symbol&);
+	int		checkTag(Symtype user_def_type, Symbol &);
+public:
+			Resolver(ProcObj *, Iaddr);
+			Resolver(Symbol&, ProcObj *);
+			Resolver(ProcObj *pobj, Symtab *, Symbol &);
+	virtual		~Resolver() {}
+
+	ProcObj 	*proc() { return this->pobj; };
+	searchType	search_mode() { return mode; }
+	void		set_search_mode(searchType m) { mode = m; }
+	Symbol		&get_top_scope() { return top_scope; }
+	Symbol		&get_current_scope() { return curScope; }
+	Symtab		*get_symtab() { return symtab; }
+
+	int		getEnclosingSrc(Symbol &srcfile);
+	virtual	int	getNext(const char *, Symbol&);
+	virtual int 	lookup(const char *, Symbol&, 
+				Symtype user_def_type=st_notags);
+	Evaluator	*evaluator();
+};
+
+// C++ specific Resolver class
+
+#define THIS_NM "this"
+
+// inGlobalSearch is used by getNext to determine where to look for the next symbol.
+// If false, the previous symbol was found in the statics, so keep looking there
+// until there are no more statics.  If true, the previous search already exhausted
+// all the statics, and started in on the globals
+
+class CCresolver : public Resolver {
+	ClassTree	*class_tree;
+	char		*member_id;
+	int		inGlobalSearch;
+	Language	lang;
+
+	int		find_global(const char *id)
+				{ inGlobalSearch = 1;
+				  return Resolver::find_global(id);
+				}
+
+	int		searchClass(Symbol &class_sym, const char *, Symtype);
+	int		searchClass(const char *, Symtype);
+	int		searchClass(ClassTree *, const char *, Symtype);
+
+			// MORE - this should be a real function when
+			// we have C++ DWARF information available
+	virtual ClassTree	*buildClassTree(Symbol &sym) = 0;
+
+protected:
+	virtual int	cmpName(const char *search_id, const char *sym_name);
+
+public:
+			CCresolver(ProcObj *pobj, Iaddr addr, Language l = CPLUS)
+				: Resolver(pobj, addr)
+				{
+					class_tree = 0;
+					inGlobalSearch = 0;
+					member_id = 0;
+					lang = l;
+				}
+			CCresolver(Symbol&sym, ProcObj *pobj, ClassTree *t,
+				  Language l = CPLUS)
+				: Resolver(sym, pobj)
+				{
+					class_tree = t;
+					inGlobalSearch = 0;
+					member_id = 0;
+					lang = l;
+				}
+			CCresolver(ProcObj *pobj, Symtab *stp,
+				  Symbol &sym, Language l = CPLUS)
+				: Resolver(pobj, stp, sym)
+				{
+					class_tree = 0;
+					inGlobalSearch = 0;
+					member_id = 0;
+					lang = l;
+				}
+			~CCresolver();
+	int		inMemberFunction(Symbol&, Symbol&);
+	int		getNext(const char *, Symbol&);
+	int 		lookup(const char *, Symbol&,
+				Symtype user_def_type=st_notags);
+
+	CCresolver	*find_base(const char *);
+	int		is_base(const char *);
+};
+
+// CCresolver_cgen makes assumptions about the C code generated by
+// the C-generating ANSI C++ compiler
+class CCresolver_cgen : public CCresolver {
+	Source		source;
+	Symbol		curSource;
+	Symbol		typeScope;
+
+	int		in_scope(Symbol &, Symbol &);
+	int		in_scope(Symbol &, long);
+
+			// This function assumes knowledge about the
+			// C-generating ANSI C++ compiler's
+			// implementation of class layouts
+	ClassTree	*buildClassTree(Symbol &sym);
+public:
+			CCresolver_cgen(ProcObj *pobj, Iaddr addr)
+				: CCresolver(pobj, addr, CPLUS_ASSUMED_V2) {}
+			CCresolver_cgen(Symbol&sym, ProcObj *pobj, ClassTree *t)
+				: CCresolver(sym, pobj, t, CPLUS_ASSUMED_V2) {}
+			CCresolver_cgen(ProcObj *pobj, Symtab *stp, Symbol &sym)
+				: CCresolver(pobj, stp, sym, CPLUS_ASSUMED_V2) {}
+			~CCresolver_cgen() {}
+
+			// functions overriding functions from base classes
+	int		searchSiblingChain(const char*, const Symbol&, 
+				Symtype);
+	int 		lookup(const char *, Symbol&,
+				Symtype user_def_type=st_notags);
+};
+
+// CCresolver_cfront makes assumptions about the C code
+// generated by cfront
+class CCresolver_cfront : public CCresolver {
+	ClassTree	*buildClassTree(Symbol &sym);
+	int		cmpName(const char *search_id, const char *sym_name);
+
+public:
+		CCresolver_cfront(ProcObj *pobj, Iaddr addr)
+			: CCresolver(pobj, addr, CPLUS_ASSUMED) {}
+		CCresolver_cfront(Symbol&sym, ProcObj *pobj, ClassTree *t)
+			: CCresolver(sym, pobj, t, CPLUS_ASSUMED) {}
+		CCresolver_cfront(ProcObj *pobj, Symtab *stp, Symbol &sym)
+			: CCresolver(pobj, stp, sym, CPLUS_ASSUMED) {}
+};
+
+Resolver *new_resolver(Language lang, ProcObj *pobj, Iaddr addr);
+Resolver *new_resolver(Language lang, Symbol&sym, ProcObj *pobj, ClassTree *t = 0);
+Resolver *new_resolver(Language lang, ProcObj *pobj, Symtab *stp, Symbol &sym);
+#endif

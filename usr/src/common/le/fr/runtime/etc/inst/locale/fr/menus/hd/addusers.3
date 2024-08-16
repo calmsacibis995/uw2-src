@@ -1,0 +1,99 @@
+.pageno
+Page %d de %d
+.ul
+Installation du système UNIX
+.hhelp_ban
+Instructions
+.helpbanner
+Aide : compte propriétaire
+.ur
+Compte propriétaire
+#.ll
+#THIS SPACE LEFT INTENTIONALLY BLANK
+.lr
+F1=Aide
+.top
+< /tmp/err.login
+Créez un compte d'ouverture de session, que le propriétaire pourra
+utiliser pour accéder à l'ordinateur. Lisez l'écran d'aide pour obtenir
+des informations sur chaque champ.
+
+.form
+#TYPE_REGEXP <min length> <max length>//regexp//field label//
+5 3 25//^[^:]+$//Nom du propriétaire ://USERNAME//
+#field options
+//Entrez le prénom et le nom du propriétaire//
+#
+#
+#TYPE_ALPHA <min length> <max length> //field label//
+1 2 8 //ID d'ouverture de session du propriétaire ://USERID//
+#field options
+//Entrez l'ID d'ouverture de session du propriétaire//
+#
+#
+#TYPE_REGEXP <min length> <max length>//regexp//field label//
+3 0 101 60000 //Numéro d'utilisateur du propriétaire ://USERNUM//
+#field options
+//Entrez le numéro d'utilisateur du propriétaire (101 ou plus)//
+#
+`[ "${DESKTOP_PRESENT}" = "Yes" ] && echo "2 2//MOTIF::Motif//NONE::Aucun//Environnement utilisateur du propriétaire ://DESKTOP// "`
+#field options
+`[ "${DESKTOP_PRESENT}" = "Yes" ] && echo "//Flèches vers la gauche/droite pour autres options//"`
+#
+#
+.button
+Appliquer
+Réinitialiser
+.bottom
+Appuyez sur "TAB" pour faire passer le curseur d'un champ à un autre.
+Ensuite, placez le curseur sur "Appliquer" et appuyez sur "ENTREE" pour
+continuer.
+.help
+Pour obtenir des instructions détaillées, vous pouvez à tout moment
+appuyer sur la touche F1 (ou sur "?").
+
+Le système UNIX accepte plusieurs utilisateurs. Un ID d'ouverture
+de session utilisateur et un mot de passe doivent être définis pour
+que l'accès à l'ordinateur soit possible. L'un des utilisateurs sera le
+"propriétaire". Le compte propriétaire sera autorisé à exécuter des
+tâches administratives telles que l'ajout de nouveaux utilisateurs et la
+gestion du réseau. D'autres utilisateurs peuvent être autorisés à
+exécuter ces tâches au moyen de l'utilitaire User Setup du Gestionnaire
+du Bureau.
+
+PRENOM ET NOM DU PROPRIETAIRE
+
+Entrez le nom complet du propriétaire. Vous pouvez également entrer un
+numéro de bureau ou de téléphone. Vous pouvez employer dans ce champ
+tous les caractères imprimables, à l'exception du signe deux-points (:).
+
+ID D'OUVERTURE DE SESSION DU PROPRIETAIRE
+
+Une fois le système UNIX entièrement installé, entrez un ID d'ouverture
+de session en regard de l'invite correspondante.
+
+Un ID d'ouverture de session doit être tapé en minuscules, et ne peut
+contenir ni tabulation ni espace. Il correspond souvent aux initiales,
+au prénom ou au nom de l'utilisateur. Par exemple, une personne du nom
+de Jean-Pierre Martin pourrait choisir "jpm", "jean-pierre", ou encore
+"jpmartin" comme ID d'ouverture de session.
+
+NUMERO D'UTILISATEUR DU PROPRIETAIRE
+
+Si cet ordinateur doit partager des fichiers ou des dossiers avec les
+autres ordinateurs d'un réseau, il est préférable que tous les
+ordinateurs identifient un même utilisateur avec le même numéro. Si le
+propriétaire est déjà affecté d'un numéro sur un autre système UNIX,
+entrez ce numéro ici : cela permettra le partage. Si vous ne connaissez
+pas le numéro d'utilisateur du propriétaire sur l'autre ordinateur, vous
+pouvez l'obtenir en exécutant la commande "id" sur cet ordinateur.
+
+Si le propriétaire ne dispose pas d'un compte sur un autre ordinateur,
+acceptez la valeur par défaut.
+.helpinst
+ECHAP=Quitter l'aide F1=Instructions 1=Page suiv. 2=Page préc.
+.hhelpinst
+ECHAP=Quitter les instructions 1=Page suiv. 2=Page préc.
+.working
+Opération en cours...
+.end

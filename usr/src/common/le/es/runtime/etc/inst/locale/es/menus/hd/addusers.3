@@ -1,0 +1,98 @@
+.pageno
+Página %d de %d
+.ul
+Instalación del sistema UNIX
+.hhelp_ban
+Instrucciones
+.helpbanner
+Ayuda: Cuenta del propietario
+.ur
+Cuenta del propietario
+#.ll
+#THIS SPACE LEFT INTENTIONALLY BLANK
+.lr
+F1=Ayuda
+.top
+< /tmp/err.login
+Cree una cuenta de entrada para que el propietario pueda utilizarla
+para acceder al computador.  Lea la pantalla de Ayuda para obtener
+información sobre los distintos campos.
+
+.form
+#TYPE_REGEXP <min length> <max length>//regexp//field label//
+5 3 25//^[^:]+$//Nombre del propietario://USERNAME//
+#field options
+//Escriba el nombre y apellido del propietario//
+#
+#
+#TYPE_ALPHA <min length> <max length> //field label//
+1 2 8 //ID de entrada del propietario://USERID//
+#field options
+//Escriba la ID de entrada del propietario//
+#
+#
+#TYPE_REGEXP <min length> <max length>//regexp//field label//
+3 0 101 60000 //Número de usuario del propietario://USERNUM//
+#field options
+//Escriba el número de usuario del propietario (>= 101)//
+#
+`[ "${DESKTOP_PRESENT}" = "Yes" ] && echo "2 2//MOTIF::Motif//NONE::Ninguno//Entorno de usuario del propietario://DESKTOP// "`
+#field options
+`[ "${DESKTOP_PRESENT}" = "Yes" ] && echo "//Flechas derecha/izquierda para más opciones//"`
+#
+#
+.button
+Aplicar
+Redefinir
+.bottom
+Pulse <Tab> para mover el cursor entre los campos. Al terminar, mueva el
+cursor a "Aplicar" y pulse <Intro> para continuar.
+.help
+Para obtener instrucciones detalladas, pulse <F1> (o '?') en cualquier
+momento.
+
+UNIX System puede soportar varios usuarios. Para acceder al computador,
+se requiere un identificador de entrada y una contraseña. Uno de los
+usuarios será el propietario del computador. La cuenta del propietario
+dispondrá de un permiso para ejecutar tareas administrativas como las de
+añadir nuevas cuentas de usuario y encargarse de la gestión de la red.
+Estos permisos pueden concederse a otras entradas de usuario mediante la
+facilidad de configuración de usuarios del Gestor de Escritorio.
+
+NOMBRE Y APELLIDO DEL PROPIETARIO
+
+Introduzca el nombre completo del propietario. Puede que a dicho nombre
+desee añadirle un número de habitación o de teléfono. En este campo,
+podrá utilizar cualquier carácter imprimible excepto los dos puntos (:).
+
+ID DE ENTRADA DEL USUARIO
+
+Seleccione una ID de usuario para utilizarla con el indicador:
+"entrada", una vez que el UNIX System esté completamente instalado.
+
+La ID de entrada debe ir en minúsculas y no debe contener
+ni tabulaciones ni espacios. A menudo, las ID de entrada
+son las iniciales del nombre o del apellido del usuario. Por ejemplo,
+alguien que se llame Antonio J. Ramón podrá elegir "ajr", "antonio"
+o incluso "aramon" (sin el acento sobre la "o") como
+identificador de usuario.
+
+NUMERO DE USUARIO DEL PROPIETARIO
+
+Si este computador va a compartir archivos o carpetas con otros
+computadores de la red, conviene que cada computador se refiera a un
+mismo usuario mediante el mismo número de usuario. Si el propietario
+dispone de un número de usuario existente en otro UNIX System, podrá
+compartir todo esto introduciendo aquí dicho número. Si desconoce el
+número de usuario del propietario del otro computador, el comando "id"
+de ese computador se lo proporcionará.
+
+Si el propietario no dispone de una cuenta en otro computador, acepte el
+valor por defecto.
+.helpinst
+ESC=Salir de Ayuda  F1=Instrucciones  1=AvPág  2=RePág
+.hhelpinst
+ESC=Salir de instrucciones  1=AvPág  2=RePág
+.working
+Operando...
+.end

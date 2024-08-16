@@ -1,0 +1,8 @@
+#ident	"@(#)initpkg:common/cmd/initpkg/init.d/tokinit	1.5"
+#ident	"$Header:	$"
+/sbin/modadmin -s | grep toktsm > /dev/null 2>&1
+if [ $? -eq 0 ]
+then 
+	/sbin/modadmin -l odisr > /dev/null 2>&1
+fi
+

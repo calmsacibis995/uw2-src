@@ -1,0 +1,195 @@
+%% Process Limit Parameters
+%C Process Limit Parameters
+These tunable parameters include General Process Limit Parameters
+and Resource (rlimit) Parameters.
+%%% General Process Limit Parameters
+% NGROUPS_MAX
+Specifies the number of user groups
+to which a user ID can belong.
+A user can
+have multiple ``group'' permissions simultaneously
+without having to execute the
+newgrp
+command.
+[See
+getgroups(2).]
+The default is 16.
+The kernel restricts this parameter
+to a range between 1 and 16, regardless
+of the tunable parameter setting.
+%% Miscellaneous Parameters
+% ARG_MAX
+This is the maximum number of characters
+(including NULL characters) allowed in
+the argument and environment strings passed
+to an exec system call.
+This can be increased to allow larger argument lists,
+but it should not be less than 5120.
+%% Process Limit Parameters
+%%% Resource Limit (rlimit) Parameters
+%C Resource Limit (rlimit) Parameters
+The following parameters represent
+default per process resource limits
+that are used to populate the
+rlimit
+structure.
+Beginning with Release 4, the
+ulimit
+shell command returns several kernel
+limits to the user obtained from the
+rlimit
+structure.
+In the following parameters the
+S
+prefix indicates soft limits;
+H,
+hard limits.
+Any user process may change its soft limits,
+up to the corresponding hard limit.
+Only
+root
+can increase hard limits.
+Setting a parameter to
+0x7FFFFFFF
+indicates an infinite limit.
+% SCORLIM
+The soft limit specifying the largest size, in bytes,
+of a core file that can be created.
+A soft limit of 0 prevents the creation of core files.
+% HCORLIM
+The maximum value of
+SCORLIM.
+% SCPULIM
+The soft limit of
+the maximum combined user and system CPU time,
+in seconds, that a process is allowed.
+A
+SIGXCPU
+signal will be sent to processes
+whose CPU time exceeds this value.
+% HCPULIM
+The maximum value of
+SCPULIM.
+% SDATLIM
+The soft limit specifying the maximum size, in bytes,
+of a process's heap.
+If a process attempts to extend its heap
+beyond this limit using
+brk(2),
+the attempt will fail and
+errno
+will be set to
+ENOMEM.
+% HDATLIM
+The maximum value of
+SDATLIM.
+% SFNOLIM
+The soft limit specifying
+the maximum number of open files the process can have.
+When this limit is exceeded,
+attempts to open files fail and
+errno
+is set to
+EMFILE.
+Note that
+there are other limits imposed by the C library when
+stdio
+(standard I/O) functions are used.
+See
+/usr/include/stdio.h.
+% HFNOLIM
+The maximum value of
+SFNOLIM.
+% SFSZLIM
+The soft limit specifying the largest offset, in bytes,
+of any single file that can be created by the process.
+A
+SIGXFSX
+signal will be sent to processes that attempt
+to write a file whose offset is greater than this value.
+In addition, the write will fail with an
+EFBIG
+error.
+There are user-level ways of
+overriding this kernel limit, such as the
+ulimit shell
+command and the
+ULIMIT
+line in
+/etc/default/login.
+% HFSZLIM
+The maximum value of
+SFSZLIM.
+% SSTKLIM
+The soft limit specifying the maximum size, in bytes,
+of the stack segment for a process.
+This defines the limit of automatic stack growth
+by the system.
+A
+SIGSEGV
+signal will be sent to processes
+that attempt to grow the stack beyond this value.
+Unless the process has arranged to catch this signal
+on a separate stack
+[see
+sigaltstack(2)],
+this will terminate the process.
+% HSTKLIM
+The maximum value of
+SSTKLIM.
+% SVMMLIM
+The soft limit specifying the maximum address space
+that may be mapped to a process.
+Attempts to increase a process's address space
+beyond this value [that is,
+brk(2),
+shmat(2),
+mmap(2)]
+fails with an
+ENOMEM
+error.
+For
+shmat(2),
+see
+shmop(2).
+% HVMMLIM
+The maximum value of
+SVMMLIM.
+%% Timer and Scheduler Parameters
+%C Timer and Scheduler Parameters
+These tunable parameters are associated with scheduler processing.
+% INITCLASS
+String tunable parameter with value set to
+TS.
+%% Processor Cache Affinity Parameters
+%C Processor Cache Affinity Parameters
+These tunable parameters are associated with the Processor Cache.
+% LOAD_BAL_FREQ
+The frequency in ticks with which the lengths of the per-processor run queues
+are examined to check that the differences exceed
+MAXIMBALANCE.
+% MAXCACHEWARM
+Maximum number of context switches after which the cache is
+assumed to have turned cold.
+% MAXIMBALANCE
+The maximum difference between two local run queues that is allowed.
+Once this maximum is exceeded, load balancing requirements will dictate
+putting affinitized LWPs on global run queue.
+% OVSTACK_PREEMPT
+A boolean value that controls whether preemption is enabled while a kernel
+LWP's (Light Weight Process') stack is using the extension page.
+When this tunable is set to 0 (the default), the
+kernel will not preempt an LWP whose stack extends into the extension page.
+When set to 1, such preemption is enabled, thus providing enhanced real
+time response.
+Enabling this feature can cause increased use of
+the stack overflow memory, and
+therefore, an increased value of OVSTACK_SIZE
+is recommended.
+OVSTACK_PREEMPT and OVSTACK_SIZE are important when you use drivers
+that use more stack space and when you run real-time applications.
+% OVSTACK_SIZE
+The quantity of memory (in Kbyes) set aside to handle stack overflow
+conditions.
+OVSTACK_PREEMPT and OVSTACK_SIZE are important when you use drivers
+that use more stack space and when you run real-time applications.

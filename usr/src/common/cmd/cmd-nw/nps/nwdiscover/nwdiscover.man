@@ -1,0 +1,79 @@
+#ident	"@(#)cmd-nw:common/cmd/cmd-nw/nps/nwdiscover/nwdiscover.man	1.1"
+#ident	"$Id: nwdiscover.man,v 1.1 1994/03/02 22:52:06 vtag Exp $"
+
+NAME
+	nwdiscover(1M)
+
+DESCRIPTION
+	The nwdiscover command is an administrative command that must be run as 
+	super user, or user with appropriate privileges. The purpose of this
+	command is to discover the characteristics of any operational IPX networks
+	and optionally set the IPX network configuration.
+	
+	If an IPX network is already configured, it does discovery on that
+	network first.
+
+	The command generates a "get nearest network service" request and sends 
+	out two IPX SAP messages to the network.  The first message is a service
+	request message for Netware File Servers, and the second is a service
+	request message for UnixWare file Servers. If there is a response from
+	the file server request messages, an IPX RIP message is sent requesting
+	information on all networks.  If a response is received to any of the
+	messages, the command, extracts the network and frame type from the reply.
+	If the -u command line option is set, the configuration file information
+	is updated.  The the network information is printed to stdout.
+
+	If no reply is received to any of the request messages, the nwdiscover
+	command will use the information already configured, or of nothing is
+	configured, it will invent a network number, set the frame type to
+	802.2, and configure the first device returned from the netinfo(1M)
+	command.
+
+	If no arguments are given to the command, it will call the netinfo(1M)
+	command to determine the network devices configured on the system. For
+	each network device configured, nwdiscover sends a GNS request to the
+	two file servers for ethernet frame types 802.2, ethernet II, ethernet
+	802 SNAP and ethernet 802.3 respectively. The search for a frame type
+	will conclude when the first response is returned from a server on the
+	network.
+
+	The command will accept the following arguments in any order:
+
+	- a	
+	    check all frame types and device types, even if there is a response
+		from a server.  If set with the -u command line option, any existing
+		configuration is erased and all networks discovered are configured.
+
+	- f<frame_type>	
+	   query the network to see if there is a server responding to messages of
+	   this frame type (default is to try all frame types).  If the -u 
+	   option is set, this frame type will be configured even if no network
+	   information was discovered.
+
+	- r<retry_count>
+	   if there is no response from the network, try again, <retry_count>
+	   times (default is 2).
+
+	- t<timeout>
+	   timeout after <timeout> seconds (default is 3).
+
+	- d<pathname>
+	   use only this path name as the network device driver (default is what
+	   ever is returned by netinfo(1M) command).
+
+	- v	
+	    turn on verbose mode. This will print debugging information to stderr.
+
+	- u
+	   update the netware configuration file (/etc/netware/nwconfig). If this
+	   option is on, the config file will be updated with the frame type and 
+	   device name and network address.
+
+	- e<frame_type>
+	   exclude searching for this frame type. This option can appear on the
+	   command line multiple times.
+
+ERRORS
+	This command will fail if the user is not super user or one or all of
+	the options specified have incorrect format or values.
+

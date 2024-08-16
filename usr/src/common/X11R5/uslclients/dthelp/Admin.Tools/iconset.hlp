@@ -1,0 +1,589 @@
+#ident\t"@(#)dthelp:Admin.Tools/iconset.hlp	1.22"
+^*version^1
+^*title^Icon Setup
+^:Icon_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Setting up icons
+^0^Icon Setup
+^$10
+Icon Setup
+
+Use Icon Setup to create an icon class for an application, folder or data
+file. An icon class defines the appearance of an icon and the resulting
+action when you use the icon.
+
+You can do the following with Icon Setup:
+
+\to\t\k(View icon classes^^Viewing Icon Classes)
+\to\t\k(Create a new icon class^^Creating a New Icon Class)
+\to\t\k(Modify an icon class^^Modifying an Icon Class)
+\to\t\k(Delete an icon class^^Deleting an Icon Class)
+
+^1^Viewing Icon Classes
+^$20
+Viewing Icon Classes 
+
+You can view the following two types of icon classes:
+
+\to\tPersonal Classes (default view) - Apply only to your Desktop.
+
+\to\tSystem Classes - Apply to every user's Desktop.
+
+Note: If you want to add a new class to every user's Desktop, be sure
+to add it as a system class.
+
+To view icon classes, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Icon_Setup. The "Icon Setup" window appears.
+
+3.\tClick on one of the following:
+
+  \to\t\k(View=>Personal Classes^^Icon Setup: Personal Classes Window)
+
+  \to\t\k(View=>System Classes^^Icon Setup: System Classes Window)
+
+Note: If you made any changes while in a particular view and you
+did not save those changes, the system displays a \k(pop-up confirmation window^^Confirmation Window)
+to give you a chance to save those changes before changing the view.
+
+^2^Confirmation Window
+^$25
+Confirmation Window
+
+Click on Yes if you want to save the changes you made before changing
+view.
+
+Click on No if you want to change the view without saving any changes.
+
+^2^Icon Setup: Personal Classes Window
+^$30
+Icon Setup: Personal Classes Window
+
+This window displays the following:
+
+\to\tIcon classes you created
+
+\to\tDatafile class provided by the system
+
+It does not display icon classes created by other users. New personal class
+icons affect the behavior of your Desktop only.
+
+To see system classes, click on View=>System Classes.
+
+
+^2^Icon Setup: System Classes Window
+^$40
+Icon Setup: System Classes Window
+
+This window displays only icon classes provided by the system.
+
+You can make changes to system icon classes only if you have
+\k(system owner permissions^dtadmin/user.hlp^Understanding Permissions).
+
+New system icon classes affect the behavior of every user's Desktop.
+
+To see personal classes, click on View=>Personal Classes.
+
+^1^Creating a New Icon Class
+^$50
+Creating a New Icon Class
+
+To create a new icon class, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Icon_Setup. The "Icon Setup" window appears.
+
+3.\tClick on Icon Class=>New.
+
+4.\tClick on one of the following:
+
+  \to\t\k(File^^Icon Setup: New System File or New Personal File Window)
+  \to\t\k(Folder^^Icon Setup: New System Folder or New Personal Folder Window)
+  \to\t\k(Application^^Icon Setup: New System Application or New Personal Application Window)
+
+5.\tType in the necessary information for the new class and click on Add
+  \tto add the information and dismiss the window, or Apply to add the
+  \tinformation without dismissing the window.
+
+  \tNote: To restore the window to its original settings, click on Reset.
+  \tTo dismiss the window without applying any changes, click on Cancel.
+  
+  \tFor detailed information on filling in the options for each class,
+  \tclick on the desired highlighted class type in Step 4 (File, Application,
+  \tor Folder).
+
+^2^Properties Window
+^$55
+Properties Window
+
+The fields in the "Icon Class Properties" windows are the same as in the 
+"New" windows. See the following for information on the type of class you
+selected:
+
+  \to\t\k(Icon Setup: New System File or New Personal File Window)
+  \to\t\k(Icon Setup: New System Application or New Personal Application Window)
+  \to\t\k(Icon Setup: New System Folder or New Personal Folder Window)
+
+^2^Icon Setup: New System File or New Personal File Window
+^$60
+Icon Setup: New System File or New Personal File Window
+
+In the Category box, click on one of the following:
+
+\to\t\k(Basic Options^^Basic Options for Files)
+\to\t\k(File Typing^^File Typing for Files)
+\to\t\k(Icon Actions^^Icon Actions for Files)
+\to\t\k(Templates^^Templates for Files)
+
+^3^Basic Options for Files
+^$70
+Basic Options for Files
+
+The following fields and options appear when you display the
+Basic Options Category (for Files):
+
+\to\tClass Name: - Type a name for the new class. The name should describe
+\t \tthe type of data files that belong to the class (for example,
+\t \tSpreadsheet Files).
+
+\to\tIcon: - Displays the icon associated with the new class. By default,
+\t \tthe system uses the standard data file icon. You can \d(drag-and-drop)
+\t \tan icon here to replace the standard icon.
+
+\to\tIcon File: - Type in the name of the file containing the icon that
+\t \tyou want to use for the new class (for example, datafile.icon).
+
+\t \tYou can also click on the Icons button to display a list of
+\t \tavailable icons.
+
+\to\t\k(Icons^^Icon Setup: Icon Library Window): - Click on this button for a pop-up window that allows
+\t \tyou to choose a new icon to be associated with the class.
+
+\to\tUpdate Icon - Displays the icon associated with the filename
+\t \tyou entered in the Icon File text box.
+
+\to\tFilename Extension: - Type in the criteria for the names of
+\t \tfiles that should be associated with this class. For example, if
+\t \tyou want all files ending in .txt to be associated with this
+\t \tclass, enter *.txt in this text box.  By default, this text box
+\t \tis empty.
+
+\t \tNote: Although the field is called "Filename Extension," you
+\t \tcan enter a complete filename or any valid UNIX regular expression.
+
+\to\tProgram to Run: -  Type in the name of the program you want to execute
+\t \twhen you open the data files associated with the new class.
+
+\to\tProgram Type: - Click on the environment needed to run the application.
+\t \tBy default, the Program Type is UNIX Graphical.
+
+Note: For most applications you will only need to fill out the fields in
+this Basic Options category. However, for some applications, you
+may need to fill out additional fields to load datafiles, or you
+may decide you want to use certain advanced features, such as the
+Templates feature.
+
+^3^Icon Actions for Files
+^$75
+Icon Actions for Files
+
+The following fields and options appear when you display the Icon Actions
+Category:
+
+\to\tDisplay icon in File: New window? - Click on No if you do not want
+\t \tthe icon for the new data file class to appear in the "File:
+\t \tNew" window. By default, an icon for this class appears, making
+\t \tit easier for you to create new files of this type.
+
+\to\tTo Open File: - Type in the UnixWare system command(s) needed to
+\t \texecute the appropriate program and open the files associated with
+\t \tthe new class.
+
+\t \tIf the Program Type is UNIX Graphical, the default is the following: 
+
+\t\t\t\t\t\t\t\t\texec "%_PROG_TO_RUN" "%F" &
+
+
+\t \tIf the Program Type is UNIX character, the default is the following: 
+
+\t\t\t\t\t\t\t\t\texec xterm -E "%_PROG_TO_RUN" "%F" &
+
+\t \tWhere %_PROG_TO_RUN is replaced with the name you entered in the
+\t \tProgram to Run field, and %F is replaced with the name of the
+\t \tfile you want to open.
+
+\t \tNote: For additional information on UnixWare system commands, see the
+\t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+\to\tTo Print File: - Type in the UnixWare system command(s) needed
+\t \tto print files.
+
+\t \tThe default value for To Print File is the following:
+
+\t \t$XWINHOME/bin/PrtMgr -p %_DEFAULT_PRINTER "%F" &
+
+^3^Icon Setup: Icon Library Window
+^$80
+Icon Setup: Icon Library Window
+
+This window displays the actual icon image associated with icon pixmap and
+bitmap files.  
+
+Click on one of the following for the "Show icons in" option:
+
+\to\tSystem Library (this is the default)
+
+\to\tOther - Type in the \d(pathname^path) for the desired folder. Click
+\t \ton Show to display the icons in the specified folder, or click on
+\t \tFind to bring up the \k("Icon Setup: Find" window^^Icon Setup: Find Window).
+
+Click on the desired icon, then click on OK. The selected icon is now
+associated with the new class.
+
+^3^Icon Setup: Find Window
+^$90
+Icon Setup: Find Window
+
+Click on a folder or click on Parent Folder in the Folder(s) list until you
+locate the desired folder, or type in the desired \d(path) for the folder in
+the Quick Show text box. 
+
+Click on OK.
+
+^3^File Typing for Files
+^$100
+File Typing for Files
+
+The following fields and options appear when you display the File Typing 
+Category:
+
+\to\tClass Name - Displays the class name you entered in Basic Options.
+
+\to\tAdditional File Typing Constraints:
+
+\t \tThis set of controls allows you to set additional constraints (beyond
+\t \tUNIX file type and filename) to determine if a file should be associated
+\t \twith the new class.
+
+\t \tThe file must meet the criteria you specify in the following boxes:
+
+\t \tA file is in this class if...
+
+\t \t-\tit is in the following folder: - Type in the name of the desired
+\t \t \tfolder. Only files found in this folder will be associated with the
+\t \t \tnew class.
+
+\t \t-\tit is linked to a file named: - Type in the name of the desired file.
+\t \t \tOnly files symbolically linked to this file will be associated with
+\t \t \tthe new class.
+
+\t \t-\tit is linked to a file in the following folder: - Type in the name of
+\t \t \tthe desired folder. Only files linked to a file in this folder will
+\t \t \tbe associated with the new class.
+
+
+^3^Templates for Files
+^$105
+Templates for Files
+
+This set of controls allows you to specify template files that should be
+associated with the new Datafile class. You may want to create a template
+if you frequently use a standard letter head or report format, and want to
+create new files that include the formatting information.
+
+The following fields and options appear when you display the Templates 
+Category:
+
+\to\tFile Name: - Type in the \d(path) to the template file that should
+\t \tbe associated with the new class. By default, this field is empty.
+
+\t \tNote: Click on Find to bring up the
+\t \t\k("Icon Setup: Find Template File" window^^Icon Setup: Find Template File Window).
+
+\to\tExisting Templates: - Scroll through the list of template files
+\t \tassociated with the current class and click on the desired
+\t \ttemplate file entry if you want to delete or change it.
+
+\t \t-\tClick on Add to put the current contents of the File Name text
+\t \t \tbox into the scroll list.
+
+\t \t-\tClick on Modify to replace the selected entry in the Templates
+\t \t \tscroll list with the current contents of the File Name text box.
+
+\t \t-\tClick on Delete to remove the selected entry from the Templates
+\t \t \tscroll list.
+
+^4^Icon Setup: Find Template File Window
+^$110
+Icon Setup: Find Template File Window
+     
+Use the arrows to scroll through the list for the desired template file,
+or type in the name of the template (if you know it). When you locate the
+desired template, click on OK. The selected file name appears in the
+Templates list.
+
+Note: To make your search easier, you can enter a filter string in the Use
+field. For example, you can use the wildcard character (the asterisk *)
+to show only files that begin with "template" by typing template.*, then
+clicking on the OK button.
+
+You can also click on Show Hidden (dot) Files (any file that begins with
+a ".") if you want the system to show all your "." files.
+
+^2^Icon Setup: New System Application or New Personal Application Window
+^$130
+Icon Setup: New System Application or New Personal Application Window
+
+In the Category box, click on one of the following:
+
+\to\t\k(Basic Options^^Basic Options for Applications)
+\to\t\k(File Typing^^File Typing for Applications)
+\to\t\k(Icon Actions^^Icon Actions for Applications)
+
+By default, this field is set to Basic Options.
+
+Note: For most applications, you do not need to create a new application
+class to run an application. You only need to add a new application class
+if you want to associate a specific icon with the application (instead of
+the standard icon), or the application requires special command-line options
+to run successfully.
+
+For information on UnixWare system command-line options, see the
+\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+^3^Basic Options for Applications
+^$135
+Basic Options for Applications
+
+The following fields and options appear when you display the
+Basic Options Category (for Applications):
+
+\to\tClass Name: - Type a name for the new class. The name should
+\t \tbe the actual name of the application, or should be a name that
+\t \tbriefly describes the application.
+
+\to\tIcon: - Displays the icon associated with the new class. By default,
+\t \tthe system uses the executable file icon. You can \d(drag-and-drop)
+\t \tan icon here to replace the standard icon.
+
+\to\tIcon File: - Type in the name of the file containing the icon you want
+\t \tto use for the new class. For example, exec.icon.
+
+\t \tYou can also click on the Icons button to display a list of
+\t \tavailable icons.
+
+\to\t\k(Icons^^Icon Setup: Icon Library Window): - Click on this button for a pop-up window that allows
+\t \tyou to choose a new icon to be associated with the class.
+
+\to\tUpdate Icon: - Displays the icon associated with the filename
+\t \tyou entered in the Icon File text box.
+
+\to\tProgram Name: - Type in the name of the program that runs this
+\t \tapplication.
+
+\to\tProgram Type: - Click on the environment needed to run the application.
+\t \tBy default, the Program Type is UNIX Graphical.
+
+
+^3^File Typing for Applications
+^$140
+File Typing for Applications
+
+The following fields and options appear when you display the File Typing
+Category:
+
+\to\tClass Name: - Displays the class name you entered in Basic Options.
+
+\to\tAdditional File Typing Constraints:  
+
+\t \tThis set of controls allows you to set additional constraints (beyond
+\t \tthe UNIX file type and program name) to determine if a file should be
+\t \tassociated with the new class.
+
+\t \tThe file must meet the criteria you specify in the following boxes:
+
+\t \tA program is in this class if...
+
+\t \t-\tit is in the following folder: - Type in the name of the desired
+\t \t \tfolder. Only applications found in this folder will be associated
+\t \t \twith the new class.
+
+\t \t-\tit is linked to a program named: - Type in the name of the desired
+\t \t \tprogram. Only applications symbolically linked to this program will
+\t \t \tbe associated with the new class.
+
+\t \t-\tit is linked to a program in the following folder: Type in the name
+\t \t \tof the desired folder. Only applications linked to a program in this
+\t \t \tfolder will be associated with the new class.
+
+^2^Icon Setup: New System Folder or New Personal Folder Window
+^$150
+Icon Setup: New System Folder or New Personal Folder Window
+
+Create a new folder type class if you have a Desktop folder that you want
+to be represented with a special folder icon instead of the default icon.
+
+This window displays the following:
+
+\to\tClass Name - Type in the desired name for the new class. Use a name
+\t \tthat describes the type of folders that should fall into this class
+\t \t(for example, Hot Projects).
+
+\to\t\k(Icon^^Icon Setup: Icon Library Window) - Displays the icon associated with the new class. By default,
+\t \tthe system uses the standard folder icon.
+
+\to\tIcon File: - Type in the name of a file containing the icon you want
+\t \tto use for the new class. For example, folder.icon.
+
+\to\tIcons - Click on this button to display a window that allows you to
+\t \tchoose a new icon to be associated with the class.
+
+\to\tUpdate Icons - Displays the icons associated with the filename you
+\t \tentered in the Icon File text box.
+  
+\to\tA folder is in this class if...
+
+\t \tThis set of controls allows you to set constraints to determine
+\t \tif a folder should be associated with the new class. The folder
+\t \tmust meet the criteria you specify in the following boxes:
+
+\t \t-\tits Name is: - Enter the name of the folder that should be
+\t \t \tin this class.  You can use wildcard characters (such as * and
+\t \t \t?).
+
+\t \t-\tit is in the Following Folder: - Type in the name of the desired
+\t \t \tfolder. Only folders found in this folder will be associated with
+\t \t \tthe new class.
+
+\t \t-\tit is Linked To a Folder Named: - Type in the name of the desired
+\t \t \tfolder. Only folders symbolically linked to this folder will be
+\t \t \tassociated with the new class.
+
+\t \t-\tit is Linked to a Folder in the Following Folder: - Type in the name
+\t \t \tof the desired folder. Only folders linked to a folder in this folder
+\t \t \twill be associated with the new class.
+
+^1^Icon Actions for Applications
+^$155
+Icon Actions for Applications
+
+The following fields and options appear when you display the Icon Actions
+Category:
+
+\to\tIcon can be moved to Wastebasket: - Click on Yes if you want
+\t \tto be able to move the icon to the Wastebasket. By default, this
+\t \toption is set to No, which means that the icon should be treated as
+\t \ta "System" icon, and therefore cannot be deleted.
+
+\to\tTo Run Program: - Type in the command you need to run the programs
+\t \tassociated with the new class.
+
+\t \tIf the Program Type is UNIX Graphical, the default is the following: 
+
+\t\t\t\t\t\t\t\t\texec "%F" &
+
+\t \tIf the Program Type is UNIX character, the default is the following: 
+
+\t\t\t\t\t\t\t\t\texec xterm -E "%_PROG_TO_RUN" &
+ 
+\to\tTo Process a Drop: - Type in the command(s) needed to perform some
+\t \taction when you \d(drag-and-drop) a file onto an icon for a program
+\t \tassociated with the class.
+
+\t \tIf the Program Type is UNIX Graphical, the default is the following: 
+
+\t\t\t\t\t\t\t\t\texec "%F" "%" &
+
+\t \tIf the Program Type is UNIX character, the default is the following: 
+
+\t\t\t\t\t\t\t\t\texec xterm -E "%F" "%S" &
+
+\t \tWhere %F is replaced by the program name.
+
+Note: For additional information on UnixWare system commands, see the
+\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+^1^Modifying an Icon Class
+
+^$160
+Modifying an Icon Class
+
+You must have \k(system owner permissions^dtadmin/user.hlp^Understanding Permissions) to change system classes. If you
+do not have system owner permissions, you can only view, not modify,
+\k(system classes^^Icon Setup: System Classes Window).
+
+You can, however, view and make changes to \k(personal classes^^Icon Setup: Personal Classes Window).
+
+To modify an icon class, do the following:
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Icon_Setup. The "Icon Setup" window appears.
+
+3.\tDouble-click on the class whose properties you want to modify.
+  \tThe window that appears reflects the type of class you are modifying.
+
+4.\tMake the desired changes in the "Properties" window. 
+
+  \tThe fields in the "Properties" window are the same as in the 
+  \t"New" windows. See the following for information on the type
+  \tof class you are modifying:
+
+  \to\t\k(Icon Setup: New System File or New Personal File Window)
+  \to\t\k(Icon Setup: New System Application or New Personal Application Window)
+  \to\t\k(Icon Setup: New System Folder or New Personal Folder Window)
+
+  \tNote: If the system class you are viewing was delivered with your
+  \tsystem, you might not be allowed to modify the class, even if you
+  \thave system owner permissions. In this case, the OK and Apply buttons
+  \twill be greyed (inactive).
+
+5.\tClick on OK to make the changes and dismiss the window, or on Apply
+  \tto make the changes without dismissing the window.
+
+^1^Deleting an Icon Class
+^$170
+Deleting an Icon Class
+
+You can delete any of your \k(personal icon classes^^Icon Setup: Personal Classes Window) except the datafile class.
+However, to delete a system class, you must have \k(system owner permissions^dtadmin/user.hlp^Understanding Permissions).
+
+To delete an icon class, do the following:
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Icon_Setup. The "Icon Setup" window appears.
+
+3.\tClick on one of the following:
+
+  \to\t\k(View=>Personal Classes^^Icon Setup: Personal Classes Window)
+
+  \t \t\k(View=>System Classes^^Icon Setup: System Classes Window)
+
+4.\tClick on the icon class you want to remove, then click on
+  \tIcon Class=>Delete. A \k(pop-up window^^Delete Confirmation Window) appears asking you to confirm the
+  \tdeletion. Click on Yes. The icon class is removed from the system.
+
+^2^Delete Confirmation Window
+^$180
+Delete Confirmation Window
+
+Be sure you want to remove the icon class before you select Yes. Once you
+delete a class, the only way to recover that class is to recreate it.
+Also, when you delete a system class, the system removes that class for
+all users on your system.
+
+If you decide not to delete the class, click on No. If you are sure you
+want to delete the class, click on Yes.

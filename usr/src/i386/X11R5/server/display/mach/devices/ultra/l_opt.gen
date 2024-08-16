@@ -1,0 +1,121 @@
+#ident	"@(#)mach:mach/devices/ultra/l_opt.gen	1.3"
+
+
+#										-*- Indented-Text -*-
+#	NAME
+#
+#		lfb_options.gen : option definition file for the lfb
+#						   device library.
+#
+#	SYNOPSIS
+#
+#		genoptions -p lfb_options_ -i lfb_options.gen -o\
+#				lfb_options.c
+#
+#	DESCRIPTION
+#
+#		This file contains definitions for the option handled by the
+#	lfb display library.
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#		${std_group_root}/lib/option.template : template for C code.
+#
+#	SEE ALSO
+#
+#		genoptions : script to generate the option parser from the 
+#					 definition file.
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	HISTORY
+#
+#		SDD CONFIGURATION
+#
+#		LFB location in MB
+@option frame-buffer-physical-address
+	@option-type	numeric
+	@valid-range	0..127
+	@default		0
+	@description	The physical address at which the ATI frame
+					buffer is mapped (in units of MB).
+					
+# Size of the frame buffer.
+@option frame-buffer-size
+	@option-type	numeric
+	@valid-range	0..
+	@default		0
+	@description	The size of the frame buffer in units of MB.  `0'
+					means auto-detect the size.
+
+#	Graphics state
+@option number-of-graphics-states
+	@option-type	numeric
+	@valid-range	0..
+	@default		8
+	@description	Number of SDD graphics states. `0' means use\
+					internal default.
+
+#	LFB enabling and disabling
+@option	use-linear-frame-buffer
+	@option-type	unique-enumeration
+	@valid-range	yes no auto-configure
+	@default		auto-configure
+	@description	Controls the usage of LFB layer code.  `yes'
+					forcibly switches on the LFB code, `no' switches
+					it off, and `auto-configure switches it `on' for EISA
+					and local bus architectures when the LFB driver is
+					present, and `off' for all others.
+
+# LFB page size
+@option linear-frame-buffer-page-size
+	@option-type	unique-enumeration
+	@valid-range	auto-configure 1 4
+	@default		auto-configure
+	@description	The page size for mapping the memory aperture.
+					Currently only `auto-configure' is supported.
+
+@option arc-cache-size
+	@option-type	numeric
+	@valid-range	0..
+	@default		16
+	@description	The number of arcs to cache in the display library
+					at a given time. `0' means switch off arc caching.
+
+# Drawing control options
+@option	bitblt-options
+	@option-type	multiple-enumeration
+	@valid-range	use-ms-bitblt use-sm-bitblt
+	@default		use-ms-bitblt use-sm-bitblt
+	@description	Flags to control bitblt operations.
+
+@option	pointdraw-options
+	@option-type 	multiple-enumeration
+	@valid-range	use-plot-points
+	@default		use-plot-points
+	@description	Flags to control point plotting operations.
+ 
+#	Arc drawing control
+@option	arcdraw-options
+	@option-type	multiple-enumeration
+	@valid-range	draw-one-bit-arcs
+	@default		draw-one-bit-arcs 
+	@description	Controls the drawing operation for arcs.
+
+# Meta options
+@option	options-file
+	@option-type	option-file
+
+@option	options-variable
+	@option-type	option-environment
+
+Local Variables:
+mode: indented-text
+tab-width: 4
+End:

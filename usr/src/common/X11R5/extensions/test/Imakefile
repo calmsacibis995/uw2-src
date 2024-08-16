@@ -1,0 +1,69 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5extensions:test/Imakefile	1.7"
+
+XCOMM $XConsortium: Imakefile,v 1.22 91/08/22 12:26:06 rws Exp $
+
+#if BuildXInputLib || BuildXYZLib
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+#if BuildXInputLib
+   XINPUTDIRS = xinput
+#endif
+#if BuildXYZLib
+      XYZDIRS = xyztest
+#endif
+      SUBDIRS = $(XINPUTDIRS) $(XYZDIRS)
+#endif
+
+    DEFINES = ExtensionDefines
+IMAKE_DEFINES = $(DEFINES)
+  SHAPESRCS = shapetest.c
+  SHAPEOBJS = shapetest.o
+#if HasShm
+    SHMSRCS = shmtest.c
+    SHMOBJS = shmtest.o
+#endif
+   MBUFSRCS = xmbufinfo.c
+   MBUFOBJS = xmbufinfo.o
+
+
+#if BuildXIdleExt
+  XIDLESRCS = xidletest.c
+  XIDLEOBJS = xidletest.o
+  XIDLEPROG = xidletest
+#else
+  XIDLESRCS = 
+  XIDLEOBJS = 
+  XIDLEPROG = 
+#endif
+
+   INCLUDES = -I../include
+       SRCS = $(SHAPESRCS) $(SHMSRCS) $(MBUFSRCS) $(XIDLESRCS)
+       OBJS = $(SHAPEOBJS) $(SHMOBJS) $(MBUFOBJS) $(XIDLEOBJS)
+
+#if HasShm
+all:: shapetest shmtest xmbufinfo $(XIDLEPROG)
+#else
+all:: shapetest xmbufinfo xidletest
+#endif
+
+NormalProgramTarget(xmbufinfo,$(MBUFOBJS),$(DEPXLIB),$(XLIB) -lsocket,NullParameter)
+NormalProgramTarget(shapetest,$(SHAPEOBJS),$(DEPXLIB),$(XLIB) -lsocket,NullParameter)
+NormalProgramTarget(xidletest,$(XIDLEOBJS),$(DEPXLIB),$(XLIB),NullParameter)
+#if HasShm
+NormalProgramTarget(shmtest,$(SHMOBJS),$(DEPXLIB),$(XLIB) -lsocket,NullParameter)
+#endif
+
+DependTarget()
+
+#ifdef IHaveSubdirs
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+#endif

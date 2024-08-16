@@ -1,0 +1,105 @@
+#ident	"@(#)pkg.platform:i386/pkg/platform/preremove	1.4"
+
+cpqsmuxd_deconfigure () {
+      SNMPDPEERS=/etc/netmgt/snmpd.peers
+      CPQSMUXD="\"cpqsmuxd\" 1.3.6.1.4.1.232 \"compaq_passwd\""
+      [ -f $SNMPDPEERS ] && \
+		grep "^$CPQSMUXD$" $SNMPDPEERS 1>/dev/null 2>&1 && \
+   	ed $SNMPDPEERS << EOEDIT 1>/dev/null 2>&1
+	/^$CPQSMUXD
+	d
+	d
+	w
+	q
+EOEDIT
+}
+cled_deconfigure() {
+   # deconfigure cled in /etc/scsi/tc.index which is $1
+   TC_INDEX=$1
+   
+   # delete  the following three lines from $TC_INDEX, which
+   # must be in this order in the file. 
+
+   #TCLEN	16
+   #TCINQ	COMPAQ  PROLIANT
+   #MKDEV	/etc/scsi/mkdev.d/cled1
+
+   # ed preserves permissions/owner/group
+   # postition at the third line, move up two lines and then delete
+   # three lines.
+
+   ed  $TC_INDEX  <<  EOEDIT 1>/dev/null 2>&1
+   /^MKDEV	\/etc\/scsi\/mkdev.d\/cled1
+   -2
+   .,+2 d
+   w
+   q
+EOEDIT
+}           
+
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+CONFDIR=/etc/conf
+CONFBIN=${CONFDIR}/bin
+
+FAILURE=1       # fatal error
+REBUILD=0
+
+MODULES=""
+
+for i in $CLASSES
+do
+case $i in
+"compaq")
+	MODULES="crom cpqw cled $MODULES"
+	;;
+"tricord")
+	MODULES="ims $MODULES"
+	;;
+*)
+	;;
+esac
+done
+
+#Remove drivers
+for MODULE in $MODULES
+do
+	${CONFBIN}/idcheck -p ${MODULE}
+	RES="$?"
+	if [ "${RES}" -ne "100" -a "${RES}" -ne "0" ]
+	then
+		${CONFBIN}/idinstall -P ${PKGINST} -d ${MODULE} 2>> /tmp/${MODULE}.err
+		REBUILD=1
+	fi
+done
+
+# remove cled entries from /etc/scsi/tc.index
+cled_deconfigure  /etc/scsi/tc.index
+
+# remove  cpqsmuxd entry from /etc/netmgt/snmpd.peers
+cpqsmuxd_deconfigure 
+
+if [ "${REBUILD}" = "1" ]
+then
+	# rebuild for changes to take effect
+
+	${CONFBIN}/idbuild
+	if [ "$?" -ne "0" ]
+	then
+		exit ${FAILURE}
+	else
+		exit 10
+	fi
+else
+	exit 0
+fi

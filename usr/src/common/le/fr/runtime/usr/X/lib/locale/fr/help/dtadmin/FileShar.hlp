@@ -1,0 +1,756 @@
+#ident\t"@(#)dthelp:Admin.Tools/FileShar.hlp    1.26"
+^*version^1
+^*title^Partage de fichiers
+^:Partage_fichiers
+^*width^70
+^+DesktopMgr/help.defs
+^?Accès à des fichiers situés sur des systèmes à distance
+^0^Partage de fichiers
+^$10
+Partage de fichiers
+
+La fonction de partage de fichiers permet d'accéder à des fichiers
+situés sur des systèmes à distance tout comme s'ils étaient sur votre
+propre système, et de configurer ce dernier de façon à ce que d'autres
+systèmes puissent accéder à vos fichiers/dossiers.
+
+Une fois que vous avez configuré le mode de partage de fichiers, vous
+n'avez pas besoin d'effectuer d'opération particulière pour utiliser
+les fichiers à distance. Vous pouvez ouvrir les dossiers, lancer les
+applications et utiliser les données à distance comme s'il s'agissait
+d'éléments implantés en local.
+
+La fonction de partage de fichiers vous permet d'effectuer les
+opérations suivantes :
+
+\to\t\k(Accès aux objets partagés à distance^^Accès aux objets partagés à distance) situés sur un autre système
+\to\t\k(Créer des objets partagés locaux^^Création d'objets partagés locaux) destinés
+\t \tà d'autres systèmes
+\to\t\k(Afficher et modifier les propriétés des objets partagés à distance^^Visualisation et modification des caractéristiques des objets partagés à distance)
+\to\t\k(Visualiser et modifier les propriétés des objets partagés en local^^Visualisation et modification des caractéristiques des objets partagés locaux)
+\to\t\k(Déconnecter ou supprimer des objets partagés à distance^^Déconnexion et suppression des objets partagés à distance) à partir
+\t \tde votre système
+\to\t\k(Rendre indisponibles ou supprimer des objets partagés en local^^Non-mise à disposition et suppression des objets partagés locaux) à
+\t \tpartir de votre système
+
+Voir également :
+\s(Partage de fichiers et de dossiers à distance^dhelp "pe.fr" ownerhb "Partage des fichiers et des dossiers à distance" "" || helpLinkErr)
+
+^1^Accès aux objets partagés à distance
+^$20
+Accès aux objets partagés à distance
+
+Remarque : pour pouvoir configurer l'accès aux objets partagés à
+distance, vous devez être autorisé à vous
+\k(connecter aux fichiers/dossiers à distance^dtadmin/user.hlp^Présentation des autorisations). Pour configurer votre
+ système en vue de l'accès à des \d(objets partagés^objet partagé) à
+ distance, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Partage_fichiers. La fenêtre "Configuration
+  \tdu partage de fichiers" s'affiche (et s'applique aux objets
+  \tpartagés à distance ou locaux, selon le type de vue sélectionné en
+  \tdernier).
+
+4.\tCliquez sur Actions=>Statut. La
+  \t\k(fenêtre "Partage de fichiers : Statut"^^Fenêtre Partage de fichiers : statut) s'affiche.
+
+5.\tVérifiez que NFS est en cours d'exécution. Si ce n'est pas le cas,
+  \tcliquez sur Lancer NFS. Lorsque NFS est démarré, un message
+  \ts'affiche et le bouton Lancer NFS apparaît en grisé.
+
+  \tRemarque : le démarrage de NFS dure quelques minutes.
+
+6.\tCliquez sur Annuler dans la fenêtre "Partage de fichiers : Statut".
+
+7.\tCliquez sur Afficher=>A distance. La fenêtre "Configuration du
+  \tpartage de\tfichiers : Objets partagés à distance" s'affiche.
+
+  \tRemarque : vous pouvez aussi afficher la fenêtre Objets partagés à
+  \tdistance, puisqu'il s'agit du type de vue paramétré par défaut.
+
+8.\tCliquez sur Objet partagé=>Nouveau. La fenêtre "Partage de
+  \tfichiers : Ajout d'un nouvel objet partagé - A distance"
+  \ts'affiche.
+
+  \to\tNom du système à distance : - Entrez le nom du système sur
+  \t \tlequel réside l'objet partagé auquel vous souhaitez accéder, ou
+  \t \tcliquez sur Consulter afin d'afficher la
+  \t \t\k(fenêtre "Consulter système à distance"^^Fenêtre Consultation du système à distance) et sélectionnez dans la
+  \t \tliste des systèmes disponibles le nom de votre choix, puis
+  \t \tcliquez sur OK (soyez patient ! si votre système est configuré
+  \t \tpour \k(DNS^dtadmin/inet.hlp^Accès à DNS), vous devrez parfois attendre quelques secondes avant
+  \t \td'obtenir l'affichage de cette liste).
+
+  \to\tMontrer objets partagés disponibles : - Cliquez sur le bouton
+  \t \tMontrer objets partagés disponibles afin d'afficher la liste des
+  \t \tobjets disponibles sur le système que vous avez sélectionné (si
+  \t \tvous avez sélectionné Consulter nom du système à distance, le
+  \t \tsystème en question affiche automatiquement cette liste).
+
+  \t \tCliquez sur l'objet partagé que vous souhaitez utiliser.
+
+  \to\tNom d'icône : - Affiche le nom de l'icône représentant l'objet
+  \t \tpartagé sélectionné (dans la fenêtre principale "Partage de
+  \t \tfichiers).
+
+  \to\tObjet partagé à connecter : - Affiche le
+  \t \t\d(chemin d'accès^chemin d'accès) complet à l'objet partagé
+  \t \tsélectionné.
+
+  \to\tConnexion au dossier local : - Entrez le nom du dossier figurant
+  \t \tsur votre système, à partir duquel vous souhaitez accéder à
+  \t \tl'objet partagé ou cliquez sur Trouver dossier afin d'afficher
+  \t \tla \k(fenêtre "Partage de fichiers : dossiers"^^Fenêtre Partage de fichiers : dossiers).
+
+  \t \tRemarque : si vous entrez un nom correspondant à un dossier
+\t \tqui n'existe pas, le système vous invite à créer le dossier en
+\t \tquestion en cliquant sur Ajouter.
+\t \tVoir \k(Message Créer dossier). Si vous entrez le nom d'un dossier qui
+\t \tn'est pas vide, le système affiche un message d'avertissement.
+\t \tVoir \k(Message Dossier non vide).
+
+  \to\tConnecter objet partagé sous : - Cliquez sur Lecture seulement
+  \t \tsi vous souhaitez pouvoir utiliser les fichiers et les dossiers
+  \t \td'un objet partagé, sans être autorisé à y effectuer aucune
+  \t \tmodification ; cliquez sur Lecture et écriture si vous souhaitez
+  \t \taussi pouvoir modifier ces fichiers et ces dossiers.
+
+  \t \tRemarque : si vous sélectionnez l'option Lecture et écriture,
+\t \tmais que le système à distance permet uniquement de disposer de
+\t \tl'objet partagé en lecture, vous ne pourrez y apporter aucune
+\t \tmodification.
+
+  \to\tConnecter lors du lancement de NFS ? - Cliquez sur Oui pour
+  \t \tconnecter l'objet partagé à présent et lors de chaque lancement
+  \t \tde NFS ; cliquez sur Non si vous voulez connecter cet objet
+  \t \tuniquement dans le cas présent.
+
+  \to\tOptions étendues : - Cliquez sur cette option pour afficher les
+  \t \toptions supplémentaires suivantes :
+
+  \t \t-\tType de connexion : - Cliquez sur
+  \t \t \t\k(Connexion logique ou physique^^Connexions logiques et physiques).
+
+  \t \t-\tAutres options de ligne de commande : - Entrez les options
+  \t \t \tde ligne de commande associées à mount. Consultez
+  \t \t \tl'option mount(1M) dans \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+9.\tCliquez sur Ajouter. Une icône représentant l'objet partagé à
+  \tdistance s'affiche dans la fenêtre "Configuration du partage de
+  \tfichiers : Objets partagés à distance".
+
+  \tRemarque : si vous ne voulez pas ajouter cet objet partagé,
+  \tcliquez sur Annuler.
+
+Voir également :
+\s(Utilisation de la fonction Partage de fichiers^dhelp "pe.fr" ownerhb "Partage des fichiers et des dossiers à distance" "Utilisation de la fonction Partage de fichiers" || helpLinkErr)
+\s{Introduction à l'administration du système de fichiers NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Message Créer dossier
+^$24
+Message Créer dossier
+
+Le nom de dossier que vous avez entré dans la case de texte "Etablir
+connexion depuis dossier local :" n'existe pas. Dans ce cas, cliquez
+sur l'un des boutons suvants :
+
+\to\tCréer - Pour créer le dossier.
+
+\to\tAnnuler - Pour annuler la demande de création du dossier. Vous
+\t \tdevez ensuite indiquer un autre nom correspondant au dossier local
+\t \tauquel vous souhaitez connecter l'objet partagé à distance.
+
+^2^Message Dossier non vide
+^$25
+Message Dossier non vide
+
+Le nom du dossier que vous avez entré dans "Etablir connexion
+depuis dossier local" contient déjà des fichiers et/ou des dossiers.
+Ces fichiers/dossiers ne seront pas accessibles pendant la durée de la
+connexion du \d(objet partagé). Par conséquent, les applications de
+votre système ou une partie du système lui-même risquent d'être
+inexploitables.
+
+Cliquez sur l'une des options suivantes :
+
+\to\tAjouter - Pour ajouter quand même le nouvel objet partagé, même si
+\t \tles fichiers et les dossiers contenus dans ce dossier ne seront
+\t \tpas accessibles lors de l'ajout de cet objet partagé.
+
+\to\tAnnuler - Pour annuler la demande de création du dossier. Vous
+\t \tdevez par conséquent indiquer le nom d'un autre dossier local
+\t \tauquel vous souhaitez connecter l'objet partagé à distance.
+
+^2^Fenêtre Consultation du système à distance
+^$30
+Fenêtre Consultation du système à distance
+
+A partir de cette fenêtre, vous pouvez parcourir les deux listes 
+suivantes et sélectionner un système :
+
+\to\t\k(Liste de domaines^^Listage des domaines) - Il s'agit de la vue par défaut si vous avez
+\t \tconfiguré DNS sur votre système.
+
+\to\t\k(Liste des systèmes) - Il s'agit de la vue par défaut si vous
+\t \tn'avez pas configuré DNS sur votre système. Elle affiche le
+\t \tcontenu de votre fichier /etc/hosts.
+
+Si vous disposez d'une liste DNS et que votre liste de systèmes
+comporte également des systèmes autres que votre système local, vous
+pouvez passer d'une vue à l'autre en cliquant sur Afficher=>Liste de
+domaines ou Afficher=>Liste de systèmes.
+
+Voir également :
+\k(Accès à DNS^dtadmin/inet.hlp^Accès à DNS)
+\s(Répertoires et fichiers^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^3^Listage des domaines
+^$40
+Listage des domaines
+
+Pour afficher la liste de domaines, cliquez sur Afficher=>Liste de domaines.
+
+Cette liste affiche par défaut les systèmes faisant partie de votre
+domaine local.
+
+Pour visualiser et sélectionner d'autres domaines (et sous-domaines),
+procédez comme suit :
+
+1.\tEntrez dans la case de texte Nom du domaine le nom du domaine de
+  \tvotre choix (c'est-à-dire le nom du domaine où réside le système
+  \trecherché).
+
+2.\tCliquez sur Mettre à jour liste.
+
+  \tSi le domaine en question comprend des sous-domaines, ces derniers
+  \tsont affichés au début de la liste de domaines.
+
+3.\tPour afficher le contenu d'un sous-domaine,
+  \t\d(cliquez deux fois^cliquer deux fois) sur l'entrée correspondante.
+  \tUne nouvelle liste affichant le contenu de ce sous-domaine
+  \tapparaît dans la partie droite.
+
+  \tVous pouvez poursuivre cette opération juqu'à ce que vous ne
+  \ttrouviezplus aucun sous-domaine rangé sous un autre sous-domaine.
+  \tCependant, votre écran ne vous permet d'afficher que trois niveaux
+  \tde domaines à la fois. S'il existe plus de trois niveaux,
+  \tdéplacez-vous dans les listes à l'aide des flèches gauche et
+  \tdroite situées au centre de l'écran.
+
+4.\tRecherchez dans ces listes le système de votre choix, puis cliquez
+  \tsur l'entrée correspondante.
+
+5.\tCliquez sur OK.
+
+^3^Liste des systèmes
+^$50
+Liste des systèmes
+
+Pour afficher la liste de systèmes, cliquez sur Afficher=>Liste de systèmes.
+
+Remarque : si le fichier /etc/hosts ne contient qu'une seule entrée
+correspondant à votre système, cette liste n'est pas accessible.
+
+La liste de systèmes affiche les systèmes figurant dans votre fichier
+/etc/hosts. Cliquez sur le système de votre choix, puis sur OK.
+
+Voir également :
+\s(Répertoires et fichiers^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^2^Fenêtre Partage de fichiers : dossiers
+^$60
+Fenêtre Partage de fichiers : dossiers
+
+Effectuez l'une des opérations suivantes :
+
+\to\tCliquez dans la liste Dossier(s) sur un nom de dossier ou sur le
+\t \tdossier parent jusqu'à ce que vous ayez repéré le dossier
+\t \trecherché.
+
+\to\tEntrez le \d(chemin d'accès) au dossier de votre choix.
+
+^1^Création d'objets partagés locaux
+^$70
+Création d'objets partagés locaux
+
+Remarque : Pour pouvoir créer des objets partagés locaux, vous devez
+avoir \k(l'autorisation de rendre disponibles des dossiers/fichiers locaux^dtadmin/user.hlp^Présentation des autorisations).
+
+La création d'un objet partagé local sert à permettre à des
+utilisateurs et à des systèmes à distance d'accéder aux fichiers et
+aux dossiers situés sur votre système.
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Partage_fichiers. La fenêtre "Configuration
+  \tdu partage de fichiers" s'affiche (et s'applique aux objets
+  \tpartagés à distance ou locaux, selon le type de vue sélectionné en
+  \tdernier).
+
+4.\tCliquez sur Actions=>Statut. La
+  \t\k(fenêtre "Partage de fichiers : Statut"^^Fenêtre Partage de fichiers : statut) s'affiche.
+
+5.\tVérifiez que NFS est en cours d'exécution. Si ce n'est pas le cas,
+  \tcliquez sur Lancer NFS. Lorsque NFS est démarré, un message
+  \ts'affiche et le bouton Lancer NFS apparaît en grisé.
+
+  \tRemarque : le démarrage de NFS dure parfois quelques minutes.
+
+6.\tCliquez sur Annuler dans la fenêtre "Partage de fichiers : Statut".
+
+7.\tCliquez sur Montrer=>Local afin de visualiser les objets partagés
+  \tlocaux. Pour pouvoir \d(mettre à disposition) un objet partagé, vous
+  \tdevez d'abord\tafficher une vue locale.
+
+8.\tCliquez sur Objet partagé=>Nouveau. La fenêtre "Partage de
+  \tfichiers : Ajout d'un nouvel objet partagé - Local" s'affiche ;
+  \telle comporte les champs suivants :
+
+  \to\tDossier/fichier à partager : - Cliquez sur Trouver. La
+  \t \t\k(fenêtre "Partage de fichiers : Objet partagé"^^Fenêtre Partage de fichiers : objet partagé) s'affiche et
+  \t \tindique les fichiers et dossiers figurant dans votre
+  \t \t\d(dossier d'origine^répertoire privé).
+
+  \t \tEffectuez l'une des opérations suivantes :
+
+  \t \t-\tCliquez dans la liste Dossier(s) sur un nom de dossier ou sur
+  \t \t \tle dossier parent jusqu'à ce que vous ayez repéré le dossier
+\t \t \trecherché.
+
+  \t \t-\tEntrez le \d(chemin d'accès) au dossier de votre choix.
+
+  \to\tNom d'icône : - Entrez le nom que vous souhaitez attribuer à
+  \t \tl'objet partagé. Par défaut, le système reprend le nom du
+  \t \tdossier/fichier entré dans le champ Dossier/Fichier à partager.
+
+  \to\tRendre disponible lors du lancement de NFS ? - Cliquez sur Oui
+  \t \tsi vous voulez que l'objet partagé soit disponible à présent et
+  \t \tlors de chaque lancement de NFS, ou sur Non si vous voulez qu'il
+  \t \tsoit disponible uniquement au moment présent (de façon
+  \t \tautomatique lors du redémarrage du système).
+
+  \to\tPour rendre disponible sous : - Cliquez sur l'une des options
+  \t \tsuivantes :
+
+  \t \t-\tLecture seulement - Pour permettre à d'autres systèmes
+\t \t \td'utiliser l'objet partagé, sans pouvoir le modifier.
+
+  \t \t-\tLecture et écriture : pour permettre l'accès aux objets
+  \t \t \tpartagés sans aucune restriction.
+
+  \t \t-\tPas d'accès : pour que l'accès soit réservé exclusivement
+\t \t \taux systèmes figurant dans la liste Exceptions.
+
+\t \t \tDans le champ Exceptions : Nom du système, entrez le nom du ou
+\t \t \tdes systèmes avec lesquels vous souhaitez partager des
+\t \t \tobjets. (Vous pouvez également cliquer sur Consulter afin
+\t \t \td'afficher la \k(fenêtre "Consulter système à distance"^^Fenêtre Consultation du système à distance).
+
+  \t \t \tCliquez ensuite sur Insérer lecture seulement ou Insérer
+  \t \t \tlecture et écriture afin d'enrichir la liste Exceptions.
+
+  \t \t \tRemarque : pour supprimer un système de la liste Exceptions,
+  \t \t \tcliquez sur son nom puis sur Supprimer. Pour supprimer
+  \t \t \tl'ensemble des systèmes répertoriés dans cette liste, cliquez
+  \t \t \tsur Supprimer tout.
+
+   \to\tOptions étendues : - Cliquez sur cette case afin d'afficher les
+   \t \toptions supplémentaires suivantes :
+
+  \t \t-\tAutres options de ligne de commande - Entrez les options de
+  \t \t \tligne de commande associées à share. Pour plus d'informations
+  \t \t \tsur les options de ligne de commande, consultez
+  \t \t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+9.\tCliquez sur Ajouter. Une icône représentant l'objet partagé local
+  \ts'affiche dans la fenêtre "Configuration du partage de fichiers :
+  \tObjets partagés locaux".
+
+  \tRemarque : si vous ne voulez pas ajouter cet objet partagé,
+  \tcliquez sur Annuler.
+
+Voir également :
+\s(Utilisation de la fonction Partage de fichiers^dhelp "pe.fr" ownerhb "Partage des fichiers et des dossiers à distance" "Utilisation de la fonction Partage de fichiers" || helpLinkErr)
+\s{Introduction à l'administration du système de fichiers NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Fenêtre Partage de fichiers : statut
+^$80
+Fenêtre Partage de fichiers : statut
+
+La fenêtre "Partage de fichiers : Statut" indique si :
+
+\to\tNFS est en cours d'exécution.
+
+\to\tLe système est prêt à \d(mettre à disposition) ou \d(connecter)
+\t \tles fichiers.
+
+\to\tParmi vos \d(objets partagés^objet partagé) locaux, certains
+\t \tsont utilisés par des systèmes à distance (si c'est le cas, le
+\t \tBureau les affiche dans la fenêtre au niveau de la zone de liste
+\t \tDossier/fichier local).
+
+Pour démarrer NFS, cliquez sur Lancer NFS.
+
+Pour arrêter NFS, cliquez sur \k(Arrêter NFS^^Fenêtre Arrêter NFS).
+
+Voir également :
+\s{Introduction à l'administration du système de fichiers NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Fenêtre Arrêter NFS
+^$85
+Fenêtre Arrêter NFS
+
+Assurez-vous que vous voulez réellement arrêter NFS sur votre système.
+
+Lorsque vous arrêtez NFS, le système déconnecte tous les objets
+partagés à distance, et les systèmes à distance ne peuvent plus
+accéder à aucun \d(objet partagé^objet partagé) local. Cette
+opération dure parfois plusieurs minutes.
+
+Si vous voulez réellement arrêter NFS, cliquez sur Arrêter NFS dans la
+fenêtre de message. Sinon, cliquez sur Annuler dans cette même
+fenêtre.
+
+Voir également :
+\s{Introduction à l'administration du système de fichiers NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+
+^2^Connexions logiques et physiques
+^$90
+Connexions logiques et physiques
+
+Si vous ne voulez en aucun cas perdre les informations que vous
+écrivez sur le système à distance, utilisez exclusivement une
+connexion physique.
+
+En cas de déconnexion, ce type de connexion oblige votre système à
+attendre que l'objet partagé à distance soit reconnecté. En fait, tant
+que la connexion n'est pas rétablie, le système reste bloqué et n'est
+pas exploitable. Au contraire, dans le cas d'une connexion logique, si
+le système à distance ne répond pas au terme d'un bref délai,
+l'opération d'écriture échoue et votre système redevient exploitable.
+Vous devrez donc sauvegarder vos données localement et essayer de les
+renvoyer ultérieurement au système à distance.
+
+^2^Fenêtre Partage de fichiers : objet partagé
+^$100
+Fenêtre Partage de fichiers : objet partagé
+
+Cette fenêtre affiche une liste d'\d(objets partagés^objet partagé)
+disponibles. Pour vous déplacer au sein de cette liste, utilisez la
+barre de défilement. Cliquez sur l'objet partagé de votre choix. Le
+système complète le champ Dossier/fichier à partager : figurant dans
+la fenêtre "Partage de fichiers : Ajout d'un nouvel objet partagé".
+
+
+^1^Visualisation et modification des caractéristiques des objets partagés à distance
+^$120
+Visualisation et modification des caractéristiques des objets partagés à distance
+
+Pour afficher ou modifier des propriétés \d(objet partagé) à
+distance, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Partage_fichiers. La fenêtre "Configuration
+  \tdu partage de fichiers" s'affiche (et s'applique aux objets
+  \tpartagés à distance ou locaux, selon le type de vue sélectionné en
+  \tdernier).
+
+  \tSi la vue est paramétrée pour les objets partagés à distance,
+  \tpassez à l'étape 5. Si elle est paramétrée pour les objets
+  \tpartagés locaux, passez à l'étape suivante.
+
+4.\tCliquez sur Afficher=>A distance. La fenêtre "Configuration du
+  \tpartage de fichiers : Objets partagés à distance" s'affiche.
+
+5.\tCliquez sur l'objet partagé de votre choix.
+
+6.\tCliquez sur Objet partagé=>Propriétés. La fenêtre "Partage de
+  \tfichiers : Propriétés d'un objet partagé - A distance" s'affiche ;
+  \telle comprend les champs suivants :
+
+  \to\tNom du système à distance : - Affiche le nom du système sur
+  \t \tlequel réside l'objet partagé.
+
+  \to\tNom d'icône : - Affiche le nom de l'icône représentant l'objet
+  \t \tpartagé sélectionné.
+
+  \to\tObjet partagé à connecter : - Affiche le
+  \t \t\d(chemin d'accès^chemin d'accès) complet à l'objet partagé
+  \t \tsélectionné.
+
+  \to\tEtablir connexion depuis dossier local : - Affiche le nom du
+  \t \tdossier situé sur votre système, dans lequel se trouve l'objet
+  \t \tpartagé.
+
+  \to\tConnecter objet partagé sous : - Si vous avez sélectionné
+  \t \tl'option Lecture seulement, vous pouvez utiliser l'objet
+  \t \tpartagé, sans être autorisé à y effectuer aucune modification.
+  \t \tSi l'option Lecture et écriture est sélectionnée, vous pouvez
+  \t \taccéder à l'objet partagé sans aucune restriction, y compris le
+  \t \tmodifier (à condition que le système à distance permette de
+  \t \tdisposer de l'objet partagé en mode Lecture et écriture).
+
+  \to\tConnecter lors du lancement de NFS ? - Si Oui est sélectionné, le
+  \t \tsystème se connecte à l'objet partagé lors de chaque lancement de
+  \t \tNFS.  Si Non est sélectionné, le système ne se connecte pas
+  \t \tautomatiquement à cet objet lors de chaque lancement de NFS.
+
+  \to\tOptions étendues : - Cliquez sur cette option pour afficher les
+  \t \toptions supplémentaires suivantes :
+
+  \t \t-\tType de connexion : - Indique s'il s'agit d'une
+  \t \t \t\k(connexion logique ou physique^^Connexions logiques et physiques).
+
+  \t \t-\tAutres options au niveau de la ligne de commande - Affiche les
+  \t \t \toptions de la ligne de commande pouvant être associées à la
+  \t \t \tcommande mount (1M).
+
+7.  Effectuez les modifications éventuellement requises et cliquez sur
+    Appliquer, ou sur Annuler afin de revenir sur la fenêtre
+    "Configuration du partage de fichiers : Objets partagés à
+    distance" sans effectuer aucun changement.
+
+
+Voir également :
+\s(Utilisation de la fonction Partage de fichiers^dhelp "pe.fr" ownerhb "Partage des fichiers et des dossiers à distance" "Utilisation de la fonction Partage de fichiers" || helpLinkErr)
+\s{Introduction à l'administration du système de fichiers NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+
+^1^Visualisation et modification des caractéristiques des objets partagés locaux
+^$130
+Visualisation et modification des caractéristiques des objets partagés locaux
+
+Pour afficher ou modifier les propriétés \d(objet partagé) locales,
+procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Partage_fichiers. La fenêtre "Configuration
+  \tdu partage de fichiers" s'affiche (et s'applique aux objets
+  \tpartagés à distance ou locaux, selon le type de vue sélectionné en
+  \tdernier).
+
+  \tSi la vue est paramétrée pour les objets partagés locaux, passez à
+  \tl'étape 5.  Si elle est paramétrée pour les objets partagés à
+  \tdistance, passez à l'étape suivante.
+
+4.\tCliquez sur Afficher=Local. La fenêtre "Configuration du partage
+  \tde fichiers : Objets partagés locaux" s'affiche.
+
+5.\tCliquez sur l'objet partagé de votre choix.
+
+6.\tCliquez sur Objet partagé=>Propriétés. La fenêtre "Partage de
+  \tfichiers : Propriétés d'un objet partagé - Local" s'affiche ; elle
+  \tcomprend les champs suivants :
+
+  \to\tDossier/fichier à partager : - Affiche le nom du fichier ou du
+  \t \tdossier que vous partagez avec d'autres systèmes.
+
+  \to\tNom d'icône : - Affiche le nom de l'icône représentant l'objet
+  \t \tpartagé.
+
+  \to\tRendre disponible lors du lancement de NFS ? - Si l'option Oui
+  \t \test sélectionnée, le système rend disponible l'objet partagé
+  \t \tchaque fois que vous lancez NFS. Si l'option Non est
+  \t \tsélectionnée, le système n'effectue pas cette opération de façon
+  \t \tautomatique.
+
+  \to\tPour rendre disponible sous - Si l'option Lecture seulement est
+  \t \tsélectionnée, les autres systèmes peuvent utiliser l'objet
+  \t \tpartagé, mais ne peuvent y apporter aucune modification. Si
+  \t \tl'option Lecture et écriture est sélectionnée, les autres
+  \t \tsystèmes peuvent accéder aux objets partagés sans aucune
+  \t \trestriction. Si l'option Pas d'accès est sélectionnée, seuls les
+  \t \tsystèmes figurant dans la liste Exceptions peuvent accéder à
+  \t \tl'objet partagé.
+
+  \to\tOptions étendues : - Cliquez sur cette option pour afficher les
+  \t \toptions supplémentaires suivantes :
+
+  \t \t-\tAutres options de ligne de commande - Entrez les options de
+  \t \t \tligne de commande associées à share(1M). Pour plus
+  \t \t \td'informations sur les options de ligne de commande, consultez
+  \t \t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+7.\tEffectuez les modifications éventuellement requises et cliquez sur
+  \tAppliquer, ou sur Annuler pour revenir sur la fenêtre
+  \t"Configuration du partage de fichiers : Objets partagés locaux"
+  \tsans effectuer aucun changement.
+
+Voir également :
+\s(Utilisation de la fonction Partage de fichiers^dhelp "pe.fr" ownerhb "Partage des fichiers et des dossiers à distance" "Utilisation de la fonction Partage de fichiers" || helpLinkErr)
+\s{Introduction à l'administration du système de fichiers NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Déconnexion et suppression des objets partagés à distance
+^$140
+Déconnexion et suppression des objets partagés à distance
+
+Pour déconnecter ou supprimer un \d(objet partagé) à distance,
+procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Partage_fichiers. La fenêtre "Configuration
+  \tdu partage de fichiers" s'affiche (et s'applique aux objets
+  \tpartagés à distance ou locaux, selon le type de vue sélectionné en
+  \tdernier).
+
+  \tSi la vue est paramétrée pour les objets partagés à distance,
+  \tpassez à l'étape 5. Si elle est paramétrée pour les objets
+  \tpartagés locaux, passez à l'étape suivante.
+
+4.\tCliquez sur Afficher=>A distance. La fenêtre "Configuration du
+  \tpartage de fichiers : Objets partagés à distance" s'affiche.
+
+5.\tCliquez sur l'objet partagé connecté que vous voulez déconnecter
+  \tou supprimer.
+
+6.\tEffectuez l'une des opérations suivantes :
+
+  \to\tPour déconnecter - Cliquez sur Actions=>Déconnecter.
+
+  \t \tL'objet partagé sélectionné n'est plus connecté. En d'autres
+  \t \ttermes, vous ne pouvez plus utiliser les fichiers qui lui sont
+  \t \tassociés. Cependant, l'objet partagé reste présent dans la
+  \t \tfenêtre, prêt à être reconnecté lors du prochain lancement de
+  \t \tNFS.
+
+  \to\tPour supprimer - Cliquez sur Objet partagé=>Supprimer.
+
+  \t \tUne \k(fenêtre de confirmation^^Fenêtre Confirmation de la suppression) s'affiche. Cliquez dans cette
+  \t \tfenêtre sur l'option Supprimer si vous voulez que l'objet
+  \t \tpartagé ne soit plus disponible sur votre système et en soit
+  \t \tdéfinitivement supprimé. Cliquez sur Annuler si vous ne voulez
+  \t \tpas supprimer définitivement cet objet.
+
+Voir également :
+\s(Utilisation de la fonction Partage de fichiers^dhelp "pe.fr" ownerhb "Partage des fichiers et des dossiers à distance" "Utilisation de la fonction Partage de fichiers" || helpLinkErr)
+\s{Introduction à l'administration du système de fichiers NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Non-mise à disposition et suppression des objets partagés locaux
+^$150
+Non-mise à disposition et suppression des objets partagés locaux
+
+Remarque : avant de rendre indisponible un \d(objet partagé) local
+ou de le supprime, vérifiez que cet objet partagé n'est pas en cours
+d'utilisation. La fenêtre \k("Partage de fichiers : Statut"^^Fenêtre Partage de fichiers : statut) affiche tous
+les systèmes à distance connectés à l'objet partagé. Si un système à
+distance utilise l'objet partagé, assurez-vous auprès de
+l'administrateur ou du propriétaire du système que vous pouvez
+déconnecter le système sans créer d'incident.
+
+Pour rendre indisponible un objet partagé local ou pour le supprimer,
+procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Partage_fichiers. La fenêtre "Configuration
+  \tdu partage de fichiers" s'affiche (et s'applique aux objets
+  \tpartagés à distance ou locaux, selon le type de vue sélectionné en
+  \tdernier).
+
+  \tSi la vue est paramétrée pour les objets partagés locaux, passez à
+  \tl'étape 5.  Si elle est paramétrée pour les objets partagés à
+  \tdistance, passez à l'étape suivante.
+
+4.\tCliquez sur Afficher=Local. La fenêtre "Configuration du partage
+  \tde fichiers : Objets partagés à distance" s'affiche.
+
+5.\tCliquez sur l'objet partagé disponible que vous voulez rendre
+  \tindisponible ou supprimer.
+
+6.\tEffectuez l'une des opérations suivantes :
+
+  \to\tPour rendre indisponible - Cliquez sur Actions=>Rendre indisponible
+
+  \t \tL'objet partagé sélectionné n'est plus disponible. En d'autres
+  \t \ttermes, les systèmes à distance ne peuvent plus accéder à ce
+  \t \tfichier.  Cependant, l'objet partagé reste présent dans la
+  \t \tfenêtre, prêt à être de nouveau disponible lors du prochain
+  \t \tlancement de NFS.
+
+  \to\tPour supprimer - Cliquez sur Objet partagé=>Supprimer.
+
+  \t \tUne \k(fenêtre de confirmation^^Fenêtre Confirmation de la suppression) s'affiche. Cliquez dans cette
+  \t \tfenêtre sur l'option Supprimer si vous voulez que l'objet
+  \t \tpartagé ne soit plus disponible et soit définitivement supprimé
+  \t \tde la fenêtre "Partage de fichiers". Cliquez sur Annuler si vous
+  \t \tne voulez pas supprimer définitivement cet objet.
+
+Voir également :
+\s(Utilisation de la fonction Partage de fichiers^dhelp "pe.fr" ownerhb "Partage des fichiers et des dossiers à distance" "Utilisation de la fonction Partage de fichiers" || helpLinkErr)
+\s{Introduction à l'administration du système de fichiers NFS (Network File System)^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Fenêtre Confirmation de la suppression
+^$160
+Fenêtre Confirmation de la suppression
+
+Assurez-vous que vous voulez supprimer définitivement l'objet partagé
+de la fenêtre "Partage de fichiers". Remarque : le système ne supprime
+pas les fichiers associés à l'objet partagé, il supprime uniquement la
+possibilité pour les systèmes à distance d'accéder à ces fichiers.
+
+Si vous ne voulez pas supprimer l'objet partagé, cliquez sur Annuler,
+et aucun objet ne sera supprimé. Sinon, cliquez sur Supprimer pour
+procéder à la suppression.
+
+
+

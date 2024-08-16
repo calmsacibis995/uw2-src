@@ -1,0 +1,1474 @@
+^*version^1
+^*title^Printer Setup
+^:Printer_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Setting up printers
+^0^Printer Setup
+^$10
+Printer Setup
+
+Use Printer Setup to add, delete, share, control, or change properties
+of printers.
+
+  o  \k(Add a local printer^^Adding a Local Printer) (\d(serial^serial printer) or \d(parallel^parallel printer))
+  o  \k(Add a remote UNIX system printer^^Adding a Remote UNIX Printer)
+  o  \k(Add a remote NetWare printer^^Adding a Remote NetWare Printer)
+  o  \k(Assign a default printer^^Assigning a Default Printer)
+  o  \k(Change the properties of a printer^^Changing Printer Properties)
+  o  \k(Connect a local printer to a NetWare print server^^Connecting a Local Printer to a NetWare Print Server)
+  o  \k(Control local and remote printers^^Controlling a Printer)
+
+  o  \k(Delete a printer^^Deleting a Printer)
+  o  \k(Disconnect a local printer from a NetWare print server^^Disconnecting a Local Printer from a NetWare Print Server)
+  o  \k(Copy a printer icon to a folder^^Copying a Printer Icon to a Folder)
+  o  \k(Set access for local users^^Setting Access for Local Users)
+  o  \k(Set access for remote users^^Setting Access for Remote Systems)
+  o  \k(View printer properties^^Viewing Printer Properties)
+
+For information on printing a file, checking print requests, and
+changing print requests, see \k(Using Your Printer^dtadmin/printuse.hlp^Using Your Printer).
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Adding a Local Printer
+^$20
+Adding a Local Printer
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to add a local printer to your system.
+
+To add a local printer to your system, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on Printer=>Add Local Printer. The Printer Setup: Add Local
+    Printer window appears.
+
+    The Printer Setup: Add Local Printer window appears with
+    the following fields and options:
+
+    o  Printer Name - Type in the name you want to use for the
+       local printer attached to your system.
+
+    o  Printer - Use the scroll bar to move up and down through
+       the list of printer types; click on the printer type that 
+       matches your printer.
+
+    o  Connection Type - Click on \d(Serial^serial printer) or \d(Parallel^parallel printer) based on
+       which type of port the printer is connected to.
+
+       Note: When you connect a printer directly to your computer,
+       the cables and connectors use either a serial or a parallel
+       interface. If you are not sure if your printer is a
+       serial or parallel printer, check the manual that came
+       with your printer. 
+
+       If you select Serial, click on Serial Configuration
+       to set the options for the following:
+
+       - Baud Rate - Click on the speed that matches the speed
+         of your printer. By default, this field is set to 9600.
+
+       - Parity - Click on the appropriate parity. The system uses
+         \d(parity) for error checking.  By default, this field is
+         set to None.
+
+       - Stop Bits - Click on the desired stop bits. By default, this
+         field is set to 1.
+
+       - Character Size - Click on the appropriate character size.
+         By default, this field is set to 8.
+
+    o  Port - If you are adding a serial printer, click on
+       COM1, COM2, or Other. If you select Other
+
+       If you are adding a parallel printer, click on LPT1, LPT2,
+       or Other. If you select Other, a Device text box appears. Type in
+       the \d(path) of the device that the printer is connected to.
+  
+    o  Send Mail if Printer Fails - Click on Yes if you want to
+       receive an electronic mail message if the printer fails, or
+       click on No if you do not want to receive an electronic mail
+       message if the printer fails.
+
+    o  Print Banner Page by Default - Click on Yes if you want the
+       system to print a banner page by default, or click on No if
+       you do not want the system to print a banner page by default.
+
+    o  Allow Banner Page Override - Click on Yes if you want other users
+       to be able to override the banner page default, or click on
+       No if you do not want users to be able to override the banner
+       page default.
+
+    o  Optional Configuration - Click on this button if you
+       want to set these additional options for your printer:
+
+       - Page Length
+       - Page Width
+       - Character Pitch
+       - Line Pitch
+
+       Each of these options has a numerical value and a unit value.
+       You can select a unit value in inches, centimeters, or
+       characters.
+
+3.  Click on OK. An icon for the printer appears in the
+    Printer Setup window. 
+
+    Note: You can also click on Reset to change all the options
+    back to their original settings, or Cancel to dismiss this
+    window without adding the printer.
+
+See also:
+\k(Copying a Printer Icon to a Folder) 
+\k(Using the Printer Setup Toolbar)
+
+^1^Adding a Remote UNIX Printer
+^$30
+Adding a Remote UNIX Printer
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to add a remote printer to your system.
+
+To set up access to a remote UNIX printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on Printer=>Add UNIX Printer. The Printer Setup: Add Remote
+    UNIX Printer window appears with the following fields and options:
+
+    o  Printer Name - Type in the name of the remote UNIX printer
+       that you want to access.
+
+    o  Type - Click on the appropriate printer type.
+
+    o  Remote Operating System Type - Click on the System V or
+       BSD (if you are not sure, ask the system administrator for
+       the remote system). 
+
+    o  Remote System - If your system is not configured for \k(DNS^dtadmin/inet.hlp^Accessing DNS) and \k(NIS^dtadmin/inet.hlp^Accessing NIS),
+       this option displays only the Systems List (/etc/hosts).
+
+       If your system is configured for DNS and NIS, this option displays three
+       columns of top-level remote systems to choose from: Domain Name Server,
+       Networking Information Service, and Systems List.
+
+       Click on the desired system.
+
+       Note: When you click on a domain, any sub-domains under
+       that domain appear in the box to its right. From here, you
+       can click on the desired sub-domain, and if this sub-domain
+       has sub-domains, they appear in the box to its right. Continue
+       clicking on the sub-domains until you locate the desired system
+       name.
+
+       The system displays only two columns, or boxes, at time. To
+       view additional boxes, use the scroll bar on top of the boxes
+       to move to the left or right.
+
+    o  Remote Printer Name - Type in the name of the remote printer.
+
+    o  Print Banner Page by Default - Click on Yes if you want the
+       system to print a banner page by default, or click on No if
+       you do not want the system to print a banner page by default.
+
+    o  Allow Banner Page Override - Click on Yes if you want other users
+       to be able to override the banner page default, or click on
+       No if you do not want users to be able to override the banner
+       page default.
+
+3.  Click on OK. An icon for the printer appears in the Printer Setup
+    window.
+
+    Note: You can also click on Reset to change all the options
+    back to their original settings, or Cancel to dismiss this
+    window without adding the printer.
+
+See also:
+\k(Copying a Printer Icon to a Folder) 
+\k(Using the Printer Setup Toolbar)
+
+^1^Adding a Remote NetWare Printer
+^$40
+Adding a Remote NetWare Printer
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to add a remote NetWare printer to your system.
+
+To set up a queue to access a NetWare printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on Printer=>Add NetWare Printer. The Printer Setup: Add NetWare
+    Printer window appears with the following fields and options:
+
+    o  Printer Name - Type in the name of the NetWare printer
+       that you want to access.
+
+    o  Type - Click on the appropriate printer type.
+
+    o  NetWare Server - Click on the desired server in the File
+       Server list. The server name appears in this field, and 
+       a list of printers available for that server appear in the
+       Printers list to the right. 
+
+    o  Printers - Click on the printer you want to access. The
+       printer name appears in the NetWare Printer field.
+
+    o  Print Banner Page by Default - Click on Yes if you want the
+       system to print a banner page by default, or click on No if
+       you do not want the system to print a banner page by default.
+
+    o  Allow Banner Page Override - Click on Yes if you want other users
+       to be able to override the banner page default, or click on
+       No if you do not want users to be able to override the banner
+       page default.
+
+    o  Send Form Feed by Default - Click on Yes if you want 
+       enable form feed at the end of a print job, or No if you
+       you do not want to enable form feed at the end of a print
+       job.
+
+       Enabling form feed ensures that the next job starts
+       at the top of the page.
+
+       Note: If an application automatically enables form
+       feed at the end of a file, adding this option causes
+       the printer to feed a blank sheet of paper before the next
+       job starts printing.
+
+    o  Allow Form Feed Override - Click on Yes if you want other users
+       to be able to override the form feed default, or click on
+       No if you do not want users to be able to override the form
+       feed default.
+
+3.  Click on OK to add the printer and apply the selected options.
+
+    Note: You can also click on Reset to change all the options
+    back to their original settings, or Cancel to dismiss this
+    window without adding the printer.
+
+See also:
+\k(Copying a Printer Icon to a Folder) 
+\k(Using the Printer Setup Toolbar)
+
+^1^Deleting a Printer
+^$50
+Deleting a Printer
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to delete a printer from your system.
+
+To delete a printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folders.
+    The \k(Printer Setup window^^Printer Setup Window appears).
+
+2.  Click on the printer icon that you want to delete.
+
+3.  Click on Printer=>Delete. The system removes the printer icon
+    from the Printer Setup window.
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Viewing Printer Properties
+^$60
+^1^Viewing Printer Properties
+
+To view the properties of a printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that you want view.
+
+3.  Click on Printer=>Properties. The Printer Setup: Properties window
+    appears.
+
+4.  See the following for a description of the fields and options
+    for each type of printer:
+
+    o  For a local printer (either serial and remote), see
+       Step 2 of \k(Adding a Local Printer).
+
+    o  For a remote UNIX printer, see Step 2 of
+       \k(Adding a Remote UNIX Printer).
+
+    o  For a remote NetWare printer, see Step 2 of
+       \k(Adding a Remote NetWare Printer). 
+
+5.  Click on Cancel to dismiss the window.
+
+^1^Changing Printer Properties
+^$70
+Changing Printer Properties
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to change printer properties.
+
+To change the properties of a printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that you want to make changes to.
+
+3.  Click on Printer=>Properties. The Printer Setup: Properties window
+    appears.
+
+4.  Make the desired changes. See the following for details on the
+    fields and options available for each type of printer:
+
+    o  For a local printer (either serial and remote), see
+       Step 2 of \k(Adding a Local Printer).
+
+    o  For a remote UNIX printer, see Step 2 of
+       \k(Adding a Remote UNIX Printer).
+
+    o  For a remote NetWare printer, see Step 2 of
+       \k(Adding a Remote NetWare Printer). 
+
+5.  Click on OK to apply the changes.
+
+    Note: You can also click on Reset to go back to the previous changes,
+    or Cancel to dismiss the window without making any changes.
+
+See also:
+\k(Using the Printer Setup Toolbar) 
+
+^1^Assigning a Default Printer
+^$80
+Assigning a Default Printer
+
+If you have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions),
+you can make one of your printers a default printer. That is,
+print jobs will automatically go to this printer if you select
+the print option from within an application without specifying a 
+printer, or you choose File=>Print from within a folder window.
+
+To assign a default printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that you want to make the default
+    printer.
+
+3.  Click on Printer=>Make Default. The currently selected printer
+    is now your default printer.
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Connecting a Local Printer to a NetWare Print Server  
+^$90
+Connecting a Local Printer to a NetWare Print Server  
+
+If you have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions), you can connect a local printer to a NetWare print server.
+
+To connect a local printer to a NetWare print server, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that represents the local printer you
+    want to connect.
+
+3.  Click on Printer=>NPrinter. The Printer Setup: NetWare Print Server
+    Connections Status window appears with the following message: 
+
+    <Printer Name> is not connected. Do you want to connect?
+
+4.  Click on Yes. The Printer Setup: Connect Local Printer to
+    NetWare Print Server window appears. 
+
+5.  Click on the desired system in the File Servers list. The print
+    servers available for that system appear to the right in the
+    Print Server list.
+
+6.  Click on the desired print server. The printers available on that
+    server appear in the Printer Name box to the right.
+
+7.  Click on the desired printer name.
+
+8.  Click on OK. The printer can now service print requests from
+    the NetWare Print Queue.
+
+    The message in the Printer Setup: NetWare Print Server Connection
+    Status window now displays the following information: 
+
+    <Printer Name> is connected to NetWare Print Server <PrintServername>
+    as Remote Printer <NetWarePrinterName> 
+
+    Note: You can also click on Cancel to dismiss the window
+    without connecting the printer.
+
+See also:
+\k(Disconnecting a Local Printer from a NetWare Print Server)
+\k(Using the Printer Setup Toolbar)
+
+^1^Disconnecting a Local Printer from a NetWare Print Server
+^$100
+Disconnecting a Local Printer from a NetWare Print Server
+
+If you have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions), you can disconnect a local printer from a NetWare print server.
+
+To disconnect a local printer from a NetWare Print server, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that represents the local printer you want
+    to disconnect.
+
+3.  Click on NPrinter in the \k(Action Area).
+    The Printer Setup: NetWare Print Server Connections Status window
+    appears the following message:
+
+    <Printer Name> is connected to NetWare Print Server <PrintServername>
+    as Remote Printer <NetWarePrinterName> 
+
+    Do you want to disconnect?
+
+4.  Click on Yes. The window changes to display the following 
+    information:
+
+    <Printer Name> is not connected to a NetWare Server.
+
+    Note: You can also click on Cancel to dismiss the window
+    without connecting the printer.
+
+See also:
+\k(Connecting a Local Printer to a NetWare Print Server)
+\k(Using the Printer Setup Toolbar)
+
+^2^Printer Setup: NetWare Print Server Connections Status Window
+^$110
+Printer Setup: NetWare Print Server Connections Status Window
+
+If your local printer is connected to a NetWare Server, this window
+displays a message like the following:
+
+       <PrinterName> is connected to NetWare Print
+       Server <PrintServerName> as Remote Printer <NWPrinterName>
+
+       Do you want to disconnect?
+
+Click on Yes if you want to disconnect the printer, or No if you
+do not want to disconnect the printer.
+
+If your local printer is not connected to a NetWare Server, this window
+displays the following message:
+
+       <PrinterName> is not connected to a NetWare Print Server.
+
+       Do you want to connect?
+
+Click on Yes if you want to connect the printer, or No if you
+do not want to connect the printer.
+
+See also:
+\k(Disconnecting a Printer from a NetWare Print Server)
+\k(Connecting a Printer to a NetWare Print Server)
+
+^1^Setting Access for Remote Systems
+^$120
+Setting Access for Remote Systems
+
+You must have \k(Administer Printers permission^dtadmin/user.hlp^Understanding Permissions) to set up
+access to local printers for remote systems.
+
+To set up access to local printers for remote systems, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the local printer you
+    want to set up for access by remote systems.
+
+3.  Click on Printer=>Set Remote Access. The Printer Setup: Set Remote
+    Access window appears. The box in the left-hand corner displays the
+    available domains.
+
+    Note: When you click on a domain, any sub-domains under
+    that domain appear in the box to its right. From here, you
+    can click on the desired sub-domain, and if this sub-domain
+    has sub-domains, they appear in the box to its right. Continue
+    clicking on the sub-domains until you locate the desired system
+    name.
+
+    The system displays only two columns, or boxes, at time. To
+    view additional boxes, use the scroll bar on top of the boxes
+    to move to the left or right.
+
+4.  Set or deny access to the remote printer as follows:
+
+    Note: To select multiple systems, press and hold down Ctrl
+    while clicking on the left mouse button.  
+
+    o  Click on Allow All Systems Except, click on the desired
+       system(s) in the multi-column browser, then click on Add.
+       The selected system(s) move to the list in the box to the
+       right.
+
+       All systems except those added to the list have access
+       to the remote printer.
+
+    o  Click on Deny All Systems Except, click on the desired
+       system(s) in the multi-column browser, then click on Add.
+       The selected system(s) move to the list in the box to the
+       right.
+
+       All systems except those added to the list are denied access
+       to the remote printer.
+
+    Remove systems as follows:
+
+    o  Click on the desired system(s), then click on Remove (to delete
+       the selected systems(s) or Remove All (to delete all the systems).
+
+5.  Click on OK. The printer is now set up for access by remote users.
+
+    Note: You can also click on Cancel if you decide not to set
+    up remote access.
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Setting Access for Local Users
+^$130
+Setting Access for Local Users
+
+You must have \k(Administer Printers permission^dtadmin/user.hlp^Understanding Permissions) to set up
+access for local users.
+
+When you first set up a printer, all users are granted access to
+that printer. You can control access by local users to local or
+remote printers by doing the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the printer that
+    you want to allow or deny access to.
+
+3.  Click on Printer=>Set User Access. The Printer Setup: Set User Access
+    window appears.
+
+4.  Allow or deny access as follows:
+
+    Note: To select multiple users, press and hold down Ctrl
+    while clicking on the left mouse button.  
+
+    o  To allow access, click on the desired user(s), then click
+       on Allow. The user(s) move to the Allow List.
+
+    o  To deny access, click on the desired user(s), then click
+       on Deny. The user(s) move to the Deny List.
+
+    o  To remove all users from the Allow List, click on Deny All.
+       The system moves all users from the Allow List to the Deny List.
+
+5.  Click on OK. 
+
+    Note: You can also click on Cancel if you decide not to set
+    up access for local users.
+
+See Also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Controlling a Printer
+^$140
+Controlling a Printer
+
+If you have \k(Administer Printers permission^dtadmin/user.hlp^Understanding Permissions), you can enable and disable both local and remote printers, as
+well as determine whether or not a printer will accept new
+print requests.
+
+Note: If you do not have Administer Printers permission, you can use the 
+following procedure to see if a printer is enabled or disabled, or if
+it is receiving print requests, but you cannot make any changes.
+
+To set the controls for a printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the printer that you want to
+    set controls for.
+
+3.  Click on Printer=>Control  The Printer Setup: Control Printer window
+    appears with the following fields and options:
+
+    o <Printer Name is Enabled/Disabled> - Displays the name of
+      the currently selected printer, and whether that printer is
+      enabled or disabled.
+
+    o  New Requests - Click on Accept if you want the printer
+       to accept new requests into the print queue, or Reject if
+       you do not want the printer to accept new requests into the
+       print queue.
+
+    o  Printer State - Click on Enabled if you want the printer
+       to print the jobs in the queue, or Disable if you want to
+       stop the printer from printing jobs in the queue.
+
+3.  Click on OK to apply the changes and go back to the Printer_Setup
+    window.
+
+    Note: You can also click on Reset to go back to the previous changes,
+    or Cancel to dismiss the window without making any changes.
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Copying a Printer Icon to a Folder
+^$150
+Copying a Printer Icon to a Folder 
+
+After you add a printer to your system, you may want to
+copy the printer icon to a folder for easier access. 
+
+To copy a printer icon to a folder, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the printer that you want to
+    copy.
+
+3.  Open the folder you want to copy the printer icon to.
+
+4.  \d(Drag-and-drop^drag-and-drop) the printer icon to the folder.
+
+You can also use the menu options to copy a printer icon to
+another folder. See \k(Printer Setup: Copy to Folder Window).
+
+
+^2^Printer Setup: Copy to Folder Window
+^$160
+Printer Setup: Copy to Folder Window
+ 
+To copy a printer icon to another folder using the menu options,
+do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the printer that you want to
+    copy.
+
+3.  Click on Printer=>Copy to Folder. The Printer Setup: Copy to Folder
+    window appears with the following fields:
+
+    Copy to: - Displays the name of the selected printer.
+
+    To: - Select the \d(path) to the desired folder by clicking
+    on the folder names in the multi-column browser. If a selected
+    folder has additional folders, these appear in the column to
+    the right. You can then click on a folder in this box. If you
+    click on a folder that has additional folders, a third box appears
+    to the right of this column.
+    You can continue clicking on folders until you reach the desired
+    path. To view the multiple columns, use the scroll bar at the
+    to move the boxes to the left and right.
+
+    Note: You can also type in the in the full \d(path) to the
+    desired folder in the Selection box.
+
+4.  Click on OK. The system copies the icon to the folder.
+
+^1^Using the Printer Setup Toolbar
+^$170
+Using the Printer Setup Toolbar
+
+The Printer Setup window has a toolbar that provides easier
+access to certain functions. Instead of accessing a function
+from a menu, you can just click on the toolbar button for
+that function.
+
+For example, if you want to delete the currently selected printer,
+instead of clicking on Printer=>Delete, you would simply click on
+the toolbar button for delete.
+
+You can access the following functions by clicking on the 
+toolbar buttons in the Printer Setup window:
+
+  o  Add - See \(kAdding Local Printer), \k(Adding a Remote UNIX Printer),
+     \k(Adding a Remote NetWare Printer) 
+  o  Update - See \k(Changing Printer Properties)
+  o  Delete - See \k(Deleting a Printer)
+  o  Make Default - See \k(Assigning a Default Printer)
+  o  Control - \k(Controlling a Printer)
+  o  Set User Access - See \k(Setting Access for Local Users)
+  o  Set Remote Access - See \k(Setting Access for Remote Systems)
+  o  Inst all - Installs all selected printers [DOUG- IS THIS RIGHT?]
+  o  NPrinter - See \k(Disconnecting a Printer from a NetWare Print Server),
+     \k(Connecting a Printer to a NetWare Print Server)
+  o  Help - Brings up online help for Printer Setup
+  o  Exit - Dismisses the Printer Setup window
+
+If you prefer not to see the toolbar, click on View=Hide Toolbar.
+If the toolbar is hidden and you want to see it, click on Show=>Toolbar.
+
+From smtp Tue Apr 12 14:01 MDT 1994
+Received: from summit.novell.com (usl.summit.novell.com) by ns.Novell.COM (4.1/SMI-4.1)
+	id AA20467; Tue, 12 Apr 94 14:01:29 MDT
+Received: from summit by summit.novell.com; Tue, 12 Apr 94 15:55 EDT
+Date: Tue, 12 Apr 94 15:55 EDT
+Message-Id: <9404121555.AA06302@summit.novell.com>
+From: djg@summit.novell.com
+To: doug_durfey@Novell.COM
+Subject: printer setup (again)
+Content-Length: 27052
+Content-Type: text/plain
+Original-Content-Type: 
+Status: RO
+
+
+Here's what I hope is the last draft (for now, anyway). Thanks
+for your help. We also have an editor coming in to proof and
+do some copy-editing on my help files, but this won't affect
+anything on the software side. 
+
+#ident	"@(#)prtsetup2:Printer_Setup.hlp	1.1"
+^*version^1
+^*title^Printer Setup
+^:Printer_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Setting up printers
+^0^Printer Setup
+^$10
+Printer Setup
+
+Use Printer Setup to add, delete, share, control, or change properties
+of printers.
+
+  o  \k(Add a local printer^^Adding a Local Printer) (\d(serial^serial printer) or \d(parallel^parallel printer))
+  o  \k(Add a remote UNIX system printer^^Adding a Remote UNIX Printer)
+  o  \k(Add a remote NetWare printer^^Adding a Remote NetWare Printer)
+  o  \k(Assign a default printer^^Assigning a Default Printer)
+  o  \k(Change the properties of a printer^^Changing Printer Properties)
+  o  \k(Connect a local printer to a NetWare print server^^Connecting a Local Printer to a NetWare Print Server)
+  o  \k(Control local and remote printers^^Controlling a Printer)
+
+  o  \k(Delete a printer^^Deleting a Printer)
+  o  \k(Disconnect a local printer from a NetWare print server^^Disconnecting a Local Printer from a NetWare Print Server)
+  o  \k(Copy a printer icon to a folder^^Copying a Printer Icon to a Folder)
+  o  \k(Set access for local users^^Setting Access for Local Users)
+  o  \k(Set access for remote users^^Setting Access for Remote Systems)
+  o  \k(View printer properties^^Viewing Printer Properties)
+
+For information on printing a file, checking print requests, and
+changing print requests, see \k(Using Your Printer^dtadmin/printuse.hlp^Using Your Printer).
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Adding a Local Printer
+^$20
+Adding a Local Printer
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to add a local printer to your system.
+
+To add a local printer to your system, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on Printer=>Add Local Printer. The Printer Setup: Add Local
+    Printer window appears.
+
+    The Printer Setup: Add Local Printer window appears with
+    the following fields and options:
+
+    o  Printer Name - Type in the name you want to use for the
+       local printer attached to your system.
+
+    o  Printer - Use the scroll bar to move up and down through
+       the list of printer types; click on the printer type that 
+       matches your printer.
+
+    o  Connection Type - Click on \d(Serial^serial printer) or \d(Parallel^parallel printer) based on
+       which type of port the printer is connected to.
+
+       Note: When you connect a printer directly to your computer,
+       the cables and connectors use either a serial or a parallel
+       interface. If you are not sure if your printer is a
+       serial or parallel printer, check the manual that came
+       with your printer. 
+
+       If you select Serial, click on Serial Configuration
+       to set the options for the following:
+
+       - Baud Rate - Click on the speed that matches the speed
+         of your printer. By default, this field is set to 9600.
+
+       - Parity - Click on the appropriate parity. The system uses
+         \d(parity) for error checking.  By default, this field is
+         set to None.
+
+       - Stop Bits - Click on the desired stop bits. By default, this
+         field is set to 1.
+
+       - Character Size - Click on the appropriate character size.
+         By default, this field is set to 8.
+
+    o  Port - If you are adding a serial printer, click on
+       COM1, COM2, or Other. If you are adding a parallel printer,
+       click on LPT1, LPT2, or Other.
+
+       If you select Other, a Device text box appears. Type in
+       the \d(path) of the device that the printer is connected to.
+  
+    o  Send Mail if Printer Fails - Click on Yes if you want to
+       receive an electronic mail message if the printer fails, or
+       click on No if you do not want to receive an electronic mail
+       message if the printer fails.
+
+    o  Print Banner Page by Default - Click on Yes if you want the
+       system to print a banner page by default, or click on No if
+       you do not want the system to print a banner page by default.
+
+    o  Allow Banner Page Override - Click on Yes if you want other users
+       to be able to override the banner page default, or click on
+       No if you do not want users to be able to override the banner
+       page default.
+
+    o  Optional Configuration - Click on this button if you
+       want to set these additional options for your printer:
+
+       - Page Length
+       - Page Width
+       - Character Pitch
+       - Line Pitch
+
+       Each of these options has a numerical value and a unit value.
+       You can select a unit value in inches, centimeters, or
+       characters.
+
+3.  Click on OK. An icon for the printer appears in the
+    Printer Setup window. 
+
+    Note: You can also click on Reset to change all the options
+    back to their original settings, or Cancel to dismiss this
+    window without adding the printer.
+
+See also:
+\k(Copying a Printer Icon to a Folder) 
+\k(Using the Printer Setup Toolbar)
+
+^1^Adding a Remote UNIX Printer
+^$30
+Adding a Remote UNIX Printer
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to add a remote printer to your system.
+
+To set up access to a remote UNIX printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on Printer=>Add UNIX Printer. The Printer Setup: Add Remote
+    UNIX Printer window appears with the following fields and options:
+
+    o  Printer Name - Type in the name of the remote UNIX printer
+       that you want to access.
+
+    o  Type - Click on the appropriate printer type.
+
+    o  Remote Operating System Type - Click on the System V or
+       BSD (if you are not sure, ask the system administrator for
+       the remote system). 
+
+    o  Remote System - If your system is not configured for \k(DNS^dtadmin/inet.hlp^Accessing DNS) and \k(NIS^dtadmin/inet.hlp^Accessing NIS),
+       this option displays only the Systems List (/etc/hosts).
+
+       If your system is configured for DNS and NIS, the box in the 
+       left-hand corner lists the available domains (Domain Name Server,
+       Networking Information Service, and Systems List).
+
+       Click on the desired system.
+
+       Note: When you click on a domain, any sub-domains under
+       that domain appear in the box to its right. From here, you
+       can click on the desired sub-domain, and if this sub-domain
+       has sub-domains, they appear in the box to its right. Continue
+       clicking on the sub-domains until you locate the desired system
+       name.
+
+       The system displays only two columns, or boxes, at time. To
+       view additional boxes, use the scroll bar on top of the boxes
+       to move to the left or right.
+
+    o  Remote Printer Name - Type in the name of the remote printer.
+
+    o  Print Banner Page by Default - Click on Yes if you want the
+       system to print a banner page by default, or click on No if
+       you do not want the system to print a banner page by default.
+
+    o  Allow Banner Page Override - Click on Yes if you want other users
+       to be able to override the banner page default, or click on
+       No if you do not want users to be able to override the banner
+       page default.
+
+3.  Click on OK. An icon for the printer appears in the Printer Setup
+    window.
+
+    Note: You can also click on Reset to change all the options
+    back to their original settings, or Cancel to dismiss this
+    window without adding the printer.
+
+See also:
+\k(Copying a Printer Icon to a Folder) 
+\k(Using the Printer Setup Toolbar)
+
+^1^Adding a Remote NetWare Printer
+^$40
+Adding a Remote NetWare Printer
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to add a remote NetWare printer to your system.
+
+To set up a queue to access a NetWare printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on Printer=>Add NetWare Printer. The Printer Setup: Add NetWare
+    Printer window appears with the following fields and options:
+
+    o  Printer Name - Type in the name you want to use locally
+       to access the remote NetWare printer.
+
+    o  Type - Click on the appropriate printer type.
+
+    o  NetWare Server - Click on the desired server in the File
+       Server list. The server name appears in this field, and 
+       a list of printers available for that server appear in the
+       Printers list to the right. 
+
+    o  Printers - Click on the printer you want to access. The
+       printer name appears in the NetWare Printer field.
+
+    o  Print Banner Page by Default - Click on Yes if you want the
+       system to print a banner page by default, or click on No if
+       you do not want the system to print a banner page by default.
+
+    o  Allow Banner Page Override - Click on Yes if you want other users
+       to be able to override the banner page default, or click on
+       No if you do not want users to be able to override the banner
+       page default.
+
+    o  Send Form Feed by Default - Click on Yes if you want to
+       enable form feed at the end of a print job, or No if you
+       do not want to enable form feed at the end of a print
+       job.
+
+       Enabling form feed ensures that the next job starts
+       at the top of the page.
+
+       Note: If an application automatically enables form
+       feed at the end of a file, adding this option causes
+       the printer to feed a blank sheet of paper before the next
+       job starts printing.
+
+    o  Allow Form Feed Override - Click on Yes if you want users
+       to be able to override the form feed default, or click on
+       No if you do not want users to be able to override the form
+       feed default.
+
+3.  Click on OK to add the printer and apply the selected options.
+
+    Note: You can also click on Reset to change all the options
+    back to their original settings, or Cancel to dismiss this
+    window without adding the printer.
+
+See also:
+\k(Copying a Printer Icon to a Folder) 
+\k(Using the Printer Setup Toolbar)
+
+^1^Deleting a Printer
+^$50
+Deleting a Printer
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to delete a printer from your system.
+
+To delete a printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folders.
+    The \k(Printer Setup window^^Printer Setup Window appears).
+
+2.  Click on the printer icon that you want to delete.
+
+3.  Click on Printer=>Delete. The system removes the printer icon
+    from the Printer Setup window.
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Viewing Printer Properties
+^$60
+^1^Viewing Printer Properties
+
+To view the properties of a printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that you want view.
+
+3.  Click on Printer=>Properties. The Printer Setup: Properties window
+    appears.
+
+4.  See the following for a description of the fields and options
+    for each type of printer:
+
+    o  For a local printer (either serial and remote), see
+       Step 2 of \k(Adding a Local Printer).
+
+    o  For a remote UNIX printer, see Step 2 of
+       \k(Adding a Remote UNIX Printer).
+
+    o  For a remote NetWare printer, see Step 2 of
+       \k(Adding a Remote NetWare Printer). 
+
+5.  Click on Cancel to dismiss the window.
+
+^1^Changing Printer Properties
+^$70
+Changing Printer Properties
+
+You must have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions) to change printer properties.
+
+To change the properties of a printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that you want to make changes to.
+
+3.  Click on Printer=>Properties. The Printer Setup: Properties window
+    appears.
+
+4.  Make the desired changes. See the following for details on the
+    fields and options available for each type of printer (Note: You
+    cannot change the printer name):
+
+    o  For a local printer (either serial and remote), see
+       Step 2 of \k(Adding a Local Printer).
+
+    o  For a remote UNIX printer, see Step 2 of
+       \k(Adding a Remote UNIX Printer).
+
+    o  For a remote NetWare printer, see Step 2 of
+       \k(Adding a Remote NetWare Printer). 
+
+    Note: You cannot change a printer name. 
+
+5.  Click on OK to apply the changes.
+
+    Note: You can also click on Reset to go back to the previous changes,
+    or Cancel to dismiss the window without making any changes.
+
+See also:
+\k(Using the Printer Setup Toolbar) 
+
+^1^Assigning a Default Printer
+^$80
+Assigning a Default Printer
+
+If you have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions),
+you can make one of your printers a default printer. That is,
+print jobs will automatically go to this printer if you select
+the print option from within an application without specifying a 
+printer, or you choose File=>Print from within a folder window.
+
+To assign a default printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that you want to make the default
+    printer.
+
+3.  Click on Printer=>Make Default. The currently selected printer
+    is now your default printer.
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Connecting a Local Printer to a NetWare Print Server  
+^$90
+Connecting a Local Printer to a NetWare Print Server  
+
+If you have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions), you can connect a local printer to a NetWare print server.
+
+To connect a local printer to a NetWare print server, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that represents the local printer you
+    want to connect.
+
+3.  Click on Printer=>NPrinter. The Printer Setup: NetWare Print Server
+    Connections Status window appears with the following message: 
+
+    <Printer Name> is not connected. Do you want to connect?
+
+4.  Click on Yes. The Printer Setup: Connect Local Printer to
+    NetWare Print Server window appears. 
+
+    Note: If you change your mind and decide not to connect the
+    printer, click on No to dismiss the window without making
+    the connection.
+
+5.  Click on the desired system in the File Servers list. The print
+    servers available for that system appear to the right in the
+    Print Server list.
+
+6.  Click on the desired print server. The printers available on that
+    server appear in the Printer Name box to the right.
+
+7.  Click on the desired printer name.
+
+8.  Click on OK. The printer can now service print requests from
+    the NetWare Print Queue.
+
+    Note: You can also click on Cancel to dismiss the window
+    without connecting the printer.
+
+See also:
+\k(Disconnecting a Local Printer from a NetWare Print Server)
+\k(Using the Printer Setup Toolbar)
+
+^1^Disconnecting a Local Printer from a NetWare Print Server
+^$100
+Disconnecting a Local Printer from a NetWare Print Server
+
+If you have \k(Administer Printers^dtadmin/user.hlp^Understanding Permissions), you can disconnect a local printer from a NetWare print server.
+
+To disconnect a local printer from a NetWare Print server, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder. 
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the printer icon that represents the local printer you want
+    to disconnect.
+
+3.  Click on NPrinter in the \k(Action Area).
+    The Printer Setup: NetWare Print Server Connections Status window
+    appears the following message:
+
+    <Printer Name> is connected to NetWare Print Server <PrintServername>
+    as Remote Printer <NetWarePrinterName> 
+
+    Do you want to disconnect?
+
+4.  Click on Yes. The printer is now disconnected.
+
+    Note: You can also click on No to dismiss the window
+    without connecting the printer.
+
+See also:
+\k(Connecting a Local Printer to a NetWare Print Server)
+\k(Using the Printer Setup Toolbar)
+
+^2^Printer Setup: NetWare Print Server Connections Status Window
+^$110
+Printer Setup: NetWare Print Server Connections Status Window
+
+If your local printer is connected to a NetWare Server, this window
+displays a message like the following:
+
+       <PrinterName> is connected to NetWare Print
+       Server <PrintServerName> as Remote Printer <NWPrinterName>
+
+       Do you want to disconnect?
+
+Click on Yes if you want to disconnect the printer, or No if you
+do not want to disconnect the printer.
+
+If your local printer is not connected to a NetWare Server, this window
+displays the following message:
+
+       <PrinterName> is not connected to a NetWare Print Server.
+
+       Do you want to connect?
+
+Click on Yes if you want to connect the printer, or No if you
+do not want to connect the printer.
+
+See also:
+\k(Disconnecting a Printer from a NetWare Print Server)
+\k(Connecting a Printer to a NetWare Print Server)
+
+^1^Setting Access for Remote Systems
+^$120
+Setting Access for Remote Systems
+
+You must have \k(Administer Printers permission^dtadmin/user.hlp^Understanding Permissions) to set up
+access to local printers for remote systems.
+
+Note: If you do not have Administer Printers permission, you can use the 
+following procedure to see which system are allowed or denied access,
+but you cannot make any changes.
+
+When you first set up a printer, all remote systems are denied access to
+that printer. You can set up access to local printers for remote systems
+by doing the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the local printer you
+    want to set up for access by remote systems.
+
+3.  Click on Printer=>Set Remote Access. The Printer Setup: Set Remote
+    Access window appears. The box in the left-hand corner displays the
+    available domains.
+
+    Note: When you click on a domain, any sub-domains under
+    that domain appear in the box to its right. From here, you
+    can click on the desired sub-domain, and if this sub-domain
+    has sub-domains, they appear in the box to its right. Continue
+    clicking on the sub-domains until you locate the desired system
+    name.
+
+    The system displays only two columns, or boxes, at time. To
+    view additional boxes, use the scroll bar on top of the boxes
+    to move to the left or right.
+
+4.  Set or deny access to the remote printer as follows:
+
+    Note: To select multiple systems, press and hold down Ctrl
+    while clicking on the left mouse button.  
+
+    o  Click on Allow All Systems Except, click on the desired
+       system(s) in the multi-column browser, then click on Add.
+       The selected system(s) move to the list in the box to the
+       right.
+
+       All systems except those added to the list have access
+       to the remote printer.
+
+    o  Click on Deny All Systems Except, click on the desired
+       system(s) in the multi-column browser, then click on Add.
+       The selected system(s) move to the list in the box to the
+       right.
+
+       All systems except those added to the list are denied access
+       to the remote printer.
+
+    Remove systems as follows:
+
+    o  Click on the desired system(s), then click on Remove (to delete
+       the selected systems(s) or Remove All (to delete all the systems).
+
+5.  Click on OK. The printer is now set up for access by remote users.
+
+    Note: You can also click on Cancel if you decide not to set
+    up remote access.
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Setting Access for Local Users
+^$130
+Setting Access for Local Users
+
+You must have \k(Administer Printers permission^dtadmin/user.hlp^Understanding Permissions) to set up
+access for local users.
+
+Note: If you do not have Administer Printers permission, you can use the 
+following procedure to see which users are allowed or denied access,
+but you cannot make any changes.
+
+When you first set up a printer, all users are granted access to
+that printer. You can control access by local users to local or
+remote printers by doing the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the printer that
+    you want to allow or deny access to.
+
+3.  Click on Printer=>Set User Access. The Printer Setup: Set User Access
+    window appears.
+
+4.  Allow or deny access as follows:
+
+    Note: To select multiple users, press and hold down Ctrl
+    while clicking on the left mouse button.  
+
+    o  To allow access, click on the desired user(s), then click
+       on Allow. The user(s) move to the Allow List.
+
+    o  To deny access, click on the desired user(s), then click
+       on Deny. The user(s) move to the Deny List.
+
+    o  To remove all users from the Allow List, click on Deny All.
+       The system moves all users from the Allow List to the Deny List.
+
+5.  Click on OK. 
+
+    Note: You can also click on Cancel if you decide not to set
+    up access for local users.
+
+See Also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Controlling a Printer
+^$140
+Controlling a Printer
+
+If you have \k(Administer Printers permission^dtadmin/user.hlp^Understanding Permissions), you can enable and disable both local and remote printers, as
+well as determine whether or not a printer will accept new
+print requests.
+
+Note: If you do not have Administer Printers permission, you can use the 
+following procedure to see if a printer is enabled or disabled, or if
+it is receiving print requests, but you cannot make any changes.
+
+To set the controls for a printer, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the printer that you want to
+    set controls for.
+
+3.  Click on Printer=>Control  The Printer Setup: Control Printer window
+    appears with the following fields and options:
+
+    o <Printer Name is Enabled/Disabled> - Displays the name of
+      the currently selected printer, and whether that printer is
+      enabled or disabled.
+
+    o  New Requests - Click on Accept if you want the printer
+       to accept new requests into the print queue, or Reject if
+       you do not want the printer to accept new requests into the
+       print queue.
+
+    o  Printer State - Click on Enabled if you want the printer
+       to print the jobs in the queue, or Disable if you want to
+       stop the printer from printing jobs in the queue.
+
+3.  Click on OK to apply the changes and go back to the Printer_Setup
+    window.
+
+    Note: You can also click on Reset to go back to the previous changes,
+    or Cancel to dismiss the window without making any changes.
+
+See also:
+\k(Using the Printer Setup Toolbar)
+
+^1^Copying a Printer Icon to a Folder
+^$150
+Copying a Printer Icon to a Folder 
+
+After you add a printer to your system, you may want to
+copy the printer icon to a folder for easier access. 
+
+To copy a printer icon to a folder, do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the printer that you want to
+    copy.
+
+3.  Open the folder you want to copy the printer icon to.
+
+4.  \d(Drag-and-drop^drag-and-drop) the printer icon to the folder.
+
+You can also use the menu options to copy a printer icon to
+another folder. See \k(Printer Setup: Copy to Folder Window).
+
+
+^2^Printer Setup: Copy to Folder Window
+^$160
+Printer Setup: Copy to Folder Window
+ 
+To copy a printer icon to another folder using the menu options,
+do the following:
+
+1.  Double-click on Printer_Setup in the Admin_Tools folder.
+    The \k(Printer Setup window^^Printer Setup Window) appears.
+
+2.  Click on the icon that represents the printer that you want to
+    copy.
+
+3.  Click on Printer=>Copy to Folder. The Printer Setup: Copy to Folder
+    window appears with the following fields:
+
+    Copy to: - Displays the name of the selected printer.
+
+    To: - Select the \d(path) to the desired folder by clicking
+    on the folder names in the multi-column browser. If a selected
+    folder has additional folders, these appear in the column to
+    the right. You can then click on a folder in this box. If you
+    click on a folder that has additional folders, a third box appears
+    to the right of this column.
+
+    You can continue clicking on folders until you reach the desired
+    path. To view the multiple columns, use the scroll bar at the
+    to move the boxes to the left and right.
+
+    Note: You can also type in the in the full \d(path) to the
+    desired folder in the Selection box.
+
+4.  Click on OK. The system copies the icon to the folder.
+
+^1^Using the Printer Setup Toolbar
+^$170
+Using the Printer Setup Toolbar
+
+The Printer Setup window has a toolbar that provides easier
+access to certain functions. Instead of accessing a function
+from a menu, you can just click on the toolbar icon for that
+function.
+
+For example, if you want to delete the currently selected printer,
+instead of clicking on Printer=>Delete, you can simply click on
+the toolbar icon for delete.
+
+The toolbar is located below the menu options bar. If you move the
+mouse pointer over an icon in the toolbar, the system displays a brief
+description of that icon in the footer area below the icon.
+
+You can access the following functions by clicking on the 
+toolbar icons in the Printer Setup window:
+
+  o  \k(Adding a local printer^^Adding a Local Printer)
+
+  o  \k(Adding a Remote UNIX Printer^^Adding a Remote UNIX Printer)
+
+  o  \k(Adding a Remote NetWare Printer^^Adding a Remote NetWare Printer) 
+
+  o  \k(Deleting a printer^^Deleting a Printer)
+
+  o  \k(Changing printer properties^^Changing Printer Properties)
+
+  o  \k(Copy a printer icon to a folder^^Copying a Printer Icon to a Folder)
+
+  o  \k(Assigning a default printer^^Assigning a Default Printer)
+
+  o  \k(Controlling a printer^^Controlling a Printer)
+
+  o  \k(Setting user access^^Setting Access for Local Users)
+
+  o  \k(Setting remote access^^Setting Access for Remote Systems)
+
+  o  \k(Connecting or Disconnecting a NetWare printer^^Connecting a Printer to a NetWare Print Server)
+
+  o  \k(Help^DesktopMgr/help.hlp^Using Help)
+
+  o  Exit (same as File=>Exit)
+
+If you prefer not to see the toolbar, click on View=Hide Toolbar.
+If the toolbar is hidden and you want to see it, click on Show=>Toolbar.
+

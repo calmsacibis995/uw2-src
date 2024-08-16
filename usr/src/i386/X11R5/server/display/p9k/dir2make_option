@@ -1,0 +1,109 @@
+#!/usr/local/bin/perl
+#	NAME					-*-Mode: Perl; -*-
+#
+#		directory-to-make-option : determine the make option depending
+#								   on a directory name.
+#
+#	SYNOPSIS
+#
+#		directory-to-make-option option-name
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	HISTORY
+#
+#		1.0.0 10_Oct_1993 jk : First coding.
+#		1.0.0 02_Jun_1994 jk : Added support for -ql profiled builds.
+#
+
+require "getopts.pl";
+require "getcwd.pl";
+
+# Check the number of arguments
+if (@ARGV != 1)
+{
+	print "usage: $0 make_option_name\n";
+	exit 1;
+}
+
+#	EVERYTHING HARDCODED FOR NOW
+# Get the current directory.
+
+$current_directory = &getcwd;	
+$optimized_suffix = "-optimized";
+$profiled_p_suffix = "-profiled-p";
+$profiled_l_suffix = "-profiled-l";
+
+$directory_root = $ENV{M};
+
+# Look for patterns "<var>-optimized, <var>-profiled-p".
+
+if ($current_directory =~
+	m/$optimized_suffix/)
+{
+	$made = "..made_optimized";
+	$cc = "-O -DSTATIC=static";
+	$ld = "-G";
+	$as = "-m";
+	$ar = "";
+}
+elsif ($current_directory =~
+	m/$profiled_p_suffix/)
+{
+	$made = "..made_profiled";
+	$cc = "-qp -DSTATIC= -DPROFILING";
+	$ld = "";
+	$as = "-m -- -DPROFILING";
+	$ar = "rv";
+}
+elsif ($current_directory =~
+	m/$profiled_l_suffix/)
+{
+	$made = "..made_profiled";
+	$cc = "-ql -DSTATIC= -DPROFILING";
+	$ld = "";
+	$as = "-m -- -DPROFILING";
+	$ar = "rv";
+}
+else
+{
+	$made = "..made_debug";
+	$cc = "-g -D__DEBUG__ -DSTATIC= ";
+	$ld = "-G";
+	$as = "-m -- -D__DEBUG__";
+	$ar = "";
+}
+
+# Determine what to dump to std out.
+
+$option = $ARGV[0];
+if ($option eq "cc")
+{
+	print "$cc";
+} elsif ($option eq "ld") {
+	print "$ld";
+} elsif ($option eq "ar") {
+	print "$ar";
+} elsif ($option eq "as") {
+	print "$as";
+} elsif ($option eq "made") {
+	print "$made";
+} elsif ($option eq "cpp") {
+	print "$cpp";
+} else {
+	die "$0 : unknown make option \"$option\" specified.\n";
+}
+	
+

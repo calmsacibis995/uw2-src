@@ -1,0 +1,89 @@
+'\"ident        "@(#)MGizmo:man/separator.man	1.1"
+.TH SeparatorGizmo 3L
+.SH NAME
+\f(CBSeparatorGizmo\f1 \- an abstract data type (ADT) that provides a
+separator visual.
+The \f(CBSeparatorGizmo\fP consists of a data structure and a set of
+functions that operate on this Gizmo.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/SeparatorG.h>
+
+.ft
+.fi
+.SH "DESCRIPTION"
+The \f(CBSeparatorGizmo\fP is just a Gizmo wrapper around a motif separator
+widget.
+The type of the separator is specified by \fItype\fP and can be any of
+XmNseparatorType.
+.PP
+A \f(CBSeparatorGizmo\fP is created by populating a \f(CBSeparatorGizmo\fP data
+structure and placing it's address in a \f(CBGizmoRec\fP
+structure.
+Ultimately, a \f(CBGizmoRec\fP structure is placed in one of the container
+Gizmos and the display is created by making a call to the function
+\f(CBCreateGizmo\fP(3L).
+Following is the definition of the \f(CBSeparatorGizmo\fP data type:
+.PP
+.nf
+.ft CB
+typedef struct _SeparatorGizmo {
+        HelpInfo *      help;
+        char *          name;
+        int             type;           /* XmNseparatorType */
+        int             orientation;    /* XmVERTICAL or XmHORIZONTAL */
+        int             height;         /* In millimeters */
+        int             width;          /* In millimeters */
+} SeparatorGizmo;
+.fi
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBSeparatorGizmo\fP:
+.IP \fBGetGizmoWidget\fP 25
+Returns the separator widget id.
+.IP \fBGetGizmoGizmo\fP 25
+Returns the handle to the \f(CBSeparatorGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 25
+Undefined.
+.IP \fBGetGizmoPreviousValue\fP 25
+Undefined.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the separator widget.
+.SH "USAGE"
+.nf
+.ft CB
+NumericGizmo    num1 = {
+        NULL, "num1", 50, 1, 100, 1, 0
+};
+SeparatorGizmo    sep1 = {
+        NULL, "sep1", XmSHADOW_ETCHED_IN_DASH, XmHORIZONTAL, 10, 200
+};
+NumericGizmo    num2 = {
+        NULL, "num2", 50, 1, 100, 1, 0
+};
+
+GizmoRec        record1[] = {
+        {NumericGizmoClass, &num1}
+        {SeparatorGizmoClass, &sep1}
+        {NumericGizmoClass, &num2}
+};
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", NULL, record1, 1
+};
+
+main()
+{
+        Gizmo        handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP,
+NumericGizmo\f(CW(3L)\fP

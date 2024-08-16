@@ -1,0 +1,358 @@
+FOOTER_HEIGHT=2
+TAB="	"
+PIPE="|"
+
+# must be kept in sync with uts/io/autoconf/confmgr/cm_i386at.h
+unktype=0
+isatype=1
+eisatype=2
+pcitype=4
+pcmciatype=8
+pnptype=16
+mcatype=32
+systype=64
+sys="SYSTEM"
+isa="ISA"
+eisa="EISA"
+mca="MCA"
+pci="PCI"
+pnp="PnP"
+pcmcia="PCMCIA"
+
+#generic type strings
+Yes="ja"
+Y='J'
+No="nein"
+N='N'
+none="keine"
+used="verwendet"
+unused="nicht verwendet"
+unknown="UNBEKANNT"
+unk="$unknown"
+noprompt="noprompt"
+prompt="Eingabeaufforderung"
+unchanged="ƒnderungen aufheben"
+changed="‰ndern"
+dash="-"
+new="neu"
+deleted="gelˆscht"
+
+BADNUM="Bitte geben Sie ein Zahl zwischen $2 und $3 ein"
+DCU_GENERIC_HEADER="UnixWare Ger‰tekonfigurations-Dienstprogramm"
+ANY_CONTINUE_FOOTER="Dr¸cken Sie eine beliebige Taste um fortzufahren"
+DCU_CHOOSE_FOOTER="Verwenden Sie die Pfeil-nach-oben-/Pfeil-nach-unten-Tasten
+und die Eingabetaste um auszuw‰hlen"
+GENERIC_CONTINUE_FOOTER="Dr¸cken Sie die EINGABETASTE, um fortzufahren"
+GENERIC_ABORT_FOOTER="Dr¸cken Sie eine beliebige Taste, um die ƒnderungen abzubrechen"
+DCUGENERIC_WAIT_FOOTER="Bitte warten."
+GENERIC_NO_CHOICES="F¸r dieses Feld gibt es keine Auswahlmˆglichkeiten, editieren Sie manuell."
+NOTYET="DIESE DCU-FUNKTION WIRD NICHT UNTERST‹TZT"
+RM_OPEN_RDONLY="
+Die Ressourcen-Managerdatenbank kann nicht zum Schreiben geˆffnet werden.
+
+Es wird f¸r Nur Lesen geˆffnet!
+
+   Dr¸cken Sie die Eingabetaste, um fortzufahren."
+
+RM_OPEN_ERROR="
+Ressourcen-Manager kann nicht geˆffnet werden.
+
+Dr¸cken Sie die Eingabetaste, um fortzufahren."
+
+# For use in "choose" script
+CHOICES="Auswahlmˆglichkeiten"
+
+CHOOSE_APPLY_CONF="
+Geben Sie DCU ein, um Konflikte zu lˆsen.
+Konflikte ignorieren und ƒnderungen anwenden.
+"
+
+CHOOSE_EXIT_CONF="
+Die ƒnderungen ignorieren und DCU verlassen.
+DCU ˆffnen, um die ƒnderungen anzuwenden.
+"
+
+MODNOSAVE="WARNUNG: Einige Datenbankeintr‰ge wurden ge‰ndert, aber nicht gespeichert."
+
+DCUconflict="
+ FEHLER: Das Ger‰tekonfigurations-Dienstprogramm (DCU) hat einen
+ Hardwarekonflikt entdeckt, der beachtet werden muﬂ, und deshalb kann
+ die Installation nicht fortgesetzt werden.
+
+ BEHEBEN:
+ Sie m¸ssen die in Konflikt stehende Hardware neu konfigurieren. Das
+ bedeutet entweder die ƒnderung der Hardwareeinstellungen und/oder die
+ Ausf¸hrung eines Konfigurationsdienstprogramms.
+
+ Siehe das UnixWare Installationshandbuch f¸r weitere Informationen.
+         - Appendix B, Hardware-Konfigurationshinweise
+         - Appendix E, Fehlerbehebung
+
+ Bitte beachten Sie dabei die Konflikte, die angezeigt werden.
+"
+
+DCUreboot="
+ Die Installation wird jetzt beendet und das
+ System heruntergefahren.
+
+ HINWEIS: Entweder manuelle und/oder DCU-Intervention wird jetzt
+ benˆtigt, um eine erfolgreiche Installation durchzuf¸hren.
+"
+
+DCUrebuild=" WARNUNG:
+ Der Unix Kernel sollte neu aufgebaut und das System neu gestartet werden, da 
+ die Attribute einiger nicht-autoconfig-Treiber ge‰ndert wurden.
+
+ Schlagen Sie im Handbuch f¸r den Systemeigent¸mer nach, wie Sie ihr System
+ neu konfigurieren."
+
+# For use in "boards" script
+BDSUMMARY="Hardware-Ger‰tekonfiguration"
+BDSFOOTER=" "
+BDSFOOTER2="Tabulator/Pfeil=Verschieben, F1=Hilfe, F2=Auswahlmˆglichkeiten,
+F4=‹berpr¸fen, F6=Info, F7=Adv, F10=Zur¸ck"
+BDCHFOOTER="F2=Auswahlmˆglichkeiten, F6=Info, Seite nach oben/nach unten=Mehr,
+EINGABETASTE=Zur¸ck"
+BD_ERR_CNFG="Bitte $N f¸r $No oder $Y f¸r $Yes verwenden, um die Ressource zu konfigurieren."
+BD_ERR_INT="Bitte verwenden Sie F2, um eine Nummer f¸r den Interrupt-Vektor auszuw‰hlen."
+BD_ERR_PORT="Bitte verwenden Sie F2, um eine Schnittstellenadresse auszuw‰hlen."
+BD_ERR_ADDR="Bitte verwenden Sie F2, um eine Speicheradresse auszuw‰hlen."
+BD_ERR_NODELETE="Die kˆnnen die Konfiguration dieser Platine nicht mit DCU aufheben."
+BD_BAD_IRQ="Ein Interrupt-Vektor muﬂ zwischen 0 und 15 liegen"
+BD_BAD_PORT="Eine E/A-Schnittstellennummer muﬂ zwischen 0 und ffff hex liegen"
+BD_BAD_PORTE="Die E/A-Endadresse muﬂ >= der E/A-Startadresse sein."
+BD_BAD_MEM="Eine E/A-Speicheradresse muﬂ zwischen 0 und ffffffff hex liegen"
+BD_BAD_MEME="Das Ende der Speicheradresse muﬂ >= dem Beginn der Speicheradresse sein"
+BD_BAD_DMA="Eine DMA-Nummer muﬂ zwischen -1 und 7 sein"
+BD_BAD_CPU="A CPU number must be between 0 and" # Sentence completed by dcu
+BD_ONE_CPU="Lediglich eine CPU wurde konfiguriert; die CPU-Z‰hlung beginnt bei 0."
+BD_BAD_UNIT="In das Einheitenfeld muﬂ ein modulabh‰ngiger numerischer Wert eingegeben werden, 0=nicht verwendet."
+BD_BAD_IPL="Eine IPL-Nummer muﬂ zwischen 0 und 9 sein"
+BD_BAD_ITYPE="Eine ITYPE-Nummer muﬂ zwischen 0 und 4 sein"
+BD_BAD_NAME="Der Ger‰tename befindet sich nicht unter den g¸ltigen Auswahlen."
+boarddriver="Treiber"
+boardname="Ger‰tename"
+boardisc="Konfigurieren"
+boardunit="Einheit"
+boardipl="IPL"
+boarditype="ITYPE"
+##################################
+# boardirq=MUST BE  = 3 CHARACTERS
+##################################
+boardirq="IRQ"
+##################################
+# boardios=MUST BE <= 7 CHARACTERS
+##################################
+boardios="EABeg"
+##################################
+# boardioe=MUST BE <= 5 CHARACTERS
+##################################
+boardioe="EAEnd"
+boardport="Schnittstellen"
+##################################
+# boardmems=MUST BE <= 8 CHARACTERS
+##################################
+boardmems="SpchBeg"
+##################################
+# boardmeme=MUST BE <= 8 CHARACTERS
+##################################
+boardmeme="SpchEnd"
+##################################
+# boarddma=MUST BE  = 3 CHARACTERS
+##################################
+boarddma="DMA"
+boardcpu="BindCPU"
+boardid="ID"
+####################################
+# BoardName=MUST BE <= 20 CHARACTERS
+####################################
+BoardName="Ger‰tename"
+BoardId="Karten-ID"
+BoardBusType="Bustyp der Karte"
+DriverName="Treibername"
+BoardInstance="Kartenvorkommen"
+IRQs="IRQ"
+UNITs="EINHEIT"
+IPLs="IPL"
+ITYPEs="ITYPE"
+Ports="E/A Schnittstellen"
+DMAs="DMA"
+Memory_Addresses="BIOS-Adresse"
+
+#For use in boardxpnd
+ESCXNDFOOTER="Dr¸cken Sie die EINGABETASTE, um die Anzeige zu beenden."
+BDXNDTEXT="
+
+Ger‰tename:     \${BDNAME[bd]}              
+Karten-ID:      \${BDID[bd]}              
+Treibername:    \${BDMODNAME[bd]}
+
+
+
+
+
+
+
+
+"
+
+#For use in "drivers" script
+DRVSUMMARY="Software-Ger‰tetreiber"
+BRDCONFIG="Neue Hardware-Konfiguration"
+CONFIG_INFO="Konfigurationsinformationen"
+DRVFOOTER="Verwenden Sie die Tabulatortaste, um sich zu bewegen, F1=Hilfe, 
+Leertaste=Umschalten, F5=Neu, F6=Info, EINGABETASTE=Zur¸ck "
+NOSELECT="Um die Karte zu konfigurieren, m¸ssen Sie zuerst den Treiber ausw‰hlen."
+NOSELECTMSG="Die folgenden Werte sind typische Konfigurationswerte f¸r diesen Treiber.
+ Wenn eine Konfiguration gew‰hlt wird, werden die Werte in der ersten
+ Spalte verwendet.
+"
+SELECTMSG="
+ Es folgen Konfigurationsinformationen, die auf den Zustand dieses
+ Treibers nach Eingabe in die aktuelle DCU-Sitzung verweisen:
+"
+CONFFOOTER="F1=Hilfe, F2=Auswahl, F4=Pr¸fen, F6=Info,
+F8=Abbrechen&R¸ckkehr, F10=Anwenden&R¸ckkehr"
+DRVHBA="Treiberkonfiguration des Host-Busadapters"
+
+NODRVCATS="
+
+Auf dieses System wurden keine Treiber
+dieser Kategorie geladen.
+
+"
+
+# For use in irq_conflict function
+IRQNOSHARE="IRQ-Konflikte mit einem Interrupt-Vektor,
+der nicht gemeinsam genutzt werden kann."
+IRQSELFSHARE="IRQ-Konflikte mit einem Interrupt-Vektor, der nur mit
+anderen Vorkommen des gleichen Moduls gemeinsam genutzt werden kann."
+IRQIPLSHARE="IRQ kann nicht von Modulen mit unterschiedlichen IPL-Werten gemeinsam genutzt."
+
+ITYPE0IRQ="Der folgende Eintrag enth‰lt Werte, die Konflikte hervorrufen.
+Das Feld ITYPE zeigt an, daﬂ das Ger‰t keine Interrupts verwendet."
+
+# For use in port_conflict functions
+IOCONF="Der E/A-Adreﬂbereich steht in Konflikt mit dem folgenden Eintrag."
+IOSCONF="Das erste E/A-Adreﬂfeld steht in Konflikt mit dem folgenden Eintrag."
+IOECONF="Das letzte E/A-Adreﬂfeld steht in Konflikt mit dem folgenden Eintrag."
+IOSREQ="Das erste E/A-Adreﬂfeld wird f¸r diesen Eintrag benˆtigt."
+IOEREQ="Das letzte E/A-Adreﬂfeld wird f¸r diesen Eintrag benˆtigt."
+
+# For use in mem_conflict functions
+MEMCONF="Der Speicheradressenbereich steht in Konflikt mit dem folgenden Eintrag."
+MEMSCONF="Das erste Speicheradressenfeld steht in Konflikt mit dem folgenden Eintrag."
+MEMECONF="Das letzte Speicheradressenfeld steht in Konflikt mit dem folgenden Eintrag."
+MEMSREQ="Das erste Speicheradressenfeld wird f¸r diesen Eintrag benˆtigt."
+MEMEREQ="Das letzte Speicheradressenfeld wird f¸r diesen Eintrag benˆtigt."
+
+# For use in dma_conflict function
+DMACONF="Die folgenden Eintr‰ge enthalten DMA-Werte, die Konflikte hervorrufen:"
+
+# For use by the silent mapping function
+DCUACTION="Parameter DCU_ACTION kann f¸r RMKEY nicht gesetzt werden."
+
+# For use in verify function
+VERIFYFOOTER="Kartenkonfiguration wird ¸berpr¸ft..."
+BD_NOSAVED="Sie m¸ssen die ƒnderungen zuerst anwenden
+(verwenden Sie F5, um die ƒnderungen anzuwenden)."
+DRV_NOVERIFY="unterst¸tzt die Pr¸ffunktion nicht."
+VERIFYFAIL="‹berpr¸fen fehlgeschlagen."
+VERIFYSUCCESS="‹berpr¸fung erfolgreich."
+
+# For use by Advanced options screen
+ADVCONFIG="Fortgeschrittene Parameterauswahl"
+ADVFOOTER="F1=Hilfe, F2=Auswahl, F10=R¸ckkehr"
+ADVSAVED="Kartenspezifische Parameter speichern"
+ADVLNMSG="Fortgeschrittene Parameter"
+BSPLNMSG="Kartenspezifische Parameter"
+ADVCBINDCPUMSG="CPU Binden ausw‰hlen"
+ADVCIPLMSG="IPL w‰hlen"
+ADVCITYPEMSG="ITYPE w‰hlen"
+
+# For use in "helpwin" script
+FIRST_PAGE_FOOTER="F1=Mehr Hilfe, Seite nach unten, Esc, um Hilfe zu verlassen"
+MIDDLE_PAGE_FOOTER="F1=Mehr Hilfe, Seite nach unten, Seite nach oben, Esc, um Hilfe zu verlassen"
+LAST_PAGE_FOOTER="F1=Mehr Hilfe, Seiten nach oben, Esc, um Hilfe zu verlassen"
+ONLY_PAGE_FOOTER="F1=Mehr Hilfe, Esc, um Hilfe zu verlassen"
+MOREHELP_FOOTER="Verwenden Sie die Pfeil-nach-oben-/Pfeil-nach-unten-Tasten
+und die EINGABETASTE, um auszuw‰hlen, oder Esc, um die Hilfe zu verlassen"
+MOREHELP_TITLE="Verwandte Hilfethemen"
+
+# For use in "dcumain" script
+DCUMAIN_TITLE="Hauptmen¸ des Ger‰tekonfigurations-Dienstprogramms"
+DCUMAIN_FOOTER="Verwenden Sie die Pfeil-nach-oben-/Pfeil-nach-unten-Tasten
+und die EINGABETASTE, um auszuw‰hlen, F1=Hilfe."
+BDUPDATE_FOOTER="Konfigurationsinformationen werden gespeichert..."
+BOARD_PROMPT="Diese Option w‰hlen, um die konfigurierten Karten dieses Systems anzuzeigen."
+BOARD="^Hardware-Ger‰tekonfiguration"
+DRIVER_PROMPT="Diese Option w‰hlen, um die Treiberkonfiguration anzuzeigen/zu ‰ndern."
+DRIVER="^Software-Ger‰tetreiber"
+SAVE="^ƒnderungen anwenden & DCU beenden"
+SAVE_PROMPT="Diese Option w‰hlen, um die Konfiguration zu speichern und die DCU zu verlassen."
+DCUCANCEL="^DCU verlassen und ƒnderungen abbrechen"
+DCUCANCEL_PROMPT="W‰hlen Sie die, um die DCU zu verlassen, ohne die ƒnderungen zu speichern."
+RESTART="Starten Sie das DCU neu und brechen Sie die ƒnderungen ab"
+RESTART_PROMPT="W‰hlen Sie die, um die DCU-Sitzung neu zu starten."
+CNFG_HBA="Treiberkonfiguration des Host-Busadapters"
+CNFG_HBA_PROMPT="W‰hlen Sie die, um den/die Treiber f¸r den Host-Busadapter zu konfigurieren."
+LOAD_HBA="Treiber f¸r Host-Busadapter (HBA) installieren"
+LOAD_HBA_PROMPT="Dies w‰hlen, um die HBA-Treiber nach der Konfigurationsausf¸hr. zu installieren."
+DCUEXIT_ERR="W‰hlen Sie \'$DCUCANCEL\', um das DCU zu verlassen."
+BAD_UPDATE="WARNUNG: Fehler w‰hrend der Aktualisierung der resmgr-Datenbank entdeckt."
+
+# For use in cnfgihv script
+CnfgFloppy2="
+   Die Konfigurationinformationen f¸r den Host-Busadapter m¸ssen
+   Geladen werden, bevor der Treiber konfiguriert werden kann.
+
+   Bitte legen Sie jetzt eine Host-Bus-Adapter diskette ein.
+
+   Dr¸cken Sie ESC, um abzubrechen oder F5, um fortzufahren."
+CnfgWait="
+           Bitte warten Sie, w‰hrend die
+Hardware-Konfigurationsinformationen geladen werden.
+"
+HdcWait="
+Bitte warten, der Bildschirm \"Hardware-Ger‰tekonfiguration\" 
+                   wird generiert.
+"
+CnflWait="Hardware-Konfiguration wird ¸berpr¸ft."
+
+DUPIHVCNFG="
+Doppelten Diskettennamen entdeckt.
+Konfiguration wurde abgebrochen.
+
+Dr¸cken Sie eine beliebige Taste, um fortzufahren.
+"
+CNFGFLOPPY_HBA_FOOTER="Die Konfiguration des Host-Busadapters wird von Diskette geladen....."
+CNFGFLOPPY_FOOTER="Dr¸cken Sie die EINGABETASTE, um fortzufahren"
+CNFGREMOVE_FLOPPY_FOOTER="Sie kˆnnen die Diskette jetzt herausnehmen."
+CNFG_DUPDRV="Warnung ... \$fn bereits in System geladen."
+
+# For use in category
+CATMAIN_TITLE="Auswahl der Software-Ger‰tetreiber"
+CATMAIN_HEADER="TREIBER   NAMEN VON UNTERST‹TZTEN GERƒTEN"
+CATMAIN_HEADER2="======   =================================="
+network_interface_cards="^Netzwerkschnittstellenkarten"
+host_bus_adapters="^Host-Busadapter"
+communications_cards="^Daten¸bertragungskarten"
+video_cards="^Videokarten"
+sound_boards="^Soundkarten"
+miscellaneous="V^erschiedenes"
+alldrivers="^Alle Software-Ger‰tetreiber"
+catreturn="^Zur¸ck zum DCU-Hauptmen¸"
+CAT1_PROMPT="Dies w‰hlen, um Netzwtreiber anzuzeigen od. zu konfigurieren."
+CAT2_PROMPT="Dies w‰hlen, um HBA-Treiber anzuzeigen oder zu konfigurieren."
+CAT3_PROMPT="W‰hlen Sie die, um Daten¸bertragungstreiber anzuzeigen oder zu konfigurieren."
+CAT4_PROMPT="Dies w‰hlen, um Treiber f¸r die Videokarte anzuzeigen oder zu konfigurieren."
+CAT5_PROMPT="Dies w‰hlen, um Treiber f¸r die Soundkarte anzuzeigen oder zu konfigurieren."
+CAT6_PROMPT="W‰hlen Sie die, um andere(n) Treibertyp(en) anzuzeigen oder zu konfigurieren."
+CAT7_PROMPT="Dies w‰hlen, um alle Hardwaretreiber anzuzeigen oder zu konfigurieren."
+CAT8_PROMPT="Dies w‰hlen, um zum Hauptmen¸ des DCU zur¸ckzukehren."
+CATMAIN_FOOTER="Verwenden Sie die Pfeil-nach-oben-/Pfeil-nach-unten-Tasten
+und die EINGABETASTE, um auszuw‰hlen, F1=Hilfe."
+
+Continued_String="(Seite nach oben/Seite nach unten f¸r weiteres)"
+PageDown_String="(Seite nach unten f¸r mehr)"
+PageUp_String="(Seite nach oben f¸r mehr)"

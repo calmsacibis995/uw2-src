@@ -1,0 +1,204 @@
+#ident	"@(#)olpkg.oam:display/prototype	1.25"
+
+#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+i copyright
+i depend
+i pkginfo
+i postinstall
+
+d display /usr	? ? ?
+d display /usr/X	? ? ?
+d display /usr/X/bin	? ? ?
+d display /usr/X/lib	? ? ?
+d display /usr/X/lib/display	? ? ?
+d display /usr/X/lib/app-defaults	? ? ?
+
+#
+# establish location of desktop admin icons.
+#
+!default 0755 bin bin
+d display /usr/X/desktop
+d display /usr/X/desktop/Admin_Tools
+
+#
+# misc high-res video drivers
+#
+!default 0644 bin bin
+#
+# ATI Mach64 drivers
+#
+f display /usr/X/lib/display/libmach64.so.1
+f display /usr/X/lib/display/turboPro.so.1
+f display /usr/X/lib/display/README.mach64
+f display /usr/X/lib/display/turboPro.dat
+f display /usr/X/lib/display/atiXpres.dat
+f display /usr/X/lib/display/mach64.vinfo
+f display /usr/X/lib/display/MACH64_OPTIONS
+#
+# S3 Vision964,  Vision864  drivers
+#
+f display /usr/X/lib/display/libs364.so.1
+f display /usr/X/lib/display/s364_init.so.1
+f display /usr/X/lib/display/stealth64.dat
+f display /usr/X/lib/display/9GXE64.dat
+f display /usr/X/lib/display/9GXEPRO.dat
+f display /usr/X/lib/display/README.s364
+f display /usr/X/lib/display/s364.vinfo
+f display /usr/X/lib/display/S364_OPTIONS
+f display /usr/X/lib/display/9gxe64wrap
+#
+# Diamond Viper (Weitek P9000) drivers
+#
+f display /usr/X/lib/display/libp9k.so.1
+f display /usr/X/lib/display/viper.so.1
+f display /usr/X/lib/display/viper_pci.dat
+f display /usr/X/lib/display/viper_vlb.dat
+f display /usr/X/lib/display/README.p9k
+f display /usr/X/lib/display/p9k.vinfo
+f display /usr/X/lib/display/P9K_OPTIONS
+f display /usr/X/lib/display/PCIDUMP.EXE
+#
+# ATI Mach8/Mach32 drivers
+#
+f display /usr/X/lib/display/libmach.so.1
+f display /usr/X/lib/display/ultra.so.1
+f display /usr/X/lib/display/README.mach
+f display /usr/X/lib/display/mach.vinfo
+f display /usr/X/lib/display/ultrapro.dat
+f display /usr/X/lib/display/unisys.dat
+f display /usr/X/lib/display/ultraplus.dat
+f display /usr/X/lib/display/ultra.dat
+f display /usr/X/lib/display/vantage.dat
+f display /usr/X/lib/display/LIBMACH_OPTIONS
+f display /usr/X/lib/display/ULTRA_OPTIONS
+#
+# S3 drivers
+#
+f display /usr/X/lib/display/libS3.so.1
+f display /usr/X/lib/display/S3_init.so.1
+f display /usr/X/lib/display/README.S3
+f display /usr/X/lib/display/s3.vinfo
+f display /usr/X/lib/display/stealthpro.dat
+f display /usr/X/lib/display/9GXE.dat
+f display /usr/X/lib/display/actixGE.dat
+f display /usr/X/lib/display/elsaWinner.dat
+f display /usr/X/lib/display/premier.dat
+f display /usr/X/lib/display/stb_x24.dat
+f display /usr/X/lib/display/fahrenheit.dat
+f display /usr/X/lib/display/Nth.dat
+f display /usr/X/lib/display/miscS3.dat
+f display /usr/X/lib/display/LIBS3_OPTIONS
+#
+# super VGA 256 color drivers
+#
+f display /usr/X/lib/display/libvga256.so.2
+f display /usr/X/lib/display/vga256.vinfo
+f display /usr/X/lib/display/README.vga256
+
+f display /usr/X/lib/display/etw32_256.so.2
+f display /usr/X/lib/display/etw32.256dat
+f display /usr/X/lib/display/etw32p_256.so.2
+f display /usr/X/lib/display/etw32p.256dat
+f display /usr/X/lib/display/ambra_w32p.dat
+
+f display /usr/X/lib/display/wdc3x_256.so.2
+f display /usr/X/lib/display/wdc3x.256dat
+
+f display /usr/X/lib/display/gd54xx_256.so.2
+f display /usr/X/lib/display/gd54xx.256dat
+
+f display /usr/X/lib/display/et4k_256.so.2
+f display /usr/X/lib/display/et4k.256dat
+
+f display /usr/X/lib/display/ncr22e_256.so.2
+f display /usr/X/lib/display/ncr22e.256dat
+
+f display /usr/X/lib/display/leg_256.so.2
+f display /usr/X/lib/display/leg.256dat
+
+f display /usr/X/lib/display/boca_256.so.2
+f display /usr/X/lib/display/boca.256dat
+
+f display /usr/X/lib/display/t89_256.so.2
+f display /usr/X/lib/display/t89.256dat
+
+f display /usr/X/lib/display/wdc1x_256.so.2
+f display /usr/X/lib/display/wdc1x.256dat
+
+f display /usr/X/lib/display/ati_256.so.2
+f display /usr/X/lib/display/ati.256dat
+
+f display /usr/X/lib/display/libqv256.so.2
+f display /usr/X/lib/display/libqv256lfb.so.2
+f display /usr/X/lib/display/libqv256bnk.so.2
+f display /usr/X/lib/display/qv1024.256dat
+f display /usr/X/lib/display/qv1280.256dat
+f display /usr/X/lib/display/qv.vinfo
+
+#
+# 16 color drivers
+#
+# Tseng Labs ET4000
+#
+f display /usr/X/lib/display/vga16.vinfo
+#
+f display /usr/X/lib/display/et4k_16.so.2
+f display /usr/X/lib/display/et4k.16dat
+
+# Cirrus GD5420, 22, 24, 26, 28, 34
+f display /usr/X/lib/display/gd54xx_16.so.2
+f display /usr/X/lib/display/gd54xx.16dat
+
+# NCR 77C22E
+f display /usr/X/lib/display/ncr22e_16.so.2
+f display /usr/X/lib/display/ncr22e.16dat
+
+#  WD90C10 WD90C11
+f display /usr/X/lib/display/wdc1x_16.so.2
+f display /usr/X/lib/display/wdc1x.16dat
+
+# ATI old video chips
+f display /usr/X/lib/display/ati_16.so.2
+f display /usr/X/lib/display/ati.16dat
+
+# Trident 8900C
+f display /usr/X/lib/display/t89_16.so.2
+f display /usr/X/lib/display/t89.16dat
+
+# misc old VGA chips
+f display /usr/X/lib/display/misc_16.so.2
+f display /usr/X/lib/display/misc.16dat
+
+#
+# setvideomode utilities
+#
+f display /usr/X/bin/gsetvideo	555 bin bin
+s display /usr/X/desktop/Admin_Tools/Display_Setup=/usr/X/bin/gsetvideo
+v display /usr/X/lib/display/VendorInfo	0644 bin bin
+f display /usr/X/lib/display/setvideomode	555 bin bin
+f display /usr/X/lib/display/vprobe	555 bin bin 1 allprivs NULL
+f display /usr/X/lib/display/vtest	555 bin bin
+
+v display /usr/X/lib/app-defaults/Gsetvideo	644 bin bin
+
+#
+# a simple kernel driver to map video memory - used by most 
+# of the 32-bit video cards (VESA, EISA, PCI)
+#
+v display /tmp/lfb/Driver.o=/usr/X/lib/display/os_lfb/Driver.o
+v display /tmp/lfb/Master=/usr/X/lib/display/os_lfb/Master
+v display /tmp/lfb/System=/usr/X/lib/display/os_lfb/System
+v display /tmp/lfb/Node=/usr/X/lib/display/os_lfb/Node
+f display /usr/include/sys/lfb_map.h=/usr/X/lib/display/os_lfb/lfb_map.h
+
+
+
+

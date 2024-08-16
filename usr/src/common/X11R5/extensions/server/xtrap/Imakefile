@@ -1,0 +1,69 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5extensions:server/xtrap/Imakefile	1.3"
+
+/*****************************************************************************
+Copyright 1987, 1988, 1989, 1990, 1991 by Digital Equipment Corp., Maynard, MA
+
+Permission to use, copy, modify, and distribute this software and its 
+documentation for any purpose and without fee is hereby granted, 
+provided that the above copyright notice appear in all copies and that
+both that copyright notice and this permission notice appear in 
+supporting documentation, and that the name of Digital not be
+used in advertising or publicity pertaining to distribution of the
+software without specific, written prior permission.  
+
+DIGITAL DISCLAIMS ALL WARRANTIES WITH REGARD TO THIS SOFTWARE, INCLUDING
+ALL IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS, IN NO EVENT SHALL
+DIGITAL BE LIABLE FOR ANY SPECIAL, INDIRECT OR CONSEQUENTIAL DAMAGES OR
+ANY DAMAGES WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS,
+WHETHER IN AN ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION,
+ARISING OUT OF OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS
+SOFTWARE.
+
+*****************************************************************************/
+#define DoSharedLib     YES
+#include <Library.tmpl>
+#include <sv4Lib.tmpl>
+EXTRA_DEFINES = -KPIC
+
+#include <Server.tmpl>
+       SRCS = 	xtrapdi.c xtrapditbl.c xtrapdiswp.c xtrapddmi.c
+       OBJS =   xtrapdi.o xtrapditbl.o xtrapdiswp.o xtrapddmi.o
+CDEBUGFLAGS = ServerCDebugFlags
+   INCLUDES = -I../../include -I../../include/xtrap \
+	      -I$(SERVERSRC)/include -I$(INCLUDESRC)
+   LINTLIBS = $(SERVERSRC)/dix/llib-ldix.ln $(SERVERSRC)/os/4.2bsd/llib-los.ln
+
+    XTRAPREF = $(TOP)/../../xtrapcode
+
+all:: libxtrapext.so
+
+libxtrapext.so: $(OBJS)
+	$(RM) $@
+	$(CC) $(YFLAGS) -G $(OBJS) -o $@ -h $@ $(SHLIBFLAGS)
+
+NormalLibraryTarget(xtrapext,$(OBJS))
+NormalLibraryObjectRule()
+LintLibraryTarget(xtrapext,$(SRCS))
+NormalLintTarget($(SRCS))
+
+links:
+	$(RM) Imakefile; \
+	$(LN) $(XTRAPREF)/server_xtrap.imake_r5 Imakefile; \
+	for i in $(SRCS); do (set -x; $(RM) $$i; \
+	    $(LN) $(XTRAPREF)/$$i .); done
+
+saber_src:
+	#load $(CFLAGS) $(SRCS)
+
+DependTarget()
+
+install::
+	$(INSTALL) $(INSTDATFLAGS) libxtrapext.so $(USRLIBDIR)

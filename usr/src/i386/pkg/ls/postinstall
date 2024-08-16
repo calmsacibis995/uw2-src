@@ -1,0 +1,267 @@
+#!/bin/sh
+#ident	"@(#)pkg.ls:ls/postinstall	1.18"
+#  Postinstall script for the LS
+#
+
+# We are on the boot floppies if:
+# the script /etc/inst/scripts/postreboot.sh exists 
+[ -f /etc/inst/scripts/postreboot.sh ] && {
+#	HOW_INSTALL=ON_BFLOP
+exit 0
+}
+
+HOW_INSTALL=NORMAL
+# We are rebooting after installation if the script
+# /etc/rc2.d/S02POSTINST exists
+[ -f /etc/rc2.d/S02POSTINST ] && {
+	HOW_INSTALL=POSTREBOOT
+}
+if $SILENT_INSTALL
+then
+	pfmt -s nostd -g ls.pkg:5 "Setting up chosen locales . . .\n"
+fi
+
+ROOT=/
+LSVAR=/var/opt/ls
+ICONV=/usr/lib/iconv
+ilist=""
+
+defadm locale LANG="$LOCALE" 2>/dev/null
+
+#
+# system definitions for a locale are in the file
+#    /usr/lib/locale/${LOCALE}/locale_def
+#
+if [ "$LOCALE" != "C" ]
+then
+	LOCALEDEF=/usr/lib/locale/${LOCALE}/locale_def
+else
+# this will allow non-US ASCII keyboards to work properly in the C locale
+	if [ "$KEYBOARD" != "NONE" ]
+	then
+		LOCALEDEF=/usr/lib/locale/en_US/locale_def
+	fi
+fi
+
+if [ ! -z "${LOCALEDEF}" -a -r "${LOCALEDEF}" ]
+then
+	. ${LOCALEDEF}
+	if [ "$LOC_MAPCHAN" != "" ]
+	then
+		defadm keyboard MAPCHAN="${LOC_MAPCHAN} " 2>/dev/null
+	else
+		defadm -d keyboard MAPCHAN 2>/dev/null
+	fi
+	if [ "$LOC_TERM" != "" ]
+	then
+		defadm coterm TERM="${LOC_TERM} " 2>/dev/null
+	else
+		defadm coterm TERM="AT386 " 2>/dev/null
+	fi
+	if [ "$LOC_M_TERM" != "" ]
+	then
+		defadm coterm-M TERM="${LOC_M_TERM} " 2>/dev/null
+	else
+		defadm coterm-M TERM="AT386-M " 2>/dev/null
+	fi
+	if [ "$LOC_COFONT" != "" ]
+	then
+		defadm cofont COFONT="${LOC_COFONT} " 2>/dev/null
+	else
+		defadm -d cofont COFONT 2>/dev/null
+	fi
+
+	if [ "$GRAPHICS" = "YES" ]
+	then
+		if [ "$LOC_XMODIFIERS" != "" ]
+		then
+			defadm Xim XMODIFIERS="$LOC_XMODIFIERS " 2>/dev/null
+		else
+			defadm -d Xim XMODIFIERS 2>/dev/null
+		fi
+
+		if [ "$KEYBOARD" != "NONE" ]
+		then
+		    defadm keyboard XKEYBOARD="$KEYBOARD " 2>/dev/null
+		else
+		    defadm keyboard XKEYBOARD="US " 2>/dev/null
+		fi
+		defadm Xim XNLSPATH="/usr/X/lib/Xsi/\$XKEYBOARD " 2>/dev/null
+		if [ "$LOC_NUMLOCK" != "" ]
+		then
+			defadm keyboard NUMLOCK="$LOC_NUMLOCK " 2>/dev/null
+		else
+			defadm -d keyboard NUMLOCK 2>/dev/null
+		fi
+		if [ "$LOC_SHIFTDOWN" != "" ]
+		then
+			defadm keyboard SHIFTDOWN="$LOC_SHIFTDOWN " 2> /dev/null
+		else
+			defadm -d keyboard SHIFTDOWN 2> /dev/null
+		fi
+	fi
+	if [ "$LOC_KCODESET" != "" ] && [ "$LOCALE" != "C" -o "$HOW_INSTALL" = "NORMAL" ]
+	then
+		savepwd=`pwd`
+		cd /usr/lib/iconv/kmods/$LOC_KCODESET
+		/etc/conf/bin/idinstall -k -u ccnv
+		/etc/conf/bin/idbuild  -M ccnv 2>&1 > /dev/null
+		cd $savepwd
+	fi
+	#
+	# set MBCONSOLE in coterm if locale requires it.
+	#
+	if [ "$LOC_MBCONSOLE" = "yes" ]
+	then
+		defadm coterm MBCONSOLE="$LOC_MBCONSOLE" 2>/dev/null
+	fi
+else
+#
+#  If there is not locale file, 
+#  make sure things are set to the default
+#
+
+	if [ "$HOW_INSTALL" = "NORMAL" ]
+	then
+		if [ -x /usr/bin/pcfont ] ; then
+			/usr/bin/pcfont > /dev/null 2> /dev/null
+		fi
+		if [ -x /usr/bin/mapkey ] ; then
+			/usr/bin/mapkey > /dev/null 2> /dev/null
+		fi
+		/usr/bin/mapchan -n > /dev/null 2> /dev/null
+	fi
+	defadm -d cofont COFONT 2>/dev/null
+	defadm coterm TERM="AT386" 2>/dev/null
+	defadm coterm-M TERM="AT386-M" 2>/dev/null
+
+
+
+
+	defadm -d keyboard KEYBOARD XKEYBOARD SHIFTDOWN MAPCHAN XNLSPATH XMODIFIERS NUMLOCK 2>/dev/null
+	defadm -d Xim XMODIFIERS 2>/dev/null
+
+fi
+#
+#  Tack the iconv_data info on the end of the current iconv_data file.
+#
+if [ -f $ICONV/iconv_data ] ; then
+	cp $ICONV/iconv_data $LSVAR/iconv_data
+	cat $LSVAR/iconv_data.ls >> $ICONV/iconv_data
+	mv $LSVAR/iconv_data $LSVAR/iconv_data.ls
+	ICONV_SAVE="YES"
+else
+	cp $LSVAR/iconv_data.ls $ICONV/iconv_data
+	ilist="$ICONV/iconv_data v 0644 bin bin\n$ilist"
+	ICONV_SAVE="NO"
+fi
+
+#
+#  Record what's been configured for the LS
+#  Overwrite what's there.
+#
+
+echo LOCALE=\"$LOCALE\" > $LSVAR/config
+echo KEYBOARD=\"$KEYBOARD\" >> $LSVAR/config
+echo ICONV_SAVE=\"$ICONV_SAVE\" >> $LSVAR/config
+echo DOALL=\"$DOALL\" >> $LSVAR/config
+echo LANGUAGE=\"$LANGUAGE\" >> $LSVAR/config
+echo TERR=\"$TERR\" >> $LSVAR/config
+echo GRAPHICS=\"$GRAPHICS\" >> $LSVAR/config
+#echo CLASSES=\"$CLASSES\" >> $LSVAR/config
+
+if [ "$GRAPHICS" = "YES" ]
+then
+#
+# Turn on input method for the C locale (so foreign keyboards still work)
+#
+
+
+if [ "$KEYBOARD" != "NONE" ] ; then
+    echo >>/usr/X/lib/locale/C/ol_locale_def "\
+!Next line installed by ls
+*inputMethod:Local"
+fi
+
+#
+# set up fonts
+#
+# fonts.alias is handled through a build script.
+# All that is needed here is to run mkfontdir, if it exists
+#
+if [ "$LANGUAGE" = "ja" -o "$DOALL" = "YES" ]
+then
+    if [ -x /usr/X/bin/mkfontdir -a -d /usr/X/lib/fonts/misc ]
+    then
+	/usr/X/bin/mkfontdir /usr/X/lib/fonts/misc
+    fi
+fi
+#
+# assign to flist the names of any fonts that we are not installing.
+# font.list is of the form:
+# locale  font_file_pathname
+#
+flist="`egrep -v \"^#|^${LANGUAGE}[ 	]|^${LANGUAGE}_|^${LANGUAGE}\.[0-9a-zA-Z]*[ 	]|^[^ 	]*_${TERR}[ 	]|^[^	 ]*_${TERR}\.[0-9a-zA-Z]*[ 	]\" $LSVAR/font.list|cut -f2- - | cut -d' ' -f2- - `"
+#
+#  Store packaging info
+#
+fi
+
+if [ "$DOALL" != "YES" ]
+then
+# big removef
+
+# leave the US keyboard in the case of ASCII
+if [ $KEYBOARD = "NONE" ]
+then
+	KEYBOARD=US
+fi
+rlist=`egrep -v "/${KEYBOARD}(\.[0-9]+)?(/|$)" $LSVAR/kb.list`
+
+
+# Make sure the locale corresponding to any language extension package in use
+# is not removed even if the system default locale is not related
+MLOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-C}}}
+if [ "$MLOCALE" != "C" -a "$MLOCALE" != "$LANGUAGE" ]
+then
+	rlist="$rlist `egrep  -v \"(/(${LANGUAGE}|${MLOCALE})(_[a-zA-Z][a-zA-Z])?(\.[a-zA-Z0-9]+)?(/|$))|(/[a-zA-Z][a-zA-Z]_${TERR}(\.[a-zA-Z0-9]+)?(/|$))\" $LSVAR/loc.list`"
+else
+	rlist="$rlist `egrep  -v \"(/${LANGUAGE}(_[a-zA-Z][a-zA-Z])?(\.[a-zA-Z0-9]+)?(/|$))|(/[a-zA-Z][a-zA-Z]_${TERR}(\.[a-zA-Z0-9]+)?(/|$))\" $LSVAR/loc.list`"
+fi
+
+
+echo "$rlist $flist" | removef ls - | xargs rm -rf
+removef -f ls || exit 2
+
+fi
+
+#Assumes that if users want application compatibility they have installed
+# the acp package
+if [ -x /usr/bin/maplocale ]
+then
+	for i in /usr/lib/locale/*
+	do
+		l=`basename $i`
+		set -- `egrep "^$l " $LSVAR/loc.map`
+		if [ $? != 0 ]
+		then
+			continue
+		fi
+		maplocale -fXENIX -t$3 -c$4 $1 2>&1 > /dev/null
+	done
+fi
+
+
+if [ ! -z "$ilist" ]
+then
+echo "$ilist" | sed -e"/^$/d" | installf ls -
+installf -f ls  || exit 2
+fi
+		
+
+
+#
+# All done - exit with correct exit code.
+#
+exit 0
+

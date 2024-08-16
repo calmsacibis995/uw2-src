@@ -1,0 +1,125 @@
+Notes on the ET4000/W32 SDD code:
+=================================
+
+
+   The hardware cursor's foreground and background colors can't be
+programmed.  The three pixel values supported are: 00 = color 0x00,
+01 = color 0xFF, 10 = transparent.   Pixel value 11 is reserved.
+   The SDD code for hardware cursor support is in place, lacking only
+a provision for allocating those colors (00 and FF).  However,
+in my tests of that code the hardware cursor produced most unusual
+results, corrupting display output elsewhere on the screen.
+Reading back all cursor-related registers verified that they were
+indeed properly loaded.  The problem occurred only while the
+cursor was enabled.  Perhaps this is a problem with the early
+revision level of the chip set I'm working with.
+   Define/undefine the UseW32HWCursor symbol in the Imakefile to
+compile with or without hardware cursor support.
+
+
+   The hardware line drawing support is really just the blitter, and is
+effective mainly for vertical, horizontal, and diagonal lines.  It can
+be used to draw arbitrary lines since any line consists of many smaller
+vertical or horizontal segments.  Such short blits can be initiated
+with a single write operation, but the gain there is minimal and didn't
+outweigh related overheads.  A preliminary implementation (not even
+bothering with clipping) proved to be slower than the v256
+assembly-coded line algorithm, so we use the blitter only for the
+cases of vertical, horizontal, and diagonal lines.
+
+
+   The blitter doesn't support a "Destination = Host" mode, so
+screen-to-memory blits can't be accelerated with the blitter,
+and sm_bitblt() wasn't implemented.
+
+
+   The code as it stands has been built with an eye toward
+compatibility with earlier ET4000 chip sets, although right now it
+has been tested just with a W32 board.  Specifically, the video
+configurations for non-W32 boards have been left in place, but a test
+for W32 capabilities is not currently performed and accelerated
+functions are always used.
+
+
+
+Additional notes on the ET4000/W32:
+
+   Mix maps (for bit expands) can be set to 1 (always use foreground) or
+can be supplied by host data (as in ms_stplblt).  Mix maps can't reside
+in memory, so the potential gain from caching downloaded fonts in
+off-screen memory is limited.
+
+   The chip supports 256 different raster ops (functions of Source,
+Pattern, and Destination pixmaps), but doesn't provide a separate plane
+mask register.  The Pattern Pixmap can be used as a plane mask, but
+a conflict arises when the Pattern Pixmap is desired for use as a
+background color.  ms_stplblt() and font_stplblit() are the only
+SDD functions affected by this limitation, and they now handle those
+cases with a little extra work.
+
+CLOCKS INFO
+===========
+
+Actual horizontal total seems to be (Htot + 2).  [ (Htot + 2) * Hsync seems
+to be a constant for a given clock.]
+
+
+		clock	half?	Htot	Vtot	Hsync	Vsync	DotClock
+640x480	2E	0	YES	95	523	31.51	70	24.451
+800x600		3	YES	127	631	34.27	54
+1024x768	3	NO	161	806	54.5	67.5
+
+
+
+800x600/60	4	Yes	126	631	37.88	60.0
+				0x7E	0x277
+  crtc 0 = 0x7E,   crtc 6 = 0x77,   crtc 7.0 = 0,  crtc 7.5 = 1,  crtc 35.1 = 0
+
+800x600/72	0	No	126	660	47.756	72
+				0x7E	0x294
+  crtc 6 = 0x94
+
+1024x768/60	2	No	160	810	48.655	60.06
+1024x768/60	2	No	161	806	48.356	60.06
+				0xA1	0x326
+  crtc 0 = 0xA1
+  crtc 6 = 0x26
+  crtc 7.0 = 1	(vtot bit 8)
+  crtc 7.5 = 1	(vtot bit 9)
+  crtc 35.1 = 0 (vtot bit 10)
+
+1024x768/70	4	No	170	806	56.383	69.954
+				0xAA	0x326
+
+
+Clock	"raw"		havled	
+
+0	48.903		24.451
+1	54.971		27.485
+2	63.244		31.622
+3	70.196		35.098
+4	77.584		38.792
+5	87.067		43.533
+6	61.133		30.566
+7	72.788		36.394
+8	24.444		12.222
+9	27.485		13.742
+A	30.558		15.279
+B	35.075		17.537
+C	38.800		19.400
+D	43.580		21.790
+E	48.329		24.164
+F	63.057		31.528
+
+
+
+Misc register:
+for 800x600:   0x23 | C		where C = 0, 4, 8, or 0xC   (clock&3 * 4)
+
+
+
+clock select lines: 1,0 = misc<3,2>
+		      2 = crtc 34 <1>
+		    4,3 = crtc 31 <7,6>
+
+Set CLK4 for 1024_70 and for 800_72...  

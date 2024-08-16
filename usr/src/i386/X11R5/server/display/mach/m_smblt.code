@@ -1,0 +1,800 @@
+#ident	"@(#)mach:mach/m_smblt.code	1.4"
+
+/***												-*- C -*-
+ ***	NAME
+ ***
+ ***		m_smblt.code : code for handling screen to memory bitblts.
+ ***	
+ ***	SYNOPSIS
+ ***		
+ ***		#define MACH_PIX_TRANS_WIDTH {8,16,32}
+ ***		#define MACH_SM_BITBLT_{8,16,32}
+ ***		#include "m_smblt.code"
+ ***
+ ***	DESCRIPTION
+ ***	
+ ***		This file contains parameterized code for implementing
+ ***	screen to memory bitblts.
+ ***	
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		__DEBUG__ : Enable debugging and assertion checking.
+ ***
+ ***	FILES
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	HISTORY
+ ***	
+ ***/
+
+#if (!defined(MACH_PIX_TRANS_WIDTH))
+#error	Pixtrans width must be defined!
+#endif
+
+/*
+ * Merge raster ops for full src + dest + plane mask
+ *
+ * More clever usage of boolean arithmetic to reduce the
+ * cost of complex raster ops.  This is for bitblt and
+ * reduces all 16 raster ops + planemask to a single
+ * expression:
+ *
+ *  dst = dst & (src & ca1 ^ cx1) ^ (src & ca2 ^ cx2)
+ *
+ * The array below contains the values for c?? for each
+ * raster op.  Those values are further modified by
+ * planemasks on multi-plane displays as follows:
+ *
+ *  ca1 &= pm;
+ *  cx1 |= ~pm;
+ *  ca2 &= pm;
+ *  cx2 &= pm;
+ */
+
+#define DECLARE_MERGEROP_BITS(TYPE,SIZE)\
+typedef struct _mergeRopBits##SIZE\
+{\
+	 TYPE ca1, cx1, ca2, cx2;\
+} mergeRopRec##SIZE, *mergeRopPtr##SIZE;\
+static mergeRopRec##SIZE mergeRopBits##SIZE[16] = {\
+O,O,O,O,		/* clear			0x0				0 */\
+I,O,O,O,		/* and				0x1				src AND dst */\
+I,O,I,O,		/* andReverse		0x2				src AND NOT dst */\
+O,O,I,O,		/* copy				0x3				src */\
+I,I,O,O,		/* andInverted		0x4				NOT src AND dst */\
+O,I,O,O,		/* noop				0x5				dst */\
+O,I,I,O,		/* xor				0x6				src XOR dst */\
+I,I,I,O,		/* or				0x7				src OR dst */\
+I,I,I,I,		/* nor				0x8				NOT src AND NOT dst */\
+O,I,I,I,		/* equiv			0x9				NOT src XOR dst */\
+O,I,O,I,		/* invert			0xa				NOT dst */\
+I,I,O,I,		/* orReverse		0xb				src OR NOT dst */\
+O,O,I,I,		/* copyInverted		0xc				NOT src */\
+I,O,I,I,		/* orInverted		0xd				NOT src OR dst */\
+I,O,O,I,		/* nand				0xe				NOT src OR NOT dst */\
+O,O,O,I,		/* set				0xf				1 */\
+}
+
+/*
+ * This macro expects that pm the plane mask is the same width as the
+ * pixtrans register. In case it is not then the planemask is replicated
+ * to the width of the pixtrans register
+ */
+#define InitializeMergeRop(alu,pm,size) {\
+	mergeRopPtr##size  _bits; \
+	_bits = &mergeRopBits##size[alu]; \
+	_ca1 = _bits->ca1 &  pm; \
+	_cx1 = _bits->cx1 | ~pm; \
+	_ca2 = _bits->ca2 &  pm; \
+	_cx2 = _bits->cx2 &  pm; \
+}
+
+#define O 0
+
+#if (MACH_PIX_TRANS_WIDTH == 8)
+
+#define I (unsigned char)(~0)
+DECLARE_MERGEROP_BITS(unsigned char, 8);
+#define DeclareMergeRop() unsigned char   _ca1, _cx1, _ca2, _cx2;
+#define MROP_GENERAL_INITIALIZE(alu,pm)	\
+	InitializeMergeRop(alu,pm,8)
+#define SM_BITBLT_NAME mach_screen_to_memory_bitblt_8
+#define TYPE unsigned char
+
+#elif (MACH_PIX_TRANS_WIDTH == 16)
+
+#define I (unsigned short)(~0)
+DECLARE_MERGEROP_BITS(unsigned short, 16);
+#define DeclareMergeRop() unsigned short   _ca1, _cx1, _ca2, _cx2;
+#define MROP_GENERAL_INITIALIZE(alu,pm)	\
+	InitializeMergeRop(alu,pm,16)
+#define SM_BITBLT_NAME mach_screen_to_memory_bitblt_16
+#define TYPE unsigned short
+
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+
+#define I (unsigned long)(~0)
+DECLARE_MERGEROP_BITS(unsigned long, 32);
+#define DeclareMergeRop() unsigned long   _ca1, _cx1, _ca2, _cx2;
+#define MROP_GENERAL_INITIALIZE(alu,pm)	\
+	InitializeMergeRop(alu,pm,32)
+#define SM_BITBLT_NAME mach_screen_to_memory_bitblt_32
+#define TYPE unsigned long
+
+#else
+#error Unsupported pixtrans width.
+#endif
+
+#undef O
+#undef I
+
+
+#define DoMergeRop(src, dst) \
+	((dst) & ((src) & _ca1 ^ _cx1) ^ ((src) & _ca2 ^ _cx2))
+
+#define DoMaskMergeRop(src, dst, mask) \
+	((dst) & (((src) & _ca1 ^ _cx1) | ~(mask)) ^ (((src) & _ca2 ^ _cx2) & (mask)))
+
+/*
+ * For rop = GXcopy
+ */
+#define MROP_COPY_DECLARE()
+#define MROP_COPY_DECLARE_REG()
+#define MROP_COPY_INITIALIZE(alu,pm)
+#define MROP_COPY_SOLID(src,dst)		(src)
+#define MROP_COPY_MASK(src,dst,mask)	((dst) & ~(mask) | (src) & (mask))
+
+/*
+ * For all other rops
+ */
+#define MROP_GENERAL_DECLARE()			DeclareMergeRop()
+#define MROP_GENERAL_DECLARE_REG()		register DeclareMergeRop()
+#define MROP_GENERAL_SOLID(src,dst)		DoMergeRop(src,dst)
+#define MROP_GENERAL_MASK(src,dst,mask)	DoMaskMergeRop(src, dst, mask)
+
+static SIBool
+SM_BITBLT_NAME (const SIbitmapP destination_p, SIint32 source_x, 
+				SIint32 source_y, SIint32 destination_x, 
+				SIint32 destination_y, SIint32 width, SIint32 height)
+{
+	unsigned short dp_config;
+	int ppw, destination_step, current_rop, startpix, endpix, midpix;
+	int numwords;
+#if (MACH_PIX_TRANS_WIDTH == 8)
+	unsigned char 	widthmask;
+	unsigned char	startmask;
+	unsigned char	endmask;
+	unsigned char	*destination_bits_p;	
+#elif (MACH_PIX_TRANS_WIDTH == 16)
+	unsigned short 	widthmask;
+	unsigned short	startmask;
+	unsigned short	endmask;
+	unsigned short	*destination_bits_p;	
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+	unsigned long 	widthmask;
+	unsigned long	startmask;
+	unsigned long	endmask;
+	unsigned long	*destination_bits_p;	
+#else
+#error Unsupported pixtrans width.
+#endif
+	
+	MACH_CURRENT_SCREEN_STATE_DECLARE();
+
+	MACH_CURRENT_GRAPHICS_STATE_DECLARE();
+	
+	MROP_GENERAL_DECLARE();
+
+	
+	ASSERT(IS_OBJECT_STAMPED(GENERIC_SCREEN_STATE,
+							 generic_current_screen_state_p));
+	ASSERT(IS_OBJECT_STAMPED(MACH_SCREEN_STATE, screen_state_p));
+	
+	ASSERT(IS_OBJECT_STAMPED(MACH_GRAPHICS_STATE, graphics_state_p));
+
+	ASSERT(IS_OBJECT_STAMPED(GENERIC_GRAPHICS_STATE,
+		 (struct generic_graphics_state *) graphics_state_p));
+	
+	ASSERT(!MACH_IS_IO_ERROR());
+	ASSERT(!MACH_IS_DATA_READY());
+	
+#if (defined(__DEBUG__))
+	if (mach_bitblt_debug)
+	{
+		(void) fprintf(debug_stream_p,
+"(mach_screen_to_memory_bitblt_%d)\n"
+"{\n"
+"\tdestination_p = %p\n"
+"\tsource_x = %ld\n"
+"\tsource_y = %ld\n"
+"\tdestination_x = %ld\n"
+"\tdestination_y = %ld\n"
+"\twidth = %ld\n"
+"\theight = %ld\n"
+"}\n",
+					   MACH_PIX_TRANS_WIDTH,
+					   (void *) destination_p, source_x, source_y,
+					   destination_x, destination_y, width, height);
+	}
+#endif
+
+	if (width <= 0 || height <= 0 || 
+		MACH_IS_X_OUT_OF_BOUNDS(source_x) ||
+		MACH_IS_Y_OUT_OF_BOUNDS(source_y) ) 
+	{
+		return (SI_SUCCEED);
+	}
+
+	/*
+	 * Switch to ATI context.
+	 */
+	MACH_STATE_SWITCH_TO_ATI_CONTEXT(screen_state_p);
+	
+	if (screen_state_p->generic_state.screen_current_clip !=
+		GENERIC_CLIP_TO_VIRTUAL_SCREEN)
+	{
+#if (defined(__DEBUG__))
+		if (mach_bitblt_debug)
+		{
+			(void) fprintf(debug_stream_p,
+"(mach_screen_to_memory_bitblt_%d) resetting clip rectangle {\n"
+"\tfrom (%hd,%hd),(%hd,%hd)\n"
+"\tto (%d,%d),(%d,%d)\n"
+"}\n",
+			   MACH_PIX_TRANS_WIDTH,
+			   screen_state_p->register_state.ext_scissor_l,
+			   screen_state_p->register_state.ext_scissor_t,
+			   screen_state_p->register_state.ext_scissor_r,
+			   screen_state_p->register_state.ext_scissor_b,
+			   0,
+			   0,
+			   screen_state_p->generic_state.screen_virtual_width-1,
+			   screen_state_p->generic_state.screen_virtual_height-1);
+		}
+#endif
+	  
+		MACH_STATE_SET_ATI_CLIP_RECTANGLE(screen_state_p, 0, 0,
+						screen_state_p->generic_state.screen_virtual_width,
+						screen_state_p->generic_state.screen_virtual_height);
+		
+		ASSERT(!MACH_IS_IO_ERROR());
+		
+		screen_state_p->generic_state.screen_current_clip =
+			GENERIC_CLIP_TO_VIDEO_MEMORY;
+		MACH_STATE_SET_FLAGS(screen_state_p, MACH_INVALID_CLIP);
+								/* deviation from SI specified clip */
+	}
+
+	/*
+	 * Synchronize registers with the graphics state.
+	 */
+	MACH_STATE_SYNCHRONIZE_STATE(screen_state_p,
+								 MACH_BITBLT_DEPENDENCIES);
+	
+	/* 
+	 * for mach8/mach32/S3 (16/32 bpp) => (ppw=0) 
+	 */
+	ppw = screen_state_p->pixels_per_pixtrans;
+	
+	
+	/*
+	 * Since we know that the destination bitmap will always be an integral
+	 * number of long words (32 bits), roundoff destination_step to the number
+	 * of chars contained till the next longword boundary or in otherwords
+	 * round it off to the next multiple of four.
+	 */
+
+	destination_step = 
+		(((destination_p->Bwidth +
+		   ((32 >> screen_state_p->generic_state.screen_depth_shift) - 1)) &  
+		   ~((32 >> screen_state_p->generic_state.screen_depth_shift)
+			 - 1)) <<
+		 screen_state_p->generic_state.screen_depth_shift) >> 3;
+	
+
+	/*
+	 * We cannot handle some cases in the mergerop scheme. These
+	 * are the cases when the pixel size is more than the pixtrans
+	 * width and the rop is not gxcopy. In such cases the mergerop
+	 * strategy would fail. Hence for these cases return SIFail.
+	 */
+	current_rop =
+		graphics_state_p->generic_state.si_graphics_state.SGmode;
+	
+	if (!ppw && current_rop != GXcopy)
+	{
+		/*
+		 * We can't handle this case.
+		 */
+		return (SI_FAIL);
+	}
+	
+	/*
+	 *   Pixtrans word boundaries in the destination bitmap
+     *   |        |        |        |        |        |        |        |
+     *   |        |        |        |        |        |        |        |
+     *     ^      ^                                   ^       ^
+	 *     |start |<--------- middle pixels --------->|  end  |
+	 *     |pixels|                                   | pixels|
+	 *
+	 * We would attempt to do the blit in the following fashion. Compute
+	 * the start and the end strips such that we leave an integral number
+	 * of pixtrans words to be read for the middle strip. The middle pixels
+	 * should be done using rep insw and the outside strips would be 
+	 * done seperately. Remember that we should not modify any area outside
+	 * the destination rectangle than that specified by dx,dy,wid,hgt. 
+	 */
+	if (ppw)
+	{
+		SIint32		delta = ppw - 1;
+
+		/*
+		 * Are there any ragged pixels at the beginning ?
+		 */
+		if ( destination_x & delta )
+		{
+			startpix = ppw - (destination_x & delta);
+		}
+		else
+		{
+			startpix = 0;
+		}
+
+		/*
+		 * Compute the startmask.
+		 */
+		if ( startpix )
+		{
+			int		i = ppw - startpix ;
+
+			startmask = (TYPE) ~0;
+			while (i--)
+			{
+				startmask = startmask << destination_p->BbitsPerPixel;
+			}
+		}
+		else
+		{
+			startmask = 0;
+		}
+		
+
+		/*
+		 * Compute the number of ragged pixels in the end
+		 */
+		endpix = (destination_x + width - 1) & delta;
+		if ( endpix == delta )
+		{
+			endpix  = 0;
+		}
+		else
+		{
+			endpix++;
+		}
+
+		/*
+		 * Compute the endmask.
+		 */
+		if (endpix)
+		{
+			int		i = endpix - 1;
+			
+			endmask = (1 << destination_p->BbitsPerPixel) - 1;
+			while (i--)
+			{
+				endmask |= endmask << destination_p->BbitsPerPixel;
+			}
+		}
+		else
+		{
+			endmask = 0;
+		}
+		
+		/*
+		 * Move destination_x back to previous word boundary
+		 */
+		destination_x &= ~(ppw - 1);
+		
+		/*
+		 * Adjust the startmask, endmask and compute the number of 
+		 * middle pixels.
+		 * Is there more than one word in the width ?
+		 */
+		if ( width <= startpix )
+		{
+			int i = startpix - width;
+			
+			/*
+			 * Adjust startpix to be equal to width, and also remove the
+			 * unnecessary bits from the startmask.
+			 */
+			startpix = width;
+
+			/*
+			 * Move sx such that the destination is aligned. Also adjust
+			 * the width.
+			 */
+			source_x -= ppw - (startpix + i);
+			width += ppw - (startpix + i);
+
+			/*
+			 * Compute the endmask. And this with the startmask and get the 
+			 * correct value of startmask.
+			 */
+			if (endpix)
+			{
+				width += ppw - endpix;
+			}
+
+			widthmask = (TYPE) ~0;
+			while (i-- > 0)
+			{
+				widthmask = widthmask >> (unsigned)destination_p->BbitsPerPixel;
+			}
+
+			startmask = startmask & widthmask;
+			midpix = endpix = numwords = 0;
+			endmask = 0;
+
+
+		}
+		else
+		{
+			/*
+			 * Compute the number of middle pixels that are contained
+			 * in whole pixtrans words.
+			 */
+			if ( (startpix + endpix) < width )
+			{
+				midpix = (width - ( startpix + endpix )) ;
+				numwords = midpix/ppw ;
+			}
+			else
+			{
+				midpix = 0;
+			}
+			/*
+			 * Adjust the source boundary such that the destination is
+			 * aligned. Also adjust width.
+			 */
+			if (startpix)
+			{
+				source_x -= ppw - startpix;
+				width += ppw - startpix;
+			}
+			if (endpix)
+			{
+				width += ppw - endpix;
+			}
+		}
+	}
+	else
+	{
+		startpix = endpix = 0;
+		midpix = width; 
+		numwords = width * destination_p->BbitsPerPixel / MACH_PIX_TRANS_WIDTH;
+	}
+
+	/*
+	 * Initialize the Mergerop variables in case the current rop
+	 * is not GXcopy.
+	 */
+	if ( current_rop != GXcopy)
+	{
+		int				i;
+#if (MACH_PIX_TRANS_WIDTH == 8)
+		unsigned char	pm;
+#elif (MACH_PIX_TRANS_WIDTH == 16)
+		unsigned short	pm;
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+		unsigned long	pm;
+#else
+#error Unsupported pixtrans width.
+#endif
+
+		pm = graphics_state_p->generic_state.si_graphics_state.SGpmask;
+		/*
+		 * Replicate the pmask to the entire pixtrans width.
+		 */
+		for ( i = 0; i < ppw-1; i++)
+		{
+			pm |= pm << destination_p->BbitsPerPixel;
+		}
+		MROP_GENERAL_INITIALIZE(current_rop,pm)	;
+	}
+
+	/*
+	 * Compute the destination_bits_p value, the start of the destination area.
+	 */
+
+	destination_bits_p = (void *) 
+		(((unsigned char *)destination_p->Bptr) +
+		 (destination_y * destination_step));
+	
+	if ( destination_p->BbitsPerPixel < 8 )
+	{
+		destination_bits_p = (void *) 
+			(((unsigned char *)destination_bits_p) +
+			 ((destination_x * destination_p->BbitsPerPixel) >> 3)); 
+	}
+	else
+	{
+		destination_bits_p = (void *)
+			(((unsigned char *)destination_bits_p) +
+			 (destination_x * (destination_p->BbitsPerPixel >> 3))); 
+	}
+
+	/*
+	 * All parameters ready. Do the blit from screen to memory.
+	 * First set the blit parameter registers.
+	 */
+	
+	dp_config = screen_state_p->dp_config_flags |
+		MACH_DP_CONFIG_FG_COLOR_SRC_BLIT |
+		MACH_DP_CONFIG_ENABLE_DRAW;
+
+#if (defined(__DEBUG__))
+	if (mach_bitblt_debug)
+	{
+		(void) fprintf(debug_stream_p,
+"(mach_screen_to_memory_bitblt_%d)\n"
+"{\n"
+"\tsource_x = %ld\n"
+"\tsource_y = %ld\n"
+"\twidth = %ld\n"
+"\theight = %ld\n"
+"\tdestination_p->Bptr = %p\n"
+"\tdestination_bits_p = %p\n"
+"\tdp_config = 0x%x\n"
+"\tdestination_step = %d\n"
+"\tstartpix = %d\n"
+"\tendpix = %d\n"
+"\tmidpix = %d\n"
+"\tstartmask = 0x%x\n"
+"\tendmask = 0x%x\n"
+"\tnumwords = %d\n"
+"}\n",
+					   MACH_PIX_TRANS_WIDTH,
+					   source_x, source_y, width, height,
+					   (void *) destination_p->Bptr,
+					   (void *) destination_bits_p,
+					   dp_config,
+					   destination_step, startpix, endpix, midpix,
+					   (int) startmask, (int) endmask, numwords);
+	}
+#endif
+
+	MACH_STATE_SET_DP_CONFIG(screen_state_p, dp_config);
+
+	MACH_WAIT_FOR_FIFO(6);
+	outw(MACH_REGISTER_SRC_Y_DIR,1);
+	outw(MACH_REGISTER_CUR_X, source_x);
+	outw(MACH_REGISTER_DEST_X_START, source_x);
+	outw(MACH_REGISTER_DEST_X_END, source_x+width);
+	outw(MACH_REGISTER_CUR_Y, source_y);
+	outw(MACH_REGISTER_DEST_Y_END,source_y+height); /* start the blit */
+
+	/*
+	 * Wait for data ready from the Graphics engine before doing
+	 * the read from the pixtrans register.
+	 */
+	MACH_WAIT_FOR_DATA_READY();
+
+	ASSERT(height > 0);
+	
+	/*
+	 * Copy one line at a time from the screen rectangle.
+	 */
+	if (current_rop == GXcopy )
+	{
+		do 
+		{
+#if (MACH_PIX_TRANS_WIDTH == 8)
+			unsigned char *tmpptr;
+#elif (MACH_PIX_TRANS_WIDTH == 16)
+			unsigned short *tmpptr;
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+			unsigned long *tmpptr;
+#else
+#error Unsupported pixtrans width.
+#endif
+
+			tmpptr = destination_bits_p;
+
+			if ( startpix )
+			{
+#if (MACH_PIX_TRANS_WIDTH == 8 )
+				unsigned char data;
+#elif (MACH_PIX_TRANS_WIDTH == 16 )
+				unsigned short data;
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+				unsigned long data;
+#else
+#error Unsupported Pixtrans width.
+#endif
+				(*screen_state_p->screen_read_pixels_p)(
+						screen_state_p->pixtrans_register,
+						1,
+						(void *)&data);
+				*tmpptr = MROP_COPY_MASK ( data, *tmpptr, startmask );
+				tmpptr++;
+			}
+
+			if ( midpix )
+			{
+				SIint32		midwords;
+
+				midwords = numwords;
+
+				ASSERT(numwords > 0);
+				
+				(*screen_state_p->screen_read_pixels_p)(
+						screen_state_p->pixtrans_register,
+						midwords,
+						(void *)tmpptr);
+				tmpptr += midwords;
+			}
+
+			if ( endpix )
+			{
+#if (MACH_PIX_TRANS_WIDTH == 8)
+				unsigned char data;
+#elif (MACH_PIX_TRANS_WIDTH == 16)
+				unsigned short data;
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+				unsigned long data;
+#else
+#error Unsupported pix trans width.
+#endif
+				(*screen_state_p->screen_read_pixels_p)(
+						screen_state_p->pixtrans_register,
+						1,
+						(void *)&data);
+				*tmpptr = MROP_COPY_MASK ( data, *tmpptr, endmask );
+			}
+
+			/*
+			 * Move to the next line in the destination pixmap.
+			 */
+			destination_bits_p = (void *)
+				(((unsigned char *)destination_bits_p) +
+				 destination_step);
+		} while (--height > 0);
+	} 
+	else /* not GXcopy, all other modes */
+	{
+		while ( height-- )
+		{
+#if (MACH_PIX_TRANS_WIDTH == 8 )
+			unsigned char *tmpptr;
+#elif (MACH_PIX_TRANS_WIDTH == 16 )
+			unsigned short *tmpptr;
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+			unsigned long *tmpptr;
+#else
+#error Unsupported pixtrans width.
+#endif
+
+			tmpptr = destination_bits_p;
+
+			if ( startpix )
+			{
+#if (MACH_PIX_TRANS_WIDTH == 8 )
+				unsigned char data;
+#elif (MACH_PIX_TRANS_WIDTH == 16 )
+				unsigned short data;
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+				unsigned long data;
+#else
+#error Unsupported pixtrans width.
+#endif
+				(*screen_state_p->screen_read_pixels_p)(
+						screen_state_p->pixtrans_register,
+						1,
+						(void *)&data);
+				*tmpptr = MROP_GENERAL_MASK ( data, *tmpptr, startmask );
+				tmpptr++;
+			}
+
+			if (midpix)
+			{
+				SIint32		midwords;
+				midwords = numwords;
+				while ( midwords-- )
+				{
+#if (MACH_PIX_TRANS_WIDTH == 8)
+					unsigned char data;
+#elif (MACH_PIX_TRANS_WIDTH == 16)
+					unsigned short data;
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+					unsigned long data;
+#else
+#error Unsupported pixtrans width.
+#endif
+					(*screen_state_p->screen_read_pixels_p)(
+							screen_state_p->pixtrans_register,
+							1,
+							(void *)&data);
+					*tmpptr = MROP_GENERAL_SOLID(data,*tmpptr);
+					tmpptr++;
+				}
+			}
+
+			if (endpix)
+			{
+#if (MACH_PIX_TRANS_WIDTH == 8 )
+				unsigned char data;
+#elif (MACH_PIX_TRANS_WIDTH == 16 )
+				unsigned short data;
+#elif (MACH_PIX_TRANS_WIDTH == 32)
+				unsigned long data;
+#else
+#error Unsupported pixtrans width.
+#endif
+				(*screen_state_p->screen_read_pixels_p)(
+						screen_state_p->pixtrans_register,
+						1,
+						(void *)&data);
+				*tmpptr = MROP_GENERAL_MASK ( data, *tmpptr, endmask );
+			}
+
+			/*
+			 * Move to the next line in the destination pixmap.
+			 */
+			destination_bits_p = (void *)
+				(((unsigned char *)destination_bits_p) + destination_step);
+		}
+	}
+
+	/*
+	 * Restore clip state.
+	 */
+	
+	MACH_WAIT_FOR_FIFO(2);	
+	outw(MACH_REGISTER_EXT_SCISSOR_L,
+		 screen_state_p->register_state.ext_scissor_l);
+	outw(MACH_REGISTER_EXT_SCISSOR_R,
+		 screen_state_p->register_state.ext_scissor_r);
+	
+	/*
+	 * Every blit invalidates the pattern registers.
+	 */
+	MACH_STATE_SET_FLAGS(screen_state_p,
+						 MACH_INVALID_PATTERN_REGISTERS);
+	
+	ASSERT(!MACH_IS_IO_ERROR());
+	ASSERT(!MACH_IS_DATA_READY());
+	
+	return (SI_SUCCEED);
+}
+
+/*
+ * Clean up.
+ */
+#undef MACH_PIX_TRANS_WIDTH
+#undef DECLARE_MERGEROP_BITS
+#undef InitializeMergeRop
+#undef DeclareMergeRop
+#undef DoMergeRop
+#undef DoMaskMergeRop
+
+#undef MROP_COPY_DECLARE
+#undef MROP_COPY_DECLARE_REG
+#undef MROP_COPY_INITIALIZE
+#undef MROP_COPY_SOLID
+#undef MROP_COPY_MASK
+
+#undef MROP_GENERAL_DECLARE
+#undef MROP_GENERAL_DECLARE_REG
+#undef MROP_GENERAL_INITIALIZE
+#undef MROP_GENERAL_SOLID
+#undef MROP_GENERAL_MASK
+#undef SM_BITBLT_NAME
+#undef TYPE

@@ -1,0 +1,264 @@
+#ident	"@(#)fr_le:common/le/fr/pkg/postinstall	1.11"
+
+#		Copyright (c) 1990, 1991, 1992, 1993, 1994, 1995 Novell, Inc. All Rights Reserved.
+#		Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.
+#		  All Rights Reserved
+
+#		THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#		The copyright notice above does not evidence any
+#		actual or intended publication of such source code.
+
+
+LNG=`echo $PKGINST | cut -c1-2`
+
+>/tmp/$PKGINST.ReMoVe
+>/tmp/$PKGINST.InStAlL
+
+#
+# localized dynatext files must be moved if an alternate install
+# directory was specified during dynatext installation
+#
+
+DOC_ROOT=/usr/doc
+DOC_RELOC=`grep "^DOC_ROOT=" /var/sadm/pkg/dynatext/pkginfo 2>/dev/null`
+[ -z "$DOC_RELOC" ] || eval "$DOC_RELOC"
+if [ "$DOC_ROOT" != "/usr/doc" ]
+then
+	cd /usr/doc/data/config
+	find $LNG -type d -print |\
+		cpio -pdumv $DOC_ROOT/data/config 2>/dev/null |\
+		xargs printf "%s d 0555 bin bin\n" \
+		>>/tmp/$PKGINST.InStAlL
+
+	find $LNG -type f -print |\
+		cpio -pdumv $DOC_ROOT/data/config 2>/dev/null |\
+		xargs printf "%s f 0444 bin bin\n" \
+		>>/tmp/$PKGINST.InStAlL
+
+	find /usr/doc/data/config/$LNG -print \
+		>>/tmp/$PKGINST.ReMoVe
+fi
+
+#Check that all the needed codeset conversion tables are there for merge.
+
+md=/usr/lib/merge/mergemsg
+dd=/usr/lib/merge/dosmsg
+lcsd=/usr/lib/merge/lcs
+
+[ ! -f $lcsd/437.lcs ] && [ -f $lcsd/pc437.lcs ] && \
+	echo "$lcsd/437.lcs=$lcsd/pc437.lcs l" >>/tmp/$PKGINST.InStAlL
+
+#
+#	Link related locales
+#
+
+DIR=/usr/lib/locale
+cd ${DIR}
+for i in $LNG*
+do
+	[ -d "$i" ] || continue
+
+	# Link merge catalogs
+	mergelang=""
+	linklang=""
+
+	case "$i" in
+		*.437)	 mergelang=$LNG.437 ;;
+		*.88591) mergelang=$LNG.8859 ;;
+		*.*)	 : ;;
+		*)	 mergelang=$LNG.8859 ;;
+	esac
+
+	if [ "$mergelang" != "" ]
+	then
+		case "$i" in
+			*.*)	linklang=$i ;;
+			*)	linklang=$i.lmf ;;
+		esac
+
+		(   [ -f $md/$mergelang ] && [ ! -f $md/$linklang ] && \
+			echo "$md/$linklang=$md/$mergelang l"
+		    [ -f $dd/$mergelang ] && [ ! -f $dd/$linklang ] && \
+			echo "$dd/$linklang=$dd/$mergelang l"
+		) >>/tmp/$PKGINST.InStAlL
+	fi
+
+	# Link UNIX catalogs
+	case "$i" in
+		$LNG)	 continue ;;
+		*.88591) : ;;
+		*.*)	 continue ;;	# don't support other codesets
+		*)	 : ;;
+	esac
+
+	[ -d $i/LC_MESSAGES ] || installf $PKGINST ${DIR}/$i/LC_MESSAGES d 0555 bin bin
+	for cat in `ls $LNG/LC_MESSAGES`
+	do
+		[ -f $i/LC_MESSAGES/$cat ] || \
+		    echo "${DIR}/$i/LC_MESSAGES/$cat=${DIR}/$LNG/LC_MESSAGES/$cat l"
+	done >>/tmp/$PKGINST.InStAlL
+	
+	# Link miscellaneous other directories
+	(   [ -d /etc/dcu.d/locale/$i ] || \
+	  	echo "/etc/dcu.d/locale/$i=/etc/dcu.d/locale/$LNG s"
+
+	    [ -d /etc/inst/locale/$i ] || \
+	  	echo "/etc/inst/locale/$i=/etc/inst/locale/$LNG s"
+
+	    [ -d $DOC_ROOT/data/config/$i ] || \
+	  	echo "$DOC_ROOT/data/config/$i=$DOC_ROOT/data/config/$LNG s"
+
+	    [ -d $DOC_ROOT/data/Xuw/defaults/$i ] || \
+	  	echo "$DOC_ROOT/data/Xuw/defaults/$i=$DOC_ROOT/data/Xuw/defaults/$LNG s"
+
+	    [ -d /usr/lib/drf/locale/$i ] || \
+	  	echo "/usr/lib/drf/locale/$i=/usr/lib/drf/locale/$LNG s"
+
+	    [ -d /usr/share/lib/mailx/$i ] || \
+	  	echo "/usr/share/lib/mailx/$i=/usr/share/lib/mailx/$LNG s"
+	) >>/tmp/$PKGINST.InStAlL
+
+done
+
+# More setup for EBT
+
+(   [ -d $DOC_ROOT/data/Xuw/defaults/$LNG ] || \
+	echo "$DOC_ROOT/data/Xuw/defaults/$LNG=$DOC_ROOT/data/Xuw/defaults/C s"
+    [ -d $DOC_ROOT/data/config/$LNG/styles ] || \
+	echo "$DOC_ROOT/data/config/$LNG/styles=$DOC_ROOT/data/config/C/styles s"
+    [ -f $DOC_ROOT/data/config/C/accent.x ] && \
+	echo "$DOC_ROOT/data/config/$LNG/accent.x=$DOC_ROOT/data/config/C/accent.x l"
+    [ -f $DOC_ROOT/data/config/C/font.map ] && \
+	echo "$DOC_ROOT/data/config/$LNG/font.map=$DOC_ROOT/data/config/C/font.map l"
+    [ -f $DOC_ROOT/data/config/C/g\* ] && \
+	echo "$DOC_ROOT/data/config/$LNG/g*=$DOC_ROOT/data/config/C/g* l"
+) >>/tmp/$PKGINST.InStAlL
+
+# Pick up AUTOMERGE and PKGINSTALL_TYPE from env file created by preinstall
+[ -f /etc/inst/save.user/${PKGINST}.env ] &&
+	. /etc/inst/save.user/${PKGINST}.env
+
+SCRIPTS=/usr/sbin/pkginst
+
+# If overlay installation, move all volatile files to save directory
+# and send e-mail.
+
+if [ "$PKGINSTALL_TYPE" = "OVERLAY" ]
+then
+	${SCRIPTS}/pkgmrgconf "${PKGINST}" "$AUTOMERGE" "$NAME"
+fi
+rm -f /etc/inst/save.user/${PKGINST}.env
+
+# If 1.1 upgrade, restore app-defaults files from 1.1 if we haven't
+# changed them in 2.0, to preserve as many user modifications
+# as possible
+
+DT_UPGRADE_STORE=/usr/X/.SAV2.0/locale/$LNG/app-defaults
+SAVE=/var/sadm/pkg/$PKGINST/save
+[ -d $SAVE ] || installf $PKGINST ${SAVE} d 0755 root sys
+if [ -r /var/sadm/pkg/$PKGINST/install/up.files ]
+then
+	while read file_name
+	do
+		full_name=/usr/X/lib/locale/$LNG/app-defaults/$file_name
+		if [ "$PKGINSTALL_TYPE" = "UPGRADE" ]
+		then
+			if [ -f $DT_UPGRADE_STORE/$file_name ]
+			then
+				cp $DT_UPGRADE_STORE/$file_name $SAVE
+				echo "$SAVE/$file_name f 0444 bin bin"
+			fi
+		fi
+		if [ -r $SAVE/$file_name ]
+		then
+			for i in /usr/X/lib/locale/$LNG*/app-defaults
+			do
+				[ "$i" = "/usr/X/lib/locale/$LNG/app-defaults" ] || \
+				    ls $i/$file_name 2>/dev/null
+			done >>/tmp/$PKGINST.ReMoVe
+			cp $SAVE/$file_name $full_name
+			echo "$full_name v 0444 bin bin"
+		fi
+	done </var/sadm/pkg/$PKGINST/install/up.files \
+	>> /tmp/$PKGINST.InStAlL
+fi
+
+cat /tmp/$PKGINST.ReMoVe | removef $PKGINST - 2>/dev/null
+[ -s /tmp/$PKGINST.ReMoVe ] && rm -rf `cat /tmp/$PKGINST.ReMoVe`
+rm /tmp/$PKGINST.ReMoVe
+removef -f $PKGINST
+
+# Link related X locales
+XDIR=/usr/X/lib/locale
+if [ -d ${XDIR} ]
+then
+	cd ${XDIR}
+	for i in $LNG*
+	do
+		[ -d "$i" ] || continue
+		case "$i" in
+			*.88591) : ;;
+			*.*)	 continue ;;	# don't support other codesets
+			*)	 : ;;
+		esac
+
+		# Edit DtCalc app-defaults that were installed by the LS package
+		if [ -f /usr/X/lib/locale/$i/app-defaults/DtCalc ]
+		then
+			cp /usr/X/lib/locale/$i/app-defaults/DtCalc /tmp/tmpa
+			while read line
+			do
+				if [ "$line" = "!translate" ]
+				then
+					read name old_val
+					set `grep "^$name" /var/opt/$PKGINST/DtCalc`
+					shift
+					sed -e "/^$name/s/$old_val/$*/" /tmp/tmpa >/tmp/tmpb
+					mv /tmp/tmpb /tmp/tmpa
+				fi
+			done </usr/X/lib/locale/$i/app-defaults/DtCalc
+			mv /tmp/tmpa /usr/X/lib/locale/$i/app-defaults/DtCalc
+		else
+			cp /var/opt/$PKGINST/DtCalc /usr/X/lib/locale/$i/app-defaults/DtCalc
+		fi
+		echo "/usr/X/lib/locale/$i/app-defaults/DtCalc v 0444 bin bin"
+		
+		if [ "$i" = "$LNG" ]
+		then
+			continue
+		fi
+
+		# Hard link any README.UW2.0.sys files that don't already exist
+		[ -f $i/README.UW2.0.sys ] || \
+		    echo "${XDIR}/$i/README.UW2.0.sys=${XDIR}/$LNG/README.UW2.0.sys l"
+
+		# Hard link any README.UW2.0.user files that don't already exist
+		[ -f $i/README.UW2.0.user ] || \
+		    echo "${XDIR}/$i/README.UW2.0.user=${XDIR}/$LNG/README.UW2.0.user l"
+
+		# Hard link any system.mwmrc files that don't already exist
+		[ -f $i/system.mwmrc ] || \
+		    echo "${XDIR}/$i/system.mwmrc=${XDIR}/$LNG/system.mwmrc l"
+
+		# Hard link any app-defaults files that don't already exist
+		[ -d $i/app-defaults ] || \
+		    installf $PKGINST ${XDIR}/$i/app-defaults d 0555 bin bin
+		for app in `ls $LNG/app-defaults`
+		do
+			[ -f $i/app-defaults/$app ] || \
+			    echo "${XDIR}/$i/app-defaults/$app=${XDIR}/$LNG/app-defaults/$app l"
+		done
+
+		# Symbolically link help directories
+		[ -d $i/help ] || \
+  			echo "${XDIR}/$i/help=${XDIR}/$LNG/help s"
+		
+		# Symbolically link messages directories
+		[ -d $i/messages ] || \
+  			echo "${XDIR}/$i/messages=${XDIR}/$LNG/messages s"
+	
+	done >>/tmp/$PKGINST.InStAlL
+fi
+cat /tmp/$PKGINST.InStAlL | installf $PKGINST - 2>/dev/null
+rm /tmp/$PKGINST.InStAlL
+installf -f $PKGINST

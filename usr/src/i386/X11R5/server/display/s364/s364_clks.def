@@ -1,0 +1,46 @@
+#pragma ident	"@(#)s364:s364/s364_clks.def	1.2"
+/***
+ ***	NAME
+ ***
+ ***	s364_clocks.def : clock definitions for the clock chips 
+ ***			supported by the S364 series of chipsets.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***	#define S364_CLOCK_CHIP(CHIP_NAME, DESCRIPTION, CHECK_FUNC, 
+ ***		PROG_FUNC)
+ ***
+ ***	#include "s364_clocks.def"
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		__DEBUG__ : Enable debugging and assertion checking.
+ ***
+ ***	FILES
+ ***
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	HISTORY
+ ***
+ ***/
+
+DEFINE_CLOCK_CHIP(S364_CLOCK_CHIP_NULL, "", 0, 0),
+
+DEFINE_CLOCK_CHIP(S364_CLOCK_CHIP_ICD_2061A, "ICD2061A Clock Synthesiser",
+	icd2061a_check_frequency, icd2061a_select_frequency),
+
+DEFINE_CLOCK_CHIP(S364_CLOCK_CHIP_TVP3025, "PLL on the TVP3025",
+	ti3025_check_frequency, ti3025_select_frequency),
+	
+DEFINE_CLOCK_CHIP(S364_CLOCK_CHIP_COUNT, "", 0, 0)

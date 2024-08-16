@@ -1,0 +1,57 @@
+#!/etc/dcu.d/winxksh
+#ident	"@(#)dcu:dcu	1.2.3.24"
+
+NOCHG=1
+SILENT=2
+INTERACTIVE=3
+
+if [ -f /etc/dcu.d/.run_silent ]
+then
+	rm -rf /etc/dcu.d/.run_silent
+else
+	if [ -x /sbin/dcusilent ]
+	then
+		/sbin/dcusilent
+		[ "$?" = "$NOCHG"  -a  "$1" = "-N" ] && exit 0
+	fi
+fi
+
+ROOT=${ROOT:-/}
+DCUDIR=${DCUDIR:-${ROOT}/etc/dcu.d}
+LD_LIBRARY_PATH=${DCUDIR}/dculib
+
+UNIX_INSTALL=${UNIX_INSTALL:-N}
+SILENT_INSTALL=${SILENT_INSTALL:-false}
+
+DCULANG=${LC_ALL:-${LC_MESSAGES:-${LANG}}}
+DCULANG=${DCULANG:-C}
+if [ ! -d ${DCUDIR}/locale/${DCULANG} ]
+then
+        DCULANG=C
+fi
+
+# If /usr is a separate fs, then the true and false commands might not be
+# accessible.  So, instead of just calling $SILENT_INSTALL, we need to do a
+# string compare.  In ksh, of course, true and false are builtins, but we are
+# running Bourne shell.
+
+if [ "$SILENT_INSTALL" = "false" ]
+then
+	TERM=${TERM:-AT386}
+	T=$TERM
+	typeset -L1 T
+	if [ ! -d ${ROOT}/usr/share/lib/terminfo ]
+	then
+		TERMINFO=${TERMINFO:-${DCUDIR}/terminfo}
+	else
+		TERMINFO=${ROOT}/usr/share/lib/terminfo
+	fi
+	if [ ! -r ${TERMINFO}/$T/${TERM} ]
+	then
+		echo "$TERM terminfo type not supported."
+		exit 1
+	fi
+fi
+export ROOT LANG TERM TERMINFO DCUDIR LD_LIBRARY_PATH DCUDEBUG
+export UNIX_INSTALL SILENT_INSTALL
+exec ${DCUDIR}/winxksh -c "${DCUDIR}/scripts/dcu $*"

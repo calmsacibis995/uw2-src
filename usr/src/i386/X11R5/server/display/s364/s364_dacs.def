@@ -1,0 +1,264 @@
+#pragma ident	"@(#)s364:s364/s364_dacs.def	1.3"
+
+/***
+ ***	NAME
+ ***
+ ***		s364_dacs.def : DAC's supported by the S364 controller.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***		#define DEFINE_DAC(NAME, ENUMVALUE, MAXCLOCK, DELAY_COUNT, ID,
+ ***				INITFUNC, UNINITFUNC,
+ ***				GETCOLORMETHOD_PSEUDOCOLOR, SETCOLORMETHOD_PSEUDOCOLOR,
+ ***				GETCOLORMETHOD_DIRECTCOLOR, SETCOLORMETHOD_DIRECTCOLOR,
+ ***				SUPPORTED_VISUALS, FLAGS16, FLAGS24, FLAGSRGB,
+ ***				HW_CURSOR_ENABLE_FN, HW_CURSOR_DISABLE_FN, 
+ ***				HW_CURSOR_COLOR_SET_FN, CHECKSUPPORT_FN, DESCRIPTION)
+ ***		#include "s364_dacs.def"
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	This file contains definitions for the various DAC's known to
+ ***	the S364 display library, and their various properties.  Each
+ ***	DAC is associated with an enumeration name, a value for this
+ ***	enumeration, pointers to functions handling initialization and
+ ***	de-initialization, get- and set- colormap functions, the
+ ***	maximum clock frequency that the DAC can safely handle, bits
+ ***	fields specifying the kinds of the 16 bit support, kinds of 24
+ ***	bit pixel support, RGB wieghtage.  The last field of the DAC
+ ***	description is a string suitable for printing out when the SDD
+ ***	initializes giving the DAC's `name'.
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***	FILES
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	HISTORY
+ ***	
+ ***/
+
+DEFINE_DAC(S364_DAC_UNKNOWN, 0, 					/* Name , value */
+	0,		 									/* Max clock */
+	0,											/* Register access delay */
+	0,											/* dac id */
+	0, 											/* init func */
+	0, 											/* uninit func */
+	0, 											/* get pseudocolor method */
+	0, 											/* set pseudocolor method */
+	0, 											/* get directcolor method */
+	0,											/* set directcolor method */
+	0,											/* supported visuals */
+	0,											/* Flags 16 */
+	0,											/* Flags 24 */
+	0,											/* Flags RGB */
+	0,											/* HW cursor enable fn */
+	0,											/* HW cursor disable fn */
+	0,											/* HW cursor set color fn	*/
+	0,											/* HW cursor move fn */
+	0,											/* HW cursor download fn */
+	0,											/* HW cursor get max size fn */
+	0,											/* Check support fn*/
+	"unknown_dac"),
+
+/* 
+ * Bt485KPJ110 dac.
+ */
+DEFINE_DAC(S364_DAC_BT485KPJ110, 1,  			
+	110000, 100, 0x80,
+	s364_dac_initialize_bt485, 				
+	s364_dac_uninitialize_bt485, 				
+	s364_dac_generic_pseudocolor_get_color, 	
+	s364_dac_generic_pseudocolor_set_color, 	
+	s364_dac_generic_directcolor_get_color,
+	s364_dac_generic_directcolor_set_color,
+	(S364_DAC_4_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_8_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_DIRECT_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_DIRECT_COLOR_SUPPORTED), 
+	(S364_DAC_16_BIT_5_5_5_SUPPORTED | 
+		S364_DAC_16_BIT_5_6_5_SUPPORTED),
+	S364_DAC_32_BIT_A_R_G_B_SUPPORTED ,
+	(S364_DAC_BITS_PER_RGB_6 | S364_DAC_BITS_PER_RGB_8),
+	s364_dac_bt485_enable_hardware_cursor,
+	s364_dac_bt485_disable_hardware_cursor,
+	s364_dac_bt485_set_hardware_cursor_color,
+	s364_dac_bt485_move_hardware_cursor,
+	s364_dac_bt485_download_hardware_cursor,
+	s364_dac_bt485_get_hardware_cursor_max_size,
+	s364_dac_bt485_check_support_for_mode,
+	"Bt485<110Mhz>"),
+
+/*
+ * Bt485KPJ135 dac.
+ */
+DEFINE_DAC(S364_DAC_BT485KPJ135, 2,  			
+	135000, 100, 0x80,
+	s364_dac_initialize_bt485, 				
+	s364_dac_uninitialize_bt485, 				
+	s364_dac_generic_pseudocolor_get_color, 	
+	s364_dac_generic_pseudocolor_set_color, 	
+	s364_dac_generic_directcolor_get_color,
+	s364_dac_generic_directcolor_set_color,
+	(S364_DAC_4_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_8_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_DIRECT_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_DIRECT_COLOR_SUPPORTED), 
+	(S364_DAC_16_BIT_5_5_5_SUPPORTED | 
+		S364_DAC_16_BIT_5_6_5_SUPPORTED),
+	S364_DAC_32_BIT_A_R_G_B_SUPPORTED ,
+	(S364_DAC_BITS_PER_RGB_6 | S364_DAC_BITS_PER_RGB_8),
+	s364_dac_bt485_enable_hardware_cursor,
+	s364_dac_bt485_disable_hardware_cursor,
+	s364_dac_bt485_set_hardware_cursor_color,
+	s364_dac_bt485_move_hardware_cursor,
+	s364_dac_bt485_download_hardware_cursor,
+	s364_dac_bt485_get_hardware_cursor_max_size,
+	s364_dac_bt485_check_support_for_mode,
+	"Bt485<110Mhz>"),
+
+/*
+ * AT&T 21C498 Dac.
+ */
+DEFINE_DAC(S364_DAC_ATT21C498, 3,
+	110000, 100, 0,
+	s364_dac_initialize_att21c498, 
+	s364_dac_uninitialize_att21c498,
+	s364_dac_generic_pseudocolor_get_color,
+	s364_dac_generic_pseudocolor_set_color,
+	0,
+	0,
+	(S364_DAC_4_BIT_PSEUDO_COLOR_SUPPORTED | 
+		S364_DAC_8_BIT_PSEUDO_COLOR_SUPPORTED),
+	0,
+	0,
+	S364_DAC_BITS_PER_RGB_6,
+	0,
+	0,
+	0,
+	0,
+	0,
+	0,
+	s364_dac_att21c498_check_support_for_mode,
+	"AT&T 21C498"),
+
+DEFINE_DAC(S364_DAC_PTVP3025_135MDN, 4,
+	135000, 100, 0x80,
+	s364_dac_initialize_ti3025, 				
+	s364_dac_uninitialize_ti3025, 				
+	s364_dac_generic_pseudocolor_get_color, 	
+	s364_dac_generic_pseudocolor_set_color, 	
+	s364_dac_ti3025_directcolor_get_color,
+	s364_dac_ti3025_directcolor_set_color,
+	(S364_DAC_4_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_8_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_DIRECT_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_DIRECT_COLOR_SUPPORTED), 
+	(S364_DAC_16_BIT_5_5_5_SUPPORTED | 
+		S364_DAC_16_BIT_5_6_5_SUPPORTED|
+		S364_DAC_16_BIT_6_6_4_SUPPORTED),
+	(S364_DAC_32_BIT_A_R_G_B_SUPPORTED |
+		S364_DAC_32_BIT_B_G_R_A_SUPPORTED) ,
+	(S364_DAC_BITS_PER_RGB_6 | S364_DAC_BITS_PER_RGB_8),
+	s364_dac_ti3025_enable_hardware_cursor,
+	s364_dac_ti3025_disable_hardware_cursor,
+	s364_dac_ti3025_set_hardware_cursor_color,
+	s364_dac_ti3025_move_hardware_cursor,
+	s364_dac_ti3025_download_hardware_cursor,
+	s364_dac_ti3025_get_hardware_cursor_max_size,
+	s364_dac_ti3025_check_support_for_mode,
+	"TI3025<135Mhz>"),
+
+DEFINE_DAC(S364_DAC_PTVP3025_175MDN, 5,		/* Name , value */
+	175000, 100, 0x80,
+	s364_dac_initialize_ti3025, 				
+	s364_dac_uninitialize_ti3025, 				
+	s364_dac_generic_pseudocolor_get_color, 	
+	s364_dac_generic_pseudocolor_set_color, 	
+	s364_dac_ti3025_directcolor_get_color,
+	s364_dac_ti3025_directcolor_set_color,
+	(S364_DAC_4_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_8_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_DIRECT_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_DIRECT_COLOR_SUPPORTED), 
+	(S364_DAC_16_BIT_5_5_5_SUPPORTED | 
+		S364_DAC_16_BIT_5_6_5_SUPPORTED|
+		S364_DAC_16_BIT_6_6_4_SUPPORTED),
+	(S364_DAC_32_BIT_A_R_G_B_SUPPORTED |
+		S364_DAC_32_BIT_B_G_R_A_SUPPORTED) ,
+	(S364_DAC_BITS_PER_RGB_6 | S364_DAC_BITS_PER_RGB_8),
+	s364_dac_ti3025_enable_hardware_cursor,
+	s364_dac_ti3025_disable_hardware_cursor,
+	s364_dac_ti3025_set_hardware_cursor_color,
+	s364_dac_ti3025_move_hardware_cursor,
+	s364_dac_ti3025_download_hardware_cursor,
+	s364_dac_ti3025_get_hardware_cursor_max_size,
+	s364_dac_ti3025_check_support_for_mode,
+	"TI3025<175Mhz>"),
+
+DEFINE_DAC(S364_DAC_PTVP3025_200MDN , 6,		/* Name , value */
+	200000, 100, 0x80,
+	s364_dac_initialize_ti3025, 				
+	s364_dac_uninitialize_ti3025, 				
+	s364_dac_generic_pseudocolor_get_color, 	
+	s364_dac_generic_pseudocolor_set_color, 	
+	s364_dac_ti3025_directcolor_get_color,
+	s364_dac_ti3025_directcolor_set_color,
+	(S364_DAC_4_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_8_BIT_PSEUDO_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_16_BIT_DIRECT_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_TRUE_COLOR_SUPPORTED |
+		S364_DAC_32_BIT_DIRECT_COLOR_SUPPORTED), 
+	(S364_DAC_16_BIT_5_5_5_SUPPORTED | 
+		S364_DAC_16_BIT_5_6_5_SUPPORTED|
+		S364_DAC_16_BIT_6_6_4_SUPPORTED),
+	(S364_DAC_32_BIT_A_R_G_B_SUPPORTED |
+		S364_DAC_32_BIT_B_G_R_A_SUPPORTED) ,
+	(S364_DAC_BITS_PER_RGB_6 | S364_DAC_BITS_PER_RGB_8),
+	s364_dac_ti3025_enable_hardware_cursor,
+	s364_dac_ti3025_disable_hardware_cursor,
+	s364_dac_ti3025_set_hardware_cursor_color,
+	s364_dac_ti3025_move_hardware_cursor,
+	s364_dac_ti3025_download_hardware_cursor,
+	s364_dac_ti3025_get_hardware_cursor_max_size,
+	s364_dac_ti3025_check_support_for_mode,
+	"TI3025<200Mhz>"),
+
+DEFINE_DAC(S364_DAC_COUNT, 7, 					/* Name , value */
+	0,		 									/* Max clock */
+	0,											/* Register access delay */
+	0,											/* dac id as in configstat0 */
+	0, 											/* init func */
+	0, 											/* uninit func */
+	0, 											/* get pseudocolor method */
+	0, 											/* set pseudocolor method */
+	0, 											/* get directcolor method */
+	0,											/* set directcolor method */
+	0,											/* supported visuals */
+	0,											/* Flags 16 */
+	0,											/* Flags 24 */
+	0,											/* Flags RGB */
+	0,											/* HW cursor enable fn */
+	0,											/* HW cursor disable fn */
+	0,											/* HW cursor set color fn	*/
+	0,											/* HW cursor move fn */
+	0,											/* HW cursor download fn */
+	0,											/* HW cursor get max size fn */
+	0,											/* Check support fn*/
+	"dac_count")

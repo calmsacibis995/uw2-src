@@ -1,0 +1,22 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/sched/Menu.chg	1.2"
+#ident	"$Header: $"
+
+menu=Change Scheduled Task
+lifetime=longterm
+
+help=OPEN TEXT $INTFBASE/Text.itemhelp change.Help.select
+
+`set -l file=$ARG1`
+close=`rm -f $file $ARG2`
+
+`readfile $ARG1`
+
+name=Help
+button=8
+action=message -t Select a Scheduled task to change.
+
+name=""
+button=8
+action=nop
+
+`indicator -w`

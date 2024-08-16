@@ -1,0 +1,748 @@
+#ident\t"@(#)dthelp:Preferences/fontmgr.hlp     1.20"
+^*version^1
+^*title^Schriftarten in UnixWare verwenden
+^:Schriftarten
+^*width^70
+^+DesktopMgr/help.defs
+^?Schriftarten in UnixWare verwenden
+^0^Schriftarten
+^$10
+Schriftarten
+
+Mit "Schriftarten" können Sie alle auf Ihrem System vorhandenen
+Schriftarten anzeigen, \d(Type 1^Schriftarten von Adobe Type 1) Schriftarten von DOS
+/Windows-Disketten installieren, nicht benötigte Schriftarten löschen
+und die auf dem Desktop verwendete Standardschriftart ändern.
+
+Typ 1 Schriftarten können Sie, sobald sie installiert sind, mit allen
+UnixWare Desktop-Anwendungen anwenden, die den X Windows
+Schriftartenmechanismus verwenden; Ihre Anwendung kann diese
+Schriftarten zu PostScript-Druckern herunterladen.
+
+"Schriftarten" bietet Ihnen folgende Möglichkeiten:
+
+\to\t\k(Installierte Schriftarten anzeigen^^Installierte Schriftarten anzeigen)
+\to\t\k(Typ 1 Schriftarten von Disketten installieren^^Typ 1 Schriftarten installieren)
+\to\t\k(Schriftarten löschen^^Schriftarten löschen)
+\to\t\k(Für Text in den Fenstern "Desktop" und "Terminal" verwendete Schriftarten ändern^^Schriftarten ändern)
+\to\t\k(Standardschriftarten der Fenster "Desktop" und "Terminal" wiederherstellen^^Standardschriftarten wiederherstellen)
+
+
+Hintergrundinformationen zu Schriftarten finden Sie unter:
+
+\k(Typenfamilien, Schriftbilder und Schriftarten)
+\k(Bitzuordnungs- und Konturschriftarten)
+\k(Beispiele der Auflösung einer Schriftart)
+
+
+^1^Typenfamilien, Schriftbilder und Schriftarten
+^$20
+Typenfamilien, Schriftbilder und Schriftarten
+
+Schriftartfamilie bezeichnet die typologische Grundform einer Gruppe
+von Schriftarten ohne Stilvarianten (ein Beispiel für eine
+Schriftartfamilie ist Helvetica).
+
+Ein Schriftbild ist ein Mitglied einer Schriftartenfamilie mit einer
+bestimmten Stilvariante (ein Beispiel für ein Schriftbild ist
+Helvetica fett).
+
+Eine Schriftart ist ein Schriftbild mit einer bestimmten Punktgröße z.
+B.: Helvetica fett 11 Punkt. Das Wort "Schriftart" wird jedoch häufig
+synonym für alle drei Begriffe verwendet.
+
+^2^Bitzuordnungs- und Konturschriftarten
+^$30
+Bitzuordnungs- und Konturschriftarten
+
+Das System speichert Schriftarten auf der Platte wie folgt:
+
+\to\t\d(Bitzuordnungsschriftarten^Bitzuordnungsschriftart)
+\t \t\to\t\d(Konturschriften^Konturschrift) (auch skalierbare
+\t \tSchriftarten genannt)
+
+Bei Bitzuordnungsschriftarten speichert das System jedes Zeichen als
+einen Satz von Punkten. Jede Bitzuordnungsschriftart wird für eine
+bestimmte Punktgröße und eine bestimmte Auflösung erstellt. In
+UnixWare wurden die meisten Bitzuordnungsschriftarten für 75 und 100
+dpi (dots per inch = Punkte pro Zoll) erstellt, was einer normalen
+Bildschirmauflösung entspricht.
+
+Wenn eine Bitzuordnungsschriftart nicht in der Auflösung angezeigt
+wird, für die sie erstellt wurde, erscheint sie kleiner oder breiter
+und kann verzerrt aussehen.
+
+Obwohl Bitzuordnungsschriftarten in eine größere Punktgröße skaliert
+werden können, werden die Punkte unnatürlich groß und die Buchstaben
+ausgefranst aussehen.
+
+Das System speichert Konturschriften in Form von Anweisungen. Wenn
+eine bestimmte Punktgröße benötigt wird, erstellt das System dynamisch
+eine Bitzuordnungsschriftart für diese Punktgröße und die Auflösung
+auf Ihrem Bildschirm. Es verwendet dafür eine \d(Konturschriftart-Renderer).  In
+UnixWare handelt es sich bei dieser Renderer um \d(Adobe Type Manager),
+die beliebige Type 1 Schriftarten verarbeiten kann, einschließlich
+Schriftarten, die Sie selbst von DOS /Windows-Disketten installieren
+können (siehe \k(Typ 1 Schriftarten installieren)).
+
+Nachstehend einige wichtige Hinweise zu Konturschriften:
+
+\to\tDa das System Anweisungen interpretieren muß, kann das Anzeigen
+\t \tvon Konturschriften länger dauern als das von
+\t \tBitzuordnungsschriftarten. Sobald Konturschriften wiedergegeben
+\t \tsind, werden sie vom System gespeichert und können beim nächsten
+\t \tMal schneller aufgerufen werden.
+
+\to\tDa nicht jede Schriftartgröße auf der Platte gespeichert werden
+\t \tmuß, nehmen Konturschriften weniger Speicherplatz in Anspruch als
+\t \tBitzuordnungsschriftarten.
+
+\to\tBestimmte ältere Anwendungen sind möglicherweise nicht in der
+\t \tLage, die Vorteile von Konturschriften zu nutzen.
+
+Siehe auch:
+\k(Beispiele der Auflösung einer Schriftart)
+
+^2^Beispiele der Auflösung einer Schriftart
+^$35
+Beispiele der Auflösung einer Schriftart
+
+Das Aufklappfenster "Auflösung anzeigen" zeigt Ihnen, daß
+\d(Bitzuordnungsschriftarten^Bitzuordnungsschriftart), die für verschiedene
+Auflösungen entwickelt wurden, aussehen können, als hätten sie
+verschiedene Größen. Um diese Beispiele zu sehen, gehen Sie wie folgt
+vor:
+
+Hinweis: Wenn Sie sich bereits im Präferenzenordner befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Präferenzen". Das Fenster "Ordner:
+  \tPräferenzen" erscheint.
+
+2.\tDoppelklicken Sie auf "Schriftarten". Das Fenster "Schriftarten"
+  \terscheint.
+
+3.\tKlicken Sie "Aktion=>Auflösung anzeigen" an. Das Fenster
+  \t"Auflösung anzeigen" erscheint.
+
+  \tHinweis: Die ersten beiden Zeilen enthalten Informationen zu Ihrem
+  \tBildschirm (Auflösung in dpi und Abmessungen). Das System
+  \tberechnet dpi mit Hilfe der Bildschirmabmessungen (z. B. 640x480)
+  \tund der Bildschirmgröße, die Sie entweder bei der Erstinstallation
+  \tvon UnixWare oder mit Hilfe von \k(Anzeige-Setup^dtadmin/video.hlp^Anzeige-Setup) angegeben haben.
+
+  \tWenn die Größe Ihres Bildschirms nicht richtig eingegeben ist und
+  \tnicht die tatsächliche physische Bildschirmgröße wiedergibt,
+  \tkönnen die DPI-Angaben für die Auflösung falsch sein und die
+  \tVerwendung bestimmter Schriftarten negativ beeinflussen.
+
+
+^1^Installierte Schriftarten anzeigen
+^$40
+Installierte Schriftarten anzeigen
+
+Der UnixWare Desktop enthält zahlreiche
+\d(Bitzuordnungsschriftarten^Bitzuordnungsschriftart) und 13 Adobe
+Typ-1-\d(Konturschriftarten^Konturschrift).
+
+Ebenso können Sie beliebig viele Schriftarten vom Typ 1 von Diskette
+aus installieren. Type-1-Schriftarten sind überall im Einzelhandel und
+über Versand erhältlich. (Außerdem stehen zusätzliche
+Bitzuordnungsschriftarten im Paket Graphics Supplemental Fonts zur
+Verfügung, welches nicht standardmäßig in der Personal Edition
+installiert ist.)
+
+Um die Schriftarten anzuzeigen, die auf Ihrem System installiert sind,
+gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Präferenzenordner befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Präferenzen". Das Fenster "Ordner:
+  \tPräferenzen" erscheint.
+
+2.\tDoppelklicken Sie auf "Schriftarten". Das Fenster "Schriftarten"
+  \terscheint.
+
+3.\tEine Schriftart zeigen Sie wie folgt an:
+
+  \to\tRollen Sie die verschiedenen
+  \t \t\d(Schriftartfamilien^Schriftbildfamilie) ab, und klicken Sie die
+  \t \tan, die Sie anzeigen möchten. In der Liste "Stil" werden die für
+  \t \tdiese Familie verfügbaren Stilarten angezeigt.
+
+  \to\tRollen Sie die für die Schriftartfamile verfügbaren
+  \t \t\d(Stile^Schriftbild) ab, und klicken Sie den Stil an, den
+  \t \tSie sehen möchten.
+
+  \to\tWählen Sie in der Steuerung "Punktgröße" die
+  \t \t\d(Punktgröße), die Sie sehen möchten.
+
+  \t \tWenn das ausgewählte Schriftbild eine Bitzuordnungsschriftart
+  \t \tist, wird eine Abolliste mit den verfügbaren Punktgrößen
+  \t \tangezeigt. Klicken Sie die gewünschte Größe an.
+
+  \t \tHinweis: Die gleiche Punktgröße kann in der Liste mehrmals
+  \t \terscheinen. Dies tritt auf, wenn die durchschnittliche Breite
+  \t \tvon zwei Schriftarten verschieden ist oder wenn zwei
+  \t \tSchriftarten verschiedene Zeichensätze verwenden. Um die
+  \t \tUnterschiede zu sehen, klicken Sie "Anzeigen=>Zeichensatz" an.
+  \t \tDoppelte Punktgrößen können auch vorkommen, weil eine für 14
+  \t \tPunkt bei 75 dpi erstellte Schriftart genauso aussieht wie eine
+  \t \tfür 10 Punkt bei 100 dpi.
+
+  \t \tWenn es sich bei dem von Ihnen ausgewählten Schriftbild um eine
+  \t \tKonturschrift handelt, erscheint ein numerisches Feld. Geben Sie
+  \t \tdie Punktgröße ein, die Sie sehen möchten (6 bis 100 Punkt),
+  \t \toder klicken Sie die nach oben bzw. unten gerichteten Pfeile an,
+  \t \tum den Wert zu ändern.
+
+  \t \tNach jeder Auswahl zeigt das System die ausgewählte Schriftart
+  \t \tim Arbeitsausschnitt an. Hinweis: Die Anzeige von
+  \t \tKonturschriften kann bei der ersten Wiedergabe einige Momente
+  \t \tdauern.
+
+4.\tUm den im Arbeitsausschnitt angezeigten Text zu ändern, gehen Sie
+  \twie folgt vor:
+
+  \to\tDamit Sie beliebige Zeichen eingeben können, die in der
+  \t \tausgewählten Schriftart angezeigt werden, klicken Sie
+  \t \t"Anzeigen=>Muster" an. Sie können die Zeichen dort eingeben, wo
+  \t \tim Arbeitsausschnitt die Meldung "Hier eingeben" erscheint.
+
+  \to\tUm den ganzen Satz druckbarer Zeichen in der ausgewählten
+  \t \tSchriftart anzuzeigen, klicken Sie "Anzeigen=>Zeichensatz" an.
+  \t \tWenn es sich bei diesem Zeichensatz nicht um den üblichen
+  \t \tZeichensatz ISO8859-1 handelt und wenn die Option
+  \t \t"Anzeigen=>Kurzbezeichnung Schriftart" aktiv ist, wird der Name
+  \t \tdes Zeichensatzes im Fußteil des Fensters angezeigt.
+
+5.\tUm den im Fußteil angezeigten Schrifartnamen zu ändern, gehen Sie
+  \twie folgt vor:
+
+  \to\tUm die Kurzbezeichnung der Schriftart anzuzeigen, klicken
+  \t \tSie "Anzeigen=>Kurzbezeichnung Schriftart" an.
+
+  \t \tFür Konturschriften werden im Fußteil folgende Informationen
+  \t \tangezeigt:
+
+  \t \t-\tBezeichnung der Schriftart für PostScript-Drucker, die
+  \t \t \tnicht mit dem von UnixWare verwendeten Namen übereinstimmt
+  \t \t \t(der PostScript-Name gibt in der Regel auch Familie und Stil
+  \t \t \tan);
+
+  \t \t-\tPunktgröße der Schriftart auf Ihrem Bildschirm;
+
+  \t \t-\tob es sich um eine dicktengleiche Schriftart (identische
+  \t \t \tZeichenbreite) handelt;
+
+  \t \t-\tder in der Schriftart enthaltene Zeichensatz (wenn es sich
+  \t \t \tnicht um ISO8859-1 handelt).
+
+  \t \tFür Bitzuordnungsschriftarten werden im Fußteil folgende
+  \t \tInformationen angezeigt:
+
+  \t \t-\tName der Schriftartfamilie;
+
+   \t\t-\tsonstige Attribute der Schriftartfamilie (falls vorhanden);
+
+   \t\t-\tStärke des Schriftbilds;
+
+   \t\t-\tStellung des Schriftbilds (wenn nicht Roman);
+
+   \t\t-\tPunktgröße der Schriftart auf Ihrem Bildschirm;
+
+  \t \t-\tBildschirmauflösung, für die die Schriftart entwickelt wurde,
+  \t \t \tinder Regel 75 oder 100 dpi (dots per inch = Punkte pro Zoll);
+
+  \t \t-\tob es sich um eine dicktengleiche Schriftart (identische
+  \t \t \tZeichenbreite) oder eine Schriftart mit variabler Spaltenbreite
+  \t \t \thandelt;
+
+  \t \t-\tdurchschnittliche Breite aller Zeichen der Schriftart.
+
+  \t \t-\tder in der Schriftart enthaltene Zeichensatz (wenn es sich
+  \t \t \tnicht um ISO8859-1 handelt).
+
+  \to\tUm die lange interne X Windows Bezeichnung \d(XLFD)
+  \t \tfür die Schriftart anzuzeigen, klicken Sie Anzeigen=>XLFD-Name
+  \t \tan.  Bei Bitzuordnungsschriftarten gibt dieser Name die
+  \t \tAuflösung an (in der Regel "-75-75-" oder "-100-100-"), für die
+  \t \tdie Schriftart ursprünglich erstellt wurde.
+
+Hinweis: Falls Probleme mit Ihren Schriftarten auftreten (z. B. wenn
+Sie im Fußteil eine Meldung "Kann Schriftart ... nicht anzeigen"
+erhalten), sollten Sie Ihre Schriftartbibliotheken überprüfen. Weitere
+Informationen erhalten Sie unter \k(Schriftartintegrität überprüfen).
+
+
+^1^Typ 1 Schriftarten installieren
+^$50
+Typ 1 Schriftarten installieren
+
+Viele bekannte Textverarbeitungs- und Graphikprogramme verwenden
+skalierbare \d(Schriftarten Type 1^Schriftarten von Adobe Type 1).  Zwar werden die
+meisten dieser Anwendungen mit einem Standardsatz von Schriftarten
+geliefert, Sie können Ihre Auswahl jedoch durch die Installation
+weiterer Typ 1 Schriftarten von DOS Disketten erweitern. Type 1
+Schriftarten sind in großer Zahl im Einzel- und Versandhandel
+erhältlich.
+
+Um zusätzliche Typ 1 Schriftarten von Disketten zu installieren, gehen
+Sie wie folgt vor:
+
+1.\tMelden Sie sich als Benutzer mit der
+  \t\k(Berechtigung zum Hinzufügen/Entfernen von Schriftarten^dtadmin/user.hlp^Mit Berechtigungen umgehen können) an.
+
+2.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Präferenzen". Das Fenster "Ordner:
+  \tPräferenzen" erscheint.
+
+3.\tDoppelklicken Sie auf "Schriftarten". Das Fenster "Schriftarten"
+  \terscheint.
+
+4.\tLegen Sie die DOS Diskette mit den Type 1 Schriftarten in das
+  \tDiskettenlaufwerk ein.
+
+  \tHinweis: Sie können entweder 3,5"- oder 5,25"-Disketten verwenden,
+  \tje nach Typ des von Ihrem System unterstützen Laufwerks (weitere
+  \tInformationen über Platten, Laufwerke usw. finden Sie unter
+  \t\k(Disketten usw.^dtadmin/disk.hlp^Überblick über den Ordner Disketten-etc.)).
+
+5.\tKlicken Sie "Aktionen=>Installieren" an. Das Fenster
+  \t"Typ 1 Schriftarten von Disketten installieren" erscheint.
+
+6. \tNun haben Sie folgende Möglichkeiten:
+
+  \to\tKlicken Sie alle gewünschten Schriftarten und anschließend
+  \t \t"Installieren" an.
+
+   \t\tHinweis: Wenn Sie "Installieren" anklicken, aber vorher keine
+  \t \tSchriftarten für die Installation ausgewählt haben, erhalten Sie
+  \t \teine Fehlermeldung und können den Versuch wiederholen.
+
+  \to\tKlicken Sie "Alle installieren" an, wenn Sie alle auf der
+  \t \tDiskette vorhandenen Schriftarten installieren möchten.
+
+Hinweis: Sie können Schriftarten auch mit Hilfe von
+\d(ziehen-und-ablegen) installieren. Beispiel: Wenn sich die Diskette mit
+den Schriftarten in Laufwerk A befindet, klicken Sie im
+\k(Ordner "Disketten usw."^dtadmin/disk.hlp^Überblick über den Ordner Disketten-etc.) das Symbol "Laufwerk A" an, ziehen es auf das
+Symbol (oder Fenster) "Schriftarten" und legen es dort ab. Das Fenster
+"Typ 1 Schriftarten von Disketten installieren" erscheint.
+
+^2^Hinweis: Legen Sie eine DOS Diskette ein
+^$60
+Hinweis: Legen Sie eine DOS Diskette ein
+
+Diese Fehlermeldung erhalten Sie, wenn das System im Diskettenlaufwerk
+keine Diskette findet. Legen Sie die DOS Diskette mit den Typ 1
+Schriftarten in das erforderliche Laufwerk ein. Sie können 3,5"- oder
+5,25"-Disketten verwenden. Falls erforderlich, sucht das System in
+beiden Laufwerken nach einer Diskette.
+
+^2^Hinweis: Keine DOS Diskette
+^$70
+Hinweis: Keine DOS Diskette
+
+Diese Fehlermeldung erhalten Sie, wenn die eingelegte Diskette nicht
+unter DOS formatiert wurde (z. B. wenn es sich um eine
+UnixWare-Diskette handelt). Ersetzen Sie die Diskette durch die DOS
+Diskette mit den Typ 1 Schriftarten, und klicken Sie "Fortfahren" an.
+
+Wenn Sie keine DOS Diskette finden und das Installationsverfahren
+abbrechen möchten, klicken Sie "Abbrechen" an.
+
+
+^2^Hinweis - Keine erkennbaren Schriftarten des Typs 1
+^$80
+Hinweis - Keine erkennbaren Schriftarten des Typs 1
+
+Diese Fehlermeldung erhalten Sie, wenn das System auf der eingelegten
+Diskette keine Typ 1 Schriftarten findet. Überprüfen Sie, ob Sie die
+richtige DOS Diskette eingelegt haben.
+
+Gelegentlich liefern Schriftartenhersteller DOS Software mit ihren
+Schriftarten; auf diesen Disketten sind keine Schriftarten enthalten.
+Legen Sie nur Disketten mit Schriftarten ein, nicht aber Disketten mit
+anderen Bezeichnungen oder die Programmdiskette.
+
+Legen Sie die richtige Diskette in das Laufwerk ein, und klicken Sie
+"Fortfahren" an.
+
+Wenn Sie keine DOS Diskette finden und das Installationsverfahren
+abbrechen möchten, klicken Sie "Abbrechen" an.
+
+^2^Hinweis - AFM-Dateien fehlen für installierte Schriftarten
+^$85
+Hinweis - AFM-Dateien fehlen für installierte Schriftarten
+
+Diese Warnmeldung erhalten Sie, wenn für einige der installierten Typ
+1 Schriftarten keine entsprechende AFM-Datei (AFM = Adobe Font
+Metrics) auf der Diskette vorhanden ist. Obwohl diese Schriftarten
+installiert wurden und verwendet werden können, laufen Anwendungen,
+die die in den AFM-Dateien verfügbaren detaillierten Maße benötigen,
+möglicherweise nicht so gut, wie sie sollten.
+
+^2^Hinweis - Zusätzliche Schriftarten einfügen
+^$87
+Hinweis - Zusätzliche Schriftarten einfügen
+
+Diese Meldung erhalten Sie, wenn sich die ausgewählten Schriftarten
+auf einer zweiten oder weiteren Diskette eines Diskettensatzes
+befinden.
+
+Legen Sie die nächste Diskette des Diskettensatzes ein, und klicken
+Sie "Fortfahren" an.
+
+Wenn Sie keine DOS Diskette finden und das Installationsverfahren
+abbrechen möchten, klicken Sie "Abbrechen" an.
+
+^1^Schriftarten löschen
+^$90
+Schriftarten löschen
+
+Schriftarten (insbesondere Bitzuordnungsschriftarten) können große
+Mengen von Speicherplatz auf Ihrer Festplatte in Anspruch nehmen. Wenn
+Speicherplatz knapp wird, können Sie Abhilfe schaffen, indem Sie z. B.
+Schriftarten von der Festplatte entfernen, die Sie nicht regelmäßig
+verwenden.
+
+Um einzelne Bitzuordnungsschriftarten oder Konturschriften von Ihrem
+System zu entfernen, gehen Sie wie folgt vor:
+
+1.\tMelden Sie sich als Benutzer mit der
+  \t\k(Berechtigung zum Hinzufügen/Entfernen von Schriftarten^dtadmin/user.hlp^Mit Berechtigungen umgehen können) an.
+
+2.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Präferenzen". Das Fenster "Ordner:
+  \tPräferenzen" erscheint.
+
+3.\tDoppelklicken Sie auf "Schriftarten". Das Fenster "Schriftarten"
+  \terscheint.
+
+4.\tKlicken Sie "Aktionen=>Löschen" an.
+
+5.\tKlicken Sie entweder \d(Bitzuordnung^Bitzuordnungsschriftart) oder
+  \t\d(Kontur^Konturschrift) an. Hinweis: Wenn Sie eine
+  \tBitzuordnungsschriftart löschen, löschen Sie eine einzige
+  \tSchriftart, d. h. eine Größe eines Stils einer Schriftartfamilie.
+  \tWenn Sie eine Konturschrift löschen, löschen Sie ein ganzes
+  \tSchriftbild (alle Punktgrößen einer Stilvariante einer
+  \tSchriftartfamilie).
+
+6.\tKlicken Sie die Schriftart an, die Sie löschen möchten. Jede
+  \tangeklickte Schriftart wird hervorgehoben.
+
+7.\tKlicken Sie "Löschen" an. Das
+  \t\k(Fenster "Hinweis - Löschen von Schriftarten bestätigen"^^Hinweis - Löschen von Schriftarten bestätigen) erscheint.
+
+  \tHinweis: Wenn Sie "Löschen" anklicken, ohne vorher Schriftarten
+  \tzum Löschen ausgewählt zu haben, erhalten Sie eine
+  \tFehlermeldung und können den Versuch wiederholen.
+
+8.\tKlicken Sie "Fortfahren" an, um die Schriftart zu entfernen.
+  \tKlicken Sie "Abbrechen" an, um die Operation zu beenden, ohne
+  \tSchriftarten zu entfernen.
+
+^2^Hinweis - Löschen von Schriftarten bestätigen
+^$92
+Hinweis - Löschen von Schriftarten bestätigen
+
+Sie erhalten diese Warnmeldung, damit Sie Ihre Entscheidung nochmals
+überdenken können. Klicken Sie "Fortfahren" an, wenn Sie die
+Schriftarten wirklich entfernen möchten.
+
+Klicken Sie "Abbrechen" an, wenn Sie die Operation abrechen möchten,
+ohne Schriftarten zu löschen.
+
+^2^Hinweis -  Es können keine Schriftarten gelöscht werden
+^$94
+Es können keine Schriftarten gelöscht werden.
+
+Diese Fehlermeldung erhalten Sie, wenn keine Schriftarten
+(Bitzuordnungsschriftarten oder Konturschriften, entsprechend Ihrer
+Auswahl) gelöscht werden können, weil Sie keine Schriftarten auf Ihrem
+Sysytem installiert haben oder bereits alle Schriftarten gelöscht
+haben.
+
+Hinweis: Bestimmte Bitzuordnungsschriftarten sind für den
+Desktop-Betrieb unerläßlich und können nicht gelöscht werden.
+
+^1^Schriftarten ändern
+^$95
+Schriftarten ändern
+
+Die Standardschriftart, die für den Text in Ihren Desktop-Fenstern
+verwendet wird, und die Schriftart, die für den Text in den Fenstern
+"Terminal" verwendet wird, können Sie ändern.
+
+Siehe:
+
+\to\t\k(Ihre Desktop-Schriftart ändern)
+\to\t\k(Ihre Terminal-Schriftart ändern)
+
+^2^Ihre Desktop-Schriftart ändern
+^$96
+Ihre Desktop-Schriftart ändern
+
+Für den Text in den Fenstern (Fenstertitel, Menütext, Symboletiketten
+usw.) verwendet der Desktop eine Standardschriftart, Helvetica Medium
+mit (in der Regel) 12 Punkt. Sie können diese Standardschriftart durch
+eine beliebige andere Schriftart ersetzen, der jedoch nicht größer als
+20 Punkt sein darf.
+
+Die Schriftart, die in den Abrollisten für die Schriftartfamilie, den
+Stil und die Punktgröße sowie im Arbeitsausschnitt für Mustertext
+angezeigt wird, wenn Sie die Anwendung "Schriftarten" das erste Mal
+öffnen, ist Ihre Desktop-Schriftart.
+
+Hinweis: Wenn Sie die Standardschriftart durch eine deutlich größere
+Schriftart (z. B. 14 - 20 Punkt) ersetzen, können manche
+Desktop-Programme leicht verzerrt aussehen, bis Sie sich das nächste
+Mal anmelden.
+
+Wenn Sie die Schriftart für das Fenster "Terminal" ändern möchten, z.
+B. aus Gründen der Lesbarkeit, lesen Sie die Erläuterungen unter
+\k(Ihre Terminal-Schriftart ändern).
+
+Wie Sie zu den Standardschriftarten zurückkehren, wird in
+\k(Standardschriftarten wiederherstellen) erläutert.
+
+Hinweis: Jedesmal, wenn Sie eine Schriftart ändern (d. h. "Auf Fenster
+anwenden", "Terminalzeichensatz ändern" oder "Standard
+wiederherstellen" auswählen), überprüft das System, ob Ihre aktuellen
+Ländereinstellungen das Ändern von Schriftarten gestatten. Wenn nicht,
+erscheint ein Aufklappfenster mit einer Fehlermeldung.
+
+Wenn Ihre Ländereinstellungen das Ändern von Schriftarten gestatten,
+überprüft das System, ob die Schriftart den richtigen Zeichensatz
+enthält. Wenn nicht, erscheint ein Aufklappfenster mit einer
+Fehlermeldung.
+
+Hinweis: Nicht alle Ländereinstellungen gestatten das Ändern von
+Schriftarten. Diese Möglichkeit ist nur bei westeuropäischen und
+englischen Ländereinstellungen verfügbar.
+
+Um die Standardschriftart für den Namen des Fensters "Desktop" zu
+ändern, gehen Sie wie folgt or:
+
+1.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Präferenzen". Das Fenster "Ordner:
+  \tPräferenzen" erscheint.
+
+2.\tDoppelklicken Sie auf "Schriftarten". Das Fenster "Schriftarten"
+  \terscheint.
+
+3.\tWählen Sie die gewünschten Schriftarten (siehe
+  \t\k(Installierte Schriftarten anzeigen)).
+
+4.\tKlicken Sie "Schriftarten=>Auf Fenster anwenden" an.  Alle
+  \tDesktop-Etiketten, -titel und sonstige Texte werden dynamisch in
+  \tder \tneuen Schriftart angezeigt. Diese Änderungen bleiben
+  \twirksam, wenn Sie sich das nächste Mal anmelden.
+
+Hinweis: Wenn Sie die Standardschriftart durch eine deutlich größere
+Schriftart (z. B. 14 - 20 Punkt) ersetzen, sehen bestimmte
+Desktop-Programme möglicherweise leicht verzerrt aus. So können zum
+Beispiel Fenstertitel, Schaltflächen und Fußteiltexte verschoben sein,
+die Etiketten von Desktop-Symbolen können rechts oder unten abgetrennt
+sein oder sich überlappen. Die meisten dieser Probleme verschwinden,
+wenn Sie die Anwendung oder der Desktop neu starten. Das Problem sich
+überlappender Dateisymboletiketten können Sie beseitigen, wenn Sie mit
+Hilfe von \k(Desktop-Präferenzen^DesktopMgr/dskpref.hlp^Grundlegende Desktop-Eigenschaften ändern) die Gittergröße für Dateiordner ändern.
+
+Sie können auch die Schriftart für das Fenster "Terminal" ändern, z.
+B. aus Gründen der Lesbarkeit. Die Terminal-Standardschriftart für das
+Fenster "Desktop" ist Lucidatypewriter Medium (in der Regel) 12 Punkt
+(siehe \k(Ihre Terminal-Schriftart ändern)).
+
+Wie Sie zu den Standardschriftarten zurückkehren, wird in
+\k(Standardschriftarten wiederherstellen) erläutert.
+
+Hinweis: Jedesmal, wenn Sie eine Schriftart ändern (d. h. "Auf Fenster
+anwenden", "Terminalzeichensatz ändern" oder "Standard
+wiederherstellen" auswählen), überprüft das System, ob Ihre aktuellen
+Ländereinstellungen das Ändern von Schriftarten gestatten. Wenn nicht,
+erscheint ein Aufklappfenster mit einer Fehlermeldung.
+
+Wenn Ihre Ländereinstellungen das Ändern von Schriftarten gestatten,
+überprüft das System, ob die Schriftart den richtigen Zeichensatz
+enthält. Wenn nicht, erscheint ein Aufklappfenster mit einer
+Fehlermeldung.
+
+
+^2^Ihre Terminal-Schriftart ändern
+^$102
+Ihre Terminal-Schriftart ändern
+
+Sie können die Terminal-Schriftart für Ihren Desktop zu einer
+beliebigen Schriftart mit gleichbleibendem Schaltschritt (feststehende
+Breite) ändern, die auf Ihrem System zur Verfügung stehen (z. B.
+Courier). Diese Schriftart wird in allen Terminalfenstern und in jeder
+Desktop-Anwendung verwendet, die für eine korrekte Ausrichtung der
+Ausgabe eine Schriftart mit gleichbleibendem Schaltschritt erfordern.
+
+Ob eine Schriftart dicktengleich ist, können Sie an der
+Kurzbezeichnung im Fußteil des Fensters ablesen, wenn Sie die Option
+"Anzeigen=>Kurzbezeichnung Schriftart" verwenden (siehe
+\k(Installierte Schriftarten anzeigen)).
+
+Um die Schriftart für das Fenster "Terminal" zu ändern, gehen Sie wie
+folgt vor:
+
+1.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Präferenzen". Das Fenster "Ordner:
+  \tPräferenzen" erscheint.
+
+2.\tDoppelklicken Sie auf "Schriftarten". Das Fenster "Schriftarten"
+  \terscheint.
+
+3.\tKlicken Sie die gewünschte dicktengleiche Schriftart an.
+
+4.\tKlicken Sie "Schriftart=>Terminalschriftart ändern" an. Alle neuen
+  \tFenster "Terminal", die Sie öffnen, verwenden die neue
+  \tStandardschriftart.
+
+  \tHinweis: Die Anwendung Terminal ist möglicherweise nicht die
+  \teinzige Anwendung auf Ihrem System, die eine dicktengleiche
+  \tSchriftart verwendet. Z. B. verwenden Post und Debug ebenfalls
+  \tdicktengleiche Schriftarten. Wenn Sie "Terminalschriftart ändern"
+  \tauswählen, ändert sich die Schriftart in allen Fenstern von
+  \t Anwendungen, die dicktengleiche Schriftarten verwenden.
+
+Wie Sie zu den Standardschriftarten zurückkehren, wird in
+\k(Standardschriftarten wiederherstellen) erläutert.
+
+Hinweis: Jedesmal, wenn Sie eine Schriftart ändern (d. h. "Auf Fenster
+anwenden", "Terminalzeichensatz ändern" oder "Standard
+wiederherstellen" auswählen), überprüft das System, ob Ihre aktuellen
+Ländereinstellungen das Ändern von Schriftarten gestatten. Wenn nicht,
+erscheint ein Aufklappfenster mit einer Fehlermeldung.
+
+Wenn Ihre Ländereinstellungen das Ändern von Schriftarten gestatten,
+überprüft das System, ob die Schriftart den richtigen Zeichensatz
+enthält. Wenn nicht, erscheint ein Aufklappfenster mit einer
+Fehlermeldung.
+
+
+^2^Standardschriftarten wiederherstellen
+^$103
+Standardschriftarten wiederherstellen
+
+Um für Ihre Fenster (einschließlich der Fenster "Terminal") die
+Standardschriftarten wiederzuherstellen, gehen Sie wie folgt vor:
+
+1.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Präferenzen". Das Fenster "Ordner:
+  \tPräferenzen" erscheint.
+
+2.\tDoppelklicken Sie auf "Schriftarten". Das Fenster "Schriftarten"
+  \terscheint.
+
+3.\tKlicken Sie "Schriftart=>Standard wiederherstellen" an. Das System
+  \tstellt für alle Fenster die Standardschriftarten wieder her (d. h.
+  \tdie Schriftarten, die bei der Erstinstallation des System
+  \tverwendet wurden).
+
+  \tDie Schriftarten der bereits auf Ihrem Desktop geöffneten
+  \tFenster "Terminal" werden nicht geändert. Nur neu geöffnete
+  \tFenster "Terminal" verwenden die Standardschriftart.
+
+Hinweis: Jedesmal, wenn Sie eine Schriftart ändern (d. h. "Auf Fenster
+anwenden", "Terminalzeichensatz ändern" oder "Standard
+wiederherstellen" auswählen), überprüft das System, ob Ihre aktuellen
+Ländereinstellungen das Ändern von Schriftarten gestatten. Wenn nicht,
+erscheint ein Aufklappfenster mit einer Fehlermeldung.
+
+^2^Hinweis - Terminal-Schriftart darf nur einfache Abstände haben
+^$104
+Hinweis - Terminal-Schriftart darf nur einfache Abstände haben
+
+Diese Fehlermeldung erhalten Sie, wenn Sie versuchen, Ihre
+Terminalschriftart durch eine Proportionalschrift zu ersetzen. Die
+Terminalschriftart muß dicktengleich sein (d. h. alle Zeichen müssen
+die gleiche Breite haben).
+
+Ob eine Schriftart dicktengleich ist, können Sie an der
+Kurzbezeichnung im Fußteil des Fensters ablesen, wenn Sie die Option
+"Anzeigen=>Kurzbezeichnung Schriftart" verwenden (siehe
+\k(Installierte Schriftarten anzeigen)).
+
+Mit UnixWare gelieferte dicktengleiche Schriftarten sind z. B.
+Courier, Fixed oder LucidaTypewriter.
+
+^2^Hinweis -  Nicht unterstützte Ländereinstellung
+^$106
+Hinweis -  Nicht unterstützte Ländereinstellung
+
+Diese Fehlermeldung erhalten Sie, wenn Sie versuchen, die Schriftart
+für die Fenster "Desktop" oder "Terminal" zu ändern, Ihre
+Ländereinstellungen diese Möglichkeit jedoch nicht unterstützen.
+
+Sie können die Schriftart nur bei westeuropäischen und englischen
+Ländereinstellungen ändern.
+
+^2^Hinweis - Punktgröße ist zu groß für die Verwendung auf dem Desktop
+^$107
+Hinweis - Punktgröße ist zu groß für die Verwendung auf dem Desktop
+
+Diese Fehlermeldung erhalten Sie, wenn Sie versuchen für Ihren Desktop
+oder IhrTerminal eine Schriftart mit einer \d(Punktgröße) über 20
+Punkt zu wählen. Punktgrößen über 20 Punkt verzerren das Aussehen des
+Desktop und machen es unbrauchbar. Verwenden Sie eine Punktgröße
+zwischen 10 und 14 für diese Funktion.  Wenn Sie eine kleinere
+Punktgröße für die gleiche Schriftart wählen und den Versuch
+wiederholen, werden die Änderungen wirksam.
+
+^2^Hinweis - Nicht passender Zeichensatz
+^$108
+Hinweis - Nicht passender Zeichensatz
+
+Diese Fehlermeldung erhalten Sie, wenn die von Ihnen gewählte
+Schriftart einen Zeichensatz enthält, der nicht mit Ihren
+Ländereinstellungen übereinstimmt. Beispiel: Manche Schriftarten
+enthalten nur den ASCII-Zeichensatz (offizielle Bezeichnung:
+ISO646.1991-IRV). Westeuropäische Ländereinstellungen benötigen den
+Zeichensatz ISO8859-1, der ASCII-Zeichen und die in Westeuropa
+verwendeten Akzentzeichen enthält.
+
+Welchen Zeichensatz eine Schriftart enthält, können Sie an der
+Kurzbezeichnung im Fußteil des Fensters ablesen, wenn Sie die Option
+"Anzeigen=>Kurzbezeichnung Schriftart" verwenden (siehe
+\k(Installierte Schriftarten anzeigen).
+
+^1^Schriftartintegrität überprüfen
+^$110
+Schriftartintegrität überprüfen
+
+Wenn Sie Schriftarten hinzufügen oder löschen, aktualisiert das System
+automatisch die Schriftartbibliotheken. Wenn Probleme mit Schriftarten
+auftreten, sollten Sie Ihr System zunächst die Schriftartbibliotheken
+überprüfen lassen.
+
+Damit das System die Schriftartbibliotheken überprüft, gehen Sie wie
+folgt vor:
+
+1.\tMelden Sie sich als Benutzer mit der
+  \t\k(Berechtigung zum Hinzufügen/Entfernen von Schriftarten^dtadmin/user.hlp^Mit Berechtigungen umgehen können) an.
+
+2.\t\d(Doppelklicken^doppelklicken) Sie im
+  \t\k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop) auf "Präferenzen". Das Fenster "Ordner:
+  \tPräferenzen" erscheint.
+
+3.\tDoppelklicken Sie auf "Schriftarten". Das Fenster "Schriftarten"
+  \terscheint.
+
+4.\tKlicken Sie "Aktion=>Vollständigkeitsprüfung" an. In einem
+  \tAufklappfenster werden Sie gefragt, ob Sie die Bearbeitung starten
+  \tmöchten (der Vorgang dauert ein paar Minuten).
+
+  \tWenn die Überprüfung abgeschlossen ist, erscheint ein weiteres
+  \tAufklappfenster.
+
+Die Überprüfung der Schriftartbibliotheken löst nicht alle Probleme.
+Wenn das Problem fortbesteht, wenden Sie sich an Ihren
+Systemverwalter.

@@ -1,0 +1,184 @@
+#ident	"@(#)olpkg.oam:dtxt/prototype	1.105"
+
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+i copyright
+i request
+i preinstall
+i depend
+i pkginfo
+i postinstall
+i preremove
+i dummy.pkginfo
+
+!PACKDIR=../usr/src/$WORK/X11R5/olpkg.oam
+!SRCDIR=../usr/src/$WORK/X11R5/lib
+!PKGINST=dtxt
+!DUMMY_PKGINFO=$PACKDIR/$PKGINST/dummy.pkginfo
+!OLD_PKGINST=wksh
+
+!default 0755 bin bin
+
+d enduser /var ? ? ?
+d enduser /var/sadm ? ? ?
+d enduser /var/sadm/pkg ? ? ?
+d enduser /var/sadm/pkg/$OLD_PKGINST
+
+f enduser /var/sadm/pkg/$OLD_PKGINST/pkginfo=$DUMMY_PKGINFO 0644 root sys
+
+d enduser /dev ? ? ?
+d enduser /etc ? ? ?
+d enduser /etc/dinit.d ? ? ?
+d enduser /usr ? ? ?
+d enduser /usr/bin ? ? ?
+d enduser /usr/lib ? ? ?
+
+d enduser /dev/X 0777 root root
+d enduser /usr/X
+d enduser /usr/X/adm
+d enduser /usr/X/adm/upgrade
+d enduser /usr/X/bin
+s enduser /usr/bin/X11=/usr/X/bin
+d enduser /usr/X/defaults
+d enduser /usr/X/lib
+s enduser /usr/lib/X11=/usr/X/lib
+d enduser /usr/X/lib/app-defaults
+d enduser /usr/X/lib/display
+d enduser /usr/X/lib/fonts
+d enduser /usr/X/lib/fonts/misc
+d enduser /usr/X/lib/fonts/75dpi
+d enduser /usr/X/lib/fonts/100dpi
+d enduser /usr/X/lib/nls
+d enduser /usr/X/lib/nls/local_im_tbl
+d enduser /usr/X/lib/wksh
+d enduser /usr/X/lib/fs
+
+c enduser /dev/X/X.null 2 2 0666 root root
+
+s enduser /usr/X/bin/uncompress=/usr/bin/uncompress
+s enduser /usr/X/bin/compress=/usr/bin/compress
+f enduser /usr/X/bin/olam
+f enduser /usr/X/bin/xhost
+f enduser /usr/X/bin/xpr
+f enduser /usr/X/bin/xset
+f enduser /usr/X/bin/xrdb
+f enduser /usr/X/bin/xwd
+f enduser /usr/X/bin/xwud
+f enduser /usr/X/bin/X 4755 root root
+f enduser /usr/X/bin/xinit 4755 root root
+f enduser /usr/X/bin/bdftopcf=/usr/X/bin/bdftopcf_nat
+f enduser /usr/X/bin/bdftosnf
+f enduser /usr/X/bin/pfb2pfa
+f enduser /usr/X/bin/mkfontdir=/usr/X/bin/mkfontdir_nat
+f enduser /usr/X/bin/mkfontscale
+f enduser /usr/X/bin/xdpyinfo
+
+!default 0644 bin bin
+
+f enduser /usr/X/adm/xdaemon.rc=$PACKDIR/adm/xdaemon.rc
+v enduser /usr/X/lib/app-defaults/olam
+
+f enduser /usr/X/adm/upgrade/dtfonts.dat
+f enduser /usr/X/adm/upgrade/dtold_files.dat
+
+f enduser /usr/X/lib/XErrorDB
+
+f enduser /usr/X/lib/libserver.so 0555 bin bin 1 NULL NULL
+
+f enduser /usr/X/lib/rgb.dir 0664 bin bin
+f enduser /usr/X/lib/rgb.pag 0664 bin bin
+f enduser /usr/X/lib/rgb.txt 0664 bin bin
+
+v enduser /usr/X/defaults/Xwinconfig
+f enduser /usr/X/defaults/Xwinconfig.ini=/usr/X/defaults/Xwinconfig
+v enduser /usr/X/defaults/Xwincmaps
+
+f enduser /usr/X/desktop/dtruntime.so.1=/usr/X/desktop/dtruntime.aa
+f enduser /usr/X/desktop/dtruntime.ab
+s enduser /usr/X/lib/libX11.so.5.0=/usr/X/desktop/dtruntime.so.1
+s enduser /usr/X/lib/libXIM.so.5.0=/usr/X/lib/libX11.so.5.0
+s enduser /usr/X/lib/libXIM.so.1=/usr/X/lib/libX11.so.5.0
+f enduser /usr/X/lib/libXimp.so.5.0
+s enduser /usr/X/lib/libXimp.so=/usr/X/lib/libXimp.so.5.0
+f enduser /usr/X/lib/libXsi.so.5.0
+s enduser /usr/X/lib/libXsi.so=/usr/X/lib/libXsi.so.5.0
+f enduser /usr/X/lib/libfont.so
+s enduser /usr/X/lib/libfont.so.1=/usr/X/lib/libfont.so
+f enduser /usr/X/lib/libxtrapext.so
+
+f enduser /usr/X/lib/libX11.so.1
+s enduser /usr/lib/libX11.so.1=/usr/X/lib/libX11.so.1
+
+f enduser /usr/X/lib/display/README.Xwin
+f enduser /usr/X/lib/display/libvga16.so.2
+f enduser /usr/X/lib/display/stdvga.so.2
+f enduser /usr/X/lib/display/stdvga.dat
+
+f enduser /usr/X/lib/fonts/misc/6x13.pcf.Z
+f enduser /usr/X/lib/fonts/misc/7x14.pcf.Z
+f enduser /usr/X/lib/fonts/misc/8x13.pcf.Z
+f enduser /usr/X/lib/fonts/misc/8x13B.pcf.Z
+f enduser /usr/X/lib/fonts/misc/cursor.pcf.Z
+v build   /usr/X/lib/fonts/misc/fonts.alias=/usr/X/lib/fonts/misc/fonts.alias.dtxt
+v enduser /usr/X/lib/fonts/misc/fonts.dir
+f enduser /usr/X/lib/fonts/75dpi/timB12.pcf.Z
+# These two fonts are here for ISO-8859-1 alias (see MR ul94-27859):
+f enduser /usr/X/lib/fonts/75dpi/lutRS12.pcf.Z
+f enduser /usr/X/lib/fonts/100dpi/lutRS12.pcf.Z
+
+v enduser /usr/X/adm/.Xprofile=$PACKDIR/adm/.Xprofile 0755 root sys
+v enduser /usr/X/adm/.Xdefaults=$PACKDIR/adm/.Xdefaults 0755 root sys
+
+f enduser /usr/X/bin/wksh 0755 bin bin
+s enduser /usr/bin/wksh=/usr/X/bin/wksh
+f enduser /usr/X/bin/olwksh 0755 bin bin
+f enduser /usr/X/lib/wksh/olwksh.rc 0644 bin bin
+
+f enduser /usr/X/lib/locale/C/Codeset=/usr/X/lib/C/Codeset
+
+f enduser /usr/X/lib/nls/C
+f enduser /usr/X/lib/nls/ja_JP.jis7
+f enduser /usr/X/lib/nls/ja_JP.jis8
+f enduser /usr/X/lib/nls/ja_JP.mscode
+f enduser /usr/X/lib/nls/ja_JP.pjis
+f enduser /usr/X/lib/nls/ja_JP.ujis
+f enduser /usr/X/lib/nls/ko_KR.euc
+f enduser /usr/X/lib/nls/lt_LN.bit7
+f enduser /usr/X/lib/nls/lt_LN.bit8
+f enduser /usr/X/lib/nls/nls.alias
+f enduser /usr/X/lib/nls/nls.dir
+f enduser /usr/X/lib/nls/wr_WR.ct
+f enduser /usr/X/lib/nls/zh_CN.ugb
+f enduser /usr/X/lib/nls/zh_TW.big5
+f enduser /usr/X/lib/nls/local_im_tbl/lt_LN.bit7
+f enduser /usr/X/lib/nls/local_im_tbl/lt_LN.bit8
+
+
+
+!default 0555 bin bin
+f enduser /usr/X/bin/fs 4755 root bin
+f enduser /usr/X/bin/fslsfonts
+f enduser /usr/X/bin/fstobdf
+f enduser /usr/X/bin/fsinfo
+f enduser /usr/X/bin/xlsfonts
+# Ensure an empty /type1 directory so that fs can run:
+!default 0755 bin bin
+d enduser /usr/X/lib/fonts/type1
+
+f enduser /usr/X/adm/fsfpreset 4755 bin bin
+
+!default 0644 bin bin
+
+f enduser /usr/X/lib/fs/config
+f enduser /usr/X/lib/fs/S68fs
+f enduser /etc/init.d/fs=/usr/X/lib/fs/S68fs
+l enduser /etc/rc2.d/S68fs=/etc/init.d/fs
+

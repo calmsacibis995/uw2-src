@@ -1,0 +1,64 @@
+#ident	"@(#)pkg.oam:i386/pkg/oam/postremove	1.10"
+#ident	"$Header: $"
+
+#
+# Remove the sysadm login 
+#
+
+trap 'exit 3' 1 2 3 15
+
+/usr/sbin/userdel sysadm >/dev/null  2>&1
+# Make sure entry in contents file does not have non-existent
+# owner "sysadm". Reset it to owner set by base package.
+chown bin /usr/sadm >/dev/null 2>&1
+chgrp bin /usr/sadm >/dev/null 2>&1
+installf base /usr/sadm d 775 bin bin 1 NULL NULL
+installf -f base
+
+#
+# Remove Extra_Admin icon from users with desktop folders.
+#
+
+GT=/usr/bin/gettxt
+
+# remove links to Admin_Tools folder for all desktop users.
+
+DAYONEDIR=/usr/X/desktop/LoginMgr/DayOne
+DESKDIR=/usr/X/desktop/Admin_Tools
+USERDIR=/usr/X/desktop/LoginMgr/Users
+LOGDIRCMD=/usr/X/adm/upgrade/dtlogindir
+if [ ! -d $DAYONEDIR -o ! -d $USERDIR -o ! -x $LOGDIRCMD ]
+then	
+	continue
+else
+	for login in `ls $USERDIR`
+	do
+		if [ -f $DAYONEDIR/$login ]
+		then
+			hdir=`$LOGDIRCMD $login`
+			if [ $? -ne 0 ]
+			then
+				# desktop user with no home dir
+				continue
+			fi
+			locale=`cat $DAYONEDIR/$login`
+			appdir=`LC_ALL=$locale $GT dayone:2 "Admin_Tools"`
+			if [ -d $hdir/$appdir ]
+			then
+				oam=`LC_ALL=$locale $GT dayone:16 "Extra_Admin"`
+				if [ -s $hdir/$appdir/$oam -o -f $hdir/$appdir/$oam -o -h $hdir/$appdir/$oam ]
+				then
+					# remove old link
+					rm -f $hdir/$appdir/$oam
+				fi
+			fi
+
+		fi
+	done
+fi
+
+rm -f $DESKDIR/Extra_Admin
+
+rm -f ${MENU}/netservices/basic_networking > /dev/null 2>&1
+
+exit 0

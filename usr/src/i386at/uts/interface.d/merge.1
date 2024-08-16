@@ -1,0 +1,20 @@
+#ident	"@(#)kern-i386at:interface.d/merge.1	1.1"
+#ident	"$Header: $"
+#
+# merge.1 -- Merge hooks interface version 1 (UnixWare 1.x)
+# This is used by drivers which need to call into the Merge code.
+#
+isdosexec
+kdppi_ioctl
+portalloc
+portfree
+
+# Old way of handling serial ports; changes in version 2:
+asy_is_assigned
+com_ppi_ioctl
+com_ppiioctl
+
+# Old way of handling floppy drivers; changes in version 2:
+floppy_free
+flp_for_dos
+mrg_in_use

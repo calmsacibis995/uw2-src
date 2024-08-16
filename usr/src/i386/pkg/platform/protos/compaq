@@ -1,0 +1,147 @@
+#ident	"@(#)pkg.platform:i386/pkg/platform/protos/compaq	1.16"
+
+!USRBINCPQ=$USRBIN/compaq
+!VARSPLCPQ=/var/spool/compaq
+!CPQDIAGS=$USRBINCPQ/diags
+!CPQIDA=$CPQDIAGS/ida
+!CPQSCSI=$CPQDIAGS/cpqscsi
+
+d compaq /tmp/cpqw	755 root sys
+d compaq /tmp/crom	 755 root sys
+
+d compaq $USRBINCPQ 775 root sys
+d compaq $USRBINCPQ/asr 775 root sys
+d compaq $USRBINCPQ/inspect 775 root sys
+d compaq $USRBINCPQ/inspect/I20eisa 775 root sys
+d compaq $USRBINCPQ/inspect/I30health_logs 775 root sys
+
+d compaq /var 775 root sys
+d compaq /var/spool 775 root bin
+d compaq $VARSPLCPQ 700 root sys
+d compaq $VARSPLCPQ/asr 700 root sys
+d compaq $VARSPLCPQ/ups 700 root sys
+d compaq $VARSPLCPQ/wellness 700 root sys
+d compaq $VARSPLCPQ/registry 700 root sys
+s compaq $USRBINCPQ/registry=$VARSPLCPQ/registry
+
+# crom driver
+v compaq /tmp/crom/Driver_atup.o=$PACKDIR/crom/Driver.o 644 root sys 2 NULL NULL
+v compaq /tmp/crom/Driver_mp.o=/mp/etc/conf/pack.d/crom/Driver.o 644 root sys 2 NULL NULL
+v compaq /tmp/crom/Master=$MASTDIR/crom 644 root sys 2 NULL NULL
+v compaq /tmp/crom/System=$SYSDIR/crom 644 root sys 2 NULL NULL
+v compaq /tmp/crom/Node=$NODEDIR/crom 644 root sys 2 NULL NULL
+
+# wellness driver
+v compaq /tmp/cpqw/Driver_atup.o=$PACKDIR/cpqw/Driver.o 644 root sys 2 NULL NULL
+v compaq /tmp/cpqw/Driver_mp.o=/mp/etc/conf/pack.d/cpqw/Driver.o 644 root sys 2 NULL NULL
+v compaq /tmp/cpqw/Space.c=$PACKDIR/cpqw/space.c 644 root sys 2 NULL NULL
+v compaq /tmp/cpqw/Master=$MASTDIR/cpqw 644 root sys 2 NULL NULL
+v compaq /tmp/cpqw/System=$SYSDIR/cpqw 644 root sys 2 NULL NULL
+v compaq /tmp/cpqw/Node=$NODEDIR/cpqw 644 root sys 2 NULL NULL
+
+# cled driver
+d compaq /tmp/cled	 755 root sys
+v compaq /tmp/cled/Space.c=$PACKDIR/cled/space.c 644 root sys 2 NULL NULL
+v compaq /tmp/cled/Driver.o=/etc/conf/pack.d/cled/Driver.o 644 root sys 2 NULL NULL
+v compaq /tmp/cled/Master=/etc/conf/mdevice.d/cled 644 root sys 2 NULL NULL
+v compaq /tmp/cled/System=/etc/conf/sdevice.d/cled 644 root sys 2 NULL NULL
+d compaq /etc/scsi  755 root sys
+d compaq /etc/scsi/mkdev.d 755 root sys
+d compaq /etc/scsi/target.d 755 root sys
+f compaq /etc/scsi/mkdev.d/cled1=/etc/scsi/mkdev.d/cled1 644 bin bin 
+
+!default 0444 bin bin
+f compaq /usr/include/sys/cled.h=/usr/include/sys/cled.h
+f compaq /usr/include/sys/cledioctl.h=/usr/include/sys/cledioctl.h
+f compaq /usr/include/sys/cledmsg.h=/usr/include/sys/cledmsg.h
+
+# commands
+f compaq $USRBINCPQ/eisa_get=$USRBINCPQ/eisa_get 0555 bin bin 
+f compaq $USRBINCPQ/eisa_nvm=$USRBINCPQ/eisa_nvm 0555 bin bin 
+f compaq $USRBINCPQ/asr/cpqasrd=$USRBINCPQ/asr/cpqasrd 0700 root other
+
+v compaq $VARSPLCPQ/asr/cpqasrd.log 0600 root bin
+s compaq $USRBINCPQ/asr/cpqasrd.log=$VARSPLCPQ/asr/cpqasrd.log
+
+f compaq $USRBINCPQ/inspect/inspect=$USRBINCPQ/inspect/inspect 0700 root other
+f compaq $USRBINCPQ/inspect/I20eisa/eisa=$USRBINCPQ/inspect/I20eisa/eisa 0700 root other 
+f compaq $USRBINCPQ/inspect/I30health_logs/health_logs=$USRBINCPQ/inspect/I30health_logs/health_logs 0700 root other 
+
+!default 0444 bin bin
+f compaq $USRINCSYS/cpqw.h=$USRINCSYS/cpqw.h
+f compaq $USRINCSYS/cpqw_lib.h=$USRINCSYS/cpqw_lib.h
+f compaq $USRINCSYS/crom.h=$USRINCSYS/crom.h
+
+# CIM Agents
+
+v compaq $VARSPLCPQ/agenterrs.log 0600 root bin
+s compaq $USRBINCPQ/agenterrs.log=$VARSPLCPQ/agenterrs.log
+
+d compaq $USRBINCPQ/smux 0755 root bin
+
+f compaq /etc/init.d/cpqasrd=$USRBINCPQ/asr/cpqasrd.etc 0644 root bin
+l compaq /etc/rc2.d/S100cpqasrd=/etc/init.d/cpqasrd
+l compaq /etc/rc1.d/K02cpqasrd=/etc/init.d/cpqasrd
+
+# UPS
+# All files unless otherwise noted will be from $USRBIN/compaq/ups
+d compaq $USRBINCPQ/ups 0755 root bin
+f compaq $USRBINCPQ/ups/cpqupsd=$USRBINCPQ/ups/cpqupsd 0755 root bin
+v compaq $VARSPLCPQ/ups/ups.cfg=$VARSPLCPQ/ups/ups.cfg 0644 root bin
+s compaq $USRBINCPQ/ups/ups.cfg=$VARSPLCPQ/ups/ups.cfg
+
+#/etc/init.d/cpqups from $USRBIN/compaq/ups/cpqups.etc
+f compaq /etc/init.d/cpqups=$USRBINCPQ/ups/cpqups.etc 0644 root bin
+l compaq /etc/rc2.d/S99cpqups=/etc/init.d/cpqups
+l compaq /etc/rc0.d/K99cpqups=/etc/init.d/cpqups
+
+v compaq $VARSPLCPQ/ups/ups.log 0600 root bin
+s compaq $USRBINCPQ/ups/ups.log=$VARSPLCPQ/ups/ups.log
+
+# Wellness agent
+# All files unless otherwise noted will be from $USRBIN/compaq/wellness
+d compaq $USRBINCPQ/wellness 0755 root bin
+f compaq $USRBINCPQ/wellness/wellness_agent=$USRBINCPQ/wellness/wellness_agent 0755 root bin
+
+#/etc/init.d/cpqwell from $USRBIN/compaq/wellness/cpqwell.etc
+f compaq /etc/init.d/cpqwell=$USRBINCPQ/wellness/cpqwell.etc 0644 root bin
+l compaq /etc/rc0.d/K02cpqwell=/etc/init.d/cpqwell
+l compaq /etc/rc1.d/K02cpqwell=/etc/init.d/cpqwell
+l compaq /etc/rc2.d/S99cpqwell=/etc/init.d/cpqwell
+
+v compaq $VARSPLCPQ/wellness/wellness.log 0600 root bin
+s compaq $USRBINCPQ/wellness/wellness.log=$VARSPLCPQ/wellness/wellness.log
+
+#IDA Agents and  Utilities
+d compaq $CPQDIAGS 0755 root bin
+d compaq $CPQIDA 0755 root bin
+f compaq $CPQIDA/cpqidamon 0750 root other
+f compaq /etc/rc2.d/S99cpqidamon 0750 root bin
+l compaq /etc/cpqidamon=/etc/rc2.d/S99cpqidamon	
+l compaq /etc/rc0.d/K01cpqidamon=/etc/rc2.d/S99cpqidamon	
+
+f compaq $CPQIDA/ida_menu 0750 root bin
+f compaq $CPQIDA/dis_beep 0750 root bin
+f compaq $CPQIDA/flush_cache 0750 root bin
+f compaq $CPQIDA/id_ctrl 0750 root bin
+f compaq $CPQIDA/id_lstatus 0750 root bin
+f compaq $CPQIDA/ida_disks 0750 root bin
+f compaq $CPQIDA/ida_info 0750 root bin
+f compaq $CPQIDA/ida_init 0750 root bin
+f compaq $CPQIDA/media_chg 0750 root bin
+f compaq $CPQIDA/ret_cache_st 0750 root bin
+f compaq $CPQIDA/ret_err_log 0750 root bin
+f compaq $CPQIDA/ret_hold 0750 root bin
+f compaq $CPQIDA/ret_mp_cont 0750 root bin
+f compaq $CPQIDA/return_stat 0750 root bin
+f compaq $CPQIDA/sense_config 0750 root bin
+f compaq $CPQIDA/set_delay 0750 root bin
+
+#SCSI Agent and Utilities
+d compaq $CPQSCSI 0755 root bin
+f compaq $CPQSCSI/cpqscsimon 0750 root other
+f compaq /etc/rc2.d/S99cpqscsimon 0750 root bin
+l compaq /etc/cpqscsimon=/etc/rc2.d/S99cpqscsimon	
+l compaq /etc/rc0.d/K01cpqscsimon=/etc/rc2.d/S99cpqscsimon	
+#l compaq /etc/rc1.d/K02cpqscsimon=/etc/rc2.d/S99cpqscsimon	
+f compaq $CPQSCSI/cpqsmu 0750 root bin

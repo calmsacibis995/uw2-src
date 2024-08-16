@@ -1,0 +1,229 @@
+#ident	"@(#)kern-i386at:interface.d/ddi.1	1.10"
+#ident	"$Header: $"
+# ddi.1 -- DDI/DKI version 1 (SVR4.0v1 + some non-DDI/DKI extensions)
+#			     (kmem_[z]alloc DMAable and physcontig)
+#
+# Documented DDI/DKI routines:
+# (Note, though, that kvtophys was only in the 3b2 DDI, but some 386 drivers
+# used it anyway.)
+adjmsg
+allocb		_Compat_allocb
+assfail
+backq		_Compat_backq
+bcanput
+bcopy
+biodone
+biowait
+bp_mapin
+bp_mapout
+brelse
+btop
+btopr
+bufcall		bufcall_u
+bzero
+canput
+clrbuf
+cmn_err
+copyb		_Compat_copyb
+copyin
+copymsg		_Compat_copymsg
+copyout
+datamsg
+delay
+dma_disable
+dma_enable
+dma_free_buf
+dma_free_cb
+dma_get_buf
+dma_get_best_mode
+dma_get_cb
+dma_pageio	_Compat_dma_pageio
+dma_prog
+dma_stop
+dma_swstart
+dma_swsetup
+drv_getparm
+drv_hztousec
+drv_priv
+drv_setparm
+drv_usectohz
+drv_usecwait
+dupb
+dupmsg
+enableok
+esballoc	esballoc_u
+esbbcall	esbbcall_u
+etoimajor
+flushband
+flushq
+freeb
+freemsg
+freerbuf
+geteblk
+getemajor
+geteminor
+geterror
+getmajor
+getminor
+getq
+getrbuf
+hat_getkpfnum	_Compat_hat_getkpfnum
+hat_getppfnum	_Compat_hat_getppfnum
+inb
+inl
+insq
+inw
+itoemajor
+kmem_alloc	_Compat_kmem_alloc
+kmem_free
+kmem_zalloc	_Compat_kmem_zalloc
+kvtophys	_Compat_kvtophys
+linkb
+makedevice
+max
+min
+msgdsize
+ngeteblk
+noenable
+OTHERQ
+outb
+outl
+outw
+page_numtopp
+page_pptonum
+physiock
+physmap
+physmap_free
+pollwakeup
+pptophys
+ptob
+pullupmsg
+putbq
+putctl
+putctl1
+putnext
+putq
+qenable
+qreply
+qsize
+RD
+rdma_filter	_Compat_rdma_filter
+repinsb
+repinsd
+repinsw
+repoutsb
+repoutsd
+repoutsw
+rmalloc
+rmfree
+rminit		_Compat_rminit
+rmsetwant	_Compat_rmsetwant
+rmvb
+rmvq
+rmwant		_Compat_rmwant
+SAMESTR
+sleep
+strlog
+strqget
+strqset
+testb
+timeout		timeout_u
+uiomove
+unbufcall
+unlinkb
+untimeout
+ureadc
+useracc		_Compat_useracc
+uwritec
+vtop
+wakeup
+WR
+# spl routines are handled specially, to reflect the shift from hard to soft
+# spl semantics by default
+spl0		spl0_h
+spl0s		_Compat_spl0s
+spl1		spl1_h
+spl1s		_Compat_spl1s
+spl2		_Compat_spl2
+spl2s		_Compat_spl2s
+spl3		_Compat_spl3
+spl3s		_Compat_spl3s
+spl4		spl4_h
+spl4s		_Compat_spl4s
+spl5		spl5_h
+spl5s		_Compat_spl5s
+spl6		spl6_h
+spl6s		_Compat_spl6s
+spl7		spl7_h
+spl7s		_Compat_spl7s
+splhi		splhi_h
+splhis		_Compat_splhis
+splimp		splhi_h
+splimps		_Compat_splhis
+splstr		spl6_h
+splstrs		_Compat_spl6s
+spltty		spl6_h
+splttys		_Compat_spl6s
+splvm		spl6_h
+splvms		_Compat_spl6s
+splx		_Compat_splx
+splxs		_Compat_splxs
+# Here are the non-DDI/DKI extensions:
+Hz		_Compat_Hz
+btoc		btopr
+ctob		ptob
+dma_breakup	_Compat_dma_pageio
+freepage	_Compat_freepage
+fubyte
+fuibyte		fubyte
+fuiword		fuword
+fuword
+getcpages	_Compat_getcpages
+ifstats
+ind		inl
+iodone		biodone
+ioinb		inb
+iooutb		outb
+iowait		biowait
+kseg		_Compat_kseg
+linw		repinsw
+loutw		repoutsw
+merge386enable	_Compat_merge386enable
+nswap		_Compat_nswap
+outd		outl
+panic		_Compat_panic
+physmem		totalmem
+phystokv	_Compat_phystokv
+pio_breakup	_Compat_pio_breakup
+printf
+seterror	_Compat_seterror
+spinwait	_Compat_spinwait
+splbuf		spl4_h
+splcli		spl5_h
+sptalloc	_Compat_sptalloc
+sptfree		_Compat_sptfree
+subyte
+suibyte		subyte
+suiword		suword
+suword
+swapdev		_Compat_swapdev
+tenmicrosec	_Compat_tenmicrosec
+uiophysio
+unkseg		_Compat_unkseg
+v86setint	_Compat_v86setint
+validproc	_Compat_validproc
+xphystokv	_Compat_phystokv
+# These routines become official DDI/DKI routines in later versions,
+# but for older drivers we consider them non-DDI extensions:
+bcmp
+ovbcopy
+strcat
+strcmp
+strcpy
+strlen
+strncat
+strncmp
+strncpy
+# This symbol is referenced by obsolete header files, so we can allow
+# their inclusion by old drivers but not by new code:
+_Header_File_Obsolete_in_UW2_0	_Compat_Header_OK

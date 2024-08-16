@@ -1,0 +1,8 @@
+#ident	"@(#)kern-i386sym:kernmap	1.5"
+pstart	= LOAD ?RX V0x0 P0x0 L0x2000;
+text	= LOAD ?RX V0xD0004000 P0x4000;
+data	= LOAD ?RWX A0x1000;
+pstart	: ?A : pstart/Driver.o
+text	: $PROGBITS ?A!W;
+data	: $PROGBITS ?AW;
+data	: $NOBITS ?AW;

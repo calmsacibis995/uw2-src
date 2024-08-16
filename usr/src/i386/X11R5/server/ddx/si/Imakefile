@@ -1,0 +1,48 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5server:ddx/si/Imakefile	1.8"
+
+#include <Server.tmpl>
+
+SISRCS =  sigc.c sigetsp.c simisc.c simskbits.c sipixmap.c \
+	siwindow.c siclip.c \
+	siscrinit.c siutils.c sizerdline.c \
+	sicmap.c sifillsp.c sifont.c sisetsp.c \
+	mfbrop.c cfbbitblt.c mipolyrect.c sitegblt.c \
+	sirop.c cfbbstore.c
+
+MISRCS = mifpolycon.c miglblt.c mipoly.c mipolypnt.c \
+	mipolyseg.c mibitblt.c mifillarc.c mifillrct.c \
+	mipolytext.c mipushpxl.c mizerarc.c mizerline.c \
+	mipointer.c misprite.c midispcur.c mieq.c
+
+SIOBJS =  sigc.o sigetsp.o simisc.o simskbits.o sipixmap.o \
+	siwindow.o siclip.o \
+	siscrinit.o siutils.o sizerdline.o \
+	sicmap.o sifillsp.o sifont.o sisetsp.o \
+	mfbrop.o cfbbitblt.o mipolyrect.o sitegblt.o \
+	sirop.o cfbbstore.o
+
+MIOBJS = mifpolycon.o miglblt.o mipoly.o mipolypnt.o \
+	mipolyseg.o mibitblt.o mifillarc.o mifillrct.o \
+	mipolytext.o mipushpxl.o mizerarc.o mizerline.o \
+	mipointer.o misprite.o midispcur.o mieq.o
+
+SRCS = $(SISRCS) $(MISRCS)
+OBJS = $(SIOBJS) $(MIOBJS)
+
+INCLUDES = -I. -I../../include -I../mi -I$(INCLUDESRC) -I$(FONTSRC)/include -I$(FONTSRC)/lib/include
+LINTLIBS = ../../dix/llib-ldix.ln ../../os/llib-los.ln ../io/llib-lio.ln
+
+NormalLibraryObjectRule()
+NormalLibraryTarget(si,$(OBJS))
+LintLibraryTarget(si,$(SRCS))
+NormalLintTarget($(SRCS))
+
+DependTarget()

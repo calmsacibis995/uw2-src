@@ -1,0 +1,63 @@
+#ident	"@(#)pkg.bkrs:i386/pkg/bkrs/preinstall	1.3.2.8"
+#ident	"$Header: $"
+
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+############## Begin UPGRADE AND OVERLAY ######################
+SCRIPTS=/usr/sbin/pkginst
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = YES ] && set -x
+
+#
+#  If there's an older (than sbird) version of OA&M installed, inform
+#  the user to pkgrm it and start again.
+
+${SCRIPTS}/chkpkgrel oam
+PKGVERSION=$?
+[ $PKGVERSION != 2 -a $PKGVERSION != 0 ] && {
+
+	#
+	#  Set up to use menu_colors; default to C-locale if ${LOCALE}'s dir has
+	#  no menu_colors.sh
+	#
+	if [ -f /etc/inst/locale/${LOCALE}/menus/menu_colors.sh ]
+	then
+		. /etc/inst/locale/${LOCALE}/menus/menu_colors.sh
+	else
+		. /etc/inst/locale/C/menus/menu_colors.sh
+	fi
+
+	#
+	#  Send the menus out to the correct directory
+	#
+	MENU_DIR=/etc/inst/locale/${LOCALE}/menus/${PKG}
+	[ -d ${MENU_DIR} ] || mkdir -p ${MENU_DIR}
+
+	MENUS="menu.remove"
+
+	for i in $MENUS
+	do
+	   if [ ! -f ${MENU_DIR}/$i ]
+	   then
+	      if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKG}/$i ]
+	      then
+	           cp ${REQDIR}/inst/locale/${LOCALE}/${PKG}/$i ${MENU_DIR}
+	      else
+	           cp ${REQDIR}/${PKG}/$i ${MENU_DIR}
+	      fi
+	   fi
+	done
+
+	menu_colors regular
+	menu -f ${MENU_DIR}/menu.remove -o /dev/null >/dev/tty 2>/dev/null < /dev/tty
+	exit 3
+}
+
+if [ "$PKGINSTALL_TYPE" = UPGRADE ] || [ "$PKGINSTALL_TYPE" = OVERLAY ]
+then
+	${SCRIPTS}/pkgsavfiles ${PKGINST}
+
+fi
+############### End UPGRADE AND OVERLAY #######################
+
+exit 0

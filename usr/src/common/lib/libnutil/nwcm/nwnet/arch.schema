@@ -1,0 +1,204 @@
+#ident	"@(#)libnwutil:common/lib/libnutil/nwcm/nwnet/arch.schema	1.1"
+/*
+ * Copyright 1992 Unpublished Work of Novell, Inc.
+ * All Rights Reserved.
+ *
+ * This work is an unpublished work and contains confidential,
+ * proprietary and trade secret information of Novell, Inc. Access
+ * to this work is restricted to (I) Novell employees who have a
+ * need to know to perform tasks within the scope of their
+ * assignments and (II) entities other than Novell who have
+ * entered into appropriate agreements.
+ *
+ * No part of this work may be used, practiced, performed,
+ * copied, distributed, revised, modified, translated, abridged,
+ * condensed, expanded, collected, compiled, linked, recast,
+ * transformed or adapted without the prior written consent
+ * of Novell.  Any use or exploitation of this work without
+ * authorization could subject the perpetrator to criminal and
+ * civil liability.
+ */
+
+/*
+** DON'T FORGET TO UPDATE ../nls/English/nwcmdesc.m4 and
+** ../nls/English/nwcmhelp.m4 if you make any changes here!!!
+*/
+
+/*
+**	This file contains configuration parameters that typically vary
+**	across Architectures
+*/
+
+ipx_auto_discovery	NWCM_PF_IPXSPX	NWCM_PN_IPX_AUTO_DISCOVERY	NWCM_PH_IPX_AUTO_DISCOVERY	boolean		active
+router_type		NWCM_PF_IPXSPX	NWCM_PN_ROUTER_TYPE	NWCM_PH_ROUTER_TYPE	string	"CLIENT" NWCMValidateRouterType()
+
+/*
+**	Parameters to control sapping on UnixWare
+*/
+sap_remote_apps NWCM_PF_SAP NWCM_PN_SAP_REMOTE_APPS NWCM_PH_SAP_REMOTE_APPS boolean inactive
+sap_install_server NWCM_PF_SAP NWCM_PN_SAP_INSTALL_SERVER NWCM_PH_SAP_INSTALL_SERVER boolean inactive
+sap_unixware NWCM_PF_SAP NWCM_PN_SAP_UNIXWARE NWCM_PH_SAP_UNIXWARE boolean active
+sap_file_compatibility	NWCM_PF_SAP	NWCM_PN_SAP_FILE_COMPATIBILITY	NWCM_PH_SAP_FILE_COMPATIBILITY	boolean		inactive
+
+/*
+**	All the following values are for the protocol stacks
+*/
+	/* FrameType ETHERNET_802.2 */
+lan_1_network	NWCM_PF_IPXSPX	NWCM_PN_LAN_NETWORK	NWCM_PH_LAN_NETWORK	hex integer	0		0 0xFFFFFFFE
+lan_1_adapter	NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER	NWCM_PH_LAN_ADAPTER	string				""				NWCMValidateDevice()
+lan_1_ppa		NWCM_PF_IPXSPX	NWCM_PN_LAN_PPA	NWCM_PH_LAN_PPA	integer		0		0 65535
+lan_1_adapter_type NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER_TYPE	NWCM_PH_LAN_ADAPTER_TYPE	uppercase string "ETHERNET_DLPI" NWCMValidateDeviceType()
+lan_1_frame_type NWCM_PF_IPXSPX	NWCM_PN_LAN_FRAME_TYPE	NWCM_PH_LAN_FRAME_TYPE	uppercase string	"ETHERNET_802.2"	NWCMValidateFrameType()
+lan_1_if_name	 			 NWCM_PF_NONE	NWCM_PN_LAN_IF_NAME	NWCM_PH_LAN_IF_NAME	string	""				NWCMInvalidate()
+lan_1_kb_per_sec NWCM_PF_IPXSPX NWCM_PN_LAN_KBPS NWCM_PH_LAN_KBPS integer 10000 0 0xFFFFFFFE
+lan_1_rip_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_BCST_INTERVAL NWCM_PH_LAN_RIP_BCST_INTERVAL integer 2 1 65535
+lan_1_rip_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_AGEOUT_INTERVALS NWCM_PH_LAN_RIP_AGEOUT_INTERVALS integer 4 1 256
+lan_1_rip_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_MAX_PKT_SIZE NWCM_PH_LAN_RIP_MAX_PKT_SIZE integer 432 40 0xFFFFFFFE
+lan_1_rip_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_SND_CHG_ONLY NWCM_PH_LAN_RIP_SND_CHG_ONLY boolean inactive
+lan_1_rip_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_PKT_DLY NWCM_PH_LAN_RIP_PKT_DLY integer 55 0 500
+lan_1_sap_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_BCST_INTERVAL NWCM_PH_LAN_SAP_BCST_INTERVAL integer 2 1 65535
+lan_1_sap_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_AGEOUT_INTERVALS NWCM_PH_LAN_SAP_AGEOUT_INTERVALS integer 4 1 256
+lan_1_sap_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_MAX_PKT_SIZE NWCM_PH_LAN_SAP_MAX_PKT_SIZE integer 480 96 0xFFFFFFFE
+lan_1_sap_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_SND_CHG_ONLY NWCM_PH_LAN_SAP_SND_CHG_ONLY boolean inactive
+lan_1_sap_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_PKT_DLY NWCM_PH_LAN_SAP_PKT_DLY integer 55 0 500
+lan_1_sap_reply_to_gns	NWCM_PF_IPXSPX	NWCM_PN_LAN_SAP_RPLY_GNS NWCM_PH_LAN_SAP_RPLY_GNS boolean active
+
+	/* FrameType ETHERNET_802.2 */
+lan_2_network	NWCM_PF_IPXSPX	NWCM_PN_LAN_NETWORK	NWCM_PH_LAN_NETWORK	hex integer	0		0 0xFFFFFFFE
+lan_2_adapter	NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER	NWCM_PH_LAN_ADAPTER	string				""				NWCMValidateDevice()
+lan_2_ppa		NWCM_PF_IPXSPX	NWCM_PN_LAN_PPA	NWCM_PH_LAN_PPA	integer		0		0 65535
+lan_2_adapter_type NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER_TYPE	NWCM_PH_LAN_ADAPTER_TYPE	uppercase string "ETHERNET_DLPI" NWCMValidateDeviceType()
+lan_2_frame_type NWCM_PF_IPXSPX	NWCM_PN_LAN_FRAME_TYPE	NWCM_PH_LAN_FRAME_TYPE	uppercase string	"ETHERNET_802.2"	NWCMValidateFrameType()
+lan_2_if_name	 			 NWCM_PF_NONE	NWCM_PN_LAN_IF_NAME	NWCM_PH_LAN_IF_NAME	string	""				NWCMInvalidate()
+lan_2_kb_per_sec NWCM_PF_IPXSPX NWCM_PN_LAN_KBPS NWCM_PH_LAN_KBPS integer 10000 0 0xFFFFFFFE
+lan_2_rip_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_BCST_INTERVAL NWCM_PH_LAN_RIP_BCST_INTERVAL integer 2 1 65535
+lan_2_rip_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_AGEOUT_INTERVALS NWCM_PH_LAN_RIP_AGEOUT_INTERVALS integer 4 1 256
+lan_2_rip_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_MAX_PKT_SIZE NWCM_PH_LAN_RIP_MAX_PKT_SIZE integer 432 40 0xFFFFFFFE
+lan_2_rip_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_SND_CHG_ONLY NWCM_PH_LAN_RIP_SND_CHG_ONLY boolean inactive
+lan_2_rip_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_PKT_DLY NWCM_PH_LAN_RIP_PKT_DLY integer 55 0 500
+lan_2_sap_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_BCST_INTERVAL NWCM_PH_LAN_SAP_BCST_INTERVAL integer 2 1 65535
+lan_2_sap_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_AGEOUT_INTERVALS NWCM_PH_LAN_SAP_AGEOUT_INTERVALS integer 4 1 256
+lan_2_sap_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_MAX_PKT_SIZE NWCM_PH_LAN_SAP_MAX_PKT_SIZE integer 480 96 0xFFFFFFFE
+lan_2_sap_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_SND_CHG_ONLY NWCM_PH_LAN_SAP_SND_CHG_ONLY boolean inactive
+lan_2_sap_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_PKT_DLY NWCM_PH_LAN_SAP_PKT_DLY integer 55 0 500
+lan_2_sap_reply_to_gns	NWCM_PF_IPXSPX	NWCM_PN_LAN_SAP_RPLY_GNS NWCM_PN_LAN_SAP_RPLY_GNS boolean active
+
+	/* FrameType ETHERNET_802.2 */
+lan_3_network	NWCM_PF_IPXSPX	NWCM_PN_LAN_NETWORK	NWCM_PH_LAN_NETWORK	hex integer	0		0 0xFFFFFFFE
+lan_3_adapter	NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER	NWCM_PH_LAN_ADAPTER	string				""				NWCMValidateDevice()
+lan_3_ppa		NWCM_PF_IPXSPX	NWCM_PN_LAN_PPA	NWCM_PH_LAN_PPA	integer		0		0 65535
+lan_3_adapter_type NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER_TYPE	NWCM_PH_LAN_ADAPTER_TYPE	uppercase string "ETHERNET_DLPI" NWCMValidateDeviceType()
+lan_3_frame_type NWCM_PF_IPXSPX	NWCM_PN_LAN_FRAME_TYPE	NWCM_PH_LAN_FRAME_TYPE	uppercase string	"ETHERNET_802.2"	NWCMValidateFrameType()
+lan_3_if_name	 			 NWCM_PF_NONE	NWCM_PN_LAN_IF_NAME	NWCM_PH_LAN_IF_NAME	string	""				NWCMInvalidate()
+lan_3_kb_per_sec NWCM_PF_IPXSPX NWCM_PN_LAN_KBPS NWCM_PH_LAN_KBPS integer 10000 0 0xFFFFFFFE
+lan_3_rip_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_BCST_INTERVAL NWCM_PH_LAN_RIP_BCST_INTERVAL integer 2 1 65535
+lan_3_rip_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_AGEOUT_INTERVALS NWCM_PH_LAN_RIP_AGEOUT_INTERVALS integer 4 1 256
+lan_3_rip_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_MAX_PKT_SIZE NWCM_PH_LAN_RIP_MAX_PKT_SIZE integer 432 40 0xFFFFFFFE
+lan_3_rip_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_SND_CHG_ONLY NWCM_PH_LAN_RIP_SND_CHG_ONLY boolean inactive
+lan_3_rip_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_PKT_DLY NWCM_PH_LAN_RIP_PKT_DLY integer 55 0 500
+lan_3_sap_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_BCST_INTERVAL NWCM_PH_LAN_SAP_BCST_INTERVAL integer 2 1 65535
+lan_3_sap_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_AGEOUT_INTERVALS NWCM_PH_LAN_SAP_AGEOUT_INTERVALS integer 4 1 256
+lan_3_sap_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_MAX_PKT_SIZE NWCM_PH_LAN_SAP_MAX_PKT_SIZE integer 480 96 0xFFFFFFFE
+lan_3_sap_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_SND_CHG_ONLY NWCM_PH_LAN_SAP_SND_CHG_ONLY boolean inactive
+lan_3_sap_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_PKT_DLY NWCM_PH_LAN_SAP_PKT_DLY integer 55 0 500
+lan_3_sap_reply_to_gns	NWCM_PF_IPXSPX	NWCM_PN_LAN_SAP_RPLY_GNS NWCM_PN_LAN_SAP_RPLY_GNS boolean active
+
+	/* FrameType ETHERNET_802.2 */
+lan_4_network	NWCM_PF_IPXSPX	NWCM_PN_LAN_NETWORK	NWCM_PH_LAN_NETWORK	hex integer	0		0 0xFFFFFFFE
+lan_4_adapter	NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER	NWCM_PH_LAN_ADAPTER	string				""				NWCMValidateDevice()
+lan_4_ppa		NWCM_PF_IPXSPX	NWCM_PN_LAN_PPA	NWCM_PH_LAN_PPA	integer		0		0 65535
+lan_4_adapter_type NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER_TYPE	NWCM_PH_LAN_ADAPTER_TYPE	uppercase string "ETHERNET_DLPI" NWCMValidateDeviceType()
+lan_4_frame_type NWCM_PF_IPXSPX	NWCM_PN_LAN_FRAME_TYPE	NWCM_PH_LAN_FRAME_TYPE	uppercase string	"ETHERNET_802.2"	NWCMValidateFrameType()
+lan_4_if_name	 			 NWCM_PF_NONE	NWCM_PN_LAN_IF_NAME	NWCM_PH_LAN_IF_NAME	string	""				NWCMInvalidate()
+lan_4_kb_per_sec NWCM_PF_IPXSPX NWCM_PN_LAN_KBPS NWCM_PH_LAN_KBPS integer 10000 0 0xFFFFFFFE
+lan_4_rip_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_BCST_INTERVAL NWCM_PH_LAN_RIP_BCST_INTERVAL integer 2 1 65535
+lan_4_rip_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_AGEOUT_INTERVALS NWCM_PH_LAN_RIP_AGEOUT_INTERVALS integer 4 1 256
+lan_4_rip_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_MAX_PKT_SIZE NWCM_PH_LAN_RIP_MAX_PKT_SIZE integer 432 40 0xFFFFFFFE
+lan_4_rip_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_SND_CHG_ONLY NWCM_PH_LAN_RIP_SND_CHG_ONLY boolean inactive
+lan_4_rip_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_PKT_DLY NWCM_PH_LAN_RIP_PKT_DLY integer 55 0 500
+lan_4_sap_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_BCST_INTERVAL NWCM_PH_LAN_SAP_BCST_INTERVAL integer 2 1 65535
+lan_4_sap_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_AGEOUT_INTERVALS NWCM_PH_LAN_SAP_AGEOUT_INTERVALS integer 4 1 256
+lan_4_sap_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_MAX_PKT_SIZE NWCM_PH_LAN_SAP_MAX_PKT_SIZE integer 480 96 0xFFFFFFFE
+lan_4_sap_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_SND_CHG_ONLY NWCM_PH_LAN_SAP_SND_CHG_ONLY boolean inactive
+lan_4_sap_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_PKT_DLY NWCM_PH_LAN_SAP_PKT_DLY integer 55 0 500
+lan_4_sap_reply_to_gns	NWCM_PF_IPXSPX	NWCM_PN_LAN_SAP_RPLY_GNS NWCM_PN_LAN_SAP_RPLY_GNS boolean active
+
+	/* FrameType ETHERNET_802.2 */
+lan_5_network	NWCM_PF_IPXSPX	NWCM_PN_LAN_NETWORK	NWCM_PH_LAN_NETWORK	hex integer	0		0 0xFFFFFFFE
+lan_5_adapter	NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER	NWCM_PH_LAN_ADAPTER	string				""				NWCMValidateDevice()
+lan_5_ppa		NWCM_PF_IPXSPX	NWCM_PN_LAN_PPA	NWCM_PH_LAN_PPA	integer		0		0 65535
+lan_5_adapter_type NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER_TYPE	NWCM_PH_LAN_ADAPTER_TYPE	uppercase string "ETHERNET_DLPI" NWCMValidateDeviceType()
+lan_5_frame_type NWCM_PF_IPXSPX	NWCM_PN_LAN_FRAME_TYPE	NWCM_PH_LAN_FRAME_TYPE	uppercase string	"ETHERNET_802.2"	NWCMValidateFrameType()
+lan_5_if_name	 			 NWCM_PF_NONE	NWCM_PN_LAN_IF_NAME	NWCM_PH_LAN_IF_NAME	string	""				NWCMInvalidate()
+lan_5_kb_per_sec NWCM_PF_IPXSPX NWCM_PN_LAN_KBPS NWCM_PH_LAN_KBPS integer 10000 0 0xFFFFFFFE
+lan_5_rip_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_BCST_INTERVAL NWCM_PH_LAN_RIP_BCST_INTERVAL integer 2 1 65535
+lan_5_rip_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_AGEOUT_INTERVALS NWCM_PH_LAN_RIP_AGEOUT_INTERVALS integer 4 1 256
+lan_5_rip_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_MAX_PKT_SIZE NWCM_PH_LAN_RIP_MAX_PKT_SIZE integer 432 40 0xFFFFFFFE
+lan_5_rip_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_SND_CHG_ONLY NWCM_PH_LAN_RIP_SND_CHG_ONLY boolean inactive
+lan_5_rip_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_PKT_DLY NWCM_PH_LAN_RIP_PKT_DLY integer 55 0 500
+lan_5_sap_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_BCST_INTERVAL NWCM_PH_LAN_SAP_BCST_INTERVAL integer 2 1 65535
+lan_5_sap_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_AGEOUT_INTERVALS NWCM_PH_LAN_SAP_AGEOUT_INTERVALS integer 4 1 256
+lan_5_sap_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_MAX_PKT_SIZE NWCM_PH_LAN_SAP_MAX_PKT_SIZE integer 480 96 0xFFFFFFFE
+lan_5_sap_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_SND_CHG_ONLY NWCM_PH_LAN_SAP_SND_CHG_ONLY boolean inactive
+lan_5_sap_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_PKT_DLY NWCM_PH_LAN_SAP_PKT_DLY integer 55 0 500
+lan_5_sap_reply_to_gns	NWCM_PF_IPXSPX	NWCM_PN_LAN_SAP_RPLY_GNS NWCM_PN_LAN_SAP_RPLY_GNS boolean active
+
+	/* FrameType ETHERNET_802.2 */
+lan_6_network	NWCM_PF_IPXSPX	NWCM_PN_LAN_NETWORK	NWCM_PH_LAN_NETWORK	hex integer	0		0 0xFFFFFFFE
+lan_6_adapter	NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER	NWCM_PH_LAN_ADAPTER	string				""				NWCMValidateDevice()
+lan_6_ppa		NWCM_PF_IPXSPX	NWCM_PN_LAN_PPA	NWCM_PH_LAN_PPA	integer		0		0 65535
+lan_6_adapter_type NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER_TYPE	NWCM_PH_LAN_ADAPTER_TYPE	uppercase string "ETHERNET_DLPI" NWCMValidateDeviceType()
+lan_6_frame_type NWCM_PF_IPXSPX	NWCM_PN_LAN_FRAME_TYPE	NWCM_PH_LAN_FRAME_TYPE	uppercase string	"ETHERNET_802.2"	NWCMValidateFrameType()
+lan_6_if_name	 			 NWCM_PF_NONE	NWCM_PN_LAN_IF_NAME	NWCM_PH_LAN_IF_NAME	string	""				NWCMInvalidate()
+lan_6_kb_per_sec NWCM_PF_IPXSPX NWCM_PN_LAN_KBPS NWCM_PH_LAN_KBPS integer 10000 0 0xFFFFFFFE
+lan_6_rip_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_BCST_INTERVAL NWCM_PH_LAN_RIP_BCST_INTERVAL integer 2 1 65535
+lan_6_rip_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_AGEOUT_INTERVALS NWCM_PH_LAN_RIP_AGEOUT_INTERVALS integer 4 1 256
+lan_6_rip_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_MAX_PKT_SIZE NWCM_PH_LAN_RIP_MAX_PKT_SIZE integer 432 40 0xFFFFFFFE
+lan_6_rip_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_SND_CHG_ONLY NWCM_PH_LAN_RIP_SND_CHG_ONLY boolean inactive
+lan_6_rip_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_PKT_DLY NWCM_PH_LAN_RIP_PKT_DLY integer 55 0 500
+lan_6_sap_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_BCST_INTERVAL NWCM_PH_LAN_SAP_BCST_INTERVAL integer 2 1 65535
+lan_6_sap_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_AGEOUT_INTERVALS NWCM_PH_LAN_SAP_AGEOUT_INTERVALS integer 4 1 256
+lan_6_sap_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_MAX_PKT_SIZE NWCM_PH_LAN_SAP_MAX_PKT_SIZE integer 480 96 0xFFFFFFFE
+lan_6_sap_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_SND_CHG_ONLY NWCM_PH_LAN_SAP_SND_CHG_ONLY boolean inactive
+lan_6_sap_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_PKT_DLY NWCM_PH_LAN_SAP_PKT_DLY integer 55 0 500
+lan_6_sap_reply_to_gns	NWCM_PF_IPXSPX	NWCM_PN_LAN_SAP_RPLY_GNS NWCM_PN_LAN_SAP_RPLY_GNS boolean active
+
+	/* FrameType ETHERNET_802.2 */
+lan_7_network	NWCM_PF_IPXSPX	NWCM_PN_LAN_NETWORK	NWCM_PH_LAN_NETWORK	hex integer	0		0 0xFFFFFFFE
+lan_7_adapter	NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER	NWCM_PH_LAN_ADAPTER	string				""				NWCMValidateDevice()
+lan_7_ppa		NWCM_PF_IPXSPX	NWCM_PN_LAN_PPA	NWCM_PH_LAN_PPA	integer		0		0 65535
+lan_7_adapter_type NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER_TYPE	NWCM_PH_LAN_ADAPTER_TYPE	uppercase string "ETHERNET_DLPI" NWCMValidateDeviceType()
+lan_7_frame_type NWCM_PF_IPXSPX	NWCM_PN_LAN_FRAME_TYPE	NWCM_PH_LAN_FRAME_TYPE	uppercase string	"ETHERNET_802.2"	NWCMValidateFrameType()
+lan_7_if_name	 			 NWCM_PF_NONE	NWCM_PN_LAN_IF_NAME	NWCM_PH_LAN_IF_NAME	string	""				NWCMInvalidate()
+lan_7_kb_per_sec NWCM_PF_IPXSPX NWCM_PN_LAN_KBPS NWCM_PH_LAN_KBPS integer 10000 0 0xFFFFFFFE
+lan_7_rip_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_BCST_INTERVAL NWCM_PH_LAN_RIP_BCST_INTERVAL integer 2 1 65535
+lan_7_rip_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_AGEOUT_INTERVALS NWCM_PH_LAN_RIP_AGEOUT_INTERVALS integer 4 1 256
+lan_7_rip_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_MAX_PKT_SIZE NWCM_PH_LAN_RIP_MAX_PKT_SIZE integer 432 40 0xFFFFFFFE
+lan_7_rip_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_SND_CHG_ONLY NWCM_PH_LAN_RIP_SND_CHG_ONLY boolean inactive
+lan_7_rip_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_PKT_DLY NWCM_PH_LAN_RIP_PKT_DLY integer 55 0 500
+lan_7_sap_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_BCST_INTERVAL NWCM_PH_LAN_SAP_BCST_INTERVAL integer 2 1 65535
+lan_7_sap_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_AGEOUT_INTERVALS NWCM_PH_LAN_SAP_AGEOUT_INTERVALS integer 4 1 256
+lan_7_sap_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_MAX_PKT_SIZE NWCM_PH_LAN_SAP_MAX_PKT_SIZE integer 480 96 0xFFFFFFFE
+lan_7_sap_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_SND_CHG_ONLY NWCM_PH_LAN_SAP_SND_CHG_ONLY boolean inactive
+lan_7_sap_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_PKT_DLY NWCM_PH_LAN_SAP_PKT_DLY integer 55 0 500
+lan_7_sap_reply_to_gns	NWCM_PF_IPXSPX	NWCM_PN_LAN_SAP_RPLY_GNS NWCM_PN_LAN_SAP_RPLY_GNS boolean active
+
+	/* FrameType ETHERNET_802.2 */
+lan_8_network	NWCM_PF_IPXSPX	NWCM_PN_LAN_NETWORK	NWCM_PH_LAN_NETWORK	hex integer	0		0 0xFFFFFFFE
+lan_8_adapter	NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER	NWCM_PH_LAN_ADAPTER	string				""				NWCMValidateDevice()
+lan_8_ppa		NWCM_PF_IPXSPX	NWCM_PN_LAN_PPA	NWCM_PH_LAN_PPA	integer		0		0 65535
+lan_8_adapter_type NWCM_PF_IPXSPX	NWCM_PN_LAN_ADAPTER_TYPE	NWCM_PH_LAN_ADAPTER_TYPE	uppercase string "ETHERNET_DLPI" NWCMValidateDeviceType()
+lan_8_frame_type NWCM_PF_IPXSPX	NWCM_PN_LAN_FRAME_TYPE	NWCM_PH_LAN_FRAME_TYPE	uppercase string	"ETHERNET_802.2"	NWCMValidateFrameType()
+lan_8_if_name	 			 NWCM_PF_NONE	NWCM_PN_LAN_IF_NAME	NWCM_PH_LAN_IF_NAME	string	""				NWCMInvalidate()
+lan_8_kb_per_sec NWCM_PF_IPXSPX NWCM_PN_LAN_KBPS NWCM_PH_LAN_KBPS integer 10000 0 0xFFFFFFFE
+lan_8_rip_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_BCST_INTERVAL NWCM_PH_LAN_RIP_BCST_INTERVAL integer 2 1 65535
+lan_8_rip_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_AGEOUT_INTERVALS NWCM_PH_LAN_RIP_AGEOUT_INTERVALS integer 4 1 256
+lan_8_rip_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_MAX_PKT_SIZE NWCM_PH_LAN_RIP_MAX_PKT_SIZE integer 432 40 0xFFFFFFFE
+lan_8_rip_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_SND_CHG_ONLY NWCM_PH_LAN_RIP_SND_CHG_ONLY boolean inactive
+lan_8_rip_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_RIP_PKT_DLY NWCM_PH_LAN_RIP_PKT_DLY integer 55 0 500
+lan_8_sap_bcast_intervals NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_BCST_INTERVAL NWCM_PH_LAN_SAP_BCST_INTERVAL integer 2 1 65535
+lan_8_sap_ageout_intervals	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_AGEOUT_INTERVALS NWCM_PH_LAN_SAP_AGEOUT_INTERVALS integer 4 1 256
+lan_8_sap_max_pkt_size NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_MAX_PKT_SIZE NWCM_PH_LAN_SAP_MAX_PKT_SIZE integer 480 96 0xFFFFFFFE
+lan_8_sap_send_changed_only	NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_SND_CHG_ONLY NWCM_PH_LAN_SAP_SND_CHG_ONLY boolean inactive
+lan_8_sap_inter_pkt_delay NWCM_PF_IPXSPX NWCM_PN_LAN_SAP_PKT_DLY NWCM_PH_LAN_SAP_PKT_DLY integer 55 0 500
+lan_8_sap_reply_to_gns	NWCM_PF_IPXSPX	NWCM_PN_LAN_SAP_RPLY_GNS NWCM_PN_LAN_SAP_RPLY_GNS boolean active

@@ -1,0 +1,123 @@
+
+
+
+		Mwm 1.2 Snapshot PreFinal Notes (20 Mar 92)
+
+
+	This is a list of UNSUPPORTED compilation flags used by Mwm:
+
+	   NO_SHAPE - turn off non-rectangular shape extension support 	for
+			environments that do not have libXext.a.
+
+	   NO_MULTIBYTE - turn off support for multibyte text and localized
+			text.
+
+	   MOTIF_ONE_DOT_ONE - use this flag when compiling Mwm 1.2 against
+			a Motif 1.1 Xm Toolkit.  This flag has only been
+			touch tested with the NO_MULTIBYTE option also set
+			(ie. cc -DMOTIF_ONE_DOT_ONE -DNO_MULTIBYTE).
+
+
+	This is an list of the changes from Mwm 1.1 to Mwm 1.2.
+
+
+	GENERAL
+	-------
+
+	Performance enhancements:
+	    event optimization and focus event compression
+	    streamline frequently executed routines
+	    fixed unnecessary redraws of icon image
+	    fixed memory leaks
+
+	I18n of .mwmrc file
+
+	I18n of mwm's dialog messages
+
+	Builtin default root menu (named DefaultRootMenu)
+
+	Improved support for clients with multiple colormaps
+
+	Improved clientAutoPlace placement algorithm
+
+	Support menu unpost replay so that the unposting buttonDown is
+	passed on.
+
+	Support Motif tear-off menus (ie. no truncation of title)
+
+	Support WM_QUERY drag and drop protocol (pre-register mode).
+
+	Improved traversal of icons in iconbox (ie. autoscroll to icon with
+	focus).
+
+	Widget names used by Mwm exposed (ie. TitleName, PushButtonGadget<n>,
+	etc).
+
+	Support continuation character '\' in .mwmrc file
+
+	Button1 double click on icons will restore icons to their previous
+	window state (ie. maximize window will deiconify to their maximum
+	size).
+
+	Alt and Meta key modifiers are treated as different modifiers.
+
+	Posting icon menus via KMenu (now Shift+F10) is fixed
+
+	Allow f.minimize from an icon in an iconbox.
+
+	"Globally active" windows are supported correctly.
+
+	Both "Alt Shift Ctrl<Key>exclam" and "Alt Ctrl<Key>1" will toggle
+	behavior.
+
+	Support of non-rectangular SHAPED windows.  Now fully supported and
+	documented.
+
+
+	NEW OR ENHANCED MWM F.FUNCTIONS
+	-------------------------------
+
+	Modified "f.lower" function to take 'within' and 'freeFamily' to
+	lower transient window below parent.
+
+	Added "f.screen arg" function to traverse screens.  Legal arguments
+	are next, prev, last, or a screen number.
+
+	Added "f.restore" function to restore window to previous window
+	state.  This function will be be bounded by default to Button1
+	double click on root icons.
+
+	Added "f.restore_and_raise" function to restore window to previous
+	window state.  This function will be be bounded by default to
+	Button1 double click on icons in an iconbox.
+
+
+	NEW OR IMPROVED RESOURCES
+	-------------------------
+
+	Modified "maximumClientSize" resource to take 'vertical' or
+	'horizontal' as values (eg. users can specify that Xterms maximize
+	only in the vertical direction).
+
+	Added "usePPostion" resource that takes the values (on, off, or
+	nonzero) to control whether program specified postion is used or
+	not.  The default for this resource is 'nonzero'.
+
+	Added "feedbackGeometry" resource to set the position of the
+	move/resize feedback window.  The default is the center of the
+	screen.
+
+	Modified "resizeBorderWidth" to default depending on the size and
+	resolution of the screen, instead of defaulting to a hardcode '10'.
+
+	Modified "frameBorderWidth" to default depending on the size and
+	resolution of the screen, instead of defaulting to a hardcode '5'.
+
+	Modified "iconPlacement" to take the value 'tight' for auto icon
+	placement with no gaps between icons.
+
+	Added "moveOpaque" resource to enable opaque window moves.  Now
+	fully supported and documented.
+
+
+

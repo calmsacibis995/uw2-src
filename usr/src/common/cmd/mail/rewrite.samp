@@ -1,0 +1,312 @@
+#ident	"@(#)mail:common/cmd/mail/rewrite.samp	1.2"
+#ident "@(#)rewrite.samp	1.2 'attmail mail(1) command'"
+#
+# rewrite.sample
+#
+# A series of sample mailR functions which may be used in the
+# /etc/mail/rewrite file.
+
+# function collapse_headers()
+#
+# Collapse all address (To:/Cc:/Bcc:) headers into single headers.
+# Pass the work on to collapse_address_header().
+
+function collapse_headers()
+{
+    collapse_address_header("To");
+    collapse_address_header("Cc");
+    collapse_address_header("Bcc");
+}
+
+# function collapse_address_header(var hdrname)
+#
+# Collapse multiple address (To:/Cc:/Bcc:) headers into a single address
+# header. Find all the headers of the given type, appending the value of
+# each onto the variable newhdr. Then delete all headers of that type, and
+# add in the replacement header.
+
+function collapse_address_header(var hdrname)
+{
+    var newhdr, val;
+    # loop through the headers
+    for (val from headers(hdrname))
+	# if our replacement value already has something in it,
+	# then append the value with a newline separator
+	if (newhdr)
+	    newhdr = newhdr @ "\n" @ val;
+	# otherwise, just copy the value
+	else
+	    newhdr = val;
+    # out with the old ...
+    delete_headers(hdrname);
+    # ... and in with the new
+    append_header(hdrname, "From", newhdr);
+}
+
+# function expand_headers()
+#
+# Split all address headers apart into multiple headers.
+# Let expand_address_header() do all of the work.
+
+function expand_headers()
+{
+    expand_address_header("To");
+    expand_address_header("Cc");
+    expand_address_header("Bcc");
+}
+
+# function expand_address_header(var hdrname)
+#
+# Split a given address apart into multiple headers.
+# Loop through the addresses on the headers of the given type,
+# and create an array with each of those value in a separate
+# element. Delete the old headers of that type, and then loop
+# through that array, adding each header back in.
+
+function expand_address_header(var hdrname)
+{
+    var i = 0, val, newhdr;
+    # loop through the headers
+    for (val from headers(hdrname))
+	{
+	var hdrval;
+	# loop through the addresses
+	for (hdrval from addrparse(val))
+	    {
+	    # save the address and comment
+	    newhdr[i] = hdrval["address"] @ " " @ hdrval["comment"];
+	    i = i + 1;
+	    }
+	}
+    # out with the old ...
+    delete_header(hdrname);
+    var j = 0;
+    # ... and in with the new
+    for ( ; j < i; j = j + 1)
+	append_header(hdrname, hdrname, newhdr[j]);
+}
+
+# function check_headers()
+#
+# Hide your machine name from everyone outside of the cluster. That is,
+# reduce subdomain addresses found in From:/To:/Cc:/Bcc: headers down to the
+# domain address, as in changing user@foo.xyz.com into user@xyz.com.
+#
+# It loops through all of the headers which match the pattern ".*", checks if
+# the value matches the pattern, and then does a global substitution of
+# foo.xyz.com with xyz.com.
+
+function check_headers()
+{
+    var hdr;
+    # loop through ALL headers
+    for (hdr from headers_pattern(".*"))
+	# if we match a header that has something like foo.xyz.com in it
+	if (hdr ~ "[a-zA-Z]\\.xyz\\.com")
+	    # then substitute the shorter version in its place
+	    gsubstitute(hdr, "[a-zA-Z0-9.]+\\.xyz\\.com", "xyz.com");
+}
+
+# function add_face_header()
+#
+# Add a person's face(saver) image to the header, grabbing it from whatever
+# directory is used for the "faces" programs?
+#
+# First check to see if the Face header exists. If not, pipe an empty string
+# through the command
+#
+#	cat -s /usr/share/lib/faces/username/48x48x48
+#
+# where username is looked up using the builtin function "username()". If
+# that command succeeds, it appends a new Face header after the last To:
+# header.
+
+function add_face_header()
+{
+    # if the face header doesn't already exist
+    if (!exists("Face"))
+	{
+	var new_face;
+	# grab the data
+	if (filterstring("",
+		"cat -s /usr/share/lib/faces/" @ username() @ "/48x48x48",
+		new_face) != 0 && length(new_face) > 0)
+	    # and add in the new header
+	    append_header("Face", "To", new_face);
+	}
+}
+
+# function add_missing_headers()
+#
+# Insert missing headers based on transport information, such as mail with no
+# From:, Date:, or {To:|Cc:} headers.
+#
+# The environment where this would be useful is one where a host acts as a
+# gateway to the Internet and should verify that it is sending legal,
+# replyable mail.
+
+function add_missing_headers()
+{
+    if (localmail())
+	{
+	# if no Date: header, use current date
+	if (!exists("Date"))
+	    append_header("Date", "Bcc", rfc822date());
+	# if no From: header, create one
+	if (!exists("From"))
+	    prepend_header("From", "To", username() @ domain());
+	# if no To/Cc/Bcc headers, put in a Group name of "Anonymous"
+	if (!exists("To") && !exists("Cc") && !exists("Bcc") &&
+	    !exists("Resent-To") && !exists("Resent-Cc") && !exists("Resent-Bcc"))
+	    append_header("To", "To", "Anonymous: ;");
+	}
+
+    else
+	{
+	# if no Date: header, grab last time stamp from the >From postmarks
+	if (!exists("Date"))
+	    {
+	    var From, last_From;
+	    for (From from headers(">From "))
+		last_From = From;
+	    var user, date, system, forward;
+	    fromcrack(last_From, user, date, system, forward);
+	    append_header("Date", "Bcc", date);
+	    }
+	# if no From: header, create one using the return path
+	if (!exists("From"))
+	    prepend_header("From", "To", bangtodomain(returnpath()));
+	# if no To/Cc/Bcc headers, generate one from the
+	# recipient list
+	if (!exists("To") && !exists("Cc") && !exists("Bcc") &&
+	    !exists("Resent-To") && !exists("Resent-Cc") && !exists("Resent-Bcc"))
+	    {
+	    var user, userlist;
+	    for (user from recipients())
+		{
+		if (userlist)
+		    userlist = userlist @ ",\n" @ bangtodomain(user);
+		else
+		    userlist = bangtodomain(user);
+		}
+	    append_header("To", "To", userlist);
+	    }
+	}
+}
+
+# function decrypt_mail
+#
+# If mail arrives with the header
+#
+#	X-encrypted: foobar
+#
+# filter the body of the message through the /usr/lib/mail/decrypt/foobar program.
+
+function decrypt_mail()
+{
+    if (exists("x-encrypted"))
+	{
+	var encrytion_type = headers("x-encrypted")[0];
+	var decryption_filter = "/usr/lib/mail/decrypt/" @ encryption_type;
+	if (filter_body(decryption_filter) == 0)
+	    delete_header("x-encrypted");
+	}
+}
+
+# function collapse_from_headers
+#
+# Collapse multiple From and >From lines into a single From_ line.
+
+function collapse_from_headers()
+{
+    # loop over existing >From headers, extracting
+    # the user and system information from each
+    var user, date, system, forward, save_system, save_user, save_date, hdr;
+    for (hdr from headers(">From"))
+	{
+	fromcrack(hdr, user, date, system, forward);
+	if (!forward)
+	    {
+	    save_user = user;
+	    save_date = date;
+	    if (save_system)
+		save_system = save_system @ "!" @ system;
+	    else
+		save_system = system;
+	    }
+	}
+
+    # delete all existing >From headers
+    delete_header(">From");
+    # Now recreate the From header.
+    if (save_system)
+	headers("From")[0] = save_user @ " " @ save_date @ " remote from " @ save_system;
+    else
+	headers("From")[0] = save_user @ " " @ save_date;
+}
+
+# function delete_content_length_headers
+#
+# Delete the Content-length: header from all mail leaving the system.
+# Note: it is a bad idea to delete the Content-length header from
+# local mail as then mail and mailx will be confused by lines in the body
+# of the message that start with "From ".
+
+function delete_content_length_headers()
+{
+    delete_header("content-length");
+}
+
+# function convert_other_timezone_dates, convert_timezone_dates_in_header
+#
+# A function to convert times given in alternate timezones (such as
+# in the Date: headers) into the local time zone.
+
+function convert_other_timezone_dates()
+{
+    convert_timezone_dates_in_header("Date");
+}
+
+function convert_other_timezone_dates(var hdrname)
+{
+    var hdr;
+    for (hdr from headers(hdrname))
+	hdr = rfc822date(getdate(hdr));
+}
+
+# function fix_all_munged_headers, fix_munged_header
+#
+# Corrects site-specific munged addresses.
+# For example, if you often get mail of the form
+#
+#	foo%bar@BAZ.EDU
+#
+# and in all cases, this was "foo@bar" before baz.edu wrecked it.
+# you would like to be able to fix these headers, whether they appear
+# in the To:, From:, Cc:, or Reply-To: fields.
+
+function fix_all_munged_headers()
+{
+    fix_munged_header("From");
+    fix_munged_header("To");
+    fix_munged_header("Cc");
+    fix_munged_header("Bcc");
+    fix_munged_header("Reply-To");
+    fix_munged_header("Sender");
+    fix_munged_header("Errors-To");
+}
+
+function fix_munged_header(var hdrname)
+{
+    var hdr;
+    # loop through the headers of this name
+    for (hdr from headers(hdrname))
+	{
+	# if the header has @baz.edu in it
+	if (hdr ~ "@baz.edu")
+	    {
+	    # then convert foo%bar@baz.edu to foo@bar
+	    hdr = gsubstitute(hdr, "([^ \t]+)%([^ \t]+)@baz.edu", "\\1@\\2");
+	    }
+	}
+}

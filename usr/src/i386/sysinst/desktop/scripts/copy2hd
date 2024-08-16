@@ -1,0 +1,58 @@
+#ident	"@(#)proto:desktop/scripts/copy2hd	1.33"
+
+if [ -f /tmp/mnttab ]
+then
+	call unlink /mnt/etc/mnttab
+	cp /tmp/mnttab /mnt/etc/mnttab
+fi
+
+cpio -pdLmvu /mnt </hd.list >/dev/null 2>&1
+call unlink /mnt/usr/lib/libdl.so.1 #for OVERLAY install
+call symlink /usr/lib/libc.so.1 /mnt/usr/lib/libdl.so.1
+/etc/scsi/bmkdev -r /mnt >/dev/null 2>&1
+
+[ -d /mnt/tmp ] || call mkdir /mnt/tmp
+call unlink /mnt/usr/bin/ksh
+cp /usr/bin/ksh     /mnt/usr/bin/ksh
+cp /usr/bin/winxksh /mnt/usr/bin/xksh
+cp /usr/bin/winxksh /mnt/tmp/winxksh
+cp /usr/bin/cpio /mnt/tmp/ncp
+call link /mnt/dev/dsk/f0q15dt /mnt/dev/fd0
+call link /mnt/dev/rdsk/f0q15dt /mnt/dev/rfd0
+[ "$PKGINSTALL_TYPE" = "NEWINSTALL" ] && print $ROOTFS > /mnt/etc/.fstype
+sh_mkdir /mnt/var /mnt/var/adm /mnt/var/tmp /mnt/usr /mnt/usr/options /mnt/home \
+	/mnt/home2 /mnt/etc /mnt/usr/bin /mnt/dev/fd >/dev/null 2>&1 || :
+{
+	print "/proc -   /proc   proc    -   no  -"
+	print "/processorfs -   /system/processor   profs    -   yes  -"
+	print "/dev/fd   -   /dev/fd fdfs    -   no  -"
+	print "/dev/dsk/f0t  /dev/rdsk/f0t   /install    s5  -   no  -"
+	print "/dev/dsk/f1t  /dev/rdsk/f1t   /install    s5  -   no  -"
+	print "/dev/dsk/f0   /dev/rdsk/f0    /install    s5  -   no  -"
+	print "/dev/dsk/f1   /dev/rdsk/f1    /install    s5  -   no  -"
+	if [ "${SLTYPE[13]}" = memfs ]
+	then
+		integer TMP_SIZE=SLSIZE[13]*1048576
+		print "/tmp	-	/tmp	memfs	-	yes	swapmax=${TMP_SIZE},rootmode=1777"
+	fi
+	if [ "${SLTYPE[14]}" = memfs ]
+	then
+		integer TMP_SIZE=SLSIZE[14]*1048576
+		print "/tmp	-	/tmp	memfs	-	yes	swapmax=${TMP_SIZE},rootmode=1777"
+	fi
+	if [ "${SLTYPE[16]}" = memfs ]
+	then
+		integer VAR_TMP_SIZE=SLSIZE[16]*1048576
+		print "/var/tmp	-	/var/tmp	memfs	-	yes	swapmax=${VAR_TMP_SIZE},rootmode=1777"
+	fi
+} >> /mnt/etc/vfstab
+# Populate /etc/swaptab
+{
+	print "#swapname		offset(in blocks)	size(in blocks)"
+	print "/dev/swap		0			-"
+} > /mnt/etc/swaptab
+
+# Set a flag so that the upgrade and overlay tools know we're
+# installing from inst and pkginst, rather than from /usr/sbin/pkgadd.
+> /mnt/tmp/boot.96587
+

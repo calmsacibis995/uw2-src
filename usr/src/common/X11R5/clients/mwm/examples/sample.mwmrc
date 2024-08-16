@@ -1,0 +1,218 @@
+# 
+# (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+# ALL RIGHTS RESERVED 
+# 
+# 
+# Motif Release 1.2
+# 
+
+#
+#  DEFAULT mwm RESOURCE DESCRIPTION FILE (.mwmrc)
+#
+
+
+#
+# menu pane descriptions
+#
+
+Menu MyRootMenu
+{
+    @motif16.xbm		f.title
+    "New Window"		f.exec "xterm &"
+    "XCalc"			f.exec "xcalc &"
+    "XLoad"			f.exec "nice xload -bd red &"
+    "Refresh"			f.refresh
+    no-label			f.separator
+    "Toggle Behavior"		f.set_behavior
+    "Kill Motif Bindings"	f.exec "xprop -root -remove _MOTIF_BINDINGS"
+    no-label			f.separator
+    "Restart Mwm"		f.restart
+    "Quit Mwm"			f.quit_mwm
+}
+
+Menu MyAppsMenu
+{
+    "Applications"		f.title
+    "XCalc"			f.exec "xcalc &"
+    "XMag"			f.exec "xmag &"
+    "XCmap"			f.exec "xcmap &"
+    "XLoad"			f.exec "nice xload -bd red &"
+    no-label			f.separator
+    "XTerm Hosts"		f.menu	MyHostMenu
+    no-label			f.separator
+    "Utilities"			f.menu	MyUtilMenu
+    "Games"			f.menu	MyGameMenu
+    "Demos"			f.menu	MyDemoMenu
+}
+
+Menu MyUtilMenu
+{
+    "Calendar"		f.exec "dxcalendar &"
+    "Xcolors"		f.exec "xcolors &"
+    "Xlock"		f.exec "nice xlock &"
+    "Xman"		f.exec "xman -bothshown -notopbox &"
+    "Xload"		f.exec "nice xload -bd red &"
+    "Monitor"		f.exec "nice xperfmon -font variable &"
+}
+
+Menu MyDemoMenu
+{
+    "ico"		f.exec "ico &"
+    "psycho"		f.exec "psycho -display :0.0 -display :0.0 &"
+    "muncher"		f.exec "muncher &"
+    "xmandel"		f.exec "xmandel &"
+    "xeyes"		f.exec "xeyes &"
+    no-label		f.separator
+    "ColorDemo"		f.exec "colordemo &"
+    "Kaleid"		f.exec "nice kaleid  -geometry 130x100 -delay 100 -icondelay 100 &"
+    "Spaceout"		f.exec "nice spaceout &"
+    "Xchaos"		f.exec "xchaos &"
+    "Xfish"		f.exec "nice xfish &"
+    "Xlife"		f.exec "xlife &"
+    "Xlife2"		f.exec "xlife2 &"
+    no-label		f.separator
+    "XmFonts"		f.exec "xmfonts &"
+    "XmDialogs"		f.exec "xmdialogs &"
+    no-label		f.separator
+    "Draw"		f.exec "draw &"
+    "Idraw"		f.exec "idraw &"
+    "Worms"		f.exec "worm &"
+    "ColorWheel"	f.exec "wheel &"
+    "RGB colors"	f.exec "rgb_colors &"
+    "Xspy"		f.exec "xspy &"
+}
+
+Menu MyGameMenu
+{
+    "Dragon"		f.exec "dragon &"
+    "Hextris"		f.exec "hextris &"
+    "Xchomp"		f.exec "xchomp &"
+    "Xchomp(color)"	f.exec "xchomp_color &"
+    "Xmahjongg"		f.exec "xmahjongg &"
+    "Xmandel"		f.exec "xmandel &"
+    "Xrobots"		f.exec "xrobots &"
+    "Xpuzzle"		f.exec "puzzle &"
+    "Xmille"		f.exec "xmille &"
+    "Xtrek"		f.exec "xtrek &"
+    "Solitaire"		f.exec "solitaire &"
+}
+
+Menu MyHostMenu
+{
+    "."			f.exec "xterm &"
+    "open"		f.exec "rterm open &"
+    "sesame"		f.exec "rterm sesame &"
+}
+
+Menu MyMwmMenu
+{
+    "Mwm functions"		f.title
+    "Next Icon"			f.next_key icon
+    "Next Window"		f.next_key window
+    "Next Transient"		f.next_key transient
+    "Lower Application"		f.menu LowerAppsMenu
+    "Raise Application"		f.menu RaiseAppsMenu
+    no-label			f.separator
+    "Pack Icons"		f.pack_icons
+    "Refresh"			f.refresh
+    no-label			f.separator
+    "Kill Motif Bindings"	f.exec "xprop -root -remove _MOTIF_BINDINGS"
+    "Toggle Behavior"		f.set_behavior
+    "Toggle Pass keys"		f.pass_keys
+    no-label			f.separator
+    "Restart Mwm"		f.restart
+    "Quit Mwm"			f.quit_mwm
+}
+
+Menu RaiseAppsMenu
+{
+    "Terminals"		f.raise -XTerm
+    "Emacses"		f.raise -emacs
+    "XLoads"		f.raise -XLoad
+    "XCmaps"		f.raise -XCmap
+    "Xeyes"		f.raise -XEyes
+}
+
+Menu LowerAppsMenu
+{
+    "Terminals"		f.lower -XTerm
+    "Emacses"		f.lower -emacs
+    "XLoads"		f.lower -XLoad
+    "XCmaps"		f.lower -XCmap
+    "Xeyes"		f.lower -XEyes
+}
+
+# Default Window Menu Description
+
+Menu MyWindowMenu
+{
+    Restore		_R	Alt<Key>F5	f.normalize
+    Move		_M	Alt<Key>F7	f.move
+    Size		_S	Alt<Key>F8	f.resize
+    Minimize		_n	Alt<Key>F9	f.minimize
+    Maximize		_x	Alt<Key>F10	f.maximize
+    Refresh		_f	Alt<Key>F2	f.refresh_win
+    Lower		_L	Alt<Key>F3	f.lower
+    no-label					f.separator
+    Close		_C	Alt<Key>F4	f.kill
+}
+
+
+#
+# key binding descriptions
+#
+
+Keys MyKeyBindings
+{
+    Shift<Key>Escape		window|icon		f.post_wmenu
+    Meta<Key>space		window|icon		f.post_wmenu
+    Meta<Key>Tab		root|icon|window	f.next_key
+    Meta Shift<Key>Tab		root|icon|window	f.prev_key
+    Meta<Key>Escape		root|icon|window	f.circle_up
+    Meta Shift<Key>Escape	root|icon|window	f.circle_down
+    Meta Shift Ctrl<Key>exclam	root|icon|window	f.set_behavior
+    Meta<Key>F6			window			f.next_key transient
+    Meta Shift<Key>F6		window			f.prev_key transient
+	<Key>F4			icon			f.post_wmenu
+    Meta Shift<Key>Delete	root|icon|window	f.restart
+}
+
+#
+# button binding descriptions
+#
+
+Buttons MyExplicitButtonBindings
+{
+    <Btn1Down>		frame|icon		f.raise
+    <Btn3Down>		frame|icon		f.post_wmenu
+!    <Btn1Down>		window|icon|root	f.focus_color
+    <Btn1Down>		root			f.menu	MyRootMenu
+    <Btn2Down>		root			f.menu	MyAppsMenu
+    <Btn3Down>		root			f.menu	MyMwmMenu
+    Meta<Btn1Down>	window|icon		f.lower
+    Meta<Btn2Down>	window|icon		f.resize
+    Meta<Btn3Down>	window|icon		f.move
+    Meta Shift<Btn1Down> window|icon		f.minimize
+    Meta Shift<Btn2Down> window|icon		f.focus_color
+    Meta Shift<Btn3Down> window|icon		f.post_wmenu
+}
+ 
+Buttons MyPointerButtonBindings
+{
+    <Btn1Down>		frame|icon		f.raise
+    <Btn3Down>		frame|icon		f.post_wmenu
+    <Btn1Down>		root			f.menu	MyRootMenu
+    <Btn2Down>		root			f.menu	MyAppsMenu
+    <Btn3Down>		root			f.menu	MyMwmMenu
+    <Btn1Down>		window			f.raise
+    Meta<Btn1Down>	window|icon		f.lower
+    Meta<Btn2Down>	window|icon		f.resize
+    Meta<Btn3Down>	window|icon		f.move
+    Meta Shift<Btn1Down> window|icon		f.minimize
+    Meta Shift<Btn2Down> window|icon		f.next_cmap
+    Meta Shift<Btn3Down> window|icon		f.post_wmenu
+}
+
+#
+#  END OF mwm RESOURCE DESCRIPTION FILE
+#

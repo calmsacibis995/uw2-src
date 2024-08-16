@@ -1,0 +1,57 @@
+<!-- Stylesheet for the table of contents window, IMI documents.
+
+  Copyright 1992 Electronic Book Technologies.  All rights reserved.
+-->
+
+
+<!ENTITY	std.font	CDATA	"helvetica"	>
+<!ENTITY	figlist		CDATA	"Liste des figures"	>
+
+<sheet>
+
+
+
+<?INSTED COMMENT: UNGROUPED STYLES FOLLOW>
+
+<!-- Style"#toc-annot" is reserved, and defines the appearance of the
+     bookmarks, word frequencies, location markers, etc. in left margin.
+-->
+<style name="#TOC-ANNOT">
+	<font> 	annotation 	</>
+	<foreground> 	#ff3c82 	</>
+	<line-spacing> 	16 	</>
+</style>
+
+<style name="ART">
+	<font-family>	&std.font;	</>
+	<font-size> 	14 	</>
+	<line-spacing>	20	</>
+	<left-indent> 	25 	</>
+	<first-indent> 	-10 	</>
+	<space-before> 	4 	</>
+	<title-tag> 	#TEXT-BEFORE 	</>
+	<text-before>Figure if(gt(cnum(ancestor(CHAPTER)),1),join(sub(cnum(ancestor(CHAPTER)),1),-gcnum():),gcnum():) attr(TITLE) 	</>
+	<break-before> 	True 	</>
+</style>
+
+<style name="SYMBOL">
+	<font-family> 	symbol 	</>
+	<font-weight>		medium			</>
+</style>
+
+<!-- Title of Book, inside front matter -->
+<style name="TITLEPG,TITLE">
+	<font-family>	&std.font;	</>
+	<font-size> 	18 	</>
+	<left-indent> 	5 	</>
+	<line-spacing> 	24 	</>
+	<space-before> 	4 	</>
+	<space-after> 	4 	</>
+	<title-tag> 	#TEXT-BEFORE 	</>
+	<text-before> 	&figlist;</>
+	<break-before> 	True 	</>
+</style>
+
+
+
+</sheet>

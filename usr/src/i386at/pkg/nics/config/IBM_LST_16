@@ -1,0 +1,45 @@
+#ident	"@(#)pkg.nics:config/IBM_LST_16	1.6"
+
+NAME=IBM_LANStreamer_MC_16
+
+DRIVER_NAME=IBMLST
+
+BOARD_IDS="0x8FA0 0x8FA4 0x8FA2"
+
+BUS=MCA
+
+CLASS=IBMLST
+
+IDTUNE_NUM=5
+
+IDTUNE_ARRAY[1]="MSM_1KCHUNKS 6"
+IDTUNE_ARRAY[2]="MSM_2KCHUNKS 1"
+IDTUNE_ARRAY[3]="MSM_6KCHUNKS 16"
+IDTUNE_ARRAY[4]="MSM_10KCHUNKS 0"
+IDTUNE_ARRAY[5]="MSM_36KCHUNKS 1"
+
+TOKEN=true
+
+DEPEND=ethtsm
+
+CUSTOM_NUM=2
+
+CUSTOM[1]='
+ODISTR1
+TXBUFFERS=4
+4
+Transmit buffers
+/etc/inst/locale/C/menus/nics/help/tx_buf_num
+Select Number of Transmit Buffers
+'
+
+CUSTOM[2]='
+ODISTR2
+RXBUFFERS=4
+4
+Receive buffers
+/etc/inst/locale/C/menus/nics/help/rx_buf_num
+Select Number of Receive Buffers
+'
+
+REBOOT=true

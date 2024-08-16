@@ -1,0 +1,24 @@
+#ident	"@(#)pkg.nw:nwnetconfig	1.5"
+#ident	"$Id: nwnetconfig,v 1.6 1994/06/21 21:27:07 eric Exp $"
+
+if [ ! -f /etc/netconfig ]
+then
+	echo >/etc/netconfig
+fi
+#
+#	Remove NetWare stuff from netconfig file
+#
+sed -e "/^ipx[ 	]/d" \
+	-e "/^spx[ 	]/d" \
+	-e "/spx\/ipx/d" /etc/netconfig \
+	|| exit 2
+
+
+if [ "$1" = install ]
+then
+  echo "#	spx/ipx Network configuration entries"
+  echo "ipx tpi_clts     v netware ipx /dev/ipx   /usr/lib/novell_nwnet.so" || exit 2
+  echo "spx tpi_cots_ord v netware spx /dev/nspx2 /usr/lib/novell_nwnet.so" || exit 2
+fi
+
+exit 0

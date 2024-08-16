@@ -1,0 +1,640 @@
+#ident\t"@(#)dthelp:Admin.Tools/FileShar.hlp	1.26"
+^*version^1
+^*title^File Sharing
+^:File_Sharing
+^*width^70
+^+DesktopMgr/help.defs
+^?Accessing files from remote systems
+^0^File Sharing
+^$10
+File Sharing
+
+Use File Sharing to access files from remote systems as if they were on
+your own system, and to set up your system so that other systems can access
+your files and folders.
+
+Once you set up file sharing, you do not have to do anything special to use
+the remote files. You open remote folders, start remote applications, and
+use remote data as if they were local.
+
+You can do the following with File Sharing:
+
+\to\t\k(Access remote share-items^^Accessing Remote Share-Items) from another system 
+\to\t\k(Create local share-items^^Creating Local Share-Items) for other systems to use 
+\to\t\k(View and modify remote share-item properties^^Viewing and Modifying Remote Share-Item Properties)
+\to\t\k(View and modify local share-item properties^^Viewing and Modifying Local Share-Item Properties)
+\to\t\k(Unconnect or delete remote share-items^^Unconnecting and Deleting Remote Share-Items) from your system
+\to\t\k(Unadvertise or delete local share-items^^Unadvertising and Deleting Local Share-Items) from your system
+
+See also:
+\s(Sharing Files and Folders Remotely^dhelp "" ownerhb "Sharing Files and Folders Remotely" "" || helpLinkErr)
+
+^1^Accessing Remote Share-Items
+^$20
+Accessing Remote Share-Items
+
+Note: You must have \k(Connect to Remote Folders/Files permission^dtadmin/user.hlp^Understanding Permissions) to be
+able to set up access to remote share-items.
+To set up your system to access remote \d(share-items^share-item), do the
+following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on File_Sharing. The "File Sharing Setup" window appears
+  \t(for remote share-items or local-share-items, depending on which view
+  \tyou last selected).
+
+4.\tClick on Actions=>Status. The \k("File Sharing: Status" window^^File Sharing: Status Window) appears.
+
+5.\tCheck to see if NFS is running. If it is not, click on Start NFS. When
+  \tNFS starts, a message appears and the Start NFS button greys out.
+
+  \tNote: It takes a few minutes for NFS to start.
+
+6.\tClick on Cancel in the "File Sharing: Status" window. 
+
+7.\tClick on View=>Remote. The "File Sharing Setup: Remote Share-Items"
+  \twindow appears. 
+
+  \tNote: You may already have the Remote Share-Items window displayed,
+  \tsince this is the default view.
+
+8.\tClick on Share-Item=>New. The "File Sharing: Add New Share-Item -
+  \tRemote" window appears with the following fields:
+
+  \to\tRemote System Name: - Type in the name of the system that has
+  \t \tthe share-item you want to access, or click on Lookup to bring
+  \t \tup the \k("Remote System Lookup window"^^Remote System Lookup Window) to choose from a list of
+  \t \tavailable systems and click on OK (be patient-it may take several
+  \t \tseconds to display the listing if your system is configured for
+  \t \t\k(DNS^dtadmin/inet.hlp^Accessing DNS)).
+
+  \to\tShow Available Share-Items: - Click on the Show Available
+  \t \tShare-Items button to bring up a list of available share-items
+  \t \tfrom the system you selected (if you selected Lookup for
+  \t \tRemote System Name, the system automatically displays this list).
+
+  \t \tClick on the share-item you want to use.
+
+  \to\tIcon Name: - Displays the icon name to represent the selected
+  \t \tshare-item (in the main "File Sharing" window).
+      
+  \to\tShare-Item to connect: - Displays the full \d(pathname^path) of the selected
+  \t \tshare-item.
+
+  \to\tLocal Folder to connect to: - Type in the name of the folder on your
+  \t \tsystem from which you want to access the share-item, or click on
+  \t \tFind Folder to bring up the \k("File Sharing: Folders" window^^File Sharing: Folders Window). 
+
+  \t \tNote: If you type in a folder name that does not exist, the
+  \t \tsystem prompts you to create the folder when you click on Add.
+  \t \tSee \k(Create Folder Message). If you type in the name of a folder
+  \t \tthat is not empty, the system displays a warning message. See
+  \t \t\k(Folder Not Empty Message).
+
+  \to\tConnect Share-Item as: - Click on Read Only if you want to be able
+  \t \tto use, but not be able to change, the files and folders within
+  \t \tthe share-item; click on Read and Write if you want to be able to
+  \t \tuse and make changes to the files and folders in the share-item.
+
+  \t \tNote: If you select read and write, but the remote system is
+  \t \tadvertising the share-item as read-only, you will not be able
+  \t \tto write to that share-item.
+
+  \to\tConnect when NFS starts? - Click on Yes to connect the share-item
+  \t \tnow and every time you start NFS; click on No to connect the
+  \t \tshare-item now only.
+
+  \to\tExtended Options: - Click on this option to bring up these additional
+  \t \toptions: 
+
+  \t \t-\tConnection is: - Click on \k(Soft or Hard connection^^Soft and Hard Connections).
+
+  \t \t-\tOther command-line options: - Type in command-line options to
+  \t \t \tthe mount command. See the mount(1M) option in the
+  \t \t \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+ 
+9.\tClick on Add. An icon representing the remote share-item appears
+  \tin the "File Sharing Setup: Remote Share-Items" window.
+
+  \tNote: If you decide you do not want to add this share-item, click
+  \ton Cancel.
+
+See also:
+\s(Using File Sharing^dhelp "" ownerhb "Sharing Files and Folders Remotely" "Using File Sharing" || helpLinkErr)
+\s{Introduction to Network File System (NFS) Administration^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Create Folder Message
+^$24
+Create Folder Message
+
+The folder name you entered in the text box "Local Folder to connect to:"
+does not exist. Click on one of the following:
+
+\to\tCreate - To create the folder.
+
+\to\tCancel - To cancel the request to create the folder. You must then
+\t \tspecify a different local folder to connect the remote share-item to.
+
+^2^Folder Not Empty Message
+^$25
+Folder Not Empty Message
+
+The folder name you entered in "Local folder to connect to" already 
+contains files or files and folders. These files and folder will not be
+available when the \d(share-item) is connected. This may cause applications
+on your system, or parts of the system itself, to become inoperable.
+
+Click on one of the following:
+
+\to\tAdd - To go ahead and add the new share-item, even though the files
+\t \tand folders in this folder will not be available when you add this
+\t \tshare-item.
+
+\to\tCancel - To cancel the request to create the folder. You must then
+\t \tspecify a different local folder to connect the remote share-item.
+
+^2^Remote System Lookup Window
+^$30
+Remote System Lookup Window
+
+From this window, you can browse through and select a system from
+one of the two following views: 
+
+\to\t\k(Domain List^^Domain Listing)- This is the default view if you have DNS configured
+\t \ton your system.
+
+\to\t\k(Systems List) - This is the default view if you do not have DNS
+\t \tconfigured on your system. It displays the contents of your /etc/hosts
+\t \tfile.
+
+If you have a DNS List and your Systems List contains entries other
+than just your local system name, you can switch between the two views
+by clicking on View=>Domain Listing or View=>Systems List. 
+
+See also:
+\k(Accessing DNS^dtadmin/inet.hlp^Accessing DNS)
+\s(Directories and Files^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^3^Domain Listing
+^$40
+Domain Listing
+
+To display the Domain Listing, click on View=>Domain Listing.
+
+By default, the Domain Listing displays the systems in your local domain.
+
+To view and select other domains (and sub-domains), do the following:
+
+1.\tType in the desired domain name (that is, the name of the domain
+  \tin which the system you are looking for resides) in the Domain Name
+  \ttext box.
+
+2.\tClick on Update Listing.
+
+  \tIf sub-domains exist under the specified domain, they appear at the
+  \ttop of the Domain Listing.  
+
+3.\tDisplay the contents of a sub-domain by \d(double-clicking^double-click) on the
+  \tsub-domain entry. A new list displaying the contents of that sub-domain
+  \tappears to the right. 
+
+  \tYou can continue to double-click on sub-domains to bring up more
+  \tsub-domains until no more sub-domains exist. However, only three levels
+  \tof domains can appear on your screen at one time. If you have more than
+  \tthree levels, use the left and right arrows in the center of your screen
+  \tto move back and forth through the listings.
+
+4.\tSearch through the listings until you locate the desired system. Then,
+  \tclick on that system entry.
+
+5.\tClick on OK.
+
+^3^Systems List
+^$50
+Systems List
+
+To display the Systems List, click on View=>Systems List.
+
+Note: If /etc/hosts contains only an entry for your system and no others,
+this view is not available.
+
+The Systems List displays the systems in your /etc/hosts file. Click on
+the desired system, then click OK. 
+
+See also:
+\s(Directories and Files^dhelp as sysag "Directories and Files" "" || helpLinkErr)
+
+^2^File Sharing: Folders Window
+^$60
+File Sharing: Folders Window
+
+Do one of the following:
+
+\to\tClick on a folder name or the Parent Folder in the Folder(s) list until
+\t \tyou locate the desired folder.
+
+\to\tType in the \d(path) to the desired folder.
+
+^1^Creating Local Share-Items
+^$70
+Creating Local Share-Items
+
+Note: You must have \k(Advertise Local Folders/Files permission^dtadmin/user.hlp^Understanding Permissions) to be able to
+create local share-items.
+
+Create a local share-item when you want to allow remote users and remote
+systems to be able to access the files and folders on your system.
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on File_Sharing. The "File Sharing Setup" window appears
+  \t(for remote share-items or local-share-items, depending on which view
+  \tyou last selected).
+
+4.\tClick on Actions=>Status. The \k("File Sharing: Status" window^^File Sharing: Status Window) appears.
+
+5.\tCheck to see if NFS is running. If is not, click on Start NFS. When NFS
+  \tstarts, a message appears and the Start NFS button greys out.
+
+  \tNote: It may take a few minutes for NFS to start.
+
+6.\tClick on Cancel in the "File Sharing: Status" window.
+
+7.\tClick on View=>Local to see the local share-items.
+  \tYou must display a local view before you can \d(advertise) a share-item.
+
+8.\tClick on Share-Item=>New. The "File Sharing: Add New Share-Item -
+  \tLocal" window appears with the following fields:
+
+  \to\tFolder/File to share: - Click on Find.
+  \t \tThe \k("File Sharing: Share-Item" window^^File Sharing: Share-Item Window) appears, displaying the
+  \t \tfiles and folders in your \d(home folder^home directory).
+
+  \t \tDo one of the following:
+
+  \t \t-\tClick on a folder name or the Parent Folder in the Folder(s) list
+  \t \t \tuntil you locate the desired folder.
+
+  \t \t-\tType in the \d(path) to the desired folder.
+
+  \to\tIcon Name: - Type a name to identify the share-item. By default, the
+  \t \tsystem uses the file or folder name entered in Folder/File to share.
+
+  \to\tAdvertise when NFS starts? - Click on Yes to advertise the share-item
+  \t \tnow and every time you start NFS, or click on No to advertise the
+  \t \tshare-item now only (automatically when the system is restarted).
+
+  \to\tFor Advertise as: - Click on one of the following:
+
+  \t \t-\tRead Only - To allow other systems to use, but not change,
+  \t \t \tthe share-item.
+
+  \t \t-\tRead and Write - To allow full access to the share-items.
+
+  \t \t-\tNo Access: To limit access only to those systems in the
+  \t \t \tExceptions list.
+
+  \t \t \tType in the Exceptions: System Name field the name of the system(s)
+  \t \t \tyou want to share with. You can also click on Lookup to bring up
+  \t \t \tthe \k("Remote System Lookup" window^^Remote System Lookup Window).
+
+  \t \t \tThen, click on Insert Read Only or Insert Read and Write to add
+  \t \t \tto the Exceptions list.
+
+  \t \t \tNote: To delete a system from the Exceptions list, click on that
+  \t \t \tsystem and click Delete. To delete all systems from the Exceptions
+  \t \t \tlist, click on Delete All.
+
+  \to\tExtended Options: - Click on this box to bring up these additional
+  \t \toptions: 
+
+  \t \t-\tOther command-line options - Type in command-line options to the
+  \t \t \tshare command. See the \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr) for information
+  \t \t \ton command-line options.
+ 
+9.\tClick on Add. An icon representing the local share-item appears in
+  \tthe "File Sharing Setup: Local Share-Items" window.
+
+  \tNote: If you decide you do not want to add this share-item, click
+  \ton Cancel.
+
+See also:
+\s(Using File Sharing^dhelp "" ownerhb "Sharing Files and Folders Remotely" "Using File Sharing" || helpLinkErr)
+\s{Introduction to Network File System (NFS) Administration^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^File Sharing: Status Window
+^$80
+File Sharing: Status Window
+
+The information in the "File Sharing: Status" window shows the following:
+
+\to\tIf NFS is currently running.
+
+\to\tIf the system is ready to \d(advertise) or \d(connect) files
+
+\to\tIf any of your local \d(share-items^share-item) are in use by remote systems
+\t \t(if share-items are in use, the Desktop displays them in the Local
+\t \tFolder/File list box in the window).
+
+To start NFS, click on Start NFS.
+
+To stop NFS, click on \k(Stop NFS^^Stop NFS Window).
+
+See also:
+\s{Introduction to Network File System (NFS) Administration^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Stop NFS Window
+^$85
+Stop NFS Window
+
+Make sure you really want to stop NFS on your system. 
+
+When you stop NFS, the system disconnects all remote share-items and
+all local \d(share-items^share-item) become unavailable to remote systems.
+This may take several minutes.
+
+If you decide you want to stop NFS, click on Stop NFS in the pop-up
+message window. If you decide not to stop NFS, click on Cancel in the
+pop-up message window.
+
+See also:
+\s{Introduction to Network File System (NFS) Administration^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+
+^2^Soft and Hard Connections
+^$90
+Soft and Hard Connections
+
+Only use a hard connection if it is essential that the information
+you are writing to the remote system not be lost.
+
+A hard connection forces your system to wait for the remote share-item to
+be reconnected if a disconnect occurs. Essentially, the system freezes
+and is not usable.  However, with a soft connection, if, after a short time
+the remote system does not respond, the write fails and your system
+becomes usable again. You will have to save your data locally and try to
+send it over to the remote system at a later time.
+
+^2^File Sharing: Share-Item Window
+^$100
+File Sharing: Share-Item Window
+
+This window displays a list of available \d(share-items^share-item). Use the scroll
+bar to move up and down through the list. Click on the desired share-item.
+The system populates the field Folder/File to share: in the "File Sharing:
+Add New Share-Item" window.
+
+
+^1^Viewing and Modifying Remote Share-Item Properties
+^$120
+Viewing and Modifying Remote Share-Item Properties
+
+To view or modify remote \d(share-item) properties, do the following: 
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on File_Sharing. The "File Sharing Setup" window appears
+  \t(for remote share-items or local-share-items, depending on the last
+  \tview you selected).
+
+  \tIf the view is set for remote share-items, go to Step 5.
+  \tIf the view is set for local share-items, go to the next step.
+
+4.\tClick on View=Remote. The "File Sharing Setup: Remote Share-Items"
+  \twindow appears.
+
+5.\tClick on the desired share-item.
+
+6.\tClick on Share-Item=>Properties. The "File Sharing: Share-Item
+  \tProperties - Remote" window appears with the following fields:
+
+  \to\tRemote System Name: - Displays the name of the system where 
+  \t \tthe share-item resides.
+
+  \to\tIcon Name: - Displays the icon name that represents the selected
+  \t \tshare-item.
+      
+  \to\tShare-Item to connect: - Displays the full \d(pathname^path) of the
+  \t \tselected share-item.
+
+  \to\tLocal Folder to connect to: -  Displays the name of the folder
+  \t \ton your system where the share-item resides. 
+
+  \to\tConnect Share Items as: - If Read Only is selected, you can use,
+  \t \tbut cannot make changes to, the share-item. If Read and Write
+  \t \tis selected, you have full access to the share-item and you can
+  \t \tmake changes to it (provided the remote system is advertising the
+  \t \tshare-item as Read and Write). 
+
+  \to\tConnect when NFS starts? - If Yes is selected, the system connects
+  \t \tto the share-item whenever you start NFS. If No is selected, the
+  \t \tsystem does not automatically connect to the share-item when you
+  \t \tstart NFS.
+
+  \to\tExtended Options: - Click on this option to bring up these
+  \t \tadditional options: 
+
+  \t \t-\tConnection is: - Displays whether the connection is a
+  \t \t \t\k(soft or hard connection^^Soft and Hard Connections).
+
+  \t \t-\tOther command-line options - Displays command-line options
+  \t \t \tfor the mount(1M) command.
+
+7.  Make the desired changes (if any) and click Apply, or click Cancel
+    to return to the "File Sharing Setup: Remote Share-Items" window
+    without making any changes.
+
+
+See also:
+\s(Using File Sharing^dhelp "" ownerhb "Sharing Files and Folders Remotely" "Using File Sharing" || helpLinkErr)
+\s{Introduction to Network File System (NFS) Administration^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+ 
+^1^Viewing and Modifying Local Share-Item Properties
+^$130
+Viewing and Modifying Local Share-Item Properties
+
+To view or modify local \d(share-item) properties, do the following: 
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on File_Sharing. The "File Sharing Setup" window appears
+  \t(for remote share-items or local-share-items, depending on
+  \tthe last view you selected)
+
+  \tIf the view is set for local share-items, go to Step 5.
+  \tIf the view is set for remote share-items, go to the next step.
+
+4.\tClick on View=Local. The "File Sharing Setup: Local Share-Items"
+  \twindow appears. 
+
+5.\tClick on the desired share-item.
+
+6.\tClick on Share-Item=>Properties. The "File Sharing: Share-Item
+  \tProperties - Local" window appears with the following fields:
+
+  \to\tFolder/File to share: - Displays the name of the file or folder
+  \t \tthat you are sharing with other systems.
+
+  \to\tIcon Name: - Displays the icon name that represents the share-item. 
+
+  \to\tAdvertise when NFS starts? - If Yes is selected, the system advertises
+  \t \tthe share-item every time you start NFS. If No is selected, the system
+  \t \tdoes not automatically advertise the share-item when you start NFS.
+
+  \to\tFor Advertise as - If Read Only is selected, other systems can
+  \t \tuse, but cannot change, the share-item. If Read and Write is
+  \t \tselected, other systems have full access to the share-items.
+  \t \tIf No Access is selected, those systems in the Exceptions list have
+  \t \taccess to the share-item.
+
+  \to\tExtended Options - Click on this option to bring up these
+  \t \tadditional options: 
+
+  \t \t-\tOther command-line options - Displays command-line options
+  \t \t \tfor the share(1M) command). See the \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr) for
+  \t \t \tinformation on command-line options.
+
+7.\tMake the desired changes (if any) and click Apply, or click Cancel to
+  \treturn to the "File Sharing Setup: Local Share-Items" window without
+  \tmaking any changes.
+
+See also:
+\s(Using File Sharing^dhelp "" ownerhb "Sharing Files and Folders Remotely" "Using File Sharing" || helpLinkErr)
+\s{Introduction to Network File System (NFS) Administration^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Unconnecting and Deleting Remote Share-Items
+^$140
+Unconnecting and Deleting Remote Share-Items
+
+To unconnect or delete a remote \d(share-item), do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on File_Sharing. The "File Sharing Setup" window appears
+  \t(for remote share-items or local-share-items, depending on
+  \tthe last view you selected).
+
+  \tIf the view is set for remote share-items, go to Step 5.
+  \tIf the view is set for local share-items, go to the next step.
+
+4.\tClick on View=Remote. The "File Sharing Setup: Remote Share-Items"
+  \twindow appears.
+
+5.\tClick on the connected share-item you want to unconnect or delete.
+
+6.\tDo one of the following:
+
+  \to\tTo unconnect -  Click on Actions=>Unconnect.
+
+  \t \tThe selected share-item is no longer connected. That is, you can no
+  \t \tlonger use the files associated with the share-item. However, the
+  \t \tshare-item remains in the window ready to reconnect the next time
+  \t \tNFS starts.
+
+  \to\tTo delete - Click on Share-Item=>Delete.
+
+  \t \tA pop-up \k(confirmation window^^Delete Confirmation Window) appears. Click on Delete in this window
+  \t \tif you want to unadvertise and permanently remove the share-item from
+  \t \tyour system. Click on Cancel if you decide you do not want to
+  \t \tpermanently delete the share-item.
+
+See also:
+\s(Using File Sharing^dhelp "" ownerhb "Sharing Files and Folders Remotely" "Using File Sharing" || helpLinkErr)
+\s{Introduction to Network File System (NFS) Administration^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^1^Unadvertising and Deleting Local Share-Items
+^$150
+Unadvertising and Deleting Local Share-Items
+
+Note: Before you unadvertise or delete a local \d(share-item), make sure
+that the share-item is not being used. The \k("File Sharing: Status" window^^File Sharing: Status Window)
+shows all remote systems connected to the share-item. If a remote
+system is using the share-item, call that system's administrator or  
+owner to ask if you may disconnect it.
+
+To unadvertise or delete a local share-item, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on File_Sharing. The "File Sharing Setup" window appears
+  \t(for remote share-items or local-share-items, depending on
+  \tthe last view you selected).
+
+  \tIf the view is set for local share-items, go to Step 5.
+  \tIf the view is set for remote share-items, go to the next step.
+
+4.\tClick on View=Local. The "File Sharing Setup: Remote Share-Items"
+  \twindow appears.
+
+5.\tClick on the advertised share-item you want to unadvertise or delete.
+
+6.\tDo one of the following:
+
+  \to\tTo unadvertise - Click on Actions=>Unadvertise.
+
+  \t \tThe selected share-item is no longer advertised. That is, remote
+  \t \tsystems can no longer access the file. However, the share-item
+  \t \tremains in the window ready to advertise the next time NFS starts.
+
+  \to\tTo delete - Click on Share-Item=>Delete.
+
+  \t \tA pop-up \k(confirmation window^^Delete Confirmation Window) appears. Click on Delete in this window
+  \t \tif you want to unadvertise and permanently remove the share-item
+  \t \tfrom the "File Sharing" window. Click on Cancel if you decide you do
+  \t \tnot want to permanently delete the share-item.
+
+See also:
+\s(Using File Sharing^dhelp "" ownerhb "Sharing Files and Folders Remotely" "Using File Sharing" || helpLinkErr)
+\s{Introduction to Network File System (NFS) Administration^dhelp as netag "Introduction to Network File System (NFS) Administration" || helpLinkErr}
+
+^2^Delete Confirmation Window
+^$160
+Delete Confirmation Window
+
+Make sure you want to permanently remove the share-item from the "File
+Sharing" window. Note that the system will not remove the files associated
+with the share-item, only the ability for remote systems to access the files.
+
+If you decide not to remove the share-item, click on Cancel and nothing
+will be deleted. Otherwise, click on Delete to continue with the removal.
+
+
+

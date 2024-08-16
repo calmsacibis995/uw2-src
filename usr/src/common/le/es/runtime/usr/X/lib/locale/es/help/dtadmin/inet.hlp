@@ -1,0 +1,1143 @@
+#ident\t"@(#)dthelp:Admin.Tools/inet.hlp        1.27"
+^*version^1
+^*title^Configuración de Internet
+^:Config_Internet
+^*width^70
+^+DesktopMgr/help.defs
+^?Config_Internet
+^0^Configuración de Internet
+^$10
+Configuración de Internet
+
+Use configuración Internet para configurar el sistema para comunicarse 
+con otros sistemas sobre redes TCP/IP
+
+Nota: la configuración de UUCP, DNS, NIS, encaminamiento sólo están
+disponibles para usuarios con
+\k(Permiso para cambiar la configuración Internet^dtadmin/user.hlp^Comprensión de los permisos).
+
+Con Configuración Internet puede hacer lo siguiente:
+
+\to\t\k(Añadir un nuevo sistema a la lista Sistemas^^Adición de un nuevo sistema a la lista de sistemas)
+\to\t\k(Cambiar la máscara de red y dirección de difusión del sistema^^Configuración del encaminamiento)
+\to\t\k(Configurar el sistema para gestión de red TCP/IP^^Configuración del sistema para redes TCP/IP)
+\to\t\k(Configurar el sistema para usar un encaminador por defecto^^Configuración del encaminamiento)
+\to\t\k(Copiar una entrada del listado de dominios en la lista Sistemas^^Listado de dominios)
+\to\t\k(Copiar un icono de un sistema remoto en una carpeta^^Copiado del icono de un sistema remoto en una carpeta)
+\to\t\k(Borrar un sistema de la lista Sistemas^^Supresión de un sistema de la lista de sistemas)
+\to\t\k(Mostrar el listado de dominios^^Listado de dominios)
+
+\to\t\k(Mostrar la lista Sistemas^^Lista de sistemas)
+\to\t\k(Buscar la entrada específica de un sistema específico^^Búsqueda de un sistema)
+\to\t\k(Definir el acceso de usuarios remotos al sistema local^^Configuración del acceso al sistema local para usuarios remotos)
+\to\t\k(Definir el acceso a un servidor de red de dominio^^Acceso a DNS)
+\to\t\k(Definir el acceso al servidor de servicios de información de red^^Acceso a NIS)
+\to\t\k(Configurar el sistema para transferencias de archivos UUCP^^Configuración de la transferencia UUCP)
+\to\t\k(Ver las propiedades de un sistema^^Visualización de propiedades del sistema)
+
+Véase también:
+\s(Configuración y definición de TCP/IP^dhelp "pe.es" ownerhb "Configuración y definición de TCP/IP" "" || helpLinkErr)
+\s(Introducción a la configuración de TCP/IP^dhelp as netag "Setting Up TCP/IP" "Introduction to TCP/IP Setup" || helpLinkErr)
+
+^1^Configuración del sistema para redes TCP/IP
+^$20
+Configuración del sistema para redes TCP/IP
+
+Si durante la instalación no introdujo una dirección de memoria
+para la gestión de red TCP/IP, el sistema mostrará automáticamente la
+ventana "Configuración Internet: Configurar sistema local" la primera
+vez que haga doble clic en Config_Internet.
+
+Para configurar el sistema para gestión de redes TCP/IP, haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+  Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet.  Aparecerá la ventana
+  \t"Configuración Internet: Configurar sistema local", con los
+  \tsiguientes campos:
+
+  \to\tNombre del sistema: Muestra el nombre del sistema.
+
+  \to\tDirección de red:  Teclee la dirección del sistema.  Si no
+  \t \tconoce la dirección de red del sistema, póngase en contacto con
+  \t \tel administrador del sistema, que es quien deberá asignar la
+  \t \tdirección.
+
+  \t \tComplete los siguientes tres campos sólo si su organización 
+  \t \ttiene acceso a un \k(servidor DNS^^Acceso a DNS):
+
+  \to\tNombre de dominio: - Teclee el nombre del dominio de la
+  \t \torganización. El nombre de dominio deberá usar una extensión
+  \t \t.com, .edu, .gov, etc.  Por ejemplo, site1.companyA.com.
+
+   \to\tServidor DNS: - Teclee el nombre del dominio principal del
+   \t \tservidor de nombre de dominio de la organización
+
+  \to\tDirección de red:  Teclee la dirección correspondiente al
+  \t \tservidor DNS.
+
+4.\tHaga clic en OK para guardar los cambios.
+
+  \tNota:  También puede hacer clic en Redefinir para cancelar todos
+  \tlos cambios que aún no haya aplicado, o hacer clic en Cancelar
+  \tpara cerrar la ventana sin guardar los cambios.
+
+Véase también:
+\s(Instalación de TCP/IP^dhelp as netag "Setting Up TCP/IP" "Installing TCP/IP" || helpLinkErr)
+\s(Configuración de TCP/IP desde la línea de comandos^dhelp "pe.es" ownerhb "Configuración y definición de TCP/IP" "Configuración de TCP/IP desde la línea de comandos" || helpLinkErr)
+
+^1^Configuración del acceso al sistema local para usuarios remotos
+^$30
+Configuración del acceso al sistema local para usuarios remotos
+
+Puede definir el sistema de modo que los usuarios de otros sistemas 
+(incluido usted mismo) puedan acceder al sistema local, así como 
+copiar archivos de y al mismo (por ejemplo, usando los comandos 
+rlogin y rcp).
+
+Para configurar el acceso al sistema local para usuarios remotos, haga
+lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2. 
+ Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet.  Aparecerá la ventana
+  \t"Configuración Internet".
+
+  \tNota: Si configuró el sistema para acceso a un \k(servidor DNS^^Acceso a DNS)
+  \t(DNS), por defecto el sistema mostrará la
+  \t\k(ventana Listado de dominios^^Listado de dominios).
+
+  \tSi no configuró el sistema para acceso DNS, el sistema mostrará
+  \tla \k(ventana Lista de sistemas^^Lista de sistemas). Localice el sistema desde el que
+  \tvan a acceder los usuarios, y haga clic en él.
+
+4.\tHaga clic en Acciones=>Acceso de usuario remoto. Aparecerá la
+  \tventana "Configuración Internet: Acceso de usuario remoto", con
+  \tlas siguientes opciones:
+
+  \to\tNombre de sistema: - Este cuadro de texto contiene el nombre
+  \t \tdel sistema actualmente seleccionado en la ventana principal
+  \t \tde Configuración Internet.
+  \t \tSi desea configurar el acceso remoto para otro sistema,
+  \t \tpuede cambiar el nombre del sistema tecleando
+  \t \tsobre el nombre actual, y pulsando <Tab>.
+
+  \to\tSuprimir restricción de contraseña: - Por defecto, este campo se
+  \t \tdefine como "Acceso a la cuenta personal".  Es decir, se
+  \t \tconfigura el acceso de usuario remoto sólo para su registro de
+  \t \tentrada.
+
+  \t \tSi tiene \k(permiso para cambiar la configuración Internet^dtadmin/user.hlp^Comprensión de los permisos),
+  \t \ttambién dispondrá de la opción de suprimir la restricción de
+  \t \tcontraseña para cualquier usuario local (/etc/hosts.equiv)
+  \t \thaciendo clic en "Usuarios remotos con cuentas locales".
+
+  \t \tLos usuarios remotos del sistema especificado que tengan una 
+  \t \tcuenta en el sistema podrán acceder a partir de ese momento al 
+  \t \tsistema sin tener que introducir una contraseña
+
+  \to\tUsuarios de <nombre_de_sistema> que pueden acceder libremente la
+  \t \tcuenta de usted/de ellos: - Haga clic en una
+  \t \tde las siguientes:
+
+  \t \t-\tNinguno - Si no desea que nadie acceda a su cuenta o a la
+  \t \t \tcuenta de dicho usuario sin teclear una contraseña.  Es el
+  \t \t \tvalor por defecto.
+
+  \t \t-\tUno mismo: Si desea poder acceder al sistema desde el
+  \t \t \tsistema remoto usando el mismo identificador de acceso (a
+  \t \t \tusted no se le pedirá una contraseña).
+
+  \t \t-\tTodos los usuarios: Si quiere que todos los usuarios del
+  \t \t \tsistema remoto puedan acceder al sistema sin tener que
+  \t \t \tsuministrar una contraseña.  El usuario deberá tener una
+  \t \t \tcuenta en el sistema.  Esta opción está disponible sólo si
+  \t \t \tseleccionó "Suprimir restricción de contraseña" para "Usuarios
+  \t \t \tremotos con cuentas locales".
+
+  \t \t-\tUsuarios específicos: Si desea que usuarios específicos puedan
+  \t \t \tacceder a su cuenta o la de usted sin tener que teclear
+  \t \t \tuna contraseña.
+
+  \t \t \tSi selecciona Usuarios específicos, la ventana se ampliará
+  \t \t \tpara incluir campos adicionales para la adición de
+  \t \t \tusuarios a la lista.  Véase \k(Selección de usuarios específicos)
+  \t \t \tpara obtener más información.
+
+5.\tHaga clic en OK para guardar los cambios y cerrar la ventana, o en
+  \tAplicar para guardar los cambios sin cerrar la ventana.
+
+Véase también:
+\s(Archivos de /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+\s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr)
+
+^2^Listado de dominios
+^$40
+Listado de dominios
+
+Para mostrar el listado de dominios, haga clic en Ver=>Listado de
+dominios.
+
+Por defecto, el listado de dominios muestra los sistemas del dominio
+local.
+
+Para ver y seleccionar otros dominios (y subdominios), haga lo
+siguiente:
+
+1.\tTeclee el nombre de dominio deseado (es decir, el nombre del
+  \tdominio en el que reside el sistema que esté buscando) en el
+  \tcuadro de texto Nombre de dominio.
+
+2.\tHaga clic en Actualizar listado.
+
+  \tSi existen subdominios bajo el dominio especificado, aparecerán en
+  \tla parte superior del listado de dominios.
+
+3.\tMuestre los contenidos de un subdominio haciendo doble clic 
+  \ten la entrada del subdominio.  Aparecerá a la derecha una 
+  \tnueva lista con el contenido de dicho subdominio.
+
+  \tPuede continuar haciendo doble clic en los subdominios para
+  \tabrir más subdominios hasta que no queden más.  No obstante, sólo
+  \ttres niveles de dominios pueden aparecer en la ventana
+  \tal mismo tiempo.  Si tiene más de tres niveles, use
+  \tlas flechas a derecha e izquierda de la parte central de
+  \tla pantalla para desplazarse por los listados.
+
+4.\tBusque por las listas hasta localizar el sistema deseado. Después,
+  \thaga clic en la entrada de ese sistema.
+
+Para añadir un sistema del listado de dominios al archivo /etc/hosts, 
+haga clic en Sistema=>Copiar en lista Sistemas.
+
+Véase también:
+\k(Lista de sistemas)
+
+^2^Lista de sistemas
+^$50
+Lista de sistemas
+
+La lista Sistemas muestra el contenido del archivo /etc/hosts.
+
+Para ver la lista de sistemas, haga clic en Visualizar=>Lista de
+sistemas
+
+Nota: Si /etc/hosts contiene sólo una entrada para su sistema y no para
+otros, esta visualización no estará disponible.
+
+Haga clic en el sistema deseado, y haga clic en OK.
+
+Nota: Si tiene \k(DNS^^Acceso a DNS) configurado en el sistema, puede cambiar la
+visualización para ver \k(Listado de dominios) haciendo clic en Ver=>Listado
+de dominios.
+
+Véase también:
+\k(Adición de un nuevo sistema a la lista de sistemas)
+\k(Supresión de un sistema de la lista de sistemas)
+\k(Visualización de propiedades del sistema)
+
+^2^Selección de usuarios específicos
+^$60
+Selección de usuarios específicos
+
+Escoja una de las siguientes opciones:
+
+\to\t\k(Añadir usuarios específicos a la lista Usuarios permitidos^^Adición de usuarios específicos)
+\to\t\k(Modificar entradas en la lista Usuarios permitidos^^Modificación de usuarios específicos)
+\to\t\k(Suprimir usuarios de la lista Usuarios permitidos^^Supresión de usuarios específicos)
+
+^3^Adición de usuarios específicos
+^$70
+Adición de usuarios específicos
+
+Para añadir usuarios específicos a la lista de usuarios que 
+pueden acceder al sistema, haga lo siguiente:
+
+1.\tTeclee el ID de acceso en el cuadro de texto reservado al efecto.
+
+2.\tHaga clic en Añadir.  El ID de acceso se desplazará al cuadro
+  \tUsuarios permitidos.
+
+3.\tRepita los pasos 1 y 2 para cada usuario que desee añadir 
+  \ta la lista.  Una vez que haya finalizado, haga clic en OK para 
+  \tguardar los IDs de acceso y cerrar la ventana, o hacer clic en 
+  \tAplicar para guardar los IDs de acceso sin cerrar la ventana.
+
+Nota: Si está configurando el acceso a la cuenta personal, extreme las
+precauciones al añadir usuarios a esta lista.  Recuerde que los
+usuarios que añada a la lista podrán acceder a su cuenta y a sus
+archivos sin tener que indicar una contraseña.
+
+^3^Modificación de usuarios específicos
+^$80
+Modificación de usuarios específicos
+
+Para modificar una entrada de la lista Usuarios permitidos, haga lo
+siguiente:
+
+1.\tHaga clic en el ID de acceso deseado de la lista Usuarios
+  \tpermitidos.
+
+2.\tRealice las modificaciones deseadas al ID de acceso.
+
+3.\tHaga clic en Modificar.
+
+4.\tHaga clic en OK para guardar los cambios y cerrar la ventana, o en
+  \tAplicar para guardar los cambios sin cerrar la ventana.
+
+^3^Supresión de usuarios específicos
+^$90
+Supresión de usuarios específicos
+
+Para borrar un usuario de la lista Usuarios permitidos, haga lo
+siguiente:
+
+1.\tHaga clic en el ID de acceso deseado de la lista Usuarios
+  \tpermitidos.
+
+2.\tHaga clic en Suprimir para eliminar el ID de acceso.
+
+3.\tHaga clic en OK para guardar los cambios y cerrar la ventana, o 
+  \ten Aplicar para guardar los cambios sin cerrar la ventana
+
+^2^Ventana Configuración Internet: Definir acceso local
+^$100
+Ventana Configuración Internet: Definir acceso local
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \to\tNombre de sistema: - Este cuadro de texto contiene el nombre
+  \t \tdel sistema actualmente seleccionado en la ventana principal
+  \t \tde Configuración Internet.
+  \t \tSi desea configurar el acceso remoto para otro sistema,
+  \t \tpuede cambiar el nombre del sistema tecleando
+  \t \tsobre el nombre actual, y pulsando <Tab>.
+
+  \to\tSuprimir restricción de contraseña: - Por defecto, este campo se
+  \t \tdefine como "Acceso a la cuenta personal".  Es decir, se
+  \t \tconfigura el acceso de usuario remoto sólo para su registro de
+  \t \tentrada.
+
+  \t \tSi tiene \k(permiso para cambiar la configuración Internet^dtadmin/user.hlp^Comprensión de los permisos),
+  \t \ttambién dispondrá de la opción de suprimir la restricción de
+  \t \tcontraseña para cualquier usuario local (/etc/hosts.equiv)
+  \t \thaciendo clic en "Usuarios remotos con cuentas locales".
+
+  \t \tLos usuarios remotos del sistema especificado que tengan una 
+  \t \tcuenta en el sistema podrán acceder a partir de ese momento al 
+  \t \tsistema sin tener que introducir una contraseña
+
+  \to\tUsuarios de <nombre_de_sistema> que pueden acceder libremente la
+  \t \tcuenta de usted/de ellos: - Haga clic en una
+  \t \tde las siguientes:
+
+  \t \t-\tNinguno - Si no desea que nadie acceda a su cuenta o a la
+  \t \t \tcuenta de dicho usuario sin teclear una contraseña.  Es el
+  \t \t \tvalor por defecto.
+
+  \t \t-\tUno mismo: Si desea poder acceder al sistema desde el
+  \t \t \tsistema remoto usando el mismo identificador de acceso (a
+  \t \t \tusted no se le pedirá una contraseña).
+
+  \t \t-\tTodos los usuarios: Si quiere que todos los usuarios del
+  \t \t \tsistema remoto puedan acceder al sistema sin tener que
+  \t \t \tsuministrar una contraseña.  El usuario deberá tener una
+  \t \t \tcuenta en el sistema.  Esta opción está disponible sólo si
+  \t \t \tseleccionó "Suprimir restricción de contraseña" para "Usuarios
+  \t \t \tremotos con cuentas locales".
+
+  \t \t-\tUsuarios específicos: Si desea que usuarios específicos puedan
+  \t \t \tacceder a su cuenta o la de usted sin tener que teclear
+  \t \t \tuna contraseña.
+
+  \t \t \tSi selecciona Usuarios específicos, la ventana se ampliará
+  \t \t \tpara incluir campos adicionales para la adición de
+  \t \t \tusuarios a la lista.  Véase \k(Selección de usuarios específicos)
+  \t \t \tpara obtener más información.
+
+2.\tHaga clic en OK para guardar los cambios y cerrar la ventana,
+  \to en Aplicar para guardar los cambios sin cerrar la ventana.
+
+Véase también:
+\k(Configuración del acceso al sistema local para usuarios remotos)
+
+^1^Adición de un nuevo sistema a la lista de sistemas
+^$110
+Adición de un nuevo sistema a la lista de sistemas
+
+Para añadir un nuevo sistema a la \k(Lista de sistemas), haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+  Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet.  Aparecerá la ventana
+  \t"Configuración Internet".  Nota: Asegúrese de que está en la
+  \t\k(ventana Lista de sistemas^^Lista de sistemas).
+
+4.\tEscoja una posición de la lista haciendo clic en un sistema.  
+  \tEl nuevo sistema se añadirá a la línea situada sobre esta entrada.
+
+5.\tHaga clic en Sistema=>Nuevo.  Aparecerá la ventana "Configuración 
+  \tInternet: Añadir nuevo sistema" aparecerá con los siguientes 
+  \tcampos:
+
+  \to\tNombre de sistema: - Teclee el nombre del sistema con el que
+  \t \tdesee poder comunicarse.
+
+  \to\tDirección de red: Teclee la dirección de red.  Si su sistema
+  \t \testá configurado para \k(Acceso DNS^^Acceso a DNS), puede hacer clic en Obtener
+  \t \tdirección y el sistema buscará la dirección del sistema por
+  \t \tusted.
+
+  \t \tNota: Si el sistema está en un dominio distinto al suyo, deberá
+  \t \tteclear el nombre de dominio en el Nombre de
+  \t \tsistema registrado anteriormente.
+
+  \to\tObservaciones: Teclee todos los comentarios que piense que
+  \t \tpueden ser de utilidad.  Por ejemplo, el número de sala en la
+  \t \tque se encuentra la máquina, el nombre del propietario del
+  \t \tsistema, etc.
+
+6.\tHaga clic en OK para guardar los cambios y cerrar la ventana o en
+  \tAplicar para guardar los cambios sin cerrar la ventana.
+
+  \tNota: También puede hacer clic en Redefinir para cancelar los
+  \tcambios que aún no haya aplicado, o hacer clic en Cancelar para
+  \tcerrar la ventana sin realizar ningún cambio.
+
+^2^Ventana Configuración Internet: Añadir nuevo sistema
+^$120
+Ventana Configuración Internet: Añadir nuevo sistema
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \to\tNombre de sistema: - Teclee el nombre del sistema con el que
+  \t \tdesee poder comunicarse.
+
+  \to\tDirección de red: Teclee la dirección de red.  Si su sistema
+  \t \testá configurado para \k(Acceso DNS^^Acceso a DNS), puede hacer clic en Obtener
+  \t \tdirección y el sistema buscará la dirección del sistema por
+  \t \tusted.
+
+  \t \tNota: Si el sistema está en un dominio distinto del suyo, deberá
+  \t \tteclear el nombre de dominio en el campo Nombre del sistema
+  \t \tanterior.
+
+  \to\tObservaciones: Teclee todos los comentarios que piense que
+  \t \tpueden ser de utilidad.  Por ejemplo, el número de sala en la
+  \t \tque se encuentra la máquina, el nombre del propietario del
+  \t \tsistema, etc.
+
+2.\tHaga clic en OK para guardar los cambios y cerrar la ventana,
+  \to en Aplicar para aplicar los cambios sin cerrar la ventana.
+
+Véase también:
+\k(Adición de un nuevo sistema a la lista de sistemas)
+
+^1^Supresión de un sistema de la lista de sistemas
+^$130
+Supresión de un sistema de la lista de sistemas
+
+Para borrar un sistema de la \k(Lista de sistemas), haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+   Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet. Aparecerá la ventana
+  \t"Configuración Internet".  Nota:  Asegúrese de que está en la
+  \t\k(ventana Lista de sistemas^^Lista de sistemas).
+
+4.\tHaga clic en la entrada del sistema que desee borrar.
+
+5.\tPulse en Sistema=>Suprimir.  La entrada del sistema se borrará 
+  \tde la lista Sistemas.
+
+^1^Configuración de la transferencia UUCP
+^$140
+Configuración de la transferencia UUCP
+
+Si tiene \k(permiso para cambiar la configuración Internet^dtadmin/user.hlp^Comprensión de los permisos),
+puede configurar el sistema para enviar y recibir correo y
+transferencias de archivos sobre redes TCP/IP usando la utilidad UNIX
+UUCP (copia de UNIX a UNIX).
+
+Nota: El propietario o administrador del sistema remoto también 
+deberá configurar su sistema para permitir las transferencias UUCP.
+
+Para aceptar transferencias UUCP (Copia de Unix a Unix) desde 
+un sistema remoto, haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+   Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet.  Aparecerá la ventana
+  \t"Configuración Internet".
+
+4.\tHaga clic en el sistema para el que desee configurar el acceso
+  \tUUCP (desde el \k(Listado de dominios) o el \k(Lista de sistemas)).
+
+5.\tHaga clic en Acciones=>Configuración de transferencias UUCP.
+  \tAparecerá la ventana "Configuración Internet: Configuración de
+  \ttransferencias UUCP" con las siguientes opciones:
+
+  \to\tNombre de sistema: - Por defecto, este cuadro de texto muestra
+  \t \tel nombre del sistema actualmente seleccionado en la ventana
+  \t \t"Configuración Internet" principal.  Puede cambiar el nombre del
+  \t \tsistema sobreescribiendo el nombre que aparece actualmente en el
+  \t \tcuadro de texto, y pulse <Tab>.
+
+  \to\tDirección de red: - Por defecto, este campo contiene la
+  \t \tdirección del sistema seleccionado actualmente.  Si cambia el
+  \t \tnombre del cuadro de texto Nombre de sistema, estos campos se
+  \t \tdejarán en blanco.
+
+  \t \tSi tiene \k(acceso DNS^^Acceso a DNS), puede hacer clic en Obtener
+  \t \tdirección para el sistema para buscar la dirección
+  \t \tde red y llenar los campos.  Si no tiene acceso DNS,
+  \t \tconsulte al administrador de red cuál es la dirección de la
+  \t \tred y tecléela.
+
+  \to\tEstado actual: Aceptando/Rechazando de: Indica si las
+  \t \ttransferencias de archivos UUCP se están aceptando actualmente
+  \t \tpara el sistema especificado.
+
+6.\tHaga clic en Aceptar. El sistema añade el sistema al
+  \tarchivo /etc/uucp/Systems.tcp.
+
+  \tNota: Puede eliminar un sistema de /etc/uucp/Systems.tcp pulsando
+  \ten Rechazar.
+
+^2^Ventana Configuración Internet: Configurar transferencia UUCP
+^$150
+Ventana Configuración Internet: Configurar transferencia UUCP
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \to\tNombre de sistema: - Por defecto, este cuadro de texto muestra
+  \t \tel nombre del sistema actualmente seleccionado en la ventana
+  \t \t"Configuración Internet" principal.  Puede cambiar el nombre del
+  \t \tsistema sobreescribiendo el nombre que aparece actualmente en el
+  \t \tcuadro de texto, y pulse <Tab>.
+
+  \to\tDirección de red: - Por defecto, este campo contiene la
+  \t \tdirección del sistema seleccionado actualmente.  Si cambia el
+  \t \tnombre del cuadro de texto Nombre de sistema, estos campos se
+  \t \tdejarán en blanco.
+
+  \t \tSi tiene \k(acceso DNS^^Acceso a DNS), puede hacer clic en Obtener
+  \t \tdirección para el sistema para buscar la dirección
+  \t \tde red y llenar los campos.  Si no tiene acceso DNS,
+  \t \tconsulte al administrador de red cuál es la dirección de la
+  \t \tred y tecléela.
+
+  \to\tEstado actual: Aceptando/Rechazando de: Indica si las
+  \t \ttransferencias de archivos UUCP se están aceptando actualmente
+  \t \tpara el sistema especificado.
+
+2.\tHaga clic en Aceptar. El sistema añade el sistema al
+  \tarchivo /etc/uucp/Systems.tcp.
+
+Véase también:
+\k(Configuración de la transferencia UUCP)
+
+
+^1^Acceso a DNS
+^$160
+Acceso a DNS
+
+No es necesario que proporcione entradas en el archivo /etc/hosts para
+c ada sistema al que desee acceder.  Si su organización tiene acceso a
+un servidor DNS, el sistema puede obtener información acerca de estos
+sistemas en dicho servidor.
+
+Si tiene \k(permiso para cambiar la configuración Internet^dtadmin/user.hlp^Comprensión de los permisos),
+puede configurar el acceso a un servidor DNS tal y como se indica
+a continuación:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+   Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet.  Aparecerá la ventana
+  \t"Configuración Internet".
+
+4.\tHaga clic en Acciones=>Acceso DNS.  Aparecerá la ventana
+  \t"Configuración Internet: Acceso DNS con los siguientes campos:
+
+  \to\tNombre de dominio: - Teclee el nombre del dominio de la
+  \t \torganización. El nombre de dominio deberá usar una extensión
+  \t \t.com, .edu, .gov, etc.  Por ejemplo, site1.companyA.com.
+
+   \to\tServidor de nombre: - Teclee el nombre del dominio principal del
+   \t \tservidor de nombre de dominio de la organización.
+
+  \to\tDirección de red:  Teclee la dirección de servidor especificado
+  \t \ten Servidor de nombre.
+
+  \to\tServidores: Use la barra de desplazamiento para desplazarse
+  \t \tpor la lista de servidores DNS (definida en el archivo
+  \t \t/etc/resolv.conf).
+
+  \t \tPuede hacer clic en una de las siguientes opciones:
+
+  \t \t-\tAñadir: Para colocar las entradas acutales de los cuadros de
+  \t \t \ttexto Servidor de nombre y Dirección de red en la lista de
+  \t \t \tdesplegable.
+
+  \t \t-\tModificar: Para reemplazar la entrada seleccionada por el
+  \t \t \tcontenido actual de los cuadros Servidor de nombre y Dirección
+  \t \t \tde red.
+
+  \t \t-\tSuprimir: Para borrar la entrada seleccionada de la lista
+  \t \t \tdesplegable.
+
+5.\tHaga clic en OK para guardar los cambios.
+
+  \tNota:  También puede hacer clic en Redefinir para cancelar todos
+  \tlos cambios que aún no haya aplicado, o hacer clic en Cancelar
+  \tpara cerrar la ventana sin guardar los cambios.
+
+Véase también:
+\s(Introducción a la administración del servicio de nombre de dominio^dhelp as netag "Using Domain Name Service with TCP/IP" "" || helpLinkErr)
+
+^2^Ventana Configuración Internet: Acceso a DNS
+^$170
+Ventana Configuración Internet: Acceso a DNS
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \to\tNombre de dominio: - Teclee el nombre del dominio de la
+  \t \torganización. El nombre de dominio deberá usar una extensión
+  \t \t.com, .edu, .gov, etc.  Por ejemplo, site1.companyA.com.
+
+   \to\tServidor de nombre: - Teclee el nombre del dominio principal del
+   \t \tservidor de nombre de dominio de la organización.
+
+  \to\tDirección de red:  Teclee la dirección de servidor especificado
+  \t \ten Servidor de nombre.
+
+  \to\tServidores: Use la barra de desplazamiento para desplazarse
+  \t \tpor la lista de servidores DNS (definida en el archivo
+  \t \t/etc/resolv.conf).
+
+  \t \tPuede hacer clic en una de las siguientes opciones:
+
+  \t \t-\tAñadir: Para colocar las entradas acutales de los cuadros de
+  \t \t \ttexto Servidor de nombre y Dirección de red en la lista de
+  \t \t \tdesplegable.
+
+  \t \t-\tModificar: Para reemplazar la entrada seleccionada por el
+  \t \t \tcontenido actual de los cuadros Servidor de nombre y Dirección
+  \t \t \tde red.
+
+  \t \t-\tSuprimir: Para borrar la entrada seleccionada de la lista
+  \t \t \tdesplegable.
+
+2.\tHaga clic en OK para guardar los cambios.
+
+Véase también:
+\k(Acceso a DNS)
+
+^1^Acceso a NIS
+^$180
+Acceso a NIS
+
+Nota: Haber configurado el sistema para el acceso a un servidor NIS no
+activa NIS automáticamente para ningún servicio específico,
+tales como la gestión de usuarios o hosts.
+
+Si tiene \k(permiso para gestionar info. de usuarios a través de NIS^dtadmin/user.hlp^Comprensión de los permisos),
+puede configurar el sistema para usar un sistema de información
+de red (NIS) tal y como se indica a continuación:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+   Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet.  Aparecerá la ventana
+  \t"Configuración Internet".
+
+4.\tHaga clic en Acciones=>Acceso NIS.  Aparecerá la ventana
+  \t"Configuración Internet: Acceso NIS" con los siguientes campos:
+
+  \to\tNombre de dominio NIS: - Teclee el nombre del dominio de la
+  \t \torganización.
+
+  \t \tNota: Este último no es necesariamente el mismo que el
+  \t \t\k(dominio DNS^^Acceso a DNS).
+
+  \to\tServidor NIS: Teclee el nombre del servidor NIS de la
+  \t \torganización.
+
+  \to\tServidores NIS: Use la barra de desplazamiento para desplazarse
+  \t \tpor la lista de servidores NIS existentes.
+
+  \t \tCon esta lista puede hacer lo siguiente:
+
+  \t \t-\tPulsar en Añadir para colocar la entrada actual del cuadro de
+  \t \t \ttexto Servidor NIS en la lista desplegable.
+
+  \t \t-\tPulse en Modificar para reemplazar la entrada seleccionada de
+  \t \t \tla lista desplegable con el contenido actual del cuadro
+  \t \t \tServidor NIS.
+
+  \t\t-\tHaga clic en Suprimir para eliminar la entrada seleccionada de
+  \t\t \tla lista desplegable.
+
+5.\tHaga clic en OK para guardar los cambios.
+
+  \tTambién puede hacer clic en Redefinir para cancelar todos los
+  \tcambios que no haya aplicado todavía, o hacer clic en Cancelar
+  \tpara cerrar la ventana sin guardar los cambios.
+
+Véase también:
+\s(Introducción a la configuración de NIS^dhelp as netag "Setting Up NIS" "" || helpLinkErr)
+\s(About NIS Administration^dhelp as netag "Introduction to NIS Administration" "" || helpLinkErr)
+
+^2^Ventana Configuración Internet: Acceso a NIS
+^$190
+Ventana Configuración Internet: Acceso a NIS
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \to\tNombre de dominio NIS: - Teclee el nombre del dominio de la
+  \t \torganización.
+
+  \t \tNota: Este último no es necesariamente el mismo que el
+  \t \t\k(dominio DNS^^Acceso a DNS).
+
+  \to\tServidor NIS: Teclee el nombre del servidor NIS de la
+  \t \torganización.
+
+  \to\tServidores NIS: Use la barra de desplazamiento para desplazarse
+  \t \tpor la lista de servidores NIS existentes.
+
+  \t \tCon esta lista puede hacer lo siguiente:
+
+  \t \t-\tPulsar en Añadir para colocar la entrada actual del cuadro de
+  \t \t \ttexto Servidor NIS en la lista desplegable.
+
+  \t \t-\tPulse en Modificar para reemplazar la entrada seleccionada de
+  \t \t \tla lista desplegable con el contenido actual del cuadro
+  \t \t \tServidor NIS.
+
+  \t\t-\tHaga clic en Suprimir para eliminar la entrada seleccionada de
+  \t\t \tla lista desplegable.
+
+2.\tHaga clic en OK para guardar los cambios.
+
+Véase también:
+\k(Acceso a NIS)
+
+^1^Configuración del encaminamiento
+^$200
+Configuración del encaminamiento
+
+Una vez que haya configurado el sistema para la gestión de red, puede entrar
+en contacto con otros sistemas de la red local.  No obstante, para
+acceder a los sistemas que se encuentren fuera de la red local, es
+posible que tenga que configurar \d(máscara de red) y
+\d(dirección de difusión) del sistema y especificar un encaminador que le
+permita llegar hasta los sistemas remotos.
+
+Para configurar el sistema para el acceso a \d(router) dentro
+de la red local, o para cambiar la máscar ade red y dirección de
+difusión del sistema, haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+   Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet.  Aparecerá la ventana
+  \t"Configuración Internet".
+
+4.\tHaga clic en Acciones=>Configuración de encaminamiento.  Aparecerá
+  \tla ventana "Configuración Internet: Configuración de
+  \tencaminamiento" con los siguientes campos:
+
+  \tPara la máscara de subred:
+
+  \to\tTipo de subred: - Haga clic en la clase adecuada (sin no sabe en
+  \t \tqué clase está la red, consulte con el administrador de red).
+  \t \tSi la red no está configurada como una red de clase
+  \t \testándar, seleccione Otras.  Aparecerá el cuadro de texto
+  \t \tMáscara; teclee en él el ID de la máscara en formato hexadecimal
+  \t \t(por ejemplo, FFFF0000).
+
+  \to\tID de red: - Indica qué parte de la dirección del sistema local
+  \t \tse considera como el identificador de red (basándose en el tipo
+  \t \tde subred actualmente seleccionado).
+
+  \t \tNota: Este campo sólo aparece si selecciona las clases A,
+  \t \tB o C como tipo de subred.
+
+  \to\tID del sistema: - Indica qué parte de la dirección del sistema
+  \t \tlocal se considera como el identificador del sistema (basándose
+  \t \ten el tipo de subred actualmente seleccionado).
+
+  \t \tNota: Este campo sólo aparece si selecciona las clases A,
+  \t \tB o C como tipo de subred.
+
+  \tPara en encaminamiento de gestión de redes:
+
+  \to\tEncaminamiento por defecto: - Teclee el nombre del sistema
+  \t \tusado como \d(router) dentro de la red local.
+  \t \tEste encaminador deberá estar "a un salto" de distancia
+  \t \tdel sistema (es decir, deberá estar conectado
+  \t \tdirectamente a la red local).
+
+  \to\tDirección de red: Teclee la dirección del encaminador por
+  \t \tdefecto.  Si su sistema está configurado para \k(Acceso DNS^^Acceso a DNS), puede
+  \t \thacer clic en Obtener dirección y el sistema buscará la
+  \t \tdirección del encaminador por usted.
+
+  \to\tActualizar de las tablas de encaminamiento usando la información
+  \t \tde difusión: - Haga clic en esta casilla de comprobación si
+  \t \tdesea ejecutar el programa de routed (es decir, el daemon del
+  \t \trouter).
+
+  \t \tPara obtener más información acerca de routed(1M), véase la
+  \t \t\s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr).
+
+  \t \tNota: routed escucha a las difusiones de información sobre 
+  \t \tcómo acceder a los sistemas remotos.
+
+5.\tHaga clic en OK para guardar los cambios.
+
+  \tNota: También puede hacer clic en Redefinir para cancelar los
+  \tcambios que aún no haya aplicado, o hacer clic en Cancelar para
+  \tcerrar la ventana sin realizar ningún cambio.
+
+Véase también:
+\s(Configuración del encaminamiento^dhelp as netag "Setting Up TCP/IP" "Setting Up Routing" || helpLinkErr)
+\s(Uso del daemon routed^dhelp as netag "Setting Up Routers and Subnetworks" "Using the routed Daemon" || helpLinkErr)
+
+^2^Ventana Configuración Internet: Configurar encaminamiento
+^$210
+Ventana Configuración Internet: Configurar encaminamiento
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \tPara la máscara de subred:
+
+  \to\tTipo de subred: - Haga clic en la clase adecuada (sin no sabe en
+  \t \tqué clase está la red, consulte con el administrador de red).
+  \t \tSi la red no está configurada como una red de clase
+  \t \testándar, seleccione Otras.  Aparecerá el cuadro de texto
+  \t \tMáscara; teclee en él el ID de la máscara en formato hexadecimal
+  \t \t(por ejemplo, FFFF0000).
+
+  \to\tID de red: - Indica qué parte de la dirección del sistema local
+  \t \tse considera como el identificador de red (basándose en el tipo
+  \t \tde subred actualmente seleccionado).
+
+  \t \tNota: Este campo sólo aparece si selecciona las clases A,
+  \t \tB o C como tipo de subred.
+
+  \to\tID del sistema: - Indica qué parte de la dirección del sistema
+  \t \tlocal se considera como el identificador del sistema (basándose
+  \t \ten el tipo de subred actualmente seleccionado).
+
+  \t \tNota: Este campo sólo aparece si selecciona las clases A,
+  \t \tB o C como tipo de subred.
+
+  \tPara en encaminamiento de gestión de redes:
+
+  \to\tEncaminamiento por defecto: - Teclee el nombre del sistema
+  \t \tusado como \d(router) dentro de la red local.
+  \t \tEste encaminador deberá estar "a un salto" de distancia
+  \t \tdel sistema (es decir, deberá estar conectado
+  \t \tdirectamente a la red local).
+
+  \to\tDirección de red: Teclee la dirección del encaminador por
+  \t \tdefecto.  Si su sistema está configurado para \k(Acceso DNS^^Acceso a DNS), puede
+  \t \thacer clic en Obtener dirección y el sistema buscará la
+  \t \tdirección del encaminador por usted.
+
+  \to\tActualizar de las tablas de encaminamiento usando la información
+  \t \tde difusión: - Haga clic en esta casilla de comprobación si
+  \t \tdesea ejecutar el programa de routed (es decir, el daemon del
+  \t \trouter).
+
+  \t \tPara obtener más información acerca de routed(1M), véase la
+  \t \t\s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr).
+
+  \t \tNota: routed escucha a las difusiones de información sobre 
+  \t \tcómo acceder a los sistemas remotos.
+
+2.\tHaga clic en OK para guardar los cambios.
+
+
+Véase también:
+\k(Configuración del encaminamiento)
+
+^2^Ventana Configuración Internet: Añadir nuevo sistema
+^$215
+Ventana Configuración Internet: Añadir nuevo sistema
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las opciones siguientes:
+
+  \to\tNombre de sistema: - Teclee el nombre del sistema con el que
+  \t \tdesee poder comunicarse.
+
+  \to\tDirección de red: Teclee la dirección de red.  Si su sistema
+  \t \testá configurado para \k(Acceso DNS^^Acceso a DNS), puede hacer clic en Obtener
+  \t \tdirección y el sistema buscará la dirección del sistema por
+  \t \tusted.
+
+  \t \tNota: Si el sistema está en un dominio distinto al suyo, deberá
+  \t \tteclear el nombre de dominio en el Nombre de
+  \t \tsistema registrado anteriormente.
+
+  \to\tObservaciones: Teclee todos los comentarios que piense que
+  \t \tpueden ser de utilidad.  Por ejemplo, el número de sala en la
+  \t \tque se encuentra la máquina, el nombre del propietario del
+  \t \tsistema, etc.
+
+2.\tHaga clic en OK para guardar los cambios y cerrar la ventana,
+  \to en Aplicar para guardar los cambios sin cerrar la ventana.
+
+Véase también:
+\k(Adición de un nuevo sistema a la lista de sistemas)
+
+^1^Copiado del icono de un sistema remoto en una carpeta
+^$220
+Copiado del icono de un sistema remoto en una carpeta
+
+Puede crear un icono para cualquier sistema remoto contenido en
+\k(Listado de dominios) o \k(Lista de sistemas).  A continuación, podrá hacer
+doble clic en este icono siempre que desee entrar a dicho sistema
+remoto o transferir archivos al mismo.
+
+Para crear un icono para el sistema remoto, haga lo siguiente:
+
+1.\tHaga clic en el sistema deseado del listado de dominios o de la
+  \tlista de sistemas.
+
+2.\tAbra la carpeta en la que quiera copiar el icono del sistema
+  \tremoto.
+
+3.\t\d(Arrastre y suelte^arrastrar y soltar) el icono del sistema remoto
+  \thasta la carpeta que abrió en el paso 2.
+
+Nota: También puede usar la opción de menú Copiar a carpeta
+para crear un incono para un sistema remoto.  Véase
+\k(Ventana Configuración Internet: Copiar en carpeta).
+
+Véase también:
+\k(Entrada remota^Remote_Access/Remote_Access.hlp^Entrada remota)
+
+^2^Ventana Configuración Internet: Copiar en carpeta
+^$230
+Ventana Configuración Internet: Copiar en carpeta
+
+Esta ventana le permite copiar la entrada de un sistema remoto en la
+carpeta deseada.  Cuando esté completa, aparecerá en la carpeta
+un icono que representará al sistema remoto.
+
+Haga lo siguiente:
+
+1.\tHaga clic en el nombre de una carpeta o en la Carpeta padre de 
+  \tla lista Carpeta(s), hasta que encuentre la carpeta deseada.
+
+2.\tTeclee en el campo Como: el nombre que desee dar al icono.  Por
+  \tdefecto, se asignará el nombre del sistema.
+
+3.\tHaga clic en Copiar.  Aparecerá en la carpeta el icono del sistema
+  \tremoto.  Puede hacer lo siguiente:
+
+  \to\t\d(Haga doble clic^hacer doble clic) en el icono del sistema
+  \t \tremoto siempre que desee entrar en dicho sistema remoto.
+
+  \to\t\d(Arrastrar y soltar^arrastrar y soltar) un archivo sobre el icono
+  \t \tdel sistema remoto siempre que desee transferir un archivo a
+  \t \tdicho sistema remoto.
+
+^1^Visualización de propiedades del sistema
+^$240
+Visualización de propiedades del sistema
+
+Para ver las propiedades de la entrada de un sistema, haga lo
+siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+   Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet.  Aparecerá la ventana
+  \t"Configuración Internet".
+
+4.\tHaga clic en el sistema deseado de \k(Listado de dominios) o
+  \t\k(Lista de sistemas).
+
+5.\tHaga clic en Sistema=>Propiedades.  Aparecerá la
+  \t\k(ventana "Configuración Internet: Propiedades^^Ventana Configuración Internet: Propiedades)
+
+    Nota: Si está en la ventana del listado de dominios, no podrá
+  \tmodificar las propiedades del sistema.  Si está en la ventana de
+  \tla lista de sistemas, podrá realizar cambios que se actualizarán
+  \ten el archivo /etc/hosts.
+
+Véase también:
+\s(Archivos de /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^2^Ventana Configuración Internet: Propiedades
+^$250
+Ventana Configuración Internet: Propiedades
+
+Si está en la ventana \k(Listado de dominios), esta ventana mostará el
+nombre del sistema y su dirección de red correspondiente.
+
+Si está en la ventana \k(Lista de sistemas), podrá modificar las
+propiedades tal y como se indica a continuación:
+
+1.\tTeclee el nombre de sistema deseado.
+
+2.\tTeclee la dirección del sistema, o, en el caso de que tenga
+  \t\k(Acceso DNS^^Acceso a DNS), puede hacer clic en Obtener dirección para que el
+  \tsistema busque la dirección del sistema.
+
+3.\tTeclee un comentario (si lo desea).
+
+5.\tHaga clic en OK para guardar los cambios y cerrar la ventana, o en
+  \tAplicar para guardar los cambios sin cerrar la ventana.  El
+  \tsistema guarda los cambios en el archivo /etc/hosts.
+
+  \tNota: También puede hacer clic en Redefinir para cancelar los
+  \tcambios que aún no haya aplicado, o hacer clic en Cancelar para
+  \tcerrar la ventana sin realizar ningún cambio.
+
+Véase también:
+\s(Archivos de /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^1^Búsqueda de un sistema
+^$260
+Búsqueda de un sistema
+
+Para buscar un sistema, haga lo siguiente:
+
+Nota: Si ya se halla en la carpeta Herramientas_de_Admin, pase al punto 2.
+   Si se halla en la carpeta Gestión_de_redes, pase al punto 3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Gestión_de_redes. Aparecerá la ventana
+  \t"Carpeta: Gestión_de_redes".
+
+3.\tHaga doble clic en Config_Internet.  Aparecerá la ventana
+  \t"Configuración Internet".
+
+4.\tPulse en una de las siguientes opciones:
+
+  \to\tBuscar=>Buscar: Para abrir la ventana "Configuración Internet:
+  \t \tBuscar". Teclee el nombre del sistema que desee buscar y haga
+  \t \tclic en Buscar.  El sistema encontrará y resaltará el sistema en
+  \t \tla \k(Listado de dominios)
+  \t \to la \k(Lista de sistemas) (seguún cuál sea la ventana actualmente
+  \t \t  seleccionada).
+
+  \to\tBuscar=>Primero:  Para buscar y resaltar la entrada del primer
+  \t \tsistema de la lista.
+
+  \to\tBuscar=>Ultimo: Para encontrar y resaltar la entrada del último
+  \t \tsistema de la lista.
+
+Véase también:
+\k(Ventana Configuración Internet: Buscar)
+
+^2^Ventana Configuración Internet: Buscar
+^$270
+Ventana Configuración Internet: Buscar
+
+Teclee el nombre del sistema que esté buscando y haga clic en Buscar.
+
+Nota: Si no está seguro de cuál es el nombre completo del sistema, o
+si no desea teclearlo entero, teclee los primeros caracteres y pulse
+en Buscar para que el sistema trate de localizarlo.
+
+Por ejemplo, supongamos que la organización tiene sistemas nombrados
+site1, site2, site3, etc.  Desea encontrar "site2".  Puede teclera
+"site" en el campo del nombre del sistema, pulse en Buscar, y el
+sistema localizará la primera vez que se produzca "site".  En este
+caso, "site1".  Haga clic en Buscar de nuevo, y el sistema localizará
+"site2".
+

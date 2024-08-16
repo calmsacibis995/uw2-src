@@ -1,0 +1,97 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/parameters/set/Help	1.1.5.2"
+#ident  "$Header: Help 2.0 91/07/12 $"
+ABSTRACT:Set Event Log Parameters
+	The "set" task allows you to set the parameters for the event
+	log file(s). This task should be run prior to enabling auditing
+	if the log parameters have not been set previously to system
+	startup.  If auditing is enabled, the new settings will take
+	effect immediately.  The settings remain in effect until the next
+	invocation of this task, or the next invocation of the "auditlog" 
+	command, or a log file switch occurs, or the system is brought 
+	down.
+
+Form.set:watermark
+	Enter a positive integer or 0.  The high water mark defines the
+	size the audit buffer is allowed to grow before it is written to
+	the event log.  It must be less than or equal to the size of the 
+	audit buffer. A value of 0, will bypass the buffering mechanism.
+
+	If auditing is enabled, this setting will replace the current
+	setting, otherwise the specified setting will be used when 
+	auditing is enabled.
+
+Form.set:eventlog
+	Enter a full pathname to either a directory or character 
+	special device where audit event logs are to be stored.
+
+	NOTE: Auditing must NOT be enabled.
+
+Form.set:logstring
+	Enter a string consisting of 7 characters or less.
+	This name will be appended to the MMDD### event log filename.
+		Example: if mach123 is entered,
+		the event log filename will be MMDD###mach123 
+	If no string is given, the event log filename will be the 
+	system generated log filename, MMDD###.
+		MM  = numerical representation of the current month
+		DD  = numerical representation of the current day
+		### = event log file sequence number[001-999]/day
+	This string will be ignored if the event log is being written 
+	to a character special device.
+
+	NOTE: Auditing must NOT be enabled and the string may not
+	      contain a '/' character.
+
+Form.set:blocksize
+	Enter an integer that is greater than or equal to the size of 
+	the audit buffer.  The input is in units of 512 byte blocks,
+	the file size restriction does not apply to character special 
+	devices.
+
+	A setting of "none" or "0" indicates that the file size is 
+	limited by the available file system space.
+
+Form.set:fullaction
+	Enter "shutdown", "disable" or "switch".  This is the action
+	to take when the audit log is full or an error has occurred
+	writing to the audit log.
+
+	shutdown - The system will be shutdown when the audit log is full.
+
+	disable - Auditing will be disabled when the audit log is full.
+
+	switch - You will be prompted to enter the name of the audit 
+	log to use in the event of an audit log switch.  Note that any 
+	process generating an audit record after a log switch occurs 
+	will have its record placed in the new log even if the process 
+	started when the previous log was in effect.  No data will be 
+	lost due to this transition.
+
+Form.log:seclog
+	Enter a full pathname to either a directory or character 
+	special device where audit event logs are to be stored
+	upon switch.  
+
+Form.log:secstring
+	Enter a string consisting of 7 characters or less.
+	This name will be appended to the MMDD### event log filename
+	upon log file switch.
+		Example: if mach123 is entered,
+		the event log filename will be MMDD###mach123 
+	If no string is given, the event log filename will be the 
+	system generated log filename, MMDD###.
+		MM  = numerical representation of the current month
+		DD  = numerical representation of the current day
+		### = event log file sequence number[001-999]/day
+	This string will be ignored if the event log is being written
+	to a character special device.
+
+	NOTE: The string may not contain a '/' character.
+
+Form.log:program
+	Enter the full pathname of the program you wish to execute
+	when the event log is full and a log file switch occurs. This
+	program is administrator definable and may be either a binary
+	or shell script file.  The program, for example, may save the
+	full log, reset the log full action setting, etc..
+

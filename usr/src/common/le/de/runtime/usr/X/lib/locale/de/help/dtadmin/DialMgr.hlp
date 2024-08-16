@@ -1,0 +1,776 @@
+#ident\t"@(#)dthelp:Admin.Tools/DialMgr.hlp     1.23"
+^*version^1
+^*title^Anwähl-Setup
+^:Anwähl-Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Anwählverkehr einrichten und verwalten
+^0^Anwähl-Setup
+^$10
+Anwähl-Setup
+
+Verwenden Sie "Anwähl-Setup", um Datenübermittlungen über Modem oder
+Direktverbindungen einzurichten. "Anwähl-Setup" bietet Ihnen folgende
+Möglichkeiten:
+
+\to\t\k(Zugriff auf ein fernes System konfigurieren^^Zugriff auf fernes System konfigurieren)
+\to\t\k(Eintrag für ein Anwählgerät konfigurieren^^Anwähl-Geräteeintrag konfigurieren)
+\to\t\k(Symbol für ein Anwählgerät in einen Ordner kopieren^^Anwähl-Gerätesymbol in einen Ordner kopieren)
+\to\t\k(Symbol für ein fernes System in einen Ordner kopieren^^Fernes Systemsymbol in einen Ordner kopieren)
+\to\t\k(Eintrag für ein Anwählgerät löschen^^Anwähl-Geräteeintrag löschen)
+
+
+\to\t\k(Eintrag für ein fernes System löschen^^Fernen Systemeintrag löschen)
+\to\t\k(Direktes System anwählen^^Zufallssystem anwählen)
+\t \t(d. h., ein System, das nicht für fernen Zugriff konfiguriert
+\t \tist)
+\to\t\k(Eintrag für ein fernes System suchen^^Fernen Systemeintrag suchen)
+\to\t\k(Eigenschaften eines Anwählgeräts anzeigen oder ändern^^Eigenschaften eines Anwähl-Gerätes ansehen oder ändern)
+\to\t\k(Eigenschaften eines fernen Systems anzeigen oder ändern^^Eigenschaften eines fernen Systems ansehen oder ändern)
+
+Siehe auch:
+\s(Anwähl-Setup verwenden^dhelp "pe.de" ownerhb "Modems und andere serielle Kommunikationsmittel einrichten" "Anwähl-Setup verwenden" || helpLinkErr)
+
+^1^Anwähl-Geräteeintrag konfigurieren
+^$20
+Anwähl-Geräteeintrag konfigurieren
+
+Hinweis: Sie müssen über die \k(Berechtigung zum Ändern von Anwähl-Setup^dtadmin/user.hlp^Mit Berechtigungen umgehen können)
+verfügen, um Einträge für Anwählgeräte konfigurieren zu können.
+
+Mit einem Anwählgerät können Sie andere Systeme anrufen und sich dort
+anmelden.
+
+Um einen Eintrag für ein Anwählgerät auf Ihrem System zu
+konfigurieren, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden,
+machen Sie weiter mit Schritt 2. Wenn Sie sich bereits im Ordner
+"Netzwerkbetrieb" befinden, machen Sie weiter mit Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tKlicken Sie "Aktionen=>Geräte konfigurieren" an. Das
+  \t\k(Fenster "Anwähl-Setup: Geräte"^^Fenster Anwähl-Setup: Geräte) \terscheint.
+
+5.\tKlicken Sie Gerät=>Neu an. Das Fenster "Geräte-Setup: Neues Gerät hinzufügen"
+  \terscheint mit folgenden Feldern:
+
+  \to\tSchnittstelle: - Der physische Anschluß des Geräts an Ihrem
+  \t \tComputer. Es kann sich um eine serielle Schnittstelle (z. B.
+  \t \tCOM1 für serielle Schnittstelle 1) oder einen anderen
+  \t \tSchnittstellentyp handeln. Wenn Sie "Sonstige" anklicken, müssen
+  \t \tSie den Namen der Schnittstelle in das Textfeld eingeben. Die
+  \t \tStandardeinstellung ist COM1.
+
+  \to\tVerknüpft mit: - Name des von Ihnen verwendeten Geräts oder
+  \t \tModems. Klicken Sie das Pfeilfeld an, um die Liste mit den
+  \t \tGerätetypen aufzurufen, und klicken Sie anschließend den
+  \t \tgewünschten Gerätetyp an.
+
+  \t \tHinweis:Wenn Sie einer bestehenden Gerätetypenliste ein Modem
+  \t \thinzufügen müssen, siehe\s(Anwähl-Geräte hinzufügen^dhelp "pe.de" ownerhb "Modems und andere serielle Kommunikationsmittel einrichten" "Anwähl-Geräte hinzufügen" || helpLinkErr) im Handbuch des
+  \t \tSystemeigentümers, und schlagen Sie ebenfalls den Befehl
+  \t \tdtmodem(1M) in der \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr) nach.
+
+  \to\tSchnittstelle konfigurieren als: - Wählen Sie eine der folgenden
+  \t \tMöglichkeiten:
+
+  \t \t-\tBidirektional - Um zuzulassen, daß Anrufe im System ein- und
+  \t \t \tausgehen.
+
+  \t \t \tHinweis: Wenn Sie Bidirektional wählen, zeigt das
+  \t \t \tSystem eine Auswahl an Eingangsgeschwindigkeiten an.
+  \t \t \tStandardmäßig ist die Geschwindigkeit auf 9600 eingestellt.
+  \t \t \tDie Ausgangsgeschwindigkeit ist auf Automatische Auswahl
+  \t \t \teingestellt. Wenn Sie entweder 14400 oder 28800 wählen, stellt
+  \t \t \tdas System die Geschwindigkeit auf den nächsthöheren gültigen
+  \t \t \tWert ein. Die ausgehende Geschwindigkeit ist immer
+  \t \t \tAutomatische Auswahl.
+
+  \t \t-\tNur ausgehend - Um aus dem System ausgehende, aber keine
+  \t \t \teingehenden Anrufe zuzulassen. Standardmäßig ist die
+  \t \t \tGeschwindigkeit für diesen Modemtyp auf
+  \t \t \tAutomatische Auswahl eingestellt.
+
+  \t \t-\tNur eingehend - Gestattet nur eingehende aber keine
+  \t \t \tausgehenden Anrufe.
+
+  \t \t \tHinweis: Wenn Sie Nur eingehen wählen, zeigt das
+  \t \t \tSystem eine Reihe von Geschwindigkeiten zur Auswahl
+  \t \t \tan. Standardmäßig ist die Geschwindigkeit auf 9600
+  \t \t \teingestellt. Wenn Sie entweder 14400 oder 28800 wählen,
+  \t \t \tstellt das System die Geschwindigkeit auf
+  \t \t \tden nächstehöheren gültigen Wert ein. Die ausgehende
+  \t \t \tGeschwindigkeit ist immer Automatische Auswahl.
+
+  \t \t-\tSchnittstelle: - Standardmäßig ist dieses Feld auf Aktiviert
+  \t \t \teingestellt. Wenn Sie die Schnittstelle deaktivieren möchten,
+  \t \t \tklicken Sie Deaktiviert an.
+
+6.\tKlicken Sie "Hinzufügen" an, um einen Eintrag für das Gerät
+  \thinzuzufügen und das Fenster zu schließen. Im Fenster
+  \t"Anwähl-Setup: Geräte" erscheint ein Symbol für das Gerät, das
+  \tSie, falls erwünscht, in einen anderen Ordner kopieren können
+  \t(siehe \k(Anwähl-Gerätesymbol in einen Ordner kopieren)).
+
+  \tHinweis: Sie können auch "Zurücksetzen" anklicken, um die
+  \tursprünglichen Einstellungen wiederherzustellen, oder Sie können
+  \t"Abbrechen" anklicken, um das Fenster zu verlassen, ohne das
+  \tGerät zu konfigurieren.
+
+^1^Anwähl-Gerätesymbol in einen Ordner kopieren
+^$30
+Anwähl-Gerätesymbol in einen Ordner kopieren
+
+Um das Symbol eines Anwählgeräts in einen anderen Ordner zu kopieren,
+gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner "Verwaltungs_Tools" befinden,
+machen Sie weiter mit Schritt 2. Wenn Sie sich bereits im Ordner
+"Netzwerkbetrieb" befinden, machen Sie weiter mit Schritt 3.
+
+1.\tDoppelklicken Sie im \k(Fenster "UnixWare Desktop"^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop)
+  \tauf "Verwaltungs_Tools". Das Fenster "Ordner: Verwaltungs_Tools"  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das
+  \t\k(Fenster "Anwähl-Setup: Geräte"^^Fenster Anwähl-Setup: Geräte) erscheint.
+
+4.\t\d(Doppelklicken^doppelklicken) Sie auf den Ordner, in den Sie
+  \tdas Symbol für das Anwählgerät kopieren möchten.
+
+5.\tVerschieben Sie das gewünschte Gerät mit der Methode
+  \t\d(ziehen und ablegen^ziehen-und-ablegen) aus dem Fenster
+  \t"Anwähl-Setup: Geräte" auf den in Schritt 4 geöffneten Ordner.
+
+  \tSie können jetzt auf das Symbol des Anwählgeräts doppelklicken,
+  \tum das \k(Fenster "Anwähl-Setup: Wählen"^^Zufallssystem anwählen) aufzurufen.
+
+Hinweis: Sie können das Symbol eines Anwählgeräts auch mit der Option
+\k(In Ordner kopieren) in einen Ihrer Ordner kopieren.
+
+^2^Fenster Anwähl-Setup
+^$40
+Fenster Anwähl-Setup
+
+Dies ist das Hauptfenster für die Funktionen von "Anwähl-Setup". Es
+zeigt das ferne System an, zu dem Sie über ein Modem oder ein anderes
+Gerät eine Verbindung herstellen können.
+
+Hinweis: Die Systeme sind in der Datei /etc/uucp/Systems definiert.
+
+Für weitere Informationen über UNIX Systemdateien siehe
+\s(Verzeichnisse und Ordner^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Fenster Anwähl-Setup: Geräte
+^$50
+Fenster Anwähl-Setup: Geräte
+
+Dieses Fenster zeigt die mit Ihrem System verbundenen Geräte an, die
+Sie zum Anwählen ferner Systeme verwenden können.
+
+Hinweis: Diese Geräte sind in der Datei /etc/uucp/Devices definiert.
+
+Für weitere Informationen über UNIX Systemdateien siehe
+\s(Verzeichnisse und Ordner^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Fenster Anwähl-Setup: Neues Gerät hinzufügen
+^$60
+Fenster Anwähl-Setup: Neues Gerät hinzufügen
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tSchnittstelle: - Der physische Anschluß des Geräts an Ihrem
+  \t \tComputer. Es kann sich um eine serielle Schnittstelle (z. B.
+  \t \tCOM1 für serielle Schnittstelle 1) oder einen anderen
+  \t \tSchnittstellentyp handeln. Wenn Sie "Sonstige" anklicken, müssen
+  \t \tSie den Namen der Schnittstelle in das Textfeld eingeben. Die
+  \t \tStandardeinstellung ist COM1.
+
+  \to\tVerbindet mit: - Name des von Ihnen verwendeten Geräts oder
+  \t \tModems. Klicken Sie das Pfeilfeld an, um die Liste mit den
+  \t \tGerätetypen aufzurufen, und klicken Sie anschließend den
+  \t \tgewünschten Gerätetyp an.
+
+  \t \tHinweis:Wenn Sie einer bestehenden Gerätetypenliste ein Modem
+  \t \thinzufügen müssen, siehe\s(Anwähl-Geräte hinzufügen^dhelp "pe.de" ownerhb "Modems und andere serielle Kommunikationsmittel einrichten" "Anwähl-Geräte hinzufügen" || helpLinkErr) im Handbuch des
+  \t \tSystemeigentümers, und schlagen Sie ebenfalls den Befehl
+  \t \tdtmodem(1M) in der \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr) nach.
+
+  \to\tSchnittstelle konfigurieren als: - Wählen Sie eine der folgenden
+  \t \tMöglichkeiten:
+
+  \t \t-\tBidirektional - Um zuzulassen, daß Anrufe im System ein- und
+  \t \t \tausgehen.
+
+  \t \t \tHinweis: Wenn Sie Bidirektional wählen, zeigt das
+  \t \t \tSystem eine Auswahl an Eingangsgeschwindigkeiten an.
+  \t \t \tStandardmäßig ist die Geschwindigkeit auf 9600 eingestellt.
+  \t \t \tDie Ausgangsgeschwindigkeit ist auf Automatische Auswahl
+  \t \t \teingestellt. Wenn Sie entweder 14400 oder 28800 wählen, stellt
+  \t \t \tdas System die Geschwindigkeit auf den nächsthöheren gültigen
+  \t \t \tWert ein. Die ausgehende Geschwindigkeit ist immer
+  \t \t \tAutomatische Auswahl.
+
+  \t \t-\tNur ausgehend - Um aus dem System ausgehende, aber keine
+  \t \t \teingehenden Anrufe zuzulassen. Standardmäßig ist die
+  \t \t \tGeschwindigkeit für diesen Modemtyp auf
+  \t \t \tAutomatische Auswahl eingestellt.
+
+  \t \t-\tNur eingehend - Gestattet nur eingehende aber keine
+  \t \t \tausgehenden Anrufe.
+
+  \t \t \tHinweis: Wenn Sie Nur eingehen wählen, zeigt das
+  \t \t \tSystem eine Reihe von Geschwindigkeiten zur Auswahl
+  \t \t \tan. Standardmäßig ist die Geschwindigkeit auf 9600
+  \t \t \teingestellt. Wenn Sie entweder 14400 oder 28800 wählen,
+  \t \t \tstellt das System die Geschwindigkeit auf
+  \t \t \tden nächstehöheren gültigen Wert ein. Die ausgehende
+  \t \t \tGeschwindigkeit ist immer Automatische Auswahl.
+
+  \t \t-\tSchnittstelle: - Standardmäßig ist dieses Feld auf Aktiviert
+  \t \t \teingestellt. Wenn Sie die Schnittstelle deaktivieren möchten,
+  \t \t \tklicken Sie Deaktiviert an.
+
+2.\tKlicken Sie "Hinzufügen" an, um einen Eintrag für das Gerät
+  \thinzuzufügen und das Fenster zu schließen. Im Fenster
+  \t"Anwähl-Setup: Geräte" erscheint ein Symbol für das Gerät, das
+  \tSie, falls erwünscht, in einen anderen Ordner kopieren können
+  \t(siehe \k(Anwähl-Gerätesymbol in einen Ordner kopieren)).
+
+Siehe auch:
+\k(Anwähl-Geräteeintrag konfigurieren).
+
+^1^Anwähl-Geräteeintrag löschen
+^$70
+Anwähl-Geräteeintrag löschen
+
+Um einen Eintrag für ein Anwählgerät zu löschen, gehen Sie wie folgt
+vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". \k(Das Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tKlicken Sie "Aktionen=>Geräte konfigurieren" an. Das
+  \t\k(Fenster "Anwähl-Setup: Geräte"^^Fenster Anwähl-Setup: Geräte) \terscheint.
+
+5.\tKlicken Sie das Gerät an, das Sie löschen möchten.
+
+6.\tKlicken Sie "Gerät=>Löschen" an. Das Gerätesymbol verschwindet aus
+  \tdem Fenster "Anwähl-Setup: Geräte".
+
+
+^1^Zugriff auf fernes System konfigurieren
+^$80
+Zugriff auf fernes System konfigurieren
+
+Bevor Sie den Zugriff auf ein fernes System konfigurieren, müssen Sie:
+
+  o  \k(einen Eintrag für ein Anwählgerät konfigurieren^^Anwähl-Geräteeintrag konfigurieren),
+
+  o  eine Anmeldung und ein Paßwort auf dem System erhalten, zu dem
+     Sie eine Verbindung herstellen möchten,
+
+  o  die Rufnummer des Systems kennen, zu dem Sie eine Verbindung
+     herstellen möchten.
+
+Um den Zugriff auf ein fernes System zu konfigurieren, gehen Sie wie
+folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tKlicken Sie "System=>Neu" an. Das Fenster
+  \t"Anwähl-Setup: Neues System hinzufügen" erscheint
+  \tmit folgenden Feldern:
+
+  \to\tSystemname: - Geben Sie den Namen des fernen Systems ein, zu dem
+  \t \tSie eine Verbindung herstellen möchten.
+
+  \to\tVerbinden über: - Klicken Sie den von Ihnen
+  \t \tverwendeten Gerätetyp an.
+
+  \to\tGeschwindigkeit: - Klicken Sie die Geschwindigkeit an, die
+  \t \tIhrem Modem oder Ihrer Schnittstelle entspricht. Wenn Sie die
+  \t \tGeschwindigkeit nicht kennen, klicken Sie "Automatische Auswahl"
+  \t \tan, bei einer direkten Verbindung klicken Sie "19200" an.
+
+  \to\tRufnummer: - Geben Sie die Rufnummer des Systems ein, zu dem Sie
+  \t \teine Verbindung herstellen möchten, und zwar mit der Vorwahl und bei
+  \t \tAuslandanrufen mit 00 und der entsprechenden Ländervorwahl
+  \t \t(z. B.: 0 30 12 34 56 oder 00 33 45 67 89).
+
+  \t \tHinweis: Bei Direktverbindungen ist dieses Feld nicht verfügbar.
+
+5.\tKlicken Sie "Kategorie=>Anmeldesequenz" für zusätzliche Optionen
+  \tan (z. B. wenn Sie  \k(UUCP^DesktopMgr/uucp.hlp^UUCP-Eingangsbereich verwenden) über das Anwählgerät verwenden möchten,
+  \tum Post zu senden oder Dateien zu übertragen).
+
+  \tHinweis: Sie müssen die \k(Berechtigung zum Ändern von Anwähl-Setup^dtadmin/user.hlp^Mit Berechtigungen umgehen können)
+  \thaben, um die Anmeldesequenz ändern zu können.
+
+  \tFolgende zusätzliche Optionen erscheinen:
+
+  \to\tAnmeldeaufforderung: - Geben Sie die Zeichenkette ein, die das
+  \t \tferne System als Anmeldeaufforderung anzeigen soll.
+
+  \t \tHinweis: Sie müssen die Zeichenkette nicht vollständig eingeben.
+
+  \to\tAntwort: - Geben Sie die Zeichenkette ein, die das ferne System
+  \t \tals Antwort auf die Anmeldeaufforderung erhalten soll.
+
+  \to\tAktuelle Anmeldesequenz: - Rollen Sie die Liste ab, um die
+  \t \tEinträge für "Anmeldeaufforderung" und "Antwort" anzuzeigen.
+  \t \tDie Reihenfolge der Einträge in der Liste muß der Reihenfolge
+  \t \tentsprechen, in der das System die Anmeldeaufforderungen
+  \t \tanzeigt. Klicken Sie eine der folgenden Möglichkeiten an:
+
+  \t \t-\tHinzufügen - Nimmt die aktuellen Einträge in
+  \t \t"Anmeldeaufforderung" und "Antwort" in die Abrolliste auf.
+
+  \t \t-\tÄndern - Ersetzt den ausgewählten Eintrag in
+  \t \t \t"Aktuelle Anmeldesequenz" durch die aktuellen Einträge in
+  \t \t \t"Anmeldeaufforderung" und/oder "Antwort".
+
+  \t \t-\tLöschen - Entfernt den ausgewählten Eintrag aus der
+  \t \t \tAbrolliste.
+
+6.\tKlicken Sie (im Fenster "Anwähl-Setup: Neues System hinzufügen")
+  \t"Hinzufügen" an. Im \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup) erscheint ein
+  \tEintrag für das ferne System.
+
+  \tHinweis: Sie können das Symbol für ein neues Systems auch in einen
+  \tanderen Ordner kopieren (siehe \k(Fernes Systemsymbol in einen Ordner kopieren)).
+  \tSie können sich dann beim fernen System anmelden, indem Sie auf
+  \tdas Symbol doppelklicken, und Sie könen Dateien auf das ferne
+  \tSystem übertragen, indem Sie sie auf das Symbol
+  \t\d(ziehen und ablegen^ziehen-und-ablegen).
+
+^2^Fenster Anwähl-Setup: Neues System hinzufügen
+^$90
+Fenster Anwähl-Setup: Neues System hinzufügen
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tSystemname: - Geben Sie den Namen des fernen Systems ein, zu dem
+  \t \tSie eine Verbindung herstellen möchten.
+
+  \to\tVerbindung herstellen via: - Klicken Sie den von Ihnen
+  \t \tverwendeten Gerätetyp an.
+
+  \to\tGeschwindigkeit: - Klicken Sie die Geschwindigkeit an, die
+  \t \t\tIhrem Modem oder Ihrer Schnittstelle entspricht. Wenn Sie die
+  \t \t\tGeschwindigkeit nicht kennen, klicken Sie "Automatische
+  \t \tAuswahl" \tan, bei einer direkten Verbindung klicken Sie "19200"
+  \t \tan.
+
+  \to\tRufnummer: - Geben Sie die Rufnummer des Systems ein, zu dem Sie
+  \t \teine Verbindung herstellen möchten, und zwar mit der Vorwahl und
+  \t \tbei Auslandsanrufen mit 00 und der entsprechenden Ländervorwahl
+  \t \t(z. B.: 0 30 12 34 56 oder 00 33 45 67 89).
+
+  \t \tHinweis: Bei Direktverbindungen ist dieses Feld nicht verfügbar.
+
+2.\tKlicken Sie "Kategorie=>Anmeldesequenz" für zusätzliche Optionen
+  \tan (z. B. wenn Sie \k(UUCP^DesktopMgr/uucp.hlp^UUCP-Eingangsbereich verwenden) über das Anwählgerät verwenden möchten, um
+  \tPost zu senden oder Dateien zu übertragen).
+
+  \tHinweis: Sie müssen die \k(Berechtigung zum Ändern von Anwähl-Setup^dtadmin/user.hlp^Mit Berechtigungen umgehen können)
+  \thaben, um die Anmeldesequenz ändern zu können.
+
+  \tFolgende zusätzliche Optionen erscheinen:
+
+  \to\tAnmeldeaufforderung: - Geben Sie die Zeichenkette ein, die das
+  \t \tferne System als Anmeldeaufforderung anzeigen soll.
+
+  \t \tHinweis: Sie müssen die Zeichenkette nicht vollständig eingeben.
+
+  \to\tAntwort: - Geben Sie die Zeichenkette ein, die das ferne System
+  \t \tals Antwort auf die Anmeldeaufforderung erhalten soll.
+
+  \to\tAktuelle Anmeldesequenz: - Rollen Sie die Liste ab, um die
+  \t \tEinträge für "Anmeldeaufforderung" und "Antwort" anzuzeigen.
+  \t \tDie Reihenfolge der Einträge in der Liste muß der Reihenfolge
+  \t \tentsprechen, in der das System die Anmeldeaufforderungen
+  \t \tanzeigt. Klicken Sie eine der folgenden Möglichkeiten an:
+
+  \t \t-\tHinzufügen - Nimmt die aktuellen Einträge in
+  \t \t"Anmeldeaufforderung" und "Antwort" in die Abrolliste auf.
+
+  \t \t-\tÄndern - Ersetzt den ausgewählten Eintrag in
+  \t \t \t"Aktuelle Anmeldesequenz" durch die aktuellen Einträge in
+  \t \t \t"Anmeldeaufforderung" und/oder "Antwort".
+
+  \t \t-\tLöschen - Entfernt den ausgewählten Eintrag aus der
+  \t \t \tAbrolliste.
+
+3.\tKlicken Sie "Hinzufügen" an. Das ferne System erscheint im
+  \t\k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup).
+
+Siehe auch:\k(Zugriff auf fernes System konfigurieren)
+
+^1^Fernen Systemeintrag löschen
+^$100
+Fernen Systemeintrag löschen
+
+Um einen Eintrag für ein fernes System zu löschen, gehen Sie wie folgt
+vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tKlicken sie das System an, das Sie löschen möchten.
+
+5.\tKlicken Sie "System=>Löschen" an. Der Systemeintrag im Fenster
+  \t"Anwähl-Setup" verschwindet.
+
+^1^Fernes Systemsymbol in einen Ordner kopieren
+^$110
+Fernes Systemsymbol in einen Ordner kopieren
+
+Sie können ein Symbol für ein fernes Anwählsystem in einen Ihrer
+Ordner kopieren. Sie können sich dann beim fernen System anmelden,
+indem Sie auf das Symbol doppelklicken.
+
+Außerdem können Sie eine Datei auf das ferne System übertragen, indem
+Sie sie auf das Symbol des fernen Systems
+\d(ziehen und ablegen^ziehen-und-ablegen).
+
+Um ein Symbol für ein fernes System in Ihren Ordner zu kopieren, gehen
+Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tDoppelklicken Sie auf den Ordner, in den Sie das Symbol
+  \tdes fernen Anwählsystems kopieren möchten.
+
+5.\tZiehen Sie das gewünschte System aus dem Fenster "Anwähl-Setup"
+  \tauf den in Schritt 4 geöffneten Ordner, und legen Sie es ab.
+
+Hinweis: Sie können ein Symbol für ein fernes System auch mit der
+Option \k(In Ordner kopieren) in einen Ihrer Ordner kopieren.
+
+^2^In Ordner kopieren
+^$120
+In Ordner kopieren
+
+Um ein Symbol für ein fernes System oder ein Anwählgerät in einen
+Ihrer Ordner zu kopieren, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tKlicken Sie Aktionen=>Setup an. Das \k(Fenster "Anwähl-Setup: Geräte"^^Fenster Anwähl-Setup: Geräte)
+  \terscheint.
+
+5.\tKlicken Sie das gewünschte Symbol für ein fernes System oder
+  \tAnwählgerät an.
+
+6.\tKlicken Sie "System=>In Ordner kopieren" an. Das Fenster
+  \t\t"Anwähl-Setup: In Ordner kopieren" erscheint.
+
+7.\tKlicken Sie in der Ordnerliste Ordnernamen oder den
+  \t\tübergeordneten Ordner an, bis Sie den gewünschten Ordner
+  \t\tlokalisiert haben.
+
+8.\tKlicken Sie "Kopieren" an. Das Symbol erscheint im Ordner.
+
+^1^Fenster Anwähl-Setup: In Ordner kopieren
+^$130
+Fenster Anwähl-Setup: In Ordner kopieren
+
+Klicken Sie in der Ordnerliste Ordnernamen oder den übergeordneten
+Ordner an, bis Sie den Ordner lokalisiert haben, in den Sie das Symbol
+für das ferne Anwählsystem kopieren möchten. Klicken Sie anschließend
+"Kopieren" an.
+
+^1^Fernen Systemeintrag suchen
+^$140
+Fernen Systemeintrag suchen
+
+Wenn im  \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup) viele Einträge für ferne Systeme
+vorhanden sind, können Sie den gewünschten Eintrag mit "Suchen"
+suchen.
+
+Gehen Sie bei der Suche nach einem Eintrag für ein fernes System wie
+folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tKlicken Sie "Suchen" an.
+
+5.\tKlicken Sie eine der folgenden Möglichkeiten an:
+
+  \to\tSuchen - Das Fenster "Anwähl-Setup: Suchen" erscheint. Geben
+  \t \tSie den Namen des gewünschten fernen Systems ein, und klicken
+  \t \tSie "Suchen" an. Der Systemname wird im Fenster "Anwähl-Setup"
+  \t \thervorgehoben.
+
+  \t \tHinweis: Wenn der Desktop den Namen des gesuchten fernen
+  \t \tSystems nicht finden kann, erscheint ein Aufklappfenster mit
+  \t \teiner Fehlermeldung.
+
+  \to\tErster - Das System wählt den ersten Eintrag für ein fernes
+  \t \tSystem im Fenster "Anwähl-Setup" aus.
+
+  \to\tLetzer - Das System wählt den letzten Eintrag für ein fernes
+  \t \tSystem im Fenster "Anwähl-Setup" aus.
+
+^2^Fenster Anwähl-Setup: Suchen
+^$150
+Fenster Anwähl-Setup: Suchen
+
+Geben Sie den Namen des gewünschten fernen Systems ein, und klicken
+Sie "Suchen" an. Der Eintrag für das ferne System wird im Fenster
+"Anwähl-Setup" hervorgehoben.
+
+^1^Zufallssystem anwählen
+^$160
+Zufallssystem anwählen
+
+Um ein direktes System anzuwählen, d. h. ein fernes System, das Sie
+nicht für fernen Zugriff konfiguriert haben, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tKlicken Sie "Aktionen=>Geräte konfigurieren" an. Das
+  \t\k(Fenster "Anwähl-Setup: Geräte"^^Fenster Anwähl-Setup: Geräte) \terscheint.
+
+5.\tKlicken Sie das Gerät an, mit dem Sie anwählen möchten.
+
+6.\tKlicken Sie Aktionen=>Wählen an. Das Fenster "Anwähl-Setup:
+    \tWählen" erscheint mit folgenden Feldern:
+
+  \to\tRufnummer: Geben Sie die Rufnummer des Systems ein, zu dem
+  \t \tSie eine Verbindung herstellen möchten. Dieses Feld ist nur
+  \t \tanwendbar, wenn das ausgewählte Gerät ein Modem ist.
+
+  \to\tGeschwindigkeit: - Klicken Sie die Geschwindigkeit an, die Ihrem
+  \t \tAnwählgerät entspricht. Wenn Sie die Geschwindigkeit nicht kennen,
+  \t \tklicken Sie "Automatische Auswahl" an.
+
+  \to\tParität: - Klicken Sie die \d(Parität) des Systems an, zu dem
+  \t \tSie eine Verbindung herstellen. Manche Systeme verwenden die Parität
+  \t \tzur Fehlerüberprüfung. Wählen Sie "Keine", wenn Sie ein
+  \t \tUNIX System anrufen.
+
+  \to\tZeichengröße: - Klicken Sie "7" an, wenn Sie ein anderes
+  \t \tUNIX System anrufen. Wenn Sie ein System anrufen, auf dem nicht
+  \t \tUNIX läuft, müssen Sie möglicherweise "8" anklicken, obwohl
+  \t \tauch manche Nicht-UNIX Systeme 7 Bit verwenden.
+
+  \to\tDuplex-Betrieb: Klicken Sie "Voll" oder "Halb" an (je nach
+  \t \tverwendeter Kommunikationssoftware). UnixWare arbeitet im Vollduplex-Betrieb.
+
+  \t \tWenn Sie mit dem System, das Sie anrufen, nicht direkt
+  \t \tverbunden sind, muß Ihr Modem auf Vollduplex eingestellt sein.
+
+7.\tKlicken Sie "Wählen" an, um das ferne System anzuwählen.
+
+  \tHinweis: Sie können auch "Zurücksetzen" anklicken, um die
+  \tFelder auf die ursprünglichen Werte zurückzusetzen, oder Sie können
+  \t"Abbrechen" anklicken, wenn Sie kein anderes System anrufen möchten.
+
+^2^Fenster Anwähl-Setup: Schnellwahl
+^$170
+Fenster Anwähl-Setup: Schnellwahl
+
+Dieses Fenster bietet folgende Optionen:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tRufnummer: Geben Sie die Rufnummer des Systems ein, zu dem
+  \t \tSie eine Verbindung herstellen möchten. Dieses Feld ist nur
+  \t \tanwendbar, wenn das ausgewählte Gerät ein Modem ist.
+
+  \to\tGeschwindigkeit: - Klicken Sie die Geschwindigkeit an, die Ihrem
+  \t \tAnwählgerät entspricht. Wenn Sie die Geschwindigkeit nicht kennen,
+  \t \tklicken Sie "Automatische Auswahl" an.
+
+  \to\tParität: - Klicken Sie die \d(Parität) des Systems an, zu dem
+  \t \tSie eine Verbindung herstellen. Manche Systeme verwenden die Parität
+  \t \tzur Fehlerüberprüfung. Wählen Sie "Keine", wenn Sie ein
+  \t \tUNIX System anrufen.
+
+  \to\tZeichengröße: - Klicken Sie "7" an, wenn Sie ein anderes
+  \t \tUNIX System anrufen. Wenn Sie ein System anrufen, auf dem nicht
+  \t \tUNIX läuft, müssen Sie möglicherweise "8" anklicken, obwohl
+  \t \tauch manche Nicht-UNIX Systeme 7 Bit verwenden.
+
+  \to\tDuplex-Betrieb: Klicken Sie "Voll" oder "Halb" an (je nach
+  \t \tverwendeter Kommunikationssoftware). UnixWare arbeitet im Vollduplex-Betrieb.
+
+  \t \tWenn Sie mit dem System, das Sie anrufen, nicht direkt
+  \t \tverbunden sind, muß Ihr Modem auf Vollduplex eingestellt sein.
+
+2.\tKlicken Sie "Wählen" an, um das ferne System anzurufen.
+
+Siehe auch:
+\k(Zufallssystem anwählen).
+
+^1^Eigenschaften eines Anwähl-Gerätes ansehen oder ändern
+^$180
+Eigenschaften eines Anwähl-Gerätes ansehen oder ändern
+
+Um die Eigenschaften eines Anwählgeräts anzuzeigen oder zu ändern,
+gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tKlicken Sie "Aktionen=Geräte konfigurieren" an. Das
+  \t\k(Fenster "Anwähl-Setup: Geräte"^^Fenster Anwähl-Setup: Geräte) erscheint.
+
+5.\tKlicken Sie das gewünschte Gerät an.
+
+6.\tKlicken Sie "Gerät=>Eigenschaften" an. Das Fenster
+  \t"Anwähl-Setup: Geräteeigenschaften" erscheint.
+
+  \tUnter \k(Anwähl-Geräteeintrag konfigurieren), Schritt 6, werden die
+  \tFelder in diesem Fenster erläutert (es handelt sich um die
+  \tgleichen Felder wie im Fenster\k("Anwähl-Setup: Neues Gerät hinzufügen"^^Fenster Anwähl-Setup: Neues Gerät hinzufügen)).
+
+7.\tKlicken Sie "Abbrechen" an, wenn Sie die Eigenschaften nur
+  \tangezeigt haben. Klicken Sie "Anwenden" an, wenn Sie Änderungen
+  \tvorgenommen haben.
+
+^1^Eigenschaften eines fernen Systems ansehen oder ändern
+^$190
+Eigenschaften eines fernen Systems ansehen oder ändern
+
+Um die Eigenschaften eines fernen Systems anzuzeigen oder zu ändern,
+gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Anwähl_Setup". Das \k(Fenster "Anwähl-Setup"^^Fenster Anwähl-Setup)
+  \terscheint.
+
+4.\tKlicken Sie das gewünschte ferne System an.
+
+5.\tKlicken Sie "System=>Eigenschaften" an. Das Fenster
+  \t"Anwähl-Setup: Systemeigenschaften des fernen Systems" erscheint.
+
+  \tIn \k(Zugriff auf fernes System konfigurieren) Schritt 4 und 5,
+  \twerden die Felder dieses Fensters beschrieben (es handelt sich um
+  \tdie gleichen Felder wie im
+  \t\k(Fenster "Anwähl-Setup: Neues System hinzufügen"^^Fenster Anwähl-Setup: Neues System hinzufügen)) .
+
+6.\tKlicken Sie "Abbrechen" an, wenn Sie die Eigenschaften nur
+  \tangezeigt haben. Klicken Sie "OK" an, wenn Sie Änderungen
+  \tvorgenommen haben.

@@ -1,0 +1,16 @@
+#ident	"@(#)netsel.adm:Menu.ns_nid	1.1.4.4"
+#ident  "$Header: Menu.ns_nid 2.0 91/07/12 $"
+
+menu="Existing Network Identifiers"
+close=`message " "`
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+cat /etc/netconfig | 
+`cat /etc/netconfig | grep -v "^#" | tr -s '\11' ' ' | 
+regex '([^ ][^ ]*)$0 ([^ ][^ ]*)$1 ([^ ][^ ]*)$2 ([^ ][^ ]*)$3 ([^ ][^ ]*)$4 ([^ ][^ ]*)$5 ([^ #][^ #]*)$6.*$' 
+ 'name="$m0"
+  description="$m5"
+  lininfo=modify:identifier
+  action=OPEN FORM $OBJ_DIR/Form.ns_modify $m0'`
+
+`message -p "Move cursor to the item you want to modify and press <RETURN>."`

@@ -1,0 +1,51 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)olpixmap:Imakefile	1.23"
+
+       DTLIBSRC = $(LIBSRC)/Dt
+          DTLIB = $(DTLIBSRC)/libDt.so
+
+       INCLUDES = -I$(DTLIBSRC) -I$(LIBSRC) -I$(XOLLIBSRC)
+LOCAL_LIBRARIES = XolClientLibs $(XMULIB) $(DTLIB) 
+  SYS_LIBRARIES = -lgen
+
+#if Release5
+        DEPLIBS = XolClientDepLibs $(DEPXMULIB) $(DTLIB)
+#else
+        DEPLIBS = XolClientDepLibs $(XMULIB) $(DTLIB)
+#endif
+
+APP_NAME=olpixmap
+
+SRCS =	canvas.c color.c draw.c edit.c events.c file.c initialize.c \
+	magnify.c pixmap.c popup.c settings.c utils.c view.c zoom.c error.c
+OBJS =	canvas.o color.o draw.o edit.o events.o file.o initialize.o \
+	magnify.o pixmap.o popup.o settings.o utils.o view.o zoom.o error.o
+
+ComplexProgramTarget($(APP_NAME))
+
+InstallAppDefaults($(APP_NAME))
+InstallAppDefaults(olpix_msgs)
+
+
+INSTALLABLES = README
+
+SOURCEDIR =	$(USRLIBDIR)/tutorial
+
+InstallMultiple($(INSTALLABLES),$(SOURCEDIR)/XPM)
+
+TOOLBOX=$(DESKTOPDIR)/Utilities 
+ICON_NAME=Pixmap_Editor
+OLD_ICON_NAME=Icon_Editor
+MKDIR=/bin/mkdir
+
+InstallDesktopClient($(BINDIR)/$(APP_NAME),$(TOOLBOX)/$(ICON_NAME))
+
+clean::
+	$(RM) $(TOOLBOX)/$(OLD_ICON_NAME)

@@ -1,0 +1,10 @@
+#ident	"@(#)kern:io/sysmsg/sysmsg.cf/Master	1.5"
+#ident	"$Header: $"
+$version 2
+$interface ddi 6mp
+$interface base
+# non-conforming symbols:
+#   console_getc conschan console_resume console_output_lock
+#   console_output_unlock console_putc console_suspend
+$entry open read write
+sysmsg	smsg	Kkc	0	0	19

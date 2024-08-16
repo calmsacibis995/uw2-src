@@ -1,0 +1,37 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)mdemos:motifgif/Imakefile	1.2"
+XCOMM 
+XCOMM (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+XCOMM ALL RIGHTS RESERVED 
+XCOMM 
+XCOMM 
+XCOMM Motif Release 1.2
+XCOMM 
+XCOMM   $RCSfile: Imakefile,v $ $Revision: 1.5.2.2 $ $Date: 1992/05/01 18:12:48 $
+#include	<Motif.tmpl>
+#include	<Motif.rules>
+EXTRA_LOAD_FLAGS = -z nodefs
+INCLUDES = -I. -I$(INCLUDESRC) -I$(MINCLUDESRC)
+       DEPLIBS1 = XmClientDepLibs
+       DEPLIBS2 = XmClientDepLibs
+LOCAL_LIBRARIES = XmClientLibs $(SYSLIBS)
+
+SRCS1 =	motifgif.c
+SRCS2 =	pict.c xgifload.c image.c
+
+OBJS1 = motifgif.o
+OBJS2 = pict.o xgifload.o image.o
+
+PROGRAMS = motifgif pict
+
+NormalLibraryObjectRule()
+
+MComplexProgramTarget_1(motifgif,$(LOCAL_LIBRARIES),NullParameter)
+MComplexProgramTarget_2(pict,$(LOCAL_LIBRARIES),NullParameter)

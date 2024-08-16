@@ -1,0 +1,111 @@
+#!/bin/sh
+#ident	"@(#)sc:local/bin/linkspace	3.1" 
+###############################################################################
+#
+# C++ Standard Components, Release 3.0.
+#
+# Copyright (c) 1991, 1992 AT&T and Unix System Laboratories, Inc.
+# Copyright (c) 1988, 1989, 1990 AT&T.  All Rights Reserved.
+#
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T and Unix System
+# Laboratories, Inc.  The copyright notice above does not evidence
+# any actual or intended publication of such source code.
+#
+###############################################################################
+
+checkfile=lsallowed
+onecol=0
+badargs=0
+symbol=
+set -- `getopt -1s:c: $*`
+if [ $? -ne 0 ]
+then    badargs=1
+fi
+for i in $*
+do      case $i in
+	-1)	onecol=1
+		shift;;
+	-c)	checkfile=$2
+		shift; shift;;
+	-s)	symbol=$2
+		shift; shift;;
+        --)     shift; break;;
+        -*)     shift;;
+        esac
+done
+if [ $badargs -eq 1 ]
+then    echo
+        echo "linkspace [ -1 ] [ -c checkfile ] [ -s symbol ] [ file ... ]" 1>&2
+	echo "-1 = print only the names of illegally defined items" 1>&2
+	echo "-s symbol = allow any name with substring \"symbol\"" 1>&2
+        echo "if -c not specified, checkfile defaults to \"./lsallowed\"" 1>&2
+	echo "if no files are specified, defaults to *.a" 1>&2
+        exit 2
+fi
+
+if [ $# -eq 0 ]; then
+        files=`ls *.a 2>/dev/null`
+	if [ "$files" = "" ]; then
+		echo "linkspace: can't open *.a" 1>&2
+		exit 2
+	fi
+else
+        files="$*"
+fi
+
+ret=0
+error() {
+	f=$1
+	g=$2
+	if [ $onecol -eq 1 ]; then
+		echo "$g"
+	else
+		echo "$f	illegally defines	$g"
+	fi
+	ret=1
+}
+
+isreserved() {
+	case $1 in
+	___st[di]*)	return 0;;
+	___[pv]tbl*)	return 0;;
+	*ATTLC*)	return 0;;	
+	*) 		return 1;;
+	esac
+}
+
+seeifincheckfile() {
+	f=$1
+        g=$2
+        if [ ! -f $checkfile ]; then
+                error $f $g
+        else
+                egrep "^$g$" $checkfile >/dev/null
+                if [ $? -ne 0 ]; then
+                        error $f $g
+                fi
+        fi
+}
+
+tmp=$$
+nm $files | egrep ":$| T | D " | sed 's/:$//' | awk '
+	{ if (NF == 1) curfile = $1
+	else print curfile, $3
+	}' | while read file global; do
+		isreserved $global
+		if [ $? -ne 0 ]; then
+			if [ "$symbol" = "" ]; then
+				seeifincheckfile $file $global
+			else
+				case $global in
+				*$symbol*)	
+					;;
+				*)	
+					seeifincheckfile $file $global
+					;;
+				esac
+			fi
+		fi
+	done
+
+exit $ret

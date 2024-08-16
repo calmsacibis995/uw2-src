@@ -1,0 +1,87 @@
+'\"ident        "@(#)MGizmo:man/label.man	1.1"
+.TH LabelGizmo 3L
+.SH NAME
+\f(CBLabelGizmo\f1 \- an abstract data type (ADT) that specifies an area
+containing a text label.
+The \f(CBLabelGizmo\fP consists of a data structure.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/LabelGizmo.h>
+.ft
+.fi
+.SH "DESCRIPTION"
+A \f(CBLabelGizmo\fP is created by populating a \f(CBLabelGizmo\fP data
+structure and placing it's address in a \f(CBGizmoRec\fP structure.
+Ultimately, a \f(CBGizmoRec\fP structure is placed in one of the container
+Gizmos and the display is created by making a call to the function
+\f(CBCreateGizmo\fP(3L).
+Following is the definition of the \f(CBLabelGizmo\fP data type:
+.PP
+.nf
+.ft CB
+typedef struct _LabelGizmo {
+        HelpInfo *      help;
+        char *          name;
+        char *          label;          /* XmNlabelString */
+        Boolean         dontAlignLabel;
+        GizmoArray      gizmos;
+        int             numGizmos;
+} LabelGizmo;
+.fi
+.PP
+\fIdontAlignLabel\fP specifies if this label is to be aligned with other
+labels within the same \fBContainerGizmo\fP.
+If \fIdontAlignLabel\fP is set to False then the label will be aligned
+with all other labels that also have \fIdontAlignLabel\fP set to False.
+Alignment occurs when the \fBContainerGizmo\fP is created.
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBLabelGizmo\fP:
+.IP \fBGetGizmoWidget\fP 25
+Returns the label gadget id.
+.IP \fBGetGizmoGizmo\fP 25
+Returns the handle to the \f(CBLabelGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 25
+Undefined.
+.IP \fBGetGizmoPreviousValue\fP 25
+Undefined.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to a row column widget that
+parents the \fBGizmoRec\fP.
+.SH "USAGE"
+.nf
+.ft CB
+char *          list[] = {
+        "item 1", "item 2", "item 3", "item 4", "item 5"
+};
+AlphaGizmo      alpha1 = {
+        NULL, "alpha1", 0, list, XtNumber(list)
+};
+
+LabelGizmo      label1 = {
+        NULL, "label1", "Items:", True, alpha1, XtNumber(alpha1)
+};
+
+GizmoRec        record1[] = {
+        {LabelGizmoClass, &label1}
+};
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", NULL, record1, 1
+};
+
+main()
+{
+        Gizmo   handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+AlphaGizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP

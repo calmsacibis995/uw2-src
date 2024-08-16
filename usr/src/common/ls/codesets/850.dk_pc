@@ -1,0 +1,368 @@
+#	Copyright (c) 1989 AT&T
+#	  All Rights Reserved  
+#
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T
+#	The copyright notice above does not evidence any   
+#	actual or intended publication of such source code.
+#
+#ident "%W%"
+
+# 1989/01 AT&T-UEL
+# To string PC 850 characters
+# Derived from: 88591.dk_pc
+# From: PC 850
+# To: 386 PC console codeset
+# Notes:
+
+map sparse (850.dk_pc) {
+
+	define(acute \311)
+	define(grave \312)
+	define(circumflex \313)
+	define(tilde \314)
+	define(diaeresis \315)
+	define(circle \316)
+	define(cedilla \317)
+	define(macron \318)
+
+	acute(" " "Ô")		# acute accent
+	grave(" " "`")		# grave accent
+	circumflex(" " "^")	# circumflex accent
+	tilde(" " "~")		# tilde
+	diaeresis(" " "Ó")	# diaeresis
+	circle(" " "¯")		# circle
+	cedilla(" " "˜")	# cedilla
+
+	grave("A" "∑")		# A grave
+	acute("A" "µ")		# A acute
+	circumflex("A" "∂")	# A circumflex
+	tilde("A" "«")		# A tilde
+	diaeresis("A" "é")	# A diaeresis
+	circle("A" "è")		# A circle
+	cedilla("C" "Ä")	# C cedilla
+
+	grave("E" "‘")		# E grave
+	acute("E" "ê")		# E acute
+	circumflex("E" "“")	# E circumflex
+	diaeresis("E" "”")	# E diaeresis
+	grave("I" "ﬁ")		# I grave
+	acute("I" "÷")		# I acute
+	circumflex("I" "◊")	# I circumflex
+	diaeresis("I" "ÿ")	# I diaeresis
+
+	tilde("N" "•")		# N tilde
+	grave("O" "„")		# O grave
+	acute("O" "‡")		# O acute
+	circumflex("O" "‚")	# O circumflex
+	tilde("O" "Â")		# O tilde
+	diaeresis("O" "ô")	# O diaeresis
+	grave("U" "Î")		# U grave
+	acute("U" "È")		# U acute
+	circumflex("U" "Í")	# U circumflex
+	diaeresis("U" "ö")	# U diaeresis
+	acute("Y" "Ì")		# Y acute
+
+	grave("a" "Ö")		# a grave
+	acute("a" "†")		# a acute
+	circumflex("a" "É")	# a circumflex
+	tilde("a" "∆")		# a tilde
+	diaeresis("a" "Ñ")	# a diaeresis
+	circle("a" "Ü")		# a circle
+	cedilla("c" "á")	# c cedilla
+
+	grave("e" "ä")		# e grave
+	acute("e" "Ç")		# e acute
+	circumflex("e" "à")	# e circumflex
+	diaeresis("e" "â")	# e diaeresis
+	grave("i" "ç")		# i grave
+	acute("i" "°")		# i acute
+	circumflex("i" "å")	# i circumflex
+	diaeresis("i" "ã")	# i diaeresis
+
+	tilde("n" "§")		# n tilde
+	grave("o" "ï")		# o grave
+	acute("o" "¢")		# o acute
+	circumflex("o" "ì")	# o circumflex
+	tilde("o" "‰")		# o tilde
+	diaeresis("o" "î")	# o diaeresis
+	grave("u" "ó")		# u grave
+	acute("u" "£")		# u acute
+	circumflex("u" "ñ")	# u circumflex
+	diaeresis("u" "Å")	# u diaeresis
+	acute("y" "Ï")		# y acute
+	diaeresis("y" "ò")	# y diaeresis
+
+#	define(compose ALT_SP)	#compose character
+#
+#	compose( 000 \000)
+#	compose( 001 \001)
+#	compose( 002 \002)
+#	compose( 003 \003)
+#	compose( 004 \004)
+#	compose( 005 \005)
+#	compose( 006 \006)
+#	compose( 007 \007)
+#	compose( 010 \010)
+#	compose( 011 \011)
+#	compose( 012 \012)
+#	compose( 013 \013)
+#	compose( 014 \014)
+#	compose( 015 \015)
+#	compose( 016 \016)
+#	compose( 017 \017)
+#
+#	compose( 020 \020)
+#	compose( 021 \021)
+#	compose( 022 \022)
+#	compose( 023 \023)
+#	compose( 024 \024)
+#	compose( 025 \025)
+#	compose( 026 \026)
+#	compose( 027 \027)
+#	compose( 030 \030)
+#	compose( 031 \031)
+#	compose( 032 \032)
+#	compose( 033 \033)
+#	compose( 034 \034)
+#	compose( 035 \035)
+#	compose( 036 \036)
+#	compose( 037 \037)
+#
+#	compose( 040 \040)
+#	compose( 041 \041)
+#	compose( 042 \042)
+#	compose( 043 \043)
+#	compose( 044 \044)
+#	compose( 045 \045)
+#	compose( 046 \046)
+#	compose( 047 \047)
+#	compose( 050 \050)
+#	compose( 051 \051)
+#	compose( 052 \052)
+#	compose( 053 \053)
+#	compose( 054 \054)
+#	compose( 055 \055)
+#	compose( 056 \056)
+#	compose( 057 \057)
+#
+#	compose( 060 \060)
+#	compose( 061 \061)
+#	compose( 062 \062)
+#	compose( 063 \063)
+#	compose( 064 \064)
+#	compose( 065 \065)
+#	compose( 066 \066)
+#	compose( 067 \067)
+#	compose( 070 \070)
+#	compose( 071 \071)
+#	compose( 072 \072)
+#	compose( 073 \073)
+#	compose( 074 \074)
+#	compose( 075 \075)
+#	compose( 076 \076)
+#	compose( 077 \077)
+#
+#	compose( 100 \100)
+#	compose( 101 \101)
+#	compose( 102 \102)
+#	compose( 103 \103)
+#	compose( 104 \104)
+#	compose( 105 \105)
+#	compose( 106 \106)
+#	compose( 107 \107)
+#	compose( 110 \110)
+#	compose( 111 \111)
+#	compose( 112 \112)
+#	compose( 113 \113)
+#	compose( 114 \114)
+#	compose( 115 \115)
+#	compose( 116 \116)
+#	compose( 117 \117)
+#
+#	compose( 120 \120)
+#	compose( 121 \121)
+#	compose( 122 \122)
+#	compose( 123 \123)
+#	compose( 124 \124)
+#	compose( 125 \125)
+#	compose( 126 \126)
+#	compose( 127 \127)
+#	compose( 130 \130)
+#	compose( 131 \131)
+#	compose( 132 \132)
+#	compose( 133 \133)
+#	compose( 134 \134)
+#	compose( 135 \135)
+#	compose( 136 \136)
+#	compose( 137 \137)
+#
+#	compose( 140 \140)
+#	compose( 141 \141)
+#	compose( 142 \142)
+#	compose( 143 \143)
+#	compose( 144 \144)
+#	compose( 145 \145)
+#	compose( 146 \146)
+#	compose( 147 \147)
+#	compose( 150 \150)
+#	compose( 151 \151)
+#	compose( 152 \152)
+#	compose( 153 \153)
+#	compose( 154 \154)
+#	compose( 155 \155)
+#	compose( 156 \156)
+#	compose( 157 \157)
+#
+#	compose( 160 \160)
+#	compose( 161 \161)
+#	compose( 162 \162)
+#	compose( 163 \163)
+#	compose( 164 \164)
+#	compose( 165 \165)
+#	compose( 166 \166)
+#	compose( 167 \167)
+#	compose( 170 \170)
+#	compose( 171 \171)
+#	compose( 172 \172)
+#	compose( 173 \173)
+#	compose( 174 \174)
+#	compose( 175 \175)
+#	compose( 176 \176)
+#	compose( 177 \177)
+#
+#	compose( 200 \200)
+#	compose( 201 \201)
+#	compose( 202 \202)
+#	compose( 203 \203)
+#	compose( 204 \204)
+#	compose( 205 \205)
+#	compose( 206 \206)
+#	compose( 207 \207)
+#	compose( 210 \210)
+#	compose( 211 \211)
+#	compose( 212 \212)
+#	compose( 213 \213)
+#	compose( 214 \214)
+#	compose( 215 \215)
+#	compose( 216 \216)
+#	compose( 217 \217)
+#
+#	compose( 220 \220)
+#	compose( 221 \221)
+#	compose( 222 \222)
+#	compose( 223 \223)
+#	compose( 224 \224)
+#	compose( 225 \225)
+#	compose( 226 \226)
+#	compose( 227 \227)
+#	compose( 230 \230)
+#	compose( 231 \231)
+#	compose( 232 \232)
+#	compose( 233 \233)
+#	compose( 234 \234)
+#	compose( 235 \235)
+#	compose( 236 \236)
+#	compose( 237 \237)
+#
+#	compose( 240 \240)
+#	compose( 241 \241)
+#	compose( 242 \242)
+#	compose( 243 \243)
+#	compose( 244 \244)
+#	compose( 245 \245)
+#	compose( 246 \246)
+#	compose( 247 \247)
+#	compose( 250 \250)
+#	compose( 251 \251)
+#	compose( 252 \252)
+#	compose( 253 \253)
+#	compose( 254 \254)
+#	compose( 255 \255)
+#	compose( 256 \256)
+#	compose( 257 \257)
+#
+#	compose( 260 \260)
+#	compose( 261 \261)
+#	compose( 262 \262)
+#	compose( 263 \263)
+#	compose( 264 \264)
+#	compose( 265 \265)
+#	compose( 266 \266)
+#	compose( 267 \267)
+#	compose( 270 \270)
+#	compose( 271 \271)
+#	compose( 272 \272)
+#	compose( 273 \273)
+#	compose( 274 \274)
+#	compose( 275 \275)
+#	compose( 276 \276)
+#	compose( 277 \277)
+#
+#	compose( 300 \300)
+#	compose( 301 \301)
+#	compose( 302 \302)
+#	compose( 303 \303)
+#	compose( 304 \304)
+#	compose( 305 \305)
+#	compose( 306 \306)
+#	compose( 307 \307)
+#	compose( 310 \310)
+#	compose( 311 \311)
+#	compose( 312 \312)
+#	compose( 313 \313)
+#	compose( 314 \314)
+#	compose( 315 \315)
+#	compose( 316 \316)
+#	compose( 317 \317)
+#
+#	compose( 320 \320)
+#	compose( 321 \321)
+#	compose( 322 \322)
+#	compose( 323 \323)
+#	compose( 324 \324)
+#	compose( 325 \325)
+#	compose( 326 \326)
+#	compose( 327 \327)
+#	compose( 330 \330)
+#	compose( 331 \331)
+#	compose( 332 \332)
+#	compose( 333 \333)
+#	compose( 334 \334)
+#	compose( 335 \335)
+#	compose( 336 \336)
+#	compose( 337 \337)
+#
+#	compose( 340 \340)
+#	compose( 341 \341)
+#	compose( 342 \342)
+#	compose( 343 \343)
+#	compose( 344 \344)
+#	compose( 345 \345)
+#	compose( 346 \346)
+#	compose( 347 \347)
+#	compose( 350 \350)
+#	compose( 351 \351)
+#	compose( 352 \352)
+#	compose( 353 \353)
+#	compose( 354 \354)
+#	compose( 355 \355)
+#	compose( 356 \356)
+#	compose( 357 \357)
+#
+#	compose( 360 \360)
+#	compose( 361 \361)
+#	compose( 362 \362)
+#	compose( 363 \363)
+#	compose( 364 \364)
+#	compose( 365 \365)
+#	compose( 366 \366)
+#	compose( 367 \367)
+#	compose( 370 \370)
+#	compose( 371 \371)
+#	compose( 372 \372)
+#	compose( 373 \373)
+#	compose( 374 \374)
+#	compose( 375 \375)
+#	compose( 376 \376)
+#	compose( 377 \377)
+}

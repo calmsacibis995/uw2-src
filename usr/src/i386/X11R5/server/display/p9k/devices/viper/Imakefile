@@ -1,0 +1,69 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)p9k:p9k/devices/viper/Imakefile	1.6"
+/**/#
+/**/# If the Makefile is lost or corrupted, to generate a new Makefile:
+/**/# 
+/**/#  /usr/X/bin/imake -DUseInstalled -DTOPDIR=. -DCURDIR=. -I/usr/X/lib/config
+/**/#
+/**/# change SRCFILE to your file name
+/**/#
+
+/**/# Please see ../../Imakefile for more information on compile time
+/**/# options.
+
+P9K_REVISION = 1
+
+CDEBUGFLAGS=-O -v
+EXTRA_DEFINES=-DPUBLIC= -DSTATIC= -DATBUS -DUSE_KD_GRAPHICS_MODE\
+	 -DUSE_SYSI86 -DLIBRARY_NAME=\"VIPER\"\
+	 -DLIBRARY_VERSION='"1.00"'\
+	 -DCHIPSET_NAME=\"P9000\"
+
+#define VendorDisplayModuleRule()			@@\
+.c.o:							@@\
+	$(CC) -c $(CDEBUGFLAGS) $(EXTRA_DEFINES) -Xa -Dix86 $(ALLINCLUDES) $<; @@\
+							@@\
+all:: $(VENDORLIB) 					@@\
+$(VENDORLIB):: $(OBJS)					@@\
+	$(CC) $(YFLAGS) -G $(OBJS) -o $(VENDORLIB) $(CORELIB) @@\
+	@echo $(VENDORLIB) generated. 			@@\
+							@@\
+install:: all						@@\
+	$(INSTALL) $(INSTLIBFLAGS) $(VENDORLIB) $(DISPLIBDIR)
+
+       SRCS = viper.c viper_pci.c
+       OBJS = viper.o viper_pci.o ../../stdenv.o
+       BASE = viper
+  VENDORLIB = viper.so.1
+    ARCHLIB = viper.a
+ MODE_FILES = viper_pci.dat viper_vlb.dat
+
+#if UseInstalled
+    CORELIB = /usr/X/lib/libp9k.so.$(P9K_REVISION)
+   INCLUDES = -I.. -I../../include -I/usr/X/include/X11 
+#else
+    CORELIB = ../../libp9k.so.$(P9K_REVISION)
+   INCLUDES = -I./ -I../.. -I$(TOP)/server/ddx/si -I$(TOP)/X11 
+#endif
+     LFLAGS = -buxz
+
+#if XWINSharedDisplayLibrary
+VendorDisplayModuleRule()
+#else
+NormalLibraryObjectRule()
+NormalLibraryTarget (ultra, $(OBJS))
+#endif /* XWINSharedDisplayLibrary */
+
+InstallMultipleDestFlags(install,$(MODE_FILES),$(DISPLIBDIR),$(INSTDATFLAGS))
+
+clean::
+	$(RM) *.so
+
+DependTarget()

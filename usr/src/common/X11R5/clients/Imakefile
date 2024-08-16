@@ -1,0 +1,31 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5misc:clients/Imakefile	1.10"
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+NOTNOW = xcmsdb xconsole
+
+#if BuildMotif
+MOTIFDIRS = mwm uil xmbind
+#else /* BuildMotif */
+MOTIFDIRS = mwm uil
+#endif /* BuildMotif */
+
+SUBDIRS = xhost \
+	appres bitmap editres listres oclock twm viewres \
+	xbiff xclipboard xclock \
+	xdpyinfo xfd xfontsel xlogo \
+	xlsatoms xlsclients xlsfonts xmag xman \
+	xmodmap xprop xrdb xrefresh \
+ 	xset xstdcmap xwininfo $(MOTIFDIRS)
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

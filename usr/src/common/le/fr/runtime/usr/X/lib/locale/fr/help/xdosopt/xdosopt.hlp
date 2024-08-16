@@ -1,0 +1,308 @@
+^*version^1
+^*title^DOS et Win
+^*width^70
+^+DesktopMgr/help.defs
+^?Exécution d'applications DOS et Windows.
+^0^DOS et Win
+^$10
+DOS et Win
+
+  Objectif : Exécution d'applications DOS et Windows.
+
+  Fenêtres correspondantes :
+
+        \k(Fenêtre Options DOS)
+        \k(Fenêtre DOS ou Windows)
+        \k(Fenêtre Info périphériques DOS)
+^1^Fenêtre Options DOS
+^$20
+\k{DOS et Win}
+Fenêtre Options
+
+Fenêtre Options vous permet de définir le mode d'affichage, la
+quantité de mémoire standard et EMS, l'affectation des unités E, F, G,
+H et I, et les ports COM actifs dans votre environnement DOS ou Windows. La 
+fenêtre Options pour DOS est  accessible à partir du menu de l'icône DOS,
+et la fenêtre Options pour Windows est accessible depuis le menu de l'icône Win.
+Affichez le menu de l'icône en appuyant et en maintenant appuyé le bouton
+de droite de la souris sur l'icône dans le dossier Applications.
+
+
+Les options suivantes peuvent être définies dans la fenêtre Options :
+
+  o Vidéo : mode graphique sélectionné pour la session DOS en cours
+    ou pour les sessions ultérieures. Cliquez sur VGA, sur CGA, sur
+    MDA ou sur Hercules.
+
+   o Unités : si votre disque dur comporte plusieurs partitions
+     DOS, vous pouvez les affecter à l'une des unités de disque
+     désignées par une lettre d'unité.
+
+Remarque : Les partitions DOS sont des sections du disque dur
+réservées à l'exécution de DOS ; le système DOS de ces partitions
+n'est pas exécuté sous UnixWare.
+
+Affichez le menu de l'unité de disque en cliquant sur le bouton
+figurant en regard de la lettre d'unité. A partir du menu,
+sélectionnez l'option None ou la partition DOS que vous voulez
+affecter à cette lettre d'unité.
+
+Remarque : une même partition DOS ne peut être affectée à plusieurs
+unités.
+
+   o Ports COM : Sélectionnez les ports COM désirés pour votre session
+     DOS. Vous devez par exemple définir un port pour avoir accès
+     à un modem interne ou externe à partir d'un logiciel de commu-
+     nication.
+
+Remarque : Vous pouvez utiliser un port COM à condition qu'il ne soit
+pas employé par un autre utilisateur, y compris un utilisateur UNIX.
+Sélectionnez un port COM uniquement si l'application sélectionnée
+l'exige. 
+
+
+   o Mémoire : Sélectionnez la quantité de mémoire standard ou EMS
+     (Expanded Memory Specifications) nécessaire pour la session DOS
+     en cours ou pour les sessions ultérieures.
+     La mémoire EMS n'est généralement utile que pour le DOS
+     et les valeurs de mémoire standard au dessus de 1 Mo sont généralement utile
+     pour l'environement Windows seulement.
+
+Affichez le menu de sélection de la mémoire en cliquant sur le bouton
+figurant en regard du type de mémoire à modifier. A partir de ce
+menu, sélectionnez le nombre de méga-octets (Mo) souhaité.
+
+Remarque : si vous sélectionnez une capacité de mémoire supérieure à
+celle dont vous disposez, il est possible que vous ne puissiez pas
+ouvrir la session DOS. Dans ce cas, refermez plusieurs fenêtres ou
+sélectionnez une capacité inférieure. La sélection d'une quantité de
+mémoire trop importante peut également avoir des répercusssions sur
+les performances de l'ordinateur.
+
+Tous les tâches d'impression sont redirigées ver le spouleur lp du
+système UNIX.  Les tâches d'impression sont traitées comme si vous les
+imprimeriez par le système UNIX. Remarque : pour imprimer par le
+spouleur lp du système UNIX, vous devez configurer une imprimante
+appellée "doslp".
+
+Les \d(buttons^bouton) disponibles de la fenêtre Options DOS sont :
+
+        \k(Bouton Début)
+        \k(Bouton Appliquer)
+        \k(Bouton Paramètres par défaut)
+        \k(Bouton d'aide)
+        \k(Bouton Annuler)
+^2^Bouton Début
+^$30
+\k{Fenêtre Options DOS}
+    Bouton Début
+
+Ouvre une fenêtre DOS. Si des modifications ont été effectuées dans
+la fenêtre Options DOS, elles s'appliquent uniquement à la session
+DOS en cours.
+
+Plus d'informations : \k(Fenêtre DOS ou Windows)
+^2^Bouton Appliquer
+^$40
+\k{Fenêtre Options DOS}
+   Bouton Appliquer
+
+Applique les modifications effectuées dans la fenêtre Options
+à toutes les sessions DOS ou Windows ultérieures. Pour appliquer les
+modifications uniquement à la session suivante, cliquez sur
+Début et non sur Appliquer.
+
+Remarque : les modifications ne s'appliquent pas aux fenêtres DOS ou
+Windows déjà ouvertes.
+
+N'appliquez pas les modifications effectuées à toutes les sessions
+ultérieures sauf si toutes les applications DOS ou Windows exécutées
+exigent la(les) même(s) option(s). A la place, affectez les options quand 
+vous en avez besoins à l'aide du bouton de debut. Vous pouvez, cependant définir
+directement des options pour des applications DOS spécifiques (pas des 
+applications Windows). Par exemple, si vous utilisez un
+programme de communication, vous devez affecter un port COM à DOS pour
+que le programme puisse communiquer avec un modem.  Pour configurer
+votre programme de communication de façon à ce que le port COM soit
+affecté à DOS uniquement lors de l'exécution de l'application, appuyez et maintenez 
+appuyé le bouton de droite de la souris sur l'icône exécutable de l'application
+(fichier .exe, .com, ou .bat) pour afficher la fenêtre Options. Définissez et sauvegardez 
+alors vos options de port COM.
+>Ensuite, vous pouvez exécuter cette application de communications en 
+cliquant deux fois sur son icône au lieu de faire tourner DOS. Cela permettra 
+de démarrer DOS, d'y assigner le port COM et de faire tourner votre application.  
+D'autre applications DOS peuvent avoir des options définies spécifiquement d'une
+manière similaire.
+^2^Bouton Paramètres par défaut
+^$50
+\k{Fenêtre Options DOS}
+    Bouton Paramètres par défaut
+
+Le bouton Paramètres par défaut restaure les paramètres par défaut.
+^2^Bouton d'aide
+^$60
+\k{Fenêtre Options DOS}
+    Bouton Aide
+
+Le bouton Aide appelle l'aide en ligne de la fenêtre Options.
+^2^Bouton Annuler
+^$70
+\k{Fenêtre Options DOS}
+    Bouton Annuler
+
+Le bouton Annuler referme la fenêtre Options, sans que les
+modifications soient sauvegardées.
+^1^Fenêtre DOS ou Windows
+^$80
+\k{DOS et Win}
+Fenêtre DOS ou Windows
+
+Vous pouvez ouvrir une seule fenêtre Windows.  Il est aussi
+possible d'ouvrir plusieurs fenêtres DOS en même temps ; tout dépend
+des ressources du système. Si une fenêtre DOS ou Windows est ouverte,
+vous pouvez accéder au menu DOS en appuyant sur Arrêt défil.
+
+Les options du menu DOS sont les suivantes :
+
+        \k(Agrandir)
+        \k(Centrer/Unfocus)
+        \k(Rafraîchir)
+        \k(Couleurs DOS/X Colors)
+        \k(Touches Bureau/DOS Keys)
+        \k(Blocage automatique activé/Autofreeze off)
+        \k(Quitter)
+
+Dans une fenêtre DOS (mais pas dans une fenêtre Windows) vous pouvez
+accéder la fenêtre Info périphériques en appuyant Ctrl-Echap
+et puis Ctrl-I.
+
+Plus d'informations : \k(Fenêtre Info périphériques DOS)
+^2^Agrandir
+^$90
+\k{Fenêtre DOS ou Windows}
+    Agrandir
+
+Affiche la fenêtre DOS en mode plein écran. Votre système UnixWare est
+alors semblable à un environnement DOS classique. Appuyez sur la
+touche Arrêt Défil pour revenir à la fenêtre DOS d'origine sous
+UnixWare.
+
+Remarque : l'option Agrandir n'est pas disponible lorsque Windows est
+configuré avec le pilote Windows/X.  L'option Agrandir n'est pas 
+disponible non plus sur un système X distant.  Vous devez utiliser
+le console si vous voudriez utiliser l'option Agrandir.
+^2^Centrer/Unfocus
+^$100
+\k{Fenêtre DOS ou Windows}
+   Centrer/Décentrer
+
+L'option de menu Centrer permet d'utiliser la souris dans la fenêtre
+DOS mais la rend indisponible dans le reste du Bureau. Pour utiliser à
+nouveau la souris dans d'autres fenêtres, appuyez sur la touche Arrêt
+Défil pour appeler le menu DOS et sélectionnez Décentrer.
+
+Lorsque vous exécutez MS-Windows 3.1 dans une fenêtre, vous n'êtes pas
+obligé d'utiliser l'option de menu Centrer. La souris est
+automatiquement disponible dans la fenêtre.
+
+Remarque : si vous utilisez l'option Agrandir, vous n'êtes pas obligé
+de faire appel à l'option Centrer pour employer la souris dans la
+fenêtre en mode plein écran.
+^2^Rafraîchir
+^$110
+\k{Fenêtre DOS ou Windows}
+    Rafraîchissement
+
+L'option Rafraîchissement du menu DOS retrace la fenêtre DOS ou la
+fenêtre Windows. Choisissez cette option si vous ne pouvez pas lire la
+fenêtre DOS ou la fenêtre Windows.
+^2^Couleurs DOS/X Colors
+^$120
+\k{Fenêtre DOS ou Windows}
+    Couleurs DOS/X Colors
+
+Selon le matériel utilisé, la fenêtre DOS s'affiche en couleurs DOS
+ou UnixWare. Si l'environnement utilise les couleurs UnixWare,
+l'option Couleurs DOS permet de les remplacer par les couleurs de
+l'environnement DOS. Cette option est inactive (et s'affiche en grisé)
+si les couleurs DOS sont sélectionnées automatiquement. Si vous faites
+appel à ce bouton pour utiliser les couleurs DOS, l'intitulé de
+l'option devient "X colors". Sélectionnez cette option pour restaurer
+les couleurs UnixWare.
+^2^Touches Bureau/DOS Keys
+^$130
+\k{Fenêtre DOS ou Windows}
+    Touches Bureau/Touches DOS
+
+Si vous utilisez l'option de menu "DOS keys", toutes les séquences de
+touches (y compris les accélérateurs du Bureau) sont transmises à
+vos application DOS et Windows. Si vous sélectionnez l'option de menu "Touches
+Bureau", tous les accélérateurs sont convertis par le Bureau (et ne
+sont pas transmis à l'application DOS).
+
+^2^Blocage automatique activé/Autofreeze off
+^$140
+\k{Fenêtre DOS ou Windows}
+    Blocage automatique activé/Blocage automatique désactivé
+
+Si vous sélectionnez l'option de menu "Blocage automatique activé",
+vos applications DOS ou Windows ne peuventt être exécutées que si vous travaillez
+dans la fenêtre active. L'unité centrale peut ainsi prendre en charge
+d'autres programmes lorsque votre fenêtre DOS figure sous d'autres
+fenêtres ou est mise en icône. Si vous ne souhaitez pas effectuer
+cette opération, choisissez "Blocage automatique désactivé".
+
+^2^Quitter
+^$150
+\k{Fenêtre DOS ou Windows}
+    Quitter
+
+L'option Quittez du menu DOS referme la fenêtre DOS ou la fenêtre
+Windows. Un avis s'affiche avant que la fenêtre se referme.
+Sélectionnez l'un des boutons suivants :
+
+   o Oui : confirme la fermeture de la fenêtre.
+
+   o Non : annule l'opération et laisse la fenêtre DOS ouverte.
+^1^Fenêtre Info périphériques DOS
+^$160
+\k{DOS et Win}
+Fenêtre Info périphériques
+
+Utilisez la fenêtre Info périphériques DOS pour afficher les
+périphériques disponibles dans DOS. Pour accéder à cette fenêtre,
+appuyez sur Ctrl-Echap, puis sur Ctrl-I dans la fenêtre DOS.  La
+fenêtre Info périphériques n'est pas disponible dans une session
+Windows ni dans une session DOS en mode graphique.
+
+
+Les informations suivantes s'affichent dans la fenêtre Info
+périphériques DOS :
+
+   o Vidéo : adaptateur graphique DOS utilisé.
+
+   o COM1 et COM2 : si le port COM est accessible à DOS, le nom du
+     périphérique UNIX connecté est affiché (par exemple,
+     /dev/tty00). Si le port COM n'est pas accessible, l'option
+     "aucun" s'affiche.
+
+   o LPT1, LPT2 et LPT3 : imprimante de destination sélectionnée
+     pour chaque périphérique.
+
+   o RAM : mémoire standard utilisée.
+
+   o EMS : mémoire EMS utilisée.
+
+   o Souris : type de souris utilisé.
+
+   o Unités de disquettes : mode d'accès aux unités de disquettes DOS.
+
+   o UNIX/DOS shared : Unités accessibles par DOS et par UNIX.
+
+   o Partitions DOS : noms d'unités auxquelles sont affectées les
+     partitions DOS.
+
+Appuyez sur la barre d'espacement pour refermer la fenêtre Info
+périphériques DOS sans quitter la session DOS en cours.
+
+

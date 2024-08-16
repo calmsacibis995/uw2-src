@@ -1,0 +1,546 @@
+#ident\t"@(#)dthelp:Admin.Tools/user.hlp	1.25"
+^*version^1
+^*title^User Setup
+^:User_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Help for the User_Setup icon
+^0^User Setup
+^$10
+User Setup
+
+Use User Setup to add user login \k(accounts^^Types of Accounts) to your system, remove user
+accounts from your system, and assign or change \k(permissions^^Understanding Permissions) to user and
+\k(group^^User Groups) accounts. 
+
+You can do the following with User Setup:
+
+\to\t\k(View users and groups^^Viewing Users and Groups)
+\to\t\k(Add a new user to your system^^Adding a New User)
+\to\t\k(Add a new group to your system^^Adding a New Group)
+\to\t\k(Delete a user^^Deleting a User)
+\to\t\k(Delete a group^^Deleting a Group)
+\to\t\k(Assign setup permissions^^Assigning Setup Permissions)
+\to\t\k(Change user properties^^Changing User Properties)
+
+Note: Before you begin adding users to your system, you may want to
+look at \k(Managing Multiple Users) for some additional information.
+
+See also:
+\s(Creating and Managing User Accounts^dhelp as sysag "Creating and Managing User Accounts" || helpLinkErr)
+
+^1^Viewing Users and Groups
+^$20
+Viewing Users and Groups
+
+To view users and groups, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on User_Setup. By default, unless you previously changed
+  \tthe view, the "User Setup: User Account" window appears. This displays
+  \tall of the user login accounts on your system.
+
+3.\tChange the view by clicking on View=>Reserved to see reserved login
+  \taccounts, or View=>Groups to display user groups. (To go back to viewing
+  \tuser accounts, simply click on View=>User).
+
+
+^1^Adding a New User
+^$30
+Adding a New User
+
+Note: You must have system owner \k(permissions^^Understanding Permissions) to be able to
+add users.
+
+To add a new user to your system, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on User_Setup. The "User Setup" window appears (depending
+  \ton which view you last selected, the window displays User Accounts,
+  \tGroups, or Reserved Accounts).
+
+3.\tClick on Account=>New. The "User Setup: Add New User Account" window
+  \tappears with the following fields:
+
+  \to\tLogin ID: - Type in the name the user enters when logging in
+  \t \tto the system. The name should be 14 characters or less. You
+  \t \tmay want to ask the user if he or she has a preference for a
+  \t \tlogin ID.  
+
+  \to\tType: - Click on either Desktop or Nondesktop. Desktop causes the
+  \t \tgraphical user interface (GUI) to start up when the user logs in.
+  \t \tNondesktop gives the user the traditional UNIX system shell prompt.
+
+  \to\tManage User Info. via NIS - Appears only if your system is
+  \t \tconfigured for \k(NIS^dtadmin/inet.hlp^Accessing NIS).
+
+  \t \tClick on this box if the user is an NIS user. User Setup clears
+  \t \tand the following fields are greyed out: Home Folder, Shell,
+  \t \tUser ID, Group, and Comments.
+
+  \t \tThe system automatically takes the values for these fields from
+  \t \tthe NIS database. 
+
+  \to\tComment: - Add information about the login account name. For example,
+  \t \tif the login ID is jmj, you may want to add a comment like
+  \t \t"John M. Jones, System Engineer."
+
+  \to\tShow Other Options: - Click on this box to bring up the following
+  \t \tadditional fields:
+
+  \t \t-\tHome Folder: - Specify the name of the home directory. If you do
+  \t \t \tnot change this field, the system automatically assigns the
+  \t \t \t/home/user  directory, where user is the login ID of the user.
+
+  \t \t-\tX-terminal Name: - This option is not available (greyed out) if you
+  \t \t \tare setting up a non-Desktop user.  
+
+  \t \t \tIf the user is going to login from another workstation or X terminal
+  \t \t \tconnected by a network, type in the name of the X terminal in this
+  \t \t \tfield.
+
+  \t \t \tNote: If you do not enter the X terminal name in this field, the
+  \t \t \tsystem will prompt the user for the X terminal name each time the
+  \t \t \tuser logs in to the Desktop.
+
+  \t \t-\tShell: - Specify the type of UNIX system shell command-line
+  \t \t \tinterpreter, such as sh (shell) or ksh (kshell). If you
+  \t \t \tdo not know what the shell is, you do not have to change
+  \t \t \tthis entry.
+  
+  \t \t-\tUser ID: - Specify a user ID number (UID). You can use any integer
+  \t \t \tover 99 (UIDs from 0-99 are assigned to reserved accounts only).
+  \t \t \tIf you do not assign a UID, the system defaults to the next available
+  \t \t \t(unique) number above the highest number currently assigned. For
+  \t \t \texample, if you assigned UIDs from 100 to 105, the system will
+  \t \t \tdefault to 106 for the next UID.
+         
+  \t \t \tIf you plan to assign users to several machines, it is
+  \t \t \tgood practice to give them the same UID number on each system.
+  \t \t \tThis is useful with some networking packages.
+
+  \t \t \tNote: For security reasons, the system will not let you choose a
+  \t \t \tUID that was previously used and recently deleted. The UID has
+  \t \t \tto go through a particular period of time called "aging" before
+  \t \t \tyou can reuse it. To override this aging process, see
+  \t \t \t\k(Reusing a User Identification Number).
+
+  \t \t-\tGroups: - Choose the group to which you want to assign the user.
+  \t \t \tYou might find it convenient to assign group permissions to
+  \t \t \tseveral users who have to work together (see \k(User Groups)).
+        
+  \t \t-\tLocales: - Choose the appropriate locale (for example,
+  \t \t \tAmerican English, French, German, and so forth).
+
+  \t \t \tNote: Unlike making a change to Locale in the \k(Preferences^DesktopMgr/locpref.hlp^Changing Locale) folder,
+  \t \t \twhich takes effect immediately, changes you make to Locale in
+  \t \t \tUser Setup only take effect after the user logs in. For example,
+  \t \t \tif you make a change to a user's locale while he or she is on the
+  \t \t \tsystem, that user will not see the change until he or she logs out
+  \t \t \tand logs back in again.
+
+  \t \t \tIn addition, you cannot make changes to your own locale through
+  \t \t \tUser Setup if you are the system owner. Instead, make changes to
+  \t \t \tyour locale through \k(Preferences^DesktopMgr/locpref.hlp^Changing Locale).
+     
+4.\tClick on Add. A pop-up window appears, asking you to confirm that you
+  \twant to add the user.
+
+5.\tClick on Yes. The system adds an icon that represents the new account
+  \tto the "User Setup" window.
+
+See also:
+\s(Creating and Managing User Accounts^dhelp as sysag "Creating and Managing User Accounts" "" || helpLinkErr)
+
+^2^Managing Multiple Users
+^$40
+Managing Multiple Users
+
+Following are a few things you should know about managing multiple users
+on your system:
+
+\to\tEach user has separate access \k(permissions^^Assigning Setup Permissions) to the files he or she
+\t \tcreates. A user can protect those files or share them freely.
+   
+\to\tThe owner account has permission to do all the basic system setup
+\t \tavailable on the Desktop.
+
+\to\tThe owner can grant any user permission to do specific system setup
+\t \tprocedures, or to have all owner permissions.
+
+See also:
+\s(Controlling Access to the System and Data^dhelp as sysag "Creating and Managing User Accounts" "Controlling Access to the System and Data" || helpLinkErr)
+
+^2^Types of Accounts
+^$50
+Types of Accounts
+
+The word "account" refers to a user login. Login accounts on a system
+are divided into the following:
+
+\to\tReserved accounts (also called system accounts) - Used for special
+\t \tadministrative tasks on the system. For example, \d(root) is a reserved
+\t \tlogin account that is used to control the entire system. In some cases,
+\t \tyou do not log in directly to a reserved account. The nuucp login, for
+\t \tinstance, is only used automatically when remote files are being
+\t \ttransferred across a network.
+
+\to\tUser login accounts - Used for the "regular" users on your system.
+
+^2^Reusing a User Identification Number
+^$55
+Reusing a User Identification Number
+
+To reuse a user identification number (UID) that is still in the "aging"
+process (that is, the UID was recently in use and the system is holding
+the UID for security reasons), do the following as the root user from the
+command line:
+
+1.\tType:
+
+  \tcd /etc/security/ia
+
+2.\tEdit the ageduid file by removing the UID entry.
+
+  \tNote: This is a read only file. If you are using "vi" to edit this file,
+  \tyou cannot just use ":wq" to write and quit. You must first write the
+  \tfile with an exclamation point (:w!), then enter :q to quit. For more
+  \tinformation on using vi, see vi(1M) in the Command Reference.
+
+^1^Adding a New Group
+^$60
+Adding a New Group
+
+Note: You must have system owner \k(permissions^^Understanding Permissions) to be able to
+add groups.
+
+To add a new group to your system, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on User_Setup. The "User Setup" window appears (depending
+  \ton which view you last selected, the window displays User Accounts,
+  \tGroups, or Reserved Accounts).
+
+3.\tClick on Group=>New. The "User Setup: Add New Group" window appears
+  \twith the following fields:
+
+  \to\tGroup Name: - Type in the name of the new group.
+
+  \to\tManage Group Info. via NIS - Appears only if your system is
+  \t \tconfigured for \k(NIS^dtadmin/inet.hlp^Accessing NIS).
+
+  \t \tClick on this box if the group is an NIS group. User Setup clears
+  \t \tand the Group ID field is greyed out.
+
+  \t \tThe system automatically takes the value for Group ID from
+  \t \tthe NIS database. 
+
+  \to\tGroup ID number: - Type in the group ID number. If you do not
+  \t \tassign a group number, the system defaults to the next available
+  \t \tgroup number.
+
+4.\tClick on Add. A pop-up confirmation window appears.
+
+5.\tClick on Yes to add the group (or No if you change your mind and
+  \tdecide not to add the group).
+
+^2^User Groups
+^$70
+User Groups
+
+You can assign several users to a group. This allows you to set access
+\k(permissions^^Understanding Permissions) so certain files, folders, and applications are available
+only to a specific group of users.
+
+For example, you may have three people working together on the same
+project, and you could assign those people to a group called "Project 1."
+As those three people create files relating to the project, they can
+open group permission so that the files are accessible only to the people
+in the group Project1.
+
+See \k(Adding a New Group) for the procedure on how to add a new group
+to the system.
+
+See also:
+\s(Creating and Managing User Accounts^dhelp as sysag "Creating and Managing User Accounts" "" || helpLinkErr)
+\s(Set-UID and Set-GID^dhelp as sysag "File Protection" "Set-UID and Set-GID" || helpLinkErr)
+
+^1^Deleting a User
+^$80
+Deleting a User
+
+Note: You must have system owner \k(permissions^^Understanding Permissions) to be able to
+delete users.
+
+To delete a user from your system, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on User_Setup. The "User Setup" window appears (depending
+  \ton which view you last selected, the window displays User Accounts,
+  \tGroups, or Reserved Accounts).
+
+3.\tClick on View=>User.
+
+4.\tClick on the icon that represents the user you want to delete (if
+  \tthe user accounts are not displayed, select View=>User).
+
+5.\tClick on Account=>Delete. A pop-up confirmation window appears.
+
+6.\tClick on Remove User's Files to delete all the files in the user's
+  \thome directory, or Backup User's Files if you want to back up the
+  \tuser's home directory before you delete the account. If you choose
+  \tto back up the user's files, the system prompts you to insert a
+  \tmedia (such as a floppy disk or cartridge tape).
+
+7.\tClick on Yes to delete the user's account (or No if you change your
+  \tmind or made a mistake). The system removes the user's login
+  \taccount icon from the "User Setup" window.
+
+See also:
+\k(Reusing a User Identification Number)
+
+^1^Deleting a Group
+^$85
+Deleting a Group
+
+Note: You must have system owner \k(permissions^^Understanding Permissions) to be able to
+delete groups.
+
+To delete a group from your system, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on User_Setup. The "User Setup" window appears (depending
+  \ton which view you last selected, the window displays User Accounts,
+  \tGroups, or Reserved Accounts).
+
+3.\tClick on View=>Groups.
+
+4.\tClick on the icon that represents the group you want to delete (if
+  \tthe group accounts are not displayed, select View=>Groups).
+
+5.\tClick on Group=>Delete. A pop-up confirmation window appears.
+
+6.\tClick on Yes to delete the group (or No if you change your mind or
+  \tmade a mistake). The system removes the group icon from the User Setup
+  \twindow.
+
+^1^Assigning Setup Permissions
+^$90
+Assigning Setup Permissions 
+
+You must have system owner \k(permissions^^Understanding Permissions) to be able to
+assign setup permissions.
+
+Before you go through the following procedure for assigning setup
+permissions, you may want to see \k(Understanding Permissions).
+
+To assign system setup permissions to an individual user login
+account, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on User_Setup. The "User Setup" window appears (depending
+  \ton which view you last selected, the window displays User Accounts,
+  \tGroups, or Reserved Accounts).
+
+3.\tClick on View=>User.
+
+4.\tClick on the icon that represents the user you want to assign
+  \tsetup permissions for.
+
+5.\tClick on Actions=>Permissions. The "User Setup: User Permissions"
+  \twindow appears.
+
+6.\tAssign ownership as follows:
+
+  \to\tSelected User is the System Owner - Click on this box if you want
+  \t \tto give the owner full ownership permission.
+
+  \to\tSelected User May - Click on the desired individual boxes under
+  \t \tthis heading if you want to restrict the user to only being able to do
+  \t \tcertain system setup functions. 
+
+7.\tClick on Apply OK to assign the account permissions to the user.
+
+See also:
+\s(The Owner Attribute^dhelp as sysag "File Protection" "The Owner Attribute" || helpLinkErr)
+\s(The Group Attribute^dhelp as sysag "File Protection" "The Group Attribute" || helpLinkErr)
+
+^2^Understanding Permissions
+^$100
+Understanding Permissions
+
+When you install the Desktop on your computer, the system asks you to
+add a user account that is assigned as the "owner" of the system.
+The owner has special privileges to do administrative tasks that you
+may not want to be available to everyone. For example, if you are
+the owner you may not want everyone who uses your system to add other
+users or to change the configuration of your printers or networks.
+
+As the owner, you can assign owner permissions to any other
+user (see \k(Assigning Setup Permissions)). You can either assign
+full ownership privileges, or privileges to do specific tasks only.
+
+Full ownership allows you to do all the tasks described below, as well as
+add and delete users and assign task permissions. Specific ownership
+permissions include the following:
+
+\to\tShutdown System - Enables you to shut down the operating
+\t \tsystem using \k(Shutdown^DesktopMgr/shutdown.hlp^Shutting Down Your System).
+
+\t \tThis operation is restricted because you would not want any user to
+\t \tshut down the system arbitrarily. You probably do not want to give
+\t \tpermission for this function to other users.
+
+\to\tAccess Disks, Tapes, etc. - Enables you to read and write information
+\t \tfrom any disk, tape, or other icons in the \k(Disks-etc^dtadmin/disk.hlp^Overview of the Disks-etc Folder) folder.
+\t \tBy default, all users have permission to access disks and tapes. 
+
+\to\tAccess Remote Systems - Enables you to remotely log in and transfer
+\t \tfiles to and from remote systems. These features are available from
+\t \tany remote system icon installed through \k(Dialup Setup^dtadmin/DialMgr.hlp^Dialup Setup) or
+\t \t\k(Internet Setup^dtadmin/inet.hlp^Internet Setup). The system gives this privilege to all users by default.
+
+\to\tChange Dialup Setup - Enables you to add or change modem or direct
+\t \tconnection configurations on your computer from the \k(Dialup Setup^dtadmin/DialMgr.hlp^Dialup Setup)
+\t \tfolder.
+
+\t \tThis feature also lets you define the systems that you can
+\t \treach over those connections. Typically, these configurations rarely
+\t \tchange, so permissions to change them should be restricted.
+
+\to\tChange Internet Setup - Enables you to add systems to the list of those
+\t \tyou can reach over an Ethernet connection (through \k(Internet Setup^dtadmin/inet.hlp^Internet Setup)).
+
+\t \tBecause improperly assigned system names and addresses can cause
+\t \tproblems within a network, you should restrict this privilege.
+
+\to\tAdminister Printers - Enables you to change printer configuration
+\t \tinformation using \k(Printer Setup^dtadmin/Printer_Setup.hlp^Printer Setup).
+
+\t \tPrinter information includes the printer type and how it connects
+\t \tto your system. Because you usually do not need to change your
+\t \tprinter setup after you initially install and configure a printer,
+\t \tother users do not really need Administer Printer permission.
+
+\to\tAdd/Remove Fonts - Enables you to add and remove fonts from
+\t \t\k(Font Setup^dtadmin/fontmgr.hlp^Fonts).  Because an application will fail if it
+\t \tneeds a font that is not there or that is improperly installed, you
+\t \tshould restrict permission to this privilege.
+
+\to\tAdd/Remove Applications - Enables you to install and remove
+\t \tapplication packages on the system from the \k(Application Installer^dtadmin/App_Installer.hlp^Application Installer) folder.
+ \t \tYou should restrict this privilege to control the types of applications
+ \t \tinstalled on your system.
+
+\to\tAdvertise Local Folders/Files - Enables you to advertise local
+\t \t\d(share-items^share-item) using \k(File Sharing^dtadmin/FileShar.hlp^File Sharing).
+
+\t \tBecause this opens access to your computer from remote systems, you
+\t \tshould restrict this privilege.
+
+\to\tConnect to Remote Folders/Files - Enables you to connect to remote
+\t \t\d(share-items^share-item) using \k(File Sharing^dtadmin/FileShar.hlp^File Sharing).
+
+ \t \tThis privilege lets users access files from remote systems. If you
+\t \twant to control the flow of information to your computer, restrict
+\t \tthis privilege.
+
+\to\tAdminister UnixWare Mail - Enables you to make changes to the
+\t \t\k(UnixWare Mail Setup^Mail_Setup/Mail_Setup.hlp^Mail Setup).
+    
+\to\tAdminister the MHS Gateway - Enables you to make changes to the
+\t \t\k(Message Handling Service^MHS_Setup/MHS_Setup.hlp^MHS Setup).
+
+\to\tAccess NetWare Setup - Enables you to set up \k(NetWare^NetWare_Setup/NetWare_Setup.hlp^NetWare Setup).
+
+\to\tShare Applications - Enables you to advertise, or share, applications
+\t \ton your system with remote systems through \k(Application Sharing^App_Sharing/applsharing.hlp^Application Sharing).
+
+\to\tAccess Install Server - Enables you to install UnixWare products,
+\t \tor packages, across a NetWare network using \k(Install Server^Install_Server/Install_Server.hlp^Install Server).
+
+\to\tStart and Stop Processors - Enables you to perform multiprocessing
+\t \tsetup functions, such as taking a processor online or offline,
+\t \tusing \k(Processor Setup^dtadmin/multiproc.hlp^Processor Setup).
+
+Note: The root login is the traditional UNIX system login for all system
+administration tasks. For more information, see \k(The root Login).
+      
+See also:
+\s(The Owner Attribute^dhelp as sysag "File Protection" "The Owner Attribute" || helpLinkErr)
+\s(The Group Attribute^dhelp as sysag "File Protection" "The Group Attribute" || helpLinkErr)
+\s(Set-UID and Set-GID^dhelp as sysag "File Protection" "Set-UID and Set-GID" || helpLinkErr)
+
+^2^The root Login
+^$110
+The root Login
+
+The root login is the traditional UNIX system login for all system
+administration tasks. Most basic procedures formerly available only to
+users logged in as root can now be done by the system owner (see
+\k(Understanding Permissions)).
+
+If you prefer, you can log in to the system from a \k(Terminal^xterm/term.hlp^Terminal) window and perform the
+administrative tasks using UNIX system commands and files. For detailed
+information on working from the UNIX system command line interface,
+see the \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+
+^1^Changing User Properties
+^$120
+Changing User Properties
+
+You must have system owner \k(permissions^^Understanding Permissions) to be able to
+change user properties.
+
+You can modify the properties you defined when you added a new user
+at a later time. 
+
+To change user properties, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on User_Setup. The "User Setup" window appears (depending
+  \ton which view you last selected, the window displays User Accounts,
+  \tGroups, or Reserved Accounts).
+
+3.\tClick on View=>User Accounts.
+
+4.\tClick on the icon that represents the user whose properties you
+  \twant to change. 
+
+5.\tClick on Account=>Properties. The "User Setup: User Account Properties"
+  \twindow appears.
+
+6.\tChange the properties as desired (see \k(Adding a New User)) for a
+  \tdescription of each of the properties.
+
+7.\tClick on Apply. The system assigns the new properties to the user.
+

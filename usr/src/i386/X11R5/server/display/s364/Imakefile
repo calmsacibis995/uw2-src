@@ -1,0 +1,216 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#pragma ident	"@(#)s364:s364/Imakefile	1.4"
+
+/***
+ ***	NAME
+ ***	
+ ***		Imakefile : Makefile generation template for the S364
+ ***					display library.
+ ***	
+ ***	SYNOPSIS
+ ***
+ ***		make Makefile 	: if in the X build environment.
+ ***
+ ***		imake -DUseInstalled  : if building outside the X
+ ***								environment.
+ ***	
+ ***	DESCRIPTION
+ ***
+ ***		The following options are available of customization at
+ ***	library build time.  These options are turned on or off using
+ ***	compile time flags.  This Imakefile contains only a summary of
+ ***	the available options.  Please read the documentation in the
+ ***	associated module for further caveats.
+ ***	
+ ***	RETURNS
+ ***
+ ***		Not Applicable.
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		OPTION			MODULE		DESCRIPTION
+ ***		~~~~~~			~~~~~~		~~~~~~~~~~~
+ ***		__DEBUG__   	*All* 		enable debugging and assertion
+ ***									checking.
+ ***		LIBRARY_NAME	global.h	prefix for library's messages.
+ ***		CHIPSET_NAME	global.h	name of the chipset
+ ***		LIBRARY_VERSION global.h 	library version
+ ***		USE_KD_GRAPHICS_MODE		Use KD driver ioctl's to switch
+ ***						s364.c		console modes.
+ ***		USE_SYSI86		s364.c		Use sysi86() for IOPL's
+ ***		PUBLIC			*All*		Marker for interface generation
+ ***									tools.
+ ***		STATIC			*All*		Define to "" for profiling.
+ ***		PROFILING		*All*		Defined on a profiling run.
+ ***
+ ***	FILES
+ ***
+ ***		Source for the s364 display library.
+ ***
+ ***	SEE ALSO
+ ***
+ ***		imake(1).
+ ***	
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	
+ ***	HISTORY
+ ***
+ ***	
+ ***/
+
+/*
+ * Bring in the rules for Imake.
+ */
+#include <sv4Lib.rules>
+
+
+/*
+ * Debugging the server with dynamically linked library is sometimes painful
+ * To statically link libvga256.a or libs364.a into the server:
+ *
+ * #undef XWINSharedDisplayLibrary
+ * and define a VENDOR_DIR; this can be any one of the directories under
+ * devices
+ *
+ * and do:
+ *	make clean
+ *	make Makefile
+ *	make
+ *	cd ../../.. (ie: to the server dir)
+ *	make Xwin_a (make sure SDD=.....libs364.a in the server/Makefile)
+ */
+
+/** #undef XWINSharedDisplayLibrary
+**/
+
+/*
+ * for archive, we have to include the objects from one of the directories
+ * under "devices", so that these objects are archived into libvga256.a
+ */ 
+#if XWINSharedDisplayLibrary
+VENDOROBJS =
+#else
+VENDOROBJS = ./devices/s364_init/?*.o
+DEF_VENDORDIR = ./devices/s364_init
+#endif
+
+/*
+ * Subdirectory control.
+ */
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS) S364_REVISION=$(S364_REVISION)'
+
+SUBDIRS = devices
+
+CDEBUGFLAGS=-O -v
+
+S364_REVISION = 1
+
+EXTRA_DEFINES=-DPUBLIC=  -DLIBRARY_NAME=\"LIBS364\"\
+			  -DLIBRARY_VERSION='"1.01"'\
+              -DCHIPSET_NAME=\"S364\" -DUSE_KD_GRAPHICS_MODE\
+              -DUSE_SYSI86 -DSTATIC=static
+
+
+#define VendorDisplayModuleRule()			@@\
+.c.o:							@@\
+	$(CC) -c $(CDEBUGFLAGS) $(EXTRA_DEFINES) -Xa -Dix86 $(ALLINCLUDES) $<; @@\
+							@@\
+all:: $(VENDORLIB) 					@@\
+$(VENDORLIB):: $(OBJS)					@@\
+	$(CC) $(YFLAGS) -G $(OBJS) -o $(VENDORLIB) -h $(VENDORLIB) -lm @@\
+	@echo $(VENDORLIB) generated. 			@@\
+							@@\
+install:: all						@@\
+	$(INSTALL) $(INSTLIBFLAGS) $(VENDORLIB) $(DISPLIBDIR)
+
+/*
+ * We need EXTRA_LIBS to link certain libraries with libs364.so. The
+ * current rule for SharedLibraryTarget1/NormalLibraryTarget does not 
+ * allow this.
+ */
+EXTRA_LIBS=-lc
+
+/*
+ * Instructions for profiling:
+ *
+ * define -DPROFILING in the EXTRA_DEFINES line.
+ * set ASM_PROFILING_OPTIONS to "-- -DPROFILING".
+ * Build the Archive library, if your CCS does not handle profiled
+ * shared objects.
+ */ 
+
+XCOMM	Include "s364_debug.[co]" if you wish to look at registers from a
+XCOMM 	debugger. 
+
+SRCS = 	debug.c stdenv.c	\
+	g__init__.c g_colormap.c g_gs.c g_omm.c g_regs.c g_state.c generic.c\
+	s364.c s364__gs__.c s364__init__.c s364__vtin__.c s364__vtout__.c\
+	s364_arc.c s364_asm.c s364_bitblt.c s364_cmap.c s364_cursor.c\
+	s364_debug.c s364_fill.c s364_font.c s364_gbls.c s364_gs.c\
+	s364_line.c s364_mischw.c s364_opt.c s364_points.c s364_regs.c\
+	s364_sline.c s364_spans.c s364_state.c 
+
+OBJS = 	debug.o stdenv.o	\
+	g__init__.o g_colormap.o g_gs.o g_omm.o g_regs.o g_state.o generic.o\
+	s364.o s364__gs__.o s364__init__.o s364__vtin__.o s364__vtout__.o\
+	s364_arc.o s364_asm.o s364_bitblt.o s364_cmap.o s364_cursor.o\
+	s364_debug.o s364_fill.o s364_font.o s364_gbls.o s364_gs.o\
+	s364_line.o s364_mischw.o s364_opt.o s364_points.o s364_regs.o\
+	s364_sline.o s364_spans.o s364_state.o 
+	
+   INCLUDES = -I.  -I../../ddx/si -I../../../X11 -I../../include -I../os_lfb
+     LFLAGS = -buxz
+  VENDORLIB = libs364.so.$(S364_REVISION)
+
+#if XWINSharedDisplayLibrary
+VendorDisplayModuleRule()
+#else /* XWINSharedDisplayLibrary */
+CDEBUGFLAGS = ServerCDebugFlags
+NormalLibraryObjectRule()
+NormalLibraryTarget(s364,$(OBJS) $(VENDOROBJS))
+#endif /* XWINSharedDisplayLibrary */
+
+MakeSubdirs($(SUBDIRS))
+ForceSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+clean::
+	$(RM) *.so *.so.* 9gxe64wrap
+
+DependTarget()
+
+all:: 9gxe64wrap
+
+9gxe64wrap:
+	$(CC) -o $(@) $(CDEBUGFLAGS) $(ALLINCLUDES) 9gxe64wrap.c
+
+InstallMultipleDestFlags(install,README.s364 S364_OPTIONS,$(DISPLIBDIR),$(INSTDATFLAGS))
+
+/*
+ * We use the std XC macro to install the library, which creates the *.so
+ * link; this file (ex: libs364.so) is needed only if you link something with
+ * this library. We don't need this, so remove it
+ */
+install::
+	$(INSTALL) $(INSTBINFLAGS) 9gxe64wrap $(DISPLIBDIR)
+	$(RM) $(DISPLIBDIR)/libs364.so
+
+.s.o:
+	$(AS)  -o $(@) -m $(ASM_PROFILING_OPTIONS) $(<)
+
+lint: ${CFILES} ${LIBCFILES}
+	$(LINT) $(LFLAGS) -Cs364 $(INCLUDES) $(SRCS) >lint.out 2>&1

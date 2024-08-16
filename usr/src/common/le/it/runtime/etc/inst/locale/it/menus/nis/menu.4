@@ -1,0 +1,43 @@
+.ul
+Installazione e configurazione di Network Information Service (NIS)
+.lr
+F1=Guida
+.top
+`[ "$TYPE" != "1" ] && echo "  \n \n  Perché NIS funzioni correttamente, è necessario costruire\n  una lista di uno o più server NIS:\n \n \n"`
+`[ "$first_loop" = "yes" ] && [ "$TYPE" = "1" ] && echo "  \n \n  Il server NIS master e: $SERVER1\n \n \n"`
+`[ "$first_loop" = "yes" ] && [ "$TYPE" = "1" ] && echo "  Ora si può immettere zero o più server NIS slave.\n \n"`
+.button
+Applica
+Reimposta
+.bottom
+Premere <Tab> per portare il cursore da un campo all'altro. Alla fine,
+portare il cursore su "Applica" e premere <Invio> per continuare.
+.form
+`[ "$first_loop" = "yes"  ] && [ "$TYPE" = "1" ] && echo "5 0 36//[A-z0-9 ]*//Nome del server://SERVER2//"`
+#`[ "$first_loop" = "yes"  ] && [ "$TYPE" != "1" ] && echo "5 1 36//[A-z0-9 ]*//Server name://SERVER1//"`
+`[ "$first_loop" = "yes"  ] && echo "5 1 36//[A-z0-9 ]*//Nome del server://SERVER1//"`
+`[ "$first_loop" = "yes" ] && echo "//Immettere il nome host di un server NIS//"`
+`[ "$first_loop" = "no" ] && echo "5 0 36//[A-z0-9 ]*//Nome del server://SERVER1//"`
+`[ "$first_loop" = "no" ] && echo "//Immettere il nome host di un server NIS//"`
+5 0 36//[A-z0-9 ]*//Nome del server://SERVER2//
+//Immettere il nome host di un server NIS//
+5 0 36//[A-z0-9 ]*//Nome del server://SERVER3//
+//Immettere il nome host di un server NIS//
+`[ "$first_loop" = "no" ] && echo "5 0 36//[A-z0-9 ]*//Nome del server://SERVER4//"`
+`[ "$first_loop" = "no" ] && echo "//Immettere il nome host di un server NIS//"`
+#5 0 36//[A-z0-9 ]*//Server name://SERVER5//
+#//Enter host name of an NIS server//
+2 2//No::No//Yes::Sì//Aggiungere altri server NIS?://more_servers//
+//Usare i tasti freccia destra/sinistra per scegliere Sì per aggiungere altri server //
+.help
+Se questa macchina è un server NIS master, immettere i nomi di zero o
+più macchine che funzioneranno come server NIS per questo dominio. 
+
+Se questa macchina è un server NIS slave, immettere i nomi di una o
+più macchine che funzioneranno come server NIS per questo dominio. 
+
+Assicuratevi che le macchine immesse compaiano nel file /etc/inet/hosts. 
+
+Per ulteriori informazioni consultare la Guida dell'Amministratore NIS.
+.helpinst
+Canc=Annulla  F1=Guida  Esc=Fine Guida  1=Avanti  2=Indietro

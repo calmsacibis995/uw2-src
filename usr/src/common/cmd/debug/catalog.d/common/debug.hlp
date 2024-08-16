@@ -1,0 +1,2960 @@
+#ident\t"@(#)debugger:catalog.d/common/debug.hlp	1.19"
+^*version^1
+^*title^Debug
+^:Debugger
+^+/usr/X/lib/locale/C/help/debug/debug.defs_CC
+^?A multi-process source-level debugger
+
+^1^Overview of Debug
+^$1
+Overview of Debug
+
+Debug is a symbolic, source-level debugger with many capabilities, 
+including control over multiple \k(processes and threads), and evaluation 
+of complex expressions in C or C++.  The debugger displays its
+information in several different windows.  Each window is
+composed of one or more panes, each providing a different
+type of information.  Which panes are available in each
+different window is configurable by the user (see \k(Configuration)).  
+There are nine different types of panes. 
+
+    The \k(Process Pane) displays the processes
+    and threads under the debugger's control and indicates
+    which process or thread is current.
+    
+    The \k(Stack Pane) displays the stack trace
+    for the \d(current process or thread).  It is updated
+    each time the current process or thread stops.
+    
+    The \k(Symbol Pane) displays the symbols
+    for the current process or thread.  It is updated each
+    time the current process or thread stops.
+    
+    The \k(Source Pane) displays the program's 
+    source.  Whenever the process or thread stops, the source 
+    window is updated to display the current line in the current
+    file.  You may also examine other files,
+    and set and delete breakpoints.
+
+    The \k(Disassembly Pane) displays the disassembly of the 
+    current function.  The pane is updated whenever the 
+    thread or process stops.
+
+    The \k(Registers Pane) displays the values of the machine
+    registers for the current thread or process.  It is 
+    is updated whenever the thread or process stops.
+
+    The \k(Event Pane) displays events (breakpoints, watchpoints,
+    system call events, etc.).  Deleting, disabling, enabling, and editing
+    events is done from the window containing this pane.
+
+    The \k(Command Pane) keeps a log of all the events as they occur.
+    Process I/O is also displayed here.  This pane allows you to enter
+    commands as if you were using the command line version of the
+    debugger.
+
+    The \k(Status Pane) keeps track of the current process or thread
+    for whatever window it belongs to.  It displays the state of
+    that process or thread and its location, if it is stopped.
+
+The \k(configuration) provided by the user describes a \d(window set).  
+Each window set contains at least one instance of each of the debugger's
+nine panes (except for the \k(Status Pane), which is not required).
+If no user configuration is provided, the debugger arranges
+its panes into a set of six windows.
+
+Each window set controls a subset of the processes and threads 
+being debugged, and each thread or process belongs to exactly
+one window set.  If you are debugging only one single-threaded process,
+you will not need more than one window set, but if you are 
+debugging multiple threads or processes, you may wish 
+to debug each thread or process in a separate window set.  
+Window sets are created by the \k(New Window Set) option in the \k(File) menu 
+of any window containing the \k(Process Pane).
+
+Each window includes some or all of the following menu buttons
+(depending on which panes appear in that window):
+
+\t\k(File button)
+\t\k(Edit button)
+\t\k(View button)
+\t\k(Control button)
+\t\k(Event button)
+\t\k(Properties button)
+\tHelp button
+
+The menus displayed by selecting these buttons provide commands to 
+control the state of the \k(processes and threads), options to change 
+the information displayed, and more.  See the Help sections for the 
+individual buttons for details. 
+
+Each window may also contain a \d(Button Bar).  The Button Bar
+may be located at the top of the window (right under the menu buttons, 
+in windows that do not have a \k(Status Pane) or under the Status Pane, 
+in windows that have one) or at the bottom of the window.
+The Button Bar contains a selection of buttons chosen from the
+other pulldown menus and provides a quick way to
+get at the most frequently used debugger commands.  Which buttons
+are available in the Button Bar of each window is configurable
+by the user (see \k(Configuration)).
+
+You may resize any window.  You may also redistribute the 
+space within the window.  To do that, click SELECT on the border of 
+any of the panes. A handle will appear, which you may drag up or down 
+to increase or decrease the size of the pane relative to the other 
+panes. 
+
+Several aspects of the behavior and look of the debugger can
+be customized using the options in the \k(Properties) menu.
+Several of these properties can also be set as application
+resources in the standard X window system resource files,
+such as the .Xdefaults file in the user's HOME directory.
+See \k(Customization) for details.  Many of the customizable
+resources can also be set using command line options (see
+\k(Invoking the Debugger).
+
+^2^Invoking the Debugger
+^$11
+\k(Overview)
+Invoking the Debugger
+
+From the Desktop metaphor, the debugger may be invoked in any of 
+three ways: 
+
+1) By dragging an object file from a folder and dropping it onto the
+   debugger's icon in the Applications folder.  This will start the debugger
+   with the dropped object file as a created process.  This has the
+   advantage of making the debugger's current working directory the same
+   as the folder in which the object file appears.  The disadvantage is
+   that you cannot give the debugger or created process any options.
+   Also, you cannot drag and drop a core file onto the debugger's icon.
+
+2) By double clicking on the debugger's icon in the Applications folder.
+   This will start up the debugger with an empty Context Window.  From there,
+   you may create or grab processes with the options in the File menu.  This
+   will let you pass options to the debugged processes, but not to the
+   debugger itself.  This method also has the disadvantage that the
+   debugger's current working directory may have no connection with the
+   directory of the file you want to debug.  You can set the current working
+   directory with the Change Directory option in the Context Window's
+   File menu.
+
+3) By typing "debug options" in an xterm window.  Even though you
+   type a command to start the debugger, this will still invoke the graphical
+   interface.  You may, however, use the command line interface by typing
+   debug -ic (ic for interface, character).
+
+   Although this is more work than clicking on an icon, this method is the
+   most flexible, allowing you to create processes with options, grab
+   running processes, or grab core files from the command line.  See debug(1)
+   for the options available.
+
+   The -X option, which lets you pass options to the X server, is the
+   only option that is specific to the graphical user interface.  You can use
+   the -X option to specify such things as fonts and colors.
+   For example,
+\tdebug -X"-background green"
+   will make the green the background color for all the debugger's windows,
+   and
+\tdebug -X '-xrm "debug*Context*background: green"'
+   will set the background color in the Context Window only.  Note that the
+   -X option takes only one argument,  so any option that you want to pass
+   through with whitespace in it must be quoted.
+
+   In this method, the debugger's current working directory will be
+   the same as the xterm window's.
+
+   Several of the properties that can be set from the options in
+   the \k(Properties) menu or as customizable \k(resources) can
+   also be set from the command line.  The command line options are:
+
+   o -config filename - filename is the name of the file the
+     debugger will use as the configuration specification (see
+     \k(Configuration).
+
+   o -output_action action - action may be one of BEEP, MESSAGE,
+     RAISE or NONE (case is insignificant).  This specifies the 
+     behavior of the debugger when a subject process generates output.
+     See \k(Output Action).
+
+   o -event_action action - action may be one of BEEP, MESSAGE
+     RAISE, or NONE (case is insignificant).  This specifies the 
+     behavior of the debugger when an event triggers in a subject
+     process.  See \k(Output Action).
+
+   o -command_level level - level may be one of PROGRAM, PROCESS,
+     THREAD (case is insignificant).  This specifies whether debugger
+     commands apply by default to the current thread, all threads
+     in the current process or all threads in the current program.
+     See \k(Granularity).
+
+   o -event_level level - level may be one of PROGRAM, PROCESS,
+     THREAD (case is insignificant).  This specifies whether debugger
+     events apply by default to the current thread, all threads
+     in the current process or all threads in the current program.
+     See \k(Granularity).
+
+   o -thread_action action[,action] - action may be either NONE,
+     STOP, BEEP or both STOP and BEEP (list both, separated by a comma, 
+     case is insignificant).  This specifies the behavior of the
+     debugger when a thread changes state.  See \k(Output Action).
+
+   o -symbols type[,type..] - type may be any of LOCAL, FILE,
+     GLOBAL, DEBUGGER, USER (separated by commas, case is 
+     insignificant).  This specifies the types of symbols to
+     be displayed in the \k(Symbol Pane).  See \k(Symbols).
+
+Using all three methods of invocation, you may create or grab
+additional processes with the options in the \k(File) menu of 
+any window containing the \k(Process Pane) or any window 
+that is automatically popped up when the debugger is started 
+(see \k(Configuration).  See \k(Create), \k(Grab Process), 
+and \k(Grab Core) for details. Note that threads can only be 
+created under programmatic control, and also cannot be individually 
+grabbed. 
+
+
+^2^Customization=resources
+^$12
+
+\k(Overview)
+Customization
+
+Several aspects of the organization, behavior and look of the
+debugger can be specified as X windows resources by placing
+resource definitions in an X windows resource files such as
+the .Xdefaults file in the user's home directory.  The debugger's
+resource class name is Debug.  The resources special to debug 
+are:
+
+config_file:\tfilename
+\tSpecifies the pathname of the debugger configuration file.
+\tSee \k(Configuration).
+
+config_desc:\tconfiguration
+\tSpecifies the configuration for the debugger directly.
+\tThe configuration must follow the form specified under
+\t\k(Configuration).  An X resources must consist of a
+\tsingle string with no newlines, so each line in a 
+\tmulti-line configuration must be continued with a
+\tbackslash (\\).
+
+output_action: action 
+     action may be one of BEEP, MESSAGE, RAISE or NONE (case is 
+     insignificant).  This specifies the behavior
+     of the debugger when a subject process generates output.
+     See \k(Output Action).
+
+event_action: action 
+     action may be one of BEEP, MESSAGE, RAISE or NONE (case is 
+     insignificant).  This specifies the behavior
+     of the debugger when an event triggers in a subject process.
+     See \k(Output Action).
+
+command_level: level
+     level may be one of PROGRAM, PROCESS, THREAD (case is 
+     insignificant).  This specifies whether debugger
+     commands apply by default to the current thread, all threads
+     in the current process or all threads in the current program.
+     See \k(Granularity).
+
+event_level: level
+     level may be one of PROGRAM, PROCESS, THREAD (case is 
+     insignificant).  This specifies whether debugger
+     events apply by default to the current thread, all threads
+     in the current process or all threads in the current program.
+     See \k(Granularity).
+
+thread_action: action[,action] 
+     action may be either NONE, STOP, BEEP or both STOP and BEEP
+     (list both, separated by a comma, case is insignificant).
+     This specifies the behavior of the debugger when a thread
+     changes state.  See \k(Output Action).
+
+symbols type[,type..]  
+     type may be any of LOCAL, FILE, GLOBAL, DEBUGGER, USER
+     (separated by commas, case is insignificant).  This 
+     specifies the types of symbols to be displayed in 
+     the \k(Symbol Pane).  See \k(Symbols).
+
+^2^Configuration=configuration
+^$13
+
+\k(Overview)
+Configuration
+
+The layout of the graphical debugger is configurable by the
+user.   The user may specify:
+\t
+\to Which panes are contained in which windows in each window
+\t  set.
+\to The number of lines each pane should contain, and for
+\t  certain panes, the number of columns as well.
+\to The contents and position (top or bottom) of the 
+\t  \d(Button Bar) for each window.
+
+The configuration is specified either in a configuration file, or
+directly in an X windows resource file.  If specified in a separate
+file, the pathname of the file is given either as the debug.config_file
+resource in an X windows resource file, or by using the -config
+option on the command line.  If specified directly in an X windows
+resource file, the configuration is the value of the debug.config_desc
+resource.  See \k(Invoking the Debugger) and \k(Customization).
+
+Several sample configurations are provided in the directory
+/usr/ccs/lib/config.
+
+If the configuration file is missing, unreadable or empty or
+an invalid configuration is specified, the debugger's default 
+configuration will be used.
+
+A configuration consists of keywords and user-defined names.
+Case is ignored when reading the keywords.  Names are used
+as the headings in window title lines and as the labels for
+the buttons in the \d(Button Bar).  Each name must be enclosed
+in quotation marks (either single or double quotes are acceptable)
+and may not span multiple lines.
+
+Whitespace is ignored, except within quoted names.  A comment
+begins with a sharp character (#) and continues until the end
+of the line.  Comments are also ignored.
+
+A configuration is made up of a series of window descriptions.
+Each window description begins with the keyword WINDOW, followed
+by a user-defined name, used as the title of the window.
+If the window name is followed by the keyword AUTO, the window
+will be displayed automatically each time the debugger is
+invoked, or when a new \d(window set) is created.
+
+The window description contains a series of one or more pane
+descriptions.  Each pane description consists of a pane type,
+followed by an optional decimal integer specifying the number
+of lines for that pane.  If the line specifier is present, it
+may optionally be followed by another decimal integer describing
+the number of columns for that pane.
+
+The valid pane types are as follows:
+COMMAND\t\k(Command Pane)
+DISASSEMBLY\t\k(Disassembly Pane)
+EVENT\t\t\k(Event Pane)
+PROCESS\t\k(Process Pane)
+REGISTER\t\k(Registers Pane)
+SOURCE\t\t\k(Source Pane)
+STACK\t\t\k(Stack Pane)
+STATUS\t\t\k(Status Pane)
+SYMBOLS\t\k(Symbol Pane)
+
+The line specifier has no affect on the Status Pane (it always
+has 1 line).  The column specifier has no affect on the
+Event Pane, the Process Pane, the Stack Pane, the Status Pane
+or the Symbol Pane.  A window will be as wide as its widest
+element, even if it contains a pane with a smaller column
+specifier.
+
+A pane may be specified only once per window, but the same
+pane may appear in multiple windows.  If a pane (other than the
+\k(Status Pane) is not specified for any window, the debugger
+will create a window to hold that pane.
+
+The final element of a window description is the button list.
+The button list is optional, and may come either before
+or after all of the pane descriptions for that window.  If
+no button list is provided, the window will not contain
+a \d(Button Bar).  If the button list comes before the pane
+descriptions for the window, the button bar will appear
+at the top of the window.  If the button list follows
+the pane descriptions, the button bar will appear at the
+bottom of the window.
+
+A button list begins with the keyword BUTTONS, and is followed
+by a series of button descriptions.
+
+Each button description consists of a button type, followed by
+an optional name, used as the label for that button.  If no
+name is provided, the debugger will supply a default name.
+The valid button types are:
+
+ANIMATE_DIS\t\k(Animate Disassembly)
+ANIMATE_SOURCE\t\k(Animate Source)
+DELETE\t\t\k(Delete)
+DESTROY\t\t\k(Destroy)
+DISABLE\t\t\k(Disable)
+ENABLE\t\t\k(Enable)
+EXPORT\t\t\k(Export)
+HALT\t\t\k(Halt)
+INPUT\t\t\k(Input)
+INTERRUPT\t\k(Interrupt)
+NEXT_INST\t\k(Next Instruction)
+NEXT_STMT\t\k(Next Statement)
+PIN_SYM\t\t\k(Pin)
+POPUP\t\t\k(Popup Window Button)
+RETURN\t\t\k(Return)
+RUN\t\t\k(Run)
+SET_CURRENT\t\k(Set Current)
+SET_WATCHPOINT\t\k(Set Watchpoint)
+STEP_INST\t\k(Step Instruction)
+STEP_STMT\t\k(Step Statement)
+UNPIN_SYM\t\k(Unpin)
+
+The POPUP button is special.  It may appear more than once
+in a button bar.  This button is used as a quick way to popup
+a different window.  The label field is required for this
+button type and must match exactly the label of one of the windows
+in the configuration.  Clicking SELECT on the button has the
+effect of popping up the associated window.  The button description
+for the POPUP button accepts an optional third field, a user-defined
+name that is used as the actual label for the button.  This may
+be different from the window label associated with the button.
+If no name is supplied, the label used is the same as the window
+label.
+
+Several of the button types are valid only if the window contains
+a pane of a particular type.
+
+ANIMATE_DIS is valid only if the window contains a \k(Disassembly Pane).
+
+ANIMATE_SOURCE is valid only if the window contains a \k(Source Pane).
+
+DELETE, DISABLE and ENABLE are valid only if the window contains an
+\k(Event Pane).
+
+INPUT and INTERRUPT are valid only if the window contains a
+\k(Command Pane).
+
+SET_CURRENT is valid only if the window contains either a \k(Process Pane)
+or a \k(Stack Pane).
+
+EXPORT, SET_WATCHPOINT, PIN_SYM, and UNPIN_SYM is valid only if the window 
+contains a \k(Symbol Pane).
+
+All other button types are valid for all windows.
+
+The following is a sample configuration that defines the
+default configuration of the debugger.
+
+WINDOW "Source" AUTO
+\tBUTTONS
+\t\tSET_CURRENT\t"Set Current"
+\t\tRUN\t\t"Run"
+\t\tRETURN \t\t"Return"
+\t\tSTEP_STMT\t"Step Stmt"
+\t\tNEXT_STMT\t"Next Stmt"
+\t\tHALT\t\t"Halt"
+\t\tDESTROY\t\t"Destroy"
+\t\tPOPUP\t\t"Symbols"
+\tSTATUS
+\tSTACK\t4
+\tSOURCE\t10 60
+WINDOW "Process"
+\tBUTTONS
+\t\tSET_CURRENT\t"Set Current"
+\t\tPOPUP\t\t"Command" "Cmd"
+\t\tPOPUP\t\t"Disassembly" "Dis
+\t\tPOPUP\t\t"Event"
+\t\tPOPUP\t\t"Source"
+\t\tPOPUP\t\t"Symbols"
+\tPROCESS\t5
+WINDOW "Symbols"
+\tBUTTONS
+\t\tEXPORT\t\t"Export"
+\t\tPIN_SYM\t\t"Pin"
+\t\tUNPIN_SYM\t"Unpin"
+\t\tSET_WATCHPOINT\t"Set WatchPt"
+\t\tPOPUP\t\t"Command" "Cmd"
+\t\tPOPUP\t\t"Disassembly" "Dis"
+\t\tPOPUP\t\t"Event"
+\t\tPOPUP\t\t"Process"
+\t\tPOPUP\t\t"Source"
+\tSTATUS
+\tSYMBOLS\t5
+WINDOW "Disassembly"
+\tBUTTONS
+\t\tSET_CURRENT\t"Set Current"
+\t\tRUN\t\t"Run"
+\t\tRETURN \t\t"Return"
+\t\tSTEP_INST\t"Step Inst"
+\t\tNEXT_INST\t"Next Inst"
+\t\tHALT\t\t"Halt"
+\t\tDESTROY\t\t"Destroy"
+\t\tPOPUP\t\t"Command" "Cmd"
+\t\tPOPUP\t\t"Process"
+\t\tPOPUP\t\t"Source"
+\tSTATUS
+\tREGISTER 6 70
+\tDISASSEMBLY 10 70
+WINDOW "Event"
+\tBUTTONS
+\t\tDISABLE\t"Disable"
+\t\tENABLE\t"Enable"
+\t\tDELETE\t"Delete"
+\t\tPOPUP\t"Command" "Cmd"
+\t\tPOPUP\t"Disassembly" "Dis
+\t\tPOPUP\t"Process"
+\t\tPOPUP\t"Source"
+\t\tPOPUP\t"Symbols"
+\tSTATUS
+\tEVENT 8
+WINDOW "Command"
+\tBUTTONS
+\t\tINPUT\t\t"Input..."
+\t\tINTERRUPT\t"Interrupt"
+\t\tPOPUP\t\t"Disassembly" "Dis"
+\t\tPOPUP\t\t"Event"
+\t\tPOPUP\t\t"Process"
+\t\tPOPUP\t\t"Source"
+\t\tPOPUP\t\t"Symbols"
+\tSTATUS
+\tCOMMAND 10 60
+
+^1^Process Pane
+^$2
+Process Pane
+
+The Process Pane lists the \k(processes and threads) controlled by the 
+given \d(window set). The information for each process or thread 
+includes: 
+
+    Program Name\tThis is usually the name of the executable file.
+\t\tIf a process forks, both parent and child processes
+\t\t(and their respective threads, if any)  will belong to
+\t\tthe same \k(program^processes and threads).
+ 
+    ID\t\tA unique debugger-generated identifier.
+
+    State\t\tCurrent State of the process or thread.
+
+    Function\tIf the process or thread is Running or Stepping, this will 
+\t\tbe blank.  Otherwise, this is the name of the function
+\t\twhere the process or thread is stopped.
+
+    Location\tIf the process or thread is Running or Stepping, this will
+\t\tbe blank.  If the process or thread is stopped in a
+\t\tfunction that was compiled with debugging information,
+\t\tthis will give the file name and line number (file@line)
+\t\twhere the process or thread is stopped.  If the function
+\t\twas not compiled with debugging information, this will
+\t\tshow the hex address where the process or thread is stopped.
+
+    Command\tThe command line used to start the program.
+
+The State may be one of the following: 
+
+    Running\tThe process or thread is in motion following a
+\t\t\k(Run) or \k(Step) command.
+
+    Stepping\tThis state appears only when the debugger has to
+\t\texecute a process or thread an instruction at a time,
+\t\ttypically because it has to continually evaluate an
+\t\tevent condition.
+
+    Stopped\tThe process or thread is halted.
+
+    Off lwp\t\tThis is the state for a multiplexed thread when it is not 
+\t\tcurrently executing on an \d(LWP). It has been
+\t\tscheduled off an LWP by the threads library possibly
+\t\tbecause it is blocked on I/O or on som
+\t\tsynchronization primitive. When it is ready to resume
+\t\texecution, it will be picked up again by an LWP.
+
+    Suspended\tThis is the state for a thread that was the target of a 
+\t\tthr_suspend() call. It will resume execution when
+\t\tcontinued by another thread.
+
+    Core\t\tThe process or thread is a core image, and may be
+\t\texamined but not altered or executed.
+
+    Core off lwp\tThis is the state of a thread that was in Off lwp
+\t\tstate when the core image was produced.
+
+    Core suspended\tThis is the state of a thread that was in Suspended
+\t\tstate when the core image was produced.
+
+You may select one or more entries in the Process Pane.  The selected 
+entries affect the behavior of many of the commands in the 
+menus of the window containing the pane.  For example, if you select an entry and then 
+click SELECT on the \k(Run) option in the \k(Control) menu, the selected 
+objects will be set running.  If you had not selected a process or 
+thread before selecting \k(Run), the \d(current process or thread) would 
+have been set running.  Selecting an object selects both the thread or 
+process and the \k(program^processes and threads).  Most of the options apply to the selected 
+object, but commands that create events (\k(Stop), \k(Signal), \k(Syscall), 
+and \k(On Stop) in the \k(Event) menu) by default apply to the selected 
+program.  You may change that with the \k(Granularity) option in the 
+\k(Properties) menu. 
+
+The current process or thread is indicated by a pointing hand to the 
+left of the program name.  The current process or thread determines 
+what is displayed in the other panes in the window set.
+The current process or thread may be changed by first 
+clicking SELECT on one process or thread in the Process Pane and then 
+clicking SELECT on the \k(Set Current) option in the \k(Edit) menu. 
+
+You may also move a thread or process from one window set to another 
+by selecting the thread or process, dragging it, and dropping it on a 
+window of the other window set. It will become the current process or 
+thread in its new window set. 
+
+If the command line is too long to fit in its column, it is truncated 
+by default.  You may force it to be wrapped to the next line with the 
+\k(Panes) option in the \k(Properties) menu. 
+
+^2^Programs, Processes, and Threads=processes and threads
+^$21
+\k(Process Pane)
+Programs, Processes, and Threads
+
+A program is an executable object in any of the object file formats 
+understood by the debugger, along with any of the shared libraries 
+that executable object may load at run-time.  The executable image of 
+a program is a process. Since a process may fork, many processes may 
+ultimately be derived from a single program. 
+
+A process consists of one or more threads of control.  Each thread 
+within a process shares the common process address space, process and 
+parent process identifiers, privileges, root and working directories, 
+file descriptors, file and record locks, resource limits and signal 
+handling context (except for the signal mask and signal stack). 
+
+A thread is a single execution context within a process. Each thread 
+has its own set of registers, signal mask and signal stack.  A 
+"thread" in the context of the debugger refers to the user-level 
+entities implemented by the interfaces contained in <thread.h>.  These 
+threads are different from, and are built on top of, the 
+kernel-supported light-weight process (LWP). 
+
+At any given time, a thread may either be running on an LWP or may be 
+idle.  An idle thread may not be started by the debugger, but its 
+state may be examined and modified. 
+
+^1^Stack Pane
+^$3
+Stack Pane
+
+The Stack Pane displays the stack trace for the 
+\d(current process or thread). The information for each stack frame 
+includes: 
+
+    Frame number\tFrames are numbered from 0 for the bottom of the
+\t\tstack (the initial frame).
+
+    Function\tThe function name.  The debugger will display a
+\t\tquestion mark (?) if it cannot find a name for the
+\t\tgiven address, either because there is insufficient
+\t\tsymbolic information, or the frame's program counter
+\t\tis pointing out of the process's address space.
+
+    Parameters\tThe argument names and values.  Argument names may
+\t\tnot be available if there is insufficient
+\t\tsymbolic information.
+
+    Location\tThe current point of execution for the frame.  The
+\t\tlocation will be in the form file@line, if the function
+\t\twas compiled with debugging information, otherwise it
+\t\twill be a hex address.
+
+The frame shown with the pointing hand is the \d(current frame).  The 
+current frame affects what is displayed in the  other windows in 
+the \d(window set).  The current frame may be changed by 
+clicking SELECT on a different frame, and then clicking SELECT on the 
+\k(Set Current) option in the \k(Edit) menu. 
+
+If any of the information is too long to fit in its column, the 
+information is truncated.  You may force the Parameters column to be 
+wrapped to the next line with the \k(Panes) options in the \k(Properties) 
+menu. 
+
+^1^Symbol Pane
+^$4
+Symbol Pane
+
+The Symbol Pane displays the values of the variables visible from the 
+\d(current context).  The kinds of symbols that may be displayed include: 
+
+\tlocal variables visible from the \d(current frame),
+\tfile static variables visible from the current frame,
+\tglobal variables visible in the current object,
+\tdebugger-defined variables, or
+\tuser-defined debugger-maintained variables.
+
+By default, the Symbol Pane displays only local variables.  You may 
+change the kinds of variables displayed with the \k(Symbols) option in 
+the \k(Properties) menu. 
+
+The information displayed for each symbol includes the symbol's name, 
+its location, type, and value.  For local variables, the location is 
+the function and line number of the enclosing scope.  For file static 
+symbols, it is the file name, and for global symbols, the name of the 
+object file. 
+
+If any information is too long to fit in its columns, it is 
+truncated. You may force the Type and Value columns to be wrapped to 
+the next line with the \k(Panes) options in the \k(Properties) menu. 
+
+Note that when a C++ class object is shown in the Symbol Pane, static 
+members of that class will not be shown in the list of member values 
+in the Value column.  They may be seen by displaying the class object 
+in the \k(Expand) or \k(Show Value) popup window available in the
+\k(View) menu of any window containing the \k(Symbol Pane)
+or \k(Source Pane).
+
+^1^Registers Pane
+^$5
+Registers Pane
+
+The Registers Pane displays the values of the machine registers
+for the \d(current process or thread).  The values are shown
+in hexadecimal (and floating-point, for floating-point registers)
+and are updated whenever the current process or thread stops.
+
+^1^Disassembly Pane
+^$6
+Disassembly Pane
+
+The Disassembly Pane shows the disassembly of the current function. 
+You may also view the disassembly of other functions with the \k(Show Function Dis) 
+option in the \k(View) menu. 
+
+The Disassembly Pane displays a stop sign in the left margin for each 
+instruction that has a breakpoint set on it.  You may set or remove a 
+breakpoint on an instruction by double-clicking the SELECT button in 
+the left margin. 
+
+^1^Source Pane
+^$7
+Source Pane
+
+The Source Pane displays the current source file. Whenever the 
+\d(current process or thread) stops, the file 
+is positioned to display the current line in the current function.  
+The current line is highlighted, and also indicated by an arrow in 
+the left margin.  If there is no current file, or the file was not 
+compiled with debugging information, the Source Pane will be empty. 
+The Source Pane will also be empty if the debugger cannot find the 
+current file; in that case you can use the \k(Source Path) popup
+available from the \k(Properties) menu of any window containing
+a Source Pane.
+
+A stop sign appears in the left margin for each line that has a 
+breakpoint set on it.  You may set or remove a breakpoint by 
+double-clicking the SELECT button in the left margin of the selected 
+line.  The debugger will display a message if it is unable to set the
+breakpoint on the selected line.  There are several reasons why
+it may not be able to set the breakpoint:
+
+    o The source line does not contain anything that would generate
+      executable code.  This would include blank lines and lines
+      containing only comments and variable declarations.
+
+    o The line is part of a multi-line statement.  You may set a
+      breakpoint on only one line of a multi-line statement or
+      condition.
+
+    o The line is the beginning of a function definition.  Set the
+      breakpoint on the first statement in the function instead.
+
+You may also view other files in the Source Pane, either by opening 
+another file from the list in the \k(Open) popup window, or by viewing a 
+different function from the list in the \k(Show Function Source) popup window. 
+
+You may examine other source files while still viewing the file
+in the Source Pane by creating a Secondary Source Window.
+Secondary Source Windows are created by selecting the \k(New Source) 
+option in the \k(File) menu, and are indicated by an asterisk ('*') in 
+the window header.  Each Secondary Source Window consists of a 
+\k(Status Pane) and a Source Pane.  The Source Pane of a secondary 
+window is not updated when the current process or thread stops. 
+
+^1^Event Pane
+^$8
+Event Pane
+
+The Event Pane has two parts: the Main Event Pane, and the 
+On Stop Event Pane.  The Main Event Pane displays the 
+\d(stop event)s, \d(signal event)s, and \d(syscall event)s for the 
+\d(current process or thread).  The On Stop Pane displays the 
+\d(onstop event)s for the current process or thread.  The information 
+displayed for each event may include: 
+
+    ID\t\tThe event number.  You will also see the character 'D'
+\t\tnext to the number if the event has been \k(Disabled^^Disable).
+
+    Type\t\tSTOP, SIGNAL, or SYSCALL.  The type for a syscall
+\t\tevent also includes the characters 'E' or 'X', for system
+\t\tcall entry or exit, respectively.
+
+    Processes\tThe processes and threads for which the event is set.
+
+    Condition\tFor stop events, the \k(Stop Expression) is the condition.
+\t\tFor signal events, this is the list of signals the events
+\t\tapplies to.  For  syscall events, it is the list of
+\t\taffected system calls.
+
+    Count\t\tFor stop and syscall events, the number of times the
+\t\tcondition occurs before the event triggers.
+
+    Command List\tThe commands the debugger is to perform when the
+\t\tevent triggers.
+
+If the process list, condition, or command list are too long to fit 
+in their columns, they are truncated.  You may force them to be 
+wrapped to the next line with the \k(Panes) option in the \k(Properties) 
+menu. 
+
+^1^Command Pane
+^$9
+Command Pane
+
+The Command Pane has two parts: 
+
+\tthe \k(Transcript Pane), and
+\tthe \k(Command Line).
+
+. The Command Pane displays a transcript of the debugging session 
+(debugger and process input and output) in the \k(Transcript Pane). The 
+\k(Command Line) is used to to enter debugger commands as if you were 
+using the command line interface. 
+
+^2^Transcript Pane
+^$91
+\k(Command Pane)
+Transcript Pane
+
+The Transcript Pane displays the history of the debugging session as 
+it affects the \k(Command Pane)'s \d(window set).  This includes: 
+
+    o Event announcements for processes and threads belonging to this 
+      window set,
+
+    o The output of any commands associated with those events,
+
+    o The processes' output, if the output is captured, (see \k(Create)), and
+
+    o The output of any commands typed in the \k(Command Line).
+
+^2^Command Line
+^$92
+\k(Command Pane)
+Command Line
+
+You may type commands in the Command Line as if you were using the 
+debugger's command line interface.  Pressing Return will cause the 
+command line to be executed.  The command, and its output, will be 
+displayed in the \k(Transcript Pane). See the manual page (debug(1)) for 
+a description of the commands available. 
+
+Any command or block of commands may be suffixed with a '>' and a 
+filename. This has the effect of redirecting the output of the 
+command into the file instead of displaying the output in the 
+Transcript Pane. You may also use ">> filename", which appends the 
+output to the file, rather than replacing its current contents, if 
+any. The debugger does not, however, allow the output of a command to 
+be piped into another UNIX(r) System shell command. 
+
+^1^Status Pane
+^$10
+Status Pane
+
+The Status Pane is typically available in windows that do not
+also contain a \k(Process Pane).
+
+The Status Pane indicates the \d(current context), that is, the 
+\d(current process or thread) for the \d(window set), the state of
+that process or thread, and if stopped, the function name and 
+line number or address of the \d(current frame). 
+
+^1^File button=File
+^$110
+File button
+
+The File button gives you access to files and to the debugger's 
+windows, and lets you create, grab, and release processes and 
+Clicking MENU on the File button brings up a menu with different
+options, depending on which panes are present in the window.
+Every window provides a File menu with at least the following
+options:
+
+\t\k(Windows)
+\t\k(Close Window)
+\t\k(Quit)
+
+In addition, if the window is one that is automatically displayed 
+when the debugger is invoked (see \k(Configuration)), the File 
+menu will contain the following options:
+
+\t\k(Create)
+\t\k(Grab Core)
+\t\k(Grab Process)
+\t\k(Release)
+\t\k(Change Directory)
+
+If the window contains a \k(Process Pane), the File menu will
+contain the following options:
+
+\t\k(Create)
+\t\k(Grab Core)
+\t\k(Grab Process)
+\t\k(Release)
+\t\k(Change Directory)
+\t\k(New Window Set)
+
+If the window contains a \k(Source Pane), the File menu will
+contain the following options:
+
+\t\k(Open)
+\t\k(New Source)
+
+Finally, if the window contains a \k(Command Pane), the File
+menu will contain the following options:
+
+\t\k(Change Directory)
+\t\k(Script)
+
+The set of options contained in the File menu for any window
+is a union of the default options and the options contributed
+by each pane contained in that window.
+
+^2^Create
+^$111
+\k(File button)
+Create
+
+The Create popup window lets you create one or more processes. You 
+may specify the file to create by dragging an object file from a 
+folder in the desktop and dropping it onto the Create window, or by 
+typing the pathname of the object file in the Command Line field.  The 
+shell-style command line may include input and/or output redirection 
+and may include a shell pipe. All resulting processes are stopped at 
+the \k(location) specified in the Starting Location field.  If you specify 
+a function other than "main", and the function cannot be found in a 
+process' address space, the process will be stopped at the function 
+"main".  If "main" cannot be found, the process will be stopped at the 
+address specified in the object file's header. When a multi-threaded 
+process is created, it will have an initial "main" thread. The main 
+thread is stopped at the specified location. 
+
+Since the processes or threads are halted after creation, you must 
+then use one of the commands in the \k(Control) menu to start them
+running. 
+
+If the Capture I/O option is selected, the input and output of the 
+process is captured and displayed in the \k(Transcript Pane) and input
+to the process must be entered with the \k(Input) popup window.  If the 
+Capture I/O option is not selected, the output of the process will go 
+to the debugger's parent xterm window, and input is entered by typing 
+in that window. This behavior is most useful when you are debugging a 
+curses-based program, or one that is highly interactive.  Capture I/O 
+should always be selected if the debugger was invoked from its icon 
+rather than from an xterm window. 
+
+The Follow Children option controls the debugger's behavior if any of 
+the created processes or threads fork.  If Follow Children is not 
+selected, the debugger will not control the child process.  If it is 
+selected, the debugger will control the child process and any of its 
+threads (the process may be released from debugger control using the 
+\k(Release) command).  All threads created by a subject process will be 
+followed by the debugger (but may also be released using the \k(Release) 
+button). The \k(Output Action) popup window lets you control the 
+debugger's behavior with respect to newly created threads. 
+
+If the Kill Processes From Previous Create option is selected, all 
+processes resulting from the previous create command are killed. This 
+lets you restart processes without having to specifically find and 
+kill all the remaining processes. 
+
+If the New Window Set option is not selected, the created processes 
+are all added to the Create window's \d(window set).  If New Window Set 
+is selected, a new window set is created, and all the created 
+processes will be controlled by the new window set.  In both cases, 
+the first program in the pipeline becomes the current process in the 
+controlling window set. 
+
+If you create processes with a \k(Script) or through the \k(Command Line), 
+the Command line in the Create window will be updated to reflect the 
+most recent create command. 
+
+The Create window is always available in the \k(File) menu
+of any window containing a \k(Process Pane) or any window that
+is automatically displayed when the debugger is invoked.
+It is invoked by clicking SELECT on Create in the \k(File) menu.
+
+^2^Grab Core
+^$112
+\k(File button)
+Grab Core
+
+The Grab Core popup window lets you open a core file and its 
+corresponding object file for examination.  Enter the names of the 
+core and object on the corresponding lines in the window.  You may 
+also drag a core file from a folder in the desktop and drop it onto 
+the Grab Core window.  Doing so will fill in both the Core File and 
+Object File fields. 
+
+If the New Window Set option is selected, a new \d(window set) will be 
+created to display the grabbed core image, otherwise the core image 
+will be displayed in the popup window's parent window set.  In both 
+cases, the grabbed core image will become the current process in its 
+window set, and the thread that encountered the fault will become the 
+current thread, if possible. 
+
+Grabbed core images may be examined using all of the commands 
+available for examining live processes, but may not be altered or 
+run. 
+
+The Grab Core window is always available in the \k(File) menu
+of any window containing a \k(Process Pane) or any window that
+is automatically displayed when the debugger is invoked.
+It is invoked by clicking SELECT on Grab Core in the \k(File) menu.
+
+^2^Grab Process
+^$113
+\k(File button)
+Grab Process
+
+The Grab Process popup window lets you take control of a live 
+process. The window contains a scrolling list of processes you may 
+grab (the processes other than the debugger itself with the same user 
+ID). You may select more than one process from the list. 
+
+By default, debug loads symbolic information for the process from the 
+object file from which the process was created. You may enter on the 
+Object File line the name of an alternate object file from which to 
+load symbolic information. This is useful when debugging long running 
+applications that have no symbol information.  If you enter a file 
+name on the Object File line you must select only one process from 
+the list. 
+
+If the New Window Set option is not selected, the grabbed processes 
+are all added to the Grab Process window's \d(window set).  If it is 
+selected, a new window set is created, and all the grabbed processes 
+will be controlled by the new window set.  In both cases, the selected 
+item that appears first in the list will become the current process 
+in its window set. If that process uses the threads interfaces, the 
+debugger will randomly select a thread from that process to become 
+the current thread. 
+
+The Follow Children option controls the debugger's behavior if any of 
+the grabbed processes fork.  If Follow Children is not selected, the 
+debugger will not control the child process.  If it is selected, the 
+debugger will control the child process (the process may be released 
+from debugger control using the \k(Release) button).  All threads created 
+by a subject process will be followed by the debugger (but may also 
+be released using the \k(Release) button). The \k(Output Action) popup window 
+lets you control the debugger's behavior with respect to newly 
+created threads. 
+
+The Grab Process window is always available in the \k(File) menu
+of any window containing a \k(Process Pane) or any window that
+is automatically displayed when the debugger is invoked.
+It is invoked by clicking SELECT on Grab Process in the \k(File) menu.
+
+^2^Release
+^$114
+\k(File button)
+Release
+
+The Release menu option lets you release one or more processes or 
+threads from the debugger's control.  Clicking SELECT on Release 
+brings up a popup menu with two options, Running and Suspended.  If 
+you choose Running, the processes or threads are released and allowed 
+to run.  If threads are selected, then Release/Suspended menu will not 
+be available, since individual threads cannot be released in a 
+stopped state. For processes, if you choose Suspended, the processes 
+are released in a stopped state, and can be grabbed again later. To 
+release a threaded process in a stopped state, you can either select 
+all threads of the process, and then select Release/Suspended, or 
+select one of the child threads, set Granularity Property's "Other 
+commands apply to:" option to "Parent Process", and then select 
+Release/Suspended. If the latter is used, be warned that unless the 
+Granularity Property is reset, all subsequent commands will apply to 
+the parent process. 
+
+If any processes or threads in the \k(Process Pane) are selected, those 
+processes or threads are released, otherwise the 
+\d(current process or thread) is released.  
+
+The Release option is available in the \k(File) menu of any window 
+containing a \k(Process Pane) or any window that is automatically
+displayed when the debugger is invoked.
+It is invoked by clicking SELECT on Release in the \k(File) menu.
+The Release option is not available if there are no processes or 
+threads in the \d(window set). 
+
+Both grabbed and created processes (see \k(Grab Process) and \k(Create)) may 
+be released.
+
+^2^Open
+^$115
+\k(File button)
+Open
+
+The Open popup window lets you choose a file to be displayed in a 
+\k(Source Pane). The window displays a list of the files making up the 
+program that were compiled with debugging information.  To view one of 
+the files, select the file and then click SELECT on the Open button, 
+or drag the file and drop it on the Source Window.  If you drag the 
+file and drop it on the Work Space, the debugger will open a new, 
+\d(secondary source window). 
+
+Note that the list of source files comes from the object file itself 
+and not from the current directory.  The debugger does not try to find 
+a file until you have made a selection.  If it cannot find the 
+selected file, use the \k(Source Path) option in the \k(Properties) menu to 
+tell the debugger where to find the source. 
+
+The Open window is always available in the \k(File) menu
+of any window containing a \k(Source Pane).
+It is invoked by clicking SELECT on Open in the \k(File) menu.
+
+^2^New Source
+^$116
+\k(File button)
+New Source
+
+The New Source option creates a new, \d(secondary source window).  
+Secondary source windows may be used to view multiple files or 
+functions simultaneously.  When it is first created, the secondary 
+source window displays the same file as the \k(Source Pane) in the
+window from which the New Source option was invoked, but you
+may change the contents with the \k(Open) or \k(Show Function Source) options. 
+
+The Open window is always available in the \k(File) menu
+of any window containing a \k(Source Pane).
+It is invoked by clicking SELECT on New Source in the \k(File) menu.
+
+^2^Script
+^$117
+\k(File button)
+Script
+
+The Script popup window lets you execute debugger commands from a 
+file. Enter the name of the file on the Script File line or drag the 
+file from its folder in the desktop and drop it onto the Script 
+window.  You may specify whether to echo the commands as they are read 
+with the Echo Commands option. The commands and their output are 
+displayed in the \k(Transcript Pane). 
+
+Nearly all the other debugger commands are unavailable while the 
+debugger is executing a script.  The few commands that are available 
+include closing windows, bringing up Help, and interrupting the 
+script (with the \k(Interrupt) button in the \k(Edit) menu of any window
+containing a \k(Command Pane)). 
+
+The Script window is always available in the \k(File) menu
+of any window containing a \k(Command Pane).
+It is invoked by clicking SELECT on Script in the \k(File) menu.
+
+^2^Change Directory
+^$118
+\k(File button)
+Change Directory
+
+The Change Directory popup window lets you change the debugger's 
+current working directory.  The current working directory is displayed 
+at the top of the window.  Enter the pathname of the new current 
+directory in the New Directory field.  If you do not enter a pathname, 
+it will use the directory specified in the environment variable HOME. 
+
+The Change Directory window is always available in the \k(File) menu
+of any window containing a \k(Command Pane) or a \k(Process Pane) or
+any window that is displayed automatically when the debugger is invoked.
+The Change Directory window is invoked by clicking SELECT on
+Change Directory in the \k(File) menu.
+
+^2^New Window Set
+^$119
+\k(File button)
+New Window Set
+
+Clicking SELECT on the New Window Set option creates a new \d(window set).
+Any window that is configured for automatic display will appear (see
+\k(Configuration).
+If any processes or threads were selected in the \k(Process Pane) of the 
+previous window set, they will be moved to the new window set, 
+otherwise the new window set will be empty. 
+
+The New Window Set option is always available in the \k(File) menu
+of any window containing a \k(Process Pane).
+
+^2^Windows
+^$1110
+\k(File button)
+Windows
+
+Clicking SELECT on the Windows option will bring up a popup menu with 
+an option for each other window in the \d(window set).  
+Selecting one of the options in the popup menu will open that window.  
+
+Any window configured for automatic display or containing a 
+\k(Process Pane) or a \k(Command Pane) is always available.
+Other windows will be available only if there is an active process
+in the window set.  Windows containing only an \k(Event Pane)
+are only available if there is a live process (as opposed to a core
+image) in the window set.
+
+If you have more than one window set active in the debugger session, 
+the popup menu will also contain an entry for each of the other 
+window sets.  Each entry will be of the form "Window set ID",
+where ID is a number that also appears in the window header 
+and menu titles.  Selecting one of these entries will pop up
+any window that is configured for automatic display in that
+window set (see \k(Configuration)).
+
+The Windows menu is available in the \k(File) menu of every
+debugger window.
+
+^3^Popup Window Button
+^$11101
+\k(File button)
+\k(Windows)
+Popup Window Button
+
+The Popup Window Button is available only in the \d(Button Bar)
+of a window.  The label on the button describes the window
+to be popped up.  Clicking SELECT on the button will popup
+the window associated with that button in the same window set
+as the window containing the button.  A button bar may
+contain multiple Popup Window Buttons.
+
+^2^Close Window
+^$1111
+\k(File button)
+Close Window
+
+Clicking SELECT on the Close Window option will close the window. The 
+window may be reopened with the \k(Windows) option in the File menu 
+button of any other window in its window set. 
+
+If the window is the only open window in its \d(window set), closing the 
+window gets rid of that window set. You will not be able to close the 
+last window in a window set if that window set contains any processes 
+or threads. 
+
+If the window is the only debugger window open, Close Window is 
+equivalent to \k(Quit).  If there are any processes or threads under the 
+debugger's control, you will be asked for confirmation before 
+exiting. 
+
+The Close Window option is available in the \k(File) menu of every
+debugger window.
+
+^2^Quit
+^$1111
+\k(File button)
+Quit
+
+Clicking SELECT on the Quit option lets you exit from the debugger.  
+If there are any processes or threads under the debugger's control, 
+you will be asked for confirmation.  When you exit the debugger, all 
+controlled processes and threads will be killed, if they were created 
+(see \k(Create)), or released and run, if they were grabbed (see 
+\k(Grab Process) or \k(Release)). 
+
+The Quit option is available in the \k(File) menu of every
+debugger window.
+
+^1^Edit button=Edit
+^$120
+Edit button
+
+Clicking MENU on the Edit button brings up a menu with different
+options, depending on which panes are present in the window.
+
+If the window contains a \k(Process Pane) or a \k(Stack Pane), 
+the Edit menu will contain the following option:
+
+\t\k(Set Current)
+
+If the window contains a \k(Symbol Pane), the Edit menu will
+contain the following options:
+
+\t\k(Export)
+\t\k(Pin)
+\t\k(Unpin)
+
+If the window contains a \k(Source Pane), a \k(Disassembly Pane)
+or a \k(Registers Pane), the Edit menu will contain the 
+following option:
+
+\t\k(Copy)
+
+If the window contains an \k(Event Pane), the Edit menu will
+contain the following options:
+
+\t\k(Disable)
+\t\k(Enable)
+\t\k(Delete)
+
+Finally, if the window contains a \k(Command Pane), the Edit
+menu will contain the following options:
+
+\t\k(Copy)
+\t\k(Input)
+\t\k(Interrupt)
+
+The set of options contained in the Edit menu for any window
+is a union of the options contributed by each pane contained in 
+that window.
+
+^2^Copy
+^$121
+\k(Edit button)
+Copy
+
+Clicking SELECT on the Copy button in the Edit menu, copies 
+selected text from the \k(Transcript Pane), \k(Source Pane), \k(Registers Pane) or
+\k(Disassembly Pane) to the clipboard. Copy is not available unless 
+there is a text selection. 
+
+Copy is available in the Edit menu of any window containing a
+\k(Command Pane), \k(Source Pane),  \k(Disassembly Pane) or
+\k(Registers Pane).
+
+^2^Set Current
+^$122
+\k(Edit button)
+Set Current
+
+The Set Current option lets you change the \d(current context). If a 
+process or thread is selected, Set Current will make the selected 
+object the \d(current process or thread). If a stack frame is selected, 
+Set Current will make the selected frame the \d(current frame).  The 
+information in all the windows in the \d(window set) will be updated to 
+reflect the new context. 
+
+The Set Current option is not available unless one process or thread 
+in the \k(Process Pane) or one frame in the \k(Stack Pane) is selected. 
+Set Current is available in the Edit menu of any window containing a
+a \k(Process Pane) or a \k(Stack Pane).
+
+^2^Export
+^$123
+\k(Edit button)
+Export
+
+The Export menu option lets you export a debugger-maintained, 
+user-defined variable to the environment.  The exported variables 
+become part of the environment that is received by debugger-created 
+processes.  If the values of the variables change, you must re-export 
+them for the new values to become part of the environment.  Note that 
+the variables are exported without the '$' prefix. 
+
+The Export option is available only if you are displaying 
+user-defined variables in the \k(Symbol Pane) and have selected one or 
+more of them. The \k(Symbols) popup window lets you choose what is 
+displayed in the \k(Symbol Pane). 
+
+Export is only available in the Edit menu of windows containing
+a \k(Symbol Pane).
+
+^2^Disable
+^$124
+\k(Edit button)
+Disable
+
+Clicking SELECT on the Disable button disables the events selected
+in either part of the \k(Event Pane) (Main Event Pane or On Stop
+Event Pane).  Disabled events have no effect on the 
+processes and threads they apply to, but are not deleted.  
+They may be reinstated with \k(Enable). 
+
+One or more events in both panes may be selected.  This option is not 
+available if the selected events are already disabled. 
+
+Disable is only available in the Edit menu of windows containing
+an \k(Event Pane).
+
+^2^Enable
+^$125
+\k(Edit button)
+Enable
+
+Clicking SELECT on the Enable button enables the events selected
+in either part of the \k(Event Pane) (Main Event Pane or Onstop
+Event Pane).  One or more \k(disabled^^Disable) events in both 
+panes may be selected.  This option is not available if the selected 
+events are not disabled.  Once enabled, an event will again 
+affect the process or thread it is enabled in. 
+
+Enable is only available in the Edit menu of windows containing
+an \k(Event Pane).
+
+^2^Delete
+^$126
+\k(Edit button)
+Delete
+
+Clicking SELECT on the Delete button deletes all events selected in
+the \k(Event Pane).  This option is not available if you have 
+not selected any events. 
+
+Delete is only available in the Edit menu of windows containing
+an \k(Event Pane).
+
+^2^Input
+^$127
+\k(Edit button)
+Input
+
+The Input popup window lets you send input to a process whose I/O is 
+captured (see \k(Create)).  Enter the string in the Input field.  If the 
+Append Newline option is set, a new-line character will be added to 
+the end of the string. The string will be echoed in the 
+\k(Transcript Pane).
+
+The Input window may be popped up by clicking SELECT on the Input 
+option in the Edit menu of any window containing a \k(Command Pane).
+This option is not available unless the \d(current process or thread)'s I/O is captured. 
+
+^2^Interrupt
+^$128
+\k(Edit button)
+Interrupt
+
+Clicking SELECT on the Interrupt option lets you interrupt a script 
+or a command from the \k(Command Line). This is useful if the script or 
+command has gotten into an infinite loop or is generating lots of 
+output. 
+
+Interrupt is only available in the Edit menu of windows containing
+a \k(Command Pane).
+
+^2^Pin
+^$129
+\k(Edit button)
+Pin
+
+The Pin option is available in the \k(View) menu of any window containing 
+a \k(Symbol Pane). Clicking SELECT on the Pin option lets you pin all of the 
+selected variables.  This option is not available unless you have selected 
+one or more unpinned variables in the \k(Symbol Pane). 
+
+A pinned variable remains in the \k(Symbol Pane) for as long as the 
+process or thread in which it resides is the \d(current process or thread),
+or until it is unpinned. Any user, program or debugger variable 
+can be pinned. Pinned variables percolate to the top of the list as the 
+\k(Symbol Pane) is updated. When a program variable goes out of scope, it
+takes on a value of "??".
+
+^2^Unpin
+^$1210
+\k(Edit button)
+Unpin
+
+The Unpin option is available in the \k(View) menu of any window containing 
+a \k(Symbol Pane). Clicking SELECT on the Unpin option lets you unpin all of 
+the selected variables that have been previously pinned.  This option is not 
+available unless you have selected one or more pinned variables in the 
+\k(Symbol Pane). 
+
+An unpinned variable will disappear from the \k(Symbol Pane) if it no longer
+belongs to the list of symbols that would normally be displayed from the 
+current scope in accordance with the \k(Symbols) property settings.
+
+^1^View button=View
+^$130
+View button
+
+The View button provides control over the state of the
+threads and processes being debugged;
+Clicking MENU on the View button brings up a menu with different
+options, depending on which panes are present in the window.
+Every window contains a View menu
+
+If the window contains a \k(Process Pane), the View menu will 
+contain the following option:
+
+\t\k(Map)
+
+If the window contains a \k(Symbol Pane), the View menu will
+contain the following options:
+
+\t\k(Expand)
+\t\k(Show Value)
+\t\k(Set Value)
+\t\k(Show Type)
+\t\k(Dump)
+
+If the window contains a \k(Source Pane) the View menu will
+contain the following options:
+
+\t\k(Show Line)
+\t\k(Show Function Source)
+\t\k(Search)
+\t\k(Expand)
+\t\k(Show Value)
+\t\k(Set Value)
+\t\k(Show Type)
+
+Finally, if the window contains a \k(Disassembly Pane) the View 
+menu will contain the following options:
+
+\t\k(Show Location)
+\t\k(Show Function Dis)
+\t\k(Search)
+\t\k(Show Value)
+\t\k(Set Value)
+\t\k(Dump)
+\t\k(Map)
+
+The set of options contained in the View menu for any window
+is a union of the options contributed by each pane contained in 
+that window.
+
+^2^Expand
+^$131
+\k(View button)
+Expand
+
+The Expand popup window lets you see the contents of a structure that 
+a pointer variable points to, follow a chain of pointers, or display 
+the contents of an array.  This window is popped up by clicking the 
+SELECT button on the Expand option in the \k(View) menu of any window
+containing either a \k(Symbol Pane) or a \k(Source Pane).
+This option is available only if you have selected one symbol in the
+\k(Symbol Pane) or an expression in the \k(Source Pane).
+
+If the selected symbol is a pointer, the Expression field will be 
+initialized with the expression needed to dereference the pointer. 
+(For C and C++ programs, that expression would be *symbol).  If the 
+selected symbol is anything other than a pointer, the Expression 
+field will display the name of the symbol.  In both cases, the Result 
+will show the value of the expression. 
+
+If the Result field displays structure, class, or array members which 
+are themselves pointers, you may dereference one of the pointers by 
+selecting that member in the Result field and clicking SELECT on the 
+Expand button.  The Expression and Result fields will then be updated 
+to show the current pointer chain.  (You could see the same thing by 
+typing the expression in the Expression field of the \k(Show Value) popup 
+window).  There is no limit to the number of pointers you may 
+dereference in this manner, but you may not dereference null pointers 
+(pointers that show a value of 0), pointers of type void *, or 
+pointers with no information about the type pointed to.  This will 
+happen if the compilation unit included only a forward declaration of 
+the type name and did not also include the definition of the class or 
+structure pointed to. 
+
+At any point in following a chain of pointers, you may backtrack by 
+clicking SELECT on the Collapse button.  That will go back one link in 
+the chain, or one level of dereference.  You may click SELECT on 
+Collapse as many times as you have clicked SELECT on Expand. 
+
+^2^Show Value
+^$132
+\k(View button)
+Show Value
+
+The Show Value popup window lets you see the value of an expression 
+in the current language. Enter the expression you want evaluated in 
+the Expression field.  You may also enter a comma-separated list of 
+expressions.  The expressions may contain program variables, built-in 
+debugger variables, and user-defined variables.  Clicking SELECT on 
+the Show Value button will cause the expressions to be evaluated and 
+the results to be displayed in the Result area.  For details on what 
+expressions are accepted, see the section on the specific language: 
+
+        \k(Support for the C Language)
+        \k(Support for the C++ Language)
+
+The Show Value popup window is available from the View menu in
+any window containing a \k(Symbol Pane), \k(Source Pane) or \k(Disassembly Pane).
+If you have selected a variable in one of these panes when the Show Value
+window is popped up, the name of that variable will be 
+used to initialize the Expression field.  If you have selected any 
+processes or threads in the \k(Process Pane), the expression will be
+evaluated in the context of each of those processes and threads in turn.
+If you have not selected any processes or threads, the \d(current process or thread)
+is used. 
+
+You may select the format of the result from one of the  choices in 
+the Format column.  Choosing "Default" will let the debugger print the 
+result in the format it chooses based on the type of the result.  
+There are several other choices, such as "Octal", "Decimal", and 
+"Character".  Choosing "Other" lets you enter a printf(3C)-like format 
+string in the Specify format field.  You may not enter anything in 
+this field without first selecting Other. 
+
+Evaluating a function call results in the debugger creating a stack 
+frame for that function and executing it.  Debugger events are 
+disabled during the function's execution. 
+
+The \k(Expand) option is similar to the Show Value option, but provides 
+specialized capabilities for dereferencing pointers. 
+
+^2^Set Value
+^$133
+\k(View button)
+Set Value
+
+The Set Value popup window lets you set a debugger built-in or 
+debugger-maintained user variable or evaluate any language 
+expression.  To set a debugger or user variable, enter an expression 
+of the form: 
+         variable = expression [,expression ...]
+in the Expression field.  The legal values of expression depend on the 
+variable. If you enter a comma-separated list of strings and user 
+variables, the string values of these expressions are concatenated. 
+
+You may also enter any expression in the current language in the 
+Expression field, although the typical use would be to evaluate an 
+assignment expression.  For details on what expressions are accepted, 
+see the section on the specific language: 
+
+        \k(Support for the C Language)
+        \k(Support for the C++ Language)
+
+The Set Value popup window is available from the View menu in any
+window containing a \k(Symbol Pane), \k(Source Pane) or \k(Disassembly Pane).
+If you have selected a variable in one of these panes when the Set Value
+window is popped up, the name of that variable will be used to initialize the 
+Expression field.  If you have selected any processes or threads in 
+the \k(Process Pane), the expression will be evaluated in the context of 
+each of those processes and threads in turn.  If you have not selected 
+any processes or threads, the \d(current process or thread)is used. 
+
+^2^Show Type
+^$134
+\k(View button)
+Show Type
+
+The Show Type popup window lets you see the type of an expression in 
+the current language.  Enter the expression in the Expression field.  
+Clicking SELECT on the Show Type button will cause the type to be 
+displayed in the Type area.  For details on what expressions are 
+accepted, see the section on the specific language: 
+
+        \k(Support for the C Language)
+        \k(Support for the C++ Language)
+
+You may also enter a type name in the Expression field.  The debugger 
+will then display the definition of the named type, including the 
+members if the type is a class, structure, union, or enumeration 
+type. 
+
+The Show Type popup window is available from the View menu in any
+window containing either a \k(Symbol Pane) or a \k(Source Pane).
+If you have selected a variable in one of these panes when the Show Type
+window is popped up, the name of that variable will be used to initialize the 
+Expression field.  If you have selected any processes or threads in the 
+\k(Process Pane) the type will be displayed in the context of each of 
+those processes and threads in turn. If you have not selected any 
+processes or threads, the \d(current process or thread) is used. 
+
+^2^Show Line
+^$135
+\k(View button)
+Show Line
+
+The Show Line option brings up a popup window that lets you position 
+the file displayed in the Source Pane at a specific line.  Enter the 
+line number in the Line field.  The Show Line window is popped up by 
+clicking SELECT on the Show Line option in the \k(View) menu of
+any window containing a \k(Source Pane).
+
+^2^Show Function Source
+^$136
+\k(View button)
+Show Function Source
+
+The Show Function Source popup window lets you display the source for any 
+function in the \d(current process or thread) that was compiled with 
+debugging information. This window is popped up by clicking SELECT on 
+the Show Function Source option in the \k(View) menu of any window containing
+a \k(Source Pane).
+
+The popup window displays two scrolling lists.  The first list 
+displays the objects making up the selected process or the parent 
+process of the selected thread; the objects are the executable file 
+and any shared libraries it depends on.  The second list shows a list 
+of functions. If the "Show Functions from Current File" option is 
+set, the Objects scrolling list is ignored, and only the functions 
+that are defined in the file currently displayed in the Source Pane 
+are shown in the Functions list.  If the "Show Functions from Selected 
+Object" option is set, the selection in the Objects list determines 
+the functions listed.  The list of functions may be blank if the 
+selected object does not contain any functions compiled with 
+debugging information. 
+
+You may select one function in the Functions list.  Clicking SELECT on 
+the Show Function button will cause that function to be displayed in 
+the \k(Source Pane) of the parent window.  You may also drag the 
+selected function and drop it on the \k(Source Pane) or on the Work 
+Space.  Dropping it on the Work Space will open a new, 
+\d(secondary source window) displaying the selected function. 
+
+^2^Show Function Dis
+^$137
+\k(View button)
+Show Function Dis 
+
+The Show Function Dis popup window lets you display the disassembly for 
+any function in the \d(current process or thread).  The Show Function Dis
+window is popped up by clicking SELECT on the Show Function Dis option in 
+the \k(View) menu of any window containing a \k(Disassembly Pane).
+
+The popup window displays two scrolling lists.  The first list 
+displays the objects making up the selected process or the parent 
+process of the selected thread; the objects are the executable file 
+and any shared libraries the executable depends on.  The selection in 
+this list determines the functions that are displayed in the second 
+list. 
+
+You may select one function in the Functions list.  Clicking SELECT on 
+the Show Function button will cause that function to be displayed in 
+the Disassembly Pane of the parent Disassembly Window.  You may also 
+drag the selected function and drop it on the \k(Disassembly Pane). 
+
+^2^Show Location
+^$138
+\k(View button)
+Show Location
+
+The Show Location option brings up a popup window that lets you 
+position the \k(Disassembly Pane) to show a specific address.  Enter the 
+hexadecimal address in the Location field.  The Show Location window 
+is popped up by clicking SELECT on the Show Location option in the 
+\k(View) menu of any window containing a \k(Disassembly Pane).
+
+^2^Search
+^$139
+\k(View button)
+Search
+
+The Search popup window lets you enter an ed(1)-style regular 
+expression to search for in the Source or Disassembly Panes.  Enter 
+the expression to be searched for in the Text field.  The expression 
+may contain any combination of the following elements: 
+\t.\tMatches any character except a newline
+\t[...]\tMatches any one of the enclosed characters,
+\t\t\tranges are allowed, and ^ indicates negation
+\t*\tIndicates zero or more of the preceding RE
+\t^\tMatches the null string at the beginning of a line
+\t$\tMatches the null string at the end of a line
+\t\{m\}\tIndicates exactly m occurrences of the preceding RE
+\t\{m,\}\tIndicates at least m occurrences of the preceding RE
+\t\{m,n\}\tIndicates m to n, inclusive, occurrences
+\t\(...\)\tMatches the same thing as ... matches
+\t\digit\tMatches the nth parenthesized RE in the same expression
+\t\<\tMatches the null string at the beginning of a word
+\t\>\tMatches the null string at the end of a word
+
+The Search window may be popped up from the \k(View) menu of any
+window containing either a \k(Source Pane) or a \k(Disassembly Pane).
+If there is any text selected in one of those panes, it is used to 
+initialize the Text field.   If the parent window contains both
+Source and Disassembly Panes, there will be a selection available
+to choose which pane to search.
+
+You may search forwards or backwards.  If text is selected, the search 
+begins after (or before) the selected string; otherwise the search 
+begins from the current position of the cursor. 
+
+^2^Dump
+^$1310
+\k(View button)
+Dump
+
+The Dump popup window lets you see the contents of memory at a 
+specific \k(location) in the selected process or thread.  Enter the 
+location in the Location field. 
+
+You may enter the number of bytes to be displayed in the Count field.  
+If you do not enter a number there, debug will display 256 bytes, 16 
+bytes per line. The bytes will be displayed in both hexadecimal and 
+ASCII. 
+
+The Dump popup window is available from the \k(View) menu of any window
+containing either a \k(Symbol Pane) or a \k(Process Pane).
+If there is a variable selected in one of those panes, its name is 
+used to initialize the Location field.  If you have selected a 
+process or thread in the \k(Process Pane) the contents of the location
+in that process or thread are shown.  If you have not selected a 
+process or thread, the \d(current process or thread) is used. 
+
+The \k(Show Value) and \k(Expand) windows provide other ways to examine the 
+address space of a process or thread. 
+
+^2^Map
+^$1311
+\k(View button)
+Map
+
+The Map popup window displays the virtual address map for the 
+selected process or the parent process of the selected thread. The 
+information displayed includes the start and end addresses, size, and 
+access permissions for each segment. 
+
+The Map window is available from the \k(View) menu of any window containing
+either a \k(Process Pane) or a \k(Disassembly Pane).
+If a process is selected in the \k(Process Pane), the address map 
+for that process will be displayed.  Only one process may 
+be selected.  If no process is selected, the address map for the 
+current process is displayed. 
+
+^1^Control button=Control
+^$14
+Control button
+
+The Control button provides access to the address space of a
+controlled process.
+Clicking MENU on the Control button brings up a menu with different
+options, depending on which panes are present in the window.
+Every window provides a Control menu with at least the following
+options:
+
+\t\k(Run)
+\t\k(Return)
+\t\k(Run Until)
+\t\k(Step Statement)
+\t\k(Step Instruction)
+\t\k(Next Statement)
+\t\k(Next Instruction)
+\t\k(Step)
+\t\k(Jump)
+\t\k(Halt)
+
+In addition, if the window contains a \k(Source Pane), the 
+Control menu will contain the following option:
+
+\t\k(Animate Source)
+
+Finally, if the window contains a \k(Disassembly Pane) the Control 
+menu will contain the following options:
+
+\t\k(Animate Disassembly)
+
+The set of options contained in the Control menu for any window
+is a union of the default options and the options contributed by 
+each pane contained in that window.
+
+^2^Run
+^$141
+\k(Control button)
+Run
+
+The Run option is invoked by clicking SELECT on the Run button
+in the \k(Control) menu of any window.  If the window contains a
+\k(Process Pane), and there are threads or processes selected in
+that pane, invoking the Run option starts the selected threads
+and processes running.  If no processes or threads are selected,
+or Run is invoked from a window that does not contain a \k(Process Pane),
+the \d(current process or thread) is set running.  This option 
+is not available unless all the selected processes and threads are 
+stopped. 
+
+^2^Return
+^$142
+\k(Control button)
+Return
+
+The Return option is invoked by clicking SELECT on the Return button
+in the \k(Control) menu of any window.  If the window contains a
+\k(Process Pane), and there are threads or processes selected in
+that pane, invoking the Return option starts the selected threads
+and processes running.  If no processes or threads are selected,
+or Return is invoked from a window that does not contain a \k(Process Pane),
+the \d(current process or thread) is set running.  Each process or
+thread that is set running will run until the current function returns. 
+
+Note that the process or thread may stop before returning to the 
+calling function if an event triggers while it is running. 
+
+This option is not available unless all the selected processes 
+and threads are stopped. 
+
+^2^Run Until
+^$143
+\k(Control button)
+Run Until
+
+The Run Until popup window lets you specify a \k(location) to run to. 
+Enter the location on the line labeled Location. 
+
+Run Until is invoked by clicking SELECT on the Run Until option in
+the \k(Control) menu of any window.  If you popped up the Run Until window
+from a window containing a \k(Process Pane), the selected processes and 
+threads (if any) in the \k(Process Pane) are affected.  Otherwise, the
+\d(current process or thread) is affected. 
+
+Note that Run Until does not guarantee that the process or thread 
+will ever get to the specified location.  If your program takes an 
+unexpected execution path, it may exit or simply bypass the location.  
+Also, if an event triggers, the process or thread will stop before 
+reaching the specified location. 
+
+^2^Step Statement
+^$144
+\k(Control button)
+Step Statement
+
+Clicking SELECT on the Step Statement option steps the affected
+processes and threads through one source statement, stepping into 
+function calls. 
+
+If the window contains a \k(Process Pane), and there are threads
+or processes selected in that pane, the Step Statement option 
+affects the selected threads and processes. If no processes or threads
+are selected, or Step Statement is invoked from a window that does
+not contain a \k(Process Pane), the \d(current process or thread) is 
+affected.
+
+This option is not available unless all the selected processes 
+and threads are stopped. 
+
+^2^Step Instruction
+^$145
+\k(Control button)
+Step Instruction
+
+Clicking SELECT on the Step Instruction option steps the affected
+processes and threads through one machine instruction, stepping into 
+function calls. 
+
+If the window contains a \k(Process Pane), and there are threads
+or processes selected in that pane, the Step Instruction option 
+affects the selected threads and processes. If no processes or threads
+are selected, or Step Instruction is invoked from a window that does
+not contain a \k(Process Pane), the \d(current process or thread) is 
+affected.
+
+This option is not available unless all the selected processes 
+and threads are stopped. 
+
+^2^Next Statement
+^$146
+\k(Control button)
+Next Statement
+
+Clicking SELECT on the Next Statement option steps the affected
+processes and threads through one source statement. Function calls are 
+stepped over (treated as a single statement).  Note that the process 
+or thread may still stop if an event triggers while the process or 
+thread is in the called subroutine. 
+
+If the window contains a \k(Process Pane), and there are threads
+or processes selected in that pane, the Next Statement option 
+affects the selected threads and processes. If no processes or threads
+are selected, or Next Statement is invoked from a window that does
+not contain a \k(Process Pane), the \d(current process or thread) is 
+affected.
+
+This option is not available unless all the selected processes 
+and threads are stopped. 
+
+^2^Next Instruction
+^$147
+\k(Control button)
+Next Instruction
+
+Clicking SELECT on the Next Instruction option steps the affected
+processes and threads through one machine instruction. Function calls are 
+stepped over (treated as a single statement).  Note that the process 
+or thread may still stop if an event triggers while the process or 
+thread is in the called subroutine. 
+
+If the window contains a \k(Process Pane), and there are threads
+or processes selected in that pane, the Next Instruction option 
+affects the selected threads and processes. If no processes or threads
+are selected, or Next Instruction is invoked from a window that does
+not contain a \k(Process Pane), the \d(current process or thread) is 
+affected.
+
+This option is not available unless all the selected processes 
+and threads are stopped. 
+
+^2^Step
+^$148
+\k(Control button)
+Step
+
+The Step popup window gives you more control over stepping than the 
+other options in the \k(Control) menu provide. 
+
+The first set of options lets you control how many times the process 
+or thread is stepped.  Selecting Single Step steps the process or 
+thread once.  If you select Step Count Times, you must enter, in the 
+Count field, the number of times to step the process or thread. 
+
+The Statement and Instruction options specify the level at which 
+stepping is to take place. 
+
+The Over Call option lets you specify whether to step over or into 
+function calls. 
+
+If you popped up the Step window from a window containing a \k(Process Pane),
+the selected processes and threads (if any) are affected. Otherwise, 
+the \d(current process or thread) is affected. 
+
+The \k(Step Statement), and \k(Step Instruction), \k(Next Statement), and 
+\k(Next Instruction)options in the \k(Control) menu provide simpler ways to 
+step a process or thread. For example, \k(Next Instruction) is equivalent 
+to selecting Single Step, Instruction, and Over Call in the Step 
+window. In addition, the \k(Animate Source) and \k(Animate Disassembly)
+buttons will step the process or thread continually until stopped. 
+
+^2^Animate Source
+^$149
+\k(Control button)
+Animate Source
+
+The Animate Source option is invoked by clicking SELECT on Animate Source
+in the \k(Control) menu of any window containing a \k(Source Pane).
+The Animate Source option starts the \d(current process or thread) stepping, 
+and it will continue stepping until an event triggers or until you stop 
+it.  A message will appear at the bottom of the window
+indicating that the process or thread is being animated. To stop the 
+animation, select the \k(Halt) button in the \k(Control) menu.  Except for 
+\k(Destroy) and \k(Input), no actions that affect the state of 
+the process or thread are allowed while it is being animated. 
+
+While the process or thread is animated, the debugger will highlight 
+each statement in the \k(Source Pane) as it is executed.  It will step 
+into any function calls that are encountered.  Information in other 
+windows is not updated until the animation stops.  Animation stops if the 
+process or thread terminates, or if the thread enters the Off-LWP or 
+Suspended state, or if an event triggers. 
+
+If the stepping happens too fast to follow easily, you may slow it 
+down using the \k(Animation) option under the \k(Properties) menu. 
+
+By selecting the Animate Source option,  you specify 
+stepping at the statement level.  The \k(Animate Disassembly) option in the 
+\k(Control) menu of any window containing a \k(Disassembly Pane) lets 
+you animate the process or thread at the instruction level. 
+
+^3^Step Statement
+
+^2^Animate Disassembly
+^$1410
+\k(Control button)
+Animate Disassembly
+
+The Animate Disassembly option is invoked by clicking SELECT on Animate Disassembly
+in the \k(Control) menu of any window containing a \k(Disassembly Pane).
+The Animate Disassembly option starts the \d(current process or thread) stepping, and 
+it will continue stepping until an event triggers or until you stop 
+it. A message will appear at the bottom of the window
+indicating that the process or thread is being animated. To stop the 
+animation, select the \k(Halt) button in the \k(Control) menu.  Except for 
+\k(Destroy) and \k(Input), no actions that affect the state of 
+the process or thread are allowed while it is being animated. 
+
+While the process or thread is animated, the debugger will highlight 
+each instruction in the \k(Disassembly Pane) as it is executed.  It will 
+step into any function calls that are encountered.  Information in 
+other windows is not updated until the animation stops.  Animation 
+stops if the process or thread terminates, or if the thread enters 
+the Off-LWP or Suspended state, or if an event triggers. 
+
+If the stepping happens too fast to follow easily, you may slow it 
+down using the \k(Animation) option under the \k(Properties) menu. 
+
+By selecting the Animate Disassembly option, you 
+specify stepping at the instruction level.  The \k(Animate Source) 
+option in the \k(Control) menu of any window containing a \k(Source Pane)
+lets you animate the process or thread at the statement level. 
+
+^2^Jump
+^$1411
+\k(Control button)
+Jump
+
+The Jump popup window lets you specify a \k(location) from which to 
+resume the execution of the affected processes and threads. Enter the 
+location on the Location line. 
+
+This option does not resume execution of the selected processes or 
+threads.  The next time you select one of the other options in the 
+\k(Control) menu, execution will start from this location. 
+
+The location may be any address within the text of the selected 
+processes, but extreme care should be taken.  Jump does not attempt to 
+adjust the process or thread stack if the address is outside of the 
+current function. Care must also be taken in jumping around code that 
+might have important side effects. 
+
+If the window contains a \k(Process Pane), and there are threads
+or processes selected in that pane, the Jump option 
+affects the selected threads and processes. If no processes or threads
+are selected, or Jump is invoked from a window that does
+not contain a \k(Process Pane), the \d(current process or thread) is 
+affected.
+
+This option is not available unless all the selected processes 
+and threads are stopped. 
+
+^2^Halt
+^$1412
+\k(Control button)
+Halt
+
+Clicking SELECT on the Halt option directs the affected processes and 
+threads to immediately suspend execution.  
+This option is not available unless all the selected 
+processes and threads are in the Running or Stepping states. 
+
+If the window contains a \k(Process Pane), and there are threads
+or processes selected in that pane, the Halt option 
+affects the selected threads and processes. If no processes or threads
+are selected, or Halt is invoked from a window that does
+not contain a \k(Process Pane), the \d(current process or thread) is 
+affected.
+
+Note that the Halt request may not take effect instantaneously, due 
+to system latency and scheduling variations. 
+
+^1^Event button=Event
+^$15
+Event button
+
+The Event button allows the user to create events that will
+alter the control flow of a thread or process.
+Clicking MENU on the Event button brings up a menu with different
+options, depending on which panes are present in the window.
+Every window provides an Event menu with at least the following
+options:
+
+\t\k(Stop on Function)
+\t\k(Stop)
+\t\k(Signal)
+\t\k(Syscall)
+\t\k(On Stop)
+\t\k(Cancel)
+\t\k(Destroy)
+\t\k(Kill)
+\t\k(Ignore Signals)
+
+In addition, if the window contains a \k(Symbol Pane), the 
+Event menu will contain the following option:
+
+\t\k(Set Watchpoint)
+
+If the window contains a \k(Source Pane) or a \k(Disassembly Pane) 
+the Event menu will contain the following options:
+
+\t\k(Set Breakpoint)
+\t\k(Delete Breakpoint)
+
+Finally, if the window contains an \k(Event Pane), the Event menu will 
+contain the following option:
+
+\t\k(Change)
+
+The set of options contained in the Event menu for any window
+is a union of the default options and the options contributed by 
+each pane contained in that window.
+
+^2^Set Breakpoint
+^$151
+\k(Event button)
+Set Breakpoint
+
+The Set Breakpoint option is available if you have selected a line in 
+the \k(Source Pane) or an instruction in the \k(Disassembly Pane)
+and if the \d(current process or thread) is stopped.  
+Clicking SELECT on this option will create a breakpoint (a type of 
+\d(stop event)) in the \d(current program) or \d(current process or thread).  
+The event will be indicated by a stop sign on the selected line or
+instruction.  The event will also be displayed in the Main Event Pane of
+the \k(Event Pane). You may also set a breakpoint by double-clicking the 
+SELECT button in the left margin of the selected line or instruction.
+
+When attempting to set a breakpoint on a source line, the debugger 
+will display a message if it is unable to set the
+breakpoint on the selected line.  There are several reasons why
+it may not be able to set the breakpoint:
+
+    o The source line does not contain anything that would generate
+      executable code.  This would include blank lines and lines
+      containing only comments and variable declarations.
+
+    o The line is part of a multi-line statement.  You may set a
+      breakpoint on only one line of a multi-line statement or
+      condition.
+
+    o The line is the beginning of a function definition.  Set the
+      breakpoint on the first statement in the function instead.
+
+^2^Delete Breakpoint
+^$152
+\k(Event button)
+Delete Breakpoint
+
+The Delete Breakpoint option is available if you selected a source line with 
+a stop sign on it in the \k(Source Pane) or an instruction with a stop
+sign on it in the \k(Disassembly Pane).  The stop sign indicates that 
+there is a breakpoint (a type of \d(stop event)) on that line or instruction.
+Clicking SELECT on the Delete Breakpoint option will remove the 
+breakpoint and delete the event. You may also remove a breakpoint 
+by double-clicking the SELECT button in the left margin of the line 
+with the breakpoint. 
+
+^2^Set Watchpoint
+^$153
+\k(Event button)
+Set Watchpoint
+
+The Set Watchpoint option is available in the \k(Control) menu of
+any window containing a \k(Symbol Pane).
+Clicking SELECT on the Set Watchpoint option lets you set watchpoints 
+on selected variables.  This option is not available unless you have 
+selected one or more program variables in the \k(Symbol Pane). 
+
+A watchpoint is a type of \d(stop event) that tells the debugger to stop 
+the program whenever the variable changes value.  The debugger will 
+create a separate stop event for each variable.  The new events will 
+be displayed, and may be deleted or disabled, in the \k(Event Pane). 
+
+^2^Stop on Function
+^$154
+\k(Event button)
+Stop on Function
+
+The Stop on Function popup window lets you set a breakpoint on a 
+function. This window is available from the \k(Event) menu of any
+window.
+
+The popup window displays two scrolling lists.  The first list 
+displays the objects (the executable file and shared libraries) 
+making up the selected process or the parent process of the selected 
+thread.  The selection in this list determines the list of functions 
+displayed in the second list. 
+
+You may select one function in the second list to set a breakpoint 
+on.  Setting a breakpoint creates a \d(stop event).  By default, events 
+apply to all the processes and threads derived from the selected 
+\k(program^processes and threads), not just the selected process or thread. If you want to 
+change this behavior, use the \k(Granularity) option in the \k(Properties) 
+menu.  If you have not selected a program in the \k(Process Pane), 
+or you invoke Stop on Function from a window that does not contain a 
+process pane, the \d(current program) is assumed.  The affected 
+programs are listed in the Programs line at the top of the popup window. 
+The event created by executing this command will be displayed in the 
+Main Event Pane of the \k(Event Pane). 
+
+^2^Stop
+^$155
+\k(Event button)
+Stop
+
+The Stop popup window lets you create a \d(stop event).  A stop event 
+specifies some condition in the program's address space that will 
+cause the debugger to stop the program's execution. 
+
+Enter a \k(Stop Expression) on the Expression line.  The debugger 
+evaluates the stop expression continuously while the subject process 
+or thread is running.  The debugger will stop the process or thread 
+when the expression becomes true. 
+
+You may enter, in the Commands field, an action for the debugger to 
+perform any time the event triggers.  The action should be one or more 
+of the commands available through the debugger's command-line 
+interface.  The results of executing the commands will be displayed in 
+the \k(Command Pane). 
+
+You may enter a number in the Count field to tell the debugger to let 
+the event trigger that many times before halting the process or 
+thread.  After that, the process or thread will be halted on each 
+occurrence of the event. 
+
+The Stop popup window is available from the \k(Event) menu of any
+window.  If you popped up the Stop window from a window containing a
+\k(Process Pane) the new event will apply to the selected \k(program^processes and threads)s 
+(if any) in the \k(Process Pane).  Otherwise, the event applies to
+the \d(current program) or \d(current process or thread). 
+
+By default, events apply to all the processes and threads derived 
+from a program, not just not just the selected process or thread.  If 
+you want to change this behavior, use the \k(Granularity) popup window.  
+The affected programs or processes are listed in the Programs line at 
+the top of the popup window. 
+
+The event created by executing this command will be displayed in the 
+Main Event Pane of the \k(Event Pane). 
+
+^3^Stop Expression
+^$1551
+\k(Event Button)
+\k(Stop)
+Stop Expression
+
+Stop Expressions are special expressions accepted by the \k(Stop) 
+command. A stop expression consists of one or more stop-events, 
+joined by the special && (and) or || (or) operators. These operators 
+are left-associative, but the debugger does not guarantee the order 
+in which their operands are evaluated. Each stop-event can be: 
+\tlocation
+\t( expr )
+\t*lvalue
+
+Each type of stop event has some action that will cause the event to 
+be noticed by the debugger. When such an action occurs, the entire 
+stop expression is evaluated for "truth". If true, the event triggers 
+in the normal way (the debugger will inform you of the event and 
+execute any associated commands). 
+
+A \k(location) is an address in the process or thread's text where the 
+debugger can set a breakpoint.  When the process or thread reaches the 
+specified location the debugger notices the event. For location stop 
+events that refer to function names, the expression is true as long 
+as that function is active. For location stop-events that apply to a 
+particular address or line number, the expression is true only when 
+the process or thread is at that address or line. When the current 
+language is C++, location stop events may also use C++-specific 
+features.  See the section on \k(C++ support) for more details. 
+
+"expr" can be any valid expression in the current \k(Language).  The 
+debugger notices the stop-event when any of the identifiers involved 
+in the expression changes value. The entire expression is then 
+evaluated in the context of the current language. 
+
+"lvalue" may be any expression in the current language that would be 
+valid on the left-hand side of an assignment statement in that 
+language.  The debugger notices this event when the contents of the 
+location change.  The change itself makes this kind of stop-event 
+true. 
+
+More powerful stop-expressions can be created by combining 
+stop-events using the special && (and) operator. For example, to stop 
+in function a only when function b is also active, enter "stop a && 
+b" in the Expression field in the \k(Stop) popup window.  To stop when the 
+value of some expression x becomes true within function y, enter 
+"stop y && (x)". 
+
+^3^Location=location
+^$1552
+\k(Event button)
+\k(Stop)
+Location
+
+The syntax for a location is: 
+\t[process/thread name@][filename@]line
+\tor [process/thread name@][filename@]symbol[+-constant]
+\tor address[+-constant]
+\tor register_name
+where "address" is an octal or hexadecimal program address, and 
+"constant" is a decimal integer. 
+
+Some examples of locations are: 
+    17\t\ta line number in the current file (%file)
+    foo.c@17\ta line number in some other file
+    0x80801234\tan address
+    main\t\ta function name or label
+    main+3\tthree bytes after the label
+    p1@main\ta function name in a specified process
+    %loc\t\tthe current location
+    %line\t\tthe current file and line number
+    %r0\t\ta register
+    %r0+80\ta register plus offset
+    %pc-4\ta register minus offset
+    $myvar\ta user-defined variable
+
+^2^Signal
+^$156
+\k(Event button)
+Signal
+
+The Signal popup window lets you create a \d(signal event).  A signal 
+event specifies an action to be executed whenever the processes or 
+threads in the selected \k(program^processes and threads) receive a particular signal. 
+
+You do not have to create an event simply to stop the process or 
+thread when it receives a signal, since the debugger will do that by 
+default.  See \k(Ignore Signals) for details on turning that capability on 
+and off. 
+
+The signals are displayed in a scrolling list.  You may select one or 
+more signals from the list.  The signals in the list are ordered 
+numerically by default.  The list may be ordered alphabetically by 
+selecting the Order list by Name option. 
+
+You must enter, in the Commands field, an action for the debugger to 
+perform when the event triggers.  The action should be one or more of 
+the commands available through the debugger's command-line interface.  
+The  results of executing the commands will be displayed in the 
+\k(Command Pane). 
+
+The Signal popup window is available from the \k(Event) menu of any
+window.  If you popped up the Signal window from a window containing a
+\k(Process Pane) the new event will apply to the selected \k(program^processes and threads)s 
+(if any) in the \k(Process Pane).  Otherwise, the event applies to
+the \d(current program) or \d(current process or thread). 
+
+By default, events apply to all the processes and threads derived 
+from a program, not just the selected process or thread.  If you want 
+to change this behavior, use the \k(Granularity) popup window.  The 
+affected programs or processes are listed in the Programs line at the 
+top of the popup window. 
+
+The event created by executing this command will be  displayed in the 
+Main Event Pane of the \k(Event Pane). 
+
+^2^Syscall
+^$157
+\k(Event button)
+Syscall
+
+The Syscall popup window lets you create a \d(syscall event).  A syscall 
+event specifies an action to be executed whenever the processes in 
+the selected \k(program^processes and threads) enter or exit a system call. 
+
+The valid system calls are displayed in a scrolling list.  You may 
+select one or more system calls from the list.  The system calls are 
+ordered alphabetically by default.  The list may be ordered 
+numerically by selecting the Order list by Number option.  The 
+debugger will halt the affected processes and threads on entry to, 
+and/or exit from, the selected system calls if the Entry or Exit 
+options, respectively, are set. 
+
+You may enter, in the Commands field, an action for the debugger to 
+perform any time the event triggers.  The action should be one or more 
+of the commands available through the debugger's command-line 
+interface.  The results of executing the commands will be displayed in 
+the \k(Command Pane). 
+
+You may enter a number in the Count field to tell the debugger to let 
+the event trigger that many times before halting the process or 
+thread.  After that, the process or thread will be halted on each 
+occurrence. 
+
+The Syscall popup window is available from the \k(Event) menu of any
+window.  If you popped up the Syscall window from a window containing a
+\k(Process Pane) the new event will apply to the selected \k(program^processes and threads)s 
+(if any) in the \k(Process Pane).  Otherwise, the event applies to
+the \d(current program) or \d(current process or thread). 
+
+By default, events apply to all the processes and threads derived 
+from a program, not just not just the selected process or thread.  If 
+you want to change this behavior, use the \k(Granularity) popup window.  
+The affected programs, processes, or threads are listed in the 
+Programs line at the top of the popup window. 
+
+The event created by executing this command will be displayed in the 
+Main Event Pane of the \k(Event Pane). 
+
+^2^On Stop
+^$158
+\k(Event button)
+On Stop
+
+The On Stop popup window lets you create an \d(onstop event).  An onstop 
+event specifies an action to be executed whenever an affected process 
+or thread stops.  Enter the action in the space labeled Commands.  The 
+action should be one or more of the commands available through the 
+debugger's command-line interface.  Each time the process or thread 
+stops, the commands are executed and the results displayed in the 
+\k(Command Pane).  Stopping includes single steps and stopping for 
+another debugger event (\k(Signal), \k(Syscall), or \k(Stop)). 
+
+The On Stop popup window is available from the \k(Event) menu of any
+window.  If you popped up the On Stop window from a window containing a
+\k(Process Pane) the new event will apply to the selected \k(program^processes and threads)s 
+(if any) in the \k(Process Pane).  Otherwise, the event applies to
+the \d(current program) or \d(current process or thread). 
+
+By default, events apply to all the processes and threads derived 
+from a program, not just the selected process or thread.  If you want 
+to change this behavior, use the \k(Granularity) popup window.  The 
+affected programs, processes or threads are listed in the Programs 
+line at the top of the window. 
+
+The event created by executing this command will be displayed in the 
+On Stop Pane of the \k(Event Pane). 
+
+^2^Cancel
+^$159
+\k(Event button)
+Cancel
+
+The Cancel popup window lets you cancel any signals that are caught 
+by the debugger.  When a signal is posted to a process or thread, the 
+debugger is notified before the process or thread receives it.  Cancel 
+allows you to get rid of the signal so the process or thread never 
+sees it. 
+
+The popup window displays a scrolling list of the signals pending 
+against the selected process or thread.  The next time you let the 
+process or thread run, it will not receive the signals you select 
+from this list. 
+
+The signals in the list are ordered numerically by default.  The list 
+may be ordered alphabetically by selecting the Order list by Name 
+option. 
+
+The Cancel popup window is available from the \k(Event) menu of any
+window.  If you popped up the Cancel window from a window containing a
+\k(Process Pane) the signals displayed will be pending against 
+the selected process or thread (if any) in the \k(Process Pane).  
+Otherwise, the \d(current process or thread) is used.
+
+2^Destroy
+^$1510
+\k(Event button)
+Destroy
+
+The Destroy option sends the signal SIGKILL to the affected
+processes.  This signal cannot be caught and causes the affected
+processes to terminate.
+
+The Destroy option is available from the \k(Event) menu of any
+window.  If you selected Destroy from a window containing a
+\k(Process Pane) the processes (if any) selected in the 
+\k(Process Pane) will be affected.  If nothing is selected, 
+or if Destroy was selected up from a window that does not 
+contain a Process Pane, only the current process will be affected.
+
+^2^Kill
+^$1511
+\k(Event button)
+Kill
+
+The Kill popup window lets you send a signal to a process or thread.  
+The popup window displays a scrolling list of signals; you may select 
+one signal from the list. The signals in the list are ordered 
+numerically by default.  The list may be ordered alphabetically by 
+selecting the Order list by Name option. 
+
+The Kill popup window is available from the \k(Event) menu of any
+window.  If you popped up the Kill window from a window containing a
+\k(Process Pane) the signal will be sent to the processes and thread
+s (if any) selected in the \k(Process Pane).  If all threads of a 
+process are selected, then you will be queried as to whether the 
+signal should be sent to the parent process or each of the child 
+threads. If nothing is selected, or if Kill was popped up from a
+window that does not contain a Process Pane, the signal will be sent
+to the current process or thread. 
+Note that signals cannot be sent to threads in the Off lwp or Suspended 
+states. 
+
+^2^Ignore Signals
+^$1512
+\k(Event button)
+Ignore Signals
+
+By default, when a signal is posted to a process or thread, the 
+debugger intercepts (catches) the signal and announces its 
+occurrence.  You may then either cancel the signal (with the \k(Cancel) 
+popup window), or run the process and let it receive the signal.  If 
+you do not want the debugger to intercept a particular signal, you 
+may tell it to ignore that signal. 
+
+The Ignore Signals popup window lets you specify the debugger's 
+action (either catch or ignore) for each signal. The popup window 
+displays a scrolling list of signals with the current action for the 
+process or thread.  You may change the action by selecting one or more 
+signals in the list.  The signals in the list are ordered numerically 
+by default.  The list may be ordered alphabetically by selecting the 
+Order list by Name option. The list also includes the name of the 
+signal handler registered by the program for each signal. 
+
+The Ignore Signals popup window is available from the \k(Event) 
+menu of any window.  If you popped up the Cancel window from a 
+window containing a \k(Process Pane) the selected process or thread
+(if any) in the \k(Process Pane) is affected.
+Otherwise, the \d(current process or thread) is affected.
+
+The Ignore Signals option is not 
+available unless the selected process or thread is stopped. 
+
+^2^Change
+^$1513
+\k(Event button)
+Change
+
+The Change option is available in the \k(Event) menu of any
+window containing an \k(Event Pane).  The Change option provides a 
+popup window that lets you edit an existing event.  This option is 
+available only if you have selected one event, in either the Main 
+Event Pane or the Onstop Pane.  The popup window will look like one 
+of the \k(Stop), \k(Signal), \k(Syscall), or \k(On Stop) windows,
+depending on the type of the event you had selected.  The fields 
+in the window will be initialized with values from the selected event.
+You may then change any of the fields.  When you finish, the changes 
+you make will be reflected in the Event Window. 
+
+^1^Properties button=Properties
+^$16
+Properties button
+
+The Properties button lets you change some of the properties
+associated with the different panes of the debugger.
+Clicking MENU on the Properties button brings up a menu with different
+options, depending on which panes are present in the window.
+
+If the window is one that is automatically displayed when the
+debugger is invoked, the Properties menu will contain the 
+following options:
+
+\t\k(Lanugage)
+\t\k(Granularity)
+\t\k(Output Action)
+\t\k(Source Path)
+
+If the window contains a \k(Process Pane) the Properties menu
+will contain the following options:
+
+\t\k(Panes)
+\t\k(Granularity)
+
+If the window contains a \k(Stack Pane), the Properties menu will 
+contain the following option:
+
+\t\k(Panes)
+
+If the window contains a \k(Symbol Pane), the Properties menu will 
+contain the following options:
+
+\t\k(Panes)
+\t\k(Symbols)
+
+If the window contains a \k(Command Pane), the Properties menu will 
+contain the following options:
+
+\t\k(Output Action)
+\t\k(Source Path)
+\t\k(Language)
+
+If the window contains a \k(Source Pane), the Properties menu will 
+contain the following options:
+
+\t\k(Source Path)
+\t\k(Language)
+\t\k(Granularity)
+\t\k(Animation)
+
+If the window contains a \k(Disassembly Pane), the Properties menu will 
+contain the following option:
+
+\t\k(Animation)
+
+Finally, if the window contains an \k(Event Pane), the Properties menu will 
+contain the following options:
+
+\t\k(Panes)
+\t\k(Granularity)
+
+The set of options contained in the Properties menu for any window
+is a union of the options contributed by each pane contained 
+in that window.
+
+Several of the options in the Properties menu may also be
+set as X window resources either in an X window resource file
+(such as .Xdefaults) or on the debugger's command line.  See
+\k(Customization) and \k(Invoking the Debugger).
+
+^2^Panes
+^$161
+\k(Properties button)
+Panes
+
+The Panes popup window lets you choose whether certain columns in the 
+the \k(Process Pane), \k(Stack Pane), \k(Symbol Pane) and \k(Event Pane),
+are wrapped or truncated if the information will not fit in the column.
+By default, they are all truncated. 
+
+The columns that are affected are the Command column in the 
+\k(Process Pane), the Parameters column in the \k(Stack Pane), the Name, Type 
+and Value columns in the \k(Symbol Pane) and the Processes and
+Command List columns in both parts of the \k(Event Pane).
+
+This option is always available in the \k(Properties) menu of
+any window containing one of the affected panes.
+
+^2^Symbols
+^$162
+\k(Properties button)
+Symbols
+
+The Symbols popup window lets you choose what kinds of symbols are 
+displayed in the \k(Symbol Pane).  The choices are: 
+
+\tGlobal\tDisplay the global symbols defined in the current object
+\t\t(executable file or shared library).
+
+\tFile\tDisplay the file static symbols that are defined in the
+\t\tcurrent file.
+
+\tLocal\tDisplay the local variables defined in the current function.
+
+\tDebugger\tDisplay the debugger's built-in variables.
+
+\tUser\tDisplay the debugger-maintained user variables.
+
+You may choose any combination of these categories.  By default, local 
+symbols are displayed. 
+
+The Symbols popup window is always available, and may be popped up 
+from the \k(Properties) menu of any window containing a \k(Symbol Pane).
+The selections affect only the parent \d(window set). 
+
+^2^Source Path
+^$163
+\k(Properties button)
+Source Path
+
+The Source Path popup window lets you set the path the debugger uses 
+to find source files. 
+
+You may enter multiple directories, one directory per line.  You may 
+also edit a previously existing set of directories.  The directories 
+will be searched in the order they appear. 
+
+If you choose the option "Program-specific Path", the path will be 
+used for the selected \k(program^processes and threads) only.  If you choose the "Global Path" 
+option, the debugger will search that list of directories for any 
+program if it cannot first find the file in the program-specific 
+path. 
+
+Source Path is invoked by clicking SELECT on the Source Path option in
+the \k(Properties) menu of any window that contains a \k(Command Pane)
+or a \k(Source Pane) or of any window that is configured to be
+displayed automatically when the debugger is invoked (see \k(Configuration)).
+If you popped up the Source Path window from a window containing a
+\k(Process Pane), the selected programs (if any) in the \k(Process Pane) 
+are affected by the "Program-specific Path."  Otherwise, the current
+program is affected. 
+
+^2^Language
+^$164
+\k(Properties button)
+Language
+
+The Language popup window lets you override the default language for 
+expression evaluation.  The default language is displayed in the line 
+titled "Current Source Language".  The debugger uses information in 
+the object file being debugged to determine the default language. If 
+the object file does not provide that information, the current source 
+language will default to C. 
+
+When you choose None for the overriding language, the current source 
+language is used for expression evaluation.  When you choose C or C++ 
+for the overriding language, the language chosen will become the 
+current language. 
+
+The current language affects the evaluation of expressions in the 
+\k(Expand), \k(Set Value), \k(Show Value), \k(Show Type), and \k(Stop) popup windows, 
+as well as commands entered in the \k(Command Window).  For details on 
+how they are affected, see the section on the specific language: 
+        \k(Support for the C Language)
+        \k(Support for the C++ Language)
+
+The Language option is invoked by clicking SELECT on Language in
+the \k(Properties) menu of any window that contains a \k(Command Pane)
+or a \k(Source Pane) or of any window that is configured to be
+displayed automatically when the debugger is invoked (see \k(Configuration)).
+The language is a global property, and affects all \d(window set)s. 
+
+^3^Support for the C Language=C support
+^$1641
+\k(Properties button)
+\k(Language)
+Support for the C Language
+
+When the current language is C, debug will support evaluation of all 
+legal ANSI C expressions, except those involving macro expansion, or 
+structure, union or enumeration type declarations.  An example of a 
+type declaration in an expression is: 
+\t((struct { int i; char c; } *)p)->c = 'a';
+
+^3^Support for the C++ Language=C++ support
+^$1642
+\k(Properties button)
+\k(Language)
+Support for the C++ Language
+
+The debugger will recognize when an object file was compiled with the 
+C++ translator, cfront (Release 2.1 or 3.0), and will set the current 
+language (displayed in the \k(Language) popup window) to C++.  Names 
+appear as in the C++ source, not as they appear in the object file. 
+
+When the current language is C++, debug accepts a subset of C++ 
+expressions, including: 
+
+     o  All expressions accepted when the current language is C,
+     o  Calls to member functions, including virtual member functions
+        and static member functions,
+     o  Calls to overloaded functions,
+     o  Expressions using type names as typedefs,
+     o  Expressions using overloaded operator functions, and
+     o  Expressions accessing class members with an implied "this"
+\tpointer, when the process or thread is stopped in a class
+\tmember function.
+
+Expressions may be entered in the \k(Set Value), \k(Show Value), \k(Show Type)
+, and \k(Stop) popup windows, as well as in the \k(Command Pane). 
+
+If given a pointer to a base class object with virtual functions, and 
+if the debugger can determine that the type of the object pointed to 
+is a class derived from the base class, the \k(Show Type) window will 
+display both the base class and the derived class. The \k(Show Value) and 
+\k(Expand) windows will also display the object in terms of the derived 
+type. 
+
+When printing the contents of a structure, \k(Show Value) and \k(Expand) will 
+display static class members, with the notation that they are static.  
+Note that the \k(Symbol Pane) does not display static members. 
+
+Using the \k(Stop) or \k(Stop on Function) popup windows, breakpoints may be 
+set on: 
+
+     o  Class member functions, including constructors, destructors,
+\tand conversion functions,
+     o  Overloaded operator functions, and
+     o  Overloaded functions, using the full prototype, or
+     o  Overloaded functions, without the prototype information.
+\tIn that case, the debugger will display a list of the functions,
+\tand ask you to pick one or all of the choices.
+
+A \d(stop event) may also be created on a specific object and member 
+function combination, using the syntax "pointer->function" or 
+"object.function".  The debugger will stop the process or thread upon 
+entering the function only if the "this" pointer matches the 
+specified object.  If the function is a virtual function, debug will 
+set the breakpoint on the appropriate overriding function. Examples 
+of expressions that may be entered in the \k(Stop) window include: 
+        C::f(int)
+        C::C
+        C::~C
+        C::operator int()
+        C::operator+
+        ptr->f(char *)
+
+^2^Granularity
+^$165
+\k(Properties button)
+Granularity
+
+The Granularity popup window lets you specify the debugger's behavior 
+with respect to programs, processes, and threads. 
+
+A \d(window set) has both a \d(current process or thread) and a 
+\d(current program)(the current program is always the parent program of 
+the current process or thread). Which you are operating on at any 
+point depends on which option, "Thread Only", "Parent Process" or 
+"Parent Program", is selected.  By default, most commands (\k(Step), 
+\k(Show Value), etc.) apply to the thread or to the process if the 
+process does not have any threads, but commands that create events 
+apply to the program.  By setting events in the program instead of the 
+process or thread, if you have to recreate the program, or if the 
+process forks, the new process will inherit all the events that were 
+defined in the old process. If you set an event in the process only, 
+then all threads created by that process will inherit the event, but 
+if the process forks, the new process will not inherit the event, and 
+the event will disappear when the process dies. If you set an event 
+in a specific thread, the event will not be set in any other process 
+or thread, and the event will disappear when that thread exits. You 
+may set the granularity of event commands separately from the 
+granularity of the other commands.  The granularity setting for 
+non-event commands also applies to selections in the \k(Process Pane). 
+
+The commands that create events are \k(Stop), \k(Stop on Function), 
+\k(Set Watchpoint), \k(Set Breakpoint), \k(Delete Breakpoint), \k(Signal), 
+\k(Syscall), and \k(On Stop). 
+
+The Granularity option is invoked by clicking SELECT on Granularity in
+the \k(Properties) menu of any window that contains a \k(Process Pane),
+\k(Source Pane) or \k(Event Pane) or of any window that is configured to be
+displayed automatically when the debugger is invoked (see \k(Configuration)).
+The granularity selected affects only the parent \d(window set). 
+
+^2^Output Action
+^$166
+\k(Properties button)
+Output Action
+
+The Output Action popup window lets you specify the actions the 
+debugger is to take when an event occurs, or when a thread changes 
+state, or when a controlled process or thread generates output.  The 
+window contains three sets of buttons, one for process and user 
+events, one for thread state changes, and the other for process I/O. 
+
+The choices for events and process I/O are: 
+
+    o Open and Raise: The debugger will bring up a window containing
+\ta \k(Command Pane), where the event notification or process 
+\toutput will be displayed in the \k(Transcript Pane).
+
+    o Beep
+
+    o Alert box: The debugger will display a message saying what
+\thas happened.
+
+    o No action:  The debugger will not do anything special.
+
+By default, the debugger beeps when an event occurs, because the 
+event notification is also displayed at the bottom of the main 
+windows. 
+
+When a process whose output is captured (see \k(Create)) generates 
+output, the default action is Open and Raise (the debugger raises the 
+Command Pane to show you the output).  Note that this does not apply 
+to processes whose output is not captured; the debugger cannot tell 
+when those processes generate output. 
+
+A thread can change states during its lifetime. For example, a 
+multiplexed thread can be scheduled off an \d(LWP) and can later be 
+picked up by another \d(LWP), or it can be suspended by another thread 
+and later continued by yet another. 
+
+The choices for thread state change actions are: 
+
+    o Beep
+
+    o Stop: The affected threads are halted, and must be explicitly restarted.
+
+These actions, unlike the ones for events and process I/O, are 
+cumulative. That is, you can select both Beep and Stop. By default, 
+both are selected, and the following actions are taken in the various 
+scenarios: 
+
+    o A new thread is created:  beep, the thread creation message is
+        displayed, and the creator thread is stopped and newly created
+        thread is also stopped if it was not created with the
+        THR_SUSPENDED flag, otherwise the suspended thread is not
+        runnable until it is explicitly continued.
+
+    o A thread goes off LWP: beep, the off LWP message is displayed.
+
+    o An off LWP thread picks up an LWP: beep, the LWP pick up message
+        is displayed, and the thread is stopped.
+
+    o A thread is suspended: beep, the suspended message is displayed.
+
+    o A suspended thread is continued: beep, the continue message
+        is displayed, the thread is stopped.
+
+    o A thread exits: beep, the exit message is displayed.
+
+The Output Action option is invoked by clicking SELECT on Output Action in
+the \k(Properties) menu of any window that contains a \k(Command Pane)
+or any window that is configured to be displayed automatically when 
+the debugger is invoked (see \k(Configuration)).
+
+^2^Animation
+^$167
+\k(Properties button)
+Animation
+
+The Animation popup window lets you control the time between steps 
+while the process or thread is animated.  A process or thread is 
+animated by selecting the \k(Animate Source) option in the \k(Control)
+menu of a window that contains a \k(Source Pane) or the 
+\k(Animate Disassembly) option in the \k(Control) menu of a window
+that contains a \k(Disassembly Pane).  When the process or 
+thread is animated, the debugger continuously steps the process 
+or thread, highlighting each statement as it is executed.  
+If the stepping takes place too fast to be followed easily, 
+you can slow it down by specifying a delay between steps. 
+
+The popup window displays a slider with a range from no delay to a 
+delay of one second.  Positioning the slider between the two ends will 
+introduce a delay of a fraction of a second. 
+
+Note that it takes some time for the debugger to step the process or 
+thread and update the display.  Depending on the characteristics of 
+your system, this stepping time may be noticeable even with no delay 
+set.  The delay specifies only a minimum time between steps.  If the 
+stepping time is greater than specified delay, the debugger does not 
+add on any additional delay time. 
+
+

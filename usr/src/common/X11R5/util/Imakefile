@@ -1,0 +1,21 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5util:Imakefile	1.4"
+XCOMM $XConsortium: Imakefile,v 1.15 91/07/16 23:07:36 gildea Exp $
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)' 'BOOTSTRAPCFLAGS=$(BOOTSTRAPCFLAGS)'
+
+#if !UseCCMakeDepend
+  MDEP_DIR = makedepend
+#endif
+
+SUBDIRS = scripts $(MDEP_DIR)
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

@@ -1,0 +1,247 @@
+#ident	"@(#)drf:cmd/drfram.proto	1.21"
+/dev/null
+3700 650
+d--775 0 3
+.sh_history l--777 0 3 /dev/null
+TIMEZONE    ---555 2 2 /etc/TIMEZONE
+funcrc	    ---755 2 2 /usr/lib/drf/funcrc
+inst        ---755 2 2 $PROTO/drf_inst
+step1rc	    ---555 2 2 /usr/lib/drf/step1rc
+step2rc	    ---555 2 2 /usr/lib/drf/step2rc
+install	d--775 0 3
+	$
+stand	d--755 0 3
+	boot	---644 0 0 $PROTO/boot
+	resmgr	---644 0 0 /stand/$RESMGR
+	$
+tmp	d--775 0 3
+	$
+var	d--775 0 3
+	tmp	d--775 0 3
+		$
+	preserve	d--775 0 3
+			$
+	$
+mnt	d--775 0 3
+	$
+sbin	d--755 0 3
+	init          ---555 0 2 /usr/lib/drf/bootstrap
+	drf_big_file  ---555 0 2 /usr/lib/drf/big_file
+	putdev        ---555 0 3 $PROTO/putdev
+	autopush      ---555 0 3 /usr/lib/drf/autopush.dy
+	fdisk         ---555 0 3 /usr/lib/drf/fdisk.boot
+	partsize      l--777 0 3 /sbin/fdisk
+	modadmin      ---555 0 3 /usr/lib/drf/modadmin.dy
+	sh            ---555 0 3 /usr/bin/winxksh
+	wsinit        ---555 0 2 /usr/lib/drf/wsinit.dy
+	$
+usr	d--775 0 3
+	bin	d--755 0 3
+		ls          ---555 0 3 /usr/bin/ls
+		vi          ---555 0 3 /usr/bin/vi
+		dd          ---555 0 3 /usr/bin/dd
+		cpio        ---555 0 3 /usr/lib/drf/cpio.boot
+		tapeop      ---555 0 3 /usr/lib/drf/tapeop
+		kb_remap    ---555 0 3 /usr/lib/drf/kb_remap
+		stty        ---555 0 3 /usr/bin/stty
+		ksh         l--777 0 3 /sbin/sh
+		xksh        l--777 0 3 /sbin/sh
+		winxksh     l--777 0 3 /sbin/sh
+	$
+	sadm	d--755 0 3
+		install	d--755 0 3
+			bin	d--755 0 3
+				libdecomp.so ---555 2 2 /usr/sadm/install/bin/libdecomp.so
+			$
+		$
+	$
+	sbin	d--755 0 3
+		check_devs  ---555 0 3 /usr/lib/drf/check_devs
+		swap        ---555 0 3 /usr/lib/drf/swap.dy
+		adpt_type   ---555 0 3 /usr/sbin/adpt_type
+		fsck        ---555 0 3 /usr/sbin/fsck
+		prtvtoc	    ---555 0 3 /usr/sbin/prtvtoc
+		edvtoc	    ---555 0 3 /usr/sbin/edvtoc
+	$
+	share	d--775 0 2
+		lib	d--775 0 2
+		   terminfo	d--775 0 2
+		          A	   d--775 0 2
+				   ANSI   ---644 0 3 /usr/share/lib/terminfo/a/ansi
+			  $
+		   $
+		$
+	$
+	lib	d--775 0 2
+		libc.so.1       ---555 2 2 /usr/lib/libc.so.1
+		libdl.so.1      l--777 0 3 /usr/lib/libc.so.1
+		libcrypt.so     ---555 2 2 /usr/lib/libcrypt.so
+		locale  d--755 2 2
+			$
+		$
+	$
+etc	d--755 0 3
+	loadmods	---444 0 3 /etc/loadmods
+	snum		---444 0 3 /etc/.snum
+	scsi	d--755 2 2
+		format.d d--755 2 2
+			sd00.0 ---555 2 2 /etc/scsi/format.d/sd00.0
+			sd01.1 ---555 2 2 /etc/scsi/format.d/sd01.1
+		$
+		tc.index	---555 2 2 /etc/scsi/tc.index
+		bmkdev		---555 0 3 /usr/lib/drf/bmkdev
+	$
+	inst	d--755 2 2
+		scripts   d--755 2 2
+			funcrc      l--777 0 3 /funcrc
+			helpwin     ---555 2 2 /usr/lib/drf/helpwin
+			scr_init    ---555 2 2 /usr/lib/winxksh/scr_init
+			winrc       ---555 2 2 /usr/lib/winxksh/winrc
+		$
+		locale   d--755 2 2
+			C	d--755 2 2
+				menus	d--755 2 2
+					txtstrings  ---555 2 2 /usr/lib/drf/locale/$DLANG/txtstr
+					help	d--755 2 2
+						na.hcf   ---444 2 2 /usr/lib/drf/locale/$DLANG/na.hcf
+						drf_help.hcf   ---444 2 2 /usr/lib/drf/locale/$DLANG/drf_help.hcf
+						drf_sh.hcf   ---444 2 2 /usr/lib/drf/locale/$DLANG/drf_sh.hcf
+						drf_rst.hcf   ---444 2 2 /usr/lib/drf/locale/$DLANG/drf_rst.hcf
+						drf_rbt.hcf   ---444 2 2 /usr/lib/drf/locale/$DLANG/drf_rbt.hcf
+						drf_mount.hcf   ---444 2 2 /usr/lib/drf/locale/$DLANG/drf_mount.hcf
+						drf_umount.hcf   ---444 2 2 /usr/lib/drf/locale/$DLANG/drf_umount.hcf
+						drf_snum.hcf   ---444 2 2 /usr/lib/drf/locale/$DLANG/drf_snum.hcf
+					$
+				$
+			$
+			keyboards	d--755 2 2
+				code_sets	d--755 2 2 
+					88591	---644 0 3 /usr/lib/drf/88591
+				$
+			$
+		$
+	$
+	emulator	---777 0 3 /etc/emulator
+	group		---644 0 3 $PROTO/group
+	passwd		---644 0 3 $PROTO/passwd
+	ap	d--755 0 3
+		chan.ap ---444 0 3 $PROTO/chan.ap.flop
+		$
+	default	d--755 0 3
+		workstations	---444 0 3 $PROTO/work.1
+		fstyp	---444 0 3 /etc/default/fstyp
+		vxfs	---444 0 3 /etc/default/vxfs
+		bfs	---444 0 3 /etc/default/bfs
+		ufs	---444 0 3 /etc/default/ufs
+		sfs	---444 0 3 /etc/default/sfs
+		s5	---444 0 3 /etc/default/s5
+		$
+	conf	 d--755 0 3
+		mod.d	 d--755 0 3
+		$
+	$
+	fs	 d--755 0 3
+		 bfs	d--755 0 3
+		 $
+		 sfs	d--755 0 3
+		 $
+		 s5	d--755 0 3
+		 $
+		 ufs	d--755 0 3
+		 $
+		 vxfs	d--755 0 3
+		 $
+	$
+$
+dev	d--775 0 3
+	console	c--622 0 3 5 0
+	vt00	c--622 0 3 5 0
+	cram	c--666 0 3 18 0
+	resmgr	c--666 0 3 4 0
+	dsk	d--775 0 0
+		f0	b--666 0 3 1 180
+		f0t	b--666 0 3 1 176
+		f03e	b--666 0 3 1 132
+		f03et	b--666 0 3 1 128
+		f03m	b--666 0 3 1 148
+		f03mt	b--666 0 3 1 144
+		f03n	b--666 0 3 1 164
+		f03nt	b--666 0 3 1 160
+		f1	b--666 0 3 1 181
+		f1t	b--666 0 3 1 177
+		f03ht   b--666 0 3 1 112
+		f1q15dt b--666 0 3 1 1
+		f1q15d  b--666 0 3 1 5
+		f13e	b--666 0 3 1 117
+		f13et	b--666 0 3 1 113
+		f13ht	b--666 0 3 1 113
+		f0q15d  b--666 0 3 1 4
+		f0q15dt b--666 0 3 1 0
+		$
+	kd	d--775 0 0
+		kd00	c--400 3 3 30 0
+		kd01	c--400 3 3 30 1
+		kd02	c--400 3 3 30 2
+		kd03	c--400 3 3 30 3
+		kd04	c--400 3 3 30 4
+		kd05	c--400 3 3 30 5
+		kd06	c--400 3 3 30 6
+		kd07	c--400 3 3 30 7
+		kd08	c--400 3 3 30 8
+		kd09	c--400 3 3 30 9
+		kd10	c--400 3 3 30 10
+		kd11	c--400 3 3 30 11
+		kd12	c--400 3 3 30 12
+		kd13	c--400 3 3 30 13
+		kd14	c--400 3 3 30 14
+		kdvm00	c--400 3 3 20 0
+		kdvm01	c--400 3 3 20 1
+		kdvm02	c--400 3 3 20 2
+		kdvm03	c--400 3 3 20 3
+		kdvm04	c--400 3 3 20 4
+		kdvm05	c--400 3 3 20 5
+		kdvm06	c--400 3 3 20 6
+		kdvm07	c--400 3 3 20 7
+		kdvm08	c--400 3 3 20 8
+		kdvm09	c--400 3 3 20 9
+		kdvm10	c--400 3 3 20 10
+		kdvm11	c--400 3 3 20 11
+		kdvm12	c--400 3 3 20 12
+		kdvm13	c--400 3 3 20 13
+		kdvm14	c--400 3 3 20 14
+		$
+	mem	c--440 3 3 2 0
+	kmem	c--440 3 3 2 1
+	null	c--666 0 3 39 0
+	rdsk	d--775 0 0
+		f0	c--666 0 3 1 180
+		f0t	c--666 0 3 1 176
+		f03e	c--666 0 3 1 132
+		f03et	c--666 0 3 1 128
+		f03ht   c--666 0 3 1 112
+		f0q15d  c--666 0 3 1 4
+		f0q15dt c--666 0 3 1 0
+		f1	c--666 0 3 1 180
+		f1t	c--666 0 3 1 177
+		f13ht	c--666 0 3 1 113
+		f1q15d  c--666 0 3 1 5
+		f1q15dt c--666 0 3 1 1
+		$
+	sad	d--755 0 3
+		user	c--666 0 3 25 0
+		admin	c--600 0 3 25 1
+		$
+	syscon	c--622 2 2 5 0
+	sysmsg	c--222 2 2 19 0
+	systty	c--622 2 2 5 0
+	term	d--775 0 3
+		$
+	tty	c--666 2 2 16 0
+	tty00	c--666 2 2 3 0
+	tty01	c--666 2 2 3 2
+	vidadm	c--666 2 2 29 1
+	video	c--666 2 2 29 0
+	vtmon	c--666 3 3 30 15
+	zero	c--666 0 3 39 1
+	$
+$

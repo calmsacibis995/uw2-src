@@ -1,0 +1,336 @@
+#!/sbin/sh
+#ident	"@(#)ktool:common/ktool/idtools/idbuild	1.46"
+#ident	"$Header:"
+#
+# This script will build a UNIX Operating System kernel using ID native mode.
+# It is called by ID Install scripts that add device drivers to the UNIX
+# Operating System kernel.
+#
+
+umask 022
+
+if [ "$MACH" = "" ]
+then
+	CALLIDCONFUPDATE=yes
+fi
+
+LABEL=UX:idbuild
+CATALOG=uxidtools
+
+MKOP=
+MODOP=
+SYMSOP=
+DBG=
+OUTFILE=unix
+STUNE=stune
+bflag=1
+kflag=0
+mflag=0
+qflag=0
+
+if ps -z > /dev/null 2>&1
+then
+	pfmt -l $LABEL -s error -g $CATALOG:61 "\n\tThe UNIX Operating System kernel cannot be rebuilt\nwhile running in enhanced security mode.\nPlease reboot mUNIX and try it again.\n"
+	exit 1
+fi
+
+_PFX=`basename $0 | sed -n 's/idbuild$//p'`
+_PFX=${_PFX:-$PFX}
+
+# delay build if it's not in a cross environment and no option specified
+if [ "${ROOT:=/}" = "/" -a $# -eq 0 ]
+then
+	bflag=0
+fi
+
+while getopts KQI:O:D:U:M:SBl:c# op
+do
+	case "$op" in
+	c)
+		MKOP="$MKOP -${op}"
+		;;
+	K)
+		kflag=1
+		;;
+	Q)
+		qflag=1
+		MKOP="$MKOP -${op}"
+		;;
+	I)
+		if [ ! -d $OPTARG ]
+                then
+			pfmt -l $LABEL -s error -g $CATALOG:62 "The directory %s doesn't exist.\n" "$OPTARG"
+                        exit 1
+                fi
+		echo $OPTARG | grep "^/" > /dev/null 2>&1 || 
+		{
+			OPTARG=`cd $OPTARG;pwd`
+		}
+
+		MKOP="$MKOP -${op} ${OPTARG}"
+		;;
+	O)
+		OUTDIR=`dirname $OPTARG`
+                if [ ! -d $OUTDIR ]
+                then
+			pfmt -l $LABEL -s error -g $CATALOG:62 "The directory %s doesn't exist.\n" "$OUTDIR"
+                        exit 1
+                fi
+		echo $OUTDIR | grep "^/" > /dev/null 2>&1 || 
+		{
+			OUTDIR=`cd $OUTDIR;pwd`
+		}
+		OUTFILE=${OUTDIR}/`basename $OPTARG`
+		MKOP="$MKOP -${op} $OUTFILE"
+		;;
+	D | U)
+		MKOP="$MKOP -${op}${OPTARG}"
+		;;
+	M)
+		mflag=1
+		MODULES="$MODULES $OPTARG"
+		MODOP="$MODOP -${op} $OPTARG"
+		;;
+	S)
+		MKOP="$MKOP -${op}"
+		;;
+	B)
+		bflag=1
+		;;
+	l)
+		SYMSOP="$SYMSOP -${op} ${OPTARG}"
+		;;
+	'#')
+		DBG="-#"
+		;;
+	*)
+		if [ "$OPTARG" = "#" ]
+		then
+			DBG="-#"
+		else
+			pfmt -l $LABEL -s error -g $CATALOG:60 "\nUsage: $0 [-Q] [-K] [[-I include_path] ...] [-O output_file]\n\t[-S] [-B] [-#] [[-M module] ...] [-l sym_list] [[-D symbol] ...]\n\t[[-U symbol] ...]\n"
+			exit 1
+		fi
+		;;
+	esac
+done
+
+if [ $mflag -eq 0 ]
+then
+	if [ $bflag -eq 1 ]
+	then
+		pfmt -l $LABEL -s info -g $CATALOG:63 "\n\tThe %s kernel will be rebuilt now.\n\tThis will take some time. Please wait.\n\n" "${OUTFILE}" 2>&1
+	else
+		pfmt -l $LABEL -s info -g $CATALOG:64 "\n\tThe unix kernel will be rebuilt to include your\n\tconfiguration changes during the next system reboot.\n\n" 2>&1
+	fi
+else
+	pfmt -l $LABEL -s info -g $CATALOG:65 "The following loadable modules will be configured now:\n" 2>&1
+	echo "\n\t$MODULES\n"
+fi
+
+if [ "${ROOT}" != "/" ]
+then
+	ROOT=${ROOT}${MACH:+"/$MACH"}
+	pfmt -l $LABEL -s info -g $CATALOG:66 "Root for this process is %s\n\n" "${ROOT}" 2>&1
+else
+	unset _PFX
+	unset MACH
+	unset KTOOL
+	PATH=/bin:/sbin:/usr/bin:/usr/sbin:/etc sync
+fi
+
+if [ $bflag -eq 0 ]
+then
+	> /etc/conf/.rebuild
+	exit 0
+fi
+
+PATH=$PATH:${KTOOL:+$KTOOL:}/etc/conf/bin
+
+IDMKUNIX=${_PFX}idmkunix
+UNIXSYMS=${_PFX}unixsyms
+IDTUNE=idtune
+IDMODREG=idmodreg
+IDMKINIT=idmkinit
+IDMKNOD=idmknod
+IDCONFUPDATE=idconfupdate
+
+ID=$ROOT/etc/conf
+
+# Find mcs in the path
+
+MCS=${_PFX}mcs
+
+IDBLD="config.h conf.c direct ifile modlist"
+# RECOVERY_CODE Disabled:
+# IDLCK="$ID/.unix_reconf $ID/.last_dev_add $ID/.last_dev_del"
+IDLCK="$ID/.unix_reconf"
+
+set +e
+
+>$ID/.unix_reconf
+ 
+cd $ID/cf.d
+if [ $mflag -eq 0 ]
+then
+	rm -f $OUTFILE
+fi
+
+if [ $qflag -eq 0 ]
+then
+	if [ "$CALLIDCONFUPDATE" = "yes" ]
+	then
+		$IDCONFUPDATE
+	fi
+
+        cd $ID/sdevice.d; cat * > $ID/cf.d/sdevice.new
+	cd $ID/cf.d
+	if [ "`echo $ID/sassign.d/*`" != $ID/sassign.d/'*' ]
+	then
+		cat $ID/sassign.d/* > $ID/cf.d/sassign.new
+	else
+		> sassign.new
+	fi
+	SDEVICE=sdevice.new
+	SASSIGN=sassign.new
+
+	# generate a new mtune file
+	$IDTUNE -B
+	if [ $? -ne 0 ]
+	then
+		pfmt -l $LABEL -s error -g $CATALOG:67 "Build failed in idtune.\n"
+		exit 1
+	fi
+
+	if [ mflag -eq 1 ]
+	then
+		STUNE=stune.current
+	else
+		rm -f modlist
+		rm -f $ID/pack.d/*/mod_reg
+	fi
+	[ -f ${STUNE} ] || >${STUNE}
+else
+	SDEVICE=sdevice
+	SASSIGN=sassign
+fi
+
+$IDMKUNIX -d $SDEVICE -a $SASSIGN -T mtune -t $STUNE \
+		-r $ROOT $MKOP $MODOP $DBG
+if [ $? -ne 0 ]
+then
+	rm -rf $IDLCK
+	if [ $kflag -eq 0 ]
+	then
+		rm -rf $IDBLD
+		rm -f sdevice.new sassign.new conf.o
+		cd $ID/pack.d
+		rm -f */_drv.o
+		rm -f */mod_conf.c
+		rm -f */mod_sec.s
+		rm -f */mod_reg
+	fi
+	exit 1
+fi
+
+if [ "${ROOT}" = "/" -a $mflag -eq 1 ]
+then
+	$IDMKNOD -r $ID -d $SDEVICE $MODOP
+	if [ $? -ne 0 ]
+	then
+		pfmt -l $LABEL -s error -g $CATALOG:68 "Failed to make /dev entries for the specified modules.\n"
+		exit 1
+	fi
+	$IDMODREG -r $ID $MODOP
+	if [ $? -ne 0 ]
+	then
+		pfmt -l $LABEL -s warn -g $CATALOG:69 "Failed to register the specified loadable modules.\n"
+	fi
+	$IDMKINIT -e $ID/init.d -o $ID/cf.d $MODOP
+	if [ $? -ne 0 ]
+	then
+		pfmt -l $LABEL -s error -g $CATALOG:70 "Failed to create inittab entries for the specified modules.\n"
+		exit 1
+	fi
+fi
+
+if [ $mflag -eq 0 ]
+then
+	cat $ID/pack.d/*/mod_reg > $ID/cf.d/mod_register 2>/dev/null
+fi
+
+if [ $kflag -eq 0 ]
+then
+        rm -rf $IDBLD
+        rm -f conf.o
+	(
+		cd $ID/pack.d
+		rm -f */_drv.o
+		rm -f */mod_conf.c
+		rm -f */mod_sec.s
+		rm -f */mod_reg
+	)
+fi
+ 
+if [ $mflag -ne 0 ]
+then
+	pfmt -l $LABEL -s info -g $CATALOG:71 "Module configuration is completed.\n" 2>&1
+	if [ $qflag -eq 0 ]
+	then
+		mv $ID/cf.d/sdevice.new $ID/cf.d/sdevice
+		rm -f $ID/cf.d/sassign.new
+	fi
+	rm -rf $IDLCK
+	exit 0
+fi
+
+# If possible, set up symbol info for kernel debuggers and DLM
+if [ -r $ID/sdevice.d/modksym -a `grep "^modksym" $ID/sdevice.d/modksym | cut -f2` = "Y" ]
+then
+	$UNIXSYMS $SYMSOP -i $ID/cf.d/kdb.rc $OUTFILE
+	if [ $? != 0 ]
+	then
+		pfmt -l $LABEL -s error -g $CATALOG:72 "\n\tCannot load the symbol table for %s\n\tThe rebuild of the UNIX Operating System kernel failed.\n" "$OUTFILE."
+		exit 1
+	fi
+else
+	pfmt -l $LABEL -s warn -g $CATALOG:73 "No symbol table will be loaded for %s\n" "$OUTFILE."
+	if [ -r $ID/sdevice.d/kdb -a `grep "^kdb" $ID/sdevice.d/kdb | cut -f2` = "Y" ]
+	then
+		$UNIXSYMS -d -i $ID/cf.d/kdb.rc $OUTFILE
+		if [ $? != 0 ]
+		then
+			pfmt -l $LABEL -s warn -g $CATALOG:74 "\n\tFailed to load kdb commands.\n\tIf any commands were specified in kdb.rc,\n\tthey will not be executed during system initialization.\n"
+		fi
+	fi
+fi
+
+# Reduce kernel size by removing comment sections
+
+$MCS -d $OUTFILE
+
+if [ $qflag -eq 0 ]
+then
+        mv $ID/cf.d/sdevice.new $ID/cf.d/sdevice
+        mv $ID/cf.d/sassign.new $ID/cf.d/sassign
+	if [ "$ROOT" = "/" -a -x /sbin/chlvl ]
+	then
+		chlvl SYS_PRIVATE $ID/cf.d/sdevice $ID/cf.d/sassign 2>/dev/null
+	fi
+fi
+
+chmod 744 $OUTFILE
+chgrp other $OUTFILE 2>/dev/null
+
+if [ "$OUTFILE" = "unix" ]
+then
+        # copy of unix to /stand/unix done at shutdown in rc0
+        >$ID/.copy_unix
+	rm -f $ID/.rebuild
+fi
+pfmt -l $LABEL -s info -g $CATALOG:75 "The %s kernel has been rebuilt.\n" "$OUTFILE" 2>&1
+
+rm -rf $IDLCK
+PATH=/bin:/sbin:/usr/bin:/usr/sbin sync
+
+exit 0

@@ -1,0 +1,189 @@
+#ident	"@(#)pkg.nuc:postremove	1.16"
+#!/bin/sh
+
+PKGMSG=uvlnuc
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]; then
+	if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	     -d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]; then
+		cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+		   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+	fi
+fi
+
+# modify netconfig to remove the nuc name resolver
+sed -e 's/\/usr\/lib\/novell.so/\/usr\/lib\/novell_nwnet.so/' /etc/netconfig >/tmp/nucnetconfig
+cp /tmp/nucnetconfig /etc/netconfig
+
+cd /etc/conf
+
+for i in nuc nucfs nucam NWam
+do
+	/etc/conf/bin/idinstall -d $i
+done
+
+pfmt -s error -g ${PKGMSG}:366 "Reconfiguring the kernel to remove NUC...\n"
+/etc/conf/bin/idbuild
+
+rm -rf /etc/rc2.d/S27nuc
+rm -rf /etc/rc0.d/K72nuc
+rm -rf /etc/rc1.d/K72nuc
+
+#Remove the Single Login indicator
+rm -f /etc/.slogin
+
+/bin/ed /usr/X/lib/classdb/dtadmin > /dev/null 2>&1 <<EOT
+g/INCLUDE nuc.cdb;/d
+g/INCLUDE asterix.cdb;/d
+g/INCLUDE autocad.cdb;/d
+g/INCLUDE coreldraw.cdb;/d
+g/INCLUDE dbase.cdb;/d
+g/INCLUDE framemaker.cdb;/d
+g/INCLUDE island.cdb;/d
+g/INCLUDE lotus123.cdb;/d
+g/INCLUDE msword.cdb;/d
+g/INCLUDE wingz.cdb;/d
+g/INCLUDE wp.cdb;/d
+g/INCLUDE digi.cdb;/d
+w
+q
+EOT
+
+# Remove the MHS_Setup entry (with its privileges) from the PrivTable
+/bin/ed /usr/X/desktop/LoginMgr/PrivTable > /dev/null 2>&1 <<EOT
+g/MHS_Setup/d
+w
+q
+EOT
+
+# Remove the nwsetup entry (with its privileges) from the PrivTable
+/bin/ed /usr/X/desktop/LoginMgr/PrivTable > /dev/null 2>&1 <<EOT
+g/nwsetup/d
+w
+q
+EOT
+
+# Remove the App_Sharing entry (with its privileges) from the PrivTable
+/bin/ed /usr/X/desktop/LoginMgr/PrivTable > /dev/null 2>&1 <<EOT
+g/App_Sharing/d
+w
+q
+EOT
+
+#remove nucfs from /etc/dfs/fstypes
+#/usr/bin/egrep -v '^nucfs' /etc/dfs/fstypes > /etc/dfs/tmpfstypes && cp /etc/dfs/tmpfstypes /etc/dfs/fstypes
+
+############## REMOVE UNIVEL ICONS FROM THE HELP DESK #######
+
+# Remove the NetWare_Access entry from the Help_Desk 
+/bin/ed /usr/X/desktop/Help_Desk > /dev/null 2>&1 <<EOT
+g/NetWare_Access/d
+w
+q
+EOT
+
+# Remove the nwsetup entry  from the Help_Desk
+/bin/ed /usr/X/desktop/Help_Desk > /dev/null 2>&1 <<EOT
+g/NetWare_Setup/d
+w
+q
+EOT
+
+# Remove the MHS_Setup entry from the Help_Desk
+/bin/ed /usr/X/desktop/Help_Desk > /dev/null 2>&1 <<EOT
+g/MHS_Setup/d
+w
+q
+EOT
+
+# Remove the App_Sharing entry from the Help_Desk
+/bin/ed /usr/X/desktop/Help_Desk > /dev/null 2>&1 <<EOT
+g/App_Sharing/d
+w
+q
+EOT
+
+# Remove the Remote_Apps entry from the Help_Desk
+/bin/ed /usr/X/desktop/Help_Desk > /dev/null 2>&1 <<EOT
+g/Remote_Apps/d
+w
+q
+EOT
+
+# Remove the Open_Application entry from the Help_Desk
+/bin/ed /usr/X/desktop/Help_Desk > /dev/null 2>&1 <<EOT
+g/Open_Application/d
+w
+q
+EOT
+
+# Remove the smfcnfg.so from setup/filetypes/config
+/bin/ed /usr/lib/setup/filetypes/config > /dev/null 2>&1 <<EOT
+g/smfcnfg.so/d
+w
+q
+EOT
+
+if [ -x /usr/lib/mail/surrcmd/createSurr ]
+then
+	/usr/lib/mail/surrcmd/createSurr
+fi
+
+###### remove the links created for the folders on the desktop
+/usr/X/adm/upgrade/dtgetusers | while read line
+do	
+	HOMEDIR=`echo $line | /usr/bin/cut -f2 -d:`
+	
+	# check if deskop environment has Admin_Tools  setup
+	if [ -d $HOMEDIR/Admin_Tools/Networking ] 
+	then
+
+		if [ -h $HOMEDIR/Admin_Tools/Networking/NetWare_Access ] 
+		then
+			rm $HOMEDIR/Admin_Tools/Networking/NetWare_Access
+		fi
+
+		if [ -h $HOMEDIR/Admin_Tools/Networking/NetWare_Setup ] 
+		then	
+			rm $HOMEDIR/Admin_Tools/Networking/NetWare_Setup
+		fi
+	fi
+
+	if [ -d $HOMEDIR/Admin_Tools ] 
+	then
+		if [ -h $HOMEDIR/Admin_Tools/MHS_Setup ] 
+		then
+			rm $HOMEDIR/Admin_Tools/MHS_Setup
+		fi
+
+		if [ -h $HOMEDIR/Admin_Tools/App_Sharing ]
+		then
+			rm $HOMEDIR/Admin_Tools/App_Sharing
+		fi
+
+	fi
+
+	# check if deskop environment has Applications  setup
+	if [ -d $HOMEDIR/Applications ] 
+	then
+		if [ -h $HOMEDIR/Applications/Remote_Apps ]
+		then
+			rm $HOMEDIR/Applications/Remote_Apps
+		fi
+	fi
+
+	# remove the /.Netware directory from the home directory of each user
+	if [ $HOMEDIR != "/" ] &&  [ $HOMEDIR  != "/var/spool/mailq" ]
+	then
+		if [ -h $HOMEDIR/netware ]
+		then
+			rm $HOMEDIR/netware
+		fi
+	fi
+done
+
+if [ -h /usr/X/desktop/netWare ]
+then
+	rm /usr/X/desktop/netWare
+fi

@@ -1,0 +1,10 @@
+#ident	"@(#)pkg-nm:preinstall	1.1"
+# Save volatile files during an upgrade or overlay.
+SCRIPTS=/usr/sbin/pkginst
+if [ "$PKGINSTALL_TYPE" = UPGRADE ] || [ "$PKGINSTALL_TYPE" = OVERLAY ]
+then
+    # Save volatile files
+    ${SCRIPTS}/pkgsavfiles ${PKGINST}
+fi
+
+exit 0

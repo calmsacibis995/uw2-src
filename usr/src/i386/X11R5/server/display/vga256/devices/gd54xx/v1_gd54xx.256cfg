@@ -1,0 +1,46 @@
+display VGA256 PseudoColor "GD54xx MULTISYNC_72 1024x768 12.0x9.0 8 1024K" 0 /dev/console gd54xx_256.so.2
+
+#display VGA256 PseudoColor "GD54xx MULTISYNC_70 1024x768 12.0x9.0 8 1024K" 0 /dev/console gd54xx_256.so.2
+#display VGA256 PseudoColor "GD54xx MULTISYNC_60 1024x768 12.0x9.0 8 1024K" 0 /dev/console gd54xx_256.so.2
+#display VGA256 PseudoColor "GD54xx MULTISYNC_72 800x600 9.75x7.32 8 1024K" 0 /dev/console gd54xx_256.so.2
+#display VGA256 PseudoColor "GD54xx MULTISYNC_60 800x600 9.75x7.32 8 1024K" 0 /dev/console gd54xx_256.so.2
+#display VGA256 PseudoColor "GD54xx MULTISYNC_56 800x600 9.75x7.32 8 1024K" 0 /dev/console gd54xx_256.so.2
+#display VGA256 PseudoColor "GD54xx MULTISYNC_72 640x480 9.75x7.32 8 1024K" 0 /dev/console gd54xx_256.so.2
+#display VGA256 PseudoColor "GD54xx STDVGA 640x480 9.75x7.32 8 1024K" 0 /dev/console gd54xx_256.so.2
+
+#
+# The first uncommented (!#) is the valid config line.
+# If you have a larger than 14inch monitor, change the 9.75x7.32 accordingly.
+# For example, for a 14inch monitor, 9.75 is the width and 7.35 is the height
+#
+# This driver should work with GD5420, GD5422, GD5426, GD5428 and GD5434 both
+# ISA and VESA versions.
+#
+# Only screen2screen bitblt is implemented. Since other functions haven't
+# been tested, they are turned OFF; 
+#
+# The FINAL version should be available around the end of Oct'93. 
+#
+# if you want to turn OFF the scr2scr bitblt hardware acceleration, set
+# HWFUNCS=no export HWFUNCS and then start X
+#
+# This driver works with both ISA and VESA; the new version of vga256
+# library (ie: libvga256.so.2), which is included.
+#
+# NOTE: This config file is valid for SVR4.2 V1 and Unixware 1.0. If you have
+# Unixware 1.1 or a later version, you MUST edit the last entry of the valid
+# config line, so that there is no path before the library name. For example
+# the last item in the 1st line of this file is "lib/display/gd54xx_256.so"
+# This must be changed to "gd54xx_256.so" if you have Unixware 1.1 or SVR4.2 V2
+#
+# Unixware 1.1 example:
+# display VGA256 PseudoColor "GD54xx MULTISYNC_72 1024x768 9.75x7.32" 0 /dev/console gd54xx_256.so
+# 
+#
+# To get information on the latest available video drivers and 
+# the X server for Unixware products, send mail to "xserver@usl.com" 
+#
+# Any feed back is appreciated. Please send mail to xserver@usl.com
+# Good luck
+#
+

@@ -1,0 +1,47 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)mmailsetup:Imakefile	1.12"
+#ident "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/MHS_Mail_Setup/Imakefile,v 1.8 1994/07/01 20:06:36 betty Exp $"
+
+/**/#	Copyright (c) 1994 Novell
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+/**/#	Novell.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+
+#include    <Motif.tmpl>
+#include    <Motif.rules>
+
+SETUPDIR = $(ROOT)/$(MACH)/usr/lib/setup
+
+
+          PROGS = MHS_Setup 
+
+depend::
+
+all:: 
+
+
+/**/#	Install ASCII configuration (definitions) file
+InstallNonExecFile(setup.def,$(SETUPDIR)/MHS_Setup)
+
+/**/#	Install process icon and mask
+InstallMultiple(mhs.setup48.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(mhsstp48.mask,$(USRLIBDIR)/bitmaps)
+
+/**/#	Install folder icon and mask
+InstallMultiple(pixmaps/mhs.stp32,$(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/mhs.stp32,$(USRLIBDIR)/bitmaps)
+
+/**/#	Install the message catalog file for this specific MHS Setup app
+InstallMsgCatalog(MHS_Setup)
+

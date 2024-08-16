@@ -1,0 +1,228 @@
+#!/bin/sh
+#ident	"@(#)pkg.platform:i386/pkg/platform/request	1.16"
+#
+#  Request script for the platform package
+
+set_compaq_vars() {
+
+    echo "UPSPORT=$DEFAULT_UPSPORT" >>/tmp/$$.out
+    echo "OS_SHUTDOWN_TIME=5" >>/tmp/$$.out
+
+}
+
+trap 'exit 3' 15
+OUTPUT=$1
+> ${OUTPUT}
+
+
+UPINSTALL=/etc/inst/up
+SCRIPTS=/usr/sbin/pkginst
+UPGRADE_STORE=/var/sadm/upgrade
+NETMGT=/var/sadm/pkg/netmgt
+CONTENTS=/var/sadm/install/contents
+
+DEFAULT_UPSPORT=none
+. $SCRIPTS/updebug
+
+
+[ "$UPDEBUG" = "YES" ] && {
+	set -x
+	goany
+}
+
+# BOOT_INSTALL is true
+# 	if the platform package is installed during boot installation.
+#
+# BOOT_INSTALL is false
+# 	if the platform package is installed  after boot installation
+#
+#
+# SILENT_INSTALL is  true for Smartstart installation. Also,
+# make sure that PLATFORM=compaq  in that case.
+POSTREBOOT=/etc/inst/scripts/postreboot.sh
+BOOT_INSTALL=true
+
+# Set BOOT_INSTALL to true, if doing boot installation 
+# This is the case if the script  $POSTREBOOT exists
+[ ! -f $POSTREBOOT ] &&  {
+	BOOT_INSTALL=false
+	SILENT_INSTALL=false
+}
+
+
+CPQ_SMART_START=false
+$BOOT_INSTALL &&  {
+	# for compaq platform and non-silent install,
+	# set the default variables. Hot button
+	# support will be added for compaq menu at a later time.
+	AUTOMERGE=NULL
+	[ "$PLATFORM"  = compaq ] && $SILENT_INSTALL && {
+	    	# The variables UPSPORT, and OS_SHUTDOWN_TIME are 
+		# in the env
+		CPQ_SMART_START=true
+	}
+
+	$CPQ_SMART_START || {	
+	   [ "$PLATFORM" = compaq ] && {
+	   	# Set the defaults for the compaq variables 
+	   	set_compaq_vars
+	   	. /tmp/$$.out
+	   }
+	}
+}
+	
+# post boot installation scenario
+$BOOT_INSTALL ||  {
+
+	export INSTALL_MODE PKGINSTALL_TYPE AUTOMERGE
+
+	############# Begin UPGRADE AND OVERLAY #######################
+
+	# Upnover supports overwriting the platform objects and
+	# preservation of the existing configuration.
+	# It does not support re-configuration.
+
+	#  set INSTALL_MODE to CUSTOM, if not set
+	[ "$INSTALL_MODE" ] || INSTALL_MODE=CUSTOM
+
+	AUTOMERGE=NULL
+	PKGINSTALL_TYPE=NEWINSTALL
+
+	# Is it upgrade or overlay?
+	# ${SCRIPTS}/chkpkgrel returns  2 if installed pkg is the same
+	#				4 if installed pkg is V4
+	#				1 if installed pkg if UNK version
+	#				0 if pkg is not installed
+	
+	[ "$UPDEBUG" = "YES" ] && goany
+
+	${SCRIPTS}/chkpkgrel
+	PKGVERSION=$?
+
+	case $PKGVERSION in
+	    2)	PKGINSTALL_TYPE=OVERLAY	;;
+	    4)	PKGINSTALL_TYPE=UPGRADE	;;
+	    *)	;;
+	esac
+
+	if [ "$PKGINSTALL_TYPE" != NEWINSTALL ] 
+	then
+	    # Set $PLATFORM 
+	    unset PLATFORM
+	    for P in compaq tricord ast
+	    do
+	   	grep " ${P} $PKGINST" $CONTENTS >/dev/null 2>&1 && {
+	    		PLATFORM=$P 
+	    		break
+	    	}
+	    done
+	    case "$PLATFORM" in
+		ast|tricord|compaq)	;;
+		*)	exit 3	;;  #PLATFORM must be set to ast|tricord|compaq
+	    esac
+	    # Only the compaq platform has volatile (config)
+	    # files that need to be preserved for upnover.
+	    [ "$PLATFORM" = compaq ] && {
+	        AUTOMERGE=Yes
+		[ "$INSTALL_MODE" = CUSTOM ] && {
+	    	   # this scripts returns:
+	    	   #		0 to auto merge config files,
+	    	   #		1 otherwise
+	    	   ${SCRIPTS}/chkmrgfiles "${NAME}"
+	    	   [ $? = 1 ] && AUTOMERGE=No
+		}
+		# Set the compaq variables 
+		set_compaq_vars
+		. /tmp/$$.out
+	    }
+	    [ "$UPDEBUG" = "YES" ] && goany
+
+	############# End UPGRADE AND OVERLAY #######################
+	else
+
+	    # Do the menu for 'pkgadd' install only
+	
+	    #  Make sure LOCALE environment variable is set.  
+	    #  If it's not set coming in to this request script, 
+	    #  then default to the C-locale.
+
+	    LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+	    MENU_DIR=/etc/inst/locale/${LOCALE}/menus/${PKG}
+	    [ -d ${MENU_DIR} ] || mkdir -p ${MENU_DIR}
+
+	    MENUS="menu.platform menu.compaq menu.compaq.1"
+
+	    for i in $MENUS
+	    do
+   		[ ! -f ${MENU_DIR}/$i ] && {
+  			MENU_FILE=${REQDIR}/$PKG/$i
+	    		LOC_DIR=${REQDIR}/inst/locale/$LOCALE
+  			[ -f ${LOC_DIR}/${PKG}/$i ] &&
+        			MENU_FILE=${LOC_DIR}/${PKG}/$i
+  			cp ${MENU_FILE} ${MENU_DIR}
+   		}
+	    done
+	    #
+	    #  Set up to use menu_colors; default to C-locale 
+	    #  if ${LOCALE}'s dir has no menu_colors.sh
+	    #
+	    LOC_DIR=/etc/inst/locale
+	    MENU_COLOR=$LOC_DIR/C/menus/menu_colors.sh
+	    [ -f ${LOC_DIR}/${LOCALE}/menus/menu_colors.sh ] &&
+	         MENU_COLOR=${LOC_DIR}/${LOCALE}/menus/menu_colors.sh
+	
+	    . $MENU_COLOR
+
+	    export PLATFORM
+	    > /tmp/$$.out.plat
+	    menu -f $MENU_DIR/menu.platform -o /tmp/$$.out.plat 2> /dev/null
+	    . /tmp/$$.out.plat
+
+	    case $PLATFORM in
+	    compaq)
+	    	export OS_SHUTDOWN_TIME UPSPORT
+
+		# Set the default values for the variables that the user 
+		# sets via menu 
+		set_compaq_vars
+		. /tmp/$$.out
+
+
+	    	> /tmp/$$.out
+	    	menu -f $MENU_DIR/menu.compaq -o /tmp/$$.out 2> /dev/null
+	    	. /tmp/$$.out
+
+		# only if there is a UPS , ask the UPS shutdown threshold
+		[ "$UPSPORT" != "none" ] && {
+	    		> /tmp/$$.out1
+	    		menu -f $MENU_DIR/menu.compaq.1 -o /tmp/$$.out1 2> /dev/null
+	    		. /tmp/$$.out1
+		}
+
+	    	rm -f /tmp/$$.out*
+	    	;;
+	       *) ;;
+	    esac
+	fi	 # NEWINSTALL
+
+}	# $BOOT_INSTALL
+
+# Set the CLASSES depending on $PLATFORM
+CLASSES="none"
+[ "$PLATFORM" = none ] && exit 3
+CLASSES="$CLASSES $PLATFORM"
+
+echo BOOT_INSTALL=\"${BOOT_INSTALL}\" >> ${OUTPUT}
+echo CPQ_SMART_START=\"${CPQ_SMART_START}\" >> ${OUTPUT}
+echo AUTOMERGE=\"${AUTOMERGE}\" >> ${OUTPUT}
+echo PKGINSTALL_TYPE=\"${PKGINSTALL_TYPE}\" >> ${OUTPUT}
+echo INSTALL_MODE=\"${INSTALL_MODE}\" >> ${OUTPUT}
+echo PLATFORM=\"${PLATFORM}\" >> ${OUTPUT}
+echo CLASSES=\"${CLASSES}\" >> ${OUTPUT}
+echo UPSPORT=\"${UPSPORT}\" >> ${OUTPUT}
+echo OS_SHUTDOWN_TIME=\"${OS_SHUTDOWN_TIME}\" >> ${OUTPUT}
+
+rm -f /tmp/$$.out /tmp/$$.CIM /tmp/$$.out.plat 
+exit 0
+

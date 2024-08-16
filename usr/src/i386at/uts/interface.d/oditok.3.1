@@ -1,0 +1,77 @@
+#ident	"@(#)kern-i386at:interface.d/oditok.3.1	1.7"
+#ident	"$Header: $"
+
+# oditok.3.1 -- ODI TokenRing Version 3.1 (Assembly Drivers only)
+
+$depend lsl msm toktsm
+
+TokenTSMGetNextSend
+TokenTSMGetRCB
+TokenTSMProcessGetRCB
+TokenTSMFastProcessGetRCB
+TokenTSMRcvComplete
+TokenTSMFastRcvComplete
+TokenTSMRegisterHSM
+TokenTSMSendComplete
+TokenTSMFastSendComplete
+TokenTSMUpdateMulticast
+
+MSMAlertFatal
+MSMAlertWarning
+MSMAlloc
+MSMAllocPages
+MSMAllocateRCB
+MSMDriverRemove
+MSMEnablePolling
+MSMFree
+MSMFreePages
+MSMInitAlloc
+MSMInitFree
+MSMParseCustomKeywords
+MSMParseDriverParameters
+MSMPrintString
+MSMPrintStringFatal
+MSMPrintStringWarning
+MSMReadEISAConfig
+MSMReadPhysicalMemory
+MSMRegisterHardwareOptions
+MSMRegisterMLID
+MSMReturnDriverResources
+MSMReturnRcvECB
+MSMScheduleAESCallBack
+MSMScheduleIntTimeCallBack
+MSMSetHardwareInterrupt
+MSMWritePhysicalMemory
+
+# These interfaces are discouraged, and are replaced/dropped in the next
+# version.
+
+GetCurrentTime
+GetHardwareBusType
+IOConfigurationList
+EnableHardwareInterrupt
+DisableHardwareInterrupt
+CheckHardwareInterrupt
+LogicalToPhysical
+PhysicalToLogical
+GetProcessorSpeedRating
+DoEndOfInterrupt
+MSMRegisterSharedMemory
+MSMDeRegisterSharedMemory
+CRescheduleLast
+
+# LSL interfaces are documented but discouraged.
+
+LSLServiceEvents
+
+# These are not part of the ODI interface itself, but are called by the
+# transmogrifier to hook the driver into the UnixWare kernel.
+
+CMsmProcessInt
+lsl_allbd_init
+lslclose
+lslHSMinit
+lslopen
+lslrsrv
+lslwput
+cmn_err

@@ -1,0 +1,66 @@
+#!/sbin/sh
+#ident	"@(#)ktool:common/ktool/idtools/idtype	1.4"
+#ident	"$Header:"
+
+# idtype  [ type ]
+#
+# If the <type> argument is provided, idtype sets the type for the
+# next idbuild(s) to <type>.
+#
+# With no argument, idtype displays the current type setting.
+
+umask 022
+
+LABEL=UX:idtype
+CATALOG=uxidtools
+
+usage()
+{
+	pfmt -l $LABEL -s error -g $CATALOG:227 "Usage: idtype [ type ]\n"
+	exit 99
+}
+
+while getopts "?" op
+do
+	case "$op" in
+	*)
+		usage
+		;;
+	esac
+done
+shift `expr $OPTIND - 1`
+
+if [ $# -gt 1 ]
+then
+	usage
+fi
+
+if [ ${ROOT:=/} != / ]
+then
+	ROOT=${ROOT}${MACH:+"/$MACH"}
+fi
+
+TYPE=$ROOT/etc/conf/cf.d/type
+
+case $# in
+0)	type=
+	if [ -f $TYPE ]
+	then
+		read type <$TYPE
+	fi
+	echo $type
+	;;
+1)	if [ ! -f $TYPE -a "$ROOT" = "/" -a -x /sbin/chlvl ]
+	then
+		echo $1 >$TYPE
+		chlvl SYS_PRIVATE $TYPE 2>/dev/null
+	else
+		echo $1 >$TYPE
+	fi
+	;;
+*)	usage
+	;;
+esac
+
+exit 0
+

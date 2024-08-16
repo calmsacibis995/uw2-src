@@ -1,0 +1,71 @@
+%% File System Parameters
+%%% NFS File System Parameters
+% NFS_ASYNC_MAX
+Specifies the maximum number of lightweight processes (LWPs)
+that can be created for asynchronous I/O over NFS.
+The default value of 8 LWPs is expected to be sufficient for most systems.
+% NFS_ASYNC_TIMEOUT
+Specifies, in seconds,
+the time-to-live of the lightweight processes (LWPs)
+that do asynchronous I/O over NFS.
+If an asynchronous request
+is not generated in the system in NFS_ASYNC_TIMEOUT seconds,
+the LWPs exit.
+% NFS_MAXCLIENTS
+Specifies the number of active RPC client handles that NFS can cache.
+The default is 6 clients.
+Increase this number
+only when more memory is added to the system.
+% NFS_MMAP_TIMEOUT
+Specifies, in seconds,
+the interval between the time the NFS mmap lightweight process (LWP) wakes up
+and the time the NFS mmap LWP updates
+file attributes for ll mmaped files.
+The default is 30 seconds.
+Given the large amount of CPU time the mmap LWP can potentially consume,
+in cases where a significant number of files have been mmaped over NFS,
+this value should not be made too small.
+The minimum value is 30 and the maximum, 180.
+% NFS_NRA
+Specifies the number of pages to read ahead for each read operation,
+if possible.
+The default is 1 page.
+Read-ahead over NFS may be turned off by changing this value to 0.
+% NFS_RETRIES
+Specifies the maximum number of NFS retries before failing the
+NFS operation for a soft mount.
+The default is 5 retries.
+Typically, this value should not be changed.
+% NFS_TIMEO
+Specifies, in seconds,
+the maximum initial time to wait for an NFS server
+to respond to a client request.
+The default is 10 seconds.
+On machines connected to ``lossy'' networks
+(networks where packets tend to get lost),
+this value should be changed.
+On some ``lossy'' networks you will have greater success
+getting the packet if you retry earlier;
+on other networks, you will have greater success if you wait longer.
+% NFSD_MAX
+Specifies the maximum number of lightweight processes (LWPs)
+that can be created for servicing NFS requests from clients.
+The default is 8 LWPs.
+Increase this value for dedicated NFS servers.
+% NFSD_MIN
+Specifies the minimum number of lightweight processes (LWPs)
+that should always exist in the system for servicing NFS requests
+from NFS clients.
+The default is 2 LWPs.
+Increase this value for dedicated NFS servers.
+% NFSD_TIMEOUT
+Specifies, in seconds,
+the time-to-live of the lightweight processes (LWPs)
+that service NFS requests from clients.
+If an NFS request is not received by the system in NFSD_TIMEOUT seconds,
+the LWPs exit.
+The default is 8 seconds.
+% NRNODE
+Specifies the maximum number of rnode structures
+to be allocated for NFS.
+An rnode is a node specific to the NFS file system type.

@@ -1,0 +1,59 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)vga256:vga256/devices/ati/Imakefile	1.11"
+
+
+/**/#
+/**/# If the Makefile is lost or corrupted, to generate a new Makefile:
+/**/# 
+/**/#  /usr/X/bin/imake -DUseInstalled -DTOPDIR=. -DCURDIR=. -I/usr/X/lib/config
+/**/#
+/**/# change SRCFILE to your file name
+/**/#
+
+#define VendorDisplayModuleRule()			@@\
+.c.o:							@@\
+	$(CC) -c -DVGA_PAGE_SIZE="(64*1024)" -O -Xa -Dix86 $(ALLINCLUDES) $<; @@\
+							@@\
+all:: $(VENDORLIB) 					@@\
+$(VENDORLIB):: $(OBJS)					@@\
+	$(CC) $(YFLAGS) -G $(OBJS) -o $(VENDORLIB) $(CORELIB) @@\
+	@echo $(VENDORLIB) generated. 			@@\
+							@@\
+install:: all						@@\
+	$(INSTALL) $(INSTLIBFLAGS) $(VENDORLIB) $(DISPLIBDIR) @@\
+	$(INSTALL) $(INSTDATFLAGS) $(CFGFILE) $(DISPLIBDIR)
+
+
+       BASE = ati
+       SRCS = $(BASE)_256.c
+       OBJS = $(BASE)_256.o
+  VENDORLIB = $(BASE)_256.so.$(DISPLIBREV)
+    ARCHLIB = $(BASE)_256.a
+    CFGFILE = $(BASE).256dat
+    CORELIB = ../../libvga256.so.$(DISPLIBREV)
+     LFLAGS = -buxz
+#ifndef SIRevision2_0
+   INCLUDES = -I./ -I../.. -I$(TOP)/server/include -I$(TOP)/server/ddx/si -I$(TOP)/X11
+#else
+   INCLUDES = -I. -I../..  -I../../../../si -I$(TOP)/X11 -I$(TOP)/programs/Xserver/include
+#endif
+
+#if XWINSharedDisplayLibrary
+VendorDisplayModuleRule()
+#else
+NormalLibraryObjectRule()
+NormalLibraryTarget ($(BASE)_256, $OBJS)
+#endif /* XWINSharedDisplayLibrary */
+
+clean::
+	$(RM) *.so
+
+DependTarget()
+

@@ -1,0 +1,324 @@
+#ident	"@(#)pkg.nuc:prototype	1.6.2.46"
+#ident	"$Header: /SRCS/esmp/usr/src/nw/pkg/nuc/prototype,v 2.55.2.4 1995/02/01 21:26:40 ericw Exp $"
+
+i pkginfo
+i depend
+i preinstall
+i postinstall
+i preremove
+i postremove
+i copyright
+i request
+i rem.files
+
+!XBINDIR=/usr/X/bin
+!XDESKTOPDIR=/usr/X/desktop
+!XHELPDIR=/usr/X/lib/locale/C/help
+!XLIBDIR=/usr/X/lib
+!XAPPDEFAULTS=/usr/X/lib/app-defaults
+
+d none /usr ? ? ?
+d none /usr/bin ? ? ?
+d none /usr/sbin ? ? ?
+d none /usr/lib ? ? ?
+d none /usr/lib/fs ? ? ?
+d none /usr/lib/fs/nucam 0775 root sys
+d none /usr/lib/fs/nucfs 0775 root sys
+d none /usr/lib/locale ? ? ?
+d none /usr/lib/locale/C ? ? ?
+d none /usr/lib/locale/C/LC_MESSAGES ? ? ?
+d none /usr/lib/mail ? ? ?
+d none /usr/lib/mail/surrcmd ? ? ?
+d none /usr/lib/setup ? ? ?
+d none /usr/lib/setup/filetypes ? ? ?
+d none /usr/X ? ? ?
+d none /usr/X/bin ? ? ?
+d none /usr/X/desktop ? ? ?
+d none /etc ? ? ?
+d none /etc/netware ? ? ?
+d none /etc/netware/conf ? ? ?
+
+d none /.NetWare 0555 root sys
+s none /usr/X/desktop/netware=/.NetWare
+
+f none /usr/lib/locale/C/LC_MESSAGES/nucmsgs.cat 0755 root bin
+f none /usr/lib/locale/C/LC_MESSAGES/nucmsgs.cat.m 0755 root bin
+
+d none /usr/X/lib ? ? ?
+d none /usr/X/lib/classdb ? ? ? ? ? ?
+d none /usr/X/lib/locale ? ? ?
+d none /usr/X/lib/locale/C ? ? ?
+d none /usr/X/lib/locale/C/help ? ? ?
+d none /usr/X/lib/bitmaps ? ? ?
+d none /usr/X/lib/pixmaps ? ? ?
+d none /usr/X/lib/app-defaults ? ? ?
+
+f none /usr/bin/nwlogin 0775 root sys
+f none /usr/bin/nwlogout 0775 root sys
+f none /usr/bin/nwwhoami 0775 root sys
+f none /usr/bin/nlist 0775 root sys
+f none /usr/bin/nwprimserver 0775 root sys
+f none /usr/bin/nwmp 0775 root sys
+f none /usr/sbin/nwsignatures 0555 root sys
+f none /usr/sbin/nwchecksums 0555 root sys
+f none /usr/sbin/nucd 0755 root sys
+f none /usr/sbin/nwcloseconns 0555 root sys
+f none /usr/sbin/nwnetd 0755 root sys
+f none /usr/sbin/nrexecd 0755 root sys
+f none /usr/bin/setpass 0755 root sys
+f none /usr/lib/libNwClnt.so 0444 root sys
+f none /usr/lib/libNwCal.so 0444 root sys
+f none /usr/lib/libNwNcp.so 0444 root sys
+f none /usr/lib/libNwLoc.so 0444 root sys
+f none /usr/lib/libnct.so 0775 root sys
+f none /usr/lib/libsl.so 0775 root sys
+f none /usr/lib/novell.so 0755 root sys
+f none /usr/lib/fs/nucfs/mount 0775 root sys
+# f none /usr/lib/fs/nucfs/umount 0775 root sys
+f none /usr/lib/setup/filetypes/smfcnfg.so 0755 root sys
+
+f none /etc/netware/conf/nuc.bin 0444 root sys
+f none /usr/lib/libnucval.so 0775 root sys
+
+f none $XLIBDIR/pixmaps/netware.xpm 644 bin bin
+f none $XLIBDIR/pixmaps/netwareServer.icon 644 bin bin
+f none $XLIBDIR/pixmaps/netwareVolume.icon 644 bin bin
+f none $XLIBDIR/pixmaps/netwareVolumeNot.icon 644 bin bin
+f none $XLIBDIR/pixmaps/Volume48.icon 644 bin bin
+f none $XLIBDIR/pixmaps/Server48.icon 644 bin bin
+
+f none $XLIBDIR/classdb/nuc.cdb 664 bin dtadmin
+
+d none /usr/lib/setup/MHS_Setup 755 root sys
+f none /usr/lib/setup/MHS_Setup/setup.def 644 root sys
+l none $XBINDIR/MHS_Setup=$XBINDIR/SetupApp
+s none $XDESKTOPDIR/Admin_Tools/MHS_Setup=$XBINDIR/MHS_Setup
+#d none $XHELPDIR/MHS_Setup 755 bin bin
+#f none $XHELPDIR/MHS_Setup/MHS_Setup.hlp 644 bin bin
+f none $XLIBDIR/pixmaps/mhs.stp32 644 bin bin
+f none $XLIBDIR/bitmaps/mhs.stp32 644 bin bin
+f none $XLIBDIR/pixmaps/mhs.setup48.icon 644 bin bin
+f none $XLIBDIR/bitmaps/mhsstp48.mask 644 bin bin
+f none $XLIBDIR/bitmaps/netwareServer.icon 644 bin bin
+f none $XLIBDIR/bitmaps/netwareVolume.icon 644 bin bin
+f none $XLIBDIR/bitmaps/netwareVolumeNot.icon 644 bin bin
+f none $XLIBDIR/bitmaps/Volume48.icon 644 bin bin
+f none $XLIBDIR/bitmaps/Server48.icon 644 bin bin
+
+f none $XBINDIR/Launch_Application 04755 root sys 1 setuid NULL
+#d none $XHELPDIR/Launch_Application 755 bin bin 
+#f none $XHELPDIR/Launch_Application/Open_Application.hlp 644 bin bin
+f none $XLIBDIR/pixmaps/remoteApplication.xpm 644 bin bin
+
+f none $XBINDIR/Remote_Apps 04755 root sys  1 setuid NULL
+d none $XDESKTOPDIR/Apps 755 bin bin
+#d none $XHELPDIR/Remote_Apps 755 bin bin
+s none $XDESKTOPDIR/Applications/Remote_Apps=$XBINDIR/Remote_Apps
+#f none $XHELPDIR/Remote_Apps/remappl.hlp 644 bin bin
+f none $XLIBDIR/pixmaps/Remote_Apps.icon 644 bin bin
+f none $XAPPDEFAULTS/Remote_Apps 644 bin bin 
+s none $XDESKTOPDIR/Applications/DOS=/usr/bin/dos 755 root sys
+
+f none $XBINDIR/App_Sharing 0755 root sys  1 setuid NULL
+#d none $XHELPDIR/App_Sharing 755 bin bin 
+d none $XDESKTOPDIR/Admin_Tools ? ? ?
+s none $XDESKTOPDIR/Admin_Tools/App_Sharing=$XBINDIR/App_Sharing
+#f none $XHELPDIR/App_Sharing/applsharing.hlp 644 bin bin 
+f none $XLIBDIR/pixmaps/App_Sharing.icon 644 bin bin 
+d none $XLIBDIR/app-defaults/.exportApps/ 755 root sys 
+f none $XLIBDIR/app-defaults/.exportApps/.exportTemp 755 root sys
+f none $XLIBDIR/app-defaults/.exportApps/.exportUTemp 755 root sys
+f none $XLIBDIR/app-defaults/.exportApps/Xterm 755 root sys
+
+f none $XBINDIR/NetWare_Access 755 root sys 1 setuid NULL
+#d none $XHELPDIR/NetWare_Access 755 bin bin
+#f none $XHELPDIR/NetWare_Access/NetWare_Access.hlp 644 bin bin
+d none $XDESKTOPDIR/Admin_Tools ? ? ?
+d none $XDESKTOPDIR/Admin_Tools/Networking ? ? ?
+s none $XDESKTOPDIR/Admin_Tools/Networking/NetWare_Access=$XBINDIR/NetWare_Access
+f none $XLIBDIR/pixmaps/xnetware.icon 644 bin bin
+f none $XLIBDIR/app-defaults/NetWare_Access 755 root sys
+
+f none $XBINDIR/xauto 755 root sys 1 setuid,dacread NULL
+#d none $XHELPDIR/xauto 755 bin bin
+#f none $XHELPDIR/Auto_Authenticator/xauto.hlp 644 bin bin
+
+d none /tmp ? ? ?
+d none /tmp/novell 0775 root sys
+d none /tmp/novell/nuc 0775 root sys
+d none /tmp/novell/nucfs 0775 root sys
+d none /tmp/novell/nucam 0775 root sys
+d none /tmp/novell/NWam 0775 root sys
+
+v none /tmp/novell/nuc/Driver_atup.o=/etc/conf/pack.d/nuc/Driver.o 0664 root sys
+v none /tmp/novell/nuc/Driver_mp.o=/mp/etc/conf/pack.d/nuc/Driver.o 0664 root sys
+v none /tmp/novell/nuc/Space.c=/etc/conf/pack.d/nuc/space.c 0664 root sys
+v none /tmp/novell/nuc/Node=/etc/conf/node.d/nuc 0664 root sys
+v none /tmp/novell/nuc/System=/etc/conf/sdevice.d/nuc 0664 root sys
+v none /tmp/novell/nuc/Master=/etc/conf/mdevice.d/nuc 0664 root sys
+v none /tmp/novell/nuc/Mtune=/etc/conf/mtune.d/nuc 0664 root sys
+f none /tmp/novell/nuc/Dtune=/etc/conf/dtune.d/nuc 0664 root sys
+
+
+v none /tmp/novell/nucfs/Driver_atup.o=/etc/conf/pack.d/nucfs/Driver.o 0664 root sys
+v none /tmp/novell/nucfs/Driver_mp.o=/mp/etc/conf/pack.d/nucfs/Driver.o 0664 root sys
+v none /tmp/novell/nucfs/Space.c=/etc/conf/pack.d/nucfs/space.c 0664 root sys
+v none /tmp/novell/nucfs/System=/etc/conf/sdevice.d/nucfs 0664 root sys
+v none /tmp/novell/nucfs/Master=/etc/conf/mdevice.d/nucfs 0664 root sys
+
+v none /tmp/novell/nucam/Driver_atup.o=/etc/conf/pack.d/nucam/Driver.o 0644 root sys
+v none /tmp/novell/nucam/Driver_mp.o=/mp/etc/conf/pack.d/nucam/Driver.o 0644 root sys
+v none /tmp/novell/nucam/Space.c=/etc/conf/pack.d/nucam/space.c 0644 root sys
+v none /tmp/novell/nucam/System=/etc/conf/sdevice.d/nucam 0644 root sys
+v none /tmp/novell/nucam/Master=/etc/conf/mdevice.d/nucam 0644 root sys
+v none /tmp/novell/nucam/Mtune=/etc/conf/mtune.d/nucam 0664 root sys
+
+v none /tmp/novell/NWam/Driver_atup.o=/etc/conf/pack.d/NWam/Driver.o  0644 root sys
+v none /tmp/novell/NWam/Driver_mp.o=/mp/etc/conf/pack.d/NWam/Driver.o  0644 root sys
+v none /tmp/novell/NWam/System=/etc/conf/sdevice.d/NWam 0644 root sys
+v none /tmp/novell/NWam/Node=/etc/conf/node.d/NWam 0644 root sys
+v none /tmp/novell/NWam/Master=/etc/conf/mdevice.d/NWam 0644 root sys
+
+# d none /etc 0755 root sys 1 NULL NULL
+d none /etc/init.d ? ? ?
+f none /etc/init.d/nuc 0444 root sys
+f none /etc/nwnetd.conf 0444 root sys
+
+d none /var/spool/smf 0775 mhsmail mail
+d none /usr/lib/mail/surrcmd/suid 0755 bin bin
+f none /usr/lib/mail/surrcmd/smf-out 04555 mhsmail mail 1 setuid NULL
+f none /usr/lib/mail/surrcmd/suid/smf-out 0555 bin bin
+f none /usr/lib/mail/surrcmd/smf-poll 0555 bin bin
+f none /usr/lib/mail/surrcmd/smf-in 0555 bin bin
+f none /usr/lib/mail/surrcmd/smfqueue 0555 bin bin
+f none /usr/lib/mail/surrcmd/smfsched 0555 bin bin
+f none /usr/lib/mail/surrcmd/decrypt 0555 bin bin
+f none /usr/lib/mail/surrcmd/mhsConfig 0555 bin bin
+f none /usr/lib/mail/surrcmd/keyVal 0555 bin bin
+f none /usr/lib/mail/surrcmd/splitAddr 0555 bin bin
+f none /usr/lib/mail/surrcmd/nwreaddirectory 055 bin bin
+f none /usr/lib/mail/surrcmd/nwreadfile 055 bin bin
+f none /usr/lib/mail/surrcmd/nwrenamefile 055 bin bin
+f none /usr/lib/mail/surrcmd/nwwritefile 055 bin bin
+f none /usr/lib/mail/surrcmd/nwdeletefile 055 bin bin
+
+f none /usr/lib/fs/nucam/mount 0755 root sys
+
+#
+#	Header Files
+#
+
+d none /usr/include ? ? ?
+d none /usr/include/sys ? ? ?
+
+# f none /usr/include/common.h 0444 bin bin
+f none /usr/include/sys/amfs_node.h 0444 bin bin
+f none /usr/include/sys/amfs_ops.h 0444 bin bin
+# f none /usr/include/sys/amfs_user.h 0444 bin bin
+# f none /usr/include/sys/common.h 0444 bin bin
+# f none /usr/include/sys/gipc_tune.h 0444 bin bin
+f none /usr/include/sys/gipcchannel.h 0444 bin bin
+f none /usr/include/sys/gipccommon.h 0444 bin bin
+f none /usr/include/sys/gipcconf.h 0444 bin bin
+# f none /usr/include/sys/gts_tune.h 0444 bin bin
+f none /usr/include/sys/gtscommon.h 0444 bin bin
+f none /usr/include/sys/gtsconf.h 0444 bin bin
+f none /usr/include/sys/gtsendpoint.h 0444 bin bin
+f none /usr/include/sys/headstrconf.h 0444 bin bin
+f none /usr/include/sys/ipxconf.h 0444 bin bin
+f none /usr/include/sys/ipxengine.h 0444 bin bin
+f none /usr/include/sys/ipxengparam.h 0444 bin bin
+f none /usr/include/sys/ipxengtune.h 0444 bin bin
+f none /usr/include/sys/ncpiopack.h 0444 bin bin
+# f none /usr/include/sys/ncpdns.h 0444 bin bin
+# f none /usr/include/sys/ncpnsops.h 0444 bin bin
+# f none /usr/include/sys/ncpnsswitch.h 0444 bin bin
+# f none /usr/include/sys/ncpuns.h 0444 bin bin
+# f none /usr/include/sys/ncpuns2.h 0444 bin bin
+f none /usr/include/sys/nucam_common.h 0444 bin bin
+# f none /usr/include/sys/nucam_space.h 0444 bin bin
+# f none /usr/include/sys/nucam_tune.h 0444 bin bin
+f none /usr/include/sys/nucfs_tune.h 0444 bin bin
+f none /usr/include/sys/nucfscommon.h 0444 bin bin
+f none /usr/include/sys/nucfsspace.h 0444 bin bin
+f none /usr/include/sys/nucmachine.h 0444 bin bin
+# f none /usr/include/sys/nucttune.h 0444 bin bin
+# f none /usr/include/sys/nucttypes.h 0444 bin bin
+# f none /usr/include/sys/nuctune.h 0444 bin bin
+f none /usr/include/sys/nuctool.h 0444 bin bin
+f none /usr/include/sys/nwctypes.h 0444 bin bin
+f none /usr/include/sys/nwfschandle.h 0444 bin bin
+f none /usr/include/sys/nwfslock.h 0444 bin bin
+f none /usr/include/sys/nwfsnode.h 0444 bin bin
+f none /usr/include/sys/nwfsops.h 0444 bin bin
+f none /usr/include/sys/nwfsvolume.h 0444 bin bin
+f none /usr/include/sys/nwmpdev.h 0444 bin bin
+f none /usr/include/sys/nwmptune.h 0444 bin bin
+f none /usr/include/sys/nwncpconf.h 0444 bin bin
+f none /usr/include/sys/nwncpspi.h 0444 bin bin
+f none /usr/include/sys/nwncptune.h 0444 bin bin
+f none /usr/include/sys/nwspi.h 0444 bin bin
+# f none /usr/include/sys/nwspiconf.h 0444 bin bin
+f none /usr/include/sys/nwspiswitch.h 0444 bin bin
+# f none /usr/include/sys/nwspitune.h 0444 bin bin
+f none /usr/include/sys/nwstr_tune.h 0444 bin bin
+f none /usr/include/sys/slstruct.h 0444 bin bin
+f none /usr/include/sys/spilcommon.h 0444 bin bin
+f none /usr/include/sys/strchannel.h 0444 bin bin
+f none /usr/include/sys/streamsconf.h 0444 bin bin
+
+d none /usr/include/nw 775 root sys
+f none /usr/include/nw/npackoff.h 0444 bin bin
+f none /usr/include/nw/npackon.h 0444 bin bin
+f none /usr/include/nw/ntypes.h 0444 bin bin
+f none /usr/include/nw/nwaccess.h 0444 bin bin
+f none /usr/include/nw/nwacct.h 0444 bin bin
+f none /usr/include/nw/nwafp.h 0444 bin bin
+f none /usr/include/nw/nwalias.h 0444 bin bin
+f none /usr/include/nw/nwaudit.h 0444 bin bin
+f none /usr/include/nw/nwbindry.h 0444 bin bin
+f none /usr/include/nw/nwcaldef.h 0444 bin bin
+f none /usr/include/nw/nwcalls.h 0444 bin bin
+f none /usr/include/nw/nwclient.h 0444 bin bin
+f none /usr/include/nw/nwconnec.h 0444 bin bin
+f none /usr/include/nw/nwdel.h 0444 bin bin
+f none /usr/include/nw/nwdentry.h 0444 bin bin
+f none /usr/include/nw/nwdirect.h 0444 bin bin
+f none /usr/include/nw/nwdpath.h 0444 bin bin
+f none /usr/include/nw/nwdsacl.h 0444 bin bin
+f none /usr/include/nw/nwdsasa.h 0444 bin bin
+f none /usr/include/nw/nwdsattr.h 0444 bin bin
+f none /usr/include/nw/nwdsaud.h 0444 bin bin
+f none /usr/include/nw/nwdsbuft.h 0444 bin bin
+f none /usr/include/nw/nwdsdc.h 0444 bin bin
+f none /usr/include/nw/nwdsdefs.h 0444 bin bin
+f none /usr/include/nw/nwdsdsa.h 0444 bin bin
+f none /usr/include/nw/nwdserr.h 0444 bin bin
+f none /usr/include/nw/nwdsfilt.h 0444 bin bin
+f none /usr/include/nw/nwdsmisc.h 0444 bin bin
+f none /usr/include/nw/nwdsname.h 0444 bin bin
+f none /usr/include/nw/nwdsnmtp.h 0444 bin bin
+f none /usr/include/nw/nwdspart.h 0444 bin bin
+f none /usr/include/nw/nwdssch.h 0444 bin bin
+f none /usr/include/nw/nwdstype.h 0444 bin bin
+f none /usr/include/nw/nwea.h 0444 bin bin
+f none /usr/include/nw/nwerror.h 0444 bin bin
+f none /usr/include/nw/nwfile.h 0444 bin bin
+f none /usr/include/nw/nwfse.h 0444 bin bin
+f none /usr/include/nw/nwlocale.h 0444 bin bin
+f none /usr/include/nw/nwmigrat.h 0444 bin bin
+f none /usr/include/nw/nwmisc.h 0444 bin bin
+f none /usr/include/nw/nwmsg.h 0444 bin bin
+f none /usr/include/nw/nwnamspc.h 0444 bin bin
+f none /usr/include/nw/nwncpext.h 0444 bin bin
+f none /usr/include/nw/nwndscon.h 0444 bin bin
+f none /usr/include/nw/nwnet.h 0444 bin bin
+f none /usr/include/nw/nwprint.h 0444 bin bin
+f none /usr/include/nw/nwqms.h 0444 bin bin
+f none /usr/include/nw/nwserver.h 0444 bin bin
+f none /usr/include/nw/nwsync.h 0444 bin bin
+f none /usr/include/nw/nwtts.h 0444 bin bin
+f none /usr/include/nw/nwvol.h 0444 bin bin
+f none /usr/include/nw/unicode.h 0444 bin bin
+f none /usr/include/nucinit.h 0444 bin bin
+

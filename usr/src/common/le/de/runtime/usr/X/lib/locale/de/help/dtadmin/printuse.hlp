@@ -1,0 +1,260 @@
+#ident\t"@(#)dthelp:Admin.Tools/printuse.hlp    1.12"
+^*version^1
+^*title^Drucker
+^:Drucker
+^*width^70
+^+DesktopMgr/help.defs
+^?Druckaufträge senden, überprüfen, löschen und ändern
+^0^Ihren Drucker verwenden
+^$10
+Ihren Drucker verwenden
+
+Bevor Sie Druckaufträge an einen lokalen oder fernen Drucker senden
+können, müssen Sie diesen Drucker konfigurieren. Weitere Einzelheiten
+über die Einrichtung von Druckern finden Sie unter \k(Drucker-Setup^dtadmin/Printer_Setup.hlp^Drucker-Setup).
+
+Wenn Sie einen Drucker konfiguriert haben, können Sie:
+
+\to\t\k(Dateien drucken^^Dateien drucken)
+\to\t\k(Druckaufträge anzeigen^^Druckaufträge anzeigen)
+\to\t\k(Eigenschaften von Druckaufträgen anzeigen^^Eigenschaften eines Druckauftrags anzeigen)
+\to\t\k(Eigenschaften von Druckaufträgen ändern^^Eigenschaften eines Druckauftrags ändern)
+\to\t\k(Druckaufträge löschen^^Druckaufträge löschen)
+
+Siehe auch:
+\s(Drucken^dhelp "pe.de" userhb "Drucken" "" || helpLinkErr)
+
+
+^1^Dateien drucken
+^$20
+Dateien drucken
+
+Wenn Sie eine Datei drucken möchten, die mit der Anwendung eines
+Fremdherstellers erstellt worden ist (z. B. einem
+Textverarbeitungsprogramm oder einer Tabellenkalkulation), verwenden
+Sie zum Drucken der Datei das Systemmenü dieser Anwendung.
+
+Wenn Sie eine ASCII-Textdatei (oder eine Datei, die Sie mit UnixWare
+oder einem anderen UNIX System erstellt haben) drucken möchten, gehen
+Sie wie folgt vor:
+
+1.\tVerschieben Sie die Datei mit der Methode
+  \t\d("ziehen und ablegen "^ziehen-und-ablegen) auf das gewünschte
+  \tDruckersymbol. Das Fenster "Drucker: Auftragseigenschaften" für
+  \tdiesen Drucker erscheint.
+
+2.\tStellen Sie folgende Optionen ein:
+
+  \to\tTitel der Bannerseite: - Geben Sie den Titel ein, der auf Ihrer
+  \t \tBannerseite erscheinen soll. Standardmäßig druckt das System
+  \t \tden Dateinamen auf die Bannerseite.
+
+  \to\tKopien: - Geben Sie die Zahl der Exemplare an, die Sie drucken
+  \t \tmöchten.
+
+  \to\tPost schicken, wenn fertig? - Klicken Sie Ja an, wenn Sie
+  \t \tmöchten, daß das System Post an Ihren \k(Briefkastenordner^DesktopMgr/Mailbox.hlp^Überblick über den Briefkastenordner) senden
+  \t \tsoll, nachdem der Auftrag fertig gedruckt ist, oder Nein, wenn
+  \t \tSie nach Beendigung des Druckauftrags nicht vom System via Post
+  \t \tbenachricht werden möchten.
+
+  \to\tBannerseite drucken: -  Klicken Sie "Ja" an, wenn als erste
+  \t \tSeite Ihres Dokuments eine Bannerseite gedruckt werden soll,
+  \t \tklicken Sie "Nein" an, wenn keine Bannerseite gedruckt werden
+  \t \tsoll.
+
+  \to\tDateityp: - Standardmäßig ist für dieses Feld "Text"
+  \t \teingestellt. Klicken Sie das Pfeilfeld und anschließend eine der
+  \t \tfolgenden Möglichkeiten an:
+
+  \t \t-\tText - Um Textdateien (auch ASCII- Dateien genannt) zu
+  \t \t \tdrucken. Dateien diesen Typs enthalten keine Informationen zur
+  \t \t \tFormatierung, es handelt sich um einfache Dateien mit
+  \t \t \tTastaturzeichen.  Dieser Dateityp wird z. B. vom \k(Text-Editor^dtedit/edit.hlp^Der Text-Editor)
+  \t \t \terstellt.
+
+  \t \t-\tText (kein Wortumbruch) - Zeilen, die nicht auf die Seite
+  \t \t \tpassen, werden, je nach Drucker, entweder an der Seitenkante
+  \t \t \tumgebrochen (mitten im Wort) oder abgeschnitten.
+
+  \t \t-\tPostScript - Um Dateien in der PostScript-Sprache zu drucken.
+  \t \t \tDiese Option können Sie nur verwenden, wenn Sie einen
+  \t \t \tPostScript-Drucker verwenden. Mit bestimmten Anwendungen printer
+  \t \t \tto use this option. Mit bestimmten Anwendungen können Sie ein
+  \t \t \tDokument (oder eine andere Datendatei) in eine Datei im
+  \t \t \tPostScript-Format drucken.
+
+  \t \t-\tHP PCL - Um Dateien zu drucken, die für Drucker mit der
+  \t \t \tEmulation HP PCL erstellt wurden, z. B. den Drucker HP Laserjet.
+
+  \t \t-\tTroff-Ausgabe - Um Dateien zu drucken, die mit dem UNIX
+  \t \t \tBefehlsformat troff erstellt wurden.
+
+  \t \t-\tAndere - Für Dateitypen, die im Menü nicht aufgelistet sind.
+  \t \t \tDer Filter für den entsprechenden Dateityp muß auf Ihrem System
+  \t \t \tgeladen sein.
+
+  \t \t \tWenn Sie "Andere" wählen, erscheint das Feld "Typ angeben".
+  \t \t \tGeben Sie den Dateityp ein.
+
+  \t \t \tWenn Sie zusätzliche Optionen für einen PostScript-Drucker
+  \t \t \teinstellen möchten (wie Seitenlänge, Seitenbreite usw.) lesen
+  \t \t \tSie unter \k(Drucker: Andere Optionen) nach.
+
+3.\tKlicken Sie "Drucken" an, um den Auftrag an den Drucker zu senden.
+  \tDas Fenster "Drucker: Meldung" zeigt an, daß Ihr Druckauftrag
+  \tangenommen wurde, und nennt die Auftrags-ID (die Sie für spätere
+  \tZwecke notieren können). Klicken Sie "Fortfahren" an, um den
+  \tAuftrag zu drucken.
+
+  \tDas Fenster "Drucker-Setup: Eigenschaften" verschwindet.
+
+  \tHinweis: Sie können "Zurücksetzen" anklicken, um die Optionen auf
+  \tdie vorherigen Einstellungen zurückzustellen. Sie können
+  \t"Abbrechen" anklicken, um das Fenster zu schließen, ohne die
+  \tOptionen zu ändern und den Druckauftrg zu senden.
+
+Siehe auch:
+\s(Drucken an der Befehlszeile^dhelp "pe.de" ownerhb "Drucker einrichten und konfigurieren" "Drucken an der Befehlszeile" || helpLinkErr)
+
+^2^Drucker: Andere Optionen
+^$30
+Drucker: Andere Optionen
+
+Wenn Sie einen PostScript-Drucker verwenden und für Ihr Dokument
+besondere Einstellungen erforderlich sind, können Sie zusätzliche
+Druckoptionen einstellen. Beispiel: Sie möchten ein Dokument drucken,
+das mehr Zeichen pro Zoll enthält, als der Standarddrucker
+unterstützt. In diesem Fall können Sie die Option Zeichenabstand im
+Fenster "Drucker: Filteroptionen" so einstellen, daß das System mehr
+Zeichen in einer Zeile unterbringt.
+
+Sie können die Optionen für folgendes im Fenster
+"Drucker: Weitere Optionen" einstellen:
+
+\to\tSeitenlänge: - Wählen Sie die gewünschte Einheit aus (Zoll,
+\t \tZentimeter oder Zeichen), und geben Sie dann (im Textfeld) die
+\t \tgewünschte Länge für eine Seite ein.
+
+\to\tSeitenbreite: - Wählen Sie die gewünschte Einheit aus (Zoll,
+\t \tZentimeter oder Zeichen), und geben Sie dann (im Textfeld) die
+\t \tgewünschte Breite für eine Seite ein.
+
+\to\tZeichenabstand: - Wählen Sie die gewünschte Einheit aus (Zoll,
+\t \tZentimeter oder Zeichen), und geben Sie dann (im Textfeld) die
+\t \tgewünschte Breite für die einzelnen Zeichen ein.
+
+\to\tZeilenabstand: - Wählen Sie die gewünschte Einheit aus (Zoll,
+\t \tZentimeter oder Zeichen), und geben Sie dann (im Textfeld) die
+\t \tgewünschte Höhe für jede Zeile ein.
+
+\to\tLändereinstellungen: - Klicken Sie die gewünschten
+\t \tLändereinstellungen an.
+
+\t \tHinweis: Je nach den von Ihnen gewählten Ländereinstellungen kann
+\t \tdie Option "Zeichensatz" deaktiviert (abgedunkelt) sein.
+
+\to\tZeichensatz: - Klicken Sie das Pfeilfeld an, um die Liste der
+\t \tverfügbaren Zeichensätze anzuzeigen. Klicken Sie dann den
+\t \tgewünschten Zeichensatz an.
+
+\to\tVerschiedenes:  -  Geben Sie die Optionen für den UNIX
+\t \tSystembefehl lp ein.
+
+\t \tFür weitere Informnationen siehe lp (1M) in der \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+Siehe auch:
+\s(Filter bereitstellen^dhelp as sysag "Providing Print Services" "Providing Filters" || helpLinkErr)
+\s(PostScript-Drucker^dhelp as sysag "Providing Print Services" "PostScript Printers" || helpLinkErr)
+
+
+^1^Druckaufträge anzeigen
+^$40
+Druckaufträge anzeigen
+
+Um die druckbereiten Aufträge für einen gegebenen Drucker anzuzeigen,
+gehen Sie wie folgt vor:
+
+1.\t\d(Doppelklicken^doppelklicken) Sie auf das Sysmbol des
+  \tDruckers. Das Fenster "Drucker: <Druckername>" erscheint
+  \t(<Druckername> wird durch den Namen Ihres Druckers ersetzt).
+
+  \tJeder Druckauftrag wird mit der Anmelde-ID der Person
+  \tgekennzeichnet, die den Druckauftrag übergeben hat.
+
+2.\tKlicken Sie "Aktionen=>Beenden" an, um das Fenster zu verlassen.
+
+Wie Sie die Eigenschaften eines Druckauftrags anzeigen, erfahren Sie
+unter \k(Eigenschaften eines Druckauftrags anzeigen).
+
+Wie Sie die Eigenschaften eines Druckauftrags ändern, erfahren Sie
+unter \k(Eigenschaften eines Druckauftrags ändern).
+
+Wie Sie einen Druckauftrag löschen, erfahren Sie unter
+\k(Druckaufträge löschen).
+
+^1^Eigenschaften eines Druckauftrags anzeigen
+^$50
+Eigenschaften eines Druckauftrags anzeigen
+
+Um die Eigenschaften eines Druckauftrags anzuzeigen, gehen Sie wie
+folgt vor:
+
+1.\t\d(Doppelklicken^doppelklicken) Sie auf das Symbol des Druckers.
+  \tDas Fenster "Drucker: <Druckername>" erscheint.
+
+2.\tKlicken Sie den gewünschten Druckauftrag an.
+
+3.\tKlicken Sie "Druckauftrag=>Eigenschaften" an. Das Fenster
+  \t"Drucker: Auftragseigenschaften" für diesen Drucker erscheint.
+  \tEine Beschreibung der Optionen in diesem Fenster finden Sie in
+  \t\k(Dateien drucken), Schritt 2.
+
+4.\tKlicken Sie "OK" an, oder klicken Sie "Abbrechen" an, um das
+  \tFenster zu verlassen.
+
+Siehe auch:
+\k(Eigenschaften eines Druckauftrags ändern)
+
+^1^Eigenschaften eines Druckauftrags ändern
+^$50
+Eigenschaften eines Druckauftrags ändern
+
+Um die Eigenschaften eines Druckauftrags zu ändern, gehen Sie wie
+folgt vor:
+
+1.\t\d(Doppelklicken^doppelklicken) Sie auf das Symbol des Druckers.
+  \tDas Fenster "Drucker: <Druckername>" erscheint.
+
+2.\tKlicken Sie den gewünschten Druckauftrag an.
+
+3.\tKlicken Sie "Druckauftrag=>Eigenschaften" an. Das Fenster
+  \t"Drucker: Auftragseigenschaften" für diesen Drucker erscheint.
+
+4.\tNehmen Sie die gewünschten Änderungen vor. Eine Beschreibung der
+  \tOptionen in diesem Fenster finden Sie in \k(Dateien drucken),
+  \tSchritt 2.
+
+5.\tKlicken Sie "OK" an, um die Änderungen anzuwenden und das Fenster
+  \tzu verlassen.
+
+  \tHinweis: Klicken Sie "Zurücksetzen" an, um zu den vorherigen
+  \tEinstellungen der Optionen zurückzukehren. Klicken Sie "Abbrechen"
+  \tan, um das Fenster zu verlassen, ohne die Eigenschaften zu ändern.
+
+^1^Druckaufträge löschen
+^$60
+Druckaufträge löschen
+
+Um einen Druckauftrag zu löschen, gehen Sie wie folgt vor:
+
+1.\t\d(Doppelklicken^doppelklicken) Sie auf das Symbol des Druckers.
+  \tDas Fenster "Drucker: <Druckername>" erscheint.
+
+2.\tKlicken Sie den Druckauftrag an, den Sie löschen möchten.
+
+3.\tKlicken Sie "Druckauftrag=>Eigenschaften" an. Das
+  \tBestätigungsfenster "Drucker: Löschen" erscheint und fordert Sie
+  \tauf, das Löschen des Druckauftrags zu bestätigen. Klicken Sie
+  \t"Löschen" an, um den Druckauftrag zu entfernen, klicken Sie
+  \t"Abbrechen" an, wenn Sie den Druckauftrag nicht entfernen möchten.

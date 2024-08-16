@@ -1,0 +1,249 @@
+!!
+!! Motif Window Manager Resources
+!!
+
+!#define MWM_POINT_AND_CLICK
+!#define MWM_NOCLEAN_TEXT
+!#define MWM_MONOCHROME_ON_COLOR
+
+#ifdef COLOR
+#define MWM_NeXT
+#endif
+
+!!
+!! Focus specific resources 
+!!
+#ifdef MWM_POINT_AND_CLICK
+Mwm*keyboardFocusPolicy:		explicit
+Mwm*buttonBindings:			MyExplicitButtonBindings
+Mwm*startupKeyFocus:			False
+!Mwm*raiseKeyFocus:			True
+!Mwm*deiconifyKeyFocus:			True
+!Mwm*focusAutoRaise:			False
+!Mwm*autoKeyFocus:			False
+!Mwm*colormapFocusPolicy:		explicit
+
+#else
+!! Pointer focus
+!!
+Mwm*keyboardFocusPolicy:		pointer
+Mwm*buttonBindings:			MyPointerButtonBindings
+!Mwm*focusAutoRaise:			True
+!Mwm*autoRaiseDelay:			600
+#endif
+
+!! NeXT style windows
+!!
+#ifdef MWM_NeXT
+Mwm*clientDecoration:			-resize -border
+Mwm*matteWidth:				4
+#endif
+
+!! Setup the rest of mwm resources
+!!
+
+!! FONT stuff
+!!
+Mwm*fontList:	-adobe-helvetica-bold-r-normal--14-*-*-*-*-*-iso8859-*
+Mwm*client*title*fontList:-adobe-helvetica-bold-o-normal--14-*-*-*-*-*-iso8859-*
+Mwm*icon*fontList:	-adobe-helvetica-medium-o-normal--12-*-*-*-*-*-iso8859-*
+!Mwm*defaultFontList:			variable
+
+Mwm*keyBindings:			MyKeyBindings
+Mwm*windowMenu:				MyWindowMenu
+Mwm*wMenuButtonClick2:			False
+Mwm*wMenuButtonClick:			False
+Mwm*resizeBorderWidth:			7
+Mwm*showFeedback:			-kill
+Mwm*moveThreshold:			3
+!Mwm*frameBorderWidth:			7
+
+!! ICON resources
+!!
+Mwm*iconClick:				False
+!Mwm*iconAutoPlace:			False
+!Mwm*iconImageMinimum:			16x16
+!Mwm*iconImageMaximum:			50x50
+!Mwm*iconDecoration:			label image
+Mwm*iconDecoration:			activelabel
+Mwm*useClientIcon:			True
+Mwm*iconImage:				xlogo.xbm
+Mwm*lowerOnIconify:			False
+!Mwm*fadeNormalIcon:			True
+!Mwm*iconPlacement:			right bottom
+!Mwm*iconPlacementMargin:		2
+
+!Mwm*useIconBox:			True
+!Mwm*iconBoxGeometry:			=3x1
+!Mwm*iconBoxTitle:			Motif Window Manager
+Mwm*iconBoxSBDisplayPolicy:		vertical
+!Mwm*iconBoxName:			iconbox
+
+!! MISC resources
+!!
+Mwm*multiScreen:		True
+!Mwm*configFile:		.altmwmrc
+
+!Mwm*saveUnder:			True
+!Mwm*moveOpaque:		True
+!Mwm*showFeedback:	 	-move 
+
+!Mwm*interactivePlacement:	True
+!Mwm*clientAutoPlace:		False
+!Mwm*positionIsFrame:		False
+!Mwm*positionOnScreen:		False
+
+!Mwm*enableWarp:		False
+!Mwm*limitResize:		False
+!Mwm*maximumMaximumSize:	1024x840
+!Mwm*doubleClickTime:		600
+!Mwm*enforceKeyFocus:		False
+!Mwm*quitTimeout:		1000
+
+!Mwm*passSelectButton:		True
+!Mwm*passButtons:		True
+Mwm*transientDecoration:	-resize
+
+!!
+!! Motif Window Manager Appearance Setup
+!!
+
+#ifdef COLOR
+#ifndef MWM_MONOCHROME_ON_COLOR
+!! COLOR setup
+!!
+Mwm*armColor:			White
+
+Mwm*background:		 	#c0c0c0
+Mwm*activeBackground:	 	LightSeaGreen
+Mwm*matteBackground:		#c0c0c0
+
+!! White Icons (without allocating extra colors)
+Mwm*iconImageBackground:	White
+Mwm*iconImageTopShadowColor:	Black
+Mwm*iconImageBottomShadowColor:	Black
+Mwm*iconImageTopShadowPixmap:	50_foreground
+Mwm*iconImageBottomShadowPixmap:50_foreground
+
+#else
+
+!! COLOR MONOCHROME setup for reduced color systems
+!!
+Mwm*cleanText:			True
+Mwm*armColor:			black
+Mwm*troughColor:		black
+
+!! Background Color
+Mwm*background: 		white
+Mwm*foreground:		 	black
+Mwm*activeBackground: 		white
+Mwm*activeForeground:	 	black
+
+!! Shadow Color
+Mwm*topShadowColor:		black
+Mwm*bottomShadowColor:		black
+Mwm*activeTopShadowColor:	black
+Mwm*activeBottomShadowColor:	black
+
+!! Pixmaps
+Mwm*backgroundPixmap:		25_foreground
+Mwm*topShadowPixmap:		background
+Mwm*bottomShadowPixmap:		foreground
+Mwm*activeBackgroundPixmap:	50_foreground
+Mwm*activeTopShadowPixmap:	background
+Mwm*activeBottomShadowPixmap:	foreground
+
+!! Icon image shadow colors
+Mwm*iconImageTopShadowColor:		black
+Mwm*iconImageBottomShadowColor:		black
+Mwm*iconImageTopShadowPixmap:		50_foreground
+
+!! Matte shadow colors
+Mwm*matteTopShadowColor:		black
+Mwm*matteBottomShadowColor:		black
+Mwm*matteTopShadowPixmap:		50_foreground
+
+!! Menu and feedback pixmaps
+Mwm*menu*topShadowPixmap:		50_foreground
+Mwm*menu*backgroundPixmap:		background
+Mwm*feedback*topShadowPixmap:		50_foreground
+Mwm*feedback*backgroundPixmap:		foreground
+
+!! ENDIF COLOR MONOCHROME setup for reduced color systems
+#endif
+
+#else
+
+Mwm*armColor:			Black
+
+#ifdef MWM_NOCLEAN_TEXT
+!! HILIGHT TITLEBAR MONOCHROME setup
+!!
+Mwm*cleanText:				False
+
+Mwm*icon*activeBackgroundPixmap:		background
+Mwm*icon*activeTopShadowColor:			Black
+Mwm*icon*activeTopShadowPixmap:			50_foreground
+
+Mwm*client*backgroundPixmap:			50_foreground
+Mwm*client*activeBackgroundPixmap:		50_foreground
+
+Mwm*client*title*activeBackground: 		black
+Mwm*client*title*activeForeground:		white
+Mwm*client*title*activeBackgroundPixmap:	background
+Mwm*client*title*activeTopShadowPixmap:		foreground
+Mwm*client*title*activeBottomShadowColor:	white
+Mwm*client*title*activeBottomShadowPixmap:	50_foreground
+
+Mwm*client*title*backgroundPixmap:		background
+#endif
+
+!! ENDIF NORMAL COLOR setup
+#endif
+
+
+!! Miscellaneous resources
+!!
+Mwm*emacs*iconImage:	emacs2.xbm
+Mwm*xterm*iconImage:	xterm.xbm
+!Mwm*iconbox*troughColor:		black
+!Mwm*menu*mappingDelay:			180
+!!Mwm*iconbox*XmDrawnButton*highlightColor: Black
+!Mwm*iconbox*hScrollBar*highlightColor: grey
+!Mwm*iconbox*vScrollBar*highlightColor: grey
+Mwm*iconbox*vScrollBar*width:  12
+Mwm*iconbox*hScrollBar*height: 12
+!Mwm*iconbox*traversalOn:		True
+!Mwm*iconbox*clientDecoration:		border
+
+#ifdef MWM_NeXT
+!Mwm*defaults*clientDecoration:		none
+Mwm*XLogo*clientDecoration:		none
+Mwm*xmter*clientDecoration:		none
+Mwm*XEyes*clientDecoration:		none
+Mwm*XCmap*clientDecoration:		none
+Mwm*Clock*clientDecoration:		none
+Mwm*XLoad*clientDecoration:		none
+Mwm*XClock*clientDecoration:		none
+Mwm*XBiff*clientDecoration:		none
+Mwm*Xpostit*clientDecoration:		none
+!Mwm*XPostit*clientDecoration:		none
+!Mwm*postItNote*clientDecoration:	none
+#else
+!Mwm*defaults*clientDecoration:		border
+Mwm*XLogo*clientDecoration:		none
+Mwm*xmter*clientDecoration:		border
+Mwm*XEyes*clientDecoration:		-minimize -maximize
+Mwm*XCmap*clientDecoration:		border
+Mwm*Clock*clientDecoration:		border
+Mwm*XLoad*clientDecoration:		border
+Mwm*XClock*clientDecoration:		border
+Mwm*XBiff*clientDecoration:		border
+Mwm*Xpostit*clientDecoration:		border
+!Mwm*XPostit*clientDecoration:		border
+!Mwm*postItNote*clientDecoration:	border
+#endif
+
+!
+!  END OF RESOURCE SPECIFICATIONS
+!

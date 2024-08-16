@@ -1,0 +1,83 @@
+STRINGS-FILE	MHS_Setup
+PANEL-TITLE	"MHS Mail Setup:1"
+ICON-TITLE	"MHS Setup:2"
+ICON-FILENAME	"mhs.setup48.icon"
+HELP-FILE	"MHS_Setup/MHS_Setup.hlp"
+HELP-TITLE	"MHS Mail Setup"
+HELP-SECTION	"10"
+
+LABEL	"MHS Gateway::3"
+FILE	/etc/mail/smfcnfg
+NAME	MHSGATEWAY
+SHORT
+START
+NEXT	"Internet Gateway:"
+DESCRIPTION	"This is the name of the MHS gateway that
+		is configured on your MHS mail server.:4"
+
+LABEL	"Internet Gateway::5"
+FILE	/etc/mail/mailcnfg
+NAME	%g
+SHORT
+NEXT	"MHS File Server:"
+DESCRIPTION	"This is the name that the MHS gateway is
+		known by from the Internet side of the gateway.:6"
+
+LABEL	"MHS File Server::7"
+FILE	/etc/mail/smfcnfg
+NAME	MAILSERV
+SHORT
+NEXT	"MHS Volume:"
+DESCRIPTION	"This is the name of the file server that
+		the other side of the MHS gateway is on.:8"
+
+LABEL	"MHS Volume::9"
+FILE	/etc/mail/smfcnfg
+NAME	MV
+SHORT
+NEXT	"MHS Directory:"
+DESCRIPTION	"This is the name of the volume on the
+		MHS file server that the mhs system lives
+		on.:10"
+
+LABEL	"MHS Directory::11"
+FILE	/etc/mail/smfcnfg
+NAME	DIRECTORY
+SHORT
+NEXT	"MHS Login:"
+DESCRIPTION	"This is the name of the directory that contains the
+		/mhs folder on the NetWare server.  Normally, this is
+		left blank.:12"
+
+LABEL	"MHS Login::13"
+FILE	/etc/mail/smfcnfg
+NAME	MHSLOGIN
+SHORT
+NEXT	"MHS Password:"
+DESCRIPTION	"This is the user to log into the file server
+		as to move messages through the gateway.:14"
+
+LABEL	"MHS Password::15"
+FILE	/etc/mail/smfcnfg
+NAME	MHSPASSWD
+SHORT
+NEXT	"Poll Frequency:"
+DESCRIPTION	"This is the password to be used when logging into the
+		file server.  It will not be displayed as you type.:16"
+
+LABEL	"Poll Frequency::17"
+FILE	/etc/mail/smfcnfg
+NAME	MHSINTERVAL
+SHORT
+NEXT	"Gateway SMF Version:"
+DESCRIPTION	"This is the number of times per hour that
+		you want to poll the file server for incoming
+		mail.  0 will disable the gateway.:18"
+
+LABEL	"Gateway SMF Version::19"
+FILE	/etc/mail/smfcnfg
+NAME	SMFVERSION
+DESCRIPTION	"This is the SMF version number of the gateway.
+		It should be the same version as was configured into
+		the MHS system when the MHS side of the gateway was
+		set up.  This will be either 70 or 71.:20"

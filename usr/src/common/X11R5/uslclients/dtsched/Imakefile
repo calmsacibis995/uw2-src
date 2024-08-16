@@ -1,0 +1,72 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)dtsched:Imakefile	1.12"
+
+#ifdef Release5
+#include <sv4Lib.tmpl>
+#endif
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+           STAR = *
+      DNDLIBSRC = $(LIBSRC)/DnD
+       DTLIBSRC = $(LIBSRC)/Dt
+      DTILIBSRC = $(USLCLIENTSRC)/libDtI
+          DTLIB = $(DTLIBSRC)/libDt.so
+         DTILIB = $(DTILIBSRC)/libDtI.so
+       GIZMOSRC = $(LIBSRC)/Gizmo
+       GIZMOLIB = $(GIZMOSRC)/libGizmo.so
+
+          DEBUG =
+
+          SRCS1 = \
+                 sched.c \
+                 prop.c \
+                 quit.c
+
+          OBJS1 = \
+                 sched.o \
+                 prop.o \
+                 quit.o
+
+          HDRS1 = \
+                 sched.h \
+                 prop.h \
+                 quit.h
+
+          PROG1 = dtsched
+
+           OBJS = $(OBJS1)
+           SRCS = $(SRCS1)
+           HDRS = $(HDRS1)
+          PROGS = $(PROG1)
+
+       INCLUDES = -I$(LIBSRC) -I$(LIBSRC)/Xol \
+                  -I$(DTLIBSRC) \
+                  -I$(DNDLIBSRC) \
+                  -I$(DTILIBSRC) \
+                  -I$(GIZMOSRC)
+LOCAL_LIBRARIES = $(DTLIB) $(DTILIB) $(GIZMOLIB) XolClientLibs
+        DEPLIBS = $(DTLIB) $(DTILIB) $(GIZMOLIB) XolClientDepLibs
+  SYS_LIBRARIES = -lgen -lw
+
+all:: $(PROGS)
+CC = LD_RUN_PATH=/usr/lib/X11 $(PFX)cc
+
+
+ComplexProgramTarget($(PROG1))
+
+/*
+ * FIX: when the Imake rules are fixed
+ */
+clobber:: clean
+   $(RM) $(PROGS)
+
+InstallMsgCatalog(dtsched)
+InstallDesktopClient($(BINDIR)/$(PROG1),$(DESKTOPDIR)/Utilities/Task_Scheduler)

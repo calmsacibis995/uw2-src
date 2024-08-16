@@ -1,0 +1,107 @@
+                comandos mailx
+
+!,shell [comando]                   escape de shell
+alias,group usuario ...             declara alias para nombres de
+                                    usuario
+alternates usuario                  declara nombres alternativos para
+                                    el acceso
+bedit [lista_de_mensajes]           edita mensajes en binario
+bprint [lista_de_mensajes]          imprime los mensajes en binario
+Bprint [lista_de_mensajes]          imprime los mensajes en binario
+                                    con todos los encabezados
+btop [lista_de_mensajes]            imprime las líneas superiores
+                                    $toplines de los mensajes en binario
+bvisual [lista_de_mensajes]         edita los mensajes en binario con el
+                                    editor $VISUAL
+cd,chdir [directorio]               cambia al directorio indicado, o al
+                                    personal si no se indica ninguno
+copy [lista_de_mensajes] archivo    guarda los mensajes en el archivo
+                                    sin marcarlos como guardados
+Copy [lista_de_mensajes]            igual que copy, usa archivo con el
+                                    nombre del autor
+delete [lista_de_mensajes]          borra mensajes
+discard,ignore header               descarta campo del encabezado al
+                                    imprimir un mensaje
+dp,dt [lista_de_mensajes]           borra los mensajes y muestra el
+                                    siguiente mensaje
+echo cadena                         imprime la cadena
+edit [lista_de_mensajes]            edita los mensajes
+folder,file nombre_de_archivo       cambia los buzones y pone el
+                                    nombre_de_archivo
+folders                             lista los archivos del directorio
+                                    de la carpeta actual
+followup,followupall [mensaje]      responde al mensaje y guardar
+                                    una copia
+Followup,Followupall [lista_mensajes]  responde a los mensajes y
+                                       guarda una copia
+forward,Forward [lista_de_mensajes] [usuarios]  envía mensajes a
+                                                los usuarios
+from [lista_de_mensajes]            proporciona las líneas de
+                                    encabezado de los mensajes
+header [mensaje]                    imprime una página de encabezados
+                                    de mensajes activos
+Headers [lista_de_mensajes]         imprime los encabezados de los
+                                    mensajes en formato sin límite
+help,?                              imprime este mensaje de ayuda
+hold,preserve [lista_de_mensajes]   conserva los mensajes en el buzón
+list                                lista todos los comandos (sin
+                                    explicaciones)
+mail,mailall usuario                envia correo a un usuario específico
+Mail,Mailrecord usuario             envía correo a un usuario específico,
+                                    y guarda una copia
+mbox [lista_de_mensajes]            los mensajes irán a mbox al
+                                    abandonar
+newmail,inc                         busca correo nuevo
+New,Unread [lista_de_mensajes]      marca los mensajes como si no se
+                                    hubiesen leído anteriormente
+                                    (nuevos)
+next [mensaje]                      va al siguiente mensaje y lo
+                                    muestra en pantalla
+pipe,| [lista_de_mensajes] [comando_del_shell] conduce los mensajes al
+                                               comando del shell
+Pipe [lista_mensajes] [comando_shell]  conduce los mensajes al comando,
+                                       ignorando los encabezados
+print,type [lista_de_mensajes]      imprime los mensajes
+Print,Type [lista_de_mensajes]      imprime los mensajes con todos los
+                                    encabezados
+quit                                abandona, conservando todos los
+                                    mensajes que no se hayan leído
+reply,respond,replyall [mensaje]    responde al autor y receptores
+                                    del mensaje
+Reply,Respond,replysender [lista_de_mensajes]  responde a los autores
+                                               de los mensajes
+retain header                       retiene el campo de encabezado
+                                    cuando imprime un mensaje
+save [lista_de_mensajes] archivo    guarda los mensajes en el archivo
+                                    (al final del mismo)
+Save [lista_de_mensajes]            guarda los mensajes en el archivo
+                                    que tiene el nombre del autor
+set [no]variable[=valor]            define un valor para la variable
+showheaders lista_mensajes lista_encabezados  muestra los encabezados
+                                              indicados correspondientes
+                                              a la lista de mensajes
+                                              especificada
+size [lista_de_mensajes]            imprime el tamaño de los mensajes
+source archivo                      lee los comandos del archivo
+top [lista_de_mensajes]             imprime las líneas superiores
+                                    $toplines de los mensajes
+touch [lista_de_mensajes]           obliga a guardar los mensajes al
+                                    abandonar la aplicación
+unalias usuario                     suprime el alias
+undelete [lista_de_mensajes]        restaura los mensajes borrados
+undiscard,unignore header           vuelve a añadir el campo de
+                                    encabezado a la lista impresa
+unretain header                     vuelve a añadir el campo de
+                                    encabezado a la lista ignorada
+version                             imprime la versión
+visual [lista_de_mensajes]          edita la lista con el editor
+                                    $VISUAL
+write [lista_de_mensajes] archivo   escribe los mensajes sin sus
+                                    encabezados
+xit,exit                            abandona la aplicación, conservando
+                                    todos los mensajes
+z [+/-]                             muestra la página siguiente
+                                    [anterior] de 10 encabezados
+
+[lista_de_mensajes] es opcional, y especifica los mensajes por número, autor,
+ tema o tipo.  El valor por defecto es el mensaje actual.

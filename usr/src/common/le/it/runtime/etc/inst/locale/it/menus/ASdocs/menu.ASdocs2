@@ -1,0 +1,68 @@
+.ul
+Installazione del libro di Application Server
+.ur
+Selezionare accesso a CD-ROM
+.lr
+F1=Guida
+.top
+È possibile accedere ai documenti dal CD-ROM. Se si sta installando dal
+CD-ROM, e possibile accedere ai documenti anche dal CD. Si può anche
+scegliere di installare alcuni documenti sul disco e accedere agli altri
+dal CD-ROM. Notare che è necessario montare il CD-ROM per accedere ai
+documenti. Premere <F1> per ulteriori informazioni.
+
+Da dove si vuole accedere ai documenti?
+
+.button
+Applica
+Reimposta
+.bottom
+Premere <Tab> per portare il cursore da un campo all'altro. Alla fine,
+portare il cursore su "Applica" e premere <Invio> per continuare.
+.form
+
+2 2//NO::No//YES::Sì//Accedere ai libri da CD-ROM?//CDROM//
+// Freccia destra/sinistra per altra opzione (2 opzioni)//
+
+2 2//YES::Sì//NO::No//Installare i libri su disco?//DISK//
+// Freccia destra/sinistra per altra opzione (2 opzioni)//
+
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Installazione del libro di Application Server
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+ACCESSO AI DOCUMENTI DA CD-ROM
+Se si sceglie di accedere ai documenti da CD-ROM, l'installazione
+aggiornerà il file di configurazione .ebtrc in modo che il browser possa
+trovare i documenti sul CD-ROM. Sarà necessario montare il CD-ROM per
+poter accedere ai documenti. Usare il comando:
+
+        mount -F cdfs -r /dev/cdrom/cCbBtTlL /installr
+
+dove C, B, T e L sono cifre variabili:
+        C è il numero della scheda di controllo SCSI a cui è
+          collegato il CD
+        B è il numero di bus (normalmente 0, ma può essere 0-7)
+        T è l'ID di destinazione (l'ID associata al drive sul bus che
+          utilizza)
+        L è il numero logico SCSI (normalmente 0)
+
+Consultare la directory /dev/cdrom per sapere quali cifre usare per
+C, B, T e L.
+
+Consultare il Manuale del proprietario del sistema per ulteriori
+informazioni.
+
+.pageno
+Pagina %d di %d
+.optstring
+Le opzioni sono:
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.end
+

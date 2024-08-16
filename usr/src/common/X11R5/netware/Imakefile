@@ -1,0 +1,23 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)nwmisc:netware/Imakefile	1.1.1.8"
+
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+SUBDIRS = \
+	classdb libclasses libcomponents libdlist Application_Sharing \
+	Auto_Authenticator Launch_Application \
+	OsMessageMonitor NetWare_Access Remote_Applications \
+	System_Tuner MHS_Mail_Setup System_Monitor \
+	NetWare_Setup UNIX_Mail_Setup Printer_Setup 
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+

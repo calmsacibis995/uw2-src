@@ -1,0 +1,135 @@
+#ident\t"@(#)dthelp:Admin.Tools/applsharing.hlp 1.13"
+^*version^1
+^*title^Partage d'applications
+^:Partage_des_applications
+^*width^70
+^+DesktopMgr/help.defs
+^?Partage des applications
+^0^Partage d'applications
+^$10
+Partage d'applications
+
+Utilisez le partage d'applications pour \d(mettre à disposition) des autres
+système UnixWare qu'ils peuvent utiliser les applications dont vous disposez.
+
+Le partage d'applications vous offre les possibilités suivantes :
+
+\to\t\k(Configurer votre système pour le partage d'applications^^Configuration de votre système en vue du partage d'applications)
+\to\t\k(Supprimer des applications de la liste des applications partagées^^Suppression d'une application partagée)
+\to\t\k(Personnaliser le script shell utilisé pour le lancement des applications partagées^^Personnalisation d'un script shell de lancement d'applications partagées)
+\to\t\k(Modifier types d'applications^^Changement des types d'applications)
+
+
+^1^Configuration de votre système en vue du partage d'applications
+^$20
+Configuration de votre système en vue du partage d'applications
+
+Pour que les utilisateurs à distance puissent accéder à des
+applications partagées, vous devez activer \d(communication point-à-point). De
+plus, le propriétaire du système à distance doit activer les
+communications d'égal à égal sur le système à distance (voir
+\k(Configuration NetWare^NetWare_Setup/NetWare_Setup.hlp^Configuration NetWare)).
+
+En outre, vous devez disposer de l'\k(autorisation Partage d'applications^dtadmin/user.hlp^Présentation des autorisations).
+
+Pour configurer le partage d'applications, procédez comme suit :
+
+1.\tOuvrez la fenêtre contenant l'application que vous souhaitez \d(mettre à disposition)
+  \tà d'autres utilisateurs.
+
+   \tRemarque : si vous êtes déjà dans le dossier Outils_Admin, passez
+   \tà l'étape 3.
+
+2.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la \k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).
+  \tLa fenêtre "Dossier : Outils_Admin" s'affiche.
+
+3.\tCliquez deux fois sur Partage_applications. La fenêtre
+  \t"Partage_applications" apparaît.
+
+4.\t\d(Faites glisser^faire glisser) le fichier ou le dossier
+  \tapplication mentionné à l'étape 1 sur la fenêtre "Partage
+  \td'applications - Applications partagées".
+
+5.\tCliquez sur Annuler pour refermer la fenêtre. L'exécutable
+  \tdu fichier ou du dossier d'applications est maintenant accessible
+  \taux autres utilisateurs.
+
+Remarque : si vous souhaitez configurer des applications partagées
+dont les programmes sont simples, tels que xclock, il vous suffit de
+suivre cette procédure. Cependant, pour la plupart des applications,
+vous devrez modifier le script shell de démarrage. Consultez alors
+\k(Personnalisation d'un script shell de lancement d'applications partagées).
+
+^1^Suppression d'une application partagée
+^$30
+Suppression d'une application partagée
+
+Pour supprimer (ne plus afficher) une application de la liste Partage
+d'applications, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la \k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).
+  \tLa fenêtre "Dossier : Outils_Admin" s'affiche.
+
+2.\tCliquez deux fois sur Partage_applications. La fenêtre
+  \t"Partage_applications" apparaît.
+
+3.\tCliquez sur l'application que vous souhaitez supprimer.
+
+4.\tCliquez sur Supprimer. Le système supprime l'application de la
+  \tliste Partage d'applications.
+
+^1^Personnalisation d'un script shell de lancement d'applications partagées
+^$40
+Personnalisation d'un script shell de lancement d'applications partagées
+
+Pour personnaliser le script shell de démarrage relatif à des
+applications partagées, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la \k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).
+  \tLa fenêtre "Dossier : Outils_Admin" s'affiche.
+
+2.\tCliquez deux fois sur Partage_applications. La fenêtre
+  \t"Partage_applications" apparaît.
+
+3.\tCliquez sur l'application que vous souhaitez éditer.
+
+4.\tCliquez sur Editer. Vous ouvrez alors une fenêtre "Editeur de
+  \ttexte" contenant le script de l'application.
+
+5.\tEffectuez les modifications requises. Pour plus d'informations sur
+  \tl'édition de texte, consultez \k(L'éditeur de texte^dtedit/edit.hlp^Editeur de texte).
+
+Remarque : l'édition du script par défaut qui permet de démarrer les
+applications partagées constitue une fonction relativement complexe.
+N'ayez recours à l'option Editer valeur par défaut que si vous êtes
+déjà familiarisé avec la programmation du shell du système UNIX.
+
+^1^Changement des types d'applications
+^$50
+Changement des types d'applications
+
+Le partage d'applications prend en charge les deux types d'applications suivants :
+
+\to\tApplication de texte - Application lancée dans la \k(fenêtre du terminal^xterm/term.hlp^Terminal).
+
+\to\tApplication X - Application disposant de sa propre fenêtre du terminal.
+
+Pour passer d'un type d'application à l'autre, procédez comme suit :
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la \k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).
+  \tLa fenêtre "Dossier : Outils_Admin" s'affiche.
+
+2.\tCliquez deux fois sur Partage_applications. La fenêtre
+  \t"Partage_applications" apparaît.
+
+3.\tCliquez sur l'application de votre choix.
+
+4.\tCliquez sur Modifier type. Si l'application était une application
+  \tX, elle se transforme en application de texte et vice-versa.
+

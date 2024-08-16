@@ -1,0 +1,57 @@
+!
+!(c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+!ALL RIGHTS RESERVED 
+!
+!
+! Motif Release 1.2
+!
+
+module helloworld_i18n
+    version = 'v1.0'
+    names = case_sensitive
+
+! string_direction, local_font, label_label & hello_label are found
+! in the localized uil module localstrings.uil, which also provided
+! the bye_label value, used at run time with MrmFetchSetValues.
+
+
+value
+    string_direction : imported integer;
+    local_font       : imported font_table;
+    label_label      : imported string;
+    hello_label      : imported string;
+
+procedure
+    helloworld_button_activate();
+
+object
+    helloworld_main : XmRowColumn {
+	arguments { 
+            XmNstringDirection = string_direction ;
+	};
+	controls {
+	    XmLabel		helloworld_label;
+	    XmPushButton	helloworld_button;
+	};
+    };
+
+object
+    helloworld_label : XmLabel {
+	arguments {
+	    XmNfontList =	 local_font;
+            XmNlabelString =     label_label ;
+	};
+    };
+
+object
+    helloworld_button : XmPushButton {
+	arguments { 
+	    XmNfontList =	 local_font;
+            XmNlabelString =	 hello_label ;
+	};
+	callbacks { 
+	    XmNactivateCallback = procedure helloworld_button_activate();
+	};
+    };
+
+end module;

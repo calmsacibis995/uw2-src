@@ -1,0 +1,40 @@
+#ident	"@(#)tricord.cmds:ims	1.2"
+
+if [ ! -d /usr/bin ]
+then			# /usr not mounted
+	exit
+fi
+
+if [ -z "$LC_ALL" -a -z "$LC_MESSAGES" ]
+then
+	if [ -z "$LANG" ]
+	then
+		LNG=`defadm locale LANG 2>/dev/null`
+		if [ "$?" != 0 ]
+		then LANG=C
+		else eval $LNG
+		fi
+	fi
+	export LANG
+fi
+LABEL="UX:$0"
+CAT=uxrc
+
+case "$1" in
+'start')
+	if [ -x /usr/bin/imsd ]
+	then
+                /usr/bin/imsd /dev/ims /var/adm/messages >/dev/console 2>&1 &
+	fi
+	;;
+'stop')
+	#stop the ims daemon
+	kill -9 `/usr/bin/ps -e \
+	|/usr/bin/egrep ' imsd$' \
+	|/usr/bin/awk '{print $1}'` 2>/dev/null
+	;;
+*)
+	USAGE="/etc/init.d/ims { start | stop }"
+	pfmt -l $LABEL -s action -g $CAT:4 "Usage: %s\n" "$USAGE"
+	;;
+esac

@@ -1,0 +1,356 @@
+#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+#ident	"@(#)langsup:common/ls/terminfo/jdisp.ti	1.2"
+#
+#	For supported terminals with Kanji.
+#
+#
+# C-ITOH
+#
+#   CIT482 Non-Kanji mode
+cit482|C-ITOH CIT-482 in VT-100 mode without kanji,
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+	am, xenl, xon,
+	cols#80, it#8, lines#24,
+	bel=^G, blink=\E[5m$<2>, bold=\E[1m$<2>,
+	clear=\E[H\E[2J$<50>, cr=\r,
+	csr=\E[%i%p1%d;%p2%dr$<50>, cub=\E[%p1%dD, cub1=\b,
+	cud=\E[%p1%dB, cud1=\n, cuf=\E[%p1%dC$<2>,
+	cuf1=\E[C$<2>, cup=\E[%i%p1%d;%p2%dH$<10>,
+	cuu=\E[%p1%dA$<2>, cuu1=\E[A$<2>, ed=\E[J$<50>,
+	el=\E[K, enacs=\E(B\E)0, home=\E[H, ht=\t, hts=\EH, ind=\n,
+	kbs=\b, kcub1=\EOD, kcud1=\EOB, kcuf1=\EOC,
+	kcuu1=\EOA, kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	khome=\E[H, rc=\E8, rev=\E[7m, ri=\EM$<50>, rmacs=^O,
+	.rmkx=\E[?1l\E>, rmkx=\E[?1l, rmso=\E[m, rmul=\E[m,
+	rs2=\E>\E[?7h, sc=\E7, sgr0=\E[m$<2>, smacs=^N,
+	.smkx=\E[?1h\E=, smkx=\E[?1h,
+	smso=\E[7m, smul=\E[4m, tbc=\E[3g,
+	smir=\E[4h, rmir=\E[4l,
+#
+#   CIT482 Kanji mode
+#
+cit482-j|C-ITOH CIT-482 in VT-100 mode with kanji,
+	lines#23, .csin=\E(B\E)I\E[?1h, csin=\E(B\E)I, devt=JapanEUC,
+	s0ds=\E(H, s1ds=\E$@, s2ds=\E(H, use=cit482,
+#
+#   CIT482 Non-Kanji Wide mode
+#
+cit482-w|C-ITOH CIT-482 in VT-100 Wide mode Wide without Kanji,
+	cols#132, use=cit482,
+#
+#   CIT482 Kanji Wide mode
+#
+cit482-w-j|C-ITOH CIT-482 in VT-100 Wide mode Wide with Kanji,
+	lines#23, .csin=\E(B\E)I\E[?1h, csin=\E(B\E)I, devt=JapanEUC,
+	s0ds=\E(H, s1ds=\E$@, s2ds=\E(H, use=cit482-w,
+#
+#   CIT600
+#
+cit600|C-ITOH CIT-600 in VT-100 mode without kanji,
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+	am, xenl, xon,
+	cols#80, it#8, lines#41,
+	bel=^G, blink=\E[5m$<2>, bold=\E[1m$<2>, cbt=\E[Z,
+	clear=\E[H\E[2J$<50>, cr=\r,
+	csr=\E[%i%p1%d;%p2%dr$<50>, cub=\E[%p1%dD, cub1=\b,
+	cud=\E[%p1%dB, cud1=\n, cuf=\E[%p1%dC$<2>,
+	cuf1=\E[C$<2>, cup=\E[%i%p1%d;%p2%dH$<10>,
+	cuu=\E[%p1%dA$<2>, cuu1=\E[A$<2>, ed=\E[J$<50>,
+	el=\E[K$<3>, enacs=\E(B\E)0, home=\E[H, ht=\t, hts=\EH, ind=\n,
+	kbs=\b, kcub1=\EOD, kcud1=\EOB, kcuf1=\EOC,
+	kcuu1=\EOA, kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	khome=\E[H, rc=\E8, rev=\E[7m$<2>, ri=\EM$<50>, rmacs=^O,
+	.rmkx=\E[?1l\E>, rmkx=\E[?1l ,rmso=\E[m$<2>, rmul=\E[m$<2>,
+	rs2=\E>\E[?7h, sc=\E7, sgr0=\E[m$<2>, smacs=^N,
+	.smkx=\E[?1h\E=, smkx=\E[?1h,
+	smso=\E[7m$<2>, smul=\E[4m$<2>, tbc=\E[3g,
+#
+cit600-j|C-ITOH CIT-600 in VT-100 mode with kanji,
+	lines#40, .csin=\E(B\E)I\E[?1h, csin=\E(B\E)I, devt=JapanJIS,
+	s0ds=\E(H, s1ds=\E$@, s2ds=\E(H, use=cit600,
+#
+#
+# Anritsu
+#
+ddy880a|Anritsu DDY-880a in ANSI mode without kanji,
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+	am, xenl, xon,
+	cols#80, it#8, lines#24,
+	bel=^G, blink=\E[5m$<2>, bold=\E[1m$<2>,
+	clear=\E[H\E[2J$<50>, cr=\r,
+	csr=\E[%i%p1%d;%p2%dr$<50>, cub=\E[%p1%dD, cub1=\b,
+	cud=\E[%p1%dB, cud1=\n, cuf=\E[%p1%dC$<2>,
+	cuf1=\E[C$<2>, cup=\E[%i%p1%d;%p2%dH$<10>,
+	cuu=\E[%p1%dA$<2>, cuu1=\E[A$<2>, ed=\E[J$<50>,
+	el=\E[K$<3>, enacs=\E(B\E)0, home=\E[H, ht=\t, hts=\EH, ind=\n,
+	kbs=\b, kcub1=\EOD, kcud1=\EOB, kcuf1=\EOC,
+	kcuu1=\EOA, kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	khome=\E[H, rc=\E8, rev=\E[7m$<2>, ri=\EM$<50>, rmacs=^O,
+	.rmkx=\E[?1l\E>, rmkx=\E[?1l, rmso=\E[m$<2>, rmul=\E[m$<2>,
+	rs2=\E>\E[?7h, sc=\E7, sgr0=\E[m$<2>, smacs=^N,
+	.smkx=\E[?1h\E=, smkx=\E[?1h,
+	smso=\E[7m$<2>, smul=\E[4m$<2>, tbc=\E[3g,
+#
+ddy880a-j|Anritsu DDY-880a in ANSI mode with kanji,
+	lines#23, .csin=\E(B\E)I\E+"0\E[?1h, csin=\E(B\E)I\E+"0\E[1;23r,
+	devt=JapanJIS, s0ds=^O, s1ds=\Eo, s2ds=^O,
+	use=ddy880a,
+#
+#
+# JCC (Japan Computer Corp.)
+#
+k1411|JCC K-1411 III in VT-100 mode without kanji,
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+	am, xenl, xon,
+	cols#80, it#8, lines#30,
+	bel=^G, blink=\E[5m$<2>, bold=\E[1m$<2>,
+	clear=\E[H\E[2J$<50>, cr=\r,
+	csr=\E[%i%p1%d;%p2%dr$<50>, cub=\E[%p1%dD, cub1=\b,
+	cud=\E[%p1%dB, cud1=\n, cuf=\E[%p1%dC$<2>,
+	cuf1=\E[C$<2>, cup=\E[%i%p1%d;%p2%dH$<10>,
+	cuu=\E[%p1%dA$<2>, cuu1=\E[A$<2>, ed=\E[J$<50>,
+	el=\E[K$<3>, enacs=\E(B\E)0, home=\E[H, ht=\t, hts=\EH, ind=\n,
+	kbs=\b, kcub1=\EOD, kcud1=\EOB, kcuf1=\EOC,
+	kcuu1=\EOA, kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	khome=\E[H, rc=\E8, rev=\E[7m$<2>, ri=\EM$<50>, rmacs=^O,
+	.rmkx=\E[?1l\E>, rmkx=\E[?1l, rmso=\E[m$<2>, rmul=\E[m$<2>,
+	rs2=\E>\E[?7h, sc=\E7, sgr0=\E[m$<2>, smacs=^N,
+	.smkx=\E[?1h\E=, smkx=\E[?1h,
+	smso=\E[7m$<2>, smul=\E[4m$<2>, tbc=\E[3g,
+#
+k1411-j|JCC K-1411 III in VT-100 mode with kanji,
+	lines#29, .csin=\E[?1h, devt=JapanJIS,
+	s0ds=\E(H, s1ds=\E$@, s2ds=\E(H, use=k1411,
+#
+# The following JCC "nk100" entries are untested...
+#
+#-nk100|JCC NK-100 in VT-100 mode without kanji,
+#-	lines#27, csr=\E[%i%p1%d;%p2%dr$<100>,
+#-	cup=\E[%i%p1%d;%p2%dH$<20>, ri=\EM$<75>,
+#-	use=k1411,
+#-
+#-nk100-j|JCC NK-100 in VT-100 mode with kanji,
+#-	lines#27, csr=\E[%i%p1%d;%p2%dr$<100>,
+#-	cup=\E[%i%p1%d;%p2%dH$<20>, ri=\EM$<75>,
+#-	use=k1411-j,
+#
+#
+# Ollivetti
+#
+s2250|Olivetti S-2250 in VT-100 mode without kanji,
+	am, bw,
+	cols#80, it#8, lines#24,
+	bel=^G, blink=\E[5m$<2>, bold=\E[1m$<2>,
+	clear=\E[H\E[2J$<50>, cr=\r, csr=\E[%i%p1%d;%p2%dr,
+	cub1=\E[1D, cud=\E[%p1%dB, cud1=\E[1B,
+	cuf=\E[%p1%dC$<2>, cuf1=\E[1C$<2>,
+	cup=\E[%i%p1%d;%p2%dH$<5>, cuu=\E[%p1%dA$<2>,
+	cuu1=\E[1A$<2>, ed=\E[0J$<50>, el=\E[0K$<3>,
+	home=\E[H, ind=\E[S, kcub1=\EOD, kcud1=\EOB,
+	kcuf1=\EOC, kcuu1=\EOA, ll=\E[24;1H, rc=\E[u,
+	rev=\E[7m$<2>, ri=\E[T, rmso=\E[m$<2>, rmul=\E[m$<2>,
+	rs2=\E[?7h, sc=\E[s, sgr0=\E[m$<2>, smso=\E[7m$<2>,
+	smul=\E[4m$<2>, tbc=\E[3g,
+#
+s2250-j-jis|Olivetti S-2250 in VT-100 JIS mode with kanji,
+	lines#23, .csin=\E(B\E)I\E+"0\E[?1h, csin=\E(B\E)I\E+"0,
+	devt=JapanJIS, ll=\E[23;1H, s0ds=\E(H, s1ds=\E$@, s2ds=\E(H,
+	use=s2250,
+#
+# This entry (EUC Olivetti) needs to be manufactured.  The original
+# made no sense and wouldn't work.
+#
+#-s2250-j-euc|Olivetti S-2250 in VT-100 JIS mode with kanji,
+#-	cup=UNTESTED,
+#-	use=s2250,
+#
+#
+# Ricoh
+#
+ts5-j-euc|TS-5 Ricoh pc in EUC mode,
+	am, xt, cols#80, lines#24,
+	bel=^G, clear=\E[2J, cr=\r, cub1=\E[1D, cud1=\E[1B,
+	cuf1=\E[1C, cup=\E[%i%p1%d;%p2%dH, cuu1=\E[1A,
+	devt=JapanEUC, dl1=\E[M, el=\E[K$<3>, .ht=\t, il1=\E[L,
+	ind=\n, kbs=\b, kcub1=\E[1D, kcud1=\E[1B, kcuf1=\E[1C,
+	kcuu1=\E[1A, nel=\n, rc=\E[u, rmso=\E[0m, sc=\E[s,
+	smso=\E[7m,
+#
+ts2|Ricoh TS-2 Terminal in VT-100 mode with auto-wrap on,
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+	am, xenl, xon,
+	cols#80, it#8, lines#41,
+	bel=^G, blink=\E[5m$<2>, bold=\E[1m$<2>, cbt=\E[Z,
+	clear=\E[H\E[2J$<50>, cr=\r,
+	csr=\E[%i%p1%d;%p2%dr$<50>, cub=\E[%p1%dD, cub1=\b,
+	cud=\E[%p1%dB, cud1=\n, cuf=\E[%p1%dC$<2>,
+	cuf1=\E[C$<2>, cup=\E[%i%p1%d;%p2%dH$<10>,
+	cuu=\E[%p1%dA$<2>, cuu1=\E[A$<2>, ed=\E[J$<50>,
+	el=\E[K$<3>, enacs=\E(B\E)0, home=\E[H, ht=\t, hts=\EH, ind=\n,
+	kbs=\b, kcub1=\EOD, kcud1=\EOB, kcuf1=\EOC,
+	kcuu1=\EOA, kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	khome=\E[H, rc=\E8, rev=\E[7m$<2>, ri=\EM$<50>, rmacs=^O,
+	.rmkx=\E[?1l\E>, rmkx=\E[?1l, rmso=\E[m$<2>, rmul=\E[m$<2>,
+	rs2=\E>\E[?7h, sc=\E7, sgr0=\E[m$<2>, smacs=^N,
+	.smkx=\E[?1h\E=, smkx=\E[?1h,
+	smso=\E[7m$<2>, smul=\E[4m$<2>, tbc=\E[3g,
+#
+ts2-j|Ricoh TS-2 Terminal in Kanji mode,
+	lines#40, .csin=\E(B\E)I\E[?1h, csin=\E(B\E)I, devt=JapanJIS,
+	s0ds=\E(H, s1ds=\E$@, s2ds=\E(H, use=ts2,
+#
+#
+# Victor Graphics
+#
+vg720|Victor Graphics in ANSI mode without Kanji,
+	acsc=``aaffggjjkkllmmnnooppqqrrssttuuvvwwxxyyzz{{||}}~~,
+	am, xenl, xon,
+	cols#80, it#8, lines#24,
+	bel=^G, blink=\E[5m$<2>, bold=\E[1m$<2>,
+	clear=\E[H\E[2J$<50>, cr=\r,
+	csr=\E[%i%p1%d;%p2%dr$<50>, cub=\E[%p1%dD, cub1=\b,
+	cud=\E[%p1%dB, cud1=\n, cuf=\E[%p1%dC$<2>,
+	cuf1=\E[C$<2>, cup=\E[%i%p1%d;%p2%dH$<10>,
+	cuu=\E[%p1%dA$<2>, cuu1=\E[A$<2>, ed=\E[J$<50>,
+	el=\E[K, enacs=\E(B\E)0, home=\E[H, ht=\t, hts=\EH, ind=\n,
+	kbs=\b, kcub1=\EOD, kcud1=\EOB, kcuf1=\EOC,
+	kcuu1=\EOA, kf1=\EOP, kf2=\EOQ, kf3=\EOR, kf4=\EOS,
+	khome=\E[H, rc=\E8, rev=\E[7m, ri=\EM$<50>, rmacs=^O,
+	.rmkx=\E[?1l\E>, rmkx=\E[?1l, rmso=\E[m, rmul=\E[m,
+	rs2=\E>\E[?7h, sc=\E7, sgr0=\E[m$<2>, smacs=^N,
+	.smkx=\E[?1h\E=, smkx=\E[?1h,
+	smso=\E[7m, smul=\E[4m, tbc=\E[3g,
+	smir=\E[4h, rmir=\E[4l,
+#
+vg720-j|Victor Graphics in ANSI mode with Kanji,
+	lines#23, .csin=\E(B\E)I\E+"0\E[?1h, csin=\E(B\E)I\E+"0,
+	devt=JapanJIS, s0ds=^O, s1ds=\Eo, s2ds=^O,
+	use=vg720,
+#
+v4w|Victor Multiwindowing Terminal in ANSI7 mode without Kanji,
+	lines#24, cols#80, use=vg720,
+	kfnd=\E[1~, kich1=\E[2~, kdch1=\E[3~,
+	kslt=\E[4~, kpp=\E[5~, knp=\E[6~,
+#-	hs, tsl=\E[1$}, fsl=\E[0$},
+#
+v4w-w|Victor Multiwindowing Terminal in ANSI7 mode Wide without Kanji,
+	cols#132, hs@, tsl@, fsl@, use=v4w,
+#
+v4w-j|Victor Multiwindowing Terminal in ANSI7 mode with Kanji,
+	lines#23, devt=JapanEUC, hs@, tsl@, fsl@, use=v4w,
+#
+v4w-w-j|Victor Multiwindowing Terminal in ANSI7 mode Wide with Kanji,
+	lines#23, devt=JapanEUC, hs@, tsl@, fsl@, use=v4w-w,
+#
+# Multibyte console driver terminfo entries:
+#
+AT386-mb|at386-mb|386AT-mb|386at-mb|at/386 console @(#)386.ti 1.4,
+	am, bw, eo, xon,
+	colors#8, cols#80, lines#25, ncv#3, pairs#64,
+	acsc=``aaffggjYk?lZm@nEooppqDrrsstCu4vAwBx3yyzz{{||}}~~,
+	bel=^G, blink=\E[5m, bold=\E[1m, civis=\E[2c,
+	clear=\E[2J\E[H, cnorm=\E[0c, cr=\r, cub=\E[%p1%dD,
+	cub1=\E[D, cud=\E[%p1%dB, cud1=\E[B, cuf=\E[%p1%dC,
+	cuf1=\E[C, cup=\E[%i%p1%02d;%p2%02dH, cuu=\E[%p1%dA,
+	cuu1=\E[A, cvvis=\E[1c, dch=\E[%p1%dP, dch1=\E[P,
+	dl=\E[%p1%dM, dl1=\E[1M, ed=\E[J, el=\E[K, flash=^G,
+	home=\E[H, ht=\t,
+	il=\E[%p1%dL, il1=\E[1L, ind=\E[S, indn=\E[%p1%dS,
+	invis=\E[9m, is2=\E[0;10m, kbs=\b, kcbt=^],
+	kclr=\E[2J, kcub1=\E[D, kcud1=\E[B, kcuf1=\E[C,
+	kcuu1=\E[A, kdch1=\E[P, kend=\E[Y, kf1=\EOP,
+	kf10=\EOY, kf11=\EOZ, kf12=\EOA, kf2=\EOQ, kf3=\EOR,
+	kf4=\EOS, kf5=\EOT, kf6=\EOU, kf7=\EOV, kf8=\EOW,
+	kf9=\EOX, khome=\E[H, kich1=\E[@, knp=\E[U, kpp=\E[V,
+	op=\E[0m, pfx=\EQ%p1%{1}%-%d'%p2%s', rev=\E[7m,
+	rin=\E[S, rmacs=\E[10m, rmso=\E[m, rmul=\E[m,
+	setab=\E[4%p1%dm, setaf=\E[3%p1%dm,
+	setb=\E[4%?%p1%{1}%=%t4%e%p1%{3}%=%t6%e%p1%{4}%=%t1%e%p1%{6}%=%t3%e%p1%d%;m,
+	setf=\E[3%?%p1%{1}%=%t4%e%p1%{3}%=%t6%e%p1%{4}%=%t1%e%p1%{6}%=%t3%e%p1%d%;m,
+	sgr=\E[10m\E[0%?%p1%p3%|%t;7%;%?%p2%t;4%;%?%p4%t;5%;%?%p6%t;1%;%?%p9%t;12%;%?%p7%t;9%;m,
+	sgr0=\E[0;10m, smacs=\E[12m, smso=\E[7m, smul=\E[4m,
+#
+#	Monochrome Multibyte console entries
+#
+AT386-M-mb|at386-m-mb|386AT-M-mb|386at-m-mb|at/386 console @(#)386.ti 1.4,
+	am, bw, eo, xon,
+	cols#80, lines#25,
+	acsc=``aaffggjYk?lZm@nEooppqDrrsstCu4vAwBx3yyzz{{||}}~~,
+	bel=^G, blink=\E[5m, bold=\E[1m, civis=\E[2c,
+	clear=\E[2J\E[H, cnorm=\E[0c, cr=\r, cub=\E[%p1%dD,
+	cub1=\E[D, cud=\E[%p1%dB, cud1=\E[B, cuf=\E[%p1%dC,
+	cuf1=\E[C, cup=\E[%i%p1%02d;%p2%02dH, cuu=\E[%p1%dA,
+	cuu1=\E[A, cvvis=\E[1c, dch=\E[%p1%dP, dch1=\E[P,
+	dl=\E[%p1%dM, dl1=\E[1M, ed=\E[J, el=\E[K, flash=^G,
+	home=\E[H, ht=\t,
+	il=\E[%p1%dL, il1=\E[1L, ind=\E[S, indn=\E[%p1%dS,
+	invis=\E[9m, is2=\E[0;10m, kbs=\b, kcbt=^],
+	kclr=\E[2J, kcub1=\E[D, kcud1=\E[B, kcuf1=\E[C,
+	kcuu1=\E[A, kdch1=\E[P, kend=\E[Y, kf1=\EOP,
+	kf10=\EOY, kf11=\EOZ, kf12=\EOA, kf2=\EOQ, kf3=\EOR,
+	kf4=\EOS, kf5=\EOT, kf6=\EOU, kf7=\EOV, kf8=\EOW,
+	kf9=\EOX, khome=\E[H, kich1=\E[@, knp=\E[U, kpp=\E[V,
+	pfx=\EQ%p1%{1}%-%d'%p2%s', rev=\E[7m, rin=\E[S,
+	rmacs=\E[10m, rmso=\E[m, rmul=\E[m,
+	sgr=\E[10m\E[0%?%p1%p3%|%t;7%;%?%p2%t;4%;%?%p4%t;5%;%?%p6%t;1%;%?%p9%t;12%;%?%p7%t;9%;m,
+	sgr0=\E[0;10m, smacs=\E[12m, smso=\E[7m, smul=\E[4m,
+#
+#	Monochrome Multibyte console driver (-ie version)
+#
+AT386-M-ie-mb|at386-m-ie-mb|386AT-M-ie-mb|386at-m-ie-mb|at/386 console @(#)386.ti 1.4,
+	am, bw, eo, xon,
+	cols#80, lines#25,
+	acsc=``aaffggj\213k\214l\215m\216n\217ooppq\222rrsst\225u\226v\227w\230x\231yyzz{{||}}~~,
+	bel=^G, blink=\E[5m, bold=\E[1m, civis=\E[2c,
+	clear=\E[2J\E[H, cnorm=\E[0c, cr=\r, cub=\E[%p1%dD,
+	cub1=\E[D, cud=\E[%p1%dB, cud1=\E[B, cuf=\E[%p1%dC,
+	cuf1=\E[C, cup=\E[%i%p1%02d;%p2%02dH, cuu=\E[%p1%dA,
+	cuu1=\E[A, cvvis=\E[1c, dch=\E[%p1%dP, dch1=\E[P,
+	dl=\E[%p1%dM, dl1=\E[1M, ed=\E[J, el=\E[K, flash=^G,
+	home=\E[H, ht=\t,
+	il=\E[%p1%dL, il1=\E[1L, ind=\E[S, indn=\E[%p1%dS,
+	invis=\E[9m, is2=\E[0;10m, kbs=\b, kcbt=^],
+	kclr=\E[2J, kcub1=\E[D, kcud1=\E[B, kcuf1=\E[C,
+	kcuu1=\E[A, kdch1=\E[P, kend=\E[Y, kf1=\EOP,
+	kf10=\EOY, kf11=\EOZ, kf12=\EOA, kf2=\EOQ, kf3=\EOR,
+	kf4=\EOS, kf5=\EOT, kf6=\EOU, kf7=\EOV, kf8=\EOW,
+	kf9=\EOX, khome=\E[H, kich1=\E[@, knp=\E[U, kpp=\E[V,
+	pfx=\EQ%p1%{1}%-%d'%p2%s', rev=\E[7m, rin=\E[S,
+	rmacs=\E[10m, rmso=\E[m, rmul=\E[m,
+	sgr=\E[10m\E[0%?%p1%p3%|%t;7%;%?%p2%t;4%;%?%p4%t;5%;%?%p6%t;1%;%?%p9%t;12%;%?%p7%t;9%;m,
+	sgr0=\E[0;10m, smacs=\E[12m, smso=\E[7m, smul=\E[4m,
+#
+#	Multibyte Console driver (-ie version)
+#
+AT386-ie-mb|at386-ie-mb|386AT-ie-mb|386at-ie-mb|at/386 console @(#)386.ti 1.4,
+	am, bw, eo, xon,
+	colors#8, cols#80, lines#25, ncv#3, pairs#64,
+	acsc=``aaffggj\213k\214l\215m\216n\217ooppq\222rrsst\225u\226v\227w\230x\231yyzz{{||}}~~,
+	bel=^G, blink=\E[5m, bold=\E[1m, civis=\E[2c,
+	clear=\E[2J\E[H, cnorm=\E[0c, cr=\r, cub=\E[%p1%dD,
+	cub1=\E[D, cud=\E[%p1%dB, cud1=\E[B, cuf=\E[%p1%dC,
+	cuf1=\E[C, cup=\E[%i%p1%02d;%p2%02dH, cuu=\E[%p1%dA,
+	cuu1=\E[A, cvvis=\E[1c, dch=\E[%p1%dP, dch1=\E[P,
+	dl=\E[%p1%dM, dl1=\E[1M, ed=\E[J, el=\E[K, flash=^G,
+	home=\E[H, ht=\t,
+	il=\E[%p1%dL, il1=\E[1L, ind=\E[S, indn=\E[%p1%dS,
+	invis=\E[9m, is2=\E[0;10m, kbs=\b, kcbt=^],
+	kclr=\E[2J, kcub1=\E[D, kcud1=\E[B, kcuf1=\E[C,
+	kcuu1=\E[A, kdch1=\E[P, kend=\E[Y, kf1=\EOP,
+	kf10=\EOY, kf11=\EOZ, kf12=\EOA, kf2=\EOQ, kf3=\EOR,
+	kf4=\EOS, kf5=\EOT, kf6=\EOU, kf7=\EOV, kf8=\EOW,
+	kf9=\EOX, khome=\E[H, kich1=\E[@, knp=\E[U, kpp=\E[V,
+	op=\E[0m, pfx=\EQ%p1%{1}%-%d'%p2%s', rev=\E[7m,
+	rin=\E[S, rmacs=\E[10m, rmso=\E[m, rmul=\E[m,
+	setab=\E[4%p1%dm, setaf=\E[3%p1%dm,
+	setb=\E[4%?%p1%{1}%=%t4%e%p1%{3}%=%t6%e%p1%{4}%=%t1%e%p1%{6}%=%t3%e%p1%d%;m,
+	setf=\E[3%?%p1%{1}%=%t4%e%p1%{3}%=%t6%e%p1%{4}%=%t1%e%p1%{6}%=%t3%e%p1%d%;m,
+	sgr=\E[10m\E[0%?%p1%p3%|%t;7%;%?%p2%t;4%;%?%p4%t;5%;%?%p6%t;1%;%?%p9%t;12%;%?%p7%t;9%;m,
+	sgr0=\E[0;10m, smacs=\E[12m, smso=\E[7m, smul=\E[4m,

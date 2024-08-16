@@ -1,0 +1,738 @@
+#ident\t"@(#)dthelp:Admin.Tools/DialMgr.hlp     1.23"
+^*version^1
+^*title^Configurazione telefono
+^:Cfg_telefono
+^*width^70
+^+DesktopMgr/help.defs
+^?Configurare e gestire comunicazioni su linea commutata
+^0^Configurazione telefono
+^$10
+Configurazione telefono
+
+Utilizzare Configurazione telefono per configurare la comunicazione
+tramite modem e connessione diretta. Con Configurazione telefono sono
+disponibili le seguenti funzioni:
+
+\to\t\k(Configurare l'accesso a un sistema remoto^^Configurazione dell'accesso ad un sistema remoto)
+\to\t\k(Configurare l'accesso per un dispositivo a linea commutata^^Configurazione di una voce del dispositivo a linea commutata)
+\to\t\k(Copiare un dispositivo a linea commutata in una cartella^^Copia dell'icona del dispositivo a linea commutata in una cartella)
+\to\t\k(Copiare un'icona di sistema remoto in una cartella^^Copia di un'icona del sistema remoto in una cartella)
+\to\t\k(Cancellare un dispositivo a linea commutata dall'elenco^^Cancellazione di una voce del dispositivo a linea commutata)
+
+\to\t\k(Cancellare una voce di sistema remoto^^Cancellazione di una voce del sistema remoto)
+\to\t\k(Chiamare un sistema a caso^^Chiamata a sistema casuale) (cioè, un sistema non configurato per l'accesso remoto)
+\to\t\k(Cercare una voce di sistema remoto^^Ricerca di una voce dell sistema remoto)
+\to\t\k(Visualizzare o modificare le proprietà di un dispositivo a linea commutata^^Visualizzazione o modifica delle proprietà del dispositivo a linea commutata)
+\to\t\k(Visualizzare o modificare le proprietà di un sistema remoto^^Visualizzazione o modifica delle proprietà di un sistema remoto)
+
+Vedi anche:
+\s(Uso di Configurazione telefono^dhelp "pe.it" ownerhb "Impostazione di modem e di altre comunicazioni seriali" "Uso della Configurazione del telefono" || helpLinkErr)
+
+^1^Configurazione di una voce del dispositivo a linea commutata
+^$20
+Configurazione di una voce del dispositivo a linea commutata
+
+Nota: Occorre avere i \k(Permessi di Modifica configurazione telefono^dtadmin/user.hlp^Comprensione dei permessi)
+per poter configurare una voce di dispositivo a linea commutata.
+
+Un dispositivo a linea commutata permette di chiamare un altro sistema
+e fare login.
+
+Per configurare sul proprio sistema una voce di dispositivo a linea
+commutata procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_Ammin, passare al Punto 2.
+Se si è già nella cartella Gestione di Rete, passare al Punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione telefono"^^Finestra Configurazione telefono) .
+
+4.\tFare clic su Azioni=>Configurare Dispositivi. Appare la finestra
+  \t \k("Configurazione Telefono: Dispositivi"^^Configurazione telefono: Finestra Dispositivi).
+
+5.\tFare clic su Dispositivo=>Nuovo. Appare la finestra "Configurazione
+  \tDispositivo: Aggiungi Nuovo Dispositivo" con i seguenti campi:
+
+  \to\tPorta: - E la connessione fisica del dispositivo sul computer.
+  \t \tPuò essere una porta seriale (ad esempio, COM1 rappresenta la
+  \t \tporta seriale 1) o un'altro tipo di porta. Facendo clic su Altro,
+  \t \toccorre immettere il nome della porta nella casella di testo. Per
+  \t \tdefault, Porta è impostata a COM1.
+
+  \to\tConnesso a: - E il nome del dispositivo o modem utilizzato. Fare
+  \t \tclic sulla casella freccia per visualizzare la Lista di Tipi di
+  \t \tDispositivo. Quindi fare clic sul tipo di dispositivo
+  \t \tdesiderato.
+
+  \t \tNota: Se è necessario aggiungere un modem alla lista dei tipi di
+  \t \tdispositivo esistenti, vedi \s(Aggiunta di voci telefoniche^dhelp "pe.it" ownerhb "Impostazione di modem e di altre comunicazioni seriali" "Aggiunta di una voce al dispositivo di telefono" || helpLinkErr) nel
+  \t \tManuale del proprietario del sistema, e consultare anche il
+  \t \tcomando dtmodem(1M) nel \s(Riferimento dei comandi^dhelp refman uarm "" "" || helpLinkErr).
+
+  \to\tConfigurare la Porta Come: - Scegliere una delle seguenti
+  \t \topzioni:
+
+  \t \t-\tBidirezionale - Per consentire sia le chiamate in entrata che in uscita dal sistema.
+
+  \t \t \tNota: Se si sceglie Bidirezionale, il sistema visualizza un
+  \t \t \tset di velocità in entrata tra cui scegliere. Per default, la
+  \t \t \tvelocità è impostata a 9600. La velocità in uscita è impostata
+  \t \t \tsu Selezione automatica. Se si sceglie 14400 o 28800, il sistema
+  \t \t \treimposta la velocità al valore valido immediatamente più alto.
+  \t \t \tLa velocità in uscita è sempre Selezione automatica.
+
+  \t \t-\tSolo in uscita - Per consentire le chiamate in uscita dal sistema,
+  \t \t \tma non quelle in entrata. Per default, l'impostazione
+  \t \t \tdi velocità per questo tipo di modem è Selezione automatica.
+
+  \t \t-\tSolo in Arrivo - Per consentire le chiamate in arrivo, ma non in
+  \t \t \tpartenza dal sistema.
+
+  \t \t \tNota: Se si sceglie Solo in entrata, il sistema visualizza
+  \t \t \tun set di velocità tra cui scegliere. Per default, questa
+  \t \t \tvelocità è impostata a 9600. Se si sceglie 14400 o 28800,
+  \t \t \til sistema reimposta la velocità al valore valido immediatamente
+  \t \t \tpiù alto. La velocità in uscita è sempre Selezione automatica.
+
+  \t \t-\tPorta: - Per default, questo campo è impostato su Abilitata.
+  \t \t \tSe si desidera disabilitare la porta, fare clic su Disabilitata.
+
+6.\tFare clic su Aggiungi per aggiungere una voce per il dispositivo e
+  \t chiudere la finestra. Un'icona che rappresenta il dispositivo appare
+  \t nella finestra "Configurazione Telefono: Dispositivi". Volendo, si
+  \t può copiare questa icona in un'altra cartella. Vedi
+  \t \k(Copia dell'icona del dispositivo a linea commutata in una cartella).
+
+  \tNota: Si può fare anche clic su Ripristina per ripristinare le
+  \timpostazioni originali, o su Annulla per liberare la finestra
+  \tsenza configurare l'unità.
+
+^1^Copia dell'icona del dispositivo a linea commutata in una cartella
+^$30
+Copia dell'icona del dispositivo a linea commutata in una cartella
+
+Per copiare un dispositivo a linea commutata in un'altra cartella,
+procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_Ammin, passare al Punto 2.
+Se si è già nella cartella Gestione di Rete, passare al Punto 3.
+
+1.\tFare doppio clic su Strumenti_Ammin nella
+  \tfinestra\k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_Ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione Telefono: Dispositivi"^^Configurazione telefono: Finestra Dispositivi).
+
+4.\t\d(Fare doppio clic^doppio clic) sulla cartella nella quale
+  \tdeve essere copiata l'icona di dispositivo a linea commutata.
+
+5.\t\d(Trascinare e Rilasciare^trascinare e rilasciare) il dispositivo prescelto dalla finestra
+\t"Configurazione Telefono: Dispositivi" nella cartella aperta al Punto 4.
+
+  \tSi può ora fare doppio clic sull'icona del dispositivo a linea
+  \tcommutata \k("Configurazione Telefono: Collegamento Veloce"^^Chiamata a sistema casuale).
+
+Nota: Si può anche copiare un'icona di dispositivo a linea commutata
+in una delle proprie cartelle utilizzando l'opzione
+\k(Copia in una cartella).
+
+^2^Finestra Configurazione telefono
+^$40
+Finestra Configurazione telefono
+
+Questa è la finestra principale per le funzioni di Configurazione
+Telefono. Visualizza il sistema remoto al quale è possibile
+connettersi tramite modem o altro dispositivo.
+
+Nota: Questi sistemi sono definiti nel file /etc/uucp/Systems.
+
+Per ulteriori informazioni sui file di sistema UNIX, vedi \s(Directory e File^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Configurazione telefono: Finestra Dispositivi
+^$50
+Configurazione telefono: Finestra Dispositivi
+
+Questa finestra visualizza i dispositivi connessi al sistema che si
+possono utilizzare per chiamare sistemi remoti.
+
+Nota: Questi dispositivi sono definiti nel file /etc/uucp/Devices.
+
+Per ulteriori informazioni sui file di sistema UNIX, vedi \s(Directory e File^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Configurazione telefono: Finestra Aggiunta nuovo dispositivo
+^$60
+Configurazione telefono: Finestra Aggiunta nuovo dispositivo
+
+In questa finestra, fare quanto segue:
+
+1.\tImpostare le opzioni seguenti:
+
+  \to\tPorta: - È la connessione fisica del dispositivo al computer.
+  \t \tPuò essere una porta seriale (ad esempio, COM1 rappresenta la
+  \t \tporta seriale 1) o un altro tipo di porta. Facendo clic su
+  \t \tAltro, è necessario immettere il nome della porta nella casella
+  \t \tdi testo. Per default, Porta è impostata a COM1.
+
+  \to\tConnesso a: - E il nome del dispositivo, o modem, usato. Fare
+  \t \tclic sulla casella freccia per visualizzare la Lista di Tipi di
+  \t \tDispositivo. Quindi fare clic sul tipo di dispositivo
+  \t \tdesiderato.
+
+  \t \tNota: Se è necessario aggiungere un modem alla lista dei tipi di
+  \t \tdispositivo esistenti, vedi \s(Aggiunta di voci telefoniche^dhelp "pe.it" ownerhb "Impostazione di modem e di altre comunicazioni seriali" "Aggiunta di una voce al dispositivo di telefono" || helpLinkErr) nel
+  \t \tManuale del proprietario del sistema, e consultare anche il
+  \t \tcomando dtmodem(1M) nel \s(Riferimento dei comandi^dhelp refman uarm "" "" || helpLinkErr).
+
+  \to\tConfigurare la Porta Come: - Scegliere una delle seguenti
+  \t \topzioni:
+
+  \t \t-\tBidirezionale - Per consentire sia le chiamate in entrata che in uscita dal sistema.
+
+  \t \t \tNota: Se si sceglie Bidirezionale, il sistema visualizza un
+  \t \t \tset di velocità in entrata tra cui scegliere. Per default, la
+  \t \t \tvelocità è impostata a 9600. La velocità in uscita è impostata
+  \t \t \tsu Selezione automatica. Se si sceglie 14400 o 28800, il sistema
+  \t \t \treimposta la velocità al valore valido immediatamente più alto.
+  \t \t \tLa velocità in uscita è sempre Selezione automatica.
+
+  \t \t-\tSolo in uscita - Per consentire le chiamate in uscita dal sistema,
+  \t \t \tma non quelle in entrata. Per default, l'impostazione
+  \t \t \tdi velocità per questo tipo di modem è Selezione automatica.
+
+  \t \t-\tSolo in Arrivo - Per consentire le chiamate in arrivo, ma non in
+  \t \t \tpartenza dal sistema.
+
+  \t \t \tNota: Se si sceglie Solo in entrata, il sistema visualizza
+  \t \t \tun set di velocità tra cui scegliere. Per default, questa
+  \t \t \tvelocità è impostata a 9600. Se si sceglie 14400 o 28800, il
+  \t \t \tsistema reimposta la velocità al valore valido immediatamente
+  \t \t \tpiù alto. La velocità in uscita è sempre Selezione automatica.
+
+  \t \t-\tPorta: - Per default, questo campo è impostato su Abilitata.
+  \t \t \tSe si desidera disabilitare la porta, fare clic su Disabilitata.
+
+"2.\tFare clic su Aggiungi per aggiungere una voce per il dispositivo e
+  \t chiudere la finestra. Un'icona che rappresenta il dispositivo
+  \t appare nella finestra ""Configurazione Telefono: Dispositivi"".
+  \t Volendo, si può copiare questa icona in un'altra cartella.
+  \t Vedi\t\k(Copia dell'icona del dispositivo a linea commutata in una cartella).
+
+Vedere anche:
+\k(Configurazione di una voce del dispositivo a linea commutata)
+
+^1^Cancellazione di una voce del dispositivo a linea commutata
+^$70
+Cancellazione di una voce del dispositivo a linea commutata
+
+Per cancellare un dispositivo a linea commutata, procedere come
+segue::
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione Telefono"^^Finestra Configurazione telefono).
+
+4.\tFare clic su Azioni=>Configurare Dispositivi. Appare la finestra
+  \t \k("Configurazione Telefono: Dispositivi"^^Configurazione telefono: Finestra Dispositivi).
+
+5.\tFare clic sul dispositivo da cancellare.
+
+6.\tFare clic su Dispositivo=>Cancella. L'icona che rappresenta il
+  \tdispositivo scompare dalla finestra "Configurazione telefono:
+  \tDispositivi"
+
+
+^1^Configurazione dell'accesso ad un sistema remoto
+^$80
+Configurazione dell'accesso ad un sistema remoto
+
+Prima di configurare l'accesso a un sistema remoto, occorre procedere
+come segue:
+
+  o  \k(configurare un dispositivo a commutazione^^Configurazione di una voce del dispositivo a linea commutata).
+
+  o  Ottenere un login e una parola d'ordine per il sistema al quale
+     si desidera connettersi.
+
+  o  Ottenere il numero telefonico del sistema al quale si desidera
+     connettersi..
+
+Per configurare l'accesso a un sistema remoto, procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione Telefono"^^Finestra Configurazione telefono).
+
+4.\tFare clic su Sistema=>Nuovo. Appare la finestra "Configurazione
+  \tTelefono" con i seguenti campi:
+
+  \to\tNome Sistema: - Immettere il nome del sistema remoto al quale
+  \t \tsi desidera connettersi.
+
+  \to\tConnessione: - Fare clic sul tipo di dispositivo in uso.
+
+  \to\tVelocità: - Fare clic sulla velocità corrispondente alla
+  \t \tvelocità del modem o della porta. In caso di dubbio, fare clic
+  \t \tsu Auto-Select. Per la connessione diretta, fare clic su 19200.
+
+  \to\tNumero Telefonico: - Immettere il numero telefonico del sistema
+  \t \tal quale connettersi, comprensivo di eventuale 9 per chiamate
+  \t \testerne, prefisso (se numero fuori zona), e numero stesso di
+  \t \tsette cifre. Ad esempio: 92015551234.
+
+  \t \tNota:Questo campo non è disponibile per connessioni dirette.
+
+5.\tFare clic su Categoria=>Sequenza di Login per opzioni aggiuntive,
+  \tnel caso si intenda inviare posta o trasferire file ad altri
+  \tsistemi utilizzando \k(UUCP^DesktopMgr/uucp.hlp^Uso della casella posta in arrivo) mediante un dispositivo a linea
+  \tcommutata.
+
+  \tNota: Occorre avere i \k(permissi di Modifica configurazione telefono^dtadmin/user.hlp^Comprensione dei permessi)
+  \tper poter cambiare la Sequenza di Login.
+
+  \tAppaiono le seguenti opzioni:
+
+  \to\tPrompt: - Immettere la stringa di testo che si prevede
+  \t \tvisualizzata come prompt dal sistema remoto.
+
+  \t \tNota: - Non è necessario immettere la stringa intera.
+
+  \to\tRisposta del Sistema: - Immettere la stringa di testo da restituire
+  \t \tal sistema remoto in risposta al prompt.
+
+  \to\tSequenza di Login Attuale: - Scorrere questa lista per
+  \t \tvisualizzare le voci Prompt e Risposta del Sistema. Le voci
+  \t \tdella lista devono presentarsi nello stesso ordine con cui il
+  \t \tsistema remoto visualizza i suoi prompt. Fare clic su una delle
+  \t \tseguenti opzioni:
+
+  \t \t-\tAggiungi - Per trasferire il contenuto di Prompt e Risposta
+  \t \t \tdel Sistema nella lista a scorrimento.
+
+  \t \to\tModifica - Per sostituire la voce selezionata nella Sequenza
+  \t \t \tdi Login Attuale con l'attuale contenuto di Prompt o Risposta
+  \t \t \tdel Sistema.
+
+  \t \to\tCancellare per rimuovere la voce selezionata dalla scroll
+  \t \t \tlist.
+
+6.\tFare clic su Aggiungi (nella finestra "Configurazione Telefono:
+  \tAggiungi Nuovo Sistema" ). Nella
+  \t\k(finestra "Configurazione Telefono"^^Finestra Configurazione telefono) appare una voce per il sistema
+  \tremoto.
+
+  \tNota: Per copiare un'icona che rappresenti il nuovo sistema in un'altra
+  \tcartella, vedi \k(Copia di un'icona del sistema remoto in una cartella).Si può quindi fare il login al
+  \tsistema remoto facendo doppio clic su quell'icona e trasferire file al
+  \tsistema remoto con la tecnica di \d(trascinare e rilasciare^trascinare e rilasciare) i file
+  \tsopra quell'icona.
+
+^2^Configurazione telefono: Finestra Aggiungi nuovo sistema
+^$90
+Configurazione telefono: Finestra Aggiungi nuovo sistema
+
+In questa finestra, fare quanto segue:
+
+1.\tImpostare le opzioni seguenti:
+
+  \to\tNome Sistema: - Immettere il nome del sistema remoto al quale
+  \t \tsi desidera connettersi.
+
+  \to\tConnessione: - Fare clic sul tipo di dispositivo in uso.
+
+  \to\tVelocità: - Fare clic sulla velocità corrispondente alla velocità
+  \t \tdel modem o della porta. In caso di dubbio, fare clic
+  \t \tsu Auto-Select. Per la connessione diretta, fare clic su 19200.
+
+  \to\tNumero Telefonico: - Immettere il numero telefonico del sistema
+  \t \tal quale connettersi, comprensivo di eventuale 9 per chiamate
+  \t \testerne, prefisso (se numero fuori zona), e numero di sette
+  \t \tcifre. Ad esempio: 92015551234.
+
+  \t \tNota:Questo campo non è disponibile per connessioni dirette.
+
+5.\tFare clic su Categoria=>Sequenza di Login per opzioni aggiuntive,
+  \tnel caso si intenda inviare posta o trasferire file ad altri
+  \tsistemi utilizzando \k(UUCP^DesktopMgr/uucp.hlp^Uso della casella posta in arrivo) mediante dispositivo a linea commutata.
+
+  \tNota: Occorre avere i \k(permissi di Modifica configurazione telefono^dtadmin/user.hlp^Comprensione dei permessi)
+  \tper poter cambiare la Sequenza di Login.
+
+  \tAppaiono le seguenti opzioni:
+
+  \to\tPrompt: - Immettere la stringa di testo che si prevede
+  \t \tvisualizzata come prompt dal sistema remoto.
+
+  \t \tNota: - Non è necessario immettere la stringa intera.
+
+  \to\tRisposta del Sistema: - Immettere la stringa di testo da restituire
+  \t \tal sistema remoto in risposta al prompt.
+
+  \to\tSequenza di Login Attuale: - Scorrere questa lista per
+  \t \tvisualizzare le voci Prompt e Risposta del Sistema. Le voci
+  \t \tdella lista devono presentarsi nello stesso ordine con cui il
+  \t \tsistema remoto visualizza i suoi prompt. Fare clic su una delle
+  \t \tseguenti opzioni:
+
+  \t \t-\tAggiungi - Per trasferire il contenuto di Prompt e Risposta
+  \t \t \tdel Sistema nella lista a scorrimento.
+
+  \t \to\tModifica - Per sostituire la voce selezionata nella Sequenza
+  \t \t \tdi Login Attuale con l'attuale contenuto di Prompt o Risposta
+  \t \t \tdel Sistema.
+
+  \t \to\tCancellare per rimuovere la voce selezionata dalla scroll
+  \t \t \tlist.
+
+3.\tFare Clic su Aggiungi. Il sistema remoto appare nella
+  \t\k(finestra "Configurazione Telefono"^^Finestra Configurazione telefono).
+
+Vedi anche:
+\k(Configurazione dell'accesso ad un sistema remoto)
+
+^1^Cancellazione di una voce del sistema remoto
+^$100
+Cancellazione di una voce del sistema remoto
+
+Per cancellare una voce di sistema remoto, procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione telefono"^^Finestra Configurazione telefono) .
+
+4.\tFare clic sul sistema da cancellare.
+
+5.\tFare clic su Sistema=>Cancella. Scompare la voce relativa al
+  \t sistema nella finestra "Configurazione Telefono".
+
+^1^Copia di un'icona del sistema remoto in una cartella
+^$110
+Copia di un'icona del sistema remoto in una cartella
+
+Si può copiare in una delle proprie cartelle un'icona relativa a un
+sistema di chiamata a distanza. In seguito si potrà fare un login
+remoto a quel sistema facendo doppio clic sull'icona.
+
+Inoltre si può spostare un file al sistema remoto semplicemente
+\d(trascinando e rilasciando^trascinare e rilasciare)il file sull'icona del
+sistema remoto.
+
+Per copiare un'icona di sistema remoto in una delle cartelle,
+procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione telefono"^^Finestra Configurazione telefono) .
+
+4.\tFare doppio clic sulla cartella in cui si desidera copiare
+  \tl'icona della telefonata al sistema remoto.
+
+5.\tTrascinare e rilasciare il sistema desiderato dalla finestra
+  \t"Configurazione Telefono" nella cartella aperta al Punto 4.
+
+Nota: È anche possibile copiare un'icona di sistema remoto in una
+delle proprie cartelle tramite l'opzione di \k(Copia in una cartella).
+
+^2^Copia in una cartella
+^$120
+Copia in una cartella
+
+Per copiare un'icona di sistema remoto o di dispositivo a linea
+commutata in una delle proprie cartelle, procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+"3.\tFare doppio clic su Configurazione_Telefono. Appare la
+\k(finestra "Configurazione telefono"^^Finestra Configurazione telefono).
+
+4.\tFare clic su Azioni=>Configurazione. Appare la finestra \k("Configurazione Telefono: Dispositivi" ^^Configurazione telefono: Finestra Dispositivi).
+
+5.\tFare clic sull'icona di sistema remoto o di dispositivo a linea
+  \tcommutata.
+
+6.\tFare clic su Sistema=>Copia su Cartella. Compare la finestra
+  \t"Configurazione Telefono: Copia su Cartella".
+
+7.\tFare clic su un nome di cartella o sulla Cartella Superiore nella
+  \tlista Cartelle fino a raggiungere la cartella desiderata.
+
+8.\tFare clic su Copia: L'icona compare nella cartella.
+
+^1^Configurazione telefono: Finestra Copia in una cartella
+^$130
+Configurazione telefono: Finestra Copia in una cartella
+
+Fare clic su un nome di cartella o sulla Cartella Superiore nella
+lista Cartelle fino a raggiungere la cartella in cui copiare l'icona
+di sistema di chiamata a distanza. Quindi fare clic su copia.
+
+^1^Ricerca di una voce dell sistema remoto
+^$140
+Ricerca di una voce dell sistema remoto
+
+Se nella \k(finestra "Configurazione Telefono"^^Finestra Configurazione telefono) le voci relative ai
+sistemi remoti sono numerose, si può utilizzare Trova per cercare la
+voce desiderata.
+
+Per cercare una voce di sistema remoto, procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione telefono"^^Finestra Configurazione telefono) .
+
+4.\tFare clic su Trova.
+
+5.\tFare clic su una delle seguenti opzioni:
+
+  \to\tRicerca: - Appare la finestra "Configurazione Telefono:
+  \t \tRicerca". Immettere il nome del sistema remoto desiderato e fare
+  \t \tclic su Ricerca. Nella finestra "Configurazione Telefono" viene
+  \t \tevidenziato il nome del sistema.
+
+  \t \tNota: Se il Desktop non riesce a trovare il nome del sistema
+  \t \tremoto cercato, viene visualizzata una finestra a comparsa con
+  \t \tun messaggio di errore.
+
+  \to\tPrimo - Viene selezionato il primo sistema remoto in elenco
+  \t \tnella finestra "Configurazione Telefono".
+
+  \to\tUltimo - Viene selezionato l'ultimo sistema remoto in elenco
+  \t \tnella finestra "Configurazione Telefono".
+
+^2^Configurazione telefono: Finestra Ricerca
+^$150
+Configurazione telefono: Finestra Ricerca
+
+Immettere il nome del sistema remoto desiderato e fare clic su
+Ricerca.
+
+^1^Chiamata a sistema casuale
+^$160
+Chiamata a sistema casuale
+
+Per comporre il numero di un sistema casuale, cioè di un sistema
+remoto non configurato per accesso remoto, procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione telefono"^^Finestra Configurazione telefono) .
+
+4.\tFare clic su Azioni=>Configurare Dispositivi. Appare la finestra
+  \t \k("Configurazione Telefono: Dispositivi"^^Configurazione telefono: Finestra Dispositivi).
+
+5.\tFare clic sul dispositivo attraverso cui si desidera comporre il
+  \tnumero.
+
+6.\tFare clic su Azioni=>Chiamata. Appare la finestra "Configurazione
+  \tTelefono: Collegamento Veloce" con i seguenti campi:
+
+  \to\tNumero Telefonico: Immettere il numero telefonico del sistema al
+  \t \tquale si desidera connettersi. Questo campo è valido solo se il
+  \t \tdispositivo selezionato è un modem.
+
+  \to\tVelocità: - Fare clic sulla velocità corrispondente a quella
+  \t \tdel dispositivo a linea commutata. In caso di dubbio, fare clic
+  \t \tsu Auto-Select.
+
+  \to\tParità: - Fare clic sulla \d(parità) del sistema al
+  \t \tquale ci si sta connettendo. Alcuni sistemi utilizzano la parità
+  \t \tper il controllo di errore. Nel caso di chiamata a un sistema
+  \t \tUNIX, selezionare Nessuna.
+
+  \to\tDimensione dei Caratteri: - Fare clic su 7 se si chiama un altro
+  \t \tsistema UNIX. Se si sta chiamando un sistema che non sta
+  \t \teseguendo UNIX, occorrerà forse fare clic su 8, seppure alcuni
+  \t \tsistemi non UNIX possono usare 7 bit.
+
+  \to\tModo Duplex: Fare clic su Full o Half, a seconda del software
+  \t \tdi communicazione utilizzato dal sistema. Unixware opera in modo
+  \t \tfull duplex.
+
+  \t \tSe non si è direttamente connessi al sistema da chiamare,
+  \t \taccertarsi si aver impostato il modem a full duplex.
+
+7.\tFare clic su Chiamata per chiamare il sistema remoto.
+
+  \tNota: Si può anche fare clic su Ripristina per ripristinare i
+  \t campi al loro valore originale, o su Annulla se si decide
+  \t di non voler fare un collegamento veloce a un altro sistema.
+
+^2^Configurazione telefono: Finestra Collegamento veloce
+^$170
+Configurazione telefono: Finestra Collegamento veloce
+
+In questa finestra agire sulle seguenti opzioni:
+
+1.\tImpostare le opzioni seguenti:
+
+  \to\tNumero Telefonico: Immettere il numero telefonico del sistema al
+  \t \tquale si desidera connettersi. Questo campo è valido solo se il
+  \t \tdispositivo selezionato è un modem.
+
+  \to\tVelocità: - Fare clic sulla velocità corrispondente a quella
+  \t \tdel dispositivo a linea commutata. In caso di dubbio, fare clic
+  \t \tsu Auto-Select.
+
+  \to\tParità: - Fare clic sulla \d(parità) del sistema al
+  \t \tquale ci si sta connettendo. Alcuni sistemi utilizzano la parità
+  \t \tper il controllo di errore. Nel caso di chiamata a un sistema
+  \t \tUNIX, selezionare Nessuna.
+
+  \to\tDimensione dei Caratteri: - Fare clic su 7 se si chiama un altro
+  \t \tsistema UNIX. Se si sta chiamando un sistema che non sta
+  \t \teseguendo UNIX, occorrerà forse fare clic su 8, seppure alcuni
+  \t \tsistemi non UNIX possono usare 7 bit.
+
+  \to\tModo Duplex: Fare clic su Full o Half, a seconda del software
+  \t \tdi communicazione utilizzato dal sistema. Unixware opera in modo
+  \t \tfull duplex.
+
+  \t \tSe non si è direttamente connessi al sistema da chiamare,
+  \t \taccertarsi si aver impostato il modem a full duplex.
+
+2.\tFare clic su Chiamata per chiamare il sistema remoto.
+
+Vedere anche:
+\k(Chiamata a sistema casuale)
+
+^1^Visualizzazione o modifica delle proprietà del dispositivo a linea commutata
+^$180
+Visualizzazione o modifica delle proprietà del dispositivo a linea commutata
+
+Per mostrare o modificare le proprietà di un dispositivo a linea
+commutata, procedere come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione telefono"^^Finestra Configurazione telefono) .
+
+4.\tFare clic su Azioni=>Configurare Dispositivi. Appare la finestra
+  \t\k("Configurazione Telefono: Dispositivi"^^Configurazione telefono: Finestra Dispositivi).
+
+5.\tFare clic sul dispositivo desiderato.
+
+6.\tFare clic su Dispositivo=>Proprietà. Appare la finestra
+  \t"Configurazione Telefono: Proprietà".
+
+  \tVedi il Punto 6 del \k(Configurazione di una voce del dispositivo a linea commutata) per una
+  \t descrizione dei campi in questa finestra (i campi sono
+  \t gli stessi che in \k("Configurazione Telefono: Aggiungi Nuovi Dispositivi"^^Configurazione telefono: Finestra Aggiunta nuovo dispositivo).
+
+7.\tFare clic su Annulla se si volevano solo visionare le
+  \tproprietà: Fare clic su Applica se sono state apportate delle
+  \tmodifiche alle proprietà.
+
+^1^Visualizzazione o modifica delle proprietà di un sistema remoto
+^$190
+Visualizzazione o modifica delle proprietà di un sistema remoto
+
+Per mostrare o modificare le proprietà di un sistema remoto, procedere
+come segue:
+
+Nota: Se si è già nella cartella Strumenti_ammin, passare al punto 3.
+Se si è già nella cartella Gestione di rete, passare al punto 3.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Gestione di rete. Appare la finestra
+  \t"Cartella: Gestione di rete".
+
+3.\tFare doppio clic su Configurazione_Telefono. Appare la
+  \t\k(finestra "Configurazione telefono"^^Finestra Configurazione telefono) .
+
+4.\tFare clic sul sistema remoto desiderato.
+
+5.\tFare clic su Sistema=>Proprietà. Appare la finestra
+  \t"Configurazione Telefono: Proprietà Sistema Remoto".
+
+  \tVedi i Punti 4 e 5 del \k(Configurazione dell'accesso ad un sistema remoto) per
+  \t una descrizione dei campi in questa finestra (i campi sono gli
+  \t stessi che nella finestra
+  \t \k("Configurazione Telefono: Aggiungi Nuovo Sistema"^^Configurazione telefono: Finestra Aggiungi nuovo sistema).
+
+7.\tFare clic su Annulla se si volevano solo visionare le proprietà:
+  \tFare clic su Applica se sono state apportate delle modifiche alle
+  \tproprietà.

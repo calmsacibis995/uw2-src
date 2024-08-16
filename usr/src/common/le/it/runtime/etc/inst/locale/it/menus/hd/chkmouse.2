@@ -1,0 +1,90 @@
+.pageno
+Pagina %d di %d
+.ul
+Installazione UNIX
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Selezione della porta per il mouse seriale
+.ur
+Selezione della porta per il mouse seriale
+.ll
+Selezionare un'opzione. Premere <F1> per la guida.
+.lr
+F1=Guida
+.top
+Per poter usare un mouse seriale è necessario comunicare al programma di
+installazione a quale porta seriale è collegato il mouse. Bisogna
+anche indicare il numero di pulsanti del mouse. Se si utilizza un
+mouse compatibile Mouse Systems Corporation (MSC), bisogna selezionare
+Mouse Systems. Per ulteriori informazioni, vedi il sistema di guida
+o la Guida all'installazione.
+
+Immettere le seguenti informazioni relative al mouse seriale.
+.form
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //COM1::tty00 (COM 1)//COM2::tty01 (COM 2)//Porta seriale a cui è collegato il mouse://SPORT//
+#field options
+//Freccia destra/sinistra per altra opzione (2 opzioni)//
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //MICROSOFT::Microsoft//MSC::Mouse Systems//Tipo di mouse di default://PROTOCOL//
+#field options
+//Freccia destra/sinistra per altra opzione (2 opzioni)//
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //2//3//Numero di pulsanti del mouse://MOUSEBUTTONS//
+#field options
+//Freccia destra/sinistra per altra opzione (2 opzioni)//
+#
+#
+.button
+Applica
+Reimposta
+.bottom
+Premere <Tab> per portare il cursore da un campo all'altro. Alla fine,
+portare il cursore su "Applica" e premere <Invio> per continuare.
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+PORTA SERIALE
+
+Perché il sistema UNIX possa gestire appropriatamente il mouse seriale,
+occorre che conosca la porta seriale alla quale il mouse è collegato.
+Consultare la documentazione del computer per stabilire se il mouse
+seriale è collegato a tty00 (nota anche come COM1) o tty01 (nota anche
+come COM2).
+
+TIPO DI MOUSE DI DEFAULT
+ 
+In molti casi, UnixWare rileva automaticamente qual'è il tipo di mouse
+seriale collegato al sistema. Il mouse Mouse Systems non viene rilevato
+automaticamente. Per evitare potenziali problemi con l'uso del mouse,
+bisogna specificare in che modo funziona.
+
+Il mouse compatibile Mouse Systems Corporation (MSC) è un mouse seriale a
+3 pulsanti simile al mouse seriale Microsoft. Prima di selezionare questo
+mouse bisogna accertarsi che sia configurato per funzionare in modo MSC.
+Per selezionare questo modo, individuare lo switch sul fondo del mouse e
+commutarlo su 3 pulsanti o modo MSC. Se il mouse compatibile MSC non
+coincide con questa descrizione o se non si riesce a trovare lo switch,
+seguire le istruzioni della documentazione che accompagna il mouse.
+
+Nota: Il modo Mouse Systems o MSC è noto anche come "PC Mouse".
+
+NUMERO DI PULSANTI DEL MOUSE
+
+Quando si utilizzerà il mouse nell'ambiente grafico di UNIX, si potranno
+utilizzare i vari pulsanti del mouse per operazioni come
+trascinamento-rilascio, doppio clic e accesso ai menu. Ciascun mouse è
+dotato di due o tre pulsanti; selezionare il numero di pulsanti corretto
+per il proprio mouse.
+
+Per ulteriori informazioni, consultare la Guida all'installazione.
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.working
+Caricamento del driver del mouse ...
+.end

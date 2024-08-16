@@ -1,0 +1,28 @@
+#ident	"@(#)dtupgrade:dtapp_dfts.dot	1.7"
+
+DtUpgradeStatus=0	# set it to `0' initially
+
+egrep -v "^$|^#" $DtUpgradeBinDir/dtapp_dfts.dat |
+while read D
+do
+   case $D in
+      UNCHGD|OLD)
+         TYPE=$D;
+         continue;;
+      *)
+      case $TYPE in
+        OLD)
+	  EchoThis "    dtapp_dfts: $TYPE - rm $D" HDR;
+          RemoveThisFile $true_obj/$D;
+          continue;;
+        UNCHGD)
+	  EchoThis "    dtapp_dfts: $TYPE - mv back $D" HDR;
+          MoveThisFile $saved_obj/$D $true_obj 644 bin bin "FORCE";
+          continue;;
+        *)
+EchoThis "    dtapp_dfts: bad Type $TYPE, don't know what to do" ERR;
+          break;;
+      esac
+      break;;
+   esac
+done

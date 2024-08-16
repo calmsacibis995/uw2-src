@@ -1,0 +1,14 @@
+#ident	"@(#)pkg.osmp:protos/ast	1.4"
+
+!CONFDIR=etc/conf
+!PACKDIR=$CONFDIR/pack.d
+
+!default 775 root sys 1 NULL NULL
+d none /tmp/ast
+
+!default 0500 root root 1 NULL NULL
+v none /tmp/ast/Driver_mp.o=/mp/$PACKDIR/ast/Driver.o
+v none /tmp/ast/Space.c=/mp/$PACKDIR/ast/space.c
+v none /tmp/ast/Master=/mp/$CONFDIR/mdevice.d/ast
+v none /tmp/ast/System=/mp/$CONFDIR/sdevice.d/ast
+v none /tmp/ast/Drvmap=/mp/$CONFDIR/drvmap.d/ast

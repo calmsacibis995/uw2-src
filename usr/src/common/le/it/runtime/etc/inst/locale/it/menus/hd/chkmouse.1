@@ -1,0 +1,52 @@
+.optstring
+Le opzioni sono:
+.pageno
+Pagina %d di %d
+.ul
+Installazione sistema operativo UNIX
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Selezione del mouse
+.ur
+Selezione del mouse
+.ll
+Selezionare un'opzione. Premere <F1> per la guida.
+.lr
+F1=Guida
+.top
+Se si desidera usare un mouse in UNIX, occorre specificare il tipo di
+mouse collegato al computer dall'elenco che segue (altrimenti scegliere
+"Nessun mouse" se non si intende usare un mouse).
+
+`[ "${CONFIGED_MSE}" = "1" ] && echo "Attualmente è configurato un mouse seriale."`
+`[ "${CONFIGED_MSE}" = "2" ] && echo "Attualmente è configurato un bus mouse."`
+`[ "${CONFIGED_MSE}" = "3" ] && echo "Attualmente è configurato un mouse compatibile PS/2."`
+`[ "${CONFIGED_MSE}" ] || echo "Se non siete sicuri del tipo di mouse collegato, consultate le\ninformazioni di aiuto per questo schermo o la guida all'installazione."`
+.form
+Mouse seriale
+Bus mouse
+Mouse compatibile PS/2
+Nessun mouse.
+.selection
+Premere '1', '2', '3' o '4' seguito da <Invio>.
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+Per poter utilizzare un mouse in UNIX, occorre specificarne il tipo.
+UNIX accetta tre tipi di mouse: seriale, bus e compatibile PS/2. Il
+mouse seriale si collega a una porta seriale del computer. Il bus mouse
+si collega a una scheda di interfaccia per mouse inserita in uno slot di
+espansione presente sulla scheda principale del computer. Il mouse
+compatibile PS/2 si collega alla porta ausiliaria del controller di
+tastiera del computer (se esiste).
+
+Se non si è sicuri del tipo di mouse collegato al computer, consultare
+la documentazione del mouse stesso.
+
+Per ulteriori informazioni, consultare la Guida all'installazione.
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.end

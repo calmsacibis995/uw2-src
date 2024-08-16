@@ -1,0 +1,34 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)breakout:Imakefile	1.1"
+
+/**/#  Imakefile (Imakefile)
+/**/# 	Acc: 575322348 Fri Mar 25 14:45:48 1988
+/**/# 	Mod: 575294297 Fri Mar 25 06:58:17 1988
+/**/# 	Sta: 575294297 Fri Mar 25 06:58:17 1988
+/**/# 	Owner: 2011
+/**/# 	Group: 1985
+/**/# 	Permissions: 666
+
+
+/**/# 	START USER STAMP AREA
+
+
+/**/# 	END USER STAMP AREA
+
+EXTRA_LOAD_FLAGS = -lm
+
+ LOCAL_LIBRARIES = $(XLIB) $(XTOOLLIB)
+
+            SRCS = breakout.c  misc.c
+            OBJS = breakout.o  misc.o
+
+ComplexProgramTarget(breakout)
+
+install::

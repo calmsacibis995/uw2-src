@@ -1,0 +1,32 @@
+CLASS Remappl
+BEGIN
+	_CLASSNAME     "Rem Apps";
+        _FILETYPE       EXEC;
+        _PATTERN       "Remote_Applications";
+        _ICONFILE      "Remote_Applications.icon";
+	MENU _Open     'exec "%F" &';
+END
+
+CLASS Expappl 
+BEGIN
+	_CLASSNAME     "App Sharing";
+        _FILETYPE       EXEC;
+        _PATTERN       "Application_Sharing";
+        _ICONFILE      "Application_Sharing.icon";
+	MENU _Open	'(if /sbin/tfadmin -t Application_Sharing 2>/dev/null;\
+			then\
+				/sbin/tfadmin Application_Sharing;\
+			else\
+				exec "%F";\
+			fi)&';
+END
+
+CLASS Launchappl
+BEGIN
+	_CLASSNAME     "Launch App";
+        _FILETYPE       EXEC;
+        _PATTERN       "*.rem";
+        _ICONFILE      "remoteApplication.xpm";
+	MENU _Open     'exec /usr/X/bin/Launch_Application -launchF "%F" &';
+END
+

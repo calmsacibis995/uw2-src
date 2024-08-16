@@ -1,0 +1,29 @@
+#ident	"@(#)filemgmt:common/cmd/oamintf/files/fileage/Text.searchnok	1.4.3.3"
+#ident  "$Header: Text.searchnok 2.0 91/07/12 $"
+Title="Error - Lists Files Older than a Particular Date"
+
+framemsg="Press CONT to repeat this task or CANCEL to return to the menu."
+
+help=OPEN TEXT $INTFBASE/Text.itemhelp schnokhelp 
+
+begrow=distinct
+begcol=distinct
+rows=4
+columns=75
+
+text="                                                                 
+   There are no files older than "$ARG2" day(s) in "$ARG1"."
+
+altslks
+ 
+name=""
+button=9
+action=nop
+ 
+name=CONT
+button=11
+action=CLOSE $OBJ_DIR/Text.searchnok
+ 
+name=CANCEL
+button=14
+action=cleanup

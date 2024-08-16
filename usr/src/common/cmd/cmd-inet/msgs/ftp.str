@@ -1,0 +1,416 @@
+#ident	"@(#)cmd-inet:common/cmd/cmd-inet/msgs/ftp.str	1.3"
+/*      @(#)ftp.str	1.3 STREAMWare for Unixware 2.0  source        */
+/*      SCCS IDENTIFICATION        */
+/*
+ * Copyrighted as an unpublished work.
+ * (c) Copyright 1987-1994 Lachman Technology, Inc.
+ * All rights reserved.
+ *
+ * RESTRICTED RIGHTS
+ *
+ * These programs are supplied under a license.  They may be used,
+ * disclosed, and/or copied only as permitted under such license
+ * agreement.  Any copy must contain the above copyright notice and
+ * this restricted rights notice.  Use, copying, and/or disclosure
+ * of the programs is strictly prohibited unless otherwise provided
+ * in the license agreement.
+ *
+ */
+ftp/tcp: unknown service\n
+USAGE: %s [-c | -C] [-d] [-v] [-t] [-i] [-n] [-g] [hostname]\n
+ftp> 
+?Ambiguous command\n
+?Invalid command\n
+Not connected.\n
+Commands may be abbreviated.  Commands are:\n\n
+%s
+?Ambiguous help command %s\n
+?Invalid help command %s\n
+%-*s\t%s\n
+Already connected to %s, use close first.\n
+(to) 
+usage: %s host-name [port]\n
+%s: bad port number-- %s\n
+Remote system type is %s.\n
+Using %s mode to transfer files.\n
+Remember to set tenex mode when transfering binary files from this machine.\n
+usage: %s [
+%s%s
+ ]\n
+%s: unknown mode\n
+We only support %s mode, sorry.\n
+We only support %s format, sorry.\n
+We only support %s structure, sorry.\n
+(local-file) 
+usage:%s local-file remote-file\n
+(remote-file) 
+(local-files) 
+usage:%s local-files\n
+Continue with
+%s\n
+usage: %s remote-file [ local-file ]\n
+\n
+(remote-files) 
+usage:%s remote-files\n
+can't find list of remote files, oops\n
+Connected to %s.\n
+Connected for proxy commands to %s.\n
+No proxy connection.\n
+Mode: %s; Type: %s; Form: %s; Structure: %s\n
+Verbose: %s; Bell: %s; Prompting: %s; Globbing: %s\n
+Store unique: %s; Receive unique: %s\n
+Case: %s; CR stripping: %s\n
+Ntrans: (in) %s (out) %s\n
+Ntrans: off\n
+Nmap: (in) %s (out) %s\n
+Nmap: off\n
+Hash mark printing: %s; Use of PORT cmds: %s\n
+Macros:\n
+\t%s\n
+Bell mode %s.\n
+Packet tracing %s.\n
+Hash mark printing %s
+ (%d bytes/hash mark)
+Verbose mode %s.\n
+Use of PORT cmds %s.\n
+Interactive mode %s.\n
+Globbing %s.\n
+%s: bad debugging value.\n
+Debugging %s (debug=%d).\n
+(remote-directory) 
+usage:%s remote-directory\n
+CWD command not recognized, trying XCWD\n
+usage:%s local-directory\n
+Local directory now %s\n
+usage:%s remote-file\n
+(from-name) 
+%s from-name to-name\n
+(to-name) 
+usage: %s remote-directory local-file\n
+usage:%s remote-files local-file\n
+%s -c %s\n
+(username) 
+usage: %s username [password] [account]\n
+Account: 
+Login failed.\n
+PWD command not recognized, trying XPWD\n
+(directory-name) 
+usage: %s directory-name\n
+MKD command not recognized, trying XMKD\n
+RMD command not recognized, trying XRMD\n
+(command line to send) 
+usage: %s line-to-send\n
+(arguments to SITE command) 
+usage: %s mode file-name\n
+(mode and file-name) 
+%s %s? 
+%s\n
+%s: %s\n
+(command) 
+usage:%s command\n
+?Invalid proxy command\n
+Case mapping %s.\n
+Carriage Return stripping %s.\n
+Ntrans off.\n
+Nmap off.\n
+(mapout) 
+Usage: %s [mapin mapout]\n
+nmap: unbalanced brackets\n
+Store unique %s.\n
+Receive unique %s.\n
+CDUP command not recognized, trying XCUP\n
+restart: offset not specified\n
+restarting at %ld. %s\n
+execute get, put or append to initiate transfer
+Limit of 16 macros have already been defined\n
+(macro name) 
+Usage: %s macro_name\n
+Macro name %s already in use\n
+Enter macro line by line, terminating it with a null line\n
+macdef:end of file encountered\n
+Macro not defined - 4k buffer exceeded\n
+(filename) 
+usage:%s filename\n
+%s\t%02d/%02d/%04d %02d:%02d:%02d GMT\n
+Local file \"%s\" is newer than remote file \"%s\"\n
+Usage: %s macro_name.\n
+'%s' macro not found.\n
+Reached the maximum of %d recursive calls\n
+ 
+connect to address %s: 
+Trying %s...\n
+fdopen failed: %s\n
+Name (%s:%s): 
+Name (%s): 
+---> 
+421 Service not available, remote server has closed connection\n
+Lost connection.\n
+%s:
+\nsend aborted\n
+local: %s 
+remote: %s\n
+%s: not a plain file.\n
+netout: write returned 0?\n
+%s: short write\n
+%cABOR\r\n
+%ld bytes %s in %.2g seconds (%.2g Kbytes/s)\n
+proxy server does not support third part transfers.\n
+No primary connection\n
+local: %s remote: %s\n
+ABOR\r\n
+runique: can't find unique file name.\n
+Error - .netrc file not correct mode.\n
+Remove password or correct mode.\n
+Remove account or correct mode.\n
+Missing macdef name argument.\n
+Macro definition missing null line terminator.\n
+4K macro buffer exceeded\n
+Unknown .netrc keyword %s\n
+socket: %s\n
+connect: %s\n
+getsockname: %s\n
+setsockopt: %s\n
+No control connection for command: %s\n
+netout: %s\n
+malloc: %s\n
+netin: %s\n
+abort: %s\n
+setsockopt (reuse address): %s\n
+bind: %s\n
+setsockopt (ignored): %s\n
+gettxt failed
+listen: %s\n
+accept: %s\n
+reset: %s\n
+tcsetattr: %s\n
+tcgetattr: %s\n
+send account command to remote server
+append to a file
+set ascii transfer type
+beep when command completed
+set binary transfer type
+toggle mget upper/lower case id mapping
+change remote working directory
+change remote working directory to parent directory
+change file permissions of remote file
+connect to remote ftp
+toggle carriage return stripping on ascii gets
+delete remote file
+toggle/set debugging mode
+list contents of remote directory
+terminate ftp session
+execute macro
+set file transfer format
+toggle metacharacter expansion of local file names
+toggle printing `#' for each buffer transferred
+print local help information
+get (set) idle timer on remote side
+change local working directory
+list contents of remote directory
+define a macro
+delete multiple files
+list contents of multiple remote directories
+get multiple files
+make directory on the remote machine
+list contents of multiple remote directories
+show last modification time of remote file
+set file transfer mode
+send multiple files
+get file if remote file is newer than local file 
+nlist contents of remote directory
+set templates for default file name mapping
+set translation table for default file name mapping
+toggle use of PORT cmd for each data connection
+force interactive prompting on multiple commands
+issue command on alternate connection
+print working directory on remote machine
+terminate ftp session and exit
+send arbitrary ftp command
+receive file
+get file restarting at end of local file
+get help from remote server
+rename file
+restart file transfer at bytecount
+remove directory on the remote machine
+show status of remote machine
+toggle store unique for local files
+clear queued command replies
+send one file
+send site specific command to remote server\n\t\tTry \rhelp site\" or \"site help\" for more information
+escape to the shell
+show size of remote file
+show current status
+set file transfer structure
+toggle store unique on remote machine
+show remote system type
+set tenex file transfer type
+toggle packet tracing
+set file transfer type
+get (set) umask on remote side
+send new user information
+toggle verbose mode
+getcpytxt: %s\n
+Unknown user name after ~
+Bad directory components
+Arguments too long
+Pathname too long
+Try again later: %s\n
+output to local-file:
+PORT command successful.
+Type set to A.
+Form must be N.
+Type E not implemented.
+Type set to I.
+Type set to L (byte size 8).
+Byte size must be 8.
+STRU F ok.
+Unimplemented STRU type.
+MODE S ok.
+Unimplemented MODE type.
+ALLO command ignored.
+Bad sequence of commands.
+ABOR command successful.
+NOOP command successful.
+Current UMASK is %03o
+Bad UMASK value
+UMASK set to %03o (was %03o)
+CHMOD: Mode value must be between 0 and 0777
+CHMOD command successful.
+Current IDLE time limit is %d seconds; max %d
+Maximum IDLE time must be between 30 and %d seconds
+Maximum IDLE time set to %d seconds
+UNIX Type: L%d System V/%s Release %s, Version %s.
+UNKNOWN Type: L%d
+%s: not a plain file.
+Goodbye.
+Restarting at %ld. %s
+Send STORE or RETRIEVE to initiate transfer.
+Please login with USER and PASS.
+<sp> username
+<sp> password
+(specify account)
+(structure mount)
+(reinitialize server state)
+(terminate service)
+<sp> b0, b1, b2, b3, b4
+(set server in passive mode)
+<sp> [ A | E | I | L ]
+(specify file structure)
+(specify transfer mode)
+<sp> file-name
+(mail file)
+(mail to user)
+(mail send to terminal)
+(mail send to terminal or mailbox)
+(mail send to terminal and mailbox)
+(mail recipient scheme question)
+(mail recipient)
+allocate storage (vacuously)
+(restart command)
+(abort operation)
+[ <sp> directory-name ]
+[ <sp> path-name ]
+site-cmd [ <sp> arguments ]
+(get type of operating system)
+[ <sp> <string> ]
+
+<sp> path-name
+(return current directory)
+(change to parent directory)
+[ <sp> umask ]
+[ <sp> maximum-idle-time ]
+<sp> mode <sp> file-name
+command: %s
+Timeout (%d seconds): closing control connection.
+User %s timed out after %d seconds at %s
+You could at least say goodbye.
+Unknown state in scanner.
+Ran out of memory.
+The following %scommands are recognized %s.
+(* =>'s unimplemented)
+Direct comments to ftp-bugs@%s.
+Unknown command %s.
+Syntax: %s%s %s
+%s%-*s\t%s; unimplemented.
+SIZE not implemented for Type %c.
+Bad value for -u\n
+Unknown flag ignored.\n
+%s FTP server (%s) ready.
+lost connection
+Can't change user from guest login.
+User %s access denied.
+Guest login ok, send ident as password.
+User %s unknown.
+FTP LOGIN REFUSED FROM %s, %s
+Password required for %s.
+Login with USER first.
+Login incorrect.
+repeated login failures from %s
+Login has expired.
+Unable to open %s: %m (skipping check)
+Unable to read last login info: %m (skipping check)
+Login inactivity limit exceeded.
+Can't set guest privileges.
+User %s: can't change directory to %s.
+No directory! Logging in with home=/
+Can't set uid.
+Guest login ok, access restrictions apply.
+ANONYMOUS FTP LOGIN FROM %s, %s
+User %s logged in.
+FTP LOGIN FROM %s, %s
+Transfer complete (unique file name:%s).
+Transfer complete.
+ (%ld bytes)
+Can't open data connection.
+Opening %s mode data connection for %s%s.
+Using existing data connection for %s%s.
+Can't create data socket (%s,%d): %s.
+Can't build data connection
+Local resource failure: malloc
+Unimplemented TYPE %d in send_data
+Data connection
+Error on input file
+TYPE E not implemented.
+WARNING! %d bare linefeeds received in ASCII mode
+   File may not have transferred correctly.\r\n
+Unimplemented TYPE %d in receive_data
+Data Connection
+Error writing file
+status of %s:
+control connection
+End of Status
+%s FTP server status:
+     Connected to %s
+     Logged in anonymously\r\n
+     Logged in as %s\r\n
+     Waiting for password\r\n
+     Waiting for user name\r\n
+; STRUcture: %s; transfer MODE: %s\r\n
+     Data connection open\r\n
+     in Passive mode
+     PORT
+     No data connection\r\n
+End of status
+Error in server: %s\n
+Closing connection due to server error.
+%s command successful.
+%s command not implemented.
+'%s': command not understood.
+MKD command successful.
+Can't get current directory: %s.
+\"%s\" is current directory.
+File exists, ready for destination name
+rename
+%s: connected
+connection from %s at %s
+Transfer aborted. Data connection closed.
+Abort successful
+Status: %lu of %lu bytes transferred
+Status: %lu bytes transferred
+Can't open passive connection
+Entering Passive Mode (%d,%d,%d,%d,%d,%d)
+Unique file name cannot be created.
+file list
+No files found.
+%ld bytes sent in %.2g seconds (%.2g Kbytes/s)\n
+%ld bytes received in %.2g seconds (%.2g Kbytes/s)\n

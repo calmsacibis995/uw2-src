@@ -1,0 +1,118 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)r5fonts:server/Imakefile	1.14"
+
+XCOMM $Header: /home/x_cvs/mit/fonts/server/Imakefile,v 1.3 1992/08/25 08:56:07 dawes Exp $
+XCOMM $XConsortium: Imakefile,v 1.14 91/09/08 14:13:39 rws Exp $
+#undef ServerDefines
+#include <Server.tmpl>
+#define	IHaveSubdirs
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)' 'CC=$(CC)' 'CCOPTIONS=$(CCOPTIONS)' 'ANSICCOPTIONS=$(ANSICCOPTIONS)'
+
+CC = ServerCcCmd
+CCOPTIONS = ServerCCOptions
+STD_DEFINES = ServerDefines
+CDEBUGFLAGS = ServerCDebugFlags
+
+OSDIR = os
+OSLIB = $(OSDIR)/libos.a
+OSOBJS = os/access.o os/config.o os/connection.o \
+	 os/error.o os/io.o os/osglue.o os/osinit.o \
+	 os/utils.o os/waitfor.o
+DIFSDIR = difs
+DIFSLIB = $(DIFSDIR)/libdifs.a
+DIFSOBJS = difs/atom.o difs/cache.o difs/charinfo.o \
+	   difs/difsutils.o difs/dispatch.o difs/events.o \
+	   difs/extensions.o difs/fontinfo.o difs/fonts.o \
+	   difs/globals.o difs/initfonts.o difs/main.o \
+	   difs/resource.o difs/swaprep.o difs/swapreq.o \
+	   difs/tables.o
+SYSLIBS = -lnsl -lsocket -ldl
+#if defined(HPArchitecture) || defined(i386SVR3Architecture)
+BSDEMUL = $(LIBSRC)/Berk/Berklib.o
+#endif
+SERVER_RUNPATHS = $(XWINLIBDIR)
+FSDIRS = $(OSDIR) $(DIFSDIR) $(PCFDIRS)
+FSLIBS = $(DIFSLIB) $(FONTLIB) $(DIFSLIB) $(OSLIB) $(BSDEMUL) 
+
+#if !SVR4ix86Architecture
+FSLIBS = $(FSLIBS) $(SPEEDOLIB) $(ATMLIB)
+#endif
+
+#ifdef MacIIArchitecture
+MFSDIRS = MacFS
+#endif
+
+SUBDIRS = $(FSDIRS) $(MFSDIRS)
+
+FSLIBDIR = $(LIBDIR)/fs
+FSERRORS = $(XWINLIBDIR)/fs/fs-errors
+FSDEFAULTFONTPATH = $(XWINLIBDIR)/fonts/type1,$(XWINLIBDIR)/fonts/75dpi,$(XWINLIBDIR)/fonts/100dpi
+
+XCOMM DEFAULTFONTPATH = DefaultFontPath
+SITE_CONFIG = -DFSDEFAULTFONTPATH=$(FSDEFAULTFONTPATH) -DFSERRORS=$(FSERRORS)
+XCOMM SITE_CONFIG = -DDEFAULTFONTPATH=$(DEFAULTFONTPATH) -DFSERRORS=$(FSERRORS)
+
+all:: fs config $(MFSDIRS)
+
+#if UslLocalityTuning
+#ifndef FurServerTarget
+#define	FurServerTarget(program)					@@\
+          PROGRAM = program.F						@@\
+									@@\
+AllTarget(program.F)							@@\
+									@@\
+program.F: $(FSDIRS) $(FSLIBS) 						@@\
+	RemoveTargetProgram($@)						@@\
+	$(LD) -r -o program.r $(DIFSOBJS) $(OSOBJS)			@@\
+	$(FUR) -l program.funcs program.r				@@\
+	LD_RUN_PATH=$(SERVER_RUNPATHS) $(CC) -o $@ program.r $(CDEBUGFLAGS) $(CCOPTIONS) $(FONTLIB) $(BSDEMUL) $(EXTRA_LIBRARIES) $(SYSLIBS) $(EXTRA_LOAD_FLAGS)@@\
+									
+#endif /* FurServerTarget */
+#endif /* UslLocalityTuning */
+
+ServerTarget(fs,$(FSDIRS),NullParameter,$(FSLIBS),$(SYSLIBS))
+
+#if UslLocalityTuning
+FurServerTarget(fs)
+#endif
+
+CppFileTarget(config,config.cpp,$(SITE_CONFIG),$(ICONFIGFILES))
+
+InstallProgram(fs,$(BINDIR))
+#if UslLocalityTuning
+InstallProgram(fs.F,$(BINDIR))
+install::
+	$(MV) $(BINDIR)/fs $(BINDIR)/NOFUR_fs
+	$(MV) $(BINDIR)/fs.F $(BINDIR)/fs
+
+clean::
+	$(RM) fs.F
+#endif
+
+InstallManPage(fs,$(MANDIR))
+
+#if InstallFSConfig
+InstallNonExecFile(config,$(FSLIBDIR))
+#endif
+
+
+InstallNonExecFile(S68fs,$(FSLIBDIR))
+
+DependSubdirs($(SUBDIRS))
+
+$(SUBDIRS):	FRC
+	@cd $@; echo "making $@" ;	\
+	$(MAKE) $(MFLAGS) PassCDebugFlags all
+
+clean::
+	$(RM) fs
+
+FRC:

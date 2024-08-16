@@ -1,0 +1,15 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/intf_remove/r.OAMmif	1.1"
+#ident  "$Header: r.OAMmif 2.0 91/07/12 $"
+
+INTFBASE=/usr/sadm/sysadm/menu
+
+find $INTFBASE -name '*.menu' -print > /var/tmp/rmtmp.$$
+for file in `cat /var/tmp/rmtmp.$$`
+do
+	grep $PKGINST $file > /dev/null
+	if [ $? = 0 ]
+	then	
+		/usr/sadm/install/bin/intf_remove $file
+	fi
+done
+rm /var/tmp/rmtmp.$$

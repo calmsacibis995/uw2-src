@@ -1,0 +1,79 @@
+.pageno
+Pagina %d di %d
+.ul
+Installazione sistema operativo UNIX
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Configurazione del bus mouse
+.ur
+Configurazione del bus mouse
+.ll
+Selezionare un'opzione. Premere <F1> per la guida.
+.lr
+F1=Guida
+.top
+Per poter utilizzare il bus mouse, occorre fornire l'interrupt
+utilizzato dalla scheda controller del mouse. I valori proposti
+corrispondono agli interrupt non utilizzati dai dispositivi del computer
+di cui UNIX è a conoscenza. Occorre anche indicare il numero dei
+pulsanti presenti sul mouse. Per ulteriori informazioni, consultare la
+Guida all'installazione.
+`[ "$MSEINT" ] && echo ""`
+`[ "$MSEINT" ] && echo "I valori mostrati qui sotto descrivono un bus mouse che era già\nconfigurato su questo computer. Se non avete cambiato mouse, vi\nconviene accettare questi valori."`
+
+Immettere le seguenti informazioni relative al bus mouse.
+.form
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+`[ "${CNT}" = "1" ] && echo "2 1//${IVN1}//    Numero di vettore di interrupt: //MSEINT//"`
+`[ "${CNT}" = "1" ] && echo "//È l'unica opzione disponibile//"`
+`[ "${CNT}" = "2" ] && echo "2 2//${IVN1}//${IVN2}//    Numero di vettore di interrupt: //MSEINT//"`
+`[ "${CNT}" = "2" ] && echo "//Freccia destra/sinistra per altra opzione (${CNT} opzioni)//"`
+`[ "${CNT}" = "3" ] && echo "2 3//${IVN1}//${IVN2}//${IVN3}//    Numero di vettore di interrupt: //MSEINT//"`
+`[ "${CNT}" = "3" ] && echo "//Freccia destra/sinistra per altra opzione (${CNT} opzioni)//"`
+`[ "${CNT}" = "4" ] && echo "2 4//${IVN1}//${IVN2}//${IVN3}//${IVN4}//    Numero di vettore di interrupt: //MSEINT//"`
+`[ "${CNT}" = "4" ] && echo "//Freccia destra/sinistra per altra opzione (${CNT} opzioni)//"`
+#field options
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //2//3//    Numero di pulsanti del mouse: //MOUSEBUTTONS//
+#field options
+//Freccia destra/sinistra per altra opzione (2 opzioni)//
+#
+#
+.button
+Applica
+Reimposta
+.bottom
+Premere <Tab> per portare il cursore da un campo all'altro. Alla fine,
+portare il cursore su "Applica" e premere <Invio> per continuare.
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+`[ "$MSEINT" ] && echo ""`
+`[ "$MSEINT" ] && echo "I valori di default mostrati in questo schermo erano usati da un bus\nmouse che era collegato al vostro sistema UNIX originale. Se non\navete cambiato il mouse, accettate questi valori."`
+
+VETTORE DI INTERRUPT
+
+Per garantire un corretto funzionamento del bus mouse in UNIX, è
+importante che UNIX conosca il numero di interrupt utilizzato dalla
+scheda controller del bus mouse. L'interrupt viene generalmente
+configurato impostando un jumper sulla scheda controller stessa. Se il
+valore indicato qui non è corretto, il bus mouse non funzionerà
+correttamente.
+
+Per ulteriori informazioni, consultare la Guida all'installazione.
+
+NUMERO DI PULSANTI DEL MOUSE
+
+Quando si utilizzerà il mouse nell'ambiente grafico di UNIX, si potranno
+utilizzare i vari pulsanti del mouse per operazioni come
+trascinamento-rilascio, doppio clic e accesso ai menu. Ciascun mouse è
+dotato di due o tre pulsanti; selezionare il numero di pulsanti corretto
+per il proprio mouse.
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.working
+Caricamento del driver del mouse ...
+.end

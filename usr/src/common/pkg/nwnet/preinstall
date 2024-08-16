@@ -1,0 +1,53 @@
+#!/bin/sh
+#ident	"@(#)pkg.nw:preinstall	1.8"
+#ident	"$Header: /SRCS/esmp/usr/src/nw/pkg/nwnet/preinstall,v 1.7.2.1 1994/10/19 16:41:47 vtag Exp $"
+
+
+SCRIPTS=/usr/sbin/pkginst
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = YES ] && set -x
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+    if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+         -d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+	then
+        cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+           /usr/lib/locale/${LOCALE}/LC_MESSAGES
+    fi
+fi
+
+if [ -x /usr/sbin/statnps ]
+then
+	if /usr/sbin/statnps
+	then
+		message -d `pfmt -s nostd -g ${PKGMSG}:3 "The NetWare Protocol Stack is running.\nYou must run stopnps before installing the %s package!" "${PKGINST}" 2>&1`
+		exit 3
+	fi
+fi
+
+#
+# check the release of the nuc package, if nuc is UPGRADE 1.0 or 1.1 to 2.0
+# must remove "nuc" before installing "nwnet".
+#
+NUCINFO=/var/sadm/pkg/nuc/pkginfo
+verline=2.0
+if [ -f $NUCINFO ]
+then
+	verline=`sed -n "s/^VERSION=//p" ${NUCINFO} 2>/dev/null`
+	if [ $verline -lt 2.0 ]
+	then
+		message -d `pfmt -s nostd -g ${PKGMSG}:4 "The NetWare Unix Client is installed.  You must remove \nthis version of the "nuc" package before installing the %s package!" "${PKGINST}" 2>&1`
+			exit 3
+	fi
+fi
+
+if [ "$PKGINSTALL_TYPE" = UPGRADE ] || [ "$PKGINSTALL_TYPE" = OVERLAY ]
+then
+    # Save volatile files
+    ${SCRIPTS}/pkgsavfiles ${PKGINST}
+fi
+
+exit 0

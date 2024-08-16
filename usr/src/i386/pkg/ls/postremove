@@ -1,0 +1,19 @@
+#!/bin/sh
+#ident	"@(#)pkg.ls:ls/postremove	1.3"
+
+#
+#  postremove file for Language Supplement.
+#
+#  have to do mkfontdir after any fonts have been removed,
+#  but only if mkfontdir and the directory exist
+#
+if [ -x /usr/X/bin/mkfontdir -a -d /usr/X/lib/fonts/misc ]
+then
+	/usr/X/bin/mkfontdir /usr/X/lib/fonts/misc
+fi
+
+PKGMSG=ls.pkg
+
+pfmt -s nostd -g ${PKGMSG}:2 "To completely reset your environment,\nyou are advised to log out and login again after package removal finishes.\n"
+#  Exit with the correct code
+exit 0

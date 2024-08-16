@@ -1,0 +1,69 @@
+.ul
+Network Support Utility (NSU)
+.ur
+Configurazione di NSU
+.lr
+Canc=Annulla  F1=Guida
+.top
+Immettere il numero di dispositivi pseudoterminale da configurare nel
+sistema.
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "\nInoltre, si deve specificare se si desiderano i file originali di"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "configurazione di Network Support Utilities combinati con i nuovi file."`
+.form
+#
+3 0 64 1024//Numero di pseudoterminali://NREG//
+// Immettere il numero di pseudoterminali (64-1024)//
+#
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "2 2//Yes::Sì//No::No//Fondere automaticamente i file di configurazione?://AUTOMERGE//"`
+# field options
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "// Freccia destra/sinistra per altra opzione (2 opzioni)//"`
+#
+.button
+Applica
+Reimposta
+.bottom
+Premere <Tab> per portare il cursore da un campo all'altro. Alla fine,
+portare il cursore su "Applica" e premere <Invio> per continuare.
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Configurazione di NSU
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+NETWORK SUPPORT UTILITIES (nsu)
+
+Il pacchetto NSU contiene diversi file e programmi che vengono
+utilizzati dal sistema UNIX per comunicare con terminali intelligenti e
+con altri computer. Altri pacchetti di rete che si potrebbe volere
+installare richiedono che in precedenza sia stato installato questo
+pacchetto.
+
+NUMERO DI PSEUDOTERMINALI
+
+Gli pseudoterminali vengono usati quanto un utente tenta di eseguire un
+login a un computer attraverso una rete, o quando tenta di eseguire
+certe applicazioni di desktop. Il numero di pseudo tty che viene
+specificato in questo schermo limiterà il numero di eventi di questo
+tipo che potranno verificarsi contemporaneamente nel computer. Se non
+si è sicuri sulla risposta da dare, limitarsi a confermare il valore
+proposto per default.
+
+Il numero indicato deve essere compreso tra 64 e 1024.
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo ""`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "FUSIONE AUTOMATICA DEI FILE DI CONFIGURAZIONE"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo ""`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "Se si risponde Sì a questa domanda, il programma di installazione"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "tenterà di combinare le modifiche apportate ai file di"`
+`[ "${PKGINSTALL_TYPE}" != NEWINSTALL -a "${INSTALL_MODE}" = CUSTOM ] && echo "configurazione esistenti di NSU nei nuovi file di configurazione."`
+.pageno
+Pagina %d di %d
+.optstring
+Le opzioni sono:
+.helpinst
+ESC=Fine guida  F1=Istruzioni  Canc=Annulla  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  Canc=Annulla  1=Avanti  2=Indietro
+.end

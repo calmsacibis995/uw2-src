@@ -1,0 +1,29 @@
+#ident	"@(#)pkg.nics:preinstall	1.2"
+
+unconfig ()
+{
+	#[ "$UPDEBUG" = YES ] && set -x
+	SD=/etc/conf/sdevice.d
+	for i in imx586 ee16 ie6 el16 NE1000 NE1500T NE2000 NE2100 wd el3 elt32
+	do
+		[ -f $SD/$i ] && {
+			grep -v "^$i	[YN]	" $SD/$i >/tmp/$$.$i
+			mv /tmp/$$.$i $SD/$i
+		}
+		[ "$UPDEBUG" = YES ] && goany
+	done
+}
+
+#main ()
+
+SCRIPTS=/usr/sbin/pkginst
+
+. $SCRIPTS/updebug
+
+#[ "$UPDEBUG" = YES ] && set -x && goany
+
+# unconfigure eth drivers
+
+unconfig
+
+exit 0	# required

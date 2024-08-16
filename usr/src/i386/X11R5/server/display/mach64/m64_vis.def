@@ -1,0 +1,166 @@
+#pragma ident	"@(#)mach64:mach64/m64_vis.def	1.5"
+
+/***
+ ***	NAME
+ ***
+ ***		m64_vis.def : Visuals that the ati MACH64
+ ***		board can support.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***	#include "m64_vis.def"
+ ***
+ ***	DESCRIPTION
+ ***	#define	DEFINE_VISUAL(NAME, DESCRIPTION, TYPE, DEPTH,
+ ***				N_COLORMAPS, SIZE, N_VALID_BITS,
+ ***				R_MASK, G_MASK, B_MASK,
+ ***				R_OFFSET, G_OFFSET, B_OFFSET)
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		__DEBUG__ : Enable debugging and assertion checking.
+ ***
+ ***	FILES
+ ***
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***	
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	HISTORY
+ ***
+ ***/
+
+DEFINE_VISUAL(NULL,
+	"Null",
+	0, 0, 
+	0, 0, 0,
+	0, 0, 0,
+	0, 0, 0),
+
+
+DEFINE_VISUAL(PSEUDO_COLOR,
+	"Pseudo Color ",
+	PSEUDOCOLOR_AVAIL, 0, 
+	1, 0, 6,
+	0, 0, 0, 
+	0, 0, 0),
+
+DEFINE_VISUAL(STATIC_COLOR,
+	"Static Color ",
+	STATICCOLOR_AVAIL, 0, 
+	1, 0, 6,
+	0, 0, 0, 
+	0, 0, 0),
+
+
+DEFINE_VISUAL(GRAY_SCALE,
+	"Gray Scale ",
+	GRAYSCALE_AVAIL, 0, 
+	1, 0, 6,
+	0, 0, 0, 
+	0, 0, 0),
+
+DEFINE_VISUAL(STATIC_GRAY,
+	"Static Gray ",
+	STATICGRAY_AVAIL, 0, 
+	1, 0, 6,
+	0, 0, 0, 
+	0, 0, 0),
+
+DEFINE_VISUAL(TRUE_COLOR_16_555,
+	"64k colors 5-5-5 True Color",
+	TRUECOLOR_AVAIL, 16, 
+	1, 32+32+32, -1,
+	0x7C00, 0x03E0, 0x001F,
+	10, 5, 0),
+
+DEFINE_VISUAL(TRUE_COLOR_16_565,
+	"64K colors 5-6-5 True Color",
+	TRUECOLOR_AVAIL, 16, 
+	1, 32+64+32, -1,
+	0xF800, 0x07E0, 0x001F,
+	11, 5, 0),
+
+DEFINE_VISUAL(TRUE_COLOR_24_RGB,
+	"16.7 million colors RGB True Color",
+	TRUECOLOR_AVAIL, 24, 
+	1, 256+256+256, -1,
+	(SIint32) 0x00FF0000, 0x0000FF00, 0x000000FF,
+	16, 8, 0),
+
+DEFINE_VISUAL(DIRECT_COLOR_16_555,
+	"64k colors 5-5-5 Direct Color",
+	DIRECTCOLOR_AVAIL, 16, 
+	1, 32+32+32, -1,
+	0x7C00, 0x03E0, 0x001F,
+	10, 5, 0),
+
+DEFINE_VISUAL(DIRECT_COLOR_16_565,
+	"64K colors 5-6-5 Direct Color",
+	DIRECTCOLOR_AVAIL, 16, 
+	1, 32+64+32, -1,
+	0xF800, 0x07E0, 0x001F,
+	11, 5, 0),
+
+DEFINE_VISUAL(DIRECT_COLOR_24_RGB,
+	"16.7 million colors RGB Direct Color",
+	DIRECTCOLOR_AVAIL, 24, 
+	1, 256+256+256, -1,
+	(SIint32) 0x00FF0000, 0x0000FF00, 0x000000FF,
+	16, 8, 0),
+
+DEFINE_VISUAL(TRUE_COLOR_32_ARGB,
+	"16.7 million colors ARGB True Color",
+	TRUECOLOR_AVAIL, 32, 
+	1, 256+256+256, -1,
+	(SIint32) 0x00FF0000, 0x0000FF00, 0x000000FF,
+	16, 8, 0),
+
+DEFINE_VISUAL(TRUE_COLOR_32_RGBA,
+	"16.7 million colors RGBA True Color",
+	TRUECOLOR_AVAIL, 32, 
+	1, 256+256+256, -1,
+	(SIint32) 0xFF000000, 0x00FF0000, 0x0000FF00,
+	24, 16, 8),
+
+DEFINE_VISUAL(TRUE_COLOR_32_ABGR,
+	"16.7 million colors ABGR True Color",
+	TRUECOLOR_AVAIL, 32, 
+	1, 256+256+256, -1,
+	(SIint32) 0x000000FF, 0x0000FF00, 0x00FF0000,
+	0, 8, 16),
+
+DEFINE_VISUAL(DIRECT_COLOR_32_ARGB,
+	"16.7 million colors ARGB Direct Color",
+	DIRECTCOLOR_AVAIL, 32, 
+	1, 256+256+256, -1,
+	(SIint32) 0x00FF0000, 0x0000FF00, 0x000000FF,
+	16, 8, 0),
+
+DEFINE_VISUAL(DIRECT_COLOR_32_RGBA,
+	"16.7 million colors RGBA Direct Color",
+	DIRECTCOLOR_AVAIL, 32, 
+	1, 256+256+256, -1,
+	(SIint32) 0xFF000000, 0x00FF0000, 0x0000FF00,
+	24, 16, 8),
+
+DEFINE_VISUAL(DIRECT_COLOR_32_ABGR,
+	"16.7 million colors ABGR Direct Color",
+	DIRECTCOLOR_AVAIL, 32, 
+	1, 256+256+256, -1,
+	(SIint32) 0x000000FF, 0x0000FF00, 0x00FF0000,
+	0, 8, 16),
+
+DEFINE_VISUAL(COUNT,
+	"",
+	0, 0, 
+	0, 0, 0,
+	0, 0, 0,
+	0, 0, 0)

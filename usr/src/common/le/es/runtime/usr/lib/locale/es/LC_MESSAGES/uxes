@@ -1,0 +1,249 @@
+falló argvtostr\n
+Falló la asignación de memoria\n
+Ya existe el nombre de comando \"%s\" \n
+Ya existe el usuario \"%s\"\n
+\"%s\" no es un nombre de función exclusiva\n
+Usuario no definido \"%s\"\n
+El privilegio de proceso \"%s\" no existe en el comando \"%s\"\n
+Uso incorrecto\n
+\nuso: adminuser [-n] [-o función[,...]]\n               [-a cmd:vía[:priv[:priv...]][,...]]\n                 usuario ...\n     adminuser [-o función[,...]]\n                 [-r cmd[:priv[:priv...]][,...]]\n                 [-a cmd:vía[:priv[:priv...]
+%s:\n
+funciones: <ninguna>\n
+funciones:     
+Comandos:\n     <none>\n
+Comandos:\n
+           %s:%s 
+El nombre de función \"%s\" ya existe\n
+Nombre de función no definido \"%s\"\n
+\nuso: adminrole [-n] [-a cmd:vía[:priv[:priv...]][,...]] función ...\n     adminrole [-r cmd[:priv[:priv...]][,...]]\n               [-a cmd:vía[:priv[:priv...]][,...]]  función...\n     adminrole [-d]  función ... \n     adminrole  \n
+%s:\t<vacío>\n
+%s:
+\t%s:%s 
+Privilegio de proceso no válido: \"%s\"\n
+Privilegio de proceso duplicado: \"%s\"\n
+Número de privilegio no reconocido: \"%d\"\n
+<desconocido> 
+No es posible ejecutar archivo de programa\n
+Nombre de comando no definido\"%s\"\n
+Usuario no autorizado\n
+No es posible definir un juego de privilegios máximo\n
+\nuso:\ttfadmin [role:] cmd [argumentos]\n\ttfadmin -t [role:] cmd [argumentos]\n
+Especificación de comando insuficiente: \"%s\"\n
+Es preciso mencionar la vía completa de acceso al comando\n
+Es preciso mencionar la vía de acceso completa para la base de datos TFM\n
+No es posible leer lista de funciones asignadas al usuario \"%s\"\n
+La base de datos TFM no existe\n
+No es posible inicializar la base de datos TFM\n
+No es posible añadir el usuario \"%s\"\n
+No es posible añadir la función \"%s\"\n
+ No es posible cambiar el usuario \"%s\"\n
+No es posible cambiar la función \"%s\"\n
+El usuario \"%s\" está siendo cambiado, inténtelo de nuevo ulteriormente\n
+La función \"%s\" está siendo cambiada, inténtelo ulteriormente\n
+No es posible suprimir la función \"%s\"\n
+No es posible suprimir el usuario \"%s\"\n
+No es posible cambiar el comando \"%s\"\n
+No es posible cambiar la lista de funciones asignadas al usuario \"%s\"\n
+Nombre de comando incorrecto: \"%s\"\n
+uso incorrecto\n
+uso: chlvl nivel archivo1 [archivo2 ...]\n
+error de programa\n
+nivel de seguridad incorrecto\n
+LTDB es inaccesible\n
+permiso denegado al archivo \"%s\"\n
+el archivo \"%s\" no es 'tranquilo' (abierto y/o asignado)\n
+el nivel de seguridad indicado no se encuentra dentro del rango de\ndispositivo para el archivo \"%s\"\n
+el sistema de archivos de  \"%s\" no acepta etiquetas por-archivo\n
+no se ha instalado el servicio del sistema\n
+no se puede acceder al archivo \"%s\" \n
+ejecución abortada para reforzar el privilegio menor\n
+ \"%s\" pertenece a un sistema de archivos montados en modo lectura únicamente\n
+falta la entrada CLASS_OBJ para \"%s\"\n
+tipo ACL no válido para \"%s\"\n
+permiso denegado a \"%s\"\n
+no se ha encontrado el archivo \"%s\"  \n
+stat ha fallado en el archivo \"%s\", %s\n
+Falló memoria Alloc\n
+falló el acl en el archivo \"%s\", %s\n
+# archivo: %s\n
+# propietario: 
+# grupo: 
+por defecto:
+usuario::
+usuario:
+grupo::
+grupo:
+clase:
+otro:
+\t#efectivo:
+uso: getacl [-ad] archivo  ...\n
+falló acl en  \"%s\", %s\n
+las opciones mencionadas son incompatibles\n
+entradas duplicadas: \"%s\"\n
+entradas duplicadas para \"%s\": \"%s\"\n
+especificación de entrada incorrecta, \"%s\"\n
+no se especificaron las entradas correspondientes al propietario del archivo, al\ngrupo de archivos, a la \"clase\", o a \"otro\"\n
+la llamada aclsort ha fallado\n
+la llamada aclsort ha fallado para \"%s\"\n
+No se puede abrir el archivo \"%s\", %s\n
+\"%s\",  línea %d; entrada ACL incorrecta\n
+no se puede suprimir la entrada del propietario del archivo, el grupo de\narchivos, la \"clase\", y \"otro\"\n
+tipo desconocido \"%s\"\n
+id de usuario desconocido \"%s\"\n
+id de grupo desconocido \"%s\"\n
+permiso desconocido \"%s\"\n
+no es posible encontrar en ACL la entrada correspondiente a \"%s\": \"%s\"\n
+tan sólo es posible especificar el propietario del archivo, el grupo de\narchivos, la \"clase\", u \"otro\" para \"%s\"\n
+tan sólo es posible definir las entradas ACL por defecto en los directorios, no\nen \"%s\"\n
+\nuso: setacl [-r]\n
+              [-m [[d[efault]:]u[ser]:: operm | perm [,]]\n
+                 [[d[efault]:]u[ser]:uid:operm | perm[,...]]\n
+                  [[d[efault]:]g[roup]::operm | perm[,]]\n
+                 [[d[efault]:]g[roup]:gid:operm | perm[,...]]\n
+                  [[d[efault]:]c[lass]:operm | perm[,]]\n
+                  [[d[efault]:]o[ther]:operm | perm]]\n
+              [-d [[d[efault]:]u[ser]:uid[,...]]\n
+                  [[d[efault]:]g[roup]:gid[,...]]\n
+                  [[d[efault]:]u[ser]::[,]]\n
+                  [[d[efault]:]g[roup]::[,]]\n
+                  [[d[efault]:]c[lass]:[,]]\n
+                  [[d[efault]:]o[ther]:[,]]]\n
+              objeto(s)\n
+        o\n
+       setacl [-r]\n
+              -s u[ser]::operm | perm[,]\n
+                 [d[efault]:u[ser]::operm | perm[,]]\n
+                 g[roup]::operm | perm[,]\n
+                 [d[efault]:g[roup]::operm | perm[,]]\n
+                 c[lass]:operm | perm[,]\n
+                 [d[efault]:c[lass]:operm | perm[,]]\n
+                 o[ther]:operm | perm[,]\n
+                 [d[efault]:o[ther]:operm | perm[,]]\n
+                 [[d[efault]:]u[ser]:uid:operm | perm[,...]]\n
+                 [[d[efault]:]g[roup]:gid:operm | perm[,...]]\n
+       setacl [-r] -f  nombre_archivo objeto(s)\n
+uso: lvdelete [-r] -a nombre_alias[,nombre_alias...]\n
+                                       [-r] -c id_cat[,id_cat...]\n
+                                       [-r] -f nombre_nivel\n
+                                       [-r] -h id_clase[,id_clase...]\n
+                                       [-r] -l lid[,lid...]\n
+\nIdentificadores  de nivel(LID):\n
+\nClasificaciones:\n
+\nCategorías:\n
+\nNombres de alias:\n
+\nNiveles:\n
+\nuso: lvlname [[-r] -a nombre_alias::nombre_nivel]\n
+               [[-r] -c #:nombre_c[,#:nombre_c...]\n
+               [[-r] -h #:nombre_h[,#:nombre_h...]\n
+               [[-r] -l [identificador_nivel::]nombre_nivel]\n
+               [-p]\n
+donde\n
+       nombre de alias  - alias asignado a un nivel completamente calificado\n
+       nombre_c         - nombre asignado a una categoría no jerárquica\n
+       nombre_h         - nombre asignado a una clasificación jerárquica\n
+       identificador de nivel -  número (LID) asignado a un nivel completamente\n       calificado\n
+       nombre_nivel     - nivel calificado, nombre_h[:nombre_c[,nombre_c]...]\n
+       #                -  número de clasificación o de categoría\n
+uso: lvlprt [-s]\n
+argumento de opción incorrecto  -- \"%s\"\n
+número no válido \"%s\"\n
+nombre no válido \"%s\"\n
+Nombre de nivel no válido \"%s\"\n
+el nombre \"%s\" está reservado\n
+LID \"%d\" está reservado\n
+el nombre \"%s\" está siendo utilizado como alias, clasificación o categogía\n
+El identificador \"%s\"  está reservado para su uso en el sistema\n
+el identificador de nivel \"%s\", no es válido. Dicho identificador debe ser\nnumérico\n
+el número de clasificación \"%s\"  no ha sido todavía asignado\n
+el número de clasificación \"%s\" ya ha sido asignado\n
+el nombre de clasificación \"%s\" todavía no ha sido definido\n
+el número de clasificación \"%s\" se halla fuera del alcance (1 - %d)\n
+el número de clasificación \"%s\" no ha sido asignado todavía\n
+el número de categoría \"%s\" ya ha sido asignado\n
+el número de categoría \"%s\" no ha sido asignado todavía\n
+el número de categoría \"%s\" se halla fuera de la serie (1 - %d)\n
+el identificador de nivel \"%s\" no ha sido asignado todavía\n
+el identificador de nivel  \"%s\" se halla en el estado válido de inactividad\n
+el identificador de nivel \"%d\" ya ha sido asignado a un nivel\n
+el nombre de nivel \"%s\" todavía no ha sido definido\n
+el nombre de nivel \"%s\" ya está en uso\n
+el identificador de nivel \"%s\" está fuera de la serie (1 - %d)\n
+ya se asignó el alias correspondiente a \"%s\"\n
+el nombre de alias \"%s\" todavía no ha sido definido\n
+no es posible crear LTDB\n
+no es posible cerrar LTDB\n
+LTDB está siendo modificado\n
+no es posible liberar LTDB\n
+no es posible buscar a través de LTDB\n
+no es posible leer LTDB\n
+no es posible escribir en LTDB\n
+no es posible leer los archivos\n
+no es posible escribir en los archivos\n
+no es posible acceder a los archivos\n
+no es posible cerrar los archivos\n
+no es posible crear los archivos\n
+memoria insuficiente para almacenar peticiones de los usuarios\n
+memoria insuficiente para leer archivos\n
+memoria insuficiente para escribir en archivos\n
+memoria insuficiente para convertir LID en un nivel totalmente cualificado\n
+memoria insuficiente para clasificar los resultados\n
+LTDB  sin sincronización durante el tratamiento del nombre de nivel \"%s\"\n
+la clasificación o categoría que abarca el nivel para LID \"%d\" \nno posee un nombre\n
+la clasificación o categoría que abarca el nivel para el alias \"%s\"\nno posee un nombre\n
+el siguiente LID asignado automáticamente es incorrecto; asigne el nombre de\nnivel \"%s\" al final del archivo\n
+se desbordó el siguiente LID asignado automáticamente; no se asignó el\nnombre de nivel \"%s\"\n
+falló el argvtostr\n
+no es posible abrir los archivos de protección para LTDB\n
+no es posible escribir los archivos de protección para LTDB\n
+el archivo %s no existe\n
+no se puede acceder al archivo %s\n
+no se puede crear el archivo para el usuario %s\n
+el archivo correspondiente al usuario %s ya existe\n
+%s\n
+\tuso: maccnv\n
+no es posible cambiar al directorio /etc/security/ia/level\n
+no es posible traducir %s\n
+Se ha encontrado una entrada errónea en el archivo de contraseñas -  pasar a la entrada siguiente\n
+la combinación de las dos opciones  -r  y  -v no es válida\n
+Uso: mldmode [ -r | -v cadena]\n
+opción incorrecta -- %s\n
+modo multinivel =%s\n
+falló exec, error = %d\n
+uso: admalloc [-m][-o][-w  nivel -u  usuario,grupo] [-r nivel_máx-nivel_mín]\n              dispositivo ...\n     admalloc -s\n     admalloc  -d[-f] [dispositivo]...\n
+%s no está definido en la base de datos Dispositivos\n
+%s ya ha sido asignado\n
+asignación no autorizada para \"%s\" y para %s\n
+\"%s\" es indefinido o inaccesible %s\n
+estado \"%s\"no autorizado es para %s\n
+nivel o escala de niveles imposible para %s\n
+No se puede acceder a la base de datos Dispositivos -  avisar al administrador\n
+La base de datos Dispositivos es incorrecta - avisar al administrador\n
+nivel no válido %s\n
+%s ocupado\n
+no se puede acceder a las informaciones de seguridad de  %s \n
+no es posible acceder a LTDB - avisar al administrador\n
+%s no predomina sobre %s\n
+La base de datos Dispositivos está siendo utilizada - Intentar de nuevo ulteriormente\n
+\"%s\" o \"%s\" no definido en el sistema\n
+\"%d\" o \"%d\" no definido en el sistema\n
+permiso denegado para %s\n
+uso: devstat -Z|z [dispositivo]...\n
+la combinación de las dos opciones -Z y -z no es válida\n
+permiso denegado\n
+\"%s\"  no está definido en la base de datos Dispositivos\n
+\"%s\" es indefinido o inaccessible para \"%s\"\n
+\"%s\" es indefinido o inaccessible\n
+\"%s\" no es un bloque con discos o un archivo de caracteres especiales para \"%s\"\n
+\"%s\"  no es un bloque con discos o un archivo de caracteres especiales\n
+memoria insuficiente\n
+nombre de dispositivo: %s\n
+nombre de la vía : %s\n
+\estado       : %s\n
+\tmodo        : %s\n
+ALTO      : %s\n
+BAJO         : %s\n
+\tusar cuenta : %d\n
+\tliberar etiqueta: %s\n
+\"%s\" carece del privilegio solicitado para \"%s\"\n
+\nUso:\ttfadmin [role:] cmd [argumentos]\n\ttfadmin -t [role:] cmd[:priv[:priv...]]\n
+Uso: mldmode [ -r | -v [cadena] ]\n

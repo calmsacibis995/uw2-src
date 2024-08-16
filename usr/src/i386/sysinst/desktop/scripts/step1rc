@@ -1,0 +1,52 @@
+#ident	"@(#)proto:desktop/scripts/step1rc	1.1.1.10"
+
+# Make the screen white on blue and clear it.  We don't care whether setting
+# the color failed at this point.
+print -n "\033[0m\033[=0E\033[=7F\033[=1G\033[0m\033[J\033[7m\033[m\033[H\033[J"
+
+call unlink /sbin/wsinit
+call unlink /etc/emulator
+
+[ -x /sbin/big_file ] && {
+	# The special boot-floppy version of /sbin/init
+	# (sysinst/cmd/bootstrap.c) has just moved some files from ramdisk to
+	# /.save, which is mounted as a memfs file system.  Now, we create a
+	# file in ramdisk that's a little smaller than the size of the hole
+	# init left when it moved these files out of ramdisk, and then we let
+	# the kernel swap to that file.  $HOLE_SIZE_FILE is a file that init
+	# created to tell us how big this hole is.  All of this is so that we
+	# can install in smaller-memory machines.
+
+	# The variable "padding" is to give us extra room in ramdisk.  The
+	# value of this variable was established by experimentation, and is
+	# set such that the number of free blocks at the Welcome Screen is
+	# about 150.  The higher the value of "padding," the higher the number
+	# of free blocks at the Welcome Screen and the smaller the size of the
+	# swap file.  The idea is that by making the swap file a little
+	# smaller than $HOLE_SIZE_FILE indicates, we give ourselves a little
+	# more ramdisk space.
+
+	integer padding=18
+	typeset swapname swaplen HOLE_SIZE_FILE=/tmp/hole_size
+
+	[ -s $HOLE_SIZE_FILE ] || {
+		print -u2 "step1rc: Internal Error: $HOLE_SIZE_FILE does not exist."
+		call sleep 1000
+		exit
+	}
+	/sbin/big_file -s $(( $(<$HOLE_SIZE_FILE) - (512 * padding) ))  |
+		read swapname swaplen
+	call unlink $HOLE_SIZE_FILE
+	[ -n "$swapname" ] || {
+		print -u2 "step1rc: Internal Error: big_file failed."
+		call sleep 1000
+		exit
+	}
+	/usr/sbin/swap -a $swapname 0 $swaplen
+	print $swapname >> /tmp/ramd.swap
+}
+
+export PATH=:/usr/bin:/sbin:/etc:/usr/sbin
+stty erase '^h' kill '^u' intr '^?' cs8 -istrip -parenb
+export ENV=/step2rc
+exec /sbin/sh -i -o vi

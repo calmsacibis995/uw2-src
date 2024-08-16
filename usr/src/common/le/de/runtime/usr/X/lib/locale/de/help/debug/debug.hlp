@@ -1,0 +1,3326 @@
+^*version^1
+^*title^Fehler_beseitigen
+^:Debugger
+^+/usr/X/lib/locale/de/help/debug/debug.defs
+^?Debug: Mehrprozeß-Testhilfeprogramm für Ursprungscode
+
+^1^Überblick über Debug
+^$1
+Überblick über Debug
+
+Debug ist ein symbolisches Ursprungskode-Testprogramm mit zahlreichen
+Möglichkeiten einschließlich der Kontrolle multipler
+\k(Prozesse und Ablaufstränge) und der Auswertung komplexer Ausdrücke in C oder
+C++. Das Testhilfeprogramm zeigt die zugehörigen Daten in mehreren
+Fenstern an. Die einzelnen Fenster bestehen aus einem oder mehreren
+Arbeitsausschnitten, in denen verschieden Typen von Informationen
+angezeigt werden. Der Benutzer kann die Aufteilung der
+Arbeitsausschnitte auf die Fenster selbst konfigurieren (siehe
+\k(Konfiguration)). Es gibt neun Arten von Arbeitsausschnitten:
+
+    \k(Arbeitsausschnitt des Prozesses) zeigt die Prozesse und Ablaufstränge
+    (Ablaufstrangs) unter der Kontrolle des Testhilfeprogramms an und
+    gibt an, welcher Prozeß bzw. Strang gerade aktiv ist.
+
+    \k(Arbeitsausschnitt Stapel) zeigt die Stapelzustände des
+    \d(aktueller Prozeß oder Ablaufstrang) an. Immer, wenn der aktive Prozeß bzw.
+    Ablaufstrang stoppt, erfolgt eine Aktualisierung.
+
+    \k(Arbeitsausschnitt Symbol) zeigt die Symbole des aktuellen Prozesses oder
+    Ablaufstrangs an. Immer, wenn der aktive Prozeß bzw. Ablaufstrang
+    stoppt, erfolgt eine Aktualisierung.
+
+    \k(Arbeitsausschnitt Ursprung) zeigt den Ursprungscode des Programms an. Wenn der
+    Prozeß bzw. Ablaufstrang stoppt, wird das Fenster, das den
+    Ursprungscode anzeigt, aktualisiert und zeigt die aktuelle Zeile der
+    aktuellen Datei an. Auch die Untersuchung anderer Dateien und das
+    Setzen und Löschen von Bruchpunkten ist möglich.
+
+    \k(Arbeitsausschnitt Disassemblierung) zeigt die Rückübersetzung (Disassemblierung)
+    der aktuellen Funktion an. Der Arbeitsausschnitt wird
+    aktualisiert, sobald der Ablaufstrang bzw. der Prozeß stoppt.
+
+    \k(Arbeitsausschnitt Register) zeigt die Werte der Speicherregister für den
+    aktuellen Ablaufstrang bzw. Prozeß. Der Arbeitsausschnitt wird
+    aktualisiert, sobald der Ablaufstrang bzw. der Prozeß stoppt.
+
+   \k(Arbeitsausschnitt Ereignis) zeigt Ereignisse an (Bruchpunkte,
+   Überwachungspunkte, Systemaufrufe usw.). Das Löschen, deaktivieren,
+   aktivieren und Bearbeiten von Ereignisse erfolgt in dem Fenster,
+   das diesen Arbeitsausschnitt enthält.
+
+    \k(Arbeitsausschnitt Befehl) führt das Protokoll über die eintretenden
+    Ereignisse. Hier wird auch E/A des Prozesses angezeigt. In diesem
+    Arbeitsausschnitt können Sie Befehle so eingeben, als würden Sie
+    die Befehlszeilenversion des Testhilfeprogramms verwenden.
+
+    \k(Arbeitsausschnitt Status) verfolgt den Ablauf des aktuellen Prozesses
+    bzw. Ablaufstrangs für das Fenster, in dem sich dieser
+    Arbeitsausschnitt befindet. Angezeigt werden Status des Prozesses
+    oder Ablaufstrangs und, bei Stopp, der Speicherstandort.
+
+Der Benutzer liefert die \k(Konfiguration). Damit wird ein
+\d(Fenster-Set) beschrieben. Jedes eingestellte Fenster enthält
+mindestens einen der neun Arbeitsausschnitte der Testhilfe
+(ausgenommen \k(Arbeitsausschnitt Status), der nicht erforderlich ist). Wenn
+der Benutzer keine eigene Konfiguration liefert, verteilt das
+Testhilfeprogramm die zugehörigen Arbeitsausschnitte über einen Satz
+von sechs Fenstern.
+
+Jeder Satz von Fenstern kontrolliert eine Untermenge der Prozesse und
+Ablaufstränge, die getestet werden. Jeder Ablaufstrang bzw. Prozeß
+gehört zu genau einem Satz von Fenstern. Wenn Sie einen Prozeß mit
+einem einzigen Ablaufstrang testen, brauchen Sie nicht mehr als einen
+Satz von Testfenstern. Wenn Sie jedoch mehrere Prozesse oder
+Ablaufstränge testen, ist es sinnvoll, diese in getrennten Sätzen von
+Fenstern zu behandeln. Fenstersätze werden durch die Option 
+\k(Neues Fensterset) im Menü \k(Datei) eines beliebigen
+Fensters erzeugt, das \k(Arbeitsausschnitt des Prozesses) enthält.
+
+Jedes Fenster enthält je nach den in ihm enthaltenen
+Arbeitsausschnitten einige oder alle der folgenden Menüschaltflächen:
+
+\t\k(Schaltfläche Datei)
+\t\k(Schaltfläche Bearbeiten)
+\t\k(Schaltfläche Ansicht)
+\t\k(Steuerschaltfläche)
+\t\k(Schaltfläche Ereignis)
+\t\k(Schaltfläche Eigenschaften)
+\tHilfe
+
+Die Menüs, die bei Auswahl dieser Schaltflächen verwendet werden,
+enthalten Befehle zur Kontrolle des Zustands von \k(Prozesse und Ablaufstränge),
+Optionen zur Änderung der angezeigten Informationen usw. Einzelheiten
+entnehmen Sie der Hilfe zu den einzelnen Schaltflächen.
+
+Die einzelnen Fenster können auch eine \d(Schaltflächenleiste) enthalten.
+Die Schaltflächenleiste kann sich oben im Fenster (direkt unter den
+Menüschaltflächen in Fenstern ohne \k(Arbeitsausschnitt Status) oder unter
+dieser) oder am unteren Fensterrand befinden. Die Schaltflächenleiste
+enthält eine Auswahl von Schaltflächen aus den anderen Abrollmenüs und
+gestattet den raschen Zugriff auf die gängigsten Befehle der
+Testhilfe. Der Benutzer kann die Konfiguration der
+Schaltflächenleisten für die einzelnen Fenster selbst vornehmen (siehe
+\k(Konfiguration)).
+
+Sie können die Größe der einzelnen Fenster neu einstellen. Sie können
+auch den innerhalb der Fenster verfügbaren Platz umverteilen. Dazu
+klicken Sie auf den Rändern der einzelnen Arbeitsausschnitte AUSWÄHLEN
+an. Ein Griff erscheint, den Sie nach oben oder unten ziehen können,
+um die einen Arbeitsausschnitt im Verhältnis zu den anderen
+Arbeitsausschnitten zu vergrößern oder zu verkleinern.
+
+Mit den Optionen im Menü \k(Eigenschaften) können Sie
+bestimmte Eigenschaften des Testhilfeprogramms individuell anpassen.
+Einige dieser Eigenschaften können auch in den X Windows
+ Systemressourcen-Standarddateien eingestellt werden,
+zum Beispiel die Datei .Xdefaults im Stammverzeichnis des Benutzers.
+Einzelheiten entnehmen Sie \k(Individuelle Anpassung). Zahlreiche
+individuell anpaßbaren Ressourcen können auch mit Optionen auf
+Befehlszeilenebene eingestellt werden (siehe \k(Debugger aufrufen)).
+
+^2^Debugger aufrufen
+^$11
+\k(Überblick über Debug)
+Debugger aufrufen
+
+Vom Desktop kann das Testhilfeprogramm auf drei Arten aufgerufen
+werden:
+
+1) Durch Ziehen einer Objektdatei aus einem Ordner und Ablegen der
+   Datei auf dem Symbol des Testhilfeprogramms im Ordner
+   "Anwendungen". Dadurch startet das Testhilfeprogramm mit der
+   abgelegten Datei als erzeugtem Prozeß. Dies hat den Vorteil, daß
+   das aktuelle Verzeichnis des Testhilfeprogramms zu dem Verzeichnis
+   wird, in dem die Objektdatei erscheint. Nachteilig ist, daß Sie an
+   das Testhilfeprogramm bzw. den erzeugten Prozeß keine Parameter
+   übergeben können. Auch können Sie keine Kerndatei auf das Symbol
+   des Testhilfeprogramms ziehen und dort ablegen.
+
+2) Durch Doppelklicken auf das Symbol des Testhilfeprogramms im Ordner
+   "Anwendungen". Dadurch startet das Programm in einem leeren
+   Kontextfenster. Von dort aus können sie mittels der Optionen des
+   Menüs "Datei" Prozesse erzeugen oder heranziehen. So können Sie an
+   die getesteten Prozesse Optionen übergeben, nicht jedoch an das
+   Testhilfeprogramm selbst. Ein weiterer Nachteil dieser Methode ist
+   es, daß das aktuelle Arbeitsverzeichnis des Testhilfeprogramms
+   nicht unbedingt mit dem Verzeichnis der zu testenden Datei in
+   Verbindung steht. Sie können das aktuelle Arbeitsverzeichnis im
+   Kontextfenster mit der Option "Verzeichnis ändern" des Menüs
+   "Datei" ändern.
+
+3) Durch Eingabe von Testhilfeoptionen in einem Xterm-Fenster. Auch
+   wenn Sie zum Start des Testhilfeprogramms einen Befehl eingeben,
+   wird anschließend die graphische Schnittstelle aufgerufen. Sie
+   können allerdings im Befehlszeilenmodus bleiben, wenn Sie "debug
+   -ic" (ic: interface, character) eingeben.
+
+   Obwohl das mehr Arbeit als das schlichte Anklicken eines Symbols
+   ist, ist diese Methode am flexibelsten, da Sie damit Prozesse mit
+   Optionen erzeugen und laufende Prozesse oder Kerndateien von der
+   Befehlszeile aus heranziehen können. Siehe Debug(1) für verfügbare
+   Optionen.
+
+   Die Option -X, mit der Sie Optionen an den X Server übergeben
+   können, ist die einzige für die grafische Benutzeroberfläche
+   spezifische Option. Sie können diese Option verwenden, um zum
+   Beispiel Angaben zu Fonts und Farben zu machen. Mit \t"debug
+   -X"-background green"" machen Sie etwa Grün zur Hintergrundfrabe
+   aller Fenster des Testhilfeprogramms, und mit \t"debug -X '-xrm
+   "debug*Context*background: green"'" stellen Sie die
+   Hintergrundfarbe nur für das Kontextfenster ein. Beachten Sie, daß
+   die Option -X nur ein Argument enthält, so daß Sie Optionen, die
+   Leerzeichen enthalten, in Anführungszeichen einschließen müssen.
+
+   Bei Verwendung dieser Methode ist das aktuelle Arbeitsverzeichnis
+   der Testhilfe dasselbe wie das des Xterm-Fensters.
+
+   Mehrere Eigenschaften, die mit den im Menü
+   \k(Eigenschaften) enthaltenen Optionen oder als individuell
+   anpaßbare \k(Ressourcen) eingestellt werden können, können dies
+   auch auf der Befehlszeile. Es gibt folgende Befehlszeilen-Optionen:
+
+   o -config dateiname - dateiname ist der Name der Datei, die das
+     Testhilfeprogramm als Konfigurationsspezifizierung verwendet
+     (siehe \k(Konfiguration)).
+
+   o -output_action aktion - aktion kann eine der folgenden sein:
+     BEEP, MESSAGE, RAISE oder NONE (Groß- oder Kleinschreibung spielt
+     keine Rolle). Damit wird das Verhalten des Testhilfeprogramms für
+     den Fall definiert, daß ein getesteter Prozeß eine Ausgabe
+     produziert (siehe \k(Ausgabeaktion)).
+
+   o -event_action aktion - aktion kann eine der folgenden sein: BEEP,
+     MESSAGE, RAISE oder NONE (Groß- oder Kleinschreibung spielt keine
+     Rolle). Damit wird das Verhalten des Testhilfeprogramms für den
+     Fall definiert, daß ein getesteter Prozeß ein Ereignis auslöst
+     (siehe \k(Ausgabeaktion)).
+
+   o -command_level ebene - ebene kann einen der folgenden Werte
+     haben: PROGRAM, PROZEß oder ABLAUFSTRANG (Groß- oder
+     Kleinschreibung spielt keine Rolle). Damit wird vorgegeben, ob
+     Befehle des Testhilfeprogramms standardmäßig auf den aktuellen
+     Ablaufstrang, alle Ablaufstränge im aktuellen Prozeß oder alle
+     Stränge im aktuellen Programm angewendet werden (siehe
+     \k(Körnung)).
+
+   o -event_level ebene - ebene kann einen der folgenden Werte haben:
+     PROGRAM, PROCESS oder THREAD (Groß- oder Kleinschreibung spielt
+     keine Rolle). Damit wird vorgegeben, ob Ereignisse des
+     Testhilfeprogramms standardmäßig auf den aktuellen Ablaufstrang,
+     alle Ablaufstränge im aktuellen Prozeß oder alle Stränge im
+     aktuellen Programm angewendet werden (siehe
+     \k(Körnung)).
+
+   o -thread_action aktion[,aktion] - aktion kann entweder NONE, STOP,
+     BEEP oder STOP und BEEP sein (wenn beide aufgeführt werden,
+     Trennung mit Komma. Groß- und Kleinschreibung spielt keine
+     Rolle). Damit wird das Verhalten des Testhilfeprogramms bei
+     Statusänderung eines Ablaufstrangs vorgegeben (siehe
+     \k(Ausgabeaktion)).
+
+   o -symbols typ[,typ...] - typ kann folgende Werte haben: LOCAL,
+     FILE, GLOBAL, DEBUGGER, USER (getrennt durch Kommas, Groß- oder
+     Kleinschreibung spielt keine Rolle). Damit werden die Symboltypen
+     angegeben, die im \k(Arbeitsausschnitt Symbol) angezeigt werden (siehe
+     \k(Symbole)).
+
+Mit allen drei Arten des Aufrufs können Sie zusätzliche Prozesse
+erzeugen oder heranziehen und dazu die Optionen im Menü
+"\k(Datei)" aller Fenster verwenden, die den
+\k(Arbeitsausschnitt des Prozesses) enthalten oder beim Start des Testhilfeprogramms
+automatisch aufgeklappt werden (siehe \k(Konfiguration)).
+Einzelheiten finden Sie in \k(Erstellen), \k(Prozeß erfassen)
+und \k(Kern erfassen). Beachten Sie, daß Ablaufstränge nur unter
+Programmkontrolle erzeugt und nicht einzeln herangezogen werden
+können.
+
+
+^2^Individuelle Anpassung=Ressourcen
+^$12
+
+\k(Überblick über Debug)
+Individuelle Anpassung
+
+Eine Reihe von Aspekten der Organisation, des Verhaltens und des
+Aussehens des Testhilfeprogramms kann als X Windows Ressourcen
+definiert werden. Dazu stellen Sie Ressourcendefinitionen in X Windows
+Ressourcendateien, zum Beispiel die Datei .Xdefaults im
+Stammverzeichnis des Benutzers. Der Name der Ressourcenklasse des
+Testhilfeprogramms ist Debug. Folgende Ressourcen sind spezifisch für
+Debug:
+
+config_file: \tdateiname \tGibt den Pfadnamen der Konfigurationsdatei
+des "Testhilfeprogramms" an (siehe \k(Konfiguration)).
+
+config_desc:\tKonfiguration
+\tGibt die Konfiguration des Testhilfeprogramms direkt an. Die
+\tKonfiguration muß in der Form erfolgen, die unter \k(Konfiguration)
+\tangegeben ist. Eine X Ressource muß aus einer einzigen Zeichenkette
+\tohne Zeilenvorschub bestehen. Daher ist jede Zeile einer aus
+\tmehreren Zeilen bestehenden Konfiguration mit einem negativen
+\tSchrägstrich (\\) fortzusetzen.
+
+output_action: action
+    aktion kann eine der folgenden sein: BEEP,
+    MESSAGE, RAISE oder NONE (Groß- oder Kleinschreibung spielt keine
+    Rolle). Damit wird das Verhalten des Testhilfeprogramms für den Fall
+    festgelegt, daß ein getesteter Prozeß eine Ausgabe erzeugt (siehe
+    \k(Ausgabeaktion)).
+
+event_action: aktion
+      aktion kann eine der folgenden sein: BEEP, MESSAGE, RAISE oder
+      NONE (Groß- oder Kleinschreibung spielt keine Rolle). Damit wird
+      das Verhalten des Testhilfeprogramms für den Fall festgelegt,
+      daß ein getesteter Prozeß ein Ereignis auslöst (siehe
+      \k(Ausgabeaktion)).
+
+command_level: ebene - ebene kann einen der folgenden Werte haben:
+     PROGRAM, PROZEß oder ABLAUFSTRANG (Groß- oder Kleinschreibung spielt
+     keine Rolle). Damit wird vorgegeben, ob Befehle des Testhilfeprogramms
+     standardmäßig auf den aktuellen Ablaufstrang, alle Ablaufstränge im
+     aktuellen Prozeß oder alle Stränge im aktuellen Programm angewendet
+     werden (siehe \k(Körnung)).
+
+event_level: ebene - ebene kann einen der folgenden Werte haben:
+     PROGRAM, PROCESS oder THREAD (Groß- oder Kleinschreibung spielt keine
+     Rolle). Damit wird vorgegeben, ob Ereignisse des Testhilfeprogramms
+     standardmäßig auf den aktuellen Ablaufstrang, alle Ablaufstränge im
+     aktuellen Prozeß oder alle Stränge im aktuellen Programm angewendet
+     werden (siehe \k(Körnung)).
+
+   o -thread_action aktion[,aktion] - aktion kann entweder NONE, STOP,
+     BEEP oder STOP und BEEP sein (wenn beide aufgeführt werden,
+     Trennung mit Komma. Groß- und Kleinschreibung spielt keine
+     Rolle). Damit wird das Verhalten des Testhilfeprogramms bei
+     Statusänderung eines Ablaufstrangs vorgegeben (siehe
+     \k(Ausgabeaktion)).
+
+symbols typ[,typ...]
+     typ kann folgende Werte haben: LOCAL, FILE, GLOBAL, DEBUGGER,
+     USER (getrennt durch Kommas, Groß- oder Kleinschreibung spielt
+     keine Rolle). Damit werden die Symboltypen angegeben, die im
+     \k(Arbeitsausschnitt Symbol) angezeigt werden (siehe \k(Symbole)).
+
+^2^Konfiguration=Konfiguration
+^$13
+
+\k(Überblick über Debug)
+Konfiguration
+
+Die Anordnung des grafischen Testhilfeprogramms kann vom Benutzer
+konfiguriert werden. Der Benutzer kann folgende Vorgaben machen:
+\toWelche Arbeitsausschnitte in welchen Fenstern enthalten sein sollen
+\t(für die einzelnen Fenstersätze).
+\toDie Anzahl der Zeilen in den einzelnen Arbeitsausschnitten und
+\tbei manchen Arbeitsausschnitten auch die Anzahl der Spalten.
+\toInhalt und Position (oben oder unten) der \d(Schaltflächenleiste) in
+\tden einzelnen Fenstern.
+
+Die Konfiguration wird entweder in einer Konfigurationsdatei oder
+direkt in einer X Windows Ressourcendatei angegeben. Erfolgt die
+Angabe in einer eigenen Datei, wird der Pfadname der Datei entweder
+als debug.config_file Ressource in einer X Windows Ressourcendatei
+oder mittels der Option -config in der Befehlszeile übergeben. Bei
+direkter Angabe in einer X Windows Ressourcendatei ist die
+Konfiguration der Wert der Ressource debug.config_desc resource (siehe
+\k(Debugger aufrufen) und \k(Individuelle Anpassung)).
+
+Im Verzeichnis /usr/ccs/lib/config sind mehrere
+Beispielkonfigurationen enthalten.
+
+Wenn die Konfigurationsdatei fehlt, unlesbar oder leer ist, oder wenn
+eine ungültige Konfiguration angegeben wurde, wird die
+Standardkonfiguration des Testhilfeprogramms verwendet.
+
+Eine Konfiguration besteht aus Schlüsselwörtern und
+benutzerdefinierten Namen. Beim Lesen von Schlüsselwörtern wird Groß-
+und Kleinschreibung ignoriert. Namen werden als Überschriften in den
+Titelzeilen von Fenstern und als Etiketten für die Schaltflächen in
+\d(Schaltflächenleiste) verwendet. Die Namen müssen in Anführungszeichen
+oder Hochkommas gesetzt werden und dürfen nicht über mehrere Zeilen
+gehen.
+
+Außerhalb von Namen in Hochkommas werden Leerzeichen ignoriert. Ein
+Kommentar beginnt mit einem Erhöhungszeichen (#) und geht bis zum
+Zeilenende. Kommentare werden ebenfalls ignoriert.
+
+Eine Konfiguration besteht aus einer Reihe von Beschreibungen von
+Fenstern. Die Beschreibung beginnt mit dem Schlüsselwort WINDOW,
+gefolgt von einem benutzerdefinierten Namen, der als Titel des
+Fensters verwendet wird. Folgt dem Namen des Fensters das
+Schlüsselwort AUTO, wird das Fenster beim Aufruf des
+Testhilfeprogramms oder bei Erstellung eines neuen
+\d(Fenster-Set) automatisch angezeigt.
+
+Die Beschreibung eines Fensters enthält ein oder mehrere
+Beschreibungen von Arbeitsausschnitten. Die Beschreibung besteht aus
+dem Typ des Arbeitsausschnittes, gefolgt von einer optionalen ganzen
+Dezimalzahl, die die Zeilenanzahl des Arbeitsausschnitts angibt. Ist
+diese Zahl vorhanden, kann ihr eine andere ganze Zahl folgen, die die
+Anzahl der Spalten des Arbeitsausschnitts festlegt.
+
+Zulässige Arbeitsausschnittypen sind:
+COMMAND\t\k(Arbeitsausschnitt Befehl)
+DISASSEMBLY\t\k(Arbeitsausschnitt Disassemblierung)
+EVENT\t\t\k(Arbeitsausschnitt Ereignis)
+PROCESS\t\k(Arbeitsausschnitt des Prozesses)
+REGISTER\t\k(Arbeitsausschnitt Register)
+SOURCE\t\t\k(Arbeitsausschnitt Ursprung)
+STACK\t\t\k(Arbeitsausschnitt Stapel)
+STATUS\t\t\k(Arbeitsausschnitt Status)
+SYMBOLS\t\k(Arbeitsausschnitt Symbol)
+
+Die Zeilenangabe hat keinen Einfluß auf den Arbeitsausschnitt
+"Status". Dieser hat immer nur 1 Zeile. Die Spaltenangabe hat keinen
+Einfluß auf folgende Arbeitsausschnitte: Ereignis, Prozeß, Stapel,
+Status und Symbol. Ein Fenster ist so breit wie das breiteste in ihm
+enthaltene Objekt, auch wenn es einen Arbeitsausschnitt mit einer
+kleineren Spaltenangabe enthält.
+
+Ein Arbeitsausschnitt kann pro Fenster nur einmal angegeben werden.
+Derselbe Arbeitsausschnitt kann jedoch in mehreren Fenstern
+erscheinen. Wird ein Arbeitsausschnitt (ausgenommen
+\k(Arbeitsausschnitt Status) für keines der Fenster vorgegeben, erzeugt das
+Testhilfeprogramm dafür ein eigenes Fenster.
+
+Das letzte Objekt in der Beschreibung eines Fensters ist die
+Schaltflächenliste. Sie ist optional und kann entweder vor oder nach
+den Beschreibungen sämtlicher Arbeitsausschnitte dieses Fensters
+stehen. Wird keine Schaltflächenliste angegeben, enthält das Fenster
+keine \d(Schaltflächenleiste). Steht die Schaltflächenleiste vor den
+Beschreibungen der Arbeitsausschnitte des Fensters, erscheint die
+Schaltflächenleiste oben im Fenster. Folgt Sie den Beschreibung,
+erscheint sie unten im Fenster.
+
+Eine Schaltflächenliste beginnt mit dem Schlüsselwort BUTTONS, gefolgt
+von einer Reihe von Schaltflächenbeschreibungen.
+
+Jede dieser Beschreibungen besteht aus dem Typ der Schaltfläche. Dem
+Typ kann ein Name folgen, das Etikett der Schaltfläche. Wird kein Name
+angegeben, wird vom Debugger ein Standardname vergeben. Zulässige
+Schaltflächentypen sind:
+
+ANIMATE_DIS\t\k(Disassemblierung animieren)
+ANIMATE_SOURCE\t\k(Ursprung animieren)
+DELETE\t\t\k(Löschen)
+DESTROY\t\k(Zerstören)
+DISABLE\t\t\k(Deaktivieren)
+ENABLE\t\t\k(Aktivieren)
+EXPAND\t\t\k(Erweitern)
+EXPORT\t\t\k(Exportieren)
+HALT\t\t\k(Halt)
+INPUT\t\t\k(Eingabe)
+INTERRUPT\t\k(Unterbrechen)
+NEXT_INST\t\k(Nächste Anweisung)
+NEXT_STMT\t\k(Nächste Aussage)
+PIN_SYM\t\t\k(Anheftfen)
+POPUP\t\t\k(Aufklappfenster-Schaltfläche)
+RETURN\t\t\k(Rückgabe)
+RUN\t\t\k(Ausführen)
+SET_CURRENT\t\k(Aktuelles einstellen)
+SET_WATCHPOINT\t\k(Beobachtungspunkt festlegen)
+STEP_INST\t\k(Schritt- Anweisung)
+STEP_STMT\t\k(Schritt- Aussage)
+UNPIN_SYM\t\k(Entheften)
+
+Die Schaltfläche des Typs POPUP weist Besonderheiten auf. Sie kann in
+einer Schaltflächenleiste mehrfach erscheinen. Sie wird verwendet, um
+ein anderes Fenster rasch aufzuklappen. Das Etikettenfeld ist für
+diesen Schaltflächentyp erforderlich. Sein Wert muß dem Etikett eines
+in der Konfiguration enthaltenen Fensters genau entsprechen. Wenn Sie
+diese Schaltfläche auswählen, wird das zugehörige Fenster aufgeklappt.
+In die Beschreibung von Schaltflächen des Typs POPUP kann optional ein
+drittes Feld mit einem benutzerdefinierten Namen aufgenommen werden,
+der als tatsächliches Etikett der Schaltfläche verwendet wird. Dieser
+kann sich von dem Etikett des zur Schaltfläche gehörigen Fensters
+unterscheiden. Wird kein Name angegeben, wird als Etikett dasselbe wie
+für das Fenster verwendet.
+
+Einige der Schaltflächentypen sind nur wirksam, wenn das Fenster einen
+Arbeitsausschnitt eines bestimmten Typs enthält.
+
+ANIMATE_DIS ist nur zulässig, wenn das Fenster \k(Arbeitsausschnitt Disassemblierung)
+enthält.
+
+ANIMATE_SOURCE ist nur zulässig, wenn das Fenster \k(Arbeitsausschnitt Ursprung)
+enthält.
+
+DELETE, DISABLE und ENABLE sind nur zulässig, wenn das Fenster
+\k(Arbeitsausschnitt Ereignis) enthält.
+
+INPUT und INTERRUPT sind nur zulässig, wenn das Fenster
+\k(Arbeitsausschnitt Befehl) enthält.
+
+SET_CURRENT ist nur zulässig, wenn das Fenster entweder
+\k(Arbeitsausschnitt des Prozesses) oder \k(Arbeitsausschnitt Stapel) enthält.
+
+EXPAND, EXPORT, SET_WATCHPOINT, PIN_SYM und UNPIN_SYM sind nur gültig,
+wenn das Fenster ein \k(Arbeitsausschnitt Symbol) enthält.
+
+Alle anderen Schaltflächentypen sind für sämtliche Fenster zulässig.
+
+Im folgenden Beispiel wird die Standardkonfiguration des Debuggers
+definiert.
+
+WINDOW "Source" AUTO 
+\tBUTTONS
+\t\tSET_CURRENT\t"Satz Current"
+\t\tRUN\t\t"Run" 
+\t\tRETURN \t\t"Return" 
+\t\tSTEP_STMT\t"Step Stmt"
+\t\tNEXT_STMT\t"Next Stmt" 
+\t\tHALT\t\t"Halt" 
+\t\tDESTROY\t\t"Destroy"
+\t\tPOPUP\t\t"Symbols" 
+\tSTATUS 
+\tSTACK\t4 
+\tSOURCE\t10 60 
+WINDOW
+"Process" 
+\tBUTTONS 
+\t\tSET_CURRENT\t"Satz Current"
+\t\tPOPUP\t\t"Command" "Cmd" 
+\t\tPOPUP\t\t"Disassembly" "Dis
+\t\tPOPUP\t\t"Event" 
+\t\tPOPUP\t\t"Source" 
+\t\tPOPUP\t\t"Symbols"
+\tPROCESS\t5 
+WINDOW "Symbols" 
+\tBUTTONS 
+\t\tEXPORT\t\t"Export"
+\t\tPIN_SYM\t\t"Pin" 
+\t\tUNPIN_SYM\t"Unpin" 
+\t\tSET_WATCHPOINT\t"Set
+WatchPt" 
+\t\tPOPUP\t\t"Command" "Cmd" 
+\t\tPOPUP\t\t"Disassembly" "Dis"
+\t\tPOPUP\t\t"Event" 
+\t\tPOPUP\t\t"Process" 
+\t\tPOPUP\t\t"Source" 
+\tSTATUS
+\tSYMBOLS\t5 WINDOW "Disassembly" 
+\tBUTTONS 
+\t\tSET_CURRENT\t"Set
+Current" 
+\t\tRUN\t\t"Run" 
+\t\tRETURN \t\t"Return" 
+\t\tSTEP_INST\t"Step
+Inst" 
+\t\tNEXT_INST\t"Next Inst" 
+\t\tHALT\t\t"Halt"
+\t\tDESTROY\t\t"Destroy" 
+\t\tPOPUP\t\t"Command" "Cmd"
+\t\tPOPUP\t\t"Process" 
+\t\tPOPUP\t\t"Source" 
+\tSTATUS 
+\tREGISTER 6 70
+\tDISASSEMBLY 10 70 WINDOW "Event" 
+\tBUTTONS 
+\t\tDISABLE\t"Disable"
+\t\tENABLE\t"Enable" 
+\t\tDELETE\t"Delete" 
+\t\tPOPUP\t"Command" "Cmd"
+\t\tPOPUP\t"Disassembly" "Dis 
+\t\tPOPUP\t"Process" 
+\t\tPOPUP\t"Source"
+\t\tPOPUP\t"Symbols" 
+\tSTATUS 
+\tEVENT 8 WINDOW "Command" 
+\tBUTTONS
+\t\tINPUT\t\t"Input..." 
+\t\tINTERRUPT\t"Interrupt"
+\t\tPOPUP\t\t"Disassembly" "Dis" 
+\t\tPOPUP\t\t"Event"
+\t\tPOPUP\t\t"Process" 
+\t\tPOPUP\t\t"Source" 
+\t\tPOPUP\t\t"Symbols"
+\tSTATUS \tCOMMAND 10 60
+
+^1^Arbeitsausschnitt des Prozesses
+^$2
+Arbeitsausschnitt des Prozesses
+
+Der Arbeitsausschnitt listet die \k(Prozesse und Ablaufstränge) auf, die vom
+jeweiligen \d(Fenster-Set) kontrolliert werden. Folgende Angaben
+werden zu den einzelnen Prozessen bzw. Ablaufsträngen aufgeführt:
+
+    Programmname\tGewöhnlich ist dies der Name der ausführbaren
+\t\tDatei. Wenn ein Prozeß aufgespalten wird,
+\t\tgehören sowohl übergeordnete und untergeordnete
+\t\tProzesse (und, falls vorhanden, ihre jeweiligen Ablaufstränge) zum
+\t\tselben \k(Programm^^Prozesse und Ablaufstränge).
+
+    ID \t\tEin eindeutiger, vom Testhilfeprogramm erzeugter
+    Identifikator.
+
+    Status \t\tAktueller Status des Prozesses oder Ablaufstrangs.
+
+    Funktion\tWenn der Prozeß bzw. Ablaufstrang läuft (Befehl
+\t\tRun) oder schrittweise ausgeführt wird (Befehl Step), ist
+\t\tdieser Eintrag leer. Andernfalls steht hier der Name
+\t\tder Funktion, bei der der Prozeß bzw. Ablaufstrang gestoppt wurde.
+
+    Stopp bei \tWenn der Prozeß bzw. Ablaufstrang läuft (Befehl
+\t\tRun) oder schrittweise ausgeführt wird (Befehl Step), ist
+\t\tdieser Eintrag leer. Wurde der Prozeß bzw. Ablaufstrang
+\t\tin einer Funktion gestoppt, die mit Daten aus dem
+\t\tTesthilfeprogramm kompiliert wurde, werden
+t\thier Dateiname und Zeilennummer (file@line)
+\t\tangegeben, an der der Prozeß bzw. Ablaufstrang gestoppt wurden.
+\t\tWurde die Funktion nicht mit Daten aus dem Testhilfeprogramm
+\t\tkompiliert, steht hier die hexadezimale Adresse, an der der Prozeß
+\t\tbzw. Ablaufstrang gestoppt wurde.
+
+     Befehl\tDie Befehlszeile, mit der das Programm gestartet wird.
+
+Status kann einen der folgenden Werte haben:
+
+    Läuft \tDer Prozeß bzw. Ablaufstrang ist nach einem
+\t\tBefehl des Testhilfeprogramms vom Typ \k(Ausführen) oder
+\t\t\k(Schritt) aktiv.
+
+    Schrittweise\tDieser Status erscheint nur, wenn das
+\t\tTesthilfeprogramm die Instruktionen
+\t\teinen Prozeß bzw. Ablaufstrang schrittweise ausführt. Dies
+\t\tkommt vor allem dann vor, wenn die Bedingung eines Ereignisses
+\t\tkontinuierlich geprüft werden muß.
+
+    Gestoppt\tDer Prozeß bzw. Ablaufstrang wurde angehalten.
+
+    Nicht auf LWP\t\tDer Status eines Multiplex-Ablaufstrangs, der
+\t\tderzeit nicht auf einem \d(LWP) ausgeführt wird.
+\t\tEr wurde von der Ablaufstrangbibliothek womöglich deswegen aus
+\t\teinem LWP herausgenommen, weil er in einem E/A-Vorgang oder einer
+\t\tSynchronisierungsfunktion blockiert wurde. Sobald der Strang
+\t\twieder für die Ausführung bereit ist, wird er von einem LWP
+\t\taufgenommen.
+
+     Ausgesetzt\tDer Status eines Ablaufstrangs, der Ziel eines
+\t\tthr_suspend Aufrufs war. Die Ausführung wird wiederaufgenommen,
+\t\twenn die Fortsetzung durch einen anderen Strang erfolgt.
+
+     Kern\t\tDer Prozeß bzw. Ablaufstrang ist ein Kernabbild
+\t\tund kann untersucht, aber nicht geändert oder ausgeführt werden.
+
+     Kern nicht auf LWP\tDer Status eines Ablaufstrangs, der
+\t\tnicht auf LWP war, als das Kernabbild hergestellt wurde.
+
+    Kern ausgesetzt\tDer Status eines Ablaufstrangs, der ausgesetzt
+\t\twar, als das Kernabbild hergestellt wurde.
+
+Sie können im Arbeitsausschnitt Prozeß einen oder mehrere Einträge
+auswählen. Die gewählten Einträge haben Einfluß auf das Verhalten
+zahlreicher Menübefehle in dem Fenster, das den Arbeitsausschnitt
+enthält. Wenn Sie zum Beispiel einen Eintrag auswählen und dann auf
+der Option \k(Ausführen) im Menü \k(Steuerung) AUSWAHL
+klicken, wird das ausgewählte Projekt auf die Ausführung eingestellt.
+Wenn Sie vor dem Anklicken von \k(Ausführen) noch keinen
+Prozeß bzw. Ablaufstrang ausgewählt hatten, wäre \d(aktueller Prozeß oder Ablaufstrang)
+auf Ausführung eingestellt worden. Die Auswahl eines Objekts führt zur
+Auswahl des Prozesses bzw. Ablaufstrangs und des \k(Programms^^Prozesse und Ablaufstränge). Die
+meisten Optionen gelten für das ausgewählte Objekt, doch gelten
+Befehle, die Ereignisse erzeugen (\k(Anhalten),
+\k(Signal), \k(Systemaufruf) und \k(Bei Stop)
+im Menü \k(Ereignis)) standardmäßig für das ausgewählte
+Programm. Sie können dies mit der Option \k(Körnung) im
+Menü \k(Eigenschaften) ändern.
+
+Der aktuelle Prozeß bzw. Ablaufstrang wird durch eine Hand mit
+ausgestrecktem Zeigefinger links neben dem Programmnamen markiert. Der
+aktuelle Prozeß bzw. Ablaufstrang legt fest, was in den anderen
+Arbeitsausschnitten des Fenstersatzes angezeigt wird. Sie können den
+aktuellen Prozeß bzw. Ablaufstrang ändern, indem Sie zunächst auf
+einen Prozeß bzw. Ablaufstrang im Arbeitsausschnitt Prozeß und
+anschließend auf die Option \k(Aktuelles einstellen) im Menü
+\k(Bearbeiten) AUSWAHL klicken.
+
+Sie können einen Prozeß oder einen Ablaufstrang ebenfalls von einem
+Fenster-Satz zum anderen verschieben, indem Sie die Option Verschieben
+des \k(Datei)-Menüs auswählen (siehe \k(Verschieben)).
+Oder aber Sie wählen den Prozeß oder Ablaufstrang aus, ziehen ihn und
+legen ihn im Prozeßarbeitsausschnitt des anderen Fenster-Sets ab.
+Dadurch wird er zum aktuellen Prozeß oder Ablaufstrang in seinem neuen
+Fenster-Set.
+
+Ist die Befehlszeile zu lange für die zugehörige Spalte, wird sie
+standardmäßig abgeschnitten. Sie können den Umbruch nach der nächsten
+Zeile mit der Option \k(Arbeitsausschnitte) im Menü \k(Eigenschaften)
+erzwingen.
+
+^2^Programme, Prozesse und Ablaufstränge=Prozesse und Ablaufstränge
+^$21
+\k(Arbeitsausschnitt des Prozesses)
+Programme, Prozesse und Ablaufstränge
+
+Ein Programm ist ein ausführbares Objekt in einem der
+Objektdateiformate, die das Testhilfeprogramm akzeptiert. Dazu kommen
+die gemeinsam benutzten Bibliotheken, die das ausführbare Objekt
+während der Ausführung laden kann. Das ausführbare Abbild eines
+Programms ist ein Prozeß. Da sich ein Prozeß verzweigen kann, können
+aus einem Programm zahlreiche Prozesse abgeleitet werden.
+
+Ein Prozeß besteht aus einem oder mehreren Ablaufsträngen. Die
+einzelnen Ablaufstränge innerhalb eines Prozesses nutzen den
+gemeinsamen Adressenraum, die Identifikatoren von Prozeß und
+übergeordnetem Prozeß, Privilegien, Stamm- und Arbeitsverzeichnisse,
+Dateibeschreibungen, Datei- und Datensatzsperren,
+Ressourcenbegrenzungen und den Kontext der Signalbehandlung
+(ausgenommen Signalmaske und Signalstapel).
+
+Ein Ablaufstrang ist ein einfacher Ausführungskontext innerhalb eines
+.Prozesses. Jeder Ablaufstrang hat seinen eigenen Registersatz, eine
+Signalmaske und einen Signalstapel. Ein "Ablaufstrang" im Kontext des
+Testhilfeprogramms bezieht sich auf Objekte der Benutzerebene, die
+durch die in <thread.h> enthaltene Schnittstelle implementiert werden.
+Diese Ablaufstränge sind vom auf Kern-Ebene unterstützten Leichtprozeß
+(LWP) zu unterscheiden, auf dem sie aufbauen.
+
+Zu einem gegebenen Zeitpunkt kann ein Ablaufstrang entweder auf einem
+LWP laufen oder inaktiv sein. Ein inaktiver Ablaufstrang kann vom
+Testhilfeprogramm nicht gestartet werden, doch kann sein Status
+überprüft und geändert werden.
+
+^1^Arbeitsausschnitt Stapel
+^$3
+Arbeitsausschnitt Stapel
+
+Der Arbeitsausschnitt "Stapel" zeigt die Stapelzustände für den
+\d(aktueller Prozeß oder Ablaufstrang) an. Zu jedem Stapelrahmen werden folgende
+Informationen aufgelistet:
+
+Rahmennummer\tRahmen werden von 0 ab (Stapelboden)
+\t\tnumeriert (Ausgangsrahmen).
+
+    Funktion\tName der Funktion. Das Testhilfeprogramm zeigt ein
+\t\tFragezeichen (?) an, wenn es zu der angegebenen Adresse keinen
+\t\tNamen findet. Das kann an ungenügenden symbolischen
+\t\tInformationen oder daran liegen, daß der Programmzähler
+\t\tdes Rahmens auf einen Adressenraum außerhalb des Prozesses zeigt.
+
+Parameter\tDie Namen und Werte von Argumenten. Argumentnamen
+\t\tstehen u. U. nicht zur Verfügung, wenn
+\t\tdie symbolischen Informationen nicht ausreichen.
+
+Standort\tDer aktuelle Punkt für die Ausführung im Rahmen.
+\t\tDer Standort hat das Format "file@line", wenn die Funktion mit
+\t\tInformationen aus dem Testhilfeprogramm kompiliert wurde.
+\t\tAndernfalls steht hier eine hexadezimale Adresse.
+
+Der Rahmen, der mit einer Hand markiert ist, ist der
+\d(aktueller Rahmen). Der aktuelle Rahmen hat Einfluß darauf, was in
+den anderen Fenstern des \d(Fenster-Set) angezeigt wird. Der
+aktuelle Rahmen kann geändert werden. Dazu klicken Sie AUSWAHL,
+zunächst auf einen anderen Rahmen, anschließend auf die Option
+\k(Aktuelles einstellen) im Menü \k(Bearbeiten).
+
+Sollten Informationen zu lang sein, um in die Spalte zu passen, werden
+sie gekürzt. Mit Hilfe der \k(Arbeitsausschnitte)-Optionen im
+\k(Eigenschaften)-Menü können Sie erzwingen, daß die Spalten
+Parameter und Speicherstelle zur nächsten Zeile umgebrochen
+werden.
+
+^1^Arbeitsausschnitt Symbol
+^$4
+Arbeitsausschnitt Symbol
+
+Der Arbeitsausschnitt "Symbol" zeigt die Werte der Variablen an, die
+vom \d(aktueller Kontext) aus sichtbar sind. Folgende Symbole können
+angezeigt werden:
+
+\tLokale Variablen, die vom \d(aktueller Rahmen) aus sichtbar sind,
+\tstatische Dateivariablen, die vom aktuellen Rahmen aus sichtbar
+\tsind, globale Variablen, die vom aktuellen Rahmen aus sichtbar sind,
+\tvom Testhilfeprogramm definierte Variablen oder benutzerdefinierte,
+\tvom Testhilfeprogramm gepflegte Variablen
+
+Standardmäßig zeigt der Arbeitsausschnitt Symbol nur lokale Variablen
+an. Sie können die Art der angezeigten Variablen mit der Option
+\k(Symbole) im Menü \k(Eigenschaften) ändern.
+
+Zu jedem Symbol werden Name, Standort und Wert angezeigt. Bei lokalen
+Variablen ist der Standort die Funktion und die Zeilennummer des sie
+einschließenden Bereichs. Bei statischen Dateisymbolen ist es der
+Dateiname, bei globalen Symbolen der Name der Objektdatei.
+
+Sind Informationen zu lang für die jeweilige Spalte, werden
+sie abgeschnitten. In den Spalten Typ und Wert können Sie den
+Umbruch nach der nächsten Zeile mit den Optionen \k(Arbeitsausschnitte)
+im Menü \k(Eigenschaften) erzwingen.
+
+Beachten Sie, daß bei Anzeige eines Objekts der Klasse C++ im
+Arbeitsausschnitt Symbol die statischen Mitglieder dieser Klasse in
+der Liste der Werte in der Spalte Wert nicht angezeigt werden. Sie
+werden jedoch sichtbar, wenn Sie das Klassenobjekt in den
+Aufklappfenstern \k(Erweitern) oder \k(Wert anzeigen)
+anzeigen, die im Menü \k(Anzeigen) aller Fenster mit dem
+Arbeitsausschnitt Symbol oder \k(Arbeitsausschnitt Ursprung) vorhanden sind.
+
+^1^Arbeitsausschnitt Register
+^$5
+Arbeitsausschnitt Register
+
+Der Arbeitsausschnitt "Register" zeigt die Werte der Speicherregister
+für den \d(aktueller Prozeß oder Ablaufstrang) an. Die Werte werden in hexadezimaler oder
+(im Fall von Gleitpunkt-Registern) Gleitpunkt-Schreibweise angezeigt
+und werden aktualisiert, sobald der aktuelle Prozeß oder Ablaufstrang
+stoppt.
+
+^1^Arbeitsausschnitt Disassemblierung
+^$6
+Arbeitsausschnitt Disassemblierung
+
+Der Arbeitsausschnitt Disassemblierung zeigt die Rückübersetzung der
+ aktuellen Funktion. Sie können auch die Rückübersetzung
+anderer Funktionen anzeigen. Dazu verwenden Sie die Option
+\k(Disassemblierte Funktion anzeigen) im Menü \k(Anzeigen).
+
+Der Arbeitsausschnitt "Disassemblierung" zeigt am linken Rand für jede
+Funktion ein Stoppzeichen an, in der eine Unterbrechungsstelle gesetzt
+wurde. Sie können bei einer Anweisung eine Unterbrechungsstelle setzen
+oder entfernen, indem Sie am linken Rand auf die AUSWÄHLEN-Maustaste
+doppelklicken.
+
+^1^Arbeitsausschnitt Ursprung
+^$7
+Arbeitsausschnitt Ursprung
+
+Im Arbeitsausschnitt Ursprungskode wird die aktuelle Ursprungsdatei angezeigt.
+Sobald der \d(aktueller Prozeß oder Ablaufstrang) stoppt, wird in der Datei die aktuelle
+Zeile der aktuellen Funktion angezeigt. Die aktuelle Zeile wird
+hervorgehoben und gleichzeitig am linken Rand mit einem Pfeil
+markiert. Wenn es keine aktuelle Datei gibt, oder wenn die Datei nicht
+mit Informationen zur Testhilfe kompiliert wurde, ist der
+Arbeitsausschnitt Ursprungskode leer. Dies gilt auch für den Fall, daß
+das Testhilfeprogramm die aktuelle Datei nicht findet. Dann können Sie
+das Aufklappfenster \k(Ursprungspfad) verwenden, das im Menü
+\k(Eigenschaften) jedes Fensters mit einem Arbeitsausschnitt
+Ursprungskode zur Verfügung steht.
+
+Am linken Rand jeder Zeile, in der eine Unterbrechungsstelle gesetzt
+wurde, erscheint ein Stoppzeichen. Sie können eine
+Unterbrechungsstelle setzen oder entfernen, indem Sie am linken Rand
+der gewählten Zeile auf die AUSWÄHLEN-Maustaste doppelklicken. Wenn
+das Testhilfeprogramm in der ausgewählten Zeile keine
+Unterbrechungsstelle setzen kann, erscheint eine entsprechende
+Meldung. Es gibt mehrere Gründe, aus denen eine Unterbrechungsstelle
+nicht gesetzt werden kann:
+
+    o Die Zeile aus dem Ursprungscode enthält nichts, das ausführbaren
+      Code erzeugen könnte. Dazu gehören Leerzeilen und Zeilen, die
+      ausschließlich Kommentare und die Vereinbarung von Variablen
+      enthalten.
+
+    o Die Zeile ist Teil einer mehrzeiligen Aussage. Sie können eine
+      Unterbrechungsstelle nur in einer Zeile einer mehrzeiligen
+      Aussage oder Bedingung setzen.
+
+    o Die Zeile ist der Anfang einer Funktionsdefinition. Die
+      Unterbrechungsstelle ist statt dessen auf die erste Aussage in
+      der Funktion zu setzen.
+
+Sie können im Arbeitsausschnitt Ursprungskode auch andere Dateien
+darstellen. Dazu öffnen Sie entweder eine andere Datei in der Liste
+des Aufklappfenster \k(Öffnen), oder Sie zeigen eine andere
+Funktion aus der Liste im Aufklappfenster \k(Ursprungscode der Funktion anzeigen) an.
+
+Sie können andere Ursprungsdateien untersuchen, während die Datei im
+Arbeitsausschnitt "Ursprungscode" weiter angezeigt wird. Dazu erzeugen Sie
+ein sekundäres Ursprungscodefenster. Derartige Fenster erzeugen Sie, indem
+Sie die Option "\k(Neuer Ursprung)" im Menü "\k(Datei)"
+auswählen. Sie werden durch einen Stern ('*') in der Titelzeile des
+Fensters angezeigt. Sekundäre Ursprungscodefenster enthalten einen
+\k(Arbeitsausschnitt Status) und einen Arbeitsausschnitt "Ursprungscode". Der
+Arbeitsausschnitt "Ursprungscode" eines Sekundärfensters wird nicht
+aktualisiert, wenn der aktuelle Prozeß oder Ablaufstrang stoppt.
+
+^1^Arbeitsausschnitt Ereignis
+^$8
+Arbeitsausschnitt Ereignis
+
+Der Arbeitsausschnitt "Ereignis" hat zwei Teile: den Arbeitsausschnitt
+"Hauptereignis" und den Arbeitsausschnitt "Ereignis bei Stopp". Im
+Arbeitsausschnitt "Hauptereignis" werden die \d(Stopereignis),
+\d(Signalereignis) und \d(syscall-Ereignis) für den
+\d(aktueller Prozeß oder Ablaufstrang) angezeigt. Der Arbeitsausschnitt zeigt die
+\d(Onstop-Ereignis) für den aktuellen Prozeß oder Ablaufstrang an.
+Folgende Daten können für jedes Ereignis angezeigt werden:
+
+    ID \t \tEreignisnummer. Neben der Nummer steht auch das Zeichen
+\t\tD', wenn das Ereignis \k(deaktiviert^^Deaktivieren) (Disabled) wurde.
+
+    Geben Sie\t\tSTOP, SIGNAL oder SYSCALL ein. Der Typ für
+\t\tSyscall-Ereignisse schließt die Zeichen 'E' oder
+\t\t'X' für Beginn (Entry) bzw. Ende (Exit) von Systemaufrufen ein.
+
+    Prozesse\tProzesse und Ablaufstränge, für die das Ereignis gesetzt
+    wurde
+
+     Bedingung\tFür Stoppereignisse ist \k(Stop-Ausdruck)die
+\t\t     Bedingung. Für Signalereignisse ist dies die Liste der
+ \t\t    Signale, auf die die Ereignisse angewendet werden. Für
+\t\t     Systemaufrufereignisse ist es die Liste der betroffenen
+ \t\t    Systemaufrufe.
+
+Zählung\t\tBei Stopp- und Systemaufrufereignissen die Anzahl
+\t\tvon Malen, die die Bedingung eintritt, ehe das Ereignis
+\t\tausgelöst wird.
+
+    Befehlsliste\tDie Befehle, die das Testhilfeprogamm ausführen muß,
+\t\twenn das Ereignis ausgelöst wird.
+
+Sind Prozeßliste, Bedingung oder Befehlsliste zu lang für ihre
+jeweilige Spalte, werden sie abgeschnitten. Sie können den Umbruch
+nach der nächsten Zeile mit der Option \k(Arbeitsausschnitte) im Menü
+\k(Eigenschaften) erzwingen.
+
+^1^Arbeitsausschnitt Befehl
+^$9
+Arbeitsausschnitt Befehl
+
+Der Arbeitsausschnitt "Befehl" hat zwei Teile:
+
+\t\k(Arbeitsausschnitt Transkription) und
+\t\k(Befehlszeile).
+
+Im Arbeitsausschnitt Befehl wird eine Transkription der Testsitzung
+(Ein- und Ausgabe von Testhilfeprogramm und Prozeß) im
+\k(Arbeitsausschnitt Transkription) angezeigt. Im \k(Befehlszeile) können Sie
+Befehle für das Testhilfeprogramm eingeben, als befänden Sie sich auf
+der Befehlszeilenebene.
+
+^2^Arbeitsausschnitt Transkription
+^$91
+\k(Arbeitsausschnitt Befehl)
+Arbeitsausschnitt Transkription
+
+Im Arbeitsausschnitt "Transkription" wird der Ablauf der
+Testsitzung angezeigt, soweit sie den \d(Fenster-Set) des
+\k(Arbeitsausschnitt Befehl)es betrifft. Dazu gehören folgende Informationen:
+
+    o Ankündigungen von Ereignissen für Prozesse und Ablaufstränge,
+      die zu diesem Fenstersatz gehören
+
+    o Ausgabe sämtlicher mit diesen Ereignissen verbundenen Befehle
+
+     o Ausgabe des Prozesses, wenn dieser aufgezeichnet wird (siehe
+       \k(Erstellen))
+
+    o Ausgabe aller Befehle, die im \k(Befehlszeile) eingegeben
+      wurden.
+
+^2^Befehlszeile
+^$92
+\k(Arbeitsausschnitt Befehl)
+Befehlszeile
+
+Sie können Befehle in der Befehlszeile so eingeben, als verwendeten
+Sie die Befehlszeilen-Schnittstelle des Testhilfeprogramms. Wenn Sie
+die Eingabetaste drücken, wird die Befehlszeile ausgeführt. Der Befehl
+samt der erzeugten Ausgabe wird im \k(Arbeitsausschnitt Transkription) angezeigt. Eine
+Beschreibung der verfügbaren Befehle finden Sie im Handbuch, Seite
+(debug(1)).
+
+Allen Befehlen oder Befehlsblöcken kann das Zeichen '>' und ein
+Dateiname vorausgehen. Dadurch wird die Ausgabe des Befehls in die
+Datei geleitet, statt im Arbeitsausschnitt Transkription angezeigt
+zu werden. Sie können auch ">> filename" verwenden. Dann wird die
+Ausgabe am Ende der Datei angehängt, statt den aktuellen Inhalt der
+Datei zu ersetzen. Allerdings ist es mit dem Testhilfeprogramm nicht
+möglich, die Ausgabe eines Befehls über eine Pipe in einen anderen
+Befehl der UNIX(r) System-Shell.
+
+^1^Arbeitsausschnitt Status
+^$10
+Arbeitsausschnitt Status
+
+Der Arbeitsausschnitt "Status" ist in der Regel in Fenstern vorhanden,
+die keinen \k(Arbeitsausschnitt des Prozesses)enthalten.
+
+Der Arbeitsausschnitt "Status" gibt den \d(aktueller Kontext) an, das
+heißt, den \d(aktueller Prozeß oder Ablaufstrang) für den \d(Fenster-Set), den
+Status dieses Prozesses oder Ablaufstrangs. Im Falle eines Stopps
+werden Funktionsname und Zeilennummer oder Adresse des
+\d(aktueller Rahmen) angezeigt.
+
+^1^Schaltfläche Datei=Datei
+^$110
+Schaltfläche Datei
+
+Die Schaltfläche "Datei" eröffnet den Zugang zu Dateien und zu den
+Fenstern des Testhilfeprogramms. Außerdem können Sie Prozesse
+erzeugen, heranziehen und freigeben. Wenn Sie auf die Schaltfläche
+"Datei" MENÜ klicken, erscheint ein Menü mit verschiedenen Optionen
+abhängig von den Arbeitsausschnitten, die im Fenster vorhanden sind.
+In jedem Fenster ist ein Menü "Datei" verfügbar, das mindestens
+folgende Optionen enthält:
+
+\t\k(Fenster) 
+\t\k(Fenster schließen) 
+\t\k(Beenden)
+
+Darüber hinaus enthält das Menü "Datei" folgende weitere Optionen,
+falls das zugehörige Fenster beim Aufruf des Testhilfeprogramms
+automatisch angezeigt wird (siehe \k(Konfiguration)):
+
+\t\k(Erstellen)
+\t\k(Kern erfassen) 
+\t\k(Prozeß erfassen) 
+\t\k(Ausgabe)
+\t\k(Verzeichnis ändern)
+
+Enthält das Fenster eine \k(Arbeitsausschnitt des Prozesses), sind im Menü "Datei"
+folgende Optionen vorhanden:
+
+\t\k(Erstellen)
+\t\k(Kern erfassen)
+\t\k(Prozeß erfassen)
+\t\k(Ausgabe) 
+\t\k(Verzeichnis ändern) 
+\t\k(Neues Fensterset)
+\t\k(Verschieben)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Ursprung), sind im Menü "Datei"
+folgende Optionen vorhanden:
+
+\t\k(Öffnen)
+\t\k(Neuer Ursprung)
+
+Enthält das Fenster schließlich einen \k(Arbeitsausschnitt Befehl), sind im
+Menü "Datei" folgende Optionen vorhanden:
+
+\t\k(Verzeichnis ändern) 
+\t\k(Skript)
+
+Die Menge der im Menü "Datei" eines Fensters enthaltenen Optionen ist
+die Vereinigungsmenge der Standardoptionen und der von den einzelnen
+in diesem Fenster enthaltenen Arbeitsausschnitte eingebrachten
+Optionen.
+
+^2^Erstellen
+^$111
+\k(Schaltfläche Datei)
+Erstellen
+
+Im Aufklappfenster "Erstellen" können Sie einen oder mehrere Prozesse
+erzeugen. Sie können die zu erstellende Datei dadurch angeben, daß Sie
+eine Objektdatei aus einem Ordner in den Desktop ziehen und auf dem
+Fenster "Erstellen" ablegen. Sie können aber auch den Pfadnamen der
+Objektdatei in das Feld "Befehlszeile" eingeben. Die Befehlszeile im
+Shell-Stil kann Umleitungen von Eingaben und/oder Ausgaben sowie eine
+Shell-Pipe enthalten. Alle sich daraus ergebenden Prozesse werden an
+dem \k(Speicherstelle) gestoppt, der im Feld "Startadresse" angegeben
+ist. Wenn Sie eine andere Funktion als "main" angeben und diese im
+Adressenraum des Prozesses nicht gefunden werden kann, wird der Prozeß
+an der Funktion "main" gestoppt. Kann "main" nicht gefunden werden,
+wird der Prozeß an der Adresse gestoppt, die im Vorspann der
+Objektdatei angegeben ist. Wenn ein Prozeß mit mehreren Ablaufsträngen
+erzeugt wird, hat er einen anfänglichen Ablaufstrang "main". Dieser
+wird an der angegebenen Stelle gestoppt.
+
+Da die Prozesse oder Ablaufstränge nach Erstellung angehalten werden,
+ müssen Sie einen der Befehle aus dem Menü \k(Steuerung)
+ verwenden, um ihre Ausführung zu starten.
+
+Wird die Option E/A aufzeichnen gewählt, werden Ein- und Ausgabe
+des Prozesses erfaßt und im \k(Arbeitsausschnitt Transkription) angezeigt. Eingabe
+für den Prozeß muß mit Hilfe des Aufklappfenster \k(Eingabe)
+erfolgen. Wird die Option E/A aufzeichnen nicht gewählt, wird die
+Ausgabe des Prozesses in das dem Testhilfeprogramm übergeordnete
+Xterm-Fenster geleitet, und Eingaben werden in diesem Fenster
+eingetippt. Dies ist sehr sinnvoll, wenn Sie ein Curses-basiertes
+Programm oder ein sehr stark interaktives Programm testen. Die Option
+E/A aufzeichnen sollte stets gewählt werden, wenn das
+Testhilfeprogramm nicht aus einem Xterm-Fenster, sondern über sein
+Symbol aufgerufen wurde.
+
+Die Option Untergeordneten Prozessen folgen steuert das Verhalten des
+Testhilfeprogramms bei Verzweigungen der erzeugten Prozesse oder
+Ablaufstränge. Wird diese Option nicht gewählt, kontrolliert das
+Testhilfeprogramm den untergeordneten Prozeß nicht. Andernfalls
+kontrolliert es den untergeordneten Prozeß und alle zugehörigen
+Ablaufstränge (der Prozeß kann mit Hilfe des Befehls
+\k(Ausgabe) aus der Kontrolle durch das Testhilfeprogramm
+entlassen werden). Alle Ablaufstränge, die von einem getesteten Prozeß
+erzeugt werden, werden vom Testhilfeprogramm verfolgt (können aber
+ebenso mittels der Schaltfläche \k(Ausgabe) freigegeben
+werden). Das Aufklappfenster \k(Ausgabeaktion) ermöglicht die
+Steuerung des Verhaltens des Testhilfeprogramms hinsichtlich neu
+erzeugter Ablaufstränge.
+
+Wird die Option "Früher erzeugte Prozesse abbrechen" gewählt, werden
+alle Prozesse abgebrochen (Befehl: kill), die mit dem vorhergehenden
+Befehl erzeugt wurden. Damit können Sie Prozesse neu starten, ohne
+alle verbleibenden Prozesse eigens suchen und abbrechen zu müssen.
+
+Wird die Option "Neuer Fenstersatz" nicht gewählt, werden die
+erzeugten Prozesse sämtlich dem \d(Fenster-Set) des Fensters
+"Erstellen" hinzugefügt. Andernfalls wird ein neuer Fenstersatz
+erstellt, und alle erzeugten Prozesse werden von diesem neuen
+Fenstersatz kontrolliert. In beiden Fällen wird das erste Programm in
+der Pipeline der aktuelle Prozeß im kontrollierenden Fenstersatz.
+
+Wenn Sie Prozesse mit einem \k(Skript) oder durch
+\k(Befehlszeile) erzeugen, wird die Befehlszeile im Fenster
+Erstellen aktualisiert, um den jeweils neuesten Befehl des Typs create
+darzustellen.
+
+Das Fenster "Erstellen" ist im Menü "\k(Datei)" sämtlicher
+Fenster verfügbar, die einen \k(Arbeitsausschnitt des Prozesses) enthalten. Es ist auch
+in allen Fenstern verfügbar, die automatisch angezeigt werden, wenn
+das Testhilfeprogramm aufgerufen wird. Der Aufruf erfolgt durch
+AUSWAHL Klicken auf "Erstellen" im Menü "\k(Datei)".
+
+^2^Kern erfassen
+^$112
+\k(Schaltfläche Datei)
+Kern erfassen
+
+Mit dem Aufklappfenster "Kern heranziehen" können Sie eine Kerndatei
+und die entsprechende Objektdatei öffnen und untersuchen. Geben Sie in
+den entsprechenden Zeilen des Fensters die Namen von Kern und Objekt
+ein. Sie können eine Kerndatei auch aus einem Ordner in den Desktop
+ziehen und auf dem Fenster "Kern heranziehen" ablegen. Dadurch werden
+die Felder `"Kerndatei" und "Objektdatei" ausgefüllt.
+
+Wird die Option "Neuer Fenstersatz" gewählt, wird ein neuer
+\d(Fenster-Set) erzeugt, in dem das herangezogene Kernabbild
+angezeigt wird. Andernfalls wird das Kernabbild in dem Fenstersatz
+angezeigt, der dem Aufklappfenster übergeordnet ist. In beiden Fällen
+wird das herangezogene Kernabbild zum aktuellen Prozeß im eigenen
+Fenstersatz, und der Ablaufstrang, der auf den Fehler stieß, wird nach
+Möglichkeit der aktuelle Ablaufstrang.
+
+Herangezogene Kernabbilder können mit allen Befehlen untersucht
+werden, die für lebende Prozesse zur Verfügung stehen. Sie können
+jedoch weder geändert noch ausgeführt werden.
+
+Das Fenster "Kern heranziehen" ist im Menü "\k(Datei)"
+sämtlicher Fenster verfügbar, die einen \k(Arbeitsausschnitt des Prozesses) enthalten.
+Es ist auch in allen Fenstern verfügbar, die automatisch angezeigt
+werden, wenn das Testhilfeprogramm aufgerufen wird. Der Aufruf erfolgt
+durch AUSWAHL Klicken auf "Kern heranziehen" im Menü
+"\k(Datei)".
+
+^2^Prozeß erfassen
+^$113
+\k(Schaltfläche Datei)
+Prozeß erfassen
+
+Mit dem Fenster "Prozeß heranziehen" können Sie die Kontrolle über
+einen lebenden Prozeß übernehmen. Das Fenster enthält eine Abrolliste
+mit heranziehbaren Prozessen (d. h., alle Prozesse mit derselben
+Benutzer-ID, ausgenommen das Testhilfeprogramm). Sie können aus der
+Liste mehr als einen Prozeß auswählen.
+
+Standardmäßig lädt das Testhilfeprogramm symbolische Informationen für
+den Prozeß aus der Objektdatei, aus der heraus der Prozeß erzeugt
+wurde. In die Zeile "Objektdatei" können Sie den Namen einer
+alternativen Objektdatei eingeben, aus der symbolische Informationen
+zu laden sind. Das ist sinnvoll, wenn Sie lang laufende Anwendungen
+testen, die keine symbolischen Informationen haben. Wenn Sie in die
+Zeile "Objektdatei" einen Dateinamen eingeben, dürfen Sie aus der
+Liste nur einen Prozeß auswählen.
+
+Wird die Option "Neuer Fenstersatz" nicht gewählt, werden die
+herangezogenen Prozesse sämtlich dem \d(Fenster-Set) des Fensters
+"Prozeß heranziehen" hinzugefügt. Andernfalls wird ein neuer
+Fenstersatz erzeugt, der alle herangezogenen Prozesse kontrolliert. In
+beiden Fällen wird das ausgewählte Objekt, das in der Liste an erster
+Stelle erscheint, zum aktuellen Prozeß im eigenen Fenstersatz. Wenn
+dieser Prozeß die Schnittstellen der Ablaufstränge verwendet, wählt
+das Testhilfeprogramm willkürlich einen Ablaufstrang aus diesem Prozeß
+als aktuellen Ablaufstrang.
+
+Die Option Untergeordneten Prozessen folgen steuert das Verhalten des
+Testhilfeprogramms bei Verzweigungen der erzeugten Prozesse. Wird
+diese Option nicht gewählt, kontrolliert das Testhilfeprogramm den
+untergeordneten Prozeß nicht. Andernfalls kontrolliert es den
+untergeordneten Prozeß (der Prozeß kann mit Hilfe der Schaltfläche
+\k(Ausgabe) aus der Kontrolle durch das Testhilfeprogramm
+entlassen werden). Alle Ablaufstränge, die von einem getesteten Prozeß
+erzeugt werden, werden vom Testhilfeprogramm verfolgt (können aber
+ebenso mittels der Schaltfläche \k(Ausgabe) freigegeben
+werden). Das Aufklappfenster \k(Ausgabeaktion) ermöglicht die
+Steuerung des Verhaltens des Testhilfeprogramms hinsichtlich neu
+erzeugter Ablaufstränge.
+
+Das Fenster "Prozeß heranziehen" ist im Menü "\k(Datei)"
+sämtlicher Fenster verfügbar, die einen \k(Arbeitsausschnitt des Prozesses) enthalten.
+Es ist auch in allen Fenstern verfügbar, die automatisch angezeigt
+werden, wenn das Testhilfeprogramm aufgerufen wird. Der Aufruf erfolgt
+durch AUSWAHL Klicken auf "Prozeß heranziehen" im Menü
+"\k(Datei)".
+
+^2^Ausgabe
+^$114
+\k(Schaltfläche Datei)
+Ausgabe
+
+Mit der Option "Loslassen" können Sie einen oder mehrere Prozesse bzw.
+Ablaufstränge aus der Kontrolle des Testhilfeprogramms entlassen. Wenn
+Sie auf "Loslassen" AUSWAHL klicken, erscheint ein Aufklappmenü mit
+zwei Optionen, "Ausführen" und "Ausgesetzt". Wählen Sie "Ausführen",
+werden die Prozesse bzw. Ablaufstränge freigegeben, und ihre
+Ausführung wird erlaubt. Wenn Ablaufstränge ausgewählt wurden, ist das
+Aufklappmenü nicht verfügbar, da einzelne nicht in gestopptem Zustand
+freigegeben werden können. Wenn Sie für Prozesse "Ausgesetzt" wählen,
+werden sie in gestopptem Zustand freigegeben und können später wieder
+herangezogen werden. Um einen Prozeß mit Ablaufsträngen in gestopptem
+Zustand freizugeben, können Sie entweder alle Ablaufstränge des
+Prozesses und anschließend "Loslassen/Ausgesetzt" wählen, oder Sie
+wählen einen der untergeordneten Ablaufstränge, setzen die Option
+"Andere Befehle anwenden auf:" im Menü "Körnigkeit" auf
+"Übergeordneter Prozeß" und wählen dann "Loslassen/Ausgesetzt". Im
+letzteren Fall müssen Sie wissen, daß alle folgenden Befehle auf den
+übergeordneten Prozeß angewendet werden, wenn Sie "Körnigkeit" nicht
+zurücksetzen.
+
+Werden Prozesse oder Ablaufstränge im \k(Arbeitsausschnitt des Prozesses) ausgewählt,
+werden sie freigegeben. Andernfalls wird der \d(aktueller Prozeß oder Ablaufstrang)
+freigegeben.
+
+Die Option "Loslassen" ist Menü "\k(Datei)" sämtlicher
+Fenster verfügbar, die einen \k(Arbeitsausschnitt des Prozesses) enthalten. Es ist auch
+in allen Fenstern verfügbar, die automatisch angezeigt werden, wenn
+das Testhilfeprogramm aufgerufen wird. Der Aufruf erfolgt durch
+AUSWAHL Klicken auf "Loslassen" im Menü "\k(Datei)". Die
+Option ist nicht verfügbar, wenn im \d(Fenster-Set) keine
+Prozesse oder Ablaufstränge vorhanden sind.
+
+Sowohl herangezogene als auch erzeugte Prozesse (siehe
+\k(Prozeß erfassen) und \k(Erstellen)) können freigegeben
+werden.
+
+^2^Öffnen
+^$115
+\k(Schaltfläche Datei)
+Öffnen
+
+Mit dem Aufklappfenster "Öffnen" können Sie eine Datei wählen, um sie
+in einem \k(Arbeitsausschnitt Ursprung) anzuzeigen. Das Fenster zeigt eine Liste
+mit den Dateien an, aus denen sich das Programm zusammensetzt und die
+mit Informationen zum Test kompiliert wurden. Um eine Datei
+anzuzeigen, wählen Sie sie aus und klicken AUSWAHL auf die
+Schaltfläche "Öffnen". Sie können die Datei auch auf das Fenster
+"Ursprungskode" ziehen und dort ablegen. Wenn Sie die Datei auf
+"Arbeitsbereich" ziehen und dort ablegen, öffnet das Testhilfeprogramm
+einen neuen \d(Sekundäres Ursprungsfenster).
+
+Beachten Sie, daß die Liste der Ursprungsdateien aus der Objektdatei
+selbst, nicht aus dem aktuellen Verzeichnis stammt. Das
+Testhilfeprogramm sucht nach einer Datei erst, wenn Sie eine Auswahl
+getroffen haben. Findet es die ausgewählte Datei nicht, verwenden Sie
+die Option \k(Ursprungspfad) im Menü \k(Eigenschaften), um dem
+Testhilfeprogramm die Fundstelle des Ursprungskodes mitzuteilen.
+
+Das Fenster "Öffnen" ist stets im Menü "\k(Datei)" aller
+Fenster verfügbar, die einen \k(Arbeitsausschnitt Ursprung) enthalten. Sie rufen
+es auf, indem Sie im Menü "\k(Datei)" auf "Öffnen" AUSWAHL
+klicken.
+
+^2^Neuer Ursprung
+^$116
+\k(Schaltfläche Datei)
+Neuer Ursprung
+
+Die Option Neuer Ursprungskode erzeugt einen neuen \d(Sekundäres Ursprungsfenster).
+Sekundäre Ursprungskodefenster können verwendet werden, um mehrere
+Funktionen bzw. Dateien gleichzeitig anzuzeigen. Bei der ersten
+Erzeugung zeigt das Sekundärfenster dieselbe Datei an wie der
+\k(Arbeitsausschnitt Ursprung) im Fenster, in dem die Option Neuer Ursprungskode
+gewählt wurde. Sie können den Inhalt des Sekundärfensters mit Hilfe
+der Optionen \k(Öffnen) oder \k(Ursprungscode der Funktion anzeigen) ändern.
+
+Das Fenster "Neuer Ursprungskode" ist im Menü "\k(Datei)" aller
+Fenster verfügbar, die einen \k(Arbeitsausschnitt Ursprung) enthalten. Sie rufen
+es auf, indem Sie im Menü "\k(Datei)" auf "Neuer Ursprungskode"
+AUSWAHL klicken.
+
+^2^Verschieben
+^$1161
+\k(Schaltfläche Datei)
+Verschieben
+
+Mit dem Aufklappfenster Verschieben können Sie einen Prozeß
+oder Ablaufstrang von einem \d(Fenster-Set) zu einem anderen
+verschieben. Sollten irgendwelche Prozesse oder Ablaufstränge in
+der \k(Arbeitsausschnitt des Prozesses) ausgewählt sein, so werden diese
+verschoben, ansonsten wird der \d(aktueller Prozeß oder Ablaufstrang) verschoben.
+Ziel einer Verschiebung kann ein neues oder ein vorhandenes
+Fenster-Satz sein. Fenster-Sets sind durch eine ganzzahlige ID
+gekennzeichnet, bei 1 beginnend. Diese ID erscheint ebenfalls im Titel
+aller Fenster des Sets. Das erste Fenster hat eine implizite ID von 1.
+
+Wenn Sie die Option Ein vorhandenes Fenster-Satz wählen,
+wird in der Liste Vorhandene Fenster-Sets eine Liste
+aller vorhandenen Fenster-Sets angezeigt. Wenn Sie ein ListenObjekt
+auswählen und dann die Schaltfläche Verschieben anklicken,
+oder einfach auf dem Objekt doppelklicken, wird der Prozeß oder
+Ablaufstrang dorthin verschoben.
+
+Eine andere Weise, Prozesse oder Ablaufstränge in ein neues
+Fenster-Satz zu verschieben, besteht darin, den Prozeß oder
+Ablaufstrang in der \k(Arbeitsausschnitt des Prozesses) auszuwählen und dann auf
+\k(Neues Fensterset) im \k(Datei)-Menü zu klicken.
+Gleichfalls können Sie einen Prozeß oder Ablaufstrang vom
+Prozeßarbeitsausschnitt eines Fenster-Sets ziehen und ihn im
+Prozeßarbeitsausschnitt eines anderen Fenster-Sets ablegen.
+
+Die Option Verschieben steht im\k(Datei)-Menü jedes Fensters
+zur Verfügung, das ein \k(Arbeitsausschnitt des Prozesses) enthält. Sie wird
+aufgerufen, indem Sie im Menü \k(Datei) auf Verschieben
+AUSWÄHLEN klicken. Sie steht nicht zur Verfügung, wenn sich im
+Fenster-Satz keine Prozesse oder Ablaufstränge befinden.
+
+^2^Skript
+^$117
+\k(Schaltfläche Datei)
+Skript
+
+Mit dem Aufklappfenster "Skript" können Sie Befehle des
+Testhilfeprogramms aus einer Datei ausführen. Geben Sie den Namen der
+Datei in die Zeile "Skriptdatei" ein, oder ziehen Sie die Datei aus
+ihrem Ordner in den Desktop, und legen Sie sie auf dem Fenster
+"Skript" ab. Mit der Option "Befehlsecho" können Sie festlegen, daß
+beim Lesen der Befehle ein Echo ausgegeben wird. Die Befehle und ihre
+Ausgaben werden im \k(Arbeitsausschnitt Transkription) angezeigt.
+
+Wenn das Testhilfeprogramm ein Skript ausführt, sind nahezu alle
+anderen Testhilfebefehle nicht verfügbar. Zu den wenigen verfügbaren
+Befehlen gehören die zum Schließen von Fenstern, zum Aufrufen von
+Hilfe und zum Unterbrechen des Skripts (mittels der Schaltfläche
+\k(Unterbrechen) im Menü \k(Bearbeiten) aller Fenster, die
+eine \k(Arbeitsausschnitt Befehl) enthalten).
+
+Das Fenster "Skript" ist immer im Menü "\k(Datei)" der
+Fenster enthalten, in denen ein \k(Arbeitsausschnitt Befehl) vorhanden ist. Sie
+rufen es auf, indem Sie im Menü "\k(Datei)" auf "Skript"
+AUSWAHL klicken.
+
+^2^Verzeichnis ändern
+^$118
+\k(Schaltfläche Datei)
+Verzeichnis ändern
+
+Mit dem Aufklappfenster "Verzeichnis ändern" können Sie das aktuelle
+Arbeitsverzeichnis des Testhilfeprogramms ändern. Das aktuelle
+Arbeitsverzeichnis wird oben im Fenster angezeigt. Geben Sie den
+Pfadnamen des neuen Verzeichnisses in das Feld "Neues Verzeichnis"
+ein. Wenn Sie keinen Pfadnamen eingeben, wird das Verzeichnis
+verwendet, das in der Umgebungsvariablen HOME definiert wurde.
+
+Das Fenster "Verzeichnis ändern" ist im Menü "\k(Datei)"
+sämtlicher Fenster verfügbar, die einen \k(Arbeitsausschnitt Befehl) oder einen
+\k(Arbeitsausschnitt des Prozesses) enthalten. Es ist auch in allen Fenstern verfügbar,
+die automatisch angezeigt werden, wenn das Testhilfeprogramm
+aufgerufen wird. Der Aufruf erfolgt durch AUSWAHL Klicken auf
+"Verzeichnis ändern" im Menü "\k(Datei)".
+
+^2^Neues Fensterset
+^$119
+\k(Schaltfläche Datei)
+Neues Fensterset
+
+Wenn Sie auf die Option Neuer Fenstersatz AUSWAHL klicken, wird ein
+neuer \d(Fenster-Set) erzeugt. Damit erscheinen alle Fenster, die
+für automatische Anzeige konfiguriert sind (siehe \k(Konfiguration)).
+Wurden im \k(Arbeitsausschnitt des Prozesses) des vorhergehenden Fenstersatzes Prozesse
+oder Ablaufstränge gewählt, werden diese in den neuen Fenstersatz
+verlegt. Andernfalls bleibt der neue Fenstersatz leer.
+
+Die Option "Neuer Fenstersatz" ist im Menü "\k(Datei)"
+sämtlicher Fenster verfügbar, die einen \k(Arbeitsausschnitt des Prozesses) enthalten.
+
+^2^Fenster
+^$1110
+\k(Schaltfläche Datei)
+Fenster
+
+Wenn Sie auf die Option "Fenster" AUSWAHL klicken, erscheint ein
+Aufklappmenü mit einer Option für die einzelnen anderen Fenster im
+\d(Fenster-Set). Die Auswahl einer der Optionen im Aufklappmenü
+führt zum Öffnen des betreffenden Fensters.
+
+Wenn in der Testhilfesitzung mehr als ein Fenstersatz aktiv ist,
+enthält das Aufklappmenü auch je einen Eintrag für die anderen
+Fenstersätze. Die Einträge haben die Form "Fenstersatz ID", wobei ID
+eine Nummer ist, die auch im Kopfteil des Fensters und in den
+Menütiteln erscheint. Wenn Sie einen dieser Einträge auswählen,
+erscheinen die Fenster, die in diesem Fenstersatz für automatische
+Anzeige konfiguriert sind (siehe \k(Konfiguration)).
+
+Das Menü "Fenster" ist im Menü "\k(Datei)" jedes Fensters
+des Testhilfeprogramms verfügbar.
+
+^3^Aufklappfenster-Schaltfläche
+^$11101
+\k(Schaltfläche Datei)
+\k(Fenster)
+Aufklappfenster-Schaltfläche
+
+Die Schaltfläche "Fenster aufklappen" ist nur in der
+\d(Schaltflächenleiste) eines Fensters verfügbar. Das Etikett auf der
+Schaltfläche beschreibt das aufzuklappende Fenster. Wenn Sie auf die
+Schaltfläche AUSWAHL klicken, wird das Fenster aufgeklappt, das im
+gleichen Fenstersatz mit dieser Schaltfläche verbunden ist wie das
+Fenster, das die Schaltfläche enthält. Eine Schaltflächenleiste kann
+mehrere Schaltflächen zum Aufklappen von Fenstern enthalten.
+
+^2^Fenster schließen
+^$1111
+\k(Schaltfläche Datei)
+Fenster schließen
+
+Wenn Sie auf die Option "Fenster schließen" AUSWAHL klicken, wird das
+Fenster geschlossen. Das Fenster kann mit der Option
+\k(Fenster) im Menü "Datei" in allen anderen Fenstern des
+Fenstersatzes geschlossen werden.
+
+Ist das Fenster das einzige offene Fenster im zugehörigen
+\d(Fenster-Set), wird dieser durch Schließen des Fensters
+geschlossen. Sie können das letzte Fenster eines Fenstersatzes jedoch
+nicht schließen, wenn dieser noch Prozesse oder Ablaufstränge
+enthält..
+
+Ist das Fenster das einzige offene Fenster des Testhilfeprogramms, ist
+Fenster schließen gleichbedeutend mit \k(Beenden). Sind
+Prozesse oder Ablaufstränge noch unter der Kontrolle des
+Testhilfeprogramms, werden Sie vor Verlassen des Programms zur
+Bestätigung aufgefordert.
+
+Die Option "Fenster schließen" ist im Menü "\k(Datei)" jedes
+Fensters des Testhilfeprogramms verfügbar.
+
+^2^Beenden
+^$1112
+\k(Schaltfläche Datei)
+Beenden
+
+Wenn Sie AUSWÄHLEN auf der Option Beenden klicken, wird
+der Debugger beendet. Sollten irgendwelche Prozesse oder
+Ablaufstränge vom Debugger kontrolliert werden, werden Sie
+aufgefordert, zu bestätigen. Wenn Sie den Debugger beenden, werden
+alle kontrollierten Prozesse und Ablaufstränge abgebrochen, falls sie
+erstellt wurden (siehe \k(Erstellen)), oder losgelassen und
+ausgeführt, falls Sie erfaßt wurden (siehe \k(Prozeß erfassen) oder
+\k(Ausgabe)).
+
+Die Option Beenden steht im \k(Datei)-Menü jedes
+Debugger-Fensters zur Verfügung.
+
+^1^Schaltfläche Bearbeiten=Bearbeiten
+^$120
+Schaltfläche Bearbeiten
+
+Wenn Sie auf die Schaltfläche "Bearbeiten" MENÜ klicken, erscheint ein
+Fenster mit unterschiedlichen Optionen, die davon abhängig sind,
+welche Arbeitsausschnitte im Fenster vorhanden sind.
+
+Enthält das Fenster einen \k(Arbeitsausschnitt des Prozesses) oder einen
+\k(Arbeitsausschnitt Stapel), ist im Menü "Bearbeiten" folgende Option
+enthalten:
+
+\t\k(Aktuelles einstellen)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Symbol), sind im Menü
+"Bearbeiten" folgende Optionen vorhanden:
+
+\t\k(Exportieren)
+\t\k(Anheftfen)
+\t\k(Entheften)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Ursprung), einen
+\k(Arbeitsausschnitt Disassemblierung) oder einen \k(Arbeitsausschnitt Register), sind im Menü
+"Bearbeiten" folgende Optionen vorhanden:
+
+\t\k(Kopieren)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Ereignis), sind im Menü
+"Bearbeiten" folgende Optionen vorhanden:
+
+\t\k(Deaktivieren)
+\t\k(Aktivieren) 
+\t\k(Löschen)
+
+Enthält das Fenster schließlich einen \k(Arbeitsausschnitt Befehl), sind im
+Menü "Bearbeiten" folgende Optionen vorhanden:
+
+\t\k(Kopieren)
+\t\k(Eingabe)  
+\t\k(Unterbrechen)
+
+Die Menge der im Menü "Bearbeiten" eines gegebenen Fensters
+enthaltenen Optionen ist die Vereinigungsmenge der Optionen, die von
+den einzelnen in diesem Fenster enthaltenen Arbeitsausschnitten
+beigesteuert werden.
+
+^2^Kopieren
+^$121
+\k(Schaltfläche Bearbeiten)
+Kopieren
+
+Wenn Sie auf die Schaltfläche "Kopieren" im Menü "Bearbeiten" AUSWAHL
+klicken, wird markierter Text aus den Arbeitsausschnitten
+\k(Arbeitsausschnitt Transkription), \k(Arbeitsausschnitt Ursprung), \k(Arbeitsausschnitt Register) oder
+\k(Arbeitsausschnitt Disassemblierung) in den Zwischenspeicher kopiert. "Kopieren" kann
+erst gewählt werden, nachdem Text ausgewählt (markiert) wurde.
+
+Die Option "Kopieren" ist im Menü "Bearbeiten" aller Fenster
+vorhanden, die einen Arbeitsausschnitt des Typs \k(Arbeitsausschnitt Befehl),
+\k(Arbeitsausschnitt Ursprung), \k(Arbeitsausschnitt Disassemblierung) oder \k(Arbeitsausschnitt Register)
+enthalten.
+
+^2^Aktuelles einstellen
+^$122
+\k(Schaltfläche Bearbeiten)
+Aktuelles einstellen
+
+Mit der Option "Aktuell ..." können Sie den \d(aktueller Kontext)
+ändern. Wird ein Prozeß oder Ablaufstrang gewählt, wird das gewählte
+Objekt damit zum \d(aktueller Prozeß oder Ablaufstrang). Wird ein Stapelrahmen gewählt,
+wird er damit zum \d(aktueller Rahmen). Die Informationen in allen
+Fensters im \d(Fenster-Set) werden aktualisiert, um den neuen
+Kontext darzustellen.
+
+Die Option "Aktuell..." ist erst verfügbar, wenn ein Prozeß oder
+Ablaufstrang im \k(Arbeitsausschnitt des Prozesses) oder ein Rahmen im
+\k(Arbeitsausschnitt Stapel) gewählt wurde. Die Option ist im Menü "Bearbeiten"
+aller Fenster verfügbar, die ein \k(Arbeitsausschnitt des Prozesses) oder ein
+\k(Arbeitsausschnitt Stapel) enthalten.
+
+^2^Exportieren
+^$123
+\k(Schaltfläche Bearbeiten)
+Exportieren
+
+Mit der Menüoption "Exportieren" können Sie eine vom Testhilfeprogramm
+gepflegte, benutzerdefinierte Variable in die Umgebung exportieren.
+Die exportierten Variablen werden Teil der Umgebung, die von vom
+Testhilfeprogramm erzeugten Prozessen empfangen wird. Wenn die Werte
+der Variablen sich ändern, müssen Sie sie wieder exportieren, damit
+die neuen Werte Teil der Umgebung werden. Beachten Sie, daß die
+Variablen ohne das Präfix '$' exportiert werden.
+
+Die Option Exportieren ist nur verfügbar, wenn Sie benutzerdefinierte
+Variablen im \k(Arbeitsausschnitt Symbol) anzeigen und eine oder mehrere dieser
+Variablen ausgewählt haben. Im Aufklappfenster \k(Symbole)
+können Sie wählen, was im \k(Arbeitsausschnitt Symbol) angezeigt wird.
+
+Die Option "Exportieren" ist nur im Menü "Bearbeiten" derjenigen
+Fenster vorhanden, die ein \k(Arbeitsausschnitt Symbol) enthalten.
+
+^2^Deaktivieren
+^$124
+\k(Schaltfläche Bearbeiten)
+Deaktivieren
+
+Wenn Sie auf die Schaltfläche Deaktivieren AUSWAHL klicken, werden die
+Ereignisse deaktiviert, die in den beiden Teilen von
+\k(Arbeitsausschnitt Ereignis) (Arbeitsausschnitte Hauptereignis oder Ereignis
+bei Stopp) ausgewählt wurden. Deaktivierte Ereignisse haben keinen
+Einfluß auf die Prozesse und Ablaufstränge, auf die sie anwendbar
+sind, werden aber nicht gelöscht. Sie können mit \k(Aktivieren)
+wieder aktiviert werden.
+
+In beiden Arbeitsausschnitten können eines oder mehrere Ereignisse
+gewählt werden. Diese Option ist nicht verfügbar, wenn die
+ausgewählten Ereignisse bereits deaktiviert wurden.
+
+"Deaktivieren" ist nur im Menü "Bearbeiten" von Fenstern verfügbar,
+die einen \k(Arbeitsausschnitt Ereignis) enthalten.
+
+^2^Aktivieren
+^$125
+\k(Schaltfläche Bearbeiten)
+Aktivieren
+
+Wenn Sie auf die Schaltfläche "Aktivieren" AUSWAHL klicken, werden die
+Ereignisse aktiviert, die in den beiden Teilen von \k(Arbeitsausschnitt Ereignis)
+(Arbeitsausschnitte "Hauptereignis" oder "Ereignis bei Stopp")
+ausgewählt wurden. Eines oder mehrere \k(deaktivierte^^Deaktivieren) Ereignisse in
+beiden Arbeitsausschnitten können ausgewählt werden. Die Option ist
+nicht verfügbar, wenn die ausgewählten Ereignisse nicht deaktiviert
+wurden. Sobald ein Ereignis aktiviert wurde, wirkt es sich erneut auf
+den Prozeß oder Ablaufstrang aus, in dem es aktiviert ist.
+
+"Aktivieren" ist nur im Menü "Bearbeiten" derjenigen Fenster
+verfügbar, die einen \k(Arbeitsausschnitt Ereignis) enthalten.
+
+^2^Löschen
+^$126
+\k(Schaltfläche Bearbeiten)
+Löschen
+
+Wenn Sie auf die Schaltfläche "Löschen" AUSWAHL klicken, werden alle
+im \k(Arbeitsausschnitt Ereignis) ausgewählten Ereignisse gelöscht. Die Option
+ist nicht verfügbar, wenn Sie keine Ereignisse ausgewählt haben.
+
+"Löschen" ist nur im Menü "Bearbeiten" derjenigen Fenster verfügbar,
+die einen \k(Arbeitsausschnitt Ereignis) enthalten.
+
+^2^Eingabe
+^$127
+\k(Schaltfläche Bearbeiten)
+Eingabe
+
+Im Aufklappfenster "Eingabe" können Sie Eingaben an einen Prozeß
+senden, dessen E/A aufgezeichnet wird (siehe \k(Erstellen)).
+Geben Sie die Zeichenkette in das Feld "Eingabe" ein. Wurde die Option
+"Zeilenvorschub anfügen" eingestellt, wird am Ende der Zeichenkette
+ein Zeilenvorschubzeichen hinzugefügt. Ein Echo der Zeichenkette wird
+im \k(Arbeitsausschnitt Transkription) angezeigt.
+
+Das Fenster "Eingabe" können Sie aufklappen, indem Sie in Fenstern,
+die einen \k(Arbeitsausschnitt Befehl) enthalten, auf die Option "Eingabe" des
+Menüs "Bearbeiten" AUSWAHL klicken. Die Option ist nur verfügbar, wenn
+die E/A für den \d(aktueller Prozeß oder Ablaufstrang) aufgezeichnet wird.
+
+^2^Unterbrechen
+^$128
+\k(Schaltfläche Bearbeiten)
+Unterbrechen
+
+Wenn Sie auf die Option "Unterbrechen" AUSWAHL klicken, können Sie ein
+Skript oder einen Befehl aus dem \k(Befehlszeile) unterbrechen.
+Dies ist sinnvoll, wenn Skript oder Befehl in eine Endlosschleife
+geraten sind oder sehr viele Ausgaben erzeugen.
+
+"Unterbrechen" ist nur im Menü "Bearbeiten" von Fenstern verfügbar,
+die einen \k(Arbeitsausschnitt Befehl) enthalten.
+
+^2^Anheftfen
+^$129
+\k(Schaltfläche Bearbeiten)
+Anheftfen
+
+Die Option Beobachten ist im Menü \k(Anzeigen) aller Fenster
+verfügbar, die einen \k(Arbeitsausschnitt Symbol) enthalten. Wenn Sie auf die
+Option Beobachten AUSWAHL klicken, können Sie alle ausgewählten
+Variablen beobachten. Die Option ist nur verfügbar, wenn Sie eine oder
+mehrere noch nicht unter Beobachtung stehende Variablen im
+\k(Arbeitsausschnitt Symbol) ausgewählt haben.
+
+Eine beobachtete Variable bleibt so lange im \k(Arbeitsausschnitt Symbol), wie
+der Prozeß oder Ablaufstrang, in dem sie resident ist, der
+\d(aktueller Prozeß oder Ablaufstrang) ist oder bis die Beobachtung aufgehoben wird.
+Beobachtet werden können beliebige Benutzer-, Programm- oder
+Testvariablen. Beobachtete Variablen wandern im Laufe der
+Aktualisierungen des \k(Arbeitsausschnitt Symbol)s an den Anfang der Liste.
+Wenn eine Programmvariable den zulässigen Bereich verläßt, nimmt sie
+den Wert "??" an.
+
+^2^Entheften
+^$1210
+\k(Schaltfläche Bearbeiten)
+Entheften
+
+Die Option Nicht mehr beobachten ist im Menü \k(Anzeigen) aller
+Fenster verfügbar, die einen \k(Arbeitsausschnitt Symbol) enthalten. Wenn
+Sie auf die Option Nicht mehr beobachten klicken, können Sie alle
+ausgewählten Variablen aus der Beobachtung nehmen, die bislang
+beobachtet wurden. Diese Option ist erst verfügbar, wenn Sie eine oder
+mehrere beobachtete Variablen im \k(Arbeitsausschnitt Symbol) ausgewählt haben.
+
+Eine nicht mehr beobachtete Variable verschwindet aus dem
+\k(Arbeitsausschnitt Symbol), falls sie nicht länger zu der Liste von Symbolen
+gehört, die normalerweise in Übereinstimmung mit den Einstellungen von
+Eigenschaften in \k(Symbole) angezeigt werden.
+
+^1^Schaltfläche Ansicht=Anzeigen
+^$130
+Schaltfläche Ansicht
+
+Mit der Schaltfläche "Anzeigen" können Sie den Status der getesteten
+Ablaufstränge und Prozesse kontrollieren. Wenn Sie auf die
+Schaltfläche "Anzeigen" MENÜ klicken, erscheint ein Menü mit
+unterschiedlichen Optionen, die davon abhängen, welche
+Arbeitsausschnitte im jeweiligen Fenster vorhanden sind. Jedes Fenster
+enthält ein Menü "Anzeigen".
+
+Enthält das Fenster einen \k(Arbeitsausschnitt des Prozesses), ist im Menü "Anzeigen"
+folgende Option vorhanden:
+
+\t\k(Zuordnungstabelle)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Symbol), sind im Menü "Anzeigen"
+folgende Optionen vorhanden:
+
+\t\k(Anzeigen)
+\t\k(Erweitern) 
+\t\k(Wert anzeigen) 
+\t\k(Wert festlegen)
+\t\k(Typ anzeigen)
+\t\k(Auszug)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Ursprung), sind im Menü "Anzeigen"
+folgende Optionen vorhanden:
+
+\t\k(Zeile anzeigen)
+\t\k(Ursprungscode der Funktion anzeigen)
+\t\k(Suchen) 
+\t\k(Erweitern) 
+\t\k(Wert anzeigen) 
+\t\k(Wert festlegen) 
+\t\k(Typ anzeigen)
+
+Enthält das Fenster schließlich einen \k(Arbeitsausschnitt Disassemblierung), sind im
+Menü "Anzeigen" folgende Optionen vorhanden:
+
+\t\k(Position anzeigen)  
+\t\k(Disassemblierte Funktion anzeigen)  
+\t\k(Suchen)  
+\t\k(Wert anzeigen)  
+\t\k(Wert festlegen)  
+\t\k(Auszug)  
+\t\k(Zuordnungstabelle)
+
+Die Menge der im Menü "Anzeigen" für ein gegebenes Fenster enthaltenen
+Optionen ist die Vereinigungsmenge der Optionen, die von den einzelnen
+in dem Fenster vorhandenen Arbeitsausschnitten beigesteuert werden.
+
+^2^Erweitern
+^$131
+\k(Schaltfläche Ansicht)
+Erweitern
+
+Im Aufklappfenster Erweitern können Sie den Inhalt einer Struktur
+sehen, auf die eine Zeigervariable zeigt, eine Zeigerkette verfolgen
+oder den Inhalt einer Matrix anzeigen. Sie klappen das Fenster auf,
+indem Sie in einem Fenster, das einen der Arbeitsausschnitte
+\k(Arbeitsausschnitt Symbol) oder \k(Arbeitsausschnitt Ursprung) enthält, auf die Option
+Erweitern im Menü \k(Anzeigen) AUSWAHL klicken. Die Option
+ist erst verfügbar, wenn Sie im \k(Arbeitsausschnitt Symbol) ein Symbol oder im
+\k(Arbeitsausschnitt Ursprung) einen Ausdruck ausgewählt haben.
+
+Ist das ausgewählte Symbol ein Zeiger, wird das Feld "Ausdruck" mit
+dem Ausdruck initialisiert, der erforderlich ist, um den Zeiger zu
+dereferenzieren (bei C und C++ Programmen, wäre der entsprechende
+Ausdruck *symbol). Ist das ausgewählte Symbol kein Zeiger, wird im
+Feld "Ausdruck" der Name des Symbols angezeigt. In beiden Fälle zeigt
+das Feld "Ergebnis" den Wert des Ausdrucks an.
+
+Werden im Feld Ergebnis Struktur-, Klassen- oder Matrixmitglieder
+angezeigt, die selbst Zeiger sind, können Sie einen der Zeiger
+dereferenzieren. Dazu wählen Sie das entsprechende Mitglied im Feld
+Ergebnis aus und klicken AUSWAHL auf die Schaltfläche Erweitern.
+Die Felder Ausdruck und Ergebnis werden dann aktualisiert, um die
+aktuelle Zeigerkette anzuzeigen. (Dasselbe Ergebnis können Sie
+erreichen, indem Sie den Ausdruck in das Feld Ausdruck des
+Aufklappfensters \k(Wert anzeigen) eingeben. Die Anzahl der
+Zeiger, die Sie auf diese Weise dereferenzieren können, ist
+unbegrenzt. Allerdings können Sie folgende Zeiger nicht
+dereferenzieren: Nullzeiger (Zeiger, die einen Wert von 0 aufweisen),
+Zeiger des Typs leer * oder Zeiger ohne Informationen über den Typ,
+auf den sie zeigen. Solche Fälle treten ein, wenn bei der Kompilierung
+nur eine vorläufige Vereinbarung des Typennamens, nicht aber die
+Definition der Klasse oder Struktur erfolgte, auf die gezeigt wird.
+
+Wenn Sie eine Zeigerkette verfolgen, können Sie an jedem Punkt den Weg
+zurückverfolgen. Dazu klicken Sie AUSWAHL auf die Schaltfläche
+"Zusammenklappen". Damit gehen Sie in der Kette um ein Glied, d. h. um
+eine Stufe der Dereferenzierung, zurück. Sie können auf
+"Zusammenklappen" so oft AUSWAHL klicken, wie Sie vorher auf
+"Erweitern" AUSWAHL geklickt haben.
+
+^2^Wert anzeigen
+^$132
+\k(Schaltfläche Ansicht)
+Wert anzeigen
+
+Im Fenster "Wert anzeigen" können Sie den Wert eines Ausdrucks in der
+aktuellen Sprache sehen. Geben Sie in das Feld "Ausdruck" den Ausdruck
+ein, dessen Wert Sie berechnen möchten. Sie können auch eine Liste von
+durch Kommas getrennten Ausdrücken eingeben. Die Ausdrücke können
+Programmvariablen, eingebaute Testvariablen und benutzerdefinierte
+Variablen enthalten. Wenn Sie auf die Schaltfläche "Wert anzeigen"
+AUSWAHL klicken, werden die Werte der Ausdrücke berechnet und die
+Ergebnisse im Bereich "Ergebnisse" angezeigt. Einzelheiten dazu,
+welche Ausdrücke akzeptiert werden, entnehmen Sie dem einschlägigen
+Abschnitt zur jeweiligen Sprache.
+
+        \k(Unterstützung für die Sprache C)   
+        \k(Unterstützung für die Sprache C++)
+
+Das Aufklappfenster "Wert anzeigen" steht im Menü "Anzeigen" aller
+Fenster zur Verfügung, die Arbeitsausschnitte des Typs
+\k(Arbeitsausschnitt Symbol), \k(Arbeitsausschnitt Ursprung) oder \k(Arbeitsausschnitt Disassemblierung)
+enthalten. Wenn sie in einem dieser Arbeitsausschnitte eine Variable
+ausgewählt haben, während das Fenster "Wert anzeigen" offen ist, wird
+der Name dieser Name zur Initialisierung des Felds "Ausdruck"
+verwendet. Wenn Sie Prozesse oder Ablaufstränge im \k(Arbeitsausschnitt des Prozesses)
+ausgewählt haben, wird der Wert des Ausdrucks der Reihe nach im
+Kontext dieser Prozesse und Ablaufstränge berechnet. Haben Sie keine
+Prozesse oder Ablaufstränge ausgewählt, wird der \d(aktueller Prozeß oder Ablaufstrang)
+verwendet.
+
+Sie können das Format des Ergebnisses aus den in der Spalte "Format"
+angebotenen Formaten auswählen. Wenn Sie "Standard" wählen, druckt das
+Testhilfeprogramm das Ergebnis in einem Format, das ausgehend vom Typ
+des Ergebnisses gewählt wurde. Es gibt mehrere andere Formate wie
+"Oktal", "Dezimal" und "Zeichen". Wenn Sie "Sonstige" wählen, können
+Sie eine Formatzeichenkette vom Typ "printf(3C)" im Feld "Format
+angeben" eingeben. Sie können ein Format in dieses Feld erst eingeben,
+nachdem Sie "Sonstige" gewählt haben.
+
+Die Berechnung des Werts einer Funktion führt dazu, daß das
+Testhilfeprogramm einen Stapelrahmen für diese Funktion erzeugt und
+ausführt. Während die Funktion ausgeführt wird, sind Ereignisse des
+Testhilfeprogramms deaktiviert.
+
+Die Option \k(Erweitern) ist der Option Wert anzeigen ähnlich,
+bietet aber besondere Möglichkeiten zum Dereferenzieren von Zeigern.
+
+^2^Wert festlegen
+^$133
+\k(Schaltfläche Ansicht)
+Wert festlegen
+
+Im Aufklappfenster "Wert einstellen" können Sie eine in das
+Testhilfeprogramm eingebaute oder von ihm gewartete Benutzervariable
+einstellen oder den Wert von Ausdrücken beliebiger Sprachen berechnen.
+Dazu geben Sie einen Ausdruck der Form Variable = Ausdruck [,Ausdruck
+...] in das Feld "Ausdruck" ein. Die zulässigen Werte eines Ausdrucks
+hängen von der Variablen ab. Wenn Sie eine durch Kommas getrennte
+Liste von Zeichenketten und Benutzervariablen eingeben, werden die
+Zeichenkettenwerte dieser Ausdrücke verkettet.
+
+Sie können auch in das Feld "Ausdruck" einen beliebigen Ausdruck der
+aktuellen Sprache eingeben, obwohl dieses typischerweise für die
+Berechnung des Werts eines Zuweisungsausdrucks verwendet wird.
+Einzelheiten zu den zulässigen Ausdrücken finden Sie im Abschnitt zu
+der jeweiligen Sprache.
+
+        \k(Unterstützung für die Sprache C)   
+        \k(Unterstützung für die Sprache C++)
+
+Das Aufklappfenster "Wert einstellen" ist im Menü "Anzeigen" jedes
+Fensters verfügbar, das Arbeitsausschnitte des Typs
+\k(Arbeitsausschnitt Symbol), \k(Arbeitsausschnitt Ursprung) oder \k(Arbeitsausschnitt Disassemblierung)
+enthält. Wenn Sie in einem dieser Arbeitsausschnitte eine Variable
+ausgewählt haben, während das Fenster "Wert einstellen" offen ist,
+wird der Name dieser Variablen zur Initialisierung des Felds
+"Ausdruck" verwendet. Wenn Sie Prozesse oder Ablaufstränge im
+\k(Arbeitsausschnitt des Prozesses) ausgewählt haben, wird der Wert des Ausdrucks der
+Reihe nach im Kontext dieser Prozesse und Ablaufstränge berechnet.
+Haben Sie keine Prozesse oder Ablaufstränge ausgewählt, wird der
+\d(aktueller Prozeß oder Ablaufstrang) verwendet.
+
+^2^Typ anzeigen
+^$134
+\k(Schaltfläche Ansicht)
+Typ anzeigen
+
+Im Aufklappfenster "Typ anzeigen" können Sie den Typ eines Ausdrucks
+in der aktuellen Sprache sehen. Geben Sie den Ausdruck ins Feld
+"Ausdruck " ein. Wenn Sie auf die Schaltfläche "Typ anzeigen" AUSWAHL
+klicken, wird der Typ im Bereich "Typ" angezeigt. Einzelheiten zu den
+zulässigen Ausdrücken finden Sie im Abschnitt zu der jeweiligen
+Sprache.
+
+        \k(Unterstützung für die Sprache C)   
+        \k(Unterstützung für die Sprache C++)
+
+Sie können in das Feld "Ausdruck" auch den Namen eines Typs eingeben.
+Das Testhilfeprogramm zeigt dann die Definition des genannten Typs
+einschließlich der Mitglieder ein, falls es sich bei dem Typ um eine
+Klasse, Struktur, Vereinigung oder Enumeration handelt.
+
+Das Aufklappfenster "Typ anzeigen" steht im Menü "Anzeigen" aller
+Fenster zur Verfügung, die Arbeitsausschnitte des Typs
+\k(Arbeitsausschnitt Symbol) oder \k(Arbeitsausschnitt Ursprung) enthalten. Wenn sie in
+einem dieser Arbeitsausschnitte eine Variable ausgewählt haben,
+während das Fenster "Typ anzeigen" offen ist, wird der Name dieser
+Variablen zur Initialisierung des Felds "Ausdruck" verwendet. Wenn Sie
+Prozesse oder Ablaufstränge im \k(Arbeitsausschnitt des Prozesses) ausgewählt haben,
+wird der Typ der Reihe nach im Kontext dieser Prozesse und
+Ablaufstränge angezeigt. Haben Sie keine Prozesse oder Ablaufstränge
+ausgewählt, wird der \d(aktueller Prozeß oder Ablaufstrang) verwendet.
+
+^2^Zeile anzeigen
+^$135
+\k(Schaltfläche Ansicht)
+Zeile anzeigen
+
+Mit der Option Zeile anzeigen können Sie ein Aufklappfenster öffnen,
+in dem sie die im Arbeitsausschnitt Ursprungskode angezeigte Datei auf
+eine bestimmte Zeile bringen können. Geben Sie die Zeilennummer in das
+Feld Zeile ein. Das Fenster Zeile anzeigen klappen Sie auf, indem
+Sie in Fenstern mit dem \k(Arbeitsausschnitt Ursprung) auf die Option Zeile
+anzeigen im Menü \k(Anzeigen) AUSWAHL klicken.
+
+^2^Ursprungscode der Funktion anzeigen
+^$136
+\k(Schaltfläche Ansicht)
+Ursprungscode der Funktion anzeigen
+
+Im Aufklappfenster Ursprungskode der Funktion anzeigen können Sie den
+Ursprungskode einer im \d(aktueller Prozeß oder Ablaufstrang) enthaltenen Funktion anzeigen,
+die mit Informationen für das Testhilfeprogramm kompiliert wurde. Sie
+öffnen dieses Fenster, indem Sie in einem Fenster mit einem
+\k(Arbeitsausschnitt Ursprung) auf die Option Ursprungskode der Funktion anzeigen
+im Menü \k(Anzeigen) AUSWAHL klicken.
+
+Im Aufklappfenster werden zwei Abrollisten angezeigt. In der ersten
+Liste sind die Objekte enthalten, die den gewählten Prozeß oder den
+übergeordneten Prozeß des ausgewählten Ablaufstrangs bilden. Diese
+Objekte sind die ausführbare Datei und etwaige gemeinsam genutzte
+Bibliotheken, auf die sie sich stützt. Die zweite Liste zeigt eine
+Reihe von Funktionen. Ist die Option "Funktionen der aktuellen Datei
+anzeigen" eingestellt, wird die Abrolliste mit den Objekten ignoriert,
+und in der Funktionsliste werden nur die Funktionen angezeigt, die in
+der im Arbeitsausschnitt "Ursprungskode" aktuell angezeigten Datei
+definiert sind. Ist die Option "Funktionen des ausgewählten Objekts
+anzeigen" gesetzt, bestimmt die Auswahl in der Objektliste, welche
+Funktionen in der Funktionsliste erscheinen. Die Funktionsliste kann
+leer sein, wenn das ausgewählte Objekt keine Funktionen enthält, die
+mit Informationen für das Testhilfeprogramm kompiliert wurden.
+
+Sie können in der Funktionsliste eine Funktion auswählen. Wenn Sie auf
+die Schaltfläche "Funktion anzeigen" AUSWAHL klicken, wird diese
+Funktion im \k(Arbeitsausschnitt Ursprung) des übergeordneten Fensters angezeigt.
+Sie können die gewählte Funktion auch ziehen und auf dem
+\k(Arbeitsausschnitt Ursprung) oder dem Arbeitsbereich ablegen. Wenn Sie die
+Funktion auf dem Arbeitsbereich ablegen, wird ein neuer
+\d(Sekundäres Ursprungsfenster) geöffnet, in dem sie angezeigt wird.
+
+^2^Disassemblierte Funktion anzeigen
+^$137
+\k(Schaltfläche Ansicht)
+Disassemblierte Funktion anzeigen
+
+Im Aufklappfenster Disassemblierte Funktion anzeigen können Sie die
+ Disassemblierung einer im \d(aktueller Prozeß oder Ablaufstrang) enthaltenen Funktion
+ anzeigen. Sie öffnen dieses Fenster, indem Sie in einem Fenster mit
+ einem \k(Arbeitsausschnitt Disassemblierung) auf die Option Disassemblierte Funktion
+ anzeigen des Menüs \k(Anzeigen) AUSWAHL klicken.
+
+Im Aufklappfenster werden zwei Abrollisten angezeigt. In der ersten
+Liste sind die Objekte enthalten, die den gewählten Prozeß oder den
+übergeordneten Prozeß des ausgewählten Ablaufstrangs bilden. Diese
+Objekte sind die ausführbare Datei und etwaige gemeinsame genutzte
+Bibliotheken, auf die sie sich stützt. Die Auswahl in dieser Liste
+legt fest, welche Funktionen in der zweiten Liste angezeigt werden.
+
+Sie können eine Funktion in der Funktionsliste auswählen? Wenn Sie auf
+die Schaltfläche "Funktion anzeigen" AUSWAHL klicken, wird diese
+Funktion im Arbeitsausschnitt "Demontage" des übergeordneten
+Fensters "Demontage" angezeigt. Sie können die ausgewählte
+Funktion auch ziehen und auf dem \k(Arbeitsausschnitt Disassemblierung) ablegen.
+
+^2^Position anzeigen
+^$138
+\k(Schaltfläche Ansicht)
+Position anzeigen
+
+Mit der Option Speicheradresse anzeigen öffnen Sie ein
+Aufklappfenster, in dem Sie den \k(Arbeitsausschnitt Disassemblierung) auf eine Position
+bringen können, in der eine bestimmte Adresse angezeigt wird. Geben
+Sie die hexadezimale Adresse in das Feld Standort ein. Das Fenster
+Speicheradresse anzeigen öffnen Sie, indem Sie in einem Fenster, das
+einen \k(Arbeitsausschnitt Disassemblierung) enthält, auf die Option Speicheradresse
+anzeigen des Menüs \k(Anzeigen) AUSWAHL klicken.
+
+^2^Suchen
+^$139
+\k(Schaltfläche Ansicht)
+Suchen
+
+Im Aufklappfenster "Suchen" können Sie einen regulären Ausdruck (RA)
+des Typs "ed(1)" eingeben, der in den Arbeitsausschnitten "Ursprungscode"
+oder "Disassemblierung" gesucht wird. In das Feld "Text" geben Sie den
+Ausdruck ein, nach dem gesucht werden soll. Der Ausdruck kann eine
+beliebige Kombination folgender Objekte enthalten: 
+\t.\tÜbereinstimmung mit einem beliebigen Zeichen mit Ausnahme eines
+Zeilenvorschubs 
+\t[...] \tÜbereinstimmung mit einem der eingeschlossenen Zeichen 
+\t \t \tBereiche sind zulässig, und ^ steht für
+Negation
+\t* \tSteht für null oder mehr des vorhergehenden RA 
+\t^\tÜbereinstimmung mit einer leeren Zeichenkette am Zeilenanfang 
+\t$\tÜbereinstimmung mit einer leeren Zeichenkette am Zeilenende 
+\t{m}\tSteht für genau m Vorkommen des vorhergehenden RA 
+\t{m,} \tSteht für mindestens m Vorkommen des vorhergehenden RA 
+\t{m,n} \tSteht für m bis einschließlich n Vorkommen 
+\t(...) \tÜbereinstimmung mit demselben Objekt wie ...  
+\tZiffer \tÜbereinstimmung mit dem nten eingeklammerten RA im gleichen Ausdruck 
+\t< \tÜbereinstimmung mit leerer Zeichenkette am Anfang eines Worts 
+\t> \tÜbereinstimmung mit leerer Zeichenkette am Ende eines Worts
+
+Das Fenster Suchen öffnen Sie über das Menü \k(Anzeigen) jedes
+Fensters, das einen \k(Arbeitsausschnitt Ursprung) oder einen \k(Arbeitsausschnitt Disassemblierung)
+enthält. Ist in einem dieser Arbeitsausschnitte Text gewählt, wird
+dieser verwendet, um das Feld Text zu initialisieren. Enthält das
+übergeordnete Fenster die Arbeitsausschnitte Ursprungscode und
+ Disassemblierung, können Sie wählen, in welchem Ausschnitt gesucht
+werden soll.
+
+Sie können vorwärts oder rückwärts suchen. Wurde Text ausgewählt,
+beginnt die Suche nach bzw. vor der ausgewählten Zeichenkette.
+Andernfalls beginnt dies Suche mit der aktuellen Position des Cursors.
+
+^2^Auszug
+^$1310
+\k(Schaltfläche Ansicht)
+Auszug
+
+Im Aufklappfenster "Speicherauszug" können Sie den Inhalt des Speichers an einer
+bestimmten \k(Speicherstelle) im ausgewählten Prozeß oder
+Ablaufstrang sehen. Geben Sie die Adresse ins Feld "Standort" ein.
+
+Sie können die Anzahl der anzuzeigenden Bytes im Feld "Zählung"
+eingeben. Wenn Sie keine Zahl eingeben, zeigt das Testhilfeprogramm
+256 Bytes mit 16 Bytes pro Zeile an. Die Bytes werden im hexadezimalen
+und im ASCII-Format angezeigt.
+
+Das Aufklappfenster Dump kann aus dem Menü \k(Anzeigen) jedes
+Fensters mit einem Arbeitsausschnitt \k(Arbeitsausschnitt Symbol) oder
+\k(Arbeitsausschnitt des Prozesses) geöffnet werden. Wurde in einem dieser
+Arbeitsausschnitte eine Variable ausgewählt, wird ihr Name zur
+ Initialisierung des Felds Standort verwendet. Wenn Sie einen Prozeß
+oder Ablaufstrang im \k(Arbeitsausschnitt des Prozesses) gewählt haben, wird der Inhalt
+des Standorts in diesem Prozeß oder Ablaufstrang angezeigt. Wenn Sie
+keinen Prozeß oder Ablaufstrang ausgewählt haben, wird der
+\d(aktueller Prozeß oder Ablaufstrang) verwendet.
+
+Die Fenster \k(Wert anzeigen) und \k(Erweitern) bieten andere
+Möglichkeiten, um den Adressenraum eines Prozesses oder Ablaufstrangs
+zu untersuchen.
+
+^2^Zuordnungstabelle
+^$1311
+\k(Schaltfläche Ansicht)
+Zuordnungstabelle
+
+Im Aufklappfenster "Adressenzuordnung" wird die virtuelle
+Adressenzuordnung für den ausgewählten Prozeß bzw. den übergeordneten
+Prozeß des ausgewählten Ablaufstrangs angezeigt. Angezeigt werden
+unter anderem Start- und Endadresse, Größe und Zugriffsberechtigungen
+für die einzelnen Segmente.
+
+Das Fenster Adressenzuordnung kann aus dem Menü \k(Anzeigen)
+jedes Fensters mit einem Arbeitsausschnitt des Typs \k(Arbeitsausschnitt des Prozesses)
+oder \k(Arbeitsausschnitt Disassemblierung) geöffnet werden. Wurde im \k(Arbeitsausschnitt des Prozesses)
+ein Prozeß ausgewählt, wird die Adressenzuordnung für diesen Prozeß
+ angezeigt. Es kann jeweils nur ein Prozeß ausgewählt werden. Wurde
+ kein Prozeß ausgewählt, wird die Adressenzuordnung für den aktuellen
+Prozeß angezeigt.
+
+^1^Steuerschaltfläche=Steuerung
+^$14
+Steuerschaltfläche
+
+Mit der Schaltfläche "Steuerung" haben Sie Zugriff auf den
+Adressenraum eines kontrollierten Prozesses. Wenn Sie auf die
+Schaltfläche "Steuerung" MENÜ klicken, erscheint ein Menü mit
+unterschiedlichen Optionen abhängig von den Arbeitsausschnitten, die
+im Fenster vorhanden sind. Jedes Fenster enthält ein Menü "Steuerung"
+mit mindestens folgenden Optionen:
+
+\t\k(Ausführen)
+\t\k(Rückgabe)
+\t\k(Laufen bis)
+\t\k(Schritt- Aussage)
+\t\k(Schritt- Anweisung)
+\t\k(Nächste Aussage)
+\t\k(Nächste Anweisung)
+\t\k(Schritt)
+\t\k(Sprung)
+\t\k(Halt)
+
+Wenn das Fenster einen \k(Arbeitsausschnitt Ursprung) enthält, ist zusätzlich
+folgende Option im Menü "Steuerung" enthalten:
+
+\t\k(Ursprung animieren)
+
+Enthält das Fenster schließlich einen \k(Arbeitsausschnitt Disassemblierung), ist im Menü
+"Steuerung" zusätzlich folgende Option vorhanden:
+
+\t\k(Disassemblierung animieren)
+
+Die Menge der im Menü "Steuerung" eines gegebenen Fensters enthaltenen
+Optionen ist die Vereinigungsmenge der Standardoptionen und der
+Optionen, die von den einzelnen im Fenster enthaltenen
+Arbeitsausschnitte beigesteuert werden.
+
+^2^Ausführen
+^$141
+\k(Steuerschaltfläche)
+Ausführen
+
+Die Option Ausführen wird aktiviert, indem Sie im Menü
+\k(Steuerung) eines beliebigen Fensters auf die Schaltfläche
+Ausführen AUSWAHL klicken. Enthält das Fenster einen
+\k(Arbeitsausschnitt des Prozesses), in dem Ablaufstränge oder Prozesse gewählt wurden,
+wird mit der Option Ausführen die Ausführung der ausgewählten
+Ablaufstränge und Prozesse gestartet. Wurden keine Prozesse oder
+Ablaufstränge ausgewählt, oder wird Ausführen in einem Fenster
+aktiviert, das keinen \k(Arbeitsausschnitt des Prozesses) enthält, wird der
+ \d(aktueller Prozeß oder Ablaufstrang) gestartet. Diese Option ist erst verfügbar, wenn
+alle ausgewählten Prozesse Ablaufstränge gestoppt sind.
+
+^2^Rückgabe
+^$142
+\k(Steuerschaltfläche)
+Rückgabe
+
+Die Option Zurückkehren wird aktiviert, indem Sie im Menü
+\k(Steuerung) eines beliebigen Fensters auf die Schaltfläche
+ Zurückkehren AUSWAHL klicken. Enthält das Fenster einen
+\k(Arbeitsausschnitt des Prozesses), in dem Ablaufstränge oder Prozesse gewählt wurden,
+wird mit der Option Zurückkehren die Ausführung der ausgewählten
+Ablaufstränge und Prozesse gestartet. Wurden keine Prozesse oder
+Ablaufstränge ausgewählt, oder wird Zurückkehren in einem Fenster
+aktiviert, das keinen \k(Arbeitsausschnitt des Prozesses) enthält, wird der
+\d(aktueller Prozeß oder Ablaufstrang) gestartet. Jeder Prozeß oder Ablaufstrang, der
+gestartet wird, läuft, bis die aktuelle Funktion zurückkehrt.
+
+Beachten Sie, daß der Prozeß oder Ablaufstrang stoppen kann, ehe eine
+Rückkehr in die rufende Funktion erfolgt, wenn während der Ausführung
+ein Ereignis ausgelöst wird.
+
+Diese Option ist erst verfügbar, wenn alle ausgewählten Prozesse und
+Ablaufstränge gestoppt sind.
+
+^2^Laufen bis
+^$143
+\k(Steuerschaltfläche)
+Laufen bis
+
+Im Aufklappfenster "Ausführen bis" können Sie eine \k(Speicherstelle)
+angeben, die erreicht werden soll. Geben Sie die Adresse auf der Zeile
+"Standort" ein.
+
+Ausführen bis aktivieren Sie, indem Sie im Menü \k(Steuerung)
+eines beliebigen Fensters auf die Option Ausführen bis AUSWAHL
+klicken. Wenn Sie das Fenster Ausführen bis aus einem Fenster mit
+einem \k(Arbeitsausschnitt des Prozesses) geöffnet haben, werden die im
+\k(Arbeitsausschnitt des Prozesses) etwa ausgewählten Prozesse und Ablaufstränge
+betroffen. Andernfalls ist der \d(aktueller Prozeß oder Ablaufstrang) betroffen.
+
+Beachten Sie, daß "Ausführen bis" nicht gewährleistet, daß der Prozeß
+oder Ablaufstrang die angegebene Adresse tatsächlich erreicht. Wenn
+Ihr Programm einen unerwarteten Ausführungspfad nimmt, kann es enden
+oder die Adresse einfach übergehen. Außerdem kann der Prozeß oder
+Ablaufstrang bei Auslösung eines Ereignisses stoppen, ehe die
+angegebene Adresse erreicht wird.
+
+^2^Schritt- Aussage
+^$144
+\k(Steuerschaltfläche)
+Schritt- Aussage
+
+Wenn Sie auf die Option "Ursprungskode schrittweise" AUSWAHL klicken,
+werden die betroffenen Prozesse und Ablaufstränge schrittweise durch
+eine Ursprungskode-Anweisung (Statement) geführt. Funktionsaufrufe werden
+berücksichtigt.
+
+Enthält das Fenster einen \k(Arbeitsausschnitt des Prozesses), in dem Ablaufstränge
+oder Prozesse gewählt wurden, betrifft die Option "Ursprungskode
+schrittweise" diese Ablaufstränge und Prozesse. Wurden keine Prozesse
+oder Ablaufstränge gewählt oder wird die Option in einem Fenster
+benützt, das keinen \k(Arbeitsausschnitt des Prozesses) enthält, ist der
+\d(aktueller Prozeß oder Ablaufstrang) betroffen.
+
+Diese Option ist erst verfügbar, wenn alle ausgewählten Prozesse und
+Ablaufstränge gestoppt sind.
+
+^2^Schritt- Anweisung
+^$145
+\k(Steuerschaltfläche)
+Schritt- Anweisung
+
+Wenn Sie auf die Option "Maschinenkode schrittweise" AUSWAHL klicken,
+werden die betroffenen Prozesse und Ablaufstränge schrittweise durch
+eine Maschinenkode-Anweisung (Instruktion) geführt. Funktionsaufrufe
+werden berücksichtigt.
+
+Enthält das Fenster einen \k(Arbeitsausschnitt des Prozesses), in dem Ablaufstränge
+oder Prozesse gewählt wurden, betrifft die Option "Maschinenkode
+schrittweise" diese Ablaufstränge und Prozesse. Wurden keine Prozesse
+oder Ablaufstränge gewählt oder wird die Option in einem Fenster
+benützt, das keinen \k(Arbeitsausschnitt des Prozesses) enthält, ist der
+\d(aktueller Prozeß oder Ablaufstrang) betroffen.
+
+Diese Option ist erst verfügbar, wenn alle ausgewählten Prozesse und
+Ablaufstränge gestoppt sind.
+
+^2^Nächste Aussage
+^$146
+\k(Steuerschaltfläche)
+Nächste Aussage
+
+Wenn Sie auf die Option "Nächste Anweisung (Ursprungskode)" AUSWAHL
+klicken, werden die betroffenen Prozesse und Ablaufstränge
+schrittweise durch eine Ursprungskode-Anweisung (Statement) geführt.
+Funktionsaufrufe werden als eine einzige Anweisung behandelt. Beachten
+Sie, daß der Prozeß oder Ablaufstrang stoppen kann, wenn ein Ereignis
+ausgelöst wird, während sich Prozeß oder Ablaufstrang im aufgerufenen
+Unterprogramm befinden.
+
+Enthält das Fenster einen \k(Arbeitsausschnitt des Prozesses), in dem Ablaufstränge
+oder Prozesse gewählt wurden, betrifft die Option "Nächste Anweisung (Ursprungskode)
+" diese Ablaufstränge und Prozesse. Wurden keine Prozesse
+oder Ablaufstränge gewählt oder wird die Option in einem Fenster
+benützt, das keinen \k(Arbeitsausschnitt des Prozesses) enthält, ist der
+\d(aktueller Prozeß oder Ablaufstrang) betroffen.
+
+Diese Option ist erst verfügbar, wenn alle ausgewählten Prozesse und
+Ablaufstränge gestoppt sind.
+
+^2^Nächste Anweisung
+^$147
+\k(Steuerschaltfläche)
+Nächste Anweisung
+
+Wenn Sie auf die Option "Nächste Anweisung (Maschinenkode)" AUSWAHL
+klicken, werden die betroffenen Prozesse und Ablaufstränge
+schrittweise durch eine Maschinenkode-Anweisung (Statement) geführt.
+Funktionsaufrufe werden als eine einzige Anweisung behandelt. Beachten
+Sie, daß der Prozeß oder Ablaufstrang stoppen kann, wenn ein Ereignis
+ausgelöst wird, während sich Prozeß oder Ablaufstrang im gerufenen
+Unterprogramm befinden.
+
+Enthält das Fenster einen \k(Arbeitsausschnitt des Prozesses), in dem Ablaufstränge
+oder Prozesse gewählt wurden, betrifft die Option "Nächste Anweisung
+(Maschinenkode)" diese Ablaufstränge und Prozesse. Wurden keine
+Prozesse oder Ablaufstränge gewählt oder wird die Option in einem
+Fenster benützt, das keinen \k(Arbeitsausschnitt des Prozesses) enthält, ist der
+\d(aktueller Prozeß oder Ablaufstrang) betroffen.
+
+Diese Option ist erst verfügbar, wenn alle ausgewählten Prozesse und
+Ablaufstränge gestoppt sind.
+
+^2^Schritt
+^$148
+\k(Steuerschaltfläche)
+Schritt
+
+Mit dem Aufklappfenster Schrittsteuerung haben Sie mehr Einfluß auf
+die schrittweise Abarbeitung als bei den anderen Optionen des Menüs
+ \k(Steuerung).
+
+Mit dem ersten Satz von Optionen können Sie bestimmen, wie oft der
+Prozeß oder Ablaufstrang schrittweise abgearbeitet wird. Wenn Sie
+"Einzelschritt" wählen, erfolgt ein Schritt im Prozeß oder
+Ablaufstrang. Wählen Sie "Mehrere Schritte", müssen Sie im Feld
+"Zählung" die Anzahl der Schritte im Prozeß oder Ablaufstrang angeben.
+
+Die Optionen "Ursprungskode" und "Maschinenkode" geben die Ebene an, auf
+der die schrittweise Abarbeitung stattfindet.
+
+Mit der Option "Funktionsaufruf" legen Sie fest, ob Funktionsaufrufe
+übergangen oder berücksichtigt werden sollen.
+
+Wenn Sie das Fenster "Schrittsteuerung" aus einem Fenster aufgerufen
+haben, das einen \k(Arbeitsausschnitt des Prozesses) enthält, sind die dort etwa
+gewählten Prozesse und Ablaufstränge betroffen. Andernfalls ist der
+\d(aktueller Prozeß oder Ablaufstrang) betroffen.
+
+Die Optionen \k(Schritt- Aussage), \k(Schritt- Anweisung),
+ \k(Nächste Aussage) und \k(Nächste Anweisung) des Menüs
+\k(Steuerung) bieten einfachere Möglichkeiten für die
+schrittweise Abarbeitung eines Prozesses oder Ablaufstrangs.
+\k(Nächste Anweisung) ist zum Beispiel gleichbedeutend mit der Wahl der
+Optionen Einzelschritt, Maschinenkode und Funktionsaufruf im Fenster
+Schrittsteuerung. Darüber hinaus dienen die Schaltflächen
+\k(Ursprung animieren) und \k(Disassemblierung animieren) der kontinuierlichen
+ Schrittabarbeitung des Prozesses oder Ablaufstrangs, bis sie gestoppt
+ werden.
+
+^2^Ursprung animieren
+^$149
+\k(Steuerschaltfläche)
+Ursprung animieren
+
+Die Option Ursprungscode-Animation wird aktiviert, indem Sie im Menü
+ \k(Steuerung) eines Fensters mit einem
+ \k(Arbeitsausschnitt Ursprung) auf die Schaltfläche Ursprungscode-Animation
+ AUSWAHL klicken. Diese Option startet die schrittweise Abarbeitung
+für den \d(aktueller Prozeß oder Ablaufstrang) und setzt sie so lange fort,
+bis ein Ereignis ausgelöst wird oder Sie sie anhalten. Am unteren
+Fensterrand erscheint eine Meldung, die angibt, daß der Prozeß oder
+Ablaufstrang animiert werden. Sie stoppen die Animation, indem Sie die
+Schaltfläche \k(Halt) im Menü \k(Steuerung) wählen.
+ Abgesehen von \k(Zerstören) und \k(Eingabe)
+sind keine Aktionen mit Wirkung für den Status von Prozeß oder
+Ablaufstrang zulässig, solange die Animation läuft.
+
+Während der Animation von Prozeß oder Ablaufstrang hebt das
+Testhilfeprogramm alle jeweils ausgeführten Anweisungen im
+\k(Arbeitsausschnitt Ursprung) hervor. Alle angetroffenen Funktionsaufrufe werden
+schrittweise abgearbeitet. Informationen in anderen Fenstern werden
+nicht aktualisiert, bis die Animation gestoppt wird. Die Animation
+stoppt, wenn der Prozeß oder Ablaufstrang enden oder wenn der
+Ablaufstrang den Status "Nicht auf LWP" oder "Ausgesetzt" erreicht
+oder wenn ein Ereignis ausgelöst wird.
+
+Wenn das schrittweise Vorgehen zu schnell erfolgt, um es leicht
+nachverfolgen zu können, dann können Sie es mit der Option
+\k(Animation) im Menü \k(Eigenschaften) verlangsamen.
+
+Mit der Option Ursprungscode-Animation erhalten Sie eine schrittweise
+ Abarbeitung auf der Ebene von Ursprungscode-Anweisungen. Mit der Option
+ \k(Disassemblierung animieren) im Menü \k(Steuerung), das in allen
+ Fenstern mit einem \k(Arbeitsausschnitt Disassemblierung) enthalten ist, können Sie
+eine Animation von Prozeß oder Ablaufstrang auf der Ebene von
+Maschinencode-Anweisungen erhalten.
+
+^2^Disassemblierung animieren
+^$1410
+\k(Steuerschaltfläche)
+Disassemblierung animieren
+
+Die Option Maschinenkode-Animation wird aktiviert, indem Sie im Menü
+\k(Steuerung) eines Fensters mit einem \k(Arbeitsausschnitt Disassemblierung) auf
+die Schaltfläche Maschinenkode-Animation AUSWAHL klicken. Diese
+Option startet die schrittweise Abarbeitung für den
+\d(aktueller Prozeß oder Ablaufstrang) und setzt sie so lange fort, bis ein Ereignis
+ausgelöst wird oder Sie sie anhalten. Am unteren Fensterrand erscheint
+eine Meldung, die angibt, daß der Prozeß oder Ablaufstrang animiert
+werden. Sie stoppen die Animation, indem Sie die Schaltfläche
+\k(Halt) im Menü \k(Steuerung) wählen. Abgesehen von
+\k(Zerstören) und \k(Eingabe) sind keine Aktionen mit
+Wirkung für den Status von Prozeß oder Ablaufstrang zulässig, solange
+die Animation läuft.
+
+Während der Animation von Prozeß oder Ablaufstrang hebt das
+Testhilfeprogramm alle jeweils ausgeführten Anweisungen im
+\k(Arbeitsausschnitt Disassemblierung) hervor. Alle angetroffenen Funktionsaufrufe werden
+schrittweise abgearbeitet. Informationen in anderen Fenstern werden
+nicht aktualisiert, bis die Animation gestoppt wird. Die Animation
+stoppt, wenn der Prozeß oder Ablaufstrang enden oder wenn der
+Ablaufstrang den Status "Nicht auf LWP" oder "Ausgesetzt" erreicht
+oder wenn ein Ereignis ausgelöst wird.
+
+Wenn das schrittweise Vorgehen zu schnell erfolgt, um es leicht
+nachverfolgen zu können, dann können Sie es mit der Option
+\k(Animation) im Menü \k(Eigenschaften) verlangsamen.
+
+Mit der Option Maschinenkode-Animation erhalten Sie eine schrittweise
+ Abarbeitung auf der Ebene von Maschinenkode-Anweisungen. Mit der
+Option \k(Ursprung animieren) im Menü \k(Steuerung), das in allen
+ Fenstern mit einem \k(Arbeitsausschnitt Ursprung) enthalten ist,
+können Sie eine Animation von Prozeß oder Ablaufstrang auf der Ebene
+von Ursprungscode-Anweisungen erhalten.
+
+^2^Sprung
+^$1411
+\k(Steuerschaltfläche)
+Sprung
+
+Mit dem Aufklappfenster "Sprung" können Sie einen \k(Speicherstelle)
+festlegen, von dem an die Ausführung der betroffenen Prozesse und
+Ablaufstränge wieder aufzunehmen ist. Geben Sie die Adresse in der
+Zeile "Standort" ein.
+
+Mit dieser Option wird die Ausführung der ausgewählten Prozesse oder
+ Ablaufstränge nicht wieder aufgenommen. Die Ausführung startet nur an
+ dieser Stelle, wenn Sie das nächste Mal eine der anderen Optionen im
+Menü \k(Steuerung) auswählen.
+
+Der Standort kann eine beliebige Adresse innerhalb des Texts der
+ausgewählten Prozesse sein, doch ist mit äußerster Vorsicht
+vorzugehen. Mit "Sprung" wird nicht versucht, den Prozeß- oder
+Ablaufstrangstapel anzupassen, wenn sich die Adresse außerhalb der
+aktuellen Funktion befindet. Vorsicht ist auch geboten, in Kode
+herumzuspringen, was erhebliche Nebenwirkungen haben könnte.
+
+Wenn das Fenster einen \k(Arbeitsausschnitt des Prozesses) enthält, in dem
+Ablaufstränge oder Prozesse gewählt wurden, betrifft die Option
+"Sprung" diese. Wurden keine Prozesse oder Ablaufstränge gewählt oder
+wurde "Sprung" in einem Fenster benützt, das keinen \k(Arbeitsausschnitt des Prozesses)
+enthält, ist der \d(aktueller Prozeß oder Ablaufstrang) betroffen.
+
+Diese Option ist erst verfügbar, wenn alle ausgewählten Prozesse und
+Ablaufstränge gestoppt sind.
+
+^2^Halt
+^$1412
+\k(Steuerschaltfläche)
+Halt
+
+Wenn Sie auf die Option "Anhalten" AUSWAHL klicken, wird die
+Ausführung der betroffenen Prozesse und Ablaufstränge sofort
+ausgesetzt. Diese Option ist erst verfügbar, wenn alle ausgewählten
+Prozesse und Ablaufstränge den Status "Ausführung" oder "Schrittweise
+Abarbeitung" haben.
+
+Enthält das Fenster einen \k(Arbeitsausschnitt des Prozesses), in dem Ablaufstränge
+oder Prozesse gewählt wurden, betrifft die Option "Anhalten" diese.
+Wurden keine Prozesse oder Ablaufstränge gewählt, oder wird "Anhalten"
+in einem Fenster benutzt, das keinen \k(Arbeitsausschnitt des Prozesses) enthält, ist
+der \d(aktueller Prozeß oder Ablaufstrang) betroffen.
+
+Beachten Sie, daß die Anforderung "Anhalten" aufgrund von Latenzzeiten
+und Variationen der Task-Organisation nicht unbedingt sofort
+Auswirkungen hat.
+
+^1^Schaltfläche Ereignis=Ereignis
+^$15
+Schaltfläche Ereignis
+
+Mit der Schaltfläche "Ereignis" kann der Benutzer Ereignisse erzeugen,
+die den Kontrollfluß eines Ablaufstrangs oder Prozesses verändern.
+Wenn Sie auf die Schaltfläche "Ereignis" MENÜ klicken, erscheint ein
+Menü mit unterschiedlichen Optionen abhängig von den im Fenster
+enthaltenen Arbeitsausschnitten. Jedes Fenster enthält ein Menü
+"Ereignis", das mindestens folgende Optionen enthält:
+
+\t\k(Bei Funktion anhalten)
+\t\k(Anhalten)
+\t\k(Signal)
+\t\k(Systemaufruf)
+\t\k(Bei Stop)
+\t\k(Abbrechen)
+\t\k(Zerstören)
+\t\k(Abbrechen)
+\t\k(Signale ignorieren)
+
+Zusätzlich enthält das Menü "Ereignis" in Fenstern mit einem
+\k(Arbeitsausschnitt Symbol) folgende Option:
+
+ \t\k(Beobachtungspunkt festlegen)
+
+In Fenstern mit einem \k(Arbeitsausschnitt Ursprung) oder einem
+\k(Arbeitsausschnitt Disassemblierung) enthält das Menü "Ereignis" folgende Optionen:
+
+ \t\k(Unterbrechungsstelle festlegen)  \t\k(Unterbrechungsstelle löschen)
+
+In Fenstern mit einem \k(Arbeitsausschnitt Ereignis) schließlich enthält das Menü
+"Ereignis" folgende Option:
+
+\t\k(Ändern)
+
+Die Menge der Optionen, die im Menü "Ereignis" eines gegebenen
+Fensters enthalten sind, ist die Vereinigungsmenge der
+Standardoptionen und der Optionen, die von den einzelnen in diesem
+Fenster vorhandenen Arbeitsausschnitten beigetragen werden.
+
+^2^Unterbrechungsstelle festlegen
+^$151
+\k(Schaltfläche Ereignis)
+Unterbrechungsstelle festlegen
+
+Die Option "Unterbrechungsstelle setzen" ist verfügbar, wenn Sie im
+\k(Arbeitsausschnitt Ursprung) eine Zeile bzw. im \k(Arbeitsausschnitt Disassemblierung) eine
+Maschinenanweisung ausgewählt haben und der \d(aktueller Prozeß oder Ablaufstrang)
+gestoppt ist. Wenn Sie auf diese Option AUSWAHL klicken, wird eine
+Unterbrechungsstelle (eine Art von \d(Stopereignis)) im
+\d(aktuelles Programm) oder im \d(aktueller Prozeß oder Ablaufstrang) gesetzt. Das Ereignis
+wird durch ein Stoppzeichen auf der ausgewählten Zeile bzw.
+Maschinenanweisung markiert. Das Ereignis wird auch im
+Arbeitsausschnitt "Hauptereignis" im \k(Arbeitsausschnitt Ereignis) angezeigt.
+Sie können eine Unterbrechungsstelle auch setzen, indem Sie mit der
+AUSWÄHLEN-Taste am linken Rand der ausgewählten Zeile oder Anweisung
+doppelklicken.
+
+Wenn das Testhilfeprogramm versucht, eine Unterbrechungsstelle in
+einer Ursprungscodezeile zu setzen, erscheint eine Meldung, falls dies
+nicht möglich ist. Für die Unmöglichkeit, eine Unterbrechungsstelle zu
+setzen, kann es mehrere Gründe geben:
+
+    o Die Zeile aus dem Ursprungscode enthält nichts, das ausführbaren
+      Code erzeugen könnte. Dazu gehören Leerzeilen und Zeilen, die
+      ausschließlich Kommentare und die Vereinbarung von Variablen
+      enthalten.
+
+    o Die Zeile ist Teil einer mehrzeiligen Aussage. Sie können eine
+      Unterbrechungsstelle nur in einer Zeile einer mehrzeiligen
+      Aussage oder Bedingung setzen.
+
+    o Die Zeile ist der Anfang einer Funktionsdefinition. Die
+      Unterbrechungsstelle ist statt dessen auf die erste Aussage in
+      der Funktion zu setzen.
+
+^2^Unterbrechungsstelle löschen
+^$152
+\k(Schaltfläche Ereignis)
+Unterbrechungsstelle löschen
+
+Die Option "Unterbrechungsstelle löschen" ist verfügbar, wenn Sie eine
+Ursprungskodezeile mit einem Stoppzeichen im \k(Arbeitsausschnitt Ursprung) oder eine
+Maschinenanweisung mit einem Stoppzeichen im \k(Arbeitsausschnitt Disassemblierung)
+ausgewählt haben. Das Stoppzeichen gibt an, daß eine
+Unterbrechungsstelle (eine Art \d(Stopereignis)) in dieser Zeile
+bzw. Maschinenanweisung gesetzt wurde. Wenn Sie auf die Option
+"Unterbrechungsstelle löschen" AUSWAHL klicken, wird die
+Unterbrechungsstelle entfernt und das Ereignis gelöscht. Sie können
+eine Unterbrechungsstelle auch löschen, indem Sie mit der
+AUSWÄHLEN-Taste auf den linken Rand der Zeile mit der
+Unterbrechungsstelle doppelklicken.
+
+^2^Beobachtungspunkt festlegen
+^$153
+\k(Schaltfläche Ereignis)
+Beobachtungspunkt festlegen
+
+Die Option Überwachungspunkt setzen ist im Menü \k(Steuerung)
+der Fenster verfügbar, die einen \k(Arbeitsausschnitt Symbol) enthalten. Wenn
+Sie auf die Option Überwachungspunkt setzen AUSWAHL klicken, können
+Sie bei ausgewählten Variablen Überwachungspunkte setzen. Diese Option
+ist erst verfügbar, wenn Sie im \k(Arbeitsausschnitt Symbol) eine oder mehrere
+Programmvariablen ausgewählt haben.
+
+Ein Überwachungspunkt ist eine Art \d(Stopereignis). Damit wird das
+Testhilfeprogramm angewiesen, das Programm anzuhalten, sobald die
+Variable ihren Wert ändert. Das Testhilfeprogramm erzeugt für jede
+Variable ein eigenes Stoppereignis. Die neuen Ereignisse werden
+angezeigt und können im \k(Arbeitsausschnitt Ereignis) gelöscht oder deaktiviert
+werden.
+
+^2^Bei Funktion anhalten
+^$154
+\k(Schaltfläche Ereignis)
+Bei Funktion anhalten
+
+Im Aufklappfenster "Anhalten bei Funktion" können Sie bei einer
+Funktion eine Unterbrechungsstelle setzen. Dieses Fenster ist im Menü
+"\k(Ereignis)" aller Fenster verfügbar.
+
+Im Aufklappfenster werden zwei Abrollisten angezeigt. Die erste
+enthält die Objekte (ausführbare Datei und gemeinsam genutzte
+Bibliotheken), die den ausgewählten Prozeß bzw. den übergeordneten
+Prozeß des ausgewählten Ablaufstrangs bilden. Die Auswahl in dieser
+Liste legt fest, welche Funktionen in der zweiten Liste angezeigt
+werden.
+
+Sie können in der zweiten Liste eine Funktion auswählen, auf die Sie
+einen Unterbrechungspunkt setzen.  Das Festlegen eines
+Unterbrechungspunktes erstellt ein \d(Stopereignis).  Standardmäßig
+werden Ereignisse auf alle vom ausgewählten \k(Programm^^Prozesse und Ablaufstränge) abstammende
+Prozesse und Ablaufstränge angewendet und nicht nur auf den
+ausgewählten Prozeß oder Ablaufstrang. Wenn Sie dieses Verhalten
+ändern möchten, verwenden Sie die Option \k(Körnung) im Menü
+\k(Eigenschaften).  Wenn Sie in der \k(Arbeitsausschnitt des Prozesses) kein Programm
+ausgewählt haben, oder Sie Stop auf Funktion von einem Fenster aus
+aufrufen, das keinen Prozeßarbeitsausschnitt enthält, wird
+\d(aktuelles Programm) angenommen.  Die betroffenen Programme werden in
+der Programmzeile oben im Aufklappfenster angezeigt. Das durch
+Ausführen dieses Befehls erzeugte Ereignis wird im Arbeitsausschnitt
+Hauptereignis von \k(Arbeitsausschnitt Ereignis) angezeigt.
+
+^2^Anhalten
+^$155
+\k(Schaltfläche Ereignis)
+Anhalten
+
+Im Aufklappfenster "Stopp" können Sie ein \d(Stopereignis)
+erzeugen. Ein Stoppereignis definiert eine Bedingung im Adressenraum
+des Programms, die das Testhilfeprogramm veranlaßt, die Ausführung des
+Programms anzuhalten.
+
+Geben Sie einen \k(Stop-Ausdruck) in der Zeile "Ausdruck" ein. Das
+Testhilfeprogramm berechnet laufend den Wert des Stoppausdrucks,
+während der getestete Prozeß oder Ablaufstrang läuft. Das
+Testhilfeprogramm stoppt den Prozeß oder Ablaufstrang, wenn der
+Ausdruck wahr wird.
+
+Im Feld "Befehle" können Sie eine Aktion angeben, die vom
+Testhilfeprogramm immer dann auszuführen ist, wenn das Ereignis
+ausgelöst wird. Die Aktion sollte in einem oder mehreren Befehlen
+bestehen, die über die Befehlszeilen-Schnittstelle des
+Testhilfeprogramms verfügbar sind. Das Ergebnis der Befehlsausführung
+wird im \k(Arbeitsausschnitt Befehl) angezeigt.
+
+In das Feld "Zählung" können Sie eine Zahl eingeben, um dem
+Testhilfeprogramm mitzuteilen, daß das Ereignis so oft ausgelöst
+werden soll, ehe der Prozeß oder Ablaufstrang anzuhalten ist.
+Anschließend wird der Prozeß oder Ablaufstrang bei jedem Eintreten des
+Ereignisses angehalten.
+
+Das Aufklappfenster Stop ist über das \k(Ereignis)-Menü
+eines jeden Fensters erhältlich. Wenn Sie dieses Fenster von einem
+Fenster aus aufgeklappt haben, das ein \k(Arbeitsausschnitt des Prozesses) enthält,
+wird das neue Ereignis auf die ausgewählten \k(Programme^^Prozesse und Ablaufstränge) (falls
+vorhanden) in \k(Arbeitsausschnitt des Prozesses) angewendet.  Ansonsten wird das
+Ereignis auf \d(aktuelles Programm) oder \d(aktueller Prozeß oder Ablaufstrang) angewendet.
+
+Standardmäßig gelten Ereignisse für alle von einem Programm
+abgeleiteten Prozesse und Ablaufstränge, nicht nur für den
+ausgewählten Prozeß oder Ablaufstrang. Wenn Sie dieses Verhalten
+ändern möchten, verwenden Sie das Aufklappfenster
+\k(Körnung). Die betroffenen Programme bzw. Prozesse werden
+in der Zeile Programme oben im Aufklappfenster gelistet.
+
+Das Ereignis, das durch die Ausführung dieses Befehls erzeugt wurde,
+wird im Arbeitsausschnitt "Hauptereignis" im \k(Arbeitsausschnitt Ereignis)
+angezeigt.
+
+^3^Stop-Ausdruck
+^$1551
+\k(Schaltfläche Ereignis)
+\k(Anhalten)
+Stop-Ausdruck
+
+Stoppausdrücke sind spezielle Ausdrücke, die vom Befehl
+"\k(Anhalten)" akzeptiert werden. Ein Stoppausdruck besteht aus
+einem oder mehreren Stoppereignissen, die durch die speziellen
+Operatoren && (und) oder || (oder) verbunden sind. Diese Operatoren
+wirken assoziativ nach links, doch garantiert das Testhilfeprogramm
+nicht die Reihenfolge, in der die Operanden bewertet werden.
+Stoppereignisse können sein:
+\tadresse 
+\t( ausdruck ) 
+\t*logwert
+
+Jeder Stoppereignis-Typ beinhaltet eine Aktion, die die Wahrnehmung
+des Ereignisses durch das Testhilfeprogramm verursacht. Wenn eine
+derartige Aktion auftritt, wird der gesamte Stoppausdruck auf
+"Wahrheit" geprüft. Ist der Ausdruck wahr, wird das Ereignis auf die
+übliche Art ausgelöst (das Testhilfeprogramm informiert Sie über das
+Ereignis und führt die damit ggf. verbundenen Befehle aus).
+
+Eine \k(Speicherstelle) ist eine Adresse im Text des Prozesses oder
+Ablaufstrangs, an der das Testhilfeprogramm eine Unterbrechungsstelle
+setzen kann. Wenn der Prozeß oder Ablaufstrang die angegebene Adresse
+erreicht, nimmt das Testhilfeprogramm das Ereignis zur Kenntnis. Bei
+Adressen-Stoppereignissen, die sich auf Funktionsnamen beziehen, ist
+der Ausdruck wahr, solange die Funktion aktiv ist. Bei
+Adressen-Stoppereignissen, die für eine bestimmte Adresse oder
+Zeilennummer gelten, ist der Ausdruck nur dann wahr, wenn sich der
+Prozeß oder Ablaufstrang an dieser Adresse bzw. Zeile befindet. Ist
+die aktuelle Sprache C++, können Adressen-Stoppereignisse auch
+C++-spezifische Merkmale verwenden. Einzelheiten entnehmen Sie dem
+Abschnitt zu \k(C++-Unterstützung).
+
+"ausdruck" kann ein gültiger Ausdruck der aktuellen
+\k(Sprache) sein. Das Testhilfeprogramm nimmt das
+Stoppereignis zur Kenntnis, sobald einer der im Ausdruck verwendeten
+Identifikatoren den Wert ändert. Der gesamte Ausdruck wird dann im
+Kontext der aktuellen Sprache geprüft.
+
+"logwert" kann jeder Ausdruck der aktuellen Sprache sein, der auf der
+linken Seite einer Zuweisung in dieser Sprache gültig wäre. Das
+Testhilfeprogramm nimmt dieses Ereignis zur Kenntnis, wenn der Inhalt
+der Adresse sich ändert. Die Änderung selbst macht diese Art von
+Stoppereignis wahr.
+
+Mächtigere Stoppausdrücke können Sie erstellen, indem Sie
+Stoppereignisse mit Hilfe des speziellen Operators && (und)
+kombinieren. Um eine Funktion a zum Beispiel nur dann anzuhalten, wenn
+Funktion b aktiv ist, geben Sie im Feld Ausdruck des Aufklappfensters
+"\k(Anhalten)" den Ausdruck "stop a && b" ein. Um die
+Ausführung anzuhalten, wenn der Wert eines Ausdrucks x in der Funktion
+y wahr wird, geben Sie "stop y && (x)" ein.
+
+^3^Position=Speicherstelle
+^$1552
+\k(Schaltfläche Ereignis)
+\k(Anhalten)
+Position
+
+Die Syntax für eine Adresse sieht wie folgt aus:
+\t[Prozeß/Ablaufstrangname@][Dateiname@]Zeile \toder
+[Prozeß/Ablaufstrangname@][Dateiname@]Symbol[+-Konstante] \toder
+Adresse[+-Konstante] \toder Registername, wobei "Adresse" eine oktale
+oder hexadezimale Programmadresse und "Konstante" eine ganze
+Dezimalzahl ist.
+
+Einige Beispiele für Adressen/Standorte:
+     17 \t \tZeilennummer in der aktuellen Datei (%file)
+     foo.c@17 \tZeilennummer in einer anderen Datei
+     0x80801234 \tAdresse
+     main \t \tFunktionsname oder Etikett
+     main+3 \tdrei Bytes nach dem Etikett
+      p1@main \tFunktionsname in einem angegebenen Prozeß
+     %loc \t \taktueller Standort
+     %line \t \taktuelle Datei und Zeilennummer
+     %r0 \t \tRegister
+     %r0+80 \tRegister plus Offset
+     %pc-4 \tRegister minus Offset
+     $myvar \tbenutzerdefinierte Variable
+
+^2^Signal
+^$156
+\k(Schaltfläche Ereignis)
+Signal
+
+Mit dem Aufklappfenster Signal können Sie ein \d(Signalereignis)
+erstellen.  Ein Signalereignis gibt eine Aktion an, die jedesmal
+ausgeführt werden soll, wenn die Prozesse oder Ablaufstränge in dem
+ausgewählten \k(Programm^^Prozesse und Ablaufstränge) ein bestimmtes Signal erhalten.
+
+Sie müssen ein Ereignis nicht erzeugen, nur um den Prozeß oder
+Ablaufstrang zu stoppen, wenn er ein Signal empfängt, da das
+Testhilfeprogramm dies standardmäßig tut. Einzelheiten zum Ein- und
+Ausschalten dieser Möglichkeit finden sie unter \k(Signale ignorieren).
+
+Die Signale werden in einer Abrolliste angezeigt. Aus dieser Liste
+können Sie ein oder mehrere Signale auswählen. Die Signale in der
+Liste werden standardmäßig numerisch geordnet. Wenn Sie die Option
+"Liste nach Namen sortieren" auswählen, wird die Liste alphabetisch
+geordnet.
+
+Sie müssen im Feld "Befehle" eine Aktion eingeben, die das
+Testhilfeprogramm ausführen soll, wenn das Ereignis ausgelöst wird.
+Die Aktion sollte in einem oder mehreren Befehlen bestehen, die über
+die Befehlszeilen-Schnittstelle des Testhilfeprogramms verfügbar sind.
+Das Ergebnis der Befehlsausführung wird im \k(Arbeitsausschnitt Befehl)
+angezeigt.
+
+Das Aufklappfenster Signal ist über das \k(Ereignis)-Menü
+eines jeden Fensters erhältlich. Wenn Sie dieses Fenster von einem
+Fenster aus aufgeklappt haben, das ein \k(Arbeitsausschnitt des Prozesses) enthält,
+wird das neue Ereignis auf die ausgewählten \k(Programme^^Prozesse und Ablaufstränge) (falls
+vorhanden) in \k(Arbeitsausschnitt des Prozesses) angewendet.  Ansonsten wird das
+Ereignis auf \d(aktuelles Programm) oder \d(aktueller Prozeß oder Ablaufstrang) angewendet.
+
+Standardmäßig gelten Ereignisse für alle von einem Programm
+abgeleiteten Prozesse und Ablaufstränge, nicht nur für den
+ausgewählten Prozeß oder Ablaufstrang. Wenn Sie dieses Verhalten
+ändern möchten, verwenden Sie das Aufklappfenster
+\k(Körnung). Die betroffenen Programme bzw. Prozesse werden
+in der Zeile Programme oben im Aufklappfenster gelistet.
+
+Das durch die Ausführung dieses Befehls erzeugte Ereignis wird im
+Arbeitsausschnitt "Hauptereignis" im \k(Arbeitsausschnitt Ereignis) angezeigt.
+
+^2^Systemaufruf
+^$157
+\k(Schaltfläche Ereignis)
+Systemaufruf
+
+Mit dem Aufklappfenster Systemaufruf können Sie ein
+\d(syscall-Ereignis) erstellen. Ein Systemaufrufereignis gibt eine
+Aktion an, die jedesmal ausgeführt werden soll, wenn die Prozesse in
+einem ausgewählten \k(Programm^^Prozesse und Ablaufstränge) einen Systemaufruf betreten oder
+verlassen.
+
+Die gültigen Systemaufrufe werden in einer Abrolliste angezeigt. Aus
+dieser Liste können Sie einen oder mehrere Systemaufrufe auswählen.
+Standardmäßig sind die Systemaufrufe alphabetisch geordnet. Sie können
+die Liste nach Nummern ordnen, indem Sie die Option "Liste nach
+Nummern sortieren" auswählen. Das Testhilfeprogramm hält die
+betroffenen Prozesse und Ablaufstränge beim Einspringen in die
+und/oder Verlassen der ausgewählten Systemaufrufe an, wenn die
+Optionen "Einsprung" bzw. "Verlassen" gesetzt wurden.
+
+Im Feld "Befehle" können Sie eine Aktion angeben, die vom
+Testhilfeprogramm immer dann auszuführen ist, wenn das Ereignis
+ausgelöst wird. Die Aktion sollte in einem oder mehreren Befehlen
+bestehen, die über die Befehlszeilen-Schnittstelle des
+Testhilfeprogramms verfügbar sind. Das Ergebnis der Befehlsausführung
+wird im \k(Arbeitsausschnitt Befehl) angezeigt.
+
+In das Feld "Zählung" können Sie eine Zahl eingeben, um dem
+Testhilfeprogramm mitzuteilen, daß das Ereignis so oft ausgelöst
+werden soll, ehe der Prozeß oder Ablaufstrang anzuhalten ist.
+Anschließend wird der Prozeß oder Ablaufstrang bei jedem Eintreten des
+Ereignisses angehalten.
+
+Das Aufklappfenster Systemaufruf ist über das \k(Ereignis)-Menü
+eines jeden Fensters erhältlich. Wenn Sie dieses Fenster von einem
+Fenster aus aufgeklappt haben, das ein \k(Arbeitsausschnitt des Prozesses) enthält,
+wird das neue Ereignis auf die ausgewählten \k(Programme^^Prozesse und Ablaufstränge) (falls
+vorhanden) in \k(Arbeitsausschnitt des Prozesses) angewendet.  Ansonsten wird das
+Ereignis auf \d(aktuelles Programm) oder \d(aktueller Prozeß oder Ablaufstrang) angewendet.
+
+Standardmäßig gelten Ereignisse für alle von einem Programm
+abgeleiteten Prozesse und Ablaufstränge, nicht nur für den
+ausgewählten Prozeß oder Ablaufstrang. Wenn Sie dieses Verhalten
+ändern möchten, verwenden Sie das Aufklappfenster
+\k(Körnung). Die betroffenen Programme bzw. Prozesse werden
+in der Zeile Programme oben im Aufklappfenster gelistet.
+
+Das Ereignis, das durch die Ausführung dieses Befehls erzeugt wurde,
+wird im Arbeitsausschnitt "Hauptereignis" im \k(Arbeitsausschnitt Ereignis)
+angezeigt.
+
+^2^Bei Stop
+^$158
+\k(Schaltfläche Ereignis)
+Bei Stop
+
+Im Aufklappfenster "Bei Stopp" können Sie ein \d(Onstop-Ereignis)
+erzeugen. Ein Ereignis bei Stopp definiert eine Aktion, die
+auszuführen ist, sobald ein betroffener Prozeß oder Ablaufstrang
+stoppt. Geben Sie die Aktion in den Bereich "Befehle" ein. Die Aktion
+sollte in einem oder mehreren Befehlen bestehen, die über die
+Befehlszeilen-Schnittstelle des Testhilfeprogramms verfügbar sind.
+Immer, wenn der Prozeß oder Ablaufstrang stoppt, werden die Befehle
+ausgeführt und die Ergebnisse im \k(Arbeitsausschnitt Befehl) angezeigt. Stopps
+können auch bei Einzelschritten oder für andere Testereignisse
+(\k(Signal), \k(Systemaufruf) oder \k(Anhalten))
+erfolgen.
+
+Das Aufklappfenster Bei Stopp ist über das
+\k(Ereignis)-Menü eines jeden Fensters erhältlich. Wenn Sie
+dieses Fenster von einem Fenster aus aufgeklappt haben, das ein
+\k(Arbeitsausschnitt des Prozesses) enthält, wird das neue Ereignis auf die
+ausgewählten \k(Programme^^Prozesse und Ablaufstränge) (falls vorhanden) in \k(Arbeitsausschnitt des Prozesses)
+angewendet.  Ansonsten wird das Ereignis auf \d(aktuelles Programm) oder
+\d(aktueller Prozeß oder Ablaufstrang) angewendet.
+
+Standardmäßig gelten Ereignisse für alle von einem Programm
+abgeleiteten Prozesse und Ablaufstränge, nicht nur für den
+ausgewählten Prozeß oder Ablaufstrang. Wenn Sie dieses Verhalten
+ändern möchten, verwenden Sie das Aufklappfenster
+\k(Körnung). Die betroffenen Programme, Prozesse bzw.
+Ablaufstränge werden in der Zeile Programme oben im Aufklappfenster
+gelistet.
+
+Das durch die Ausführung dieses Befehls erzeugt Ereignis wird im
+Arbeitsausschnitt "Bei Stopp" im \k(Arbeitsausschnitt Ereignis) angezeigt.
+
+^2^Abbrechen
+^$159
+\k(Schaltfläche Ereignis)
+Abbrechen
+
+Im Aufklappfenster "Signal unterdrücken" können Sie alle Signale
+unterdrücken, die vom Testhilfeprogramm empfangen werden. Wird ein
+Signal an einen Prozeß oder Ablaufstrang gesendet, wird das
+Testhilfeprogramm informiert, ehe der Prozeß oder Ablaufstrang das
+Signal empfängt. Mit "Signal unterdrücken" können Sie das Signal
+unterdrücken, so daß es den Prozeß oder Ablaufstrang nie erreicht.
+
+Im Aufklappfenster wird eine Abrolliste der für den ausgewählten
+Prozeß oder Ablaufstrang anstehenden Signale angezeigt. Signale, die
+Sie aus dieser Liste wählen, werden vom Prozeß oder Ablaufstrang nicht
+empfangen, wenn Sie ihn das nächste Mal laufen lassen.
+
+Die Signale in der Liste sind standardmäßig numerisch geordnet. Wenn
+Sie die Option "Liste nach Namen sortieren" wählen, werden die Signale
+alphabetisch geordnet.
+
+Das Aufklappfenster "Signal unterdrücken" ist im Menü
+"\k(Ereignis)" aller Fenster verfügbar. Wenn Sie das Fenster
+"Signal unterdrücken" in einem Fenster mit einem \k(Arbeitsausschnitt des Prozesses)
+öffnen, stehen die angezeigten Signale für den ausgewählten Prozeß
+oder Ablaufstrang (falls vorhanden) im \k(Arbeitsausschnitt des Prozesses) an.
+Andernfalls wird der \d(aktueller Prozeß oder Ablaufstrang) verwendet.
+
+^2^Zerstören
+^$1510
+\k(Schaltfläche Ereignis)
+Zerstören
+
+Mit der Option "Zerstören" wird das Signal SIGKILL an den betroffenen
+Prozeß gesendet. Dieses Signal kann nicht abgefangen werden und führt
+zum Ende der betroffenen Prozesse.
+
+Die Option "Zerstören" ist im Menü "\k(Ereignis)" aller Fenster
+verfügbar. Wenn Sie "Zerstören" in einem Fenster mit einem
+\k(Arbeitsausschnitt des Prozesses) gewählt haben, werden die im \k(Arbeitsausschnitt des Prozesses)
+ausgewählten Prozesse (falls vorhanden) betroffen. Wurde nichts
+ausgewählt, oder wurde "Zerstören" in einem Fenster ohne den
+Arbeitsausschnitt "Prozeß" gewählt, ist nur der aktuelle Prozeß
+betroffen.
+
+^2^Abbrechen
+^$1511
+\k(Schaltfläche Ereignis)
+Abbrechen
+
+Im Aufklappfenster "Abtöten" können Sie ein Signal an einen Prozeß
+oder Ablaufstrang senden. Im Fenster wird eine Abrolliste mit Signalen
+angezeigt, aus der Sie ein Signal auswählen können. Die Signale in der
+Liste sind standardmäßig numerisch geordnet. Mit der Option "Liste
+nach Namen sortieren" können Sie sie alphabetisch ordnen.
+
+Das Aufklappfenster "Abtöten" ist im Menü "\k(Ereignis)" aller
+Fenster verfügbar. Wenn Sie das Fenster "Abtöten" in einem Fenster mit
+einem \k(Arbeitsausschnitt des Prozesses) öffnen, wird das Signal an die dort
+ausgewählten (falls vorhanden) Prozesse and Ablaufstränge gesendet.
+Wurden alle Ablaufstränge eines Prozesses ausgewählt, werden Sie
+gefragt, ob das Signal an den übergeordneten Prozeß oder an alle
+untergeordneten Ablaufstränge gesendet werden soll. Wurde nichts
+ausgewählt oder wurde "Abtöten" in einem Fenster geöffnet, das keinen
+Arbeitsausschnitt "Prozeß" enthält, wird das Signal an den aktuellen
+Prozeß oder Ablaufstrang gesendet. Beachten Sie, daß Signale nicht an
+Ablaufstränge gesendet werden können, die sich im Status "Nicht auf
+LWP" oder "Ausgesetzt" befinden.
+
+^2^Signale ignorieren
+^$1512
+\k(Schaltfläche Ereignis)
+Signale ignorieren
+
+Standardmäßig fängt das Testhilfeprogramm die an einen Prozeß oder
+Ablaufstrang gesendeten Signale ab und meldet ihr Vorhandensein. Sie
+können die Signale dann entweder unterdrücken (mit dem Aufklappfenster
+"\k(Abbrechen)") oder den Prozeß laufen und das Signal empfangen
+lassen. Wenn Sie nicht möchten, daß das Testhilfeprogramm ein
+bestimmtes Signal abfängt, können Sie ihm mitteilen, es zu ignorieren.
+
+Im Aufklappfenster "Signale ignorieren" können Sie für die einzelnen
+Signale festlegen, welche Aktion das Testhilfeprogramm ausführen soll
+(Abfangen oder Ignorieren). Im Fenster wird eine Abrolliste der
+Signale und der aktuell gültigen Aktion für den Prozeß oder
+Ablaufstrang angezeigt. Sie können die Aktion ändern, indem Sie eines
+oder mehrere Signale in der Liste auswählen. Standardmäßig ist die
+Liste numerisch geordnet. Sie können Sie mit der Option "Liste nach
+Namen sortieren" alphabetisch ordnen. Die Liste enthält auch den Namen
+der vom Programm für die einzelnen Signale registrierten
+Signalbehandlungsroutine.
+
+Das Aufklappfenster "Signale ignorieren" ist im Menü
+"\k(Ereignis)" aller Fenster verfügbar. Wenn Sie das Fenster
+"Signale ignorieren" in einem Fenster mit einem \k(Arbeitsausschnitt des Prozesses)
+öffnen, sind die dort ausgewählten Prozesse oder Ablaufstränge (falls
+vorhanden) betroffen. Andernfalls ist der \d(aktueller Prozeß oder Ablaufstrang)
+betroffen.
+
+Die Option "Signale ignorieren" ist erst verfügbar, wenn der
+ausgewählte Prozeß oder Ablaufstrang angehalten wurde.
+
+^2^Ändern
+^$1513
+\k(Schaltfläche Ereignis)
+Ändern
+
+Die Option "Ändern" ist im Menü "\k(Ereignis)" aller Fenster
+mit einem \k(Arbeitsausschnitt Ereignis) verfügbar. Mit ihr wird ein
+Aufklappfenster geöffnet, in dem Sie ein vorhandenes Ereignis
+bearbeiten können. Die Option ist nur verfügbar, wenn Sie ein Ereignis
+im Arbeitsausschnitt "Hauptereignis" bzw. "Bei Stopp" ausgewählt
+haben. Je nach gewähltem Ereignistyp sieht das Fenster wie eines der
+Fenster "\k(Anhalten)", "\k(Signal)",
+"\k(Systemaufruf)" oder "\k(Bei Stop)" aus. Die Felder im
+Fenster werden mit den Werten des gewählten Ereignisses initialisiert.
+Sie können die Werte sämtliche Felder ändern. Am Ende werden die
+vorgenommenen Änderungen im Fenster "Ereignis" angezeigt.
+
+^1^Schaltfläche Eigenschaften=Eigenschaften
+^$16
+Schaltfläche Eigenschaften
+
+Mit der Schaltfläche "Eigenschaften " können Sie bestimmte
+Eigenschaften ändern, die mit den einzelnen Arbeitsausschnitten des
+Testhilfeprogramms verbunden sind. Wenn Sie auf die Schaltfläche
+"Eigenschaften" MENÜ klicken, erscheint ein Menü mit Optionen, die je
+nach den im Fenster vorhandenen Arbeitsausschnitten unterschiedlich
+sind.
+
+Handelt es sich bei dem Fenster um eines, das beim Aufruf des
+Testhilfeprogramms automatisch angezeigt wird, enthält das Menü
+"Eigenschaften" folgende Optionen:
+
+\t\k(Sprache)
+\t\k(Körnung)
+\t\k(Ausgabeaktion)
+\t\k(Ursprungspfad)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt des Prozesses), sind im Menü
+"Eigenschaften" folgende Optionen vorhanden:
+
+\t\k(Arbeitsausschnitte)
+\t\k(Körnung)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Stapel), ist im Menü
+"Eigenschaften" folgende Option vorhanden:
+
+\t\k(Arbeitsausschnitte)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Symbol), sind im Menü
+"Eigenschaften" folgende Optionen vorhanden:
+
+\t\k(Arbeitsausschnitte)
+\t\k(Symbole)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Befehl), sind im Menü
+"Eigenschaften" folgende Optionen vorhanden:
+
+\t\k(Ausgabeaktion)
+\t\k(Ursprungspfad) 
+\t\k(Sprache)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Ursprung),sind im Menü
+"Eigenschaften" folgende Optionen vorhanden:
+
+\t\k(Ursprungspfad) 
+\t\k(Sprache) 
+\t\k(Körnung)
+\t\k(Animation)
+
+Enthält das Fenster einen \k(Arbeitsausschnitt Disassemblierung), ist im Menü
+"Eigenschaften" folgende Option vorhanden:
+
+\t\k(Animation)
+
+Enthält das Fenster schließlich einen \k(Arbeitsausschnitt Ereignis), sind im
+Menü "Eigenschaften" folgende Optionen vorhanden:
+
+\t\k(Arbeitsausschnitte)
+\t\k(Körnung)
+
+Die Menge der im Menü "Eigenschaften" für ein gegebenes Fenster
+enthaltenen Optionen ist die Vereinigungsmenge der Optionen, die von
+den einzelnen im jeweiligen Fenster enthaltenen Arbeitsausschnitten
+beigesteuert werden.
+
+Mehrere im Menü "Eigenschaften" enthaltene Optionen können auch als X
+Window Ressourcen in einer X Windows Ressourcendatei (zum Beispiel
+.Xdefaults) oder auf der Befehlszeile des Testhilfeprogramms
+eingestellt werden. Einzelheiten finden Sie unter "\k(Individuelle Anpassung)"
+und "\k(Debugger aufrufen)".
+
+^2^Arbeitsausschnitte
+^$161
+\k(Schaltfläche Eigenschaften)
+Arbeitsausschnitte
+
+Im Aufklappfenster "Arbeitsausschnitte" können Sie wählen, ob
+bestimmte Spalten in den Arbeitsausschnitten "\k(Arbeitsausschnitt des Prozesses)",
+"\k(Arbeitsausschnitt Stapel)", "\k(Arbeitsausschnitt Symbol)" und "\k(Arbeitsausschnitt Ereignis)"
+umbrochen oder abgeschnitten werden, wenn die zugehörigen
+Informationen nicht in die Spalte passen. Standardmäßig werden die
+Informationen stets abgeschnitten.
+
+Die betroffenen Spalten sind die Befehlsspalte in \k(Arbeitsausschnitt des Prozesses),
+die Parameter- und Speicherstellenspalten in
+\k(Arbeitsausschnitt Stapel), die Spalten Name, Typ und Wert in
+\k(Arbeitsausschnitt Symbol) und die Spalten Prozesse und Befehlsliste in
+beiden Teilen von \k(Arbeitsausschnitt Ereignis).
+
+Diese Option ist stets im Menü \k(Eigenschaften) aller Fenster
+verfügbar, die einen der betroffenen Arbeitsausschnitte enthalten.
+
+^2^Symbole
+^$162
+\k(Schaltfläche Eigenschaften)
+Symbole
+
+Im Aufklappfenster "Symbole" können Sie wählen, welche Arten von
+Symbolen im "\k(Arbeitsausschnitt Symbol)" angezeigt werden sollen. Folgende
+Möglichkeiten stehen zur Wahl:
+
+ \tGlobal \tAnzeige der im aktuellen Objekt definierten globalen Symbole
+ \t\t \t(ausführbare Datei oder gemeinsam genutzte Bibliothek)
+
+\tDatei\tAnzeige der statischen Dateisymbole, die in der aktuellen
+\t\tDatei definiert sind
+
+\tLokal\tAnzeige der in der aktuellen Funktion definierten lokalen
+\t\tVariablen
+
+\tTesthilfeprogramm\tAnzeige der ins Testhilfeprogramm eingebauten
+\t\tVariablen
+
+\tBenutzer\tAnzeige der vom Testhilfeprogramm gepflegten
+\t\tBenutzervariablen
+
+Sie können eine beliebige Kombination dieser Kategorien wählen.
+Standardmäßig werden lokale Symbole angezeigt.
+
+Das Aufklappfenster Symbole ist immer verfügbar und kann im Menü
+\k(Eigenschaften) aller Fenster geöffnet werden, die einen
+\k(Arbeitsausschnitt Symbol) enthalten. Die Auswahl betrifft nur den
+übergeordneten \d(Fenster-Set).
+
+^2^Ursprungspfad
+^$163
+\k(Schaltfläche Eigenschaften)
+Ursprungspfad
+
+Im Aufklappfenster "Pfad für Ursprungsdateien" können Sie den vom
+Testhilfeprogramm für die Suche nach Ursprungsdateien verwendeten Pfad
+anzeigen.
+
+Sie können mehrere Verzeichnisse eingeben (eines pro Zeile). Sie
+können auch einen bereits vorhandenen Satz von Verzeichnissen
+bearbeiten. Die Verzeichnisse werden in der Reihenfolge ihres
+Erscheinens durchsucht.
+
+Wenn Sie die Option "Programmspezifischer Pfad" wählen, wird der
+Pfad nur für das ausgewählte \k(Programm^^Prozesse und Ablaufstränge) verwendet. Bei der Option
+"Allgemeiner Pfad" durchsucht der Debugger diese Liste nach
+Verzeichnissen für jedes Programm, wenn er die Datei nicht zuerst im
+programmspezifischen Pfad findet.
+
+Sie können das Fenster Pfad für Ursprungsdateien in jedem Fenster öffnen,
+das einen Arbeitsausschnitt des Typs \k(Eigenschaften) oder
+\k(Arbeitsausschnitt Befehl) enthält oder beim Aufruf des Testhilfeprogramms
+automatisch geöffnet wird (siehe \k(Arbeitsausschnitt Ursprung)). Dazu klicken
+Sie AUSWAHL auf die Option Pfad für Ursprungsdateien im Menü
+\k(Konfiguration) Wenn Sie das Fenster Pfad für Ursprungsdateien aus
+einem Fenster mit einem \k(Arbeitsausschnitt des Prozesses) geöffnet haben, sind die
+ausgewählten Programme (falls vorhanden) vom "programmspezifischen
+Pfad" betroffen. Andernfalls ist das aktuelle Programm betroffen.
+
+^2^Sprache
+^$164
+\k(Schaltfläche Eigenschaften)
+Sprache
+
+Mit dem Aufklappfenster "Sprache" können Sie die Standardsprache für
+die Ermittlung des Werts von Ausdrücken überschreiben. Die
+Standardsprache wird in der Zeile "Aktuelle Ursprungskodesprache"
+angezeigt. Das Testhilfeprogramm verwendet Informationen aus der
+getesteten Objektdatei, um die Standardsprache zu ermitteln. Wenn die
+Objektdatei diese Informationen nicht enthält, wird C standardmäßig
+als aktuelle Ursprungskodesprache verwendet.
+
+Wenn Sie für die überschreibende Sprache "Keine" wählen, wird die
+aktuelle Ursprungskodesprache für die Berechnung des Werts von Ausdrücken
+verwendet. Wenn Sie C oder C++ wählen, wird die gewählte zur aktuellen
+Sprache.
+
+Die aktuelle Sprache beeinflußt sowohl die Auswertung von Ausdrücken
+in den Aufklappfenstern \k(Erweitern), \k(Wert festlegen),
+\k(Wert anzeigen), \k(Typ anzeigen) und \k(Anhalten), wie
+auch in \k(Arbeitsausschnitt Befehl) eingegebene Befehle.  Einzelheiten über
+die Auswirkungen finden Sie im Abschnitt über die jeweilige Sprache:
+        \k(Unterstützung für die Sprache C)
+        \k(Unterstützung für die Sprache C++)
+
+Die Option Sprache können Sie in jedem Fenster verwenden, das einen
+Arbeitsausschnitt des Typs \k(Eigenschaften) oder
+\k(Arbeitsausschnitt Befehl) enthält oder beim Aufruf des Testhilfeprogramms
+automatisch geöffnet wird (siehe \k(Arbeitsausschnitt Ursprung)). Dazu klicken
+Sie AUSWAHL auf die Option Sprache im Menü \k(Konfiguration). Die
+Sprache ist eine globale Eigenschaft und betrifft jeden
+\d(Fenster-Set).
+
+^3^Unterstützung für die Sprache C=C-Unterstützung
+^$1641
+\k(Schaltfläche Eigenschaften)
+\k(Sprache)
+Unterstützung für die Sprache C
+
+Ist die aktuelle Sprache C, wird vom Testhilfeprogramm die Berechnung
+aller zulässigen ANSI C Ausdrücke unterstützt. Ausgenommen sind
+diejenigen mit Makroerweiterungen sowie mit Typenvereinbarungen für
+Struktur, Union oder Enumeration. Beispiel für eine Typenvereinbarung:
+\t((struct { int i; char c; } *)p)->c = 'a';
+
+^3^Unterstützung für die Sprache C++=C++-Unterstützung
+^$1642
+\k(Schaltfläche Eigenschaften)
+\k(Sprache)
+Unterstützung für die Sprache C++
+
+Der Debugger erkennt, wenn eine Objektdatei mit dem C++
+Kompilierungssystem 2.0 oder dem C++ Übersetzer
+cfront (Version 2.1 oder 3.0) kompiliert worden ist, und wird
+die aktuelle Sprache (angezeigt im Aufklappfenster
+\k(Sprache)) auf C++ einstellen. Namen erscheinen wie in der
+C++-Quelle, und nicht so wie in der Objektdatei.
+
+Ist C++ die aktuelle Sprache, akzeptiert das Testhilfeprogramm eine
+Untermenge von C++ Ausdrücken, darunter folgende:
+
+    o  alle Ausdrücke, die akzeptiert werden, wenn C die aktuelle
+       Sprache ist
+    o  Aufrufe von Mitgliederfunktionen einschließlich virtueller
+       und statischer Mitgliederfunktionen
+    o  Aufrufe von übergeladenen Funktionen
+    o  Ausdrücke, bei denen Typennamen als Typendefinitionen
+         (typedefs) verwendet werden
+    o  Ausdrücke mit übergeladenen Operatorenfunktionen
+    o  Ausdrücke, die auf Klassenmitglieder mit einem impliziten
+\t"this"-Zeiger zugreifen, wenn der Prozeß oder Ablaufstrang in einer Funktion gestoppt wurde,
+\tdie Klassenmitglied ist.
+
+Ausdrücke können in die Aufklappfenster \k(Wert festlegen),
+\k(Wert anzeigen), \k(Typ anzeigen) und \k(Anhalten) sowie
+in den \k(Arbeitsausschnitt Befehl) eingegeben werden.
+
+Im Falle eines Zeigers auf ein Basisklassenobjekt mit virtuellen
+Funktionen, in dem das Testhilfeprogramm feststellen kann, daß der Typ
+des gezeigten Objekts eine von der Basisklasse abgeleitete Klasse ist,
+zeigt das Fenster \k(Typ anzeigen) die Basisklasse und die
+abgeleitete Klasse an. Die Fenster \k(Wert anzeigen) und
+\k(Erweitern) zeigen außerdem das Objekt unter den
+Voraussetzungen des abgeleiteten Typs an.
+
+Beim Drucken des Inhalts einer Struktur werden in den Fenstern
+\k(Wert anzeigen) und \k(Erweitern) statische
+Klassenmitglieder mit der Anmerkung angezeigt, daß sie statisch sind.
+Beachten Sie, daß statische Mitglieder im \k(Arbeitsausschnitt Symbol) nicht
+angezeigt werden.
+
+Wenn Sie die Aufklappfenster "\k(Anhalten)" oder
+"\k(Bei Funktion anhalten)" verwenden, können Sie Unterbrechungsstellen bei
+folgenden Objekten setzen:
+
+    o  Klassenmitgliederfunktionen einschließlich Konstruktoren und Destruktoren
+\tund Konvertierungsfunktionen
+    o  übergeladene Operatorenfunktionen und
+    o  übergeladene Funktionen, die den kompletten Prototyp verwenden oder
+    o  übergeladene Funktionen ohne Prototypeninformationen
+\tIn diesem Fall zeigt das Testhilfeprogramm eine Liste der Funktionen an
+\tund fordert Sie auf, eine oder alle Möglichkeiten zu wählen.
+
+Ein \d(Stopereignis) kann auch auf einer spezifischen Kombination
+von Objekt und Mitgliederfunktion erzeugt werden. Dazu ist die Syntax
+"zeiger->funktion" oder "objekt.funktion" zu verwenden. Das
+Testhilfeprogramm stoppt den Prozeß oder Ablaufstrang beim Einsprung
+in die Funktion nur, wenn der "this"-Zeiger mit dem angegebenen Objekt
+übereinstimmt. Handelt es sich bei der Funktion um eine virtuelle,
+setzt das Testhilfeprogramm die Unterbrechungsstelle auf die passende
+überschreibende Funktion. Beispiele für Ausdrücke, die in das Fenster
+"\k(Anhalten)" eingegeben werden können, sind unter anderem:
+        C::f(int) 
+        C::C
+        C::~C
+        C::operator int()
+        C::operator+
+        ptr->f(char *)
+
+^2^Körnung
+^$165
+\k(Schaltfläche Eigenschaften)
+Körnung
+
+Im Aufklappfenster "Körnigkeit" können Sie das Verhalten des
+Testhilfeprogramms bezogen auf Programme, Prozesse und Ablaufstränge
+festlegen.
+
+Ein \d(Fenster-Set) hat sowohl einen \d(aktueller Prozeß oder Ablaufstrang) als auch
+einen \d(aktuelles Programm) (das aktuelle Programm ist stets das
+übergeordnete Programm des aktuellen Prozesses oder Ablaufstrangs).
+Mit welchem der beiden Sie zu einem gegebenen Zeitpunkt arbeiten,
+hängt davon ab, welche der Optionen "Nur Ablaufstrang",
+"Übergeordneter Prozeß" oder "Übergeordnetes Programm" gewählt wurde.
+Standardmäßig gelten die meisten Befehle (\k(Schritt),
+\k(Wert anzeigen) usw.) für den Ablaufstrang oder den Prozeß,
+falls der Prozeß keine Ablaufstränge hat. Dagegen gelten Befehle, die
+Ereignisse erzeugen, für das Programm. Wenn Sie Ereignisse im Programm
+und nicht im Prozeß oder Ablaufstrang setzen und wenn Sie das Programm
+neu erstellen müssen oder sich der Prozeß verzweigt, erbt der neue
+Prozeß alle Ereignisse, die im alten Prozeß definiert wurden. Wenn Sie
+ein Ereignis nur im Prozeß setzen, erben alle von diesem Prozeß
+erzeugten Ablaufstränge das Ereignis. Wenn der Prozeß sich jedoch
+verzweigt, erbt der neue Prozeß das Ereignis nicht, und das Ereignis
+verschwindet, wenn der Prozeß abstirbt. Wenn Sie ein Ereignis in einem
+bestimmten Ablaufstrang setzen, wird das Ereignis in keinem anderen
+Prozeß oder Ablaufstrang gesetzt, und das Ereignis verschwindet, wenn
+der Ablaufstrang endet. Sie können die Körnigkeit von Ereignisbefehlen
+getrennt von der Körnigkeit anderer Befehle einstellen. Die
+Einstellung der Körnigkeit für Befehle, die sich nicht auf Ereignisse
+beziehen, gilt auch für eine im \k(Arbeitsausschnitt des Prozesses) getroffene Auswahl.
+
+Folgende Befehle erzeugen Ereignisse: "\k(Anhalten)",
+"\k(Bei Funktion anhalten)", "\k(Beobachtungspunkt festlegen)", "\k(Unterbrechungsstelle festlegen)",
+"\k(Unterbrechungsstelle löschen)", "\k(Signal)", "\k(Systemaufruf)"
+und "\k(Bei Stop)".
+
+Die Option Körnigkeit rufen Sie auf, indem Sie in Fenstern, die einen
+Arbeitsausschnitt des Typs \k(Arbeitsausschnitt des Prozesses), \k(Arbeitsausschnitt Ursprung)
+oder \k(Arbeitsausschnitt Ereignis) enthalten oder die für automatische Anzeige
+beim Aufruf des Testhilfeprogramms konfiguriert sind, im Menü
+\k(Eigenschaften) auf Körnigkeit AUSWAHL klicken. (Siehe \k(Konfiguration)).
+Die gewählte
+Körnigkeit betrifft nur den übergeordneten \d(Fenster-Set).
+
+^2^Ausgabeaktion
+^$166
+\k(Schaltfläche Eigenschaften)
+Ausgabeaktion
+
+Im Aufklappfenster "Ausgabeaktion" können Sie die Aktionen festlegen,
+die das Testhilfeprogramm vornehmen soll, wenn ein Ereignis eintritt,
+ein Ablaufstrang den Status ändert oder ein kontrollierter Prozeß bzw.
+Ablaufstrang eine Ausgabe erzeugt. Das Fenster enthält drei Sätze von
+Schaltflächen, einen für Prozeß- und Benutzerereignisse, einen für
+Statusänderungen von Ablaufsträngen und einen für Prozeß-E/A.
+
+Sie haben folgende Wahlmöglichkeiten für Ereignisse und Prozeß-E/A:
+
+    o Öffnen und hochsetzen: Das Testhilfeprogramm öffnet ein Fenster
+      mit einem \k(Arbeitsausschnitt Befehl), in dem die Benachrichtigung über
+      das Ereignis oder \tProzeßausgaben im \k(Arbeitsausschnitt Transkription)
+      angezeigt werden.
+
+    o akustisches Signal
+
+    o Alarmfenster: Das Testhilfeprogramm zeigt eine Meldung an, die
+      angibt, \twas sich ereignet hat.
+
+    o Keine Aktion: Das Testhilfeprogramm macht nichts Besonderes.
+
+Standardmäßig erzeugt das Testhilfeprogramm ein akustisches Signal,
+wenn ein Ereignis eintritt, da die Benachrichtigung über das Ereignis
+auch am unteren Rand des Hauptfensters angezeigt wird.
+
+Wenn ein Prozeß, dessen Ausgabe aufgezeichnet wird (siehe
+\k(Erstellen)), Ausgabe erzeugt, ist die Standardaktion "Öffnen
+und hochsetzen" (das Testhilfeprogramm bringt den Arbeitsausschnitt
+"Befehl" nach oben, um die Ausgabe anzuzeigen). Beachten Sie, daß dies
+nicht für Prozesse gilt, deren Ausgabe nicht aufgezeichnet wird, da
+das Testhilfeprogramm nicht feststellen kann, wann diese Prozesse
+Ausgabe erzeugen.
+
+Ein Ablaufstrang kann während seiner Lebensdauer den Status ändern.
+Zum Beispiel kann ein Multiplex-Ablaufstrang aus einem
+\d(LWP) herausgenommen und später von einem anderen \d(LWP)
+wieder aufgenommen werden oder von einem anderen Ablaufstrang
+ausgesetzt und später von einem weiteren fortgesetzt werden.
+
+Folgende Aktionen zum Ändern des Ablaufstrangstatus stehen zur Wahl:
+
+    o akustisches Signal
+
+    o Stopp: Die betroffenen Ablaufstränge werden angehalten und
+      müssen ausdrücklich neu gestartet werden.
+
+Diese Aktionen sind anders als die für Ereignisse und Prozeß-E/A
+kumulativ. Das heißt, Sie können "Akustisches Signal" und "Stopp"
+gleichzeitig wählen. Standardmäßig werden beide gewählt, und in den
+verschiedenen Szenarios werden folgende Aktionen ausgeführt:
+
+    o Ein neuer Ablaufstrang wird erzeugt:  akustisches Signal, die
+      Meldung zur Erzeugung des Ablaufstrangs wird angezeigt, und der
+      erzeugende Ablaufstrang wird gestoppt und der erneut erzeugte
+      Ablaufstrang wird ebenfalls gestoppt, wenn er nicht mit der
+      Flagge THR_SUSPENDED erzeugt wurde. Andernfalls kann der
+      ausgesetzte Ablaufstrang nicht mehr laufen, bis er ausdrücklich
+      fortgesetzt wird.
+
+    o Ein Ablaufstrang verläßt den LWP: akustisches Signal. Die
+      Meldung "Nicht auf LWP" wird angezeigt.
+
+    o Ein Ablaufstrang, der nicht auf LWP ist, wird von einem LWP
+      aufgenommen: akustisches Signal, die entsprechende LWP-Nachricht
+      wird angezeigt, und der Ablaufstrang wird angehalten.
+
+    o Ein Ablaufstrang wird ausgesetzt: akustisches Signal, die
+      Nachricht "Ausgesetzt" wird angezeigt.
+
+    o Ein ausgesetzter Ablaufstrang wird fortgesetzt: akustisches
+      Signal, die Fortsetzungsmeldung wird angezeigt, der Ablaufstrang
+      wird angehalten.
+
+    o Ein Ablaufstrang endet: akustisches Signal, die Endemeldung wird
+      angezeigt.
+
+Die Option Ausgabeaktion wird gewählt, indem Sie auf sie in einem
+Fenster, das einen \k(Eigenschaften) enthält oder für automatisches
+Öffnen beim Aufruf des Testhilfeprogramms konfiguriert ist (siehe
+\k(Arbeitsausschnitt Befehl)), im Menü \k(Konfiguration) AUSWAHL klicken.
+
+^2^Animation
+^$167
+\k(Schaltfläche Eigenschaften)
+Animation
+
+Im Aufklappfenster Animation können Sie die Zeit zwischen
+Einzelschritten steuern, während der Prozeß oder Ablaufstrang animiert
+wird. Sie animieren einen Prozeß oder Ablaufstrang, indem Sie die
+Option \k(Ursprung animieren) im Menü \k(Steuerung) eines Fensters
+mit einem \k(Arbeitsausschnitt Ursprung) bzw. die Option \k(Disassemblierung animieren) im
+Menü \k(Steuerschaltfläche) eines Fensters mit einem \k(Arbeitsausschnitt Disassemblierung)
+wählen. Wenn der Prozeß oder Ablaufstrang animiert wird, führt das
+Testhilfeprogramm ihn kontinuierlich schrittweise aus und hebt die
+einzelnen Anweisungen hervor, die gerade ausgeführt werden. Erfolgt
+die schrittweise Abarbeitung zu schnell, um leicht verfolgt werden zu
+können, können Sie sie verlangsamen, indem Sie den Zeitraum zwischen
+den Schritten ändern.
+
+Im Aufklappfenster wird ein Schieberegler angezeigt, der sich in einem
+Bereich "Keine Verzögerung" bis zu einer Verzögerung von einer Sekunde
+bewegen läßt. Wenn Sie den Schieberegler zwischen den beiden
+Endpunkten positionieren, führt dies zu einer Verzögerung von einem
+Sekundenbruchteil.
+
+Beachten Sie, daß es einige Zeit dauert, bis das Testhilfeprogramm den
+nächsten Schritt des Prozesses oder Ablaufstrangs ausführt und die
+Anzeige aktualisiert. Je nach den Merkmalen Ihres Systems kann die für
+einen Schritt benötigte Zeit sogar ohne Verzögerung bemerkbar sein.
+Die Verzögerung gibt nur die Mindestdauer zwischen zwei Schritten an.
+Ist die Dauer für die Abarbeitung eines Schritts größer als die
+angegebene Verzögerung, fügt das Testhilfeprogramm keine zusätzliche
+Verzögerung hinzu.
+

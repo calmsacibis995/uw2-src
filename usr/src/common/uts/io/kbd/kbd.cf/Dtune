@@ -1,0 +1,26 @@
+%% Keyboard mapping (KBD) Parameters
+%C Keyboard mapping (KBD) Parameters
+These tunable parameters are associated with keyboard mapping.
+% KBDTIME	
+Specifies the default timer value for timeout mode.
+It is the number of clock ticks allowed before timing out.
+The value of one clock tick depends on the hardware, but is usually
+1/100 of a second. 
+A timeout value of 20 is 1/5 second at 100Hz.
+Values from 5 to 400 inclusive are allowed by the module; if the value
+set for KBDTIME is outside this range, the module forces it to
+the nearest limit.
+This value is a default;
+users can change their specific stream to use a different
+value depending on their own 
+preferences, terminal baud-rate, and typing speed.
+% NKBDU
+Specifies the maximum number of tables that can be attached by
+a single user.
+The number should be large enough to cover uncommon cases, and
+must be at least 2.
+% ZUMEM
+Specifies the maximum number of bytes that a user,
+other than a privileged user,
+can allocate for private tables (that is, the quota).
+Default is 4096.

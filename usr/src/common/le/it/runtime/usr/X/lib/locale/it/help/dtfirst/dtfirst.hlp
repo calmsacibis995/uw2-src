@@ -1,0 +1,224 @@
+#ident\t"@(#)dthelp:Admin.Tools/dtfirst.hlp     1.20"
+^*version^1
+^*title^Configurazione iniziale
+^:Cfg_iniziale
+^*width^70
+^+DesktopMgr/help.defs
+^?Configurazione iniziale
+^0^Configurazione iniziale
+^$10
+Configurazione iniziale
+
+Dopo avere installato UnixWare, è possibile personalizzare l'ambiente
+di lavoro. Segue una lista dei task che fanno parte della
+configurazione iniziale da eseguire eventualmente prima di cominciare
+ad utilizzare UnixWare. Fare clic (ovvero, premere rapidamente e
+rilasciare il pulsante sinistro del mouse) sul task evidenziato che si
+vuole eseguire.
+
+Appare uno schermo di guida con una breve descrizione del task, o una
+spiegazione del perché si deve eseguire tale task. Da questa schermata
+di guida, fare quanto segue:
+
+\to\tOttenere informazioni ed istruzioni complementari per eseguire il
+\t \ttask, sia dalla guida in linea, sia dalla documentazione stampata
+\t \tdi UnixWare.
+
+ \t\tNota: Per informazioni su come usare la guida in linea, fare clic
+ \t\tsu \k(Uso della Guida^DesktopMgr/help.hlp^Uso di Guida).
+
+\to\tRichiamare il task, se possibile.
+
+Nota: Non è necessario eseguire tutti i task di configurazione.
+Scegliere solo quelli appropriati per l'ambiente in cui si lavora. Se
+si decide di non impostare alcuni o nessun task a questo punto, si può
+tornare indietro a questo schermo di guida facendo doppio clic
+(premere e rilasciare rapidamente il pulsante sinistro del mouse)
+sull'icona Cfg_iniziale in \k(Informazioni^DesktopMgr/helpdesk.hlp^Introduzione a Informazioni.).
+
+Tuttavia, se si decide di tralasciare tutti gli altri task, si
+consiglia di eseguire il primo della lista, intitolato "Creazione dei
+dischetti di recupero di emergenza".
+
+Nota: Se si fa clic su uno degli elementi della lista che segue e poi
+si decide di tornare a questo schermo di guida, fare clic sul pulsante
+Torna Indietro nella parte superiore dello schermo.
+
+\to\t\k(Creazione dei dischetti di recupero di emergenza)
+\to\t\k(Aumento della risoluzione dello schermo)
+\to\t\k(Configurazione del sistema per la gestione di rete TCP/IP)
+\to\t\k(Configurazione del sistema per la gestione di rete a linea commutata)
+\to\t\k(Configurazione del sistema per inviare la posta agli utenti di altre reti)
+\to\t\k(Impostazione di una stampante)
+\to\t\k(Installazione delle applicazioni UNIX)
+\to\t\k(Installazione di DOS e Windows)
+\to\t\k(Configurazione del sistema per l'accesso NetWare)
+\to\t\k(Creazione dei nastri di recupero di emergenza)
+
+Dopo aver completato la configurazione per la prima volta, si
+consiglia di leggere le informazioni generali sul sistema. Fare clic
+su \k(Introduzione al Desktop UnixWare^DesktopMgr/desktop.hlp^Introduzione al Desktop UnixWare).
+
+Nota: Per ottenere una lista dei marchi citati in questo
+sistema di guida, fare clic su \k(Marchi^DesktopMgr/trademark.hlp^Marchi).
+
+
+^1^Creazione dei dischetti di recupero di emergenza
+^$20
+Creazione dei dischetti di recupero di emergenza
+
+Il dischetto di recupero di emergenza è un dischetto personalizzato
+per il proprio sistema. Se il sistema dovesse rovinarsi, il dischetto
+consente di constatare dove deve essere riparato il danno avvenuto sul
+sistema UnixWare.
+
+Per istruzioni su come creare i dischetti di recupero di emergenza,
+vedere "Recupero del sistema" nel Manuale del proprietario del
+sistema.
+
+Per creare ora un dischetto di recupero d'emergenza, fare clic su
+\s(Crea dischetto di recupero d'emergenza^/usr/X/bin/xterm -t "`gettxt dtfirst2:10 \"Crea dischetto d'emergenza\"`" -E $XWINHOME/adm/dtexec -P root su root -c "'/sbin/emergency_disk -g diskette1'").
+
+^1^Aumento della risoluzione dello schermo
+^$30
+Aumento della risoluzione dello schermo
+
+È possibile cambiare la risoluzione dello schermo per aumentare la
+quantità di informazioni visualizzate su di esso ed aumentare il
+numero di colori che il sistema utilizza nello schermo.
+
+Per ulteriori informazioni, fare clic su \k(Configurazione schermo^dtadmin/video.hlp^Configurazione Schermo).
+
+Per aumentare ora la risoluzione video, fare clic su \s(Configura display^/sbin/tfadmin gsetvideo -p || /usr/bin/gettxt dtfirst2:11 "Impossibile aumentare la risoluzione video." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Configurazione del sistema per la gestione di rete TCP/IP
+^$40
+Configurazione del sistema per la gestione di rete TCP/IP
+
+Se durante l'installazione non è stato configurato il TCP/IP
+(Transmission Control Protocol/Internet Protocol), o se non si ha un
+server bootp nell'ambiente (verificare con l'amministratore del
+sistema), configurare TCP/IP in modo da potere mandare la posta agli
+utenti di altri sistemi ed accedere alle stampanti su altri sistemi
+UNIX.
+
+È inoltre possibile configurare l'accesso al server DNS, al server
+NIS, all'instradatore di rete e così via. Tutti questi task di
+configurazione, compresa la configurazione TCP/IP, vengono eseguiti
+mediante la funzione Configurazione Internet.
+
+
+Per ulteriori informazioni, fare clic su \k(Configurazione Internet^dtadmin/inet.hlp^Configurazione Internet).
+
+Per configurare ora la rete TCP/IP, fare clic su \s(Configura TCP/IP^/sbin/tfadmin inet || /usr/bin/gettxt dtfirst2:12 "Impossibile richiamare Configurazione di rete TCP/IP." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Configurazione del sistema per la gestione di rete a linea commutata
+^$50
+Configurazione del sistema per la gestione di rete a linea commutata
+
+Se si ha bisogno di accedere ad un altro sistema attraverso la rete
+telefonica, mediante l'uso di un modem (ad esempio, se si ha bisogno
+di connettersi con il proprio ufficio, mentre si è in un altro
+distante), configurare il sistema per la gestione in rete del
+telefono.
+
+Per maggiori informazioni, fare clic su \k(Configurazione telefono^dtadmin/DialMgr.hlp^Configurazione telefono).
+
+Per configurare ora il sistema per la rete su linea
+commutata via modem, fare clic su \s(Configura rete su linea commutata^/sbin/tfadmin dialup || /usr/bin/gettxt dtfirst2:13 "Impossibile richiamare Configurazione rete su linea commutata." | /usr/X/desktop/rft/dtmsg).
+
+^1^Configurazione del sistema per inviare la posta agli utenti di altre reti
+^$60
+Configurazione del sistema per inviare la posta agli utenti di altre reti
+
+Se si desidera configurare il sistema per contattare un server di
+posta in grado di inviare posta a sistemi UNIX su altre reti, bisogna
+usare Configura posta per configurare la posta. Per ulteriori
+informazioni, fare clic su \k(Configurazione posta^Mail_Setup/Mail_Setup.hlp^Configurazione Posta).
+
+Per configurare ora la posta, fare clic su \s(Configura posta^/sbin/tfadmin Mail_Setup || /usr/bin/gettxt dtfirst2:14 "Impossibile configurare la posta." | /usr/X/desktop/rft/dtmsg).
+
+Se il sistema è un Application Server e si vuole che funga da gateway
+tra gli utenti della posta del sistema UNIX ed il servizio MHS
+(Servizio di gestione dei messaggi) NetWare, utilizzare Configurazione
+MHS per configurare la posta. Per ulteriori informazioni, fare clic su
+\k(Cfg_MHS^MHS_Setup/MHS_Setup.hlp^Configurazione MHS).
+
+Per configurare ora un gateway MHS, fare clic su
+\s(Configura gateway MHS^/sbin/tfadmin MHS_Setup || /usr/bin/gettxt dtfirst2:15 "Impossibile configurare un gateway MHS." | /usr/X/desktop/rft/dtmsg).
+
+^1^Impostazione di una stampante
+^$70
+Impostazione di una stampante
+
+Prima di poter mandare richieste di stampa ad una stampante locale
+o remota, si deve configurare l'accesso a tale stampante.
+
+Per maggiori informazioni, vedere \k(Configurazione stampante^dtadmin/Printer_Setup.hlp^Configurazione stampante).
+
+Per configurare ora una stampante, fare clic su \s(Configura stampante^/sbin/tfadmin prtsetup -o || /usr/bin/gettxt dtfirst2:16 "Impossibile configurare una stampante." | /usr/X/desktop/rft/dtmsg).
+
+^1^Installazione delle applicazioni UNIX
+^$80
+Installazione delle applicazioni UNIX
+
+È possibile installare altre applicazioni UNIX o pacchetti aggiuntivi
+nel sistema dopo l'installazione iniziale di UnixWare. Per esempio, è
+possibile installare il pacchetto ASdocs per accedere a tutto il set
+di documentazione in linea dell'Application Server UnixWare.
+
+Per ulteriori informazioni, fare clic su
+\k(Installatore delle applicazioni^dtadmin/App_Installer.hlp^Installatore applicazioni).
+
+Per installare ora un'applicazione UNIX, fare clic su \s(Installa applicazioni UNIX^/sbin/tfadmin PackageMgr || /usr/bin/gettxt dtfirst2:17 "Impossibile installare un'applicazione UNIX." | /usr/X/desktop/rft/dtmsg).
+
+Nota: È impossibile usare l'Installatore delle applicazioni per
+aggiungere applicazioni DOS o Windows. Vedere \k(Installazione di DOS e Windows).
+
+^1^Installazione di DOS e Windows
+^$90
+Installazione di DOS e Windows
+
+Se si desidera installare DOS o Windows nel sistema UnixWare, o
+un'applicazione DOS o Windows qualsiasi, si deve accedere all'ambiente
+DOS con un \d(doppio clic^doppio clic) sia sull'icona Cfg_Win
+sia sull'icona DOS.
+
+Per maggiori informazioni, vedere "Uso di DOS e Windows" nel Manuale
+dell'utente di Desktop.
+
+
+^1^Configurazione del sistema per l'accesso NetWare
+^$100
+Configurazione del sistema per l'accesso NetWare
+
+Se si ha accesso ai server NetWare, è possibile migliorare la
+connessione a NetWare riconfigurando i parametri del protocollo di
+rete IPX/SPX NetWare. Ad esempio, se il sistema ha molteplici schede
+di rete, è possibile configurarle tanto per la gestione di rete
+NetWare, quanto per l'instradamento IPX.
+
+È inoltre possibile abilitare l'opzione che consente il monitoraggio
+ed il controllo dello stato degli stack di rete IPX/SPX da un altro
+sistema.
+
+Per maggiori informazioni, vedi \k(Configurazione NetWare ^NetWare_Setup/NetWare_Setup.hlp^Configurazione NetWare).
+
+Per configurare ora l'accesso a NetWare, fare clic su
+\s(Configura accesso a NetWare^/sbin/tfadmin nwsetup || /usr/bin/gettxt dtfirst2:18 "Impossibile configurare l'accesso a NetWare."| /usr/X/desktop/rft/dtmsg).
+
+^1^Creazione dei nastri di recupero di emergenza
+^$110
+Creazione dei nastri di recupero di emergenza
+
+Dopo avere installato tutti i prodotti e le applicazioni aggiuntive,
+proteggere il sistema creando nastri di recupero di emergenza.
+
+Per istruzioni su come creare nastri di recupero di emergenza, vedere
+"Recupero del sistema" nel Manuale del proprietario del sistema.
+
+Nota: Se è stata eseguita un'installazione di upgrade, bisogna creare
+anche un nuovo backup completo del sistema. Vedi \k(Backup-Ripristino^dtadmin/backup.hlp^Backup-Ripristino).
+

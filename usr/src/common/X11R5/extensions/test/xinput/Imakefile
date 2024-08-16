@@ -1,0 +1,25 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5extensions:test/xinput/Imakefile	1.2"
+
+XCOMM $XConsortium: Imakefile,v 1.14 91/07/12 17:06:55 rws Exp $
+
+   LOCLIBS = $(XILIB) $(XLIB)
+   DEPLIBS = $(DEPXILIB) $(DEPXLIB)
+   SRCS = XTouch.c XPErrors.c XList.c XSelInput.c XSendEv.c
+
+all: xtouch xprotoerrors xlist xselinput xsendev
+
+NormalProgramTarget(xtouch,XTouch.o,$(DEPLIBS),$(LOCLIBS),NullParameter)
+NormalProgramTarget(xprotoerrors,XPErrors.o,$(DEPLIBS),$(LOCLIBS),NullParameter)
+NormalProgramTarget(xlist,XList.o,$(DEPLIBS),$(LOCLIBS),NullParameter)
+NormalProgramTarget(xselinput,XSelInput.o,$(DEPLIBS),$(LOCLIBS),NullParameter)
+NormalProgramTarget(xsendev,XSendEv.o,$(DEPLIBS),$(LOCLIBS),NullParameter)
+
+DependTarget()

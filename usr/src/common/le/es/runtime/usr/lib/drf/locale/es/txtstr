@@ -1,0 +1,236 @@
+FOOTER_HEIGHT=2
+Yes=sí
+No=no
+MiniWelcome="
+Bienvenido al modo de recuperación de emergencia.
+
+Tiene pocas utilidades disponibles para utilizar en este modo.
+Éstas son vi, fsck, cpio, dd, grep, ls etc. 
+Si su disco duro está sano, puede montar los sistemas de archivos en
+el disco duro en /mnt usando el comando mountall. Puede
+desmontarlos utilizando el comando umountall.
+
+Para salir de esta shell de recuperación de emergencia, teclee 'exit'.
+"
+DRF_NEXT_FLP="
+
+        Inserte el segundo disquete de recuperación
+
+                de emergencia y pulse INTRO.
+
+"
+DRF_HARD_MODS_WAIT="
+
+         Espere mientras se cargan los
+
+     controladores de hardware del sistema. 
+
+"
+DRF_SOFT_MODS_WAIT="
+
+         Espere mientras se cargan los
+
+     controladores de software del sistema.
+
+"
+DRF_UNMNT_MSG="
+
+        Desmontando todos los sistemas de archivos de /mnt.
+
+                     Espere, por favor.
+"
+DRF_MNT_MSG="
+
+        Montando los sistemas de archivos en el disco
+
+             duro en /mnt. Espere, por favor.
+"
+DRF_DSK_GOOD="
+        El disco duro está sano.
+
+       Pulse INTRO para continuar.
+"
+DRF_DSK_BAD="
+        El disco duro NO está sano.
+
+        Pulse INTRO para continuar.
+"
+DSK_SETUP="
+
+        Configurando el (los) disco(s) duro(s) para que
+
+            coincidan con la configuración original.
+
+"
+DSK_SETUP_ERR="
+
+      Se encontró un error mientras se configuraba
+
+                       el disco.
+
+              Pulse INTRO para continuar.
+"
+DSK_RST_ERR="
+
+          Se encontró un error mientras 
+
+             se restauraba el disco.
+
+            Pulse INTRO para continuar.
+"
+DSK_RST_MSG="
+
+         Restaurando el (los) disco(s). 
+
+         (Tardará unos minutos.)
+
+"
+RESTORE_SUCCESS="
+
+    El (los) disco(s) se ha(n) restaurado satisfactoriamente.
+
+                Pulse INTRO para continuar.
+
+"
+MAIN_TITLE="Menú de recuperación de emergencia"
+SH_PROMPT="Acceda a la shell de UnixWare"
+MNT_PROMPT="Monte los sistemas de archivos del disco duro en /mnt"
+UNMNT_PROMPT="Desmonte los sistemas de archivos montados en /mnt"
+RESTORE_PROMPT="Restaure de una cinta de recuperación de emergencia"
+REBOOT_PROMPT="Reinicie el sistema"
+DRF_SHELL="Acceda a la shell de UnixWare"
+DRF_MOUNT="Montar sistemas de archivos"
+DRF_UNMOUNT="Desmonte los sistemas de archivos"
+DRF_RESTORE="Restaure el (los) disco(s)"
+DRF_REBOOT="Reinicie"
+GENERIC_FORM_FOOTER="Pulse F1 para Ayuda."
+GENERIC_MENU_FOOTER="Use las teclas de flechas arriba/abajo e INTRO
+para seleccionar; F1 para ayuda"
+GENERIC_WAIT_FOOTER="Espere, por favor."
+GENERIC_HEADER="UnixWare 2 - Recuperación de emergencia"
+
+# For use in 'helpwin' script
+FIRST_PAGE_FOOTER="F1=Más ayuda, AvPág, ESC para salir de ayuda"
+MIDDLE_PAGE_FOOTER="F1=Más ayuda, AvPág, RePág, Esc para salir de ayuda"
+LAST_PAGE_FOOTER="F1=Más ayuda, RePág, Esc para salir de ayuda"
+ONLY_PAGE_FOOTER="F1=Más ayuda, Esc para salir de ayuda"
+MOREHELP_FOOTER="Use las teclas de flechas arriba/abajo para seleccionar
+o ESC para salir de ayuda."
+MOREHELP_TITLE="Temas de ayuda relacionados"
+
+TAPE_PROMPT="
+  Inserte la cinta en la unidad de cinta y pulse
+'INTRO' cuando esté listo.  Si tiene más de una unidad
+de cinta, asegúrese que están todas vacías excepto
+la que contiene la cinta de recuperación de emergencia.
+
+Si la cinta ya está en la unidad, pulse 'INTRO'.
+"
+TAPE_OPEN_ERROR="
+  No se ha detectado ninguna cinta en la unidad de cinta.
+Asegúrese de que la cinta está correctamente insertada en la unidad,
+el bloqueo (si lo hay) está activado y la unidad de cinta está
+encendida.
+
+             Pulse INTRO para continuar."
+TAPE_READ_ERROR="
+   No se puede leer la cinta de la unidad de cinta.
+Asegúrese de que la cinta está insertada correctamente en la unidad,
+el bloqueo (si lo hay) está activado y la unidad de cinta 
+está encendida.
+
+             Pulse INTRO para continuar."
+NEXT_TAPE_PROMPT="
+   Extraiga la cinta actual de la unidad e inserte
+
+                la cinta siguiente.
+
+           Pulse INTRO para continuar."
+#for use in Color_Console
+MONITOR_TYPE="
+En un monitor en color, esta pantalla mostrará texto en blanco sobre
+fondo azul. De otro modo, debería considerarse como un monitor en blanco
+y negro. ¿Qué tipo de monitor está conectado a su computador?
+
+"
+MONITOR_FOOTER="Utilice las teclas de flechas para seleccionar un tipo
+de monitor y pulse luego 'INTRO'."
+MONITOR_ENTRY="Elija el tipo de monitor"
+
+REBOOT_MSG="
+
+*ASEGURESE DE QUE LA UNIDAD DE ARRANQUE (DISQUETE O CD-ROM) ESTÉ VACIA*
+
+     Al pulsar 'INTRO', el sistema se cerrará y arrancará de nuevo.
+"
+SERIAL_FIELD="El número de serie : "
+SERIAL_PROMPT="Teclee el número de serie de su copia UnixWare y pulse F10"
+SERIAL_TITLE="Formato de número de serie"
+INCORRECT_SNUM="El número de serie tecleado no es correcto. Tecléelo de nuevo y pulse F10"
+SNUM_FATAL="
+
+        El número de serie no ha coincidido en el número de intentos
+        máximo permitido. La máquina rearrancará al pulsar 'INTRO'.
+"
+COLOR_PROMPT="
+
+          La Selección de tipo de monitor
+
+  UnixWare no pudo determinar si su computador está
+  equipado con un monitor en color o no (monocromo).
+
+  Para asegurarse de que puede leer todas las pantallas
+  durante la recuperación, UnixWare debe conocer el tipo
+  de monitor que posee.
+
+  En un monitor a color, esta pantalla estará escrita en
+  blanco sobre fondo azul. Si no es así, debe considerar 
+  su monitor como monocromo. ¿Qué tipo de monitor
+  utiliza su computador?
+
+ Las opciones son:
+
+ 1. Monitor a color.
+ 2. Monitor monocromo.
+
+ Teclee '1' ó '2' seguido de 'INTRO': "
+
+RETENSION_WAIT="
+        Tensando la cinta.
+
+   Esto tardará unos tres minutos. 
+"
+FLPY2_READ_ERROR_1="
+   Se produjo un error durante la lectura del segundo 
+disquete de emergencia. Compruebe que posee los
+disquetes adecuados y comience de nuevo el proceso
+de arranque desde el principio. Si no dispone del segundo 
+disquete adecuado, podrá procesar pero sus capacidades
+serán limitadas.
+
+        Pulse INTRO para continuar."
+FLPY2_READ_ERROR_2="
+   Se produjo un error durante la lectura del segundo 
+disquete de emergencia. Compruebe que posee los
+disquetes adecuados y comience de nuevo el proceso
+de arranque desde el principio. Si no dispone del segundo 
+disquete adecuado, podrá procesar pero sus capacidades
+serán limitadas.
+
+        Pulse INTRO para continuar."
+FS_MOD_LOAD_ERROR="
+   Se produjo un error durante la carga de los módulos 
+del sistema de archivos. Compruebe que posee los
+disquetes adecuados y comience de nuevo el proceso
+de arranque desde el principio. Si no dispone del segundo 
+disquete adecuado, podrá procesar pero sus capacidades
+serán limitadas.
+
+        Pulse INTRO para continuar."
+DISK_INFO_READ_MSG="
+
+     Leyendo la información relativa a la configuración 
+
+               original del (de los) disco(s) 
+
+"

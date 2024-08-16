@@ -1,0 +1,590 @@
+#ident\t"@(#)dthelp:Admin.Tools/user.hlp        1.25"
+^*version^1
+^*title^Configurazione utente
+^:Cfg_utente
+^*width^70
+^+DesktopMgr/help.defs
+^?Guida per l'icona Configurazione_utente
+^0^Configurazione utente
+^$10
+Configurazione utente
+
+Utilizzare Configurazione utente per aggiungere \k(conti^^Tipi di conti) di login
+dell'utente al sistema, rimuovere conti utente dal sistema e assegnare
+o modificare \k(permessi^^Comprensione dei permessi) a conti utente o di \k(gruppo^^Gruppi di utenti).
+
+Con Configurazione utente si può fare quanto segue:
+
+\to\t\k(Mostrare utenti e gruppi^^Visualizzazione di utenti e gruppi)
+\to\t\k(Aggiungere un nuovo utente al sistema^^Aggiunta di un nuovo utente)
+\to\t\k(Aggiungere un nuovo gruppo al sistema^^Aggiunta di un nuovo gruppo)
+\to\t\k(Cancellare un utente^^Cancellazione di un utente)
+\to\t\k(Cancellare un gruppo^^Cancellazione di un gruppo)
+\to\t\k(Assegnare permessi di configurazione^^Attribuzione dei permessi di configurazione)
+\to\t\k(Cambiare le proprietà utente^^Modifica proprietà dell'utente)
+
+Nota: Prima di iniziare ad aggiungere utenti al sistema, consultare
+\k(Gestione di molteplici utenti) per ulteriori informazioni.
+
+Vedi anche:
+\s(Creazione e gestione di conti utente^dhelp as sysag "Creating and Managing User Accounts" || helpLinkErr)
+
+^1^Visualizzazione di utenti e gruppi
+^$20
+Visualizzazione di utenti e gruppi
+
+Per mostrare utenti e gruppi, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_utente. Per default, a meno che
+  \tla vista non sia stata precedentemente modificata, appare la
+  \tfinestra "Configurazione utente: Conto utente". Essa visualizza
+  \ttutti i conti di login utente su questo sistema.
+
+3.\tCambiare la vista facendo clic su Mostra=>Riservati per
+  \tvedere i conti di login riservati, o su Mostra=>Gruppi per
+  \tvisualizzare i gruppi utente. (Per tornare a visualizzare i conti
+  \tutente basta fare clic su Mostra=>Utente).
+
+
+^1^Aggiunta di un nuovo utente
+^$30
+Aggiunta di un nuovo utente
+
+Nota: Occorre avere i \k(permessi^^Comprensione dei permessi) di proprietario del sistema
+per poter aggiungere utenti.
+
+Per aggiungere un nuovo utente al sistema, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_utente. Appare la finestra
+  \t"Configurazione utente" (a seconda dell'ultima vista selezionata,
+  \tsono visualizzati Conti utente, gruppo, or Riservato Conto s).
+
+3.\tFare clic su Conto=>Nuovo. Appare la finestra "Configurazione
+  \tutente:Aggiungi nuovo conto utente" con i seguenti campi:
+
+  \to\tID di login: - Digitare il nome che l'utente immette
+  \t \tquando fa login. Il nome dovrebbe essere di 14 caratteri
+  \t \to meno. Può essere opportuno chiedere all'utente se ha delle
+  \t \tpreferenze relative all'ID di login.
+
+  \to\tTipo: - Fare clic o su Desktop o su Nondesktop. Desktop causes
+  \t \tthe graphical user interface (GUI) to start up when the user
+  \t \tlogs in. Nondesktop gives the user the traditional UNIX system
+  \t \tshell prompt.
+
+  \to\tGestione Informazioni Utenti mediante NIS - Compare solo se il
+  \t \til sistema è configurato per \k(NIS^dtadmin/inet.hlp^Accesso a NIS).
+
+  \t \tFare clic su questa casella se l'utente è un utente NIS.
+  \t \tConfigurazione utente si ripulisce e i seguenti campi vengono
+  \t \tinattivati: Cartella home, Shell, ID dell'utente, Gruppo, e
+  \t \tCommenti.
+
+  \t \tIl sistema ricava automaticamente i valori per questi
+  \t \tcampi dal database NIS.
+
+  \to\tCommento - Aggiungere informazioni relative al nome del conto di
+  \t \tlogin. Ad esempio, se la ID di login è jmj, si potrebbe volere
+  \t \taggiungere un commento quale "John M. Jones, Sistemista."
+
+  \to\tMostra altre opzioni: - Fare clic su questa casella per far
+  \t \tapparire in più i seguenti campi:
+
+  \t \t-\tCartella Home: - Specificare il nome della cartella home. Se
+  \t \t \tnon si modifica questo campo, viene automaticamente assegnata
+  \t \t \tla directory /home/utente, dove utente è la ID di login
+  \t \t \tdell'utente.
+
+  \t \t-\tNome terminale X: - Questa opzione non è disponibile
+  \t \t \t(disattivata) se si sta configurando un utente non-Desktop.
+
+  \t \t \tSe l'utente dovrà fare il login da un'altra stazione di lavoro
+  \t \to\tda un terminale X connesso alla rete, digitare in questo campo
+  \t \t \til nome del terminale X.
+
+  \t \t \tNota: Se il nome del terminale X non viene immesso in
+  \t \t \tquesto campo, all'utente verrà richiesto il nome del terminale X
+  \t \t \togni volta che l'utente fa il login al Desktop.
+
+  \t \t-\tShell: - Specificare il tipo di interprete di riga di
+  \t \t \tcomando della shell del sistema UNIX, quale sh (shell) o ksh
+  \t \t \t(kshell). Se non si conosce il tipo di shell, non occorre
+  \t \t \tmodificare questa voce.
+
+  \t \t-\tID dell'utente: - Specificare un numero per la ID dell'utente
+  \t \t \t(UID). Si può specificare qualunque intero maggiore di 99 (le
+  \t \t \tUID 0-99 vengono assegnate solamente a conti riservati). Se
+  \t \t \tnon si assegna una UID, viene assegnato per default il
+  \t \t \tprossimo numero disponibile (unico) superiore al massimo
+  \t \t \tnumero attualmente assegnato. Ad esempio, se sono state
+  \t \t \tassegnate le UID da 100 a 105, la prossima UID sarà per
+  \t \t \tdefault il 106.
+
+  \t \t \tSe si intende assegnare gli utenti a vari computer,
+  \t \t \tè buona norma assegnare loro gli stessi numeri di UID su ogni sistema.
+  \t \t \tCiò si dimostra utile con alcuni pacchetti di gestione di rete.
+
+  \t \t \tNota: Per motivi di sicurezza, il sistema impedisce di scegliere
+  \t \t \tuna UID usata in precedenza e cancellata di recente. La UID
+  \t \t \tdeve subire un "invecchiamento" di una certa durata prima di
+  \t \t \tpoter essere riutilizzata. Per ignorare l'invecchiamento, vedi
+  \t \t \t\k(Riutilizzo di un numero di identificazione utente).
+
+  \t \t-\tGruppi: - Scegliere il gruppo al quale assegnare l'utente.
+  \t \t \tPuò essere opportuno assegnare permessi di gruppo
+  \t \t \ta diversi utenti che devono collaborare (vedere \k(Gruppi di utenti)).
+
+  \t \t-\tAmbienti locali: - Scegliere l'ambiente locale appropriato (ad
+  \t \t \tesempio Americano, Inglese, Francese, Tedesco, ecc.).
+
+  \t \t \tNota: Contrariamente alle modifiche di Ambiente locale nella
+  \t \t \tcartella \k(Preferenze^DesktopMgr/locpref.hlp^Modifica ambiente locale), che hanno effetto immediato, le modifiche
+  \t \t \ta Ambiente locale in Configurazione utente hanno effetto solo
+  \t \t \tdopo il login dell'utente. Ad esempio, se si modifica l'ambiente
+  \t \t \tlocale di un utente mentre è connesso al sistema, l'utente non
+  \t \t \tvedrà la modifica fino a quando non esegue un logout seguito da
+  \t \t \tun login.
+
+  \t \t \tInoltre, non è possibile apportare modifiche al proprio ambiente locale
+  \t \t \ttramite Configurazione utenti se si è il proprietario del sistema.
+  \t \t \tApportare i cambiamenti al proprio ambiente locale tramite \k(Preferenze^DesktopMgr/locpref.hlp^Modifica ambiente locale).
+
+4.\tFare clic su Aggiungi. Appare una finestra a comparsa con la
+  \trichiesta di confermare che si vuole aggiungere un utente.
+
+5.\tFare clic su Sì. Viene aggiunta un'icona per il nuovo conto
+  \tnella finestra "Configurazione utente".
+
+Vedi anche:
+\s(Creazione e gestione di conti utente^dhelp as sysag "Creating and Managing User Accounts" "" || helpLinkErr)
+
+^2^Gestione di molteplici utenti
+^$40
+Gestione di molteplici utenti
+
+Seguono alcuni fatti che è bene conoscere sulla gestione di utenti
+multipli sul sistema.
+
+\to\tOgni utente ha \k(permissi^^Attribuzione dei permessi di configurazione) di accesso distinti
+\t \tai file che crea. Un utente può proteggere i suoi file o condividerli
+\t \tliberamente.
+
+\to\tIl conto del proprietario ha il permesso di eseguire tutta la
+\t \tconfigurazione base del sistema disponibile sul Desktop.
+
+\to\tIl proprietario può concedere a qualunque utente il permesso di
+\t \teffettuare delle specifiche procedure di configurazione del
+\t \tsistema, o tutti i permessi del proprietario.
+
+Vedi anche:
+\s(Controllo dell'accesso al sistema e ai dati^dhelp as sysag "Creating and Managing User Accounts" "Controlling Access to the System and Data" || helpLinkErr)
+
+^2^Tipi di conti
+^$50
+Tipi di conti
+
+Il termine "conto" si riferisce al login dell'utente. I conti di login
+su un sistema sono divisi come segue:
+
+\to\tConti riservati (detti anche conti di sistema) - Usati per compiti
+\t \tamministrativi speciali sul sistema. Ad esempio,
+\t \t\d(radice) è un conto di login riservato che viene
+\t \tutilizzato per il controllo di tutto il sistema. In taluni casi
+\t \tnon si effettua il login direttamente a un conto riservato. Il
+\t \tlogin del nuucp, ad esempio, viene solo usato automaticamente
+\t \tquando file remoti vengono trasferiti attraverso la rete.
+
+\to\tConti login dell'utente - Usati sul sistema per utenti "normali".
+
+^2^Riutilizzo di un numero di identificazione utente
+^$55
+Riutilizzo di un numero di identificazione utente
+
+Per riutilizzare un numero di identificazione (UID) ancora in fase di
+"invecchiamento" (cioè, una UID vhe è stata in uso di recente e che il
+sistema tiene bloccata per motivi di sicurezza), procedere come segue
+dalla riga di comando come utente root:
+
+1.\tTipo:
+
+  \tcd /etc/security/ia
+
+2.\tModificare il file ageduid rimuovendo la voce della UID.
+
+  \tNota: Questo è un file a sola lettura. Se si sta usando "vi" per
+  \tmodificarlo, non basta usare ":wq" per scrivere e uscire. Bisogna
+  \tprima scrivere il file con un punto esclamativo (:w!), poi
+  \timmettere :q per uscire. Per ulteriori informazioni sull'uso di
+  \tvi, vedi vi(1M) nel Riferimento dei comandi.
+
+^1^Aggiunta di un nuovo gruppo
+^$60
+Aggiunta di un nuovo gruppo
+
+Nota: Occorre avere i \k(permessi^^Comprensione dei permessi) di proprietario del sistema
+per poter aggiungere gruppi.
+
+Per aggiungere un nuovo gruppo al sistema, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_utente. Appare la finestra
+  \t"Configurazione utente" (a seconda dell'ultima vista selezionata,
+  \tsono visualizzati Conti utente, gruppo, or Riservato Conto s).
+
+3.\tFare clic su Gruppo=>Nuovo. Appare la finestra "Configurazione
+  \t utente: Aggiungi nuovo gruppo" con i seguenti campi:
+
+  \to\tNome del gruppo: - Immettere il nome del nuovo gruppo.
+
+  \to\tGestire info di gruppo con NIS - Compare solo se il
+  \t \tsistema è configurato per \k(NIS^dtadmin/inet.hlp^Accesso a NIS).
+
+  \t \tFare clic su questa casella se il gruppo è un gruppo NIS.
+  \t \tConfigurazione utente scompare e il campo ID del gruppo viene
+  \t \tdisattivato.
+
+  \t \tIl sistema acquisisce automaticamente il valore per la
+  \t \tID del gruppo dal database NIS.
+
+  \to\tNumero di ID del gruppo: - Immettere il numero di ID del
+  \t \tgruppo. Se non si assegna un numero di gruppo, il sistema
+  \t \tassegna per default il primo numero di gruppo disponibile.
+
+4.\tFare clic su Aggiungi. Appare una finestra di conferma a comparsa.
+
+5.\tFare clic su Sì per aggiungere il gruppo (o su No se si cambia
+  \tidea e si decide di non aggiungere il gruppo).
+
+^2^Gruppi di utenti
+^$70
+Gruppi di utenti
+
+Si possono assegnare diversi utenti a un gruppo. Ciò consente di
+impostare i \k(permessi^^Comprensione dei permessi) di accesso in modo che certi file, cartelle e
+applicazioni siano disponibili solo per un gruppo specifico di utenti.
+
+Ci siano, ad esempio, tre persone che collaborano a uno stesso
+progetto. Si potrebbero assegnare a un gruppo detto "Progetto 1". Come
+essi creano dei file relativi al progetto, possono stabilire il
+permesso di gruppo in modo che i file siano accessibili solo alle
+persone del gruppo progetto1.
+
+Vedere \k(Aggiunta di un nuovo gruppo) per la procedura di aggiunta di un
+nuovo gruppo al sistema.
+
+Vedi anche:
+\s(Creazione e gestione di conti utente^dhelp as sysag "Creating and Managing User Accounts" "" || helpLinkErr)
+\s(Imposta-UID e Imposta-GID^dhelp as sysag "File Protection" "Set-UID and Set-GID" || helpLinkErr)
+
+^1^Cancellazione di un utente
+^$80
+Cancellazione di un utente
+
+Nota: Si devono possedere i \k(permessi^^Comprensione dei permessi) di proprietario del
+sistema per poter cancellare utenti.
+
+Per cancellare un utente dal sistema, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_utente. Appare la finestra
+  \t"Configurazione utente" (a seconda dell'ultima vista selezionata,
+  \tsono visualizzati Conti utente, gruppo, or Riservato Conto s).
+
+3.\tFare clic su Mostra=>Utente.
+
+4.\tFare clic sull'icona relativa all'utente da cancellare (se
+  \ti conti utente non sono stati visualizzati, selezionare
+  \tMostra=>Utente).
+
+5.\tFare clic su Conto=>Cancella. Appare una finestra di conferma a comparsa.
+
+6.\tFare clic su Rimuovi i file dell'utente per cancellare tutti
+  \ti file della directory home dell'utente, o su Backup dei file
+  \tdell'utente se si vuole ottenere il backup della directory home
+  \tdell'utente prima di cancellare il conto. Se si sceglie il backup
+  \tdei file del utente, il sistema richiede l'inserimento di un
+  \tsupporto per il backup (quale il dischetto o il nastro a cartuccia).
+
+7.\tFare clic su Sì per cancellare il conto utente (o su No se si
+  \tcambia idea o si è fatto uno sbaglio). Il sistema rimuove l'icona
+  \tdel conto login dell'utente dalla finestra "Configurazione
+  \tutente".
+
+Vedi anche:
+\k(Riutilizzo di un numero di identificazione utente)
+
+^1^Cancellazione di un gruppo
+^$85
+Cancellazione di un gruppo
+
+Nota: Occorre possedere i \k(permessi^^Comprensione dei permessi) del proprietario del
+sistema per poter cancellare i gruppi.
+
+Per cancellare un gruppo dal sistema, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_utente. Appare la finestra
+  \t"Configurazione utente" (a seconda dell'ultima vista selezionata,
+  \tsono visualizzati Conti utente, gruppo, or Riservato Conto s).
+
+3.\tFare clic su Mostra=>Gruppi.
+
+4.\tFare clic sull'icona relativa al gruppo da cancellare (se non sono
+  \tstati visualizzati i conti gruppo, selezionare Mostra=>Gruppi).
+
+5.\tFare clic su Gruppo=>Cancella. Appare una finestra di conferma a comparsa.
+
+6.\tFare clic su Sì per cancellare il conto di gruppo (o su No se si
+  \tcambia idea o si è fatto uno sbaglio). Il sistema rimuove l'icona
+  \tdel gruppo dalla finestra "Configurazione utente".
+
+^1^Attribuzione dei permessi di configurazione
+^$90
+Attribuzione dei permessi di configurazione
+
+Occorre possedere i \k(permessi^^Comprensione dei permessi) del proprietario del sistema
+per poter assegnare permessi di configurazione.
+
+Prima di esminare la seguente procedura di assegnazione dei permessi
+di configurazione, vedere eventualmente \k(Comprensione dei permessi).
+
+Per assegnare i permessi di configurazione del sistema a un conto di
+login dell'utente, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_utente. Appare la finestra
+  \t"Configurazione utente" (a seconda dell'ultima vista selezionata,
+  \tsono visualizzati Conti utente, gruppo, or Riservato Conto s).
+
+3.\tFare clic su Mostra=>Utente.
+
+4.\tFare clic sull'icona relativa all'utente cui si desiderano
+  \tassegnare i permessi di configurazione.
+
+5.\tFare clic su Azioni=>Permessi. Appare la finestra "Configurazione
+  \tutente: Permessi utente".
+
+6.\tAssegnare la proprietà come segue:
+
+  \to\tL'utente selezionato è il proprietario del sistema - Fare clic
+  \t \tsu questa casella se si vogliono dare al proprietario i permessi
+  \t \tcompleti di proprietà.
+
+  \to\tL'utente selezionato può - Fare clic sulle caselle
+  \t \tdesiderate sotto questa intestazione se si vuole limitare
+  \t \tl'utente alla possibilità di eseguire solo certe funzioni di
+  \t \tconfigurazione del sistema.
+
+7.\tFare clic su Applica OK per assegnare i permessi di conto
+  \tall'utente.
+
+Vedi anche:
+\s(L'attributo Proprietario^dhelp as sysag "File Protection" "The Owner Attribute" || helpLinkErr)
+\s(L'attributo Gruppo^dhelp as sysag "File Protection" "The Group Attribute" || helpLinkErr)
+
+^2^Comprensione dei permessi
+^$100
+Comprensione dei permessi
+
+All'installazione del Desktop sul computer, il sistema chiede che si
+aggiunga un conto utente che viene assegnato come "proprietario" del
+sistema. Il proprietario ha privilegi speciali per eseguire certi
+compiti amministrativi che si potrebbero voler precludere ad altri. Ad
+esempio, chi è proprietario potrebbe non desiderare che tutti quelli
+che usano il suo sistema possano aggiungere altri utenti o modificare
+la configurazione delle stampanti o delle reti.
+
+Come proprietari, si possono assegnare i permessi del proprietario a
+qualunque altro utente (vedere \k(Attribuzione dei permessi di configurazione)). Si possono
+assegnare o i privilegi di piena proprietà, o privilegi limitati a
+compiti specifici.
+
+La piena proprietà consente di eseguire tutti i compiti descritti di
+seguito e di aggiungere e cancellare utenti e di assegnare permessi
+per i compiti. I permessi specifici della proprietà comprendono:
+
+\to\tSpegnere il sistema - Abilita a spegnere il sistema
+\t \toperativo utilizzando \k(Shutdown^DesktopMgr/shutdown.hlp^Spegnimento del sistema).
+
+\t \tQuest'operazione è riservata in quanto non si può volere che un
+\t \tutente qualsiasi possa spegnere il sistema a capriccio. È
+\t \timprobabile che si voglia dare il permesso per questa funzione ad
+\t \taltri utenti.
+
+\to\tAccedere a dischi, nastri, ecc. - Abilita alla lettura e scrittura
+\t \tdi informazioni da dischi o nastri o qualunque altra icona nella
+\t \tcartella \k(Dischi-ecc.^dtadmin/disk.hlp^Introduzione alla cartella Dischi-ecc.). Per default tutti gli utenti hanno il permesso
+\t \tdi accedere a dischi e nastri.
+
+\to\tAccedere a sistemi remoti - Abilita al login remoto e al
+\t \ttrasferimento di file da e per sistemi remoti. Queste funzioni
+\t \tsono disponibili da qualunque icona di sistema remoto installata
+\t \tmediante \k(Configurazione telefono^dtadmin/DialMgr.hlp^Configurazione telefono) o \k(Configurazione Internet^dtadmin/inet.hlp^Configurazione Internet). Il
+\t \tsistema fornisce questo privilegio per default a tutti gli utenti.
+
+\to\tModificare configurazione telefono - Abilita ad aggiungere o
+\t \tmodificare sul computer configurazioni di modem o di connessioni
+\t \tdirette nella cartella \k(Configurazione telefono^dtadmin/DialMgr.hlp^Configurazione telefono).
+
+\t \tQuesta assegnazione permette anche di definire i sistemi
+\t \traggiungibili con queste connessioni. In genere, queste
+\t \tconfigurazioni cambiano raramente, per cui è bene limitare i
+\t \tpermessi a modificarle.
+
+\to\tModificare la configurazione Internet - Abilita ad aggiungere
+\t \tsistemi alla lista di quelli raggiungibili con connessione
+\t \tEthernet (tramite \k(Configurazione Internet^dtadmin/inet.hlp^Configurazione Internet)).
+
+\t \tDal momento che nomi di sistema e indirizzi male assegnati
+\t \tpossono determinare problemi con la rete, è opportuno limitare
+\t \tquesto privilegio.
+
+\to\tAmministrare stampanti - Abilita a modificare l'informazione di
+\t \tconfigurazione stampanti mediante \k(Configurazione stampante^dtadmin/Printer_Setup.hlp^Configurazione stampante).
+
+\t \tLe informazioni sulle stampanti comprendono il tipo di stampante
+\t \te come è connesso al sistema. Siccome di solito non occorre
+\t \tmodificare la configurazione della stampante dopo l'installazione
+\t \te la configurazione iniziale, agli altri utenti non serve
+\t \tveramente il permesso di Amministrare stampanti.
+
+\to\tAggiungere/rimuovere font - Abilita ad aggiungere e rimuovere font
+\t \tmediante \k(Configurazione font^dtadmin/fontmgr.hlp^Font). Dato che un'applicazione
+\t \tfallirà se manca o è mal installato un font di cui abbisogna, dovrebbe
+\t \tessere limitato il permesso a questo privilegio.
+
+\to\tAggiungere/Rimuovere Applicazioni - Abilita a installare e
+\t \trimuovere pacchetti applicativi sul sistema dalla cartella
+\t \t\k(Installatore applicazioni^dtadmin/App_Installer.hlp^Installatore applicazioni). Si dovrebbe limitare questo
+\t \tprivilegio per tenere sotto controllo i tipi di applicazioni
+\t \tinstallate su questo sistema.
+
+\to\tPubblicizzare cartelle/file locali - Abilita a pubblicizzare
+\t \t\d(voci condivise^elemento condiviso) locali mediante
+\t \t\k(Condivisione file^dtadmin/FileShar.hlp^Condivisione file).
+
+\t \tSiccome questo permesso rende libero l'accesso al computer da
+\t \tsistemi remoti, questo privilegio dovrebbe essere limitato.
+
+\to\tConnettersi a cartelle/file remoti - Abilita a connettersi a
+\t \t\d(voci condivise^elemento condiviso) remote utilizzando
+\t \t\k(Condivisione file^dtadmin/FileShar.hlp^Condivisione file).
+
+ \t \tQuesto privilegio permette agli utenti l'accesso ai file di
+\t \tsistemi remoti. Se si desidera controllare il flusso informativo
+\t \tal computer, occorre limitare questo privilegio.
+
+\to\tAmministrare posta UnixWare - Abilita ad apportare modifiche alla
+\t \t\k(Configurazione posta UnixWare^Mail_Setup/Mail_Setup.hlp^Configurazione Posta).
+
+\to\tAmministrare il gateway MHS - Abilita a fare modifiche al
+\t \t\k(Servizio di gestione di messaggi^MHS_Setup/MHS_Setup.hlp^Configurazione MHS).
+
+\to\tAccedere alla configurazione NetWare - Abilita a configurare
+\t \t\k(NetWare^NetWare_Setup/NetWare_Setup.hlp^Configurazione NetWare).
+
+\to\tCondividere applicazioni - Abilita a pubblicizzare o condividere
+\t \tapplicazioni sul proprio sistema con sistemi remoti mediante
+\t \t\k(Condivisione di applicazioni^App_Sharing/applsharing.hlp^Condivisione applicazioni).
+
+\to\tAccedere a Install Server - Abilita all'installazione di prodotti
+\t \to pacchetti UnixWare attraverso una rete NetWare utilizzando
+\t \t\k(Server di installazione^Install_Server/Install_Server.hlp^Server di installazione).
+
+\to\tAvviare e arrestare processori - Abilita l'esecuzione di funzioni
+\t \tdi configurazione di multiprocessing, quali mettere un
+\t \tprocessore online o offline \k(Configurazione processore^dtadmin/multiproc.hlp^Configurazione processore).
+
+Nota: Il login della radice è il login UNIX tradizionale per tutti i
+compiti amministrativi del sistema. Per ulteriori informazioni, vedere
+\k(Il login di root).
+
+Vedi anche:
+\s(L'attributo Proprietario^dhelp as sysag "File Protection" "The Owner Attribute" || helpLinkErr)
+\s(L'attributo Gruppo^dhelp as sysag "File Protection" "The Group Attribute" || helpLinkErr)
+\s(Set-UID and Set-GID^dhelp as sysag "File Protection" "Set-UID and Set-GID" || helpLinkErr)
+
+^2^Il login di root
+^$110
+Il login di root
+
+Il login della radice è il login tradizionale sul sistema UNIX per
+tutti i compiti amministrativi del sistema. La maggior parte delle
+procedure fondamentali precedentemente disponibili solo agli utenti
+che facevano il login come radice può adesso essere eseguita dal
+proprietario del sistema (vedere \k(Comprensione dei permessi)).
+
+Se lo si preferisce, si può fare il login al sistema da una finestra
+\k(Terminale^xterm/term.hlp^Terminale) e svolgere i compiti amministrativi utilizzando i comandi di
+sistema e i file di UNIX. Per informazioni dettagliate sul lavoro
+dall'interfaccia a riga di comando del sistema UNIX, vedi il
+\s(Riferimento dei comandi^dhelp refman uarm "" "" || helpLinkErr).
+
+
+^1^Modifica proprietà dell'utente
+^$120
+Modifica proprietà dell'utente
+
+Occorre possedere i \k(permessi^^Comprensione dei permessi) del proprietario del sistema
+per modificare le proprietà dell'utente.
+
+Le proprietà che si definiscono quando si aggiunge un nuovo utente
+possono essere modificate in seguito.
+
+Per modificare le proprietà dell'utente, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tFare doppio clic su Configurazione_utente. Appare la finestra
+  \t"Configurazione utente" (a seconda dell'ultima vista selezionata,
+  \tsono visualizzati Conti utente, gruppo, or Riservato Conto s).
+
+3.\tFare clic su Mostra=>Conti utente.
+
+4.\tFare clic sull'icona che rappresenta l'utente del quale si
+  \tvogliono modificare le proprietà.
+
+5.\tFare clic su Conto=>Proprietà. Appare la finestra "Configurazione
+  \tutente: Proprietà del conto utente".
+
+6.\tModificare le proprietà come si desidera (vedi \k(Aggiunta di un nuovo utente)
+  \tper la descrizione di ciascuna proprietà).
+
+7.\tFare clic su Applica. Il sistema assegna le nuove proprietà all'utente.
+

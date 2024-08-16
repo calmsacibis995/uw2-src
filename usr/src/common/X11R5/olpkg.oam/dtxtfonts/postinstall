@@ -1,0 +1,48 @@
+#ident	"@(#)olpkg.oam:dtxtfonts/postinstall	1.13"
+#	Copyright (c) 1994, Novell, Inc.
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+#
+#	Supplemental Fonts Package
+#
+
+PKGMSG=${PKG}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+
+#
+# Let's make the fonts if the user has chosen to.
+#
+	/usr/X/bin/mkfontdir /usr/X/lib/fonts/100dpi
+	/usr/X/bin/mkfontdir /usr/X/lib/fonts/75dpi
+	/usr/X/bin/mkfontdir /usr/X/lib/fonts/misc
+	[ "$TERM" = "xterm" ] && LD_LIBRARY_PATH=/usr/X/lib /usr/X/bin/xset fp rehash >/dev/null 2>&1
+
+# Save some disk space if Adobe Type Manager is installed:
+if [ -f /usr/X/lib/libatm.so ]; then
+   # If the atm package is installed, no need to waste disk space on IBM's poor-quality Type 1 rasterizer:
+   rm -f /usr/X/lib/libType1.so
+   removef    ${PKGINST} /usr/X/lib/libType1.so	>/dev/null 2>&1
+   removef -f ${PKGINST}			>/dev/null 2>&1
+   fi
+
+#
+# Now clean up
+#
+rm -rf /tmp/pkg > /dev/null 2>&1
+exit ${errflag}

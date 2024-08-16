@@ -1,0 +1,31 @@
+# If you want vt-switching to be snappy, you can reduce the amount of video 
+# memory that is saved by the video driver. By default, the driver saves all the
+# available video memory (ex: 1MB or 2MB or 4MB). If you use the non-X vt 
+# (ex: console) only for text mode, you need to save only 32K and if you use
+# the console for DOS/standard_vga graphics programs, you have to save 256K. 
+# uncomment one of the next two lines that is applicable to your usage.
+#vt-switch-save-lines=32
+#vt-switch-save-lines=256
+
+# if you have a RAMDAC that can handle 135MHz bandwidth, define it here
+#dac-name=ati-68875-cfn
+
+# R4 server + Running WABI/WINTACH/Word Processing, text remains uncleared from # the right side of the drawing area - uncomment the next line
+#fontdraw-options=!draw-non-terminal-fonts
+
+# ATI VANTAGE: On fast machines moving the cursor leaves junk on the screen
+# uncomment the next line
+#vram-fifo-depth=8
+
+# ATI ULTRA PLUS: Moving a window leaves traces on the screen
+# uncomment the next line
+#vram-fifo-depth=8
+
+# Example XFree86 Style initialization:
+#	 "1024x768"     65    1024 1032 1208 1288    768  768  773  798
+# The option will be:
+#modedb-string="65    1024 1032 1208 1288    768  768  773  798"
+
+# If you want startup diagnostics printed out
+#verbose-startup=1
+

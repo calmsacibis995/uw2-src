@@ -1,0 +1,101 @@
+#!/bin/sh
+#ident	"@(#)pkg.nw:request	1.5"
+#ident	"$Header: /SRCS/esmp/usr/src/nw/pkg/nwnet/request,v 1.3.2.1 1994/10/19 16:41:45 vtag Exp $"
+
+trap 'exit 3' 15
+OUTPUT=$1
+> ${OUTPUT}
+
+SCRIPTS=/usr/sbin/pkginst
+PKGINSTALL_TYPE=NEWINSTALL
+AUTOMERGE=NULL
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = YES ] && set -x
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]; then
+    if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+         -d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]; then
+        cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+           /usr/lib/locale/${LOCALE}/LC_MESSAGES
+    fi
+fi
+
+HOW_INSTALL=NORMAL
+# We are in foundation set installation on the boot floppies if:
+# the script /etc/inst/scripts/postreboot.sh exists
+if [ -f /etc/inst/scripts/postreboot.sh ] 
+then
+	HOW_INSTALL=ON_BFLOP
+else
+	#is it upgrade or overlay?
+	#   ${SCRIPTS}/chkpkgrel returns
+	#					1 if installed pkg if UNK version
+	#					2 if installed pkg is SVR4.2
+	#					4 if installed pkg is SVR4.0 V4
+	#					9 if installed pkg is newer
+	#					0 if pkg is not installed
+
+	$SCRIPTS/chkpkgrel
+	case $? in
+		0)  PKGINSTALL_TYPE=NEWINSTALL
+			AUTOMERGE=No
+			;;
+		2)  PKGINSTALL_TYPE=OVERLAY
+			AUTOMERGE=Yes
+			;;
+		4)  PKGINSTALL_TYPE=UPGRADE
+			message -d `pfmt -s nostd -g ${PKGMSG}:1 "Installed version of %s package must be removed before this version \ncan be installed." "${PKGINST}" 2>&1`
+			exit 3
+			;;
+		9)  # Newer just do overlay
+			PKGINSTALL_TYPE=OVERLAY
+			AUTOMERGE=Yes
+			;;
+		*)  # Don't allow install
+			message -d `pfmt -s nostd -g ${PKGMSG}:2 "The current installed version of %s could not be identified!\n You must remove the %s package before re-installing!" "${PKGINST}" "${PKGINST}" 2>&1`
+				exit 3
+			;;
+	esac
+fi
+
+#
+#  Do we have Desktop Package installed?
+#
+`pkginfo -i desktop > /dev/null 2>&1`
+
+USE_DTM=$?
+DTM=YES
+
+if [ "${USE_DTM}" != "0" ]
+then
+	DTM=NO
+	#
+	# Are we installing desktop now...if so then set DTM
+	#
+	for i in $PKGLIST
+	do
+		case $i in
+		desktop)    DTM=YES;;
+		esac
+	done
+fi
+
+#
+# set CLASSES to contain DTMadmin If desktop package is installed
+#
+unset CLASSES
+CLASSES="base nwext"
+if [ "${DTM}" = "YES" ]
+then
+	CLASSES="${CLASSES} DTMadmin"
+fi
+
+echo AUTOMERGE=\"${AUTOMERGE}\" >> ${OUTPUT}
+echo PKGINSTALL_TYPE=\"${PKGINSTALL_TYPE}\" >> ${OUTPUT}
+echo HOW_INSTALL=\"${HOW_INSTALL}\" >> ${OUTPUT}
+echo CLASSES=\"${CLASSES}\" >> ${OUTPUT}
+echo DTM=\"${DTM}\" >> ${OUTPUT}
+
+exit 0

@@ -1,0 +1,106 @@
+#!/bin/sh
+#ident	"@(#)sc:local/bin/checkios	3.1" 
+###############################################################################
+#
+# C++ Standard Components, Release 3.0.
+#
+# Copyright (c) 1991, 1992 AT&T and Unix System Laboratories, Inc.
+# Copyright (c) 1988, 1989, 1990 AT&T.  All Rights Reserved.
+#
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T and Unix System
+# Laboratories, Inc.  The copyright notice above does not evidence
+# any actual or intended publication of such source code.
+#
+###############################################################################
+
+badargs=0
+symbol=iostream
+checkfile=iosallowed
+set -- `getopt s:c: $*`
+if [ $? -ne 0 ]
+then    badargs=1
+fi
+for i in $*
+do      case $i in
+        -s)     symbol=$2
+                shift; shift;;
+        -c)     checkfile=$2
+                shift; shift;;
+        --)     shift; break;;
+        -*)     shift;;
+        esac
+done
+if [ $badargs -eq 1 ]
+then    echo
+        echo "checkios [ -s symbol ] [ -c checkfile ] [ file ... ]" 1>&2
+        echo "if -s not specified, symbol defaults to \"iostream\"" 1>&2
+        echo "if -c not specified, checkfile defaults to \"iosallowed\"" 1>&2
+        echo "if no files are specified, defaults to *.a" 1>&2
+        exit 2
+fi
+
+# print list of .o's in archive file $1 that pull in iostream
+findina() {
+	f=$1
+	nm $f | egrep ":|$symbol" | awk '
+	BEGIN	{	FS = ":"
+			thisone = 0 
+		}
+		{ 	if (NF == 2) {
+				if (thisone == 1) 
+					print file
+				file = $1
+				thisone = 0
+			}
+			else
+				thisone = 1
+		}
+	END	{	if (thisone == 1)
+				print file
+		}
+	'
+}
+
+ret=0
+
+error() {
+	echo "$1 pulls in $symbol; if you really intend this, please list it in ./$checkfile" 
+	ret=1
+}
+
+seeifincheckfile() {
+	i=$1
+	if [ ! -f $checkfile ]; then
+		error $i
+	else
+		egrep "^$i$" $checkfile >/dev/null
+		if [ $? -ne 0 ]; then
+			error $i
+		fi
+	fi
+}
+
+if [ $# -eq 0 ]; then
+        files=`ls *.a 2>/dev/null`
+	if [ "$files" = "" ]; then
+		echo "checkios: can't open *.a" 1>&2
+		exit 2
+	fi
+else
+        files="$*"
+fi
+
+for i in $files; do
+	case $i in
+	*.o)	nm $i | grep $symbol >/dev/null
+		if [ $? -eq 0 ]; then
+			seeifincheckfile $i
+		fi
+		;;
+	*.a)	for f in `findina $i`; do
+			seeifincheckfile $f
+		done
+		;;
+	esac
+done
+exit $ret

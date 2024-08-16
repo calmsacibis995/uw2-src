@@ -1,0 +1,77 @@
+#!/usr/gnu/bin/perl --
+#ident	"@(#)mail:common/cmd/mail/mhs/splitAddr	1.1"
+# -*-Perl-*-
+
+package splitAddr;
+
+%pairedToken = ('"', '"',
+		"(", ")",
+		"<", ">",
+		"{", "}");
+$pairedToken = "[" . join("", keys(%pairedToken)) . "]";
+sub findToken {
+  local($token) = shift(@_);
+  while (@line) {
+    $_ = shift(@line);
+    push(@string, $_);
+    if ($_ eq $token) {
+      return 1;
+    }
+    elsif ($_ eq "\\") {
+      push(@string, shift(@line));
+    }
+    elsif (/^$pairedToken$/) {
+      &findToken($pairedToken{$_});
+    }
+    elsif ($_ eq "@" && scalar(@string) == 1) {
+      # special case -- handle "routed" form
+      &findToken(":");
+    }
+  }
+  return 0;
+}
+
+
+sub splitAddr {
+  local($split) = shift;
+  $split =~ s/\\/\\\\/;
+  local($i) = scalar(split(?($split)?, join(",", @_)));
+  # trash empty tokens
+  while ($i >= $[) {
+    splice(@_, $i, 1) unless($_[$i]);
+    --$i;
+  }
+  local(@line) = (@_);
+  local(@addr) = ();
+  while (@line) {
+    local(@string) = ();
+    $line[$[] =~ s/^\s*//;		# remove leading whitespace
+    --$#string if (&findToken(","));
+    push(@addr, join("", @string));
+  }
+  return @addr;
+}
+
+
+sub main'splitInet {
+  local(@addr) = &splitAddr("[@:,\"\\<>()]", @_);
+  return wantarray ? @addr : join(",\n\t", @addr);
+}
+
+
+sub main'splitSMF {
+  local(@addr) = &splitAddr("[,\"\\{}()]", @_);
+  return wantarray ? @addr : join(",\n\t", @addr);
+}
+
+package main;
+
+if ($0 eq "splitAddr") {
+  chop(@lines = <>);
+  $addr = &splitInet(@lines);
+  print "$addr\n";
+  $addr = join(",\n ", &splitSMF(@lines));
+  print "$addr\n";
+}
+
+1;

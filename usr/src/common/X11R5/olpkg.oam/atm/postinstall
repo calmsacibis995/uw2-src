@@ -1,0 +1,64 @@
+#ident	"@(#)olpkg.oam:atm/postinstall	1.16"
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+#
+#	USL Adobe Type Manager and Base 13 Type 1 Fonts
+#
+
+PKGMSG=${PKG}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+
+#
+# create dummy fonts.dir file in /usr/X/lib/fonts/type1
+#
+
+[ -f /usr/X/lib/fonts/type1/fonts.dir ] || {
+	echo "0" > /usr/X/lib/fonts/type1/fonts.dir
+
+}
+# This code generates XLFD names for Type 1 fonts in the
+# ATM Basic Fonts Package (atm13)
+
+if [ -r /usr/X/lib/fonts/type1/config ]; then
+   derivedOption=`grep derived-instance /usr/X/lib/fonts/type1/config |
+		     sed -n 1p`
+   if [ `echo $derivedOption | wc -l` -eq 1 ]; then
+      derivedValues=`echo $derivedOption | cut -f2 -d=`
+      fi
+   fi
+
+if [ "$derivedValues" ]; then
+   : # it has been set from value in file
+else
+   derivedValues=10,12,14
+   fi
+
+# After fonts are installed:
+cd /usr/X/lib/fonts
+DERIVED_INSTANCE_PS=$derivedValues \
+   LD_LIBRARY_PATH=/usr/X/lib /usr/X/bin/mkfontscale /usr/X/lib/fonts/type1 &&
+   /usr/X/bin/mkfontdir   type1
+
+#
+# Now clean up
+#
+rm -rf /tmp/pkg > /dev/null 2>&1
+exit ${errflag}

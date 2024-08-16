@@ -1,0 +1,110 @@
+#!/sbin/sh 
+#ident	"@(#)ktool:common/ktool/idtools/idtarg/idrebuild	1.10"
+#ident	"$Header:"
+
+umask 022
+
+LABEL=UX:idrebuild
+CATALOG=uxidtools
+TMPFILE=/tmp/.idbuild.$$
+export TMPFILE
+bootup=
+mountusr=
+wait=30
+if [ "$1" = reboot ]
+then
+	bootup=YES
+fi
+
+if [ -f /etc/conf/.rebuild ]
+then
+	if ps -z > /dev/null 2>&1
+	then
+		pfmt -l $LABEL -s info -g $CATALOG:193 "A new UNIX Operating System kernel, to include recent\nsoftware configuration\nchanges, could not be built while\nrunning a enhanced security kernel.\nPlease reboot the mUNIX to do the kernel rebuild.\n"
+		exit 1
+	fi
+	if [ ! -d /usr/bin ]
+	then
+		while read bdevice rdevice mntp fstype fsckpass automnt mntopts
+		do
+			# check for comments
+			case ${bdevice} in
+			'#'*)	continue
+			esac
+
+			if [ "${mntp}" = "/usr" ]
+			then
+				/sbin/fsck -F ${fstype} -m  ${rdevice}  >/dev/null 2>&1
+				if [ $? -ne 0 ]
+				then
+					pfmt -l $LABEL -s info -g $CATALOG:194 "The %s file system (%s) is being checked.\n" "$mntp" "$rdevice"
+					/sbin/fsck -F ${fstype} -y  ${rdevice}
+				fi
+				/sbin/mount /usr > /dev/null 2>/dev/null
+				if [ $? -eq 0 ]
+				then
+					mountusr=yes
+				else
+					pfmt -l $LABEL -s error -g $CATALOG:195 "%s: Failed to mount /usr.\nThe rebuild of the UNIX Operating System kernel is aborted.\n" "$0"
+					exit 1
+				fi
+				break
+			fi
+		done < /etc/vfstab
+	fi
+
+	auto=`/usr/bin/defadm idtools AUTOREBLD | /usr/bin/sed 's/AUTOREBLD=//'`
+	if [ $auto = "NO" -o "$bootup" ]
+	then
+		if [ "$auto" = "NO" ]
+		then
+			wait=0
+		fi
+		while :
+		do
+			/usr/bin/message -cu -w $wait `gettxt $CATALOG:196 "The UNIX Operating System kernel\nwill now be rebuilt to incorporate recent configuration changes.\n"`
+			case "$?" in
+			"1") 
+				if [ "$mountusr" ]
+				then
+					/sbin/umount /usr > /dev/null 2>&1
+				fi
+				pfmt -l $LABEL -s info -g $CATALOG:197 "The rebuild of the UNIX Operating System kernel has been aborted.\nA rebuild will be attempted at next reboot.\n"
+				exit 0;;
+			"0") 
+				break;;
+			esac
+		done
+	fi
+	/etc/conf/bin/idbuild -B 2> $TMPFILE
+	if [ $? -ne 0 ]
+	then
+		/usr/bin/cat $TMPFILE
+		pfmt -l $LABEL -s info -g $CATALOG:198 "A new UNIX Operating System kernel, to include recent software\nconfiguration changes, could not be successfully built.\n"
+		/sbin/rm /etc/conf/.rebuild
+		(gettxt $CATALOG:199 "Subject: UNIX Operating System kernel rebuild failed\n\nThe last UNIX Operating System kernel rebuild failed with the following output:\n" ;
+		/usr/bin/cat $TMPFILE) | /usr/bin/mail root
+		if [ "$mountusr" ]
+		then
+			/sbin/umount /usr > /dev/null 2>&1
+		fi
+		/sbin/rm -f $TMPFILE
+		exit 1
+	fi
+	/sbin/rm -f $TMPFILE
+	/etc/conf/bin/idcpunix
+	if [ "$mountusr" ]
+	then
+		/sbin/umount /usr > /dev/null 2>&1
+	fi
+
+	if [ "$bootup" ]
+	then
+		/sbin/sync;/sbin/sync;/sbin/sync
+		/sbin/rm -rf /tmp/*
+		/sbin/umountall
+		/sbin/sync;/sbin/sync;/sbin/sync
+		pfmt -l $LABEL -s info -g $CATALOG:200 "The system is being rebooted.\n"
+		/sbin/uadmin 2 1
+	fi
+fi

@@ -1,0 +1,254 @@
+STRINGS-FILE	Mail_Setup
+PANEL-TITLE	"UNIX Mail Setup:1"
+ICON-TITLE	"Mail Setup:2"
+ICON-FILENAME	"umail48.icon"
+HELP-FILE	"Mail_Setup/Mail_Setup.hlp"
+HELP-TITLE	"UNIX Mail Setup"
+HELP-SECTION	"10"
+
+LABEL	"Add a \'Date:\' Line?:3"
+FILE	/etc/mail/mailcnfg
+LOCALDATA	No:4	Yes:5
+EXTENDED
+NEXT	"Add a \'From:\' Line?"
+NAME	ADD_DATE
+DESCRIPTION	"If a message which originated on the local machine does
+		not have an RFC822 \'Date:\' header line, and this variable is
+		set to Yes, an RFC822 \'Date:\' header line will be added.:6"
+
+LABEL	"Add a \'From:\' Line?:7"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Add a \'Received:' Line?"
+NAME	ADD_FROM
+DESCRIPTION	"If a message which originated on the local machine does not
+		have an RFC822 \'From:\' header line and this variable is set
+		to Yes, an RFC822 \'From:\' header line will be added.:8"
+
+LABEL	"Add a \'Received:\' Line?:9"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Debug Level:"
+NAME	ADD_RECEIVED
+DESCRIPTION	"If a message is received which has no \'Received:\' header
+		line and this variable is set to Yes, a \'Received:\' header
+		line will be added.:10"
+
+LABEL	"Cluster Name::13"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"\'Remote From:\' String:"
+SHORT
+NEXT	"Route All Msgs to Smarter Host?"
+NAME	CLUSTER
+DESCRIPTION	"To identify a closely coupled set of systems by one
+		name to all other systems, set this field to the cluster name.
+		This string is used in place of the local system nodename
+		returned by uname(2) to process mail messages.:14"
+
+LABEL	"Mailsurr Mailcnfg Var's::15"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Compile Mailsurr File?"
+NAME	CNFG_EXPORT
+DESCRIPTION	"A comma-separated list of mail configuration variables
+		to be passed through to mailsurr commands as environment
+		variables.:16"
+
+LABEL	"Debug Level::17"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Cluster Name:"
+NAME	DEBUG
+DESCRIPTION	"This variable takes the same values as the \-x 
+		command\-line option of mail.  This provides a way of setting a
+		system-wide debug/tracing level.  When debugging, this is
+		typically set to 2, which provides minimal diagnostics useful
+		for debugging mail and rmail failures.  The value of the
+		\-x mail command-line option will override any value entered
+		here.:18"
+
+LABEL	"Delete Empty Mail Files?:19"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Domain Name:"
+NAME	DEL_EMPTY_MFILE
+DESCRIPTION	"When this variable is set to Default, mail and
+		rmail will delete empty mail files if the file permissions
+		are 0660, and will retain them otherwise.  If you select
+		Yes, empty mail files will always be deleted regardless
+		of file permissions.  If you select No, empty mail files
+		will never be deleted.:20"
+
+LABEL	"Domain Name::21"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Mailsurr Env Var's:"
+NAME	DOMAIN
+DESCRIPTION	"This string is used to override the system domain name
+		with a domain name to be used for mail only.
+		This domain name will be used as the system domain name
+		for mail purposes.:22"
+
+LABEL	"Failsafe Forwarding System::23"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Delete Empty Mail Files?"
+NAME	FAILSAFE
+DESCRIPTION	"In the event that the /var/mail directory is accessed via NFS,
+		and it is not accessible when mail is delivered, the mail will
+		be forwarded to the failsafe forwarding system.  This
+		variable should be set to the name of the system from which
+		the /var/mail directory is mounted.  If you are not
+		mounting the /var/mail directory via NFS, leave this blank.:24"
+
+LABEL	"Compile Mailsurr File?:25"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Route All Msgs to Smarter Host?"
+NAME	NOCOMPILEDSURRFILE
+DESCRIPTION	"Normally, mail will create a compiled version of the
+		routing configuration file to reduce the initialization
+		time for future invocations of mail whenever the
+		configuration file changes.  If you select No,
+		mail will ignore the compiled file.:26"
+
+LABEL	"\'Remote From:\' String::27"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Failsafe Forwarding System:"
+NAME	REMOTEFROM
+DESCRIPTION	"This string may be set if you want to use a slightly
+		different string in the ...remote from... information
+		on the UNIX postmark header line than either the cluster
+		name or system name.:28"
+
+LABEL	"Smarter Host::29"
+FILE	/etc/mail/mailcnfg
+NAME	SMARTERHOST
+EXTENDED
+START
+NEXT	"Add a \'Date:\' Line?"
+SHORT
+START
+NEXT	"Cluster Name:"
+DEFAULT	mailhost
+NAME	SMARTERHOST
+DESCRIPTION	"This string may be set to the name of a mail system
+		that has better alias and routing information available
+		than the local system.  Any mail that the local system
+		cannot route will then be sent to the smarter host.:30"
+
+LABEL	"Mailsurr Env Var's::31"
+FILE	/etc/mail/mailcnfg
+EXTENDED
+NEXT	"Mailsurr Mailcnfg Var's:"
+NAME	SURR_EXPORT
+DESCRIPTION	"A comma-separated list of environment variables to be passed
+		through to mailsurr commands.  This is normally left blank.:32"
+
+LABEL	"Route All Msgs to Smarter Host?:37"
+DEFAULT	No
+FILE	/etc/mail/mailflgs
+NAME	STUP
+EXTENDED
+NEXT	"Accept Mail Addressed to the Domain?"
+SHORT
+NEXT	"Accept Mail Addressed to the Domain?"
+DESCRIPTION	"If Yes is selected, all non-local messages will be
+		routed through the smarter host.:38"
+
+LABEL	"Accept Mail Addressed to the Domain?:51"
+DEFAULT	No
+FILE	/etc/mail/mailflgs
+NAME	ACCDOM
+EXTENDED
+NEXT	"Log Messages?"
+SHORT
+NEXT	"Log Messages?"
+DESCRIPTION	"If Yes is selected, messages addressed to the local domain
+		with no system name will be regarded as being addressed
+		to the local system.:52"
+
+LABEL	"Log Messages?:39"
+DEFAULT	No
+FILE	/etc/mail/mailflgs
+NAME	LOG
+EXTENDED
+NEXT	"Route local messages through MHS?"
+SHORT
+NEXT	"Route local messages through MHS?"
+DESCRIPTION	"If Yes is selected, a log entry for each mail message
+		that passes through the local system will be placed in either
+		/var/mail/:log/<day-of-week> or
+		/var/mail/:errors/<day-of-week>.:40"
+
+LABEL	"Route local messages through MHS?:53"
+DEFAULT	No
+FILE	/etc/mail/mailflgs
+NAME	ROUTEMHS
+EXTENDED
+NEXT	"Add a \'Message-ID:\' Line?"
+DESCRIPTION	"If Yes is selected, mail addresses to a user supposedly
+		on this system that does not exist will be routed through the
+		MHS gateway provided that it has been configured.  If the
+		MHS gateway has not been configured, the mail will be routed
+		to the smarter host if that has been configured, else the mail
+		will be bounced.:54"
+
+LABEL	"Add a \'Message-ID:\' Line?:41"
+FILE	/etc/mail/mailcnfg
+LOCALDATA	No:4	Yes:5
+EXTENDED
+NEXT	"Convert to 7-Bit Headers?"
+NAME	ADD_MESSAGE_ID
+DESCRIPTION	"If a message which originated on the local machine does
+		not have an RFC822 \'Message-ID:\' header line and Yes is
+		selected, a \'Message-ID:\' header line will be added.:42"
+
+LABEL	"Convert to 7-Bit Headers?:43"
+FILE	/etc/mail/mailcnfg
+LOCALDATA	No:4	Yes:5
+EXTENDED
+NAME	FORCE_7BIT_HEADERS
+EXTENDED
+NEXT	"Convert to 7-Bit MIME?"
+DESCRIPTION	"If Yes is selected, mail will convert any 8-bit
+		headers into 7-bit format.  Since 8-bit characters are
+		only allowed in the comment portions of \'To:\', \'Cc:\' and
+		\'Bcc:\' header lines, any such header lines found with 8-bit
+		characters in non-comment sections will be changed into
+		\'Illegal-To:\', \'Illegal-Cc:\', and \'Illegal-Bcc:\'
+		header lines.:44"
+
+LABEL	"Convert to 7-Bit MIME?:45"
+FILE	/etc/mail/mailcnfg
+LOCALDATA	No:4	Yes:5
+EXTENDED
+NAME	FORCE_7BIT_MIME
+EXTENDED
+NEXT	"Convert non-MIME to MIME?"
+DESCRIPTION	"If Yes is selected, when a non-MIME (Multi-Purpose
+		Internet Message Extensions) mail message is converted to
+		the MIME format, an 8-bit message body will be converted to
+		7-bit format using the quoted-printable or base64 transfer
+		encodings.:46"
+
+LABEL	"Convert non-MIME to MIME?:47"
+FILE	/etc/mail/mailcnfg
+LOCALDATA	No:4	Yes:5
+EXTENDED
+NAME	FORCE_MIME
+EXTENDED
+NEXT	"Add a \'To:\' Line?"
+DESCRIPTION	"If Yes is selected, any message received which is not
+		in MIME format will be converted to MIME format.:48"
+
+LABEL	"Add a \'To:\' Line?:49"
+FILE	/etc/mail/mailcnfg
+LOCALDATA	No:4	Yes:5
+EXTENDED
+NAME	ADD_TO
+DESCRIPTION	"If Yes is selected, any message which is sent by a user
+		on the local machine without an RFC822 \'To:\' header line
+		will have one added.:50"

@@ -1,0 +1,16 @@
+#ident	"@(#)langsup:common/ls/:mkterminfo	1.1"
+
+echo "Compiling terminfo entries"
+if [ ! -d $PKGDIR/usr/share/lib/terminfo ] ; then
+	/bin/mkdir -p $PKGDIR/usr/share/lib/terminfo
+fi
+
+TERMINFO=$PKGDIR/usr/share/lib/terminfo
+export TERMINFO
+
+tic terminfo/dec.ti
+tic terminfo/att.ti
+tic terminfo/jdisp.ti
+tic terminfo/jprint.ti
+
+echo "Complete"

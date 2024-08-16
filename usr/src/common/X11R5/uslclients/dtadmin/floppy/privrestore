@@ -1,0 +1,112 @@
+#!/sbin/sh
+
+#ident	"@(#)dtadmin:floppy/privrestore	1.1"
+#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+# This file restores privileges based on arguments passed to it, including:
+#	1) -f option  indicates name of flp_index file which contains the
+#		exact list of files that were restored in the case of a
+#		partial restore.
+#
+#	2) -n option  indicates files NOT restored because the option to
+#		not overwrite existing or newer files was selected.
+#
+#	3) -p option  indicates the file containing privilege information
+#		about all files that may have been backed up.  Format of
+#		the file is "filepath///privileges".
+#
+#	4) -r option  indicates the type of restore being performed -- either
+#		a complete restore or a selective restore.  In the case of
+#		selective restore, it's necessary to check the flp_index
+#		file to make sure a file was restored before restoring its
+#		privileges.
+#
+# The user of this program must have appropriate privilege to be able to 
+# restore file privileges.
+
+
+PRIVFILENAME=""
+DONTRESTOREFILE=""
+FLPINDEXFILE=""
+RESTORE=complete
+
+while getopts f:n:p:r: opt
+do
+	case $opt in
+	f)	FLPINDEXFILE=$OPTARG;;
+	n)	DONTRESTOREFILE=$OPTARG;;
+	p)	PRIVFILENAME=$OPTARG;;
+	r)	RESTORE=$OPTARG;;
+	esac
+done
+FINISHLINE="privilege restoration complete!"
+
+# If the privindex file doesn't exist or has zero length, there are 
+# no privileges to be restored.
+if [ "$PRIVFILENAME" != "" -a -s "$PRIVFILENAME" ]
+then
+	if [ "$DONTRESTOREFILE" != "" -a ! -r $DONTRESTOREFILE ]
+	then
+		echo "$DONTRESTOREFILE not readable or does not exist"
+		echo $FINISHLINE
+		exit 1
+	fi
+	# There are privileges to be restored; process the line to restore them.
+	cat $PRIVFILENAME | \
+	awk -F"///" '{print "/sbin/filepriv -f "$2 " \""$1"\""}' | \
+	while XX=`line`
+	do
+		FILENAME=`echo $XX | cut -f4- -d" " | cut -f2 -d'"'`
+		OKTORESTORE=1
+
+		# if file was not restored because it was already on system,
+		# don't restore its privileges
+		grep "Existing \"$FILENAME\" same" $DONTRESTOREFILE >/dev/null 2>&1
+		if [ $? -eq 0 ]
+		then
+			OKTORESTORE=0
+		else
+			# if file was not restored because this is a selective
+			# restore and the file was not selected, don't restore
+			# its privileges
+			if [ "$RESTORE" != "complete" ]
+			then
+				# make sure an flp_indexfile was passed via -f
+				if [ "$FLPINDEXFILE" = "" ]
+				then
+					echo "no flp_index file"
+					echo $FINISHLINE
+					exit 1
+				fi
+
+				grep "^$FILENAME\$" $FLPINDEXFILE >/dev/null 2>&1
+				if [ $? -eq 1 ]
+				then
+					OKTORESTORE=0
+				fi
+			fi
+		fi
+		if [ $OKTORESTORE -eq 1 ]
+		then
+			if [ -x "$FILENAME" ]
+			then
+				# file was restored so restore its privileges
+				eval $XX 
+			fi
+		fi
+	done
+fi
+
+# Remove the privilege file and the dontrestore file
+rm -f $PRIVFILENAME $DONTRESTOREFILE
+
+# Print the following string so the monitor knows we're done
+echo $FINISHLINE
+exit 0

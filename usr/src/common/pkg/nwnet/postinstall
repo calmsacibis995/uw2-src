@@ -1,0 +1,170 @@
+#ident	"@(#)pkg.nw:postinstall	1.14"
+#ident	"$Id: postinstall,v 1.20.2.3 1994/11/03 00:54:18 vtag Exp $"
+
+
+SCRIPTS=/usr/sbin/pkginst
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]; then
+    if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+         -d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]; then
+        cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+           /usr/lib/locale/${LOCALE}/LC_MESSAGES
+    fi
+fi
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = YES ] && set -x
+
+#
+# Create and install NULL files in /etc/netware
+#
+touch /etc/netware/nwconfig
+installf -c base ${PKGINST} /etc/netware/nwconfig v 0644 root sys
+touch /etc/netware/sapouts
+installf -c base ${PKGINST} /etc/netware/sapouts v 0644 root sys
+installf -f -c base ${PKGINST}
+
+if [ "$PKGINSTALL_TYPE" != NEWINSTALL ]
+then
+    ${SCRIPTS}/pkgmrgconf "${PKGINST}" "$AUTOMERGE" "$NAME"
+else
+	#
+	#	Set up NetWare configuration
+	#	Make sure server name configured
+	#
+	NAME=`/usr/sbin/nwcm -v server_name`
+	if echo $NAME |  fgrep \"\" >/dev/null
+	then
+		# Server name not set, set it
+		/usr/sbin/nwcm -q -s "server_name=`uname -n`"
+	fi
+
+	if [ -f /var/sadm/pkg/as/pkginfo ]
+	then
+		#	Configure values for AS system
+		#	router_type=FULL
+		#	Turn on NVT
+		#
+		/usr/sbin/nwcm -s spx_network_rlogin=on >/dev/null 2>&1
+		/usr/sbin/nwcm -s router_type=FULL >/dev/null 2>&1
+	else
+		#	Configure lower defaults for PE systems for nspx
+		#	Use defaults for NVT and router_type
+		#
+		/usr/sbin/nwcm -s spx_max_connections=20
+		/usr/sbin/nwcm -s spx_max_sockets=10
+		/usr/sbin/nwcm -s sap_unixware=off
+	fi
+fi
+
+#
+#	If the desktop is present, set up our icons and privileges
+#
+if [ "$DTM" = YES ]
+then
+
+	# Add nwsetup (if not there) to the PrivTable, give it special privileges.
+	/usr/bin/grep "NetWare_Setup" /usr/X/desktop/LoginMgr/PrivTable >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "nucdt:10:Access NetWare Setup	nwsetup:/usr/X/bin/nwsetup:setuid:driver" >> /usr/X/desktop/LoginMgr/PrivTable
+	fi
+
+
+	# Add nwsetup (if not there) to the Help_Desk.
+	/usr/bin/grep "NetWare_Setup" /usr/X/desktop/Help_Desk>/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "NetWare_Setup^_194,201{_HELPFILE=\"NetWare_Setup/NetWare_Setup.hlp\";_ICONLABEL=\"NetWare_Setup\";_DESCRP=\"Setting up NetWare server connections.\";_ICONFILE=\"nwsetup.icon\"}">>/usr/X/desktop/Help_Desk
+	fi
+
+	# Add classdb (if not there) include to dtadmin
+	if [ -d /usr/X/lib/classdb ]
+	then
+
+		/usr/bin/grep "INCLUDE nwsetup\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+		if [ $? -ne 0 ]
+		then
+			echo "INCLUDE nwsetup.cdb;" >> /usr/X/lib/classdb/dtadmin
+		fi
+	fi
+
+	# Add Net NetWare Setup to users desktop environment that have networking
+	/usr/X/adm/upgrade/dtgetusers | while read line
+	do
+		HOMEDIR=`echo $line | /usr/bin/cut -f2 -d:`
+		VARNAME=`echo $HOMEDIR | /usr/bin/cut -f2 -d/`
+
+		# check if deskop environment has Admin_Tools/Networking  setup
+		if [ -d $HOMEDIR/Admin_Tools/Networking ]
+		then
+			if [ ! -s $HOMEDIR/Admin_Tools/Networking/NetWare_Setup ]
+			then
+				ln -s /usr/X/bin/nwsetup $HOMEDIR/Admin_Tools/Networking/NetWare_Setup 2>/dev/null
+			fi
+		fi
+
+	done
+fi
+
+#
+#	Configure Drivers
+#
+ERR=/tmp/nwnet.err
+CWD=/tmp/nwnet
+rm -f ${ERR}
+for i in ipx ripx nspx
+do
+	cd ${CWD}/${i}
+	echo "/etc/conf/bin/idinstall -k -P ${PKGINST} -u ${i}" >> ${ERR} 2>&1
+	/etc/conf/bin/idinstall -k -P ${PKGINST} -u ${i} >> ${ERR} 2>&1
+	if [ $? -ne 0 ]
+	then
+		echo "/etc/conf/bin/idinstall -k -P ${PKGINST} -a ${i}" >> ${ERR} 2>&1
+		/etc/conf/bin/idinstall -k -P ${PKGINST} -a ${i} >> ${ERR} 2>&1
+		if [ $? -ne 0 ]
+		then
+		message -d `pfmt -s nostd -g ${PKGMSG}:5 "The installation cannot be completed due to an error \nin the driver installation.  The file %s contains the errors." ${ERR} 2>&1`
+			exit 2
+		fi
+	fi
+	cd ${CWD}
+done
+
+#
+#	Rebuild Kernel
+#
+echo "/etc/conf/bin/idbuild -M ipx -M ripx -M nspx" >> ${ERR} 2>&1
+/etc/conf/bin/idbuild -M ipx -M ripx -M nspx >> ${ERR} 2>&1
+if [ $? -ne 0 ]
+then
+		message -d `pfmt -s nostd -g ${PKGMSG}:6 "The installation cannot be completed due to an error \nin the driver installation (idbuild).  The file %s contains the errors. " ${ERR} 2>&1`
+fi
+
+#
+# execute scripts to modify /etc/inet/services and /etc/netconfig.
+#
+sh /var/sadm/pkg/nwnet/install/nwservices install >/tmp/nwservices
+cp /tmp/nwservices /etc/inet/services
+sh /var/sadm/pkg/nwnet/install/nwnetconfig install >/tmp/nwnetconfig
+cp /tmp/nwnetconfig /etc/netconfig
+
+# Now clean up
+#
+# Remove tmp files from package installation database.
+#
+cd ${CWD}
+find `pwd` -depth -print >/tmp/$$a
+removef $PKGINST `cat /tmp/$$a` >/dev/null 2>&1
+rm -f /tmp/$$a
+
+cd /
+rm -fr ${CWD}
+removef -f ${PKGINST}
+if [ "$PKGINSTALL_TYPE" != NEWINSTALL ]
+then
+	exit 10
+else
+	exit 0
+fi

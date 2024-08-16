@@ -1,0 +1,365 @@
+FOOTER_HEIGHT=2
+TAB="	"
+PIPE="|"
+
+# must be kept in sync with uts/io/autoconf/confmgr/cm_i386at.h
+unktype=0
+isatype=1
+eisatype=2
+pcitype=4
+pcmciatype=8
+pnptype=16
+mcatype=32
+systype=64
+sys="SISTEMA"
+isa="ISA"
+eisa="EISA"
+mca="MCA"
+pci="PCI"
+pnp="PnP"
+pcmcia="PCMCIA"
+
+#generic type strings
+Yes="sí"
+Y="S"
+No="no"
+N="N"
+none="ninguno"
+used="utilizado"
+unused="no utilizado"
+unknown="DESCONOCIDO"
+unk="$unknown"
+noprompt="sin indicador"
+prompt="indicador"
+unchanged="sin cambiar"
+changed="cambiar"
+dash="-"
+new="nuevo"
+deleted="suprimido"
+
+BADNUM="Teclee un número entre $2 y $3"
+DCU_GENERIC_HEADER="Utilidad Configuración de dispositivos de UnixWare"
+ANY_CONTINUE_FOOTER="Pulse cualquier tecla para continuar"
+DCU_CHOOSE_FOOTER="Utilice las teclas de flechas arriba/abajo e INTRO para seleccionar"
+GENERIC_CONTINUE_FOOTER="Pulse INTRO para continuar"
+GENERIC_ABORT_FOOTER="Pulse cualquier tecla para abortar los cambios"
+DCUGENERIC_WAIT_FOOTER="Espere, por favor."
+GENERIC_NO_CHOICES="No hay opciones conocidas disponibles para este campo, edítelo manualmente."
+NOTYET="ESTA FUNCIÓN DE DCU NO ESTÁ SOPORTADA"
+RM_OPEN_RDONLY="
+No se puede abrir la base de datos del Gestor de recursos para escribir.
+
+Se abre en modo de sólo lectura.
+
+  Pulse INTRO para continuar."
+
+RM_OPEN_ERROR="
+No se puede abrir el Gestor de recursos.
+
+  Pulse INTRO para continuar."
+
+# For use in "choose" script
+CHOICES="Opciones"
+
+CHOOSE_APPLY_CONF="
+Introduzca la DCU para resolver los conflictos.
+Ignore los conflictos y aplique los cambios.
+"
+
+CHOOSE_EXIT_CONF="
+Ignore las modificacioones realizadas y salga de DCU.
+Entre en el DCU para aplicar los cambios.
+"
+
+MODNOSAVE="ADVERTENCIA: Algunas entradas de la base de datos han sido
+modificadas pero no guardadas."
+
+DCUconflict="
+ ERROR: La Utilidad Configuración de dispositivos(DCU) ha detectado
+ un conflicto de hardware que requiere atención y por lo tanto
+ la instalación no puede continuar.
+
+ SOLUCIÓN:
+ Debe volver a configurar el hardware en conflicto. Esto puede
+ requerir un cambio en los parámetros de hardware y/o la ejecución
+ de una utilidad de configuración.
+
+ Vea el Manual de Instalación para más información.
+         - Apéndice B, Notas sobre configuración de hardware
+         - Apéndice E, Detección de errores
+
+ Tome nota de los conflictos que van a aparecer.
+"
+
+DCUreboot="
+ La instalación va a terminar ahora y
+ se ejecutará el cierre del sistema.
+
+ NOTA: Se requiere el manual y/o la intervención de la DCU
+ para realizar una instalación satisfactoria.
+"
+
+DCUrebuild="ADVERTENCIA:
+ Se debe volver a construir el kernel de unix y rearrancar el sistema
+ debido a que los atributos de algunos controladores de
+ no-autoconfiguración han sido modificados.
+
+ Consulte el manual del propietario de sistema para
+ más información sobre cómo reconfigurar el sistema."
+
+# For use in "boards" script
+BDSUMMARY="Configuración de dispositivos de hardware"
+BDSFOOTER=" "
+BDSFOOTER2="TAB/flecha=Mover, F1=Ayuda, F2=Opciones, F4=Verificar,
+F6=Info, F7=Av, F10=Retorno"
+BDCHFOOTER="F2=opciones, F6=Info, RePág/AvPág=Más, INTRO=Retorno"
+BD_ERR_CNFG="Use $N para $No y $Y para $Yes con el fin de configurar el recurso."
+BD_ERR_INT="Utilice F2 para seleccionar un número de vector de interrupción."
+BD_ERR_PORT="Utilice F2 para seleccionar una dirección de puerto."
+BD_ERR_ADDR="Utilice F2 para seleccionar una dirección de puerto."
+BD_ERR_NODELETE="No puede anular la configuración de esta tarjeta con la DCU."
+BD_BAD_IRQ="Un vector de interrupción debe estar comprendido entre 0 y 15."
+BD_BAD_PORT="Un número de puerto de E/S debe estar comprendido entre
+0 y ffff hexadecimal."
+BD_BAD_PORTE="La dirección de E/S final debe ser >= a la dirección de E/S inicial."
+BD_BAD_MEM="Una dirección de memoria de E/S debe estar comprendida
+entre 0 y ffffffff hexadecimal."
+BD_BAD_MEME="La dirección de memoria final debe ser >= a la dirección de memoria inicial."
+BD_BAD_DMA="Un número de DMA debe estar comprendido entre -1 y 7."
+BD_BAD_CPU="A CPU number must be between 0 and" # Sentence completed by dcu
+BD_ONE_CPU="Sólo hay una CPU configurada y la numeración de la CPU comienza por 0."
+BD_BAD_UNIT="El campo Unidad requiere un valor numérico dependiente del módulo, 0=no usado."
+BD_BAD_IPL="Un número de IPL debe estar comprendido entre 0 y 9."
+BD_BAD_ITYPE="Un número de ITYPE debe estar comprendido entre 0 y 4"
+BD_BAD_NAME="El nombre de dispositivo no se encuentra en la lista de opciones válidas."
+boarddriver="Controlador"
+boardname="Nombre de dispositivo"
+boardisc="Configurar"
+boardunit="Unidad"
+boardipl="IPL"
+boarditype="ITYPE"
+##################################
+# boardirq=MUST BE  = 3 CHARACTERS
+##################################
+boardirq="IRQ"
+##################################
+# boardios=MUST BE <= 7 CHARACTERS
+##################################
+boardios="IOEmpez"
+##################################
+# boardioe=MUST BE <= 5 CHARACTERS
+##################################
+boardioe="IOFin"
+boardport="Puertos"
+##################################
+# boardmems=MUST BE <= 8 CHARACTERS
+##################################
+boardmems="MemEmpez"
+##################################
+# boardmeme=MUST BE <= 8 CHARACTERS
+##################################
+boardmeme="MemFin"
+##################################
+# boarddma=MUST BE  = 3 CHARACTERS
+##################################
+boarddma="DMA"
+boardcpu="BindCPU"
+boardid="ID"
+####################################
+# BoardName=MUST BE <= 20 CHARACTERS
+####################################
+BoardName="Nombre de dispositivo"
+BoardId="Id de tarjeta"
+BoardBusType="Tipo de bus de tarjeta"
+DriverName="Nombre de controlador"
+BoardInstance="Ocurrencia de tarjeta"
+IRQs="IRQ"
+UNITs="UNIDAD"
+IPLs="IPL"
+ITYPEs="ITYPE"
+Ports="Puertos de E/S"
+DMAs="DMA"
+Memory_Addresses="Dirección de BIOS"
+
+#For use in boardxpnd
+ESCXNDFOOTER="Pulse INTRO para salir de la visualización"
+BDXNDTEXT="
+
+Nombre de dispositivo:     \${BDNAME[bd]}
+ID de tarjeta:             \${BDID[bd]}
+Nombre de controlador:  \${BDMODNAME[bd]}
+
+
+
+
+
+
+
+
+
+
+
+"
+
+#For use in "drivers" script
+DRVSUMMARY="Controladores de dispositivos de software"
+BRDCONFIG="Nueva configuración de hardware"
+CONFIG_INFO="Información de configuración"
+DRVFOOTER="Utilice TAB para mover, Barra espaciadora=Conmutar,
+F1=Ayuda, F5=Nuevo, F6=Info, INTRO=Retorno"
+NOSELECT="Para configurar la tarjeta, primero debe seleccionar el controlador."
+NOSELECTMSG="Los valores siguientes son los valores típicos de configuración para este
+controlador. Si se ha seleccionado configurar para este controlador, se
+usarán los valores de la primera columna.
+"
+SELECTMSG="
+ La siguiente información hace referencia a la configuración reflejando
+ el estado de este controlador tras la entrada en la actual sesión de DCU:
+"
+CONFFOOTER="F1=Ayuda, F2=Opciones, F4=Comprobar, F6=Info,
+F8=Cancelar&Regresar, F10=Aplicar&Regresar"
+DRVHBA="Configuración del controlador del adaptador del bus host"
+
+NODRVCATS="
+
+No hay controladores de esta categoría
+que se hayan cargado en el sistema.
+
+"
+
+# For use in irq_conflict function
+IRQNOSHARE="IRQ está en conflicto con un vector de interrupción que no se puede compartir."
+IRQSELFSHARE="IRQ está en conflicto con un vector de interrupción que sólo puede
+compartirse con otra ocurrencia del mismo módulo."
+IRQIPLSHARE="No se puede compartir el IRQ entre módulos con diferentes valores IPL."
+
+ITYPE0IRQ="La entrada siguiente contiene valores contradictorios.
+El campo ITYPE indica que el dispositivo no hace uso de interrupciones."
+
+# For use in port_conflict functions
+IOCONF="El rango de dirección de E/S está en conflicto con la entrada siguiente."
+IOSCONF="El campo de dirección de E/S inicial está en conflicto con la entrada siguiente."
+IOECONF="El campo de dirección de E/S final está en conflicto con la entrada siguiente."
+IOSREQ="Se requiere el campo de dirección de E/S inicial para esta entrada."
+IOEREQ="Se requiere el campo de dirección de E/S final para esta entrada."
+
+# For use in mem_conflict functions
+MEMCONF="El rango de dirección de memoria está en conflicto
+con la entrada siguiente."
+MEMSCONF="El campo de dirección de memoria inicial está en conflicto
+con la entrada siguiente."
+MEMECONF="El campo de dirección de memoria final está en conflicto
+con la entrada siguiente."
+MEMSREQ="Se requiere el campo de dirección de memoria inicial para esta entrada."
+MEMEREQ="Se requiere el campo de dirección de memoria final para esta entrada."
+
+# For use in dma_conflict function
+DMACONF="Las entradas siguientes poseen valores DMA contradictorios:"
+
+# For use by the silent mapping function
+DCUACTION="No se puede definir el parámetro DCU_ACTION para RMKEY."
+
+# For use in verify function
+VERIFYFOOTER="Verificando la configuración de tarjeta..."
+BD_NOSAVED="Primero debe aplicar los cambios (utilice F5 para aplicar los cambios)."
+DRV_NOVERIFY="no soporta la función de verificación."
+VERIFYFAIL="fallo en la verificación."
+VERIFYSUCCESS="verificación satisfactoria."
+
+# For use by Advanced options screen
+ADVCONFIG="Selección de parámetros avanzada"
+ADVFOOTER="F1=Ayuda, F2=Opciones, F10=Regresar"
+ADVSAVED="Guardando los parámetros específicos de la tarjeta"
+ADVLNMSG="Parámetros avanzados"
+BSPLNMSG="Parámetros específicos de tarjeta"
+ADVCBINDCPUMSG="Seleccione CPU de enlace"
+ADVCIPLMSG="Seleccionar IPL"
+ADVCITYPEMSG="Seleccionar ITYPE"
+
+# For use in "helpwin" script
+FIRST_PAGE_FOOTER="F1=Más ayuda, AvPág, Esc para salir de ayuda"
+MIDDLE_PAGE_FOOTER="F1=Más ayuda, AvPág, RePág, Esc para salir de ayuda"
+LAST_PAGE_FOOTER="F1=Más ayuda, RePág, Esc para salir de ayuda"
+ONLY_PAGE_FOOTER="F1=Más ayuda, Esc para salir de ayuda"
+MOREHELP_FOOTER="Utilice las teclas de flecha arriba/abajo e INTRO para seleccionar
+o Esc para salir de ayuda"
+MOREHELP_TITLE="Temas de ayuda relacionados"
+
+# For use in "dcumain" script
+DCUMAIN_TITLE="Menú principal de la Utilidad Configuración de dispositivos"
+DCUMAIN_FOOTER="Utilice las teclas de flecha arriba/abajo e INTRO para seleccionar, F1=Ayuda"
+BDUPDATE_FOOTER="Guardando información sobre configuración..."
+BOARD_PROMPT="Seleccione esto para ver las tarjetas configuradas en el sistema."
+BOARD="^Configuración de dispositivos de hardware"
+DRIVER_PROMPT="Seleccione esto para ver/modificar la configuración de los controladores."
+DRIVER="C^ontroladores de dispositivos de software"
+SAVE="^Aplicar los cambios y salir de la DCU"
+SAVE_PROMPT="Seleccione esto para guardar la información de configuración y salir de la DCU."
+DCUCANCEL="^Salir de la DCU y cancelar los cambios"
+DCUCANCEL_PROMPT="Seleccione esto para finalizar la sesión de DCU sin guardar los cambios."
+RESTART="Reinicie la DCU y cancele los cambios"
+RESTART_PROMPT="Seleccione esto para reiniciar la sesión de DCU."
+CNFG_HBA="Configuración del controlador del adaptador del bus host"
+CNFG_HBA_PROMPT="Seleccione esto para configurar el (los) controlador(es) de adaptador bus host."
+LOAD_HBA="Instale el (los) controlador(es) del adaptador del bus host"
+LOAD_HBA_PROMPT="Seleccione esto para instalar controladores HBA después de completar la config."
+DCUEXIT_ERR="Seleccione \'$DCUCANCEL\' para salir de DCU."
+BAD_UPDATE="ADVERTENCIA: Error detectado durante la actualización de
+base de datos resmgr."
+
+# For use in cnfgihv script
+CnfgFloppy2="
+   La información sobre configuración del adaptador del bus del host 
+   debe estar cargada antes de configurar el controlador.
+
+   Inserte un disquete Host Bus Adapter ahora.
+
+     Pulse ESC para abortar o F5 para continuar.
+
+"
+CnfgWait="
+Espere mientras se carga la información
+sobre configuración del hardware.
+"
+HdcWait="
+Espere mientras se genera la pantalla de
+Configuración de dispositivo de hardware.
+"
+CnflWait="Verificando la configuración del hardware."
+
+DUPIHVCNFG="
+Detectado nombre de disquete duplicado.
+Se ha abortado la configuración.
+
+    Pulse cualquier tecla para continuar.
+"
+CNFGFLOPPY_HBA_FOOTER="Cargando la configuración del adaptador del bus host desde disquete..."
+CNFGFLOPPY_FOOTER="Pulse INTRO para continuar."
+CNFGREMOVE_FLOPPY_FOOTER="Puede extraer el disquete ahora."
+CNFG_DUPDRV="Advertencia... \$fn ya está cargado en el sistema."
+
+# For use in category
+CATMAIN_TITLE="Selecciones de controladores de dispositivos de software"
+CATMAIN_HEADER="CONTROLADOR    NOMBRES DE DISPOSITIVOS SOPORTADOS"
+CATMAIN_HEADER2="===========   ================================"
+network_interface_cards="Tarjetas de ^interfaces de redes"
+host_bus_adapters="^Adaptadores del bus host"
+communications_cards="Tarjetas de ^comunicaciones"
+video_cards="^Tarjetas de vídeo"
+sound_boards="Tarjetas de ^sonido"
+miscellaneous="^Varios"
+alldrivers="Todos los controladores de ^dispositivos de software"
+catreturn="Volver al ^menú principal de DCU"
+CAT1_PROMPT="Seleccione esto para ver o configurar el (los) controlador(es) de red"
+CAT2_PROMPT="Ver o configurar el (los) controlador(es) del adaptador del bus host."
+CAT3_PROMPT="Ver o configurar el (los) controlador(es) de comunicaciones."
+CAT4_PROMPT="Ver o configurar el (los) controlador(es) de tarjetas de vídeo."
+CAT5_PROMPT="Ver o configurar el (los) controlador(es) de tarjetas de sonido."
+CAT6_PROMPT="Ver o configurar otro(s) tipo(s) de controlador(es)."
+CAT7_PROMPT="Ver o configurar todos los tipos de controladores de hardware."
+CAT8_PROMPT="Volver al menú principal de la Utilidad Configuración de dispositivos."
+CATMAIN_FOOTER="Utilice las teclas de flecha arriba/abajo e INTRO para seleccionar, F1=Ayuda"
+
+Continued_String="(Re Pág/Av Pág para más información)"
+PageDown_String="(Haga clic en Av Pág para más información)"
+PageUp_String="(Haga clic en Re Pág para más información)"

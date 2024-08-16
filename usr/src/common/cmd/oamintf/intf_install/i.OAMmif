@@ -1,0 +1,23 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/intf_install/i.OAMmif	1.1"
+#ident  "$Header: i.OAMmif 2.0 91/07/12 $"
+
+# Class action script for sysadm installation package
+
+while read SRC DEST
+do
+	if [ $SRC = /dev/null ]
+	then
+		echo "$DEST"
+	else
+		cp $SRC $DEST
+		echo "$DEST"
+	fi
+done
+
+if [ "$1" = "ENDOFCLASS" ]
+then
+	/usr/sadm/install/bin/intf_inst || exit $?
+fi
+
+exit 0
+

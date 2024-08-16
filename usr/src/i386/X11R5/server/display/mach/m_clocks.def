@@ -1,0 +1,100 @@
+/***									-*-Mode: C; -*-
+ ***	NAME
+ ***
+ ***	mach_clocks.def : clock definitions for the clock chips 
+ ***		supported by the MACH series of chipsets.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***	#define MACH_CLOCK_CHIP(CHIP_NAME, DESCRIPTION, f1, f2 .. f16)
+ ***
+ ***	#include "m_clocks.def"
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	This file defines the frequencies supported by those clock
+ ***	chips `builtin' to the MACH display library.  The format of
+ ***	the file is as follows:
+ ***
+ ***	The first parameter of each "DEFINE_CLOCK_CHIP" construct is
+ ***	an enumeration name used in the code.  The second is the clock 
+ *** 	chips name.The next sixteen parameters specify the supported 
+ ***	frequencies by the given clock chip expressed in hundredths 
+ ***	of a megahertz.  For example, a clock frequency output of 
+ ***	135.00 Mhz would be expressed as value 13500 in this file.
+ ***
+ ***	The clock frequencies for a particular clock chip are arranged
+ ***	in order indexed using the CLOCK_SEL register.
+ ***
+ ***	Clock chip specifications may be defined by the board-level
+ ***	layer too.  Use is made of the fact that a given clock chip
+ ***	can have only 16 different frequencies (there being 4 bits to
+ ***	select a clock value in the CLOCK_SEL register).  If the board
+ ***	level layer sets the pointer `mach_screen_state::clock_chip_p'
+ ***	to point to the appropriate table of frequency values, the chipset
+ ***	layer will use this pointer instead of the builtin tables.
+ ***	
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***	FILES
+ ***
+ ***	SEE ALSO
+ ***
+ ***	"mach.c"			: initialization code for the MACH library.
+ ***	"mach_modes.def"	: display mode definitions.
+ ***	"mach_dacs.def"		: dac definitions.
+ ***	
+ ***	CAVEATS
+ ***
+ ***	BUGS
+ ***
+ ***	HISTORY
+ ***
+ ***/
+
+#ident	"@(#)mach:mach/m_clocks.def	1.2"
+
+DEFINE_CLOCK_CHIP(MACH_CLOCK_CHIP_NULL,
+	"",
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+
+DEFINE_CLOCK_CHIP(MACH_CLOCK_CHIP_18810,
+	"Ati 18810",
+	4295, 4877, -1, 3600, 
+	5035, 5664, -1, 4490, 
+	3024, 3200, 3750, 3900, 
+	4000, 5664, 7500, 6500),
+
+DEFINE_CLOCK_CHIP(MACH_CLOCK_CHIP_18810_2, 
+	"Ati 18810-2",
+	4295, 4877, -1, 3600, 
+	5035, 5664, -1, 4490, 
+	3024, 3200, 11000, 8000, 
+	4000, 4490, 7500, 6500),
+
+DEFINE_CLOCK_CHIP(MACH_CLOCK_CHIP_18811_0, 
+	"Ati 18810-0",
+	4295, 4877, 9240, 3600, 
+	5035, 5664, -1, 4490, 
+	3024, 3200, 11000, 8000, 
+	4000, 4490, 7500, 6500),
+
+DEFINE_CLOCK_CHIP(MACH_CLOCK_CHIP_18812_0, 
+	"Ati 18812-0",
+	4295, 4877, 9240, 3600,
+	5035, 5664, -1, 4490, 3024,
+	3200, 11000, 8000, 4000,
+	4490, 7500, 6500),
+
+DEFINE_CLOCK_CHIP(MACH_CLOCK_CHIP_18811_1,
+	"Ati 18811-1",
+	10000, 12600, 9240, 3600,
+	5035, 5664, -1, 4490,
+	13500, 3200, 11000, 8000,
+	3991, 4490, 7500, 6500),
+
+DEFINE_CLOCK_CHIP(MACH_CLOCK_CHIP_COUNT,
+	"",
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)

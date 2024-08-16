@@ -1,0 +1,33 @@
+#ident	"@(#)pkg.nics:config/nflxt_d	1.15"
+
+NAME=Compaq_Netflex_Token_Dual_Port
+
+DRIVER_NAME=nflxt
+
+CLASS="nflxt nflx nflxsr"
+
+DEPEND=nflxsr
+
+TOKEN=true
+
+VERIFY=true
+
+BUS=EISA
+
+UNIT=2
+
+POST_SCRIPT="nflxt_post"
+
+EXTRA_FILES="/etc/netflex/cet_start
+/etc/netflex/cet_end
+/etc/netflex/unitok.bin
+/etc/netflex/unitokf.bin"
+
+CONFIG_CMDS="/etc/netflex/cet_start nflxt /etc/netflex 0
+/etc/netflex/ap.nflxsr -f"
+
+BOARD_IDS="CPQ6300"
+
+UPGRADE_CHECK=scripts/nflxt_d.upg
+
+NUM_PORTS=2

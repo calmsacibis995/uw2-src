@@ -1,0 +1,113 @@
+#ident	"@(#)ktool:common/ktool/ddicheck/ddilint.data	1.1"
+# data file for flint for ddi/dki/sdi lint library
+
+msg:	name used but not defined
+id:	.*mod_misc_ops.*
+
+msg:	name used but not defined
+id:	.*mod_drv_ops.*
+
+msg:	function argument declared inconsistently
+id:	.*getrbuf.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*ngeteblk.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*buf_breakup.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*sdi_getdev.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*sdi_register.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*sdi_translate.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*rdma_filter.*ddilint.c.*
+
+msg:	function argument declared inconsistently
+id:	.*uiomove.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*uiomove.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*drv_priv.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*vtop.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*bcmp.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*bcopy.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*bzero.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*copyin.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*copyout.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*ovbcopy.*ddilint.*
+
+msg:	function argument declared inconsistently
+id:	.*min.*ddilint.*systm.h.*
+
+msg:	function argument declared inconsistently
+id:	.*max.*ddilint.*systm.h.*
+
+msg:	value type declared inconsistently
+id:	.*strlen.*ddilint.*
+
+msg:	value type declared inconsistently
+id:	.*splx.*ddilint.*
+
+msg:	value type declared inconsistently
+id:	.*sdi_send.*ddilint.*
+
+# The following two warnings are permitted because ddi.h incorrectly
+# declares splx to be a void and lint does not like casting void functions
+# to void.
+
+msg:	function returns value which is sometimes ignored
+id:	splx
+
+msg:	function returns value which is always ignored
+id:	splx
+
+msg:	name used but not defined
+id:	sm_poolhead
+
+msg:	name used but not defined
+id:	lg_poolhead
+
+msg:	name used but not defined
+id:	smfreelist
+
+msg:	name used but not defined
+id:	lgfreelist
+
+# UnixWare 1.1 specific messages
+
+msg:	value type declared inconsistently
+id:	.*spl.*ddilint.*unsigned int.*ddi.h.*int.*
+
+msg:	value type declared inconsistently
+id:	.*sdi_started.*ddilint.*int.*ddi.h.*long.*
+
+msg:	function argument declared inconsistently
+id:	.*const char \*.*char \*.*
+
+msg:	function argument declared inconsistently
+id:	.*drv_getparm(arg 2).*
+
+msg:	function argument declared inconsistently
+id:	.*splx(arg 1).*

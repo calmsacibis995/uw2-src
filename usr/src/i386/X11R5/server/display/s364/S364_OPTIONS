@@ -1,0 +1,45 @@
+#if you want startup diagnostics printed out
+#verbose-startup=1
+
+# If you want vt-switching to be snappy, you can reduce the amount of video 
+# memory that is saved by the video driver. By default, the driver saves all the
+# available video memory (ex: 1MB or 2MB or 4MB). If you use the non-X vt 
+# (ex: console) only for text mode, you need to save only 32K and if you use
+# the console for DOS/standard_vga graphics programs, you have to save 256K. 
+# uncomment one of the next two lines that is applicable to your usage.
+#vt-switch-save-lines=32
+#vt-switch-save-lines=256
+
+# if you have a BrookTree RAMDAC that can handle 135MHz, uncomment the next line
+# you can go higher than 60Hz at 1280x1024 modes
+#dac-name=Bt485KPJ135 
+
+#if you have any problem with cursor (ex: no cursor display), uncomment the next
+#line. 
+#cursor-type=software-cursor
+
+# On #9GXE64 PRO Vision964 based cards, the memory clock is programmed to
+# 57 MHz (least risky frequency). By incresing this frequency, you can get 
+# better performance. If your configuration cannot support a particular 
+# frequency, you will see drawing problems (pixel droppings) on the screen.
+# uncomment one of the 3 lines below.
+#memory-clock-frequency=63
+#memory-clock-frequency=53
+
+# On #9GXE64 PCI Vision 864 based cards (problem only on  some configurations)
+# 1280x1024 and 1152x900 (except lower refresh rates) modes don't work 
+# properly; so, those modes are turned OFF by default for PCI m/c. Uncomment 
+# the following line to try 1280x1024 and 1152x900 modes on
+# PCI - it may or may not work on your PCI configuration.
+#pci-9gxe64-1280-modes=yes
+
+# On #9GXE64 PRO Vision 964 based cards, if you experience 'wrap_around' or 
+# 'edge duplication'  problems, you can try the following options.
+#video-clock-delay=yes
+#video-clock-invert=yes
+
+# On some Vision964 based VLB boards, there may be some problems in 
+# drawing lengthy solid lines. You can try the following option to 
+# work around such problems. Uncomment the following line:
+#vlb-964-line-workaround=yes
+

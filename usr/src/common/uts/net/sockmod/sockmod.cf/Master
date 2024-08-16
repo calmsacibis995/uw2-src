@@ -1,0 +1,10 @@
+#ident	"@(#)kern:net/sockmod/sockmod.cf/Master	1.5"
+#ident	"$Header: $"
+$version 2
+$depend net
+$interface ddi 6mp
+$interface base
+# non-conforming symbols:
+#   EVENT_WAIT_SIG EVENT_SIGNAL EVENT_ALLOC EVENT_DEALLOC EVENT_WAIT
+$entry start
+sockmod	sockmod	LSm	0	0	0

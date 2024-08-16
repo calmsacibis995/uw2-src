@@ -1,0 +1,34 @@
+#ident	"@(#)pdi.cmds:tapecntl.str	1.1"
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+Invalid block size. Must be in multiple of 512 bytes.\n
+Erase function failure.\n
+Write protected cartridge.\n
+Please check tape or cables are installed properly.\nOperation may not be valid on this controller type.\n
+Retension function failure.\n
+Please check equipment thoroughly before retry.\n
+Load function failure.\n
+Unload function failure.\n
+Read block length limits function failure.\n
+Set block length function failure.\n
+Function not supported on this controller type.\n
+Set tape density function failure.\n
+Rewind function failure.\n
+Positioning function failure.\n
+No Data Found - End of written media or bad tape media suspected.\n
+Reset function failure.\n
+Device open failure.\n
+Usage: tapecntl [ -abelrtuvw ] [ -f arg ] [ -p arg ] [ -d SCSI_density_code_in_decimal ] [ device ] \n
+\ntapecntl: -a\t\tposition tape to End-of-Data\n\t  -b\t\tread block length limits\n\t  -e\t\terase\n\t  -l\t\tload\n\t  -r\t\treset \n\t  -t\t\tretension\n\t  -u\t\tunload\n\t  -v\t\tset variable length block mode\n\t  -w\t\trewind\n\t  -f (n)\tset fixed block length to (n) bytes\n\t  -p (n)\tposition - space (n) filemarks forward\n\t  -d (n)\tset density to that specified by SCSI density\n\t\t\tcode (n) -- specify (n) in decimal\n
+Block length limits:\n
+\tMaximum block length = %d\n
+\tMinimum block length = %d\n
+set for variable length block mode failed: %s\n
+set for fixed length block mode failed: %s\n
+New tape density code = %d (%#x)\n

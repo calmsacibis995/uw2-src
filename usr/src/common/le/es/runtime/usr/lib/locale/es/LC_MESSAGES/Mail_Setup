@@ -1,0 +1,54 @@
+Configuración de correo de UNIX
+Configuración de correo
+¿Añadir una línea \'Fecha:\'?
+No
+Sí
+Si el mensaje originado en el sistema local no incluye la línea de encabezado RFC822 \'Fecha:\', y esta variable ha sido definida en Sí, se añadirá este encabezado.
+¿Añadir una línea \'De:\'?
+Si el mensaje originado en el sistema local no incluye la línea de encabezado RFC822 \'De:\', y esta variable ha sido definida en Sí, se añadirá este encabezado.
+¿Añadir una línea \'Recibido:\'?
+Si el mensaje recibido no incluye la línea de encabezado \'Recibido:\', y esta variable ha sido definida en Sí, se añadirá este encabezado.
+
+
+Nombre de grupo de sectores:
+A fin de identificar un conjunto de sistemas estrechamente relacionados mediante un único nombre frente al resto de los sistemas, defina este campo con el nombre del grupo de sectores. Se usa esta cadena en sustitución del nombre de nodo del sistema local generado por uname(2) con objeto de procesar los mensajes de correo.
+Mailsurr Mailcnfg Var's:
+Ha de transferirse a los comandos mailsurr una lista de variables de configuración de correo separadas por comas como si se tratase de variables de entorno.
+Nivel de depuración:
+Esta variable posee los mismos valores que la opción de correo \-x línea de comando.  Gracias a ello es posible establecer un nivel de depuración/ejecución en todo el sistema.   Al depurar, normalmente se define la variable a 2, lo que permite la obtención de diagnósticos mínimos necesarios para la depuración de correo y de las funciones de rcorreo.  El valor de la opción de línea de comando de correo \-x remplazará cualquier otro valor que se haya introducido en esta posición.
+¿Suprimir los archivos de correo vacíos?
+Cuando esta variable se defina como Por defecto, mail y rmail suprimirán los archivos de correo vacíos si sus permisos correspondientes son 0660; en el resto de los casos, se conservarán.  Si selecciona Sí, los archivos de correo vacíos serán siempre suprimidos independientemente de sus permisos.  SI selecciona No, nunca se suprimirán estos archivos.
+Nombre de dominio:
+Se hará uso de esta cadena a fin de sustituir el nombre de dominio del sistema por un nombre de dominio específico al correo.  Este se utilizará como nombre de dominio del sistema en cuestiones relacionadas con el correo.
+Sistema de reenvío a prueba de fallos:
+En el caso de que el directorio /var/mail sea accesible mediante NFS y no sea posible acceder a él mientras de distribuye el correo, los mensajes se pasarán al sistema de reenvío a prueba de fallos. Esta variable debe corresponder al nombre del sistema a partir del cual está montado el directorio /var/mail. Si no monta este directorio mediante NFS, deje este campo vacío.
+¿Compilar el archivo Mailsurr?
+Por regla general, el sistema de correo generará una versión compilada del archivo de configuración de encaminamiento para reducir el tiempo de inicialización para invocaciones futuras del correo una vez realizadas las modificaciones en el archivo de configuración. Si selecciona No, el sistema de correo ignorará el archivo compilado.
+Cadena \'Procedente de:\'
+Puede activar esta cadena si desea proporcionar una información diferente a la de nombre de grupo de sectores o nombre de sistema en el campo ...procedente de... perteneciente al encabezado del matasellos de UNIX.
+Host más inteligente:
+Esta cadena debe corresponder al nombre del sistema de correo que dispone de un alias y de una información de encaminamiento mejores que el sistema local. Cualquier mensaje que el sistema local no pueda encaminar será enviado al host más inteligente.
+Variables de entorno de Mailsurr:
+Ha de transferirse a los comandos mailsurr una lista de variables de entorno separadas por comas. Por regla general , este campo queda vacío.
+
+
+
+
+¿Enviar todos los mensajes al Host más inteligente?
+Si se selecciona Sí, todos los mensajes  no locales serán enviados al host más inteligente.
+¿Registrar mensajes?
+Si se selecciona Sí, se creará una entrada de registro en /var/mail/:log/<día-de-la-semana> o en /var/mail/:errors/<día-de-la-semana> por cada mensaje de correo que pase a través del sistema local.
+¿Añadir una línea \'ID de mensaje:\'
+Si el mensaje originado en el sistema local no incluye la línea de encabezado RFC822 \'ID de mensaje:\', y se ha seleccionado la opción Sí, se añadirá este encabezado.
+¿Convertir en encabezados de 7 bits?
+Si se selecciona Sí, el sistema de correo convertirá cualquier encabezado de 8 bits al formato de 7 bits. Sólo se permite el uso de caracteres de 8 bits en los apartados correspondientes a comentarios como son \'A\', \'Cc:\' y \'Bcc:\'. En consecuencia, cualquier encabezado de caracteres de 8 bits que aparezca en apartados no correspondientes a comentarios será modificado a  \'To no autorizado:\', \'Cc no autorizado:\', y \'Bcc no autorizado:\'.
+¿Convertir a MIME de 7 bits?
+Si se selecciona Sí, cuando un mensaje de correo no MIME (Multi-Purpose Internet Message Extensions) es convertido al formato MIME, un mensaje de 8 bits será convertido al formato de 7 bits mediante la utilización de caracteres printable o la codificación de transferencias de base 64.
+¿Convertir no MIME a MIME?
+Si se selecciona Sí, cualquier mensaje que se reciba en el formato no MIME será convertido a MIME.
+¿Añadir una línea \'A:\'?
+Si se selecciona Sí, cualquier mensaje que un usuario envíe al sistema local sin el encabezado RFC822 \'A\', será dotado de uno a su recepción.
+¿Aceptar el Correo dirigido al Dominio?
+Si se selecciona Sí, los mensajes que se envíen al dominio local sin un nombre de sistema especificado serán considerados como dirigidos al sistema local.
+¿Encaminar mensajes locales a través del MHS?
+Si se selecciona Sí, las direcciones de correo a un usuario que se encuentre supuestamente en este sistema y que no exista, se encaminarán a través del gateway del MHS, puesto que se ha configurado.  Si el gateway del MHS no se ha configurado, el correo se encaminará al host más inteligente que se haya configurado; en caso contrario, el correo irá al siguiente.

@@ -1,0 +1,60 @@
+#ident	"@(#)p9k:p9k/p9k_clocks.def	1.1"
+/***
+ ***	NAME
+ ***
+ ***	p9k_clocks.def : clock definitions for the clock chips 
+ ***			supported by the P9000 series of chipsets.
+ ***
+ ***	SYNOPSIS
+ ***
+ ***	#define P9000_CLOCK_CHIP(CHIP_NAME, DESC, CLOCK_INIT_FUNC, 
+ ***		FREQ_SUPPORTED_FUNC,
+ ***		CLOCK_UNINIT_FUNC,CLOCK_FREQ_COUNT,f1, f2 .. f16...)
+ ***
+ ***	#include "p9k_clocks.def"
+ ***
+ ***	DESCRIPTION
+ ***
+ ***	RETURNS
+ ***
+ ***	MACRO VARIABLES
+ ***
+ ***		__DEBUG__ : Enable debugging and assertion checking.
+ ***
+ ***	FILES
+ ***
+ ***
+ ***	SEE ALSO
+ ***
+ ***	CAVEATS
+ ***
+ ***
+ ***	BUGS
+ ***
+ ***	AUTHORS
+ ***
+ ***	HISTORY
+ ***
+ ***/
+
+DEFINE_CLOCK_CHIP(P9000_CLOCK_NULL,
+	"",
+	NULL, NULL,NULL,0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0),
+
+
+DEFINE_CLOCK_CHIP(P9000_CLOCK_ICD2061A,
+	"ICD 2061A",
+	p9000_clock_initialize_icd2061a,p9000_clock_initialize_icd2061a,
+	p9000_clock_is_supported_frequency,
+	0,
+	25000, 150000, 40000, 32500, 50000, 65000, 36000, 
+	44900, 74500, 80160, 50350, 31500, 63000, 77160, 
+	-1, -1),
+
+DEFINE_CLOCK_CHIP(P9000_CLOCK_COUNT,
+	"Clock Chip Delimiter",
+	NULL, NULL,NULL,0,
+	0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+
+

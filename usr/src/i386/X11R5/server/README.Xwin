@@ -1,0 +1,466 @@
+
+/*
+ * This file has general information about USL's Xwin server (version 2)
+ * features like:
+ *	
+ *	- dynamic linking of various of display libararies at run time.
+ *	- configuration files
+ *
+ * Also, you will find information about setting high res modes
+ */
+
+INTRODUCTION:
+=============
+
+	USL's Xwin server is divided into three parts: 
+		1.  "CORE X" (X), 
+		2.  "DISPLAY MODULE" (DM)
+		3.  "VENDOR MODULE" (VM); 
+
+	The CORE is the X server (ie: /usr/X/bin/X).
+	A "DISPLAY MODULE" (DM) is one of many libraries to support various
+	chip sets (ex: S3, Mach32, SuperVGA256), video boards.
+	A "VENDOR MODULE" (VM) is the vendor's specific stuff, mostly the
+	initialization of various high-res modes.
+
+		Example: To run Cirrus GD54xx based cards in 256 color modes
+			Runtime X = X + libvga256.so.2 + gd542x_256.so.2
+
+		Example: To run ET4000 based cards in 256 color modes 
+			Runtime X = X + libvga16.so.2 + et4k_256.so.2
+
+		Example: To run Trident 8900 in 16 color modes 
+			Runtime X = X + libvga16.so.2 + t89_16.so.2
+
+		Example: To run any Intel Video card in Standard VGA mode
+			Runtime X = X + libvga16.so.2 + stdvga.so.2
+
+	/usr/X/defaults/Xwinconfig file has all the the information that the
+	X server needs. This file has information about
+	the type of video board present in the system and the resolution that
+	the user wants to run the server. For more information on the format
+	of Xwinconfig file, see the sub-section 'Xwinconfig'.
+
+		:DisplayModule:		:Description:
+		---------------		-------------
+		libvga16.so.2		std vga and various 16 color modes
+		libvga256.so.2		256 color modes for dumb super VGA cards
+		gd542x_256.so.2		boards based on Cirrus 5420 through 5434	
+VGA World::
+===========
+	Since the only standard in the 'VGA world' is 640x480 16 colors, USL's
+	Xwin product is delivered to run in the default mode, ie: 640x480 
+	and 16 colors. Drivers for all the popular VGA cards are 
+	provided with the system.
+
+	It is STRONGLY RECOMENDED that the user install the product with the 
+	default mode, run all the required software and make sure 
+	everything runs fine; and then switch to a high res mode.
+
+	A drawing library is split up into two individual libraries, one
+	for actual drawing (DM) and one for initialization (VM). 
+	A drawing library (libvga16.so.2 or libvga256.so.2) is common to 
+	all VGA cards, irrespective of the vendor. But, the initialzation 
+	library is different for each board vendor. USL provides 
+	"VENDOR MODULES" for most of the popular VGA cards;
+	they are in '/usr/X/lib/display/' directory.
+
+	See examples below on how to manually edit the Xwinconfig file and also
+	how to find out the various resolution+monitor combinations supported
+	by a particular initialization library.
+
+	BE CAREFUL WHEN YOU SELECT THE HIGH RESOLUTION MODES. A WRONG 
+	COMBINATION CAN EITHER reboot the machine, or damage the monitor.
+	For example, if I have a Tseng Labs ET4000 base board and if you 
+	choose one of the selections from Trident, it might cause serious
+	problems.
+
+	Also whenever you select one of the high-res modes, run 'sync' a few
+	times before you start the server. This will minimize the damage in
+	case the system reboots.  
+
+setvideomode utility:
+=====================
+	Some of the new features are:
+
+		- auto detection for the graphics chipset and the video
+		  memory installed (whenever possible)
+		- optional "TEST" feature - this will allow you to test the
+		  mode selected, so that you don't have to bring up X to test
+		  the selected mode.
+
+	This utility sets up configuration file for high res modes.
+	Run this utility ONLY after you make sure everything works.
+	To select a high resolution mode, the user can run this
+	utility (/usr/X/adm/setvideomode) program or an advanced user
+	can manually edit the "/usr/X/defaults/Xwinconfig" file.
+
+	To run the '/usr/X/adm/setvideomode' utility, you must be
+	super-user (ie: root).
+
+	If 'setvideomode' is executed with '-default' flag, the default
+	Xwinconfig (640x480, 16 colors) is restored. If no flags are
+	given, the user is prompted with a list of video vendors; once a vendor
+	is selected, then the user is prompted with the resolutions and the
+	monitors supported by that vendor. After the appropriate selection
+	is made, the user is given an option to test the selected mode. A 
+	/usr/X/defaults/Xwinconfig file is generated after the user accepts
+	the mode.
+
+	IF YOU WANT TO RESTORE THE DEFAULT Xwinconfig FILE, execute the foll:
+		'/usr/X/adm/setvideomode -default'
+		(NOTE: you have to be super-user)
+
+
+	Testing all the modes supported by a VendorModule: There is one
+	un-supported (undocumented) flag to "setvideomode" that will allow
+	you to cycle through all the modes in a VendorModule. Once you select
+	the Vendor, all the modes supported by the vendor are cycled through.
+	First the information about the mode is printed on the screen, then
+	the 'test' pattern is displayed on the screen, pauses for a few seconds
+	and then goes to the next available mode until all the modes are
+	cycled through. This mode SHOULD be used ONLY if you have a high-end
+	monitor, because if the VendorModule supports a range of monitors
+	from low-end to high-end (in most cases), and if you don't have 
+	a monitor to handle the high-end frequencies, chosing this option
+	might DAMAGE your monitor. To use this option:
+
+		/usr/X/adm/setvideomode -testallmodes
+
+
+/usr/X/defaults/Xwinconfig
+==========================
+
+	For each line in this file, everything after the "#" sign is treated
+	as a comment.
+
+	The following is a sample config file for standard VGA, 640x480 16 color
+	mode:
+
+
+	################## /usr/X/defaults/Xwinconfig #######################
+
+	KEYBOARD = us
+	FONTPATH = "lib/fonts/misc,lib/fonts/75dpi,lib/fonts/100dpi"
+
+	#
+	# Primary Screen definition
+	#
+	DEFINE SCREEN 0
+		chipset = STDVGA	# video chipset
+		 memory = 512		# video memory
+		  class = VGA16		# class of this DisplayModule
+		  model = VGA		# the core drawing lib for this class
+	     vendor_lib = stdvga.so	# chip specific drawing lib
+	   virtual_size = 640x480	# actual Frame Buffer size
+	   display_size = 640x480	# display (viewing) size within the FB
+		 visual = StaticColor	# visual for this class
+	       fb_depth = 4		# number of colors
+		 device = /dev/console	# device used
+		monitor = STDVGA	# type of monitor
+	   monitor_size = 10x8		# size of the monitor
+	  monitor_specs = NONE		# info passed to vendor lib - optional
+	  info2classlib = NONE		# info passed to class lib - optional
+	 info2vendorlib = NONE		# info passed to vendor lib - optional
+	END
+
+	################## /usr/X/defaults/Xwinconfig #######################
+
+
+	The first line "DEFINE SCREEN 0" defines this as the primary screen 0
+	In a multi-screen env (not officially supported at this time),
+	a second screen is defined as "DEFINE SCREEN 1".
+	NOTE: There are too many restrictions on the hardware combinations for 
+	Intel architectures to support more than one video board in the same box 
+
+	"chipset" is the graphics chipset, ex: ET4000, T8900, S3 etc
+
+	"memory"  is the video memory installed on the video board
+		This is automatically detected for most of the popular chipsets,
+		but the user can over-ride this field during "setvideomode"
+
+	"class"   class of this video hardware
+
+	"model"	model name of the video board
+
+	"vendor_lib" vendor/chip specific library, ex: et4k_256.so, t89_16.so
+
+	"virtual_size" virtual frame buffer (screen) size - by default this is
+		same as the display size (DISPLAY_SIZE). In theory you can have
+		the virtual size depends on the installed display memory, 
+		but some vendor's hardware is sensitive to the the length of 
+		each scan line, which restricts the virtual width of the frame 
+		buffer to be one of a set of pre-defined values. 
+
+		The virtual size of the frame buffer is always equal (default)
+		or larger than the "DISPLAY_SIZE".
+
+		Due to non-standards in the VGA world, and the various 
+		combinations of the chips, resolutions, monitors, it is not 
+		easy to reliably support the panning feature on all boards.
+		Also there are human factors issues (especially if you are
+		running a "desktop". The icons go off the screen).  Due to 
+		these reasons panning is not officially supported.
+		(In other words try at your own risk; it is an UN-SUPPORTED 
+		feature). You can try various combinations and if
+		something works and you like it, use it; if there are any
+		problems, please do not file any MR's.  
+
+	"display_size"
+		The actual display area (ie: visible area) on the screen.
+
+	"visual"
+		default visual for this environment
+
+	"fb_depth"
+		depth of the frame buffer (ie: 4, 8, 16, 24 etc)
+
+	"device"
+		device used (ex: /dev/console)
+
+	"monitor"
+		type of monitor
+
+	"monitor_size"
+		size of the monitor in widthxheight in inches
+
+	"monitor_specs"
+		any monitor specific info that a DisplayModule or a VendorModule
+		needs. This info is passed "AS-IS" to the DM and VM
+
+	"info2classlib"
+		any chip specific info that a DisplayModule needs. 
+		This info is passed "AS-IS" to the DisplayModule 
+
+	"info2vendorlib"
+		any vendor specific info that a DisplayModule needs. 
+		This info is passed "AS-IS" to the DisplayModule 
+
+	switching to another high-res mode without running setvideomode
+	---------------------------------------------------------------
+
+	Each vendor's library (ex: et4k_256.so) supports some pre-determined
+	combinations of display resolutions and monitors.
+
+	1st example:
+	............
+
+	If you want to switching to another combination (ex: from 800x600,
+	MULTISYNC_60 to 1024x768, MULTISYNC_60) that this module supports, 
+	you have to edit only one field:
+
+	change "display_size = 800x600" to "display_size = 1024x768"
+
+	If you want to know which combinations that the current vendor library
+	supports, see the corresponding configuration file in
+	"/usr/X/lib/display" directory. For example, the corresponding
+	configuration file for "et4k_256.so" is "et4k.256cfg".
+
+	How do I know which resolution+monitor combinations are supported?
+	------------------------------------------------------------------
+
+	When ever a  combination (MODEL, DISPLAY_SIZE, MONITOR) is not
+	found, all the supported modes are printed to stdout. One easy way
+	is to read the corresponding config file in /usr/X/lib/display.
+
+	A second way to get this info, is put an invalid entry in one of the
+	three fields. For example, if you change "MODEL = foo" and run X,
+	all the modes supported by the "vendor_lib" are printed to stdout.
+
+Colormaps:
+==========
+	In 16 color mode, the server reads the "/usr/X/defaults/Xwincmaps" file
+	to fill up the static color map. Each line has a 'R', 'G', and 'B'
+	values. There are a few colormaps in the default Xwincmaps file, but the
+	user can create his/her own colormap in this file. The server takes
+	the first colormap without '#' in the first column as the valid colormap
+	data.
+
+Miscellaneous:
+==============
+
+	A new DisplayModule (DM) is created if the graphics chip has enough new
+	hardware features that many new functions has to be implemented
+	from a existing DM. For example, a S3 chip has enough hardware features
+	that we decided to create a new DM and not to use the dumb SuperVGA256
+	(libvga256.so.2) module. 
+
+	But, let us say you have some fixed function (a few functions like
+	bitblt and stippling) chips like WD90C31 and Cirrus GD5426, there is
+	no real need for creating a complete new DM.  We can implement
+	those few functions (to take advantage of the hardware)
+	in the VendorModule and over-ride the software versions from the
+	DisplayModule. For example, if you have a new chip that supports
+	only screen-to-screen bitblt, you can add support to this new chip
+	by implementing just 3 functions (init_modes, restore_modes and
+	scr_scr_bitblt). 
+
+	You can even disable (if you want to compare peformance difference 
+	between software and hardware versions or
+	if you suspect the bug is in the hardware version) the hardware
+	functions by setting an env variable, HWFUNCS=no
+
+	HWFUNCS=no /usr/X/bin/X &
+
+	If hardware function disabling/enabling is provided, "HWFUNCS" env
+	variable is used. The VendorModule prints a message to stderr. For
+	example:
+
+		HWFUNCS=no /usr/X/bin/X -config /tmp/mygd542x.cfg &
+
+		You will see the following message on stderr:
+
+			Cirrus GD5426 detected.
+			GD54xx Hardware functions disabled.
+
+
+	There is new un-documented feature in the V2 server that gives the
+	trace of the SI function calls. This is an experimental feature and
+	is going through changes, so it is un-supported. The command line
+	option is:
+			X -sitrace <level> where level must be between 1-4
+
+			ex: X -sitrace 1
+
+Trouble Shooting:
+=================
+
+- How can I run the server in background from console?
+	You cannot run the server in background on console (from VT's it
+	is OK) if you are in 'ksh'. To run the server in background, do 
+	the following:
+
+		/bin/sh
+		/usr/X/bin/X &
+
+- How can I run the server in realtime ?
+	The default is the 'fixed class' scheduler class for the server.
+	The fixed class scheduler is a new class in SVR4 ES, that is in
+	between time sharing class and real time class. To run the server
+	in a particular scheduler class:
+
+	   olinit -serverclass <realtime|fixed|timeshare>
+
+	To manually run X in a particular scheduler class :
+
+		priocntl -e -c FC -m 25 -p 25  X &
+
+	In the above line, FC can be replaced with RT for realtime the server 
+
+- How do I switch VT's ?
+	Hold 'control' and 'alt' keys down simultaneously and then hit
+	'sys-req' (printscreen).
+	Release the 'control' and 'alt' keys
+	Press the 'p' key
+
+	At this point, you should be back to console with login prompt.
+
+- The screen is scrambled and I cannot do anything ....
+	This could happen if there is an invalid entry in the
+	/usr/X/defaults/Xwinconfig file. 
+	Try to VT switch; if you get a 'login' prompt, login and kill the
+	server process. Then execute the following:
+
+		/usr/X/adm/setvideomode -default
+
+	The above command restores the default mode.
+	   
+- xterm pops up a window and disappears ....
+	set CONSEM=yes; export CONSEM and then run xterm
+
+- olinit returns without anything happening on the screen ....
+	Sometimes, if the server dies abruptly, (ie: server does not exit
+	normally), some files are left out which might cause the new
+	invocation of the server to think that there is a server running.
+	To get around the problem:
+
+	   	rm -f /dev/X/*
+
+	and then either login again or run olinit
+
+- On IBM MCA machines with built in VGA, cannot see anything on the screen.
+	You need the true IBM monitor to run VGA 640x480 mode.
+
+- The screen is distorted for Trident T8900C based VGA board and 256 colors
+	Some newer versions of Trident T8900C boards are different from the
+	earlier versions; all the 256 color modes are broken in some of
+	the newer versions of T8900C, but works fine on some. We are working
+	with Trident Microsystems on this problem, until then you cannot
+	run the server in 256 color modes with some of the T8900C boards.
+
+- If I run in 1024x768 modes, my font size too small.
+	The default font size is 75dpi. You must have edited the Xwinconfig
+	file manually. Edit "/usr/X/defaults/Xwinconfig" file and change the
+	'lib/fonts/75dpi' to 'lib/fonts/100dpi'. 
+
+- Killing the server from console
+	DO NOT kill the server with '-9' signal; this may not restore the
+	state properly. Allways do the following:
+
+		kill <server pid>
+		kill <server pid>
+
+	if you do kill twice, it should kill the server without any side
+	effects.
+
+- 'killall' puts X in a wierd state.
+	killall kills all the user-level processes, including mousemgr.
+	During 'VT switch', the server goes to sleep and waits for input
+	from mousemgr (apart from waiting for other signals). Since the 
+	mousemgr doesn't exist anymore, X goes into wait state with 'init' 
+	as the owner. To avoid this problem, first kill X and then 
+	run 'killall' If you already ran 'killall' and X is hanging 
+	around, start 'mousemgr' and then kill X.
+
+- With certain VGA cards and monochrome (VGA compatible) monitors
+  nothing is displayed on the screen. Why ?
+	This could be a hardware problem. Some VGA cards detect the type
+	of monitor and accordingly initialize the hardware. Some cards
+	fail to correctly detect the type of monitor. 
+	The WORKAROUND for this type of problem is power-on the monitor
+	AFTER the machine (PC) is powered-on.
+	In other words, power-on the machine, wait for 10-15 seconds, and
+	then power-on the monitor. When there is no monitor connected,
+	all (allmost) VGA cards default to monochrome monitor.
+
+- Cannot run clients from remote machines.
+	A few things to check:
+
+	Did you run xhost +<hostname> ?
+	Is there an entry "xserver0 6000/tcp" in /etc/services file ?
+	Can you do regular "rlogin" or "ping" between the two machines ?
+
+	If you don't care for network security, you can disable checking by
+	starting the server with "-xnetaccess off",
+	example:
+		olinit -- -xnetaccess off
+		OR
+		X -xnetaccess off &
+
+- After "killall" command, there is X process hanging around which
+  ties up one vt. 
+	When you Vt-switch, X
+	goes into 'sleep' state and waits for input from mousemgr before
+	the server dies. But, the mousemgr is already killed, and init
+	is the new owner of X. In this state X cannot be killed, but
+	if the "/usr/lib/mousemgr" is started again, then X is killed
+	immediately. 
+	DO NOT run "killall" while X is running; first kill X and then
+	run "killall" 
+		
+- System freezes randomly while running in 256 high res modes.
+	Disable your Video BIOS from system setup. If the problem still
+	persists, go to the next lower resolution. If it still persists,
+	You might need a new initialization driver for your card.
+
+- The mouse drags slowly as if it tries to catch up ....
+	(This problem is true on bus mouse only)
+	Change the interrupt and try again; ie: run mouseadmin, remove
+	the mouse, and attach the bus mouse again with a different
+	interrupt.
+
+- Cannot run the server in realtime mode, eventhough -class realtime
+  is specified.
+	You need to have "cmds" pkg installed. This pkg has the utilities
+	realated to realtime processes.
+

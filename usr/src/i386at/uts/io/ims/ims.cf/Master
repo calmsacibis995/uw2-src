@@ -1,0 +1,10 @@
+#ident	"@(#)kern-i386at:io/ims/ims.cf/Master	1.4"
+#ident	"$Header: $"
+$version 2
+$interface ddi 1
+$interface base
+# non-conforming symbols:
+#   nintr psm_intron ivect intpri tri_log_buf
+#   drv_callback
+$entry  intr init start halt read ioctl
+ims	ims	hc	0	0	0

@@ -1,0 +1,28 @@
+#ident	"@(#)pkg.nw:preremove	1.4"
+#!/bin/sh
+#ident	"$Header: /SRCS/esmp/usr/src/nw/pkg/nwnet/preremove,v 1.4 1994/09/19 17:40:33 meb Exp $"
+
+
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+    if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+         -d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+	then
+        cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+           /usr/lib/locale/${LOCALE}/LC_MESSAGES
+    fi
+fi
+
+if [ -x /usr/sbin/statnps ]
+then
+	if /usr/sbin/statnps
+	then
+		message `pfmt -s nostd -g ${PKGMSG}:3 "The NetWare Protocol Stack is running.\nYou must run stopnps before removing the nwnet package! " 2>&1`
+		exit 3
+	fi
+fi
+rm -rf /etc/netware/*.pid > /dev/null 2>&1
+exit 0

@@ -1,0 +1,275 @@
+#ident\t"@(#)dthelp:Applications/Remote_Access.hlp	1.16"
+^*version^1
+^*title^Remote Login
+^:Remote_Login
+^*width^70
+^+DesktopMgr/help.defs
+^?Setting up access to remote systems
+^0^Remote Login
+^$10
+Remote Login
+
+Use Remote Login to log in or transfer files to a remote system without
+opening up Dialup Setup or Internet Setup. 
+
+Before you can use Remote Login, you must do the following:
+
+\to\tSet up your system for TCP/IP networking, as described in \k(Internet Setup^dtadmin/inet.hlp^Internet Setup)
+                                 or
+\t \tSet your system up for networking using a modem or direct connection,
+\t \tas described in \k(Dialup Setup^dtadmin/DialMgr.hlp^Dialup Setup)
+
+\to\tGet a login ID and a password on the remote system 
+                                 or
+\t \tAsk a user who has an account on the remote system to give you access to
+\t \this or her account, as described in
+\t \t\k(Setting Up Local System Access for Remote Users^dtadmin/inet.hlp^Setting Up Local System Access for Remote Users)
+
+You can do the following with Remote Login:
+
+\to\t\k(Log in to a remote system^^Logging in to a Remote System)
+\to\t\k(Copy files to a remote system^^Copying Files to a Remote System)
+\to\t\k(Change the properties of a Remote Login icon^^Changing Remote Login Connection Properties)
+
+Note: You can create additional remote system icons by making a copy of your
+remote access icon or by copying a system entry from within \k(Internet Setup^dtadmin/inet.hlp^Internet Setup)
+or \k(Dialup Setup^dtadmin/DialMgr.hlp^Dialup Setup) to a folder. See \k(Copying an Icon for a Remote System to a Folder^dtadmin/inet.hlp^Copying an Icon for a Remote System to a Folder).
+
+^1^Logging in to a Remote System
+^$20
+Logging in to a Remote System
+
+To login to a remote system, do the following:
+
+1.\t\d(Double-click^double-click) on Remote_Login in your \k(Applications folder^DesktopMgr/appl.hlp^Overview of the Applications Folder), or on any
+  \tother remote system icon that you may have copied from \k(Internet Setup^dtadmin/inet.hlp^Copying an Icon for a Remote System to a Folder)
+  \tor \k(Dialup Setup^dtadmin/DialMgr.hlp^Dialup Setup). The "Remote System - Login" window appears with
+  \tthe following options:
+
+  \to\tSystem Name: - Type in the name of the system you want to access. Be
+  \t \tsure you have a login ID and password already set up on that system,
+  \t \tor have access to another user's account. 
+
+  \t \tNote: You can click on \k(Lookup^^Remote Login - Lookup Window) for a list of systems defined in your
+  \t \t/etc/hosts file, or for a list of systems in your domain (if you have
+  \t \t\k(DNS^dtadmin/inet.hlp^Accessing DNS) configured on your system).
+
+  \to\tLogin to System As: - Type in your login ID on the remote system, or
+  \t \ttype in the login ID of the user who has given you access to his or her
+  \t \taccount.
+
+2.\tClick on Login to log in to the remote system. If you want to store the
+  \tcurrent options so you can use them the next time you double-click on the
+  \tRemote_Login icon, click on Save before you exit this window. 
+
+See also:
+\s(Files in /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^2^Remote System - Login Window
+^$30
+Remote System - Login Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tSystem Name: - Type in the name of the system you want to access. Be
+  \t \tsure you have a login ID and password already set up on that system,
+  \t \tor have access to another user's account. 
+
+  \t \tNote: You can click on \k(Lookup^^Remote Login - Lookup Window) for a list of systems defined in your
+  \t \t/etc/hosts file, or for a list of systems in your domain (if you have
+  \t \t\k(DNS^dtadmin/inet.hlp^Accessing DNS) configured on your system).
+
+  \to\tLogin to System As: - Type in your login ID on the remote system, or
+  \t \ttype in the login ID of the user who has given you access to his or her
+  \t \taccount.
+
+2.\tClick on Login to log in to the remote system. If you want to store the
+  \tcurrent options so you can use them the next time you double-click on the
+  \tRemote_Login icon, click on Save before you exit this window. 
+
+^2^Remote Login - Lookup Window
+^$40
+Remote Login - Lookup Window
+
+If you do not have \k(DNS configured on your system^dtadmin/inet.hlp^Accessing DNS), click on the desired
+system defined in the /etc/hosts file.
+
+If you do have DNS configured on your system, you can either choose a system
+displayed in the Systems List or displayed in the \k(Domain Listing^dtadmin/inet.hlp^Domain Listing).
+
+See also:
+\s(Files in /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^1^Changing Remote Login Connection Properties
+^$50
+Changing Remote Login Connection Properties
+
+To change Remote Login connection properties, do the following:
+
+1.\t\d(Right-click^right-click) on the desired Remote Login icon.
+
+2.\tClick on Properties. The "Remote System - Connection Properties"
+  \twindow appears with the following fields:
+  
+  \to\tSystem Name: - Type in the name of the system you want to access. If
+  \t \tyou have \k(DNS configured^dtadmin/inet.hlp^Accessing DNS) on your system, you can click on \k(Lookup^^Remote Login - Lookup Window)
+  \t \tto search for a system.
+
+  \to\tLogin to System As: - Type in your login ID on the remote system, or
+  \t \tthe login ID of the user who has given you access to his or her account.
+
+  \to\tTransfer Files To: - By default, this field is set to your login ID.
+  \t \tYou can, however, transfer files to another login ID if that user has
+  \t \tgiven you access to his or her account.
+
+  \to\tShow Other Options: - Click on this box to display the following
+  \t \tadditional properties:
+
+  \t \t-\tTransfer Files Using: - By default, this field is set to UUCP (see
+  \t \t \t\k(Using the UUCP Inbox^DesktopMgr/uucp.hlp^Using the UUCP Inbox) for information on retrieving UUCP file
+  \t \t \ttransfers).
+
+  \t \t \tClick on Remote Copy if you want to use \k(rcp^dtadmin/inet.hlp^Setting Up Local System Access for Remote Users).
+
+  \t \t-\tCopy Files To: - This field appears only if you choose to transfer
+  \t \t \tfiles using Remote Copy. Type in the \d(pathname^path) of the directory
+  \t \t \tto which you want to copy the files.
+
+  \t \t-\tAlways Confirm: - Turn off Connections if you do not want to display
+  \t \t \tthe \k("Remote System - Login" window^^Remote System - Login Window) whenever you double-click
+  \t \t \ton the Remote Login icon, or turn off on File Transfers if you do
+  \t \t \tnot want the \k("Remote System - File Transfer" window^^Remote System - File Transfer Window) to
+  \t \t \tdisplay whenever you \d(drag-and-drop) a file on to a Remote
+  \t \t \tSystem icon.
+
+3.\tClick on Save to save the changes.
+
+  \tNote: You can also click on Reset to restore the previous settings, or
+  \ton Cancel to dismiss the window without saving any changes.
+
+See also:
+\k(Internet Setup^dtadmin/inet.hlp^Internet Setup)
+
+
+^2^Remote System - Connection Properties Window
+^$60
+Remote System - Connection Properties Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+  
+  \to\tSystem Name: - Type in the name of the system you want to access. If
+  \t \tyou have \k(DNS configured^dtadmin/inet.hlp^Accessing DNS) on your system, you can click on
+  \t \t\k(Lookup^^Remote Login - Lookup Window) to search for a system.
+
+  \to\tLogin to System As: - Type in your login ID on the remote system, or
+  \t \tthe login ID of the user who has given you access to his or her account.
+
+  \to\tTransfer Files To: - By default, this field is set to your login ID.
+  \t \tYou can, however, transfer files to another login ID if that user has
+  \t \tgiven you access to his or her account.
+
+  \to\tShow Other Options: - Click on this box to display the following
+  \t \tadditional properties:
+
+  \t \t-\tTransfer Files Using: - By default, this field is set to UUCP (see
+  \t \t \t\k(Using the UUCP Inbox^DesktopMgr/uucp.hlp^Using the UUCP Inbox) for information on retrieving
+  \t \t \tUUCP file transfers).
+
+  \t \t \tClick on Remote Copy if you want to use \k(rcp^dtadmin/inet.hlp^Setting Up Local System Access for Remote Users).
+
+  \t \t-\tCopy Files To: - This field appears only if you choose to transfer
+  \t \t \tfiles using Remote Copy. Type in the \d(pathname^path) of the directory
+  \t \t \tto which you want to copy the files.
+
+  \t \t-\tAlways Confirm: - Turn off Connections if you do not want to display
+  \t \t \tthe \k("Remote System - Login" window^^Remote System - Login Window) whenever you double-click
+\t \t \ton the Remote Login icon, or turn off on File Transfers if you do not
+  \t \t \twant the \k("Remote System - File Transfer" window^^Remote System - File Transfer Window) to display whenever
+  \t \t \tyou \d(drag-and-drop) a file on to a Remote System icon.
+
+2.\tClick on Save to save the changes.
+
+  \tNote: You can also click on Reset to restore the previous settings, or
+  \ton Cancel to dismiss the window without saving any changes.
+
+^1^Copying Files to a Remote System
+^$65
+Copying Files to a Remote System
+
+To copy files to a remote system, do the following:
+
+1.\tOpen the folder that contains the file you want to copy to a remote
+  \tsystem. 
+
+2.\t\d(Drag-and-drop^drag-and-drop) the file you want to copy on to a Remote System
+  \ticon. The "Remote System - File Transfer" window appears with the
+  \tfollowing fields:
+
+  \to\tSystem Name: - If the Remote Login icon is associated with a
+  \t \tspecific remote system, that system's name appears in this text box.
+  \t \tOtherwise, the text box is blank. Type in system name or click on
+  \t \t\k(Lookup^^Remote Login - Lookup Window) to choose from a list of systems.
+
+  \to\tUser Receiving File(s): - By default, this field is set to your login
+  \t \tID. You can, however, transfer files to another login ID by changing
+  \t \tthe entry in this text box.
+
+  \to\tShow Other Options: - Click on this box to display the following
+  \t \tadditional properties: 
+
+  \t \t-\tTransfer Files Using: - By default, this field is set to UUCP. Click
+  \t \t \ton Remote Copy if you want to transfer files using \k(rcp^dtadmin/inet.hlp^Setting Up Local System Access for Remote Users).
+
+  \t \t-\tCopy Files To: - This field appears only if you choose to transfer
+  \t \t \tfiles using  Remote Copy. Type in the \d(pathname^path) of the directory
+  \t \t \tto which you want to copy the files.
+
+3.\tClick on Send to copy the file to the remote system. If you want to use
+  \tthese same settings again the next time you double-click on this Remote
+  \tLogin icon, click on Save.
+
+  \tNote: You can also click Reset to restore the previous settings, or Cancel
+  \tto dismiss the window without making any changes.
+  
+See also:
+\k(Internet Setup^dtadmin/inet.hlp^Internet Setup)
+\k(Using the UUCP Inbox^DesktopMgr/uucp.hlp^Using the UUCP Inbox)
+
+^2^Remote System - File Transfer Window
+^$70
+Remote System - File Transfer Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tSystem Name: - If the Remote_Login icon is associated with a
+  \t \tspecific remote system, that system's name appears in this text box.
+  \t \tOtherwise, the text box is blank. Type in system name or click on
+  \t \t\k(Lookup^^Remote Login - Lookup Window) to choose from a list of systems.
+
+  \to\tUser Receiving File(s): - By default, this field is set to your login
+  \t \tID. You can, however, transfer files to another login ID by changing
+  \t \tthe entry in this text box.
+
+  \to\tShow Other Options: - Click on this box to display the following
+  \t \tadditional properties: 
+
+  \t \t-\tTransfer Files Using: - By default, this field is set to UUCP. Click
+  \t \t \ton Remote Copy if you want to transfer files using \k(rcp^dtadmin/inet.hlp^Setting Up Local System Access for Remote Users).
+
+  \t \t-\tCopy Files To: - This field appears only if you choose to transfer
+  \t \t \tfiles using  Remote Copy. Type in the \d(pathname^path) of the directory
+  \t \t \tto which you want to copy the files.
+
+2.\tClick on Send to copy the file to the remote system. If you want to use
+  \tthese same settings again the next time you double-click on this Remote
+  \tLogin icon, click on Save.
+
+  \tNote: You can also click Reset to restore the previous settings, or Cancel
+  \tto dismiss the window without making any changes.
+  

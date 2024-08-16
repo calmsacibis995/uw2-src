@@ -1,0 +1,120 @@
+This Directory Supports the following three sets of configurations:
+   1) Error Message Localization
+   2) Interface Localization
+   3) Character Set Localization
+================================
+================================
+================================
+
+1) Error Message Localization
+================================
+
+The file 'errors.txt' is a list of error numbers and their corresponding
+string message.  The print style formatting directives are replaced with
+associated values.
+This file can be modified as you wish. 
+If an EBT program cannot find a message in the file, its number
+is printed out instead.
+
+The file 'msgs.txt' is a list of dialog box messages used in the system.
+
+props.txt: style property names
+
+values.txt: style property values
+
+query.txt: query language keywords
+================================
+================================
+================================
+
+2) Interface Localization (dtext,insted directories)
+================================ 
+
+The interface can be localized by using a set of files found in the
+dtext directory with the .rc extension.
+See the System Adminstration manual for the 
+names and grammars for these file.
+
+
+================================
+================================
+================================
+================================
+
+3) Character Set Localization
+
+================================
+
+This directory can have the following files to support
+extended character sets and multiple languages.
+=============================================================
+
+upper.x: translation table to convert characters to uppercase
+lower.x: translation table to convert characters to lowercase
+
+global.i: global isa table
+	UPPER: 1 bit
+        LOWER: 2 bit
+	PUNCT: 4 bit
+	SPACE: 8 bit
+	DIGIT: 16 bit
+	CONTROL: 32 bit
+
+mac-8859.x: mac to 8859 translation table, etc.
+
+
+Format of a translation table file
+=============================================================
+# this line is a comment
+# any line can also be blank
+#name Name of table, such as mac-iso8859 (translate from mac to 8859)
+
+# this next line shows the entry for hex 0x10 in the table with a value of 
+# hex 0x40
+# NOTE: The table maps the first --> second.  In this case, 0x10 maps
+# to 0x40.
+
+0x10 0x40
+
+# this next line shows the same thing but using decimal notation
+16 64
+
+# this next line shows the same thing using character notation
+'a' 'A'
+
+# note that formats can be mixed as shown on this next line
+'a' 0x62
+
+# you should have one line such as that above for every entry
+# that has to be translated
+
+# if a character does not have an entry, its translation is
+# defined to be the same, in other words, its translation is
+# mapped to itself
+
+
+
+Format of an isa table file
+=============================================================
+#name Name of table
+# this line is a comment
+# any line can also be blank
+
+# by default, the table will begin empty
+# by default, the table will being with bits set to 0
+
+#bits number
+# where number is an integer between 0 and 255
+# first this turns everything off for bits number
+# then add all following entries setting bits number
+ 
+# this next line adds hex characters 0x10 and 0x20 to the table
+# under the current bit settings
+0x10 0x20
+
+# this next line adds the characters 'a', 'b', and 'c' to the table
+'a' 'b' 'c'
+
+# this line adds decimal character 5 to the table
+5
+

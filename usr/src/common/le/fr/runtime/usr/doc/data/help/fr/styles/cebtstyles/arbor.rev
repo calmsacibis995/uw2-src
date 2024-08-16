@@ -1,0 +1,174 @@
+<!-- Template for new revelatory Stylesheets
+
+  Copyright 1992, Electronic Book Technologies.  All rights reserved.
+-->
+
+<!ENTITY	art.color	CDATA	"#000000"	>
+<!ENTITY	hottext.fontfam	CDATA	"courier"	>
+<!ENTITY	hottext.foreground	CDATA	"#0101E2"	>
+<!ENTITY	hottext.slant	CDATA	"Roman"	>
+<!ENTITY	hottext.weight	CDATA	"Bold"	>
+<!ENTITY	std.font	CDATA	"helvetica"	>
+<!ENTITY	std.font-size	CDATA	"14"	>
+<!ENTITY	std.leftindent	CDATA	"5"	>
+<!ENTITY	std.line-spacing	CDATA	"20"	>
+<!ENTITY	std.rightindent	CDATA	"6"	>
+<!ENTITY	subscript	CDATA	"-3"	>
+
+<sheet>
+
+
+<?INSTED COMMENT: UNGROUPED STYLES FOLLOW>
+
+<style name="#TAGS">
+	<foreground>	purple	</>
+</style>
+
+<style name="EXTREF">
+	<font-family>	&hottext.fontfam	</>
+	<font-weight>	&hottext.weight	</>
+	<font-slant>	&hottext.slant	</>
+	<foreground>	&hottext.foreground	</>
+	<score>	Under	</>
+	<script>	ebt-link root=idmatch(ID, ATTR(RID)) book=attr(book)    window=new stylesheet=popup.rev	</>
+</style>
+
+<style name="I">
+	<font-slant>	Italics	</>
+</style>
+
+<style name="ITEM">
+	<left-indent>	+=10	</>
+	<break-before>	False	</>
+</style>
+
+<style name="ITEM,P">
+	<space-after>	2	</>
+</style>
+
+<style name="LIST">
+	<left-indent>	+=5	</>
+	<space-before>	4	</>
+	<break-before>	line	</>
+	<break-after>	line	</>
+</style>
+
+<style name="MARKER">
+	<font-family>	if(isempty(attr(type)),symbol,)	</>
+	<font-weight>	Medium	</>
+	<hide>	text	</>
+	<break-before>	line	</>
+	<text-before>switch(attr(type,parent(LIST)),'triple', format(cnum(),word('LETTER decimal roman',countword(qtag(), x,'eq(var(x),'LIST')',',')))., 'num', cnum()., 'default', content())</>
+</style>
+
+<style name="PROPERTY">
+	<break-before>	Line	</>
+</style>
+
+<style name="ROWRULE">
+	<hrules>	Before	</> 
+</style>
+
+<style name="#SDATA">
+	<font-family>	attr(font)	</>
+	<font-weight>	attr(weight)	</>
+	<character-set>	attr(charset)	</>
+	<text-before>char(attr(code))</>
+</style>
+
+<style name="SP.FN">
+	<icon-position>	Right	</>
+	<hide>	Children	</>
+	<script>	ebt-reveal title="Footnote" stylesheet="fulltext.v"	</>
+	<icon-type>	footnote	</>
+</style>
+
+<style name="SP.SUB">
+	<vertical-offset>	&subscript	</>
+</style>
+
+<style name="SPECIAL">
+	<font-family>	&title.font	</>
+	<select>	SP.toupper(attr(type))	</>
+</style>
+
+<style name="STYLE">
+	<space-before>	6	</>
+	<space-after>	6	</>
+	<break-before>	Line	</>
+	<text-before>if(attr(NAME), Property setting\(s\) for style attr(NAME):, Property setting:)</>
+</style>
+
+<style name="STYLE,#TEXT-BEFORE">
+	<font-weight>	Bold	</>
+</style>
+
+<style name="SUBBLOCK,LABEL">
+	<font-weight>	Bold	</>
+	<foreground>	&title.color	</>
+	<space-before>	8	</>
+	<justification>	Left	</>
+	<break-before>	line	</>
+</style>
+
+<style name="SUBBLOCK,P">
+	<space-before>	if(gt(cnum(),1), 10,)	</>
+	<break-before>	if(gt(cnum(),1), Line, None)	</>
+</style>
+
+<style name="TABLE">
+	<font-family>	&std.font	</>
+	<font-size>	&std.font-size	</>
+	<line-spacing>	&std.line-spacing	</>
+	<space-before>	15	</>
+	<break-before>	Line	</>
+</style>
+
+<style name="TABLECELL">
+	<left-indent>	+=div(tableinfo(arbor,left-indent,5),2)	</>
+	<width>	sub(div(tableinfo(arbor,width,5),2),15)	</>
+	<justification>	tableinfo(arbor,justification)	</>
+	<column>	True	</>
+</style>
+
+<style name="TABLECELL,P">
+	<left-indent>	if(eq(cnum(ancestor()),1), +=10, +=0)	</>
+	<right-indent>	if(eq(cnum(ancestor()),1), +=5, +=0)	</>
+	<break-before>	if(eq(cnum(),1), None, Line)	</>
+</style>
+
+<style name="TABLEROW">
+	<font-weight>	if(gt(cnum(),1),Medium,Bold)	</>
+	<space-before>	4	</>
+	<space-after>	4	</>
+	<vrules>	Children	</>
+	<break-before>	Line	</>
+</style>
+
+<style name="VALUE">
+	<left-indent>	+=55	</>
+	<column>	True	</>
+</style>
+
+<style name="VERBATIM">
+	<font-family>	&verbatim.font	</>
+	<font-size>	&verbatim.font-size	</>
+	<line-spacing>	&verbatim.line-spacing	</>
+	<space-before>	if(eq(tag(lsibling()),'VERBATIM'),2,8)	</>
+	<space-after>	if(eq(tag(rsibling()),'VERBATIM'),2,8)	</>
+	<justification>	verbatim	</>
+	<break-before>	Line	</>
+	<break-after>	Line	</>
+</style>
+
+<style name="XREF">
+	<font-family>	&hottext.fontfam	</>
+	<font-weight>	&hottext.weight	</>
+	<font-slant>	&hottext.slant	</>
+	<foreground>	&hottext.foreground	</>
+	<score>	Under	</>
+	<script>	ebt-link root=idmatch(ID, ATTR(RID)) window=new stylesheet=popup.rev	</>
+</style>
+
+
+</sheet>

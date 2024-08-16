@@ -1,0 +1,54 @@
+Configuration de la messagerie UNIX
+Configuration courrier
+Ajouter une ligne \'Date :\' ?
+Non
+Oui
+Si un message émis sur la machine locale ne comporte pas de ligne d'en-tête RFC822 \'Date :\', et que cette variable est définie sur Oui, cette ligne d'en-tête sera ajoutée.
+Ajouter une ligne \'From :\' ?
+Si un message émis sur la machine locale ne comporte pas de ligne d'en-tête RFC822 \'From :\', et que cette variable est définie sur Oui, cette ligne d'en-tête sera ajoutée.
+Ajouter une ligne \'Received :\' ?
+Si un message reçu ne comporte pas de ligne d'en-tête \'Received :\', et que cette variable est définie sur Oui, cette ligne d'en-tête sera ajoutée.
+
+
+Nom de grappe :
+Pour qu'un groupe de systèmes à couplage intermédiaire soit identifié sous un seul nom par tous les autres systèmes, entrez le nom de la grappe dans ce champ. Cette chaîne est utilisée à la place du nom de noeud du système local qui est renvoyé par uname(2) pour traiter les messages.
+Variables Mailcnfg Mailsurr :
+Liste présentant les variables de configuration du courrier séparées par des virgules. Ces variables doivent être transmises aux commandes mailsurr en tant que variables d'environnement.
+Niveau de débogage :
+Cette variable prend les mêmes valeurs que l'option \-x command\-line associée au courrier. Elle permet de définir un niveau d'analyse/de débogage à l'échelle de l'ensemble du système. Lors du débogage, cette variable est généralement paramétrée sur 2, qui correspond au niveau minimal de diagnostic requis pour supprimer les bogues du courrier et éviter les incidents rmail. La valeur de l'option \-x mail command-line écrase toute valeur entrée à ce niveau.
+Effacer les fichiers courrier vides ?
+Lorsque cette variable est définie sur Par défaut, mail et rmail effacent les fichiers courrier vides si les autorisations liées aux fichiers correspondent à 066 ; si tel n'est pas le cas, ces fichiers sont conservés. Si vous sélectionnez Oui, les fichiers courrier vides seront systématiquement supprimés quelles que soient les autorisations associées. Si vous sélectionnez Non, ces fichiers ne seront jamais effacés.
+Nom du domaine :
+Cette chaîne permet d'écraser le nom de domaine du système par un nom de domaine utilisé pour le courrier uniquement. Ce nom sera employé comme nom de domaine du système dans le cadre du courrier.
+Système d'expédition à sécurité intégrée :
+Dans le cas où le répertoire /var/mail est accessible via NFS, et où il n'est pas accessible durant la distribution de courrier, les messages seront envoyés au système d'expédition à sécurité intégrée. Cette variable doit correspondre au nom du système à partir duquel le répertoire /var/mail est monté. Si vous ne montez pas ce répertoire via NFS, laissez ce champ vierge.
+Compiler fichier Mailsurr ?
+En général, Courrier crée une version compilée du fichier de configuration du routage de façon à réduire la durée d'initialisation liée à des appels ultérieurs de Courrier à chaque modification du fichier de configuration. Si vous sélectionnez Non, Courrier ignore le fichier compilé.
+Chaîne \'Remote from :\' :
+Cette chaîne peut être définie si vous souhaitez utiliser une chaîne légèrement différente du nom de la grappe ou du système dans le champ ...accès à distance à partir de... de la ligne d'en-tête du cachet UNIX.
+Hôte plus intelligent :
+Cette chaîne peut être paramétrée sur le nom d'un système de courrier disposant d'alias ou d'informations de routage plus adaptés que le système local. Tout courrier que le système local ne peut pas acheminer sera alors envoyé à l'hôte intelligent.
+Variables Env Mailsurr :
+Liste présentant les variables d'environnement séparées par des virgules. Ces variables doivent être transmise aux commandes mailsurr. Ce champ reste généralement vierge.
+
+
+
+
+Acheminer tous les messages vers l'hôte intelligent ?
+Si vous sélectionnez Oui, tous les messages non locaux seront acheminés via l'hôte intelligent.
+Journaliser messages ?
+Si vous sélectionnez Oui, une entrée de journal est créée dans /var/mail/:log/<jour-de-semaine> ou /var/mail/:errors/<jour-de-semaine> pour chaque message transmis via le système local.
+Ajouter une ligne \'Message-ID :\' ?
+Si un message émis sur la machine locale ne comporte pas de ligne d'en-tête RFC822 \'Message-ID :\', et que Oui est sélectionné, cette ligne d'en-tête sera ajoutée.
+Convertir en en-têtes de 7 bits ?
+Si vous avez sélectionné Oui, mail convertit tout en-tête de 8 bits au format 7 bits. Etant donné que les commentaires des lignes d'en-tête \'To :\', \'Cc :\' et \'Bcc :\' ne peuvent contenir que des caractères de 8 bits, toute ligne d'en-tête de ce type qui comprend des sections sans commentaire comportant des caractères de 8 bits sera transformée en ligne d'en-tête \'Illegal-To :\', \'Illegal-Cc :\' et \'Illegal-Bcc :\'.
+Convertir en MIME de 7 bits ?
+Si Oui est sélectionné, lorsqu'un message non MIME (Multi-Purpose Internet Message Extensions) est converti au format au format MIME, un message de 8 bits sera converti au format 7 bits au moyen de systèmes de codage de transfert imprimable ou base64.
+Convertir non MIME en MIME ?
+Si vous sélectionnez Oui, tout message reçu qui ne correspond pas au format MIME sera converti à ce format.
+Ajouter une ligne \'To :\' ?
+Si vous sélectionnez Oui, tout message expédié par un utilisateur de la machine locale sans ligne d'en-tête \'To :\' RFC822 se verra affecté de cette ligne d'en-tête.
+Accepter le courrier adressé au domaine ?
+Si vous sélectionnez Oui, les messages adressés au domaine local sans nom de système seront considérés comme des messages adressés au système local.
+Acheminer les messages locaux via MHS ?
+Si vous sélectionnez Oui, le courrier adressé à un utilisateur censé résider sur ce système qui n'existe pas sera acheminé via la passerelle MHS, à condition que cette dernière ait été configurée. Si tel n'est pas le cas, le courrier sera acheminé vers l'hôte intelligent à condition que ce dernier ait été configuré, sinon le courrier ne sera pas transmis.

@@ -1,0 +1,478 @@
+#pragma ident	"@(#)p9k:p9k/README.p9k	1.8"
+
+
+Setting High Resolution Modes: (*VERY IMPORTANT    VERY IMPORTANT*)
+-------------------------------------------------------------------
+        Use the '-noprobe' option with setvideomode/setvgamode utility.
+	Not using this option may result in the P9K graphics engine 
+	being left in a wierd state on some vendor's p9k cards when 
+	the utility tries to detect the type of chip set.
+
+	Ex:     setvgamode -noprobe -vinfo p9k
+	OR
+	setvideomode -noprobe -vinfo p9k
+
+
+PCI Boards (*VERY IMPORTANT    VERY IMPORTANT*)
+-----------------------------------------------
+
+For P9000/PCI boards, the video driver needs the 'base address' and a
+'dac-base-address'. These values can change when one of the following occurs:
+
+	- if the video card is moved to a different PCI slot
+	- if another PCI card (ex: hard disk controller) is added
+	- if the mother board is replaced
+
+There is no easy way to get these two values in UW1.1, so a DOS utility is
+provided, "/usr/X/lib/display/PCIDUMP.exe". You *MUST* execute this utility
+under native DOS, note down the values printed out, and put these values
+in "/usr/X/lib/display/P9K_OPTIONS" file.
+
+For example:
+
+p9000-base-address="0xA0000000"
+dac-base-address="0xE000"
+
+##############################################################################
+
+Due to non-standards in the Intel video world, it is literally impossible
+for any vendor to test all the available combinations of the machines, monitors
+and video hardware. By default, most of the popular combinations are tested
+before any SDD is released.
+
+The P9K SDD has been designed to handle various non-standard env's so that
+it will ease the support and users can even try out various non-default
+options. A user can define the options in "/usr/X/lib/display/P9K_OPTIONS"
+file or in an env variable, "DISPLIB_OPTIONS". For example, I can have
+the following lines in "/usr/X/lib/display/P9K_OPTIONS" file:
+
+    verbose-startup=1
+    dac-name=bt485
+    fontdraw-options=!use-offscreen-memory
+
+The above options will print some verbose information about the hardware,
+force the ram-dac to "bt485" and turns OFF the the use of offscreen memory
+for drawing fonts.
+
+or you can set the same in a env variable. The env variable approach is used
+if you want to over-ride only one or two options. If you have more than
+one or two, define the options in P9K as defined earlier.
+
+    DISPLIB_OPTIONS="dac-name=bt485"
+    export DISPLIB_OPTIONS
+
+The ram-dac will be forced to "bt485". The precedence of options
+is as follows (in order of decreasing priority):
+
+    a.  from the "DISPLIB_OPTIONS" environment variable
+    b.  from the "/usr/X/lib/display/P9K_OPTIONS" file
+    c.  default options that were compiled into the library.
+
+
+
+#	Version number
+@option si-interface-version
+	@option-type	unique-enumeration
+	@valid-range	1-0 1-1 auto-configure
+	@default		auto-configure
+	@description	The version number that the SDD returns to the SI \
+					server.
+
+@option verbose-startup
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	Print messages about chipset configuration if\
+					set to `yes'.
+	
+#
+#		OFF SCREEN MEMORY MANAGER CONFIGURATION
+#
+# 	Off-Screen Memory Manager Options.
+@option	omm-named-allocation-list
+	@option-type	string
+	@default		""
+	@description	Named allocation requests for the offscreen memory\
+					manager.  This option is primarily used to name\
+					`holes' in the video memory.
+					
+
+@option omm-horizontal-constraint
+	@option-type	numeric
+	@valid-range	0..
+	@default		0
+	@description	The widths of all offscreen memory requests are\
+					rounded up to this value.  O means use an\
+					internal heuristic.
+
+@option omm-vertical-constraint
+	@option-type 	numeric
+	@valid-range	0..
+	@default		0
+	@description	The heights of all offscreen memory requests are\
+					rounded up to this value.  0 means use an internal\
+					heuristic.
+
+@option	omm-neighbour-list-increment 
+	@option-type 	numeric
+	@valid-range	0..
+	@default		20
+	@description	Number of neighbour list nodes allocated at one time.\
+					Neighbour lists are managed during every allocate and\
+					free operation. 0 means use an internal heuristic.
+
+@option	omm-full-coalesce-watermark
+	@option-type 	numeric
+	@valid-range	0..
+	@default		2
+	@description  	If the number of currently allocated blocks falls below\
+					this value the omm will attempt a full coalesion operation.\
+					Remember that coalesion is an expensive operation.
+				
+@option	omm-hash-list-size 
+	@option-type 	numeric
+	@valid-range	0..
+	@default		512
+	@description	Size of the hash table of omm free blocks. 0 means use an\
+					an internal heuristic.
+
+#
+#		BOARD CONFIGURATION
+#
+
+#	Video memory configuration
+
+@option video-memory-dimensions
+	@option-type	string
+	@description	Video memory organization in pixels (WxH).
+
+@option	linear-frame-buffer-size
+	@option-type	numeric
+	@valid-range	0..4
+	@default		0
+	@description	Size in MB of linear frame buffer aperture.
+
+#	Clock chip.
+@option	clock-name
+	@option-type	unique-enumeration
+	@valid-range	icd2061a
+	@default		icd2061a
+	@description	The type of clock chip on the video board.
+
+@option	dac-name
+	@option-type	unique-enumeration
+	@valid-range	Bt485KPJ135 Bt485KPJ110
+	@default		Bt485KPJ110
+	@description	The type of DAC on board.
+
+@option memory-configuration
+	@option-type	unique-enumeration
+	@valid-range	1 2 3 4 5
+	@default		3
+	@description	Memory configuration on board. Use 3 for a 2M board\
+					and 1, 2, or 4 for a 1M board.
+
+@option p9000-base-address
+	@option-type 	string
+	@description	Physical memory address at which the P9000 chipset\
+					and the frame buffer can be mapped. 
+
+@option dac-base-address
+	@option-type 	string
+	@description	Physical memory address at which the RAMDAC \
+					on the board has to be I/O mapped. 
+
+#
+# VRAM Controller options
+#
+
+@option vram-refresh-period
+	@option-type 	numeric
+	@valid-range	0..
+	@default 		0
+	@description	Number of cycles between memory refreshes. A value of\
+					zero will select internal default
+
+@option vram-ras-low-maximum
+	@option-type 	numeric
+	@valid-range	0..
+	@default 		0
+	@description	Maximum amount of time the RAS  signal can be asserted.\
+					Zero selects internal default value.
+		
+
+#
+# Screen Repaint timing control
+#
+
+@option dot-clock-divide
+	@option-type	numeric
+	@valid-range	4 8
+	@default		4
+	@description	Dot clock divide factor
+
+
+#
+# Display Mode parameters
+#
+
+@option	modedb-string
+	@option-type	string
+	@description	ModeDB entry in the following format: \
+					\"Clock Horizontal_timing Vertical_timing flags\". \
+					Clock is in MHz.\
+					The timing field consists of display, sync_start,\
+						sync_end and total timings in that order.
+
+
+# 	Cursor 
+@option	cursor-type
+	@option-type	unique-enumeration
+	@valid-range	auto-configure dac-cursor software-cursor 
+	@default		auto-configure
+	@description	Cursor implementation types.
+
+@option cursor-max-size
+	@option-type	string
+	@description	Maximum size of the downloadable cursor in WXH format
+
+@option	number-of-downloadable-cursors
+	@option-type	numeric
+	@valid-range	0..
+	@default		1
+	@description
+
+
+#
+#		VISUAL HANDLING
+#
+#
+
+#
+# DAC related parameters
+#
+
+#	DAC RGB width
+@option	dac-rgb-width
+	@option-type	unique-enumeration
+	@valid-range	6 8 default
+	@default		8
+	@description	Number of significant bits per R/G/B output.\
+					`default' will use the industry standard of 6.
+
+#	DAC Access delay count
+@option	dac-access-delay-count
+	@option-type	numeric
+	@valid-range	1..
+	@default		1000
+	@description	Number of cycles to wait between dac accesses.
+
+#	DAC 24 bit option
+@option	dac-24-bit-color-mode
+	@option-type	unique-enumeration
+	@valid-range	rgba abgr
+	@default		rgba
+	@description	Order of R/G/B pixels in a 32 bit word.
+
+#	DAC 16 bit options
+@option dac-16-bit-color-mode
+	@option-type	unique-enumeration
+	@valid-range	555 565 655 664
+	@default		555
+	@description	Bits for R/G/B in 16 bit mode.
+
+
+@option dac-max-frequency
+	@option-type 	numeric
+	@valid-range	0..
+	@default		0
+	@description	Every dac has a maximum frequency to which it can operate\
+					without damaging itself/card/monitor. This option allows\
+					overriding of the builtin default value for the dac.\
+					A value of 0 (default) will use the builtin defaults.\
+					UTMOST CAUTION SHOULD BE USED WHILE CHANGING THIS OPTION.\
+					Wrong use can damage your system. The value is in MHz.
+
+@option bt485-clock-doubler-threshold
+	@option-type	numeric
+	@valid-range	0..
+	@default		80
+	@description	BT485 manual recommends using the internal clock doubler\
+					beyond dot clock frequencies of 80MHz. This option provides\
+					a way of specifying the threshold greater than which the\
+					clock doubler will be enabled. A  value of 0 indicates that\
+					clock doubler will not be used at all.
+
+# 	VT switch size
+@option vt-switch-save-lines
+	@option-type	numeric
+	@valid-range	0..4096
+	@default		2048
+	@description	Number of lines of screen to save. Exact values would \
+					save the total memory occupied by the x server.
+
+#	Graphics state
+@option number-of-graphics-states
+	@option-type	numeric
+	@valid-range	0..
+	@default		8
+	@description	Number of SDD graphics states. `0' means use\
+					internal default.
+
+#	Strategy decisions
+@option	tile-best-size
+	@option-type	string
+	@default		"64x64"
+	@description	Best tile size as seen by the Si code
+
+@option stipple-best-size
+	@option-type	string
+	@description	Best stipple size as seen by si code.
+
+@option two-color-tile-maximum-width
+	@option-type	numeric
+	@default		128
+	@description	2-Color tiles with width  more than this value will not\
+					be converted to stipples.
+
+@option two-color-tile-maximum-height
+	@option-type	numeric
+	@default		128
+	@description	2-Color tiles with height  more than this value will not\
+					be converted to stipples.
+		
+
+#	Controlling caching of offscreen memory parameters.
+@option	offscreen-tile-padded-width
+	@option-type	numeric
+	@valid-range	1..
+	@default		128
+	@description	Pad small tiles to this value in offscreen memory.\
+					Should be a power of two.
+
+@option	offscreen-tile-padded-height
+	@option-type	numeric
+	@valid-range	1..
+	@default		32
+	@description	Pad small tiles to this value in offscreen memory.\
+					Should be a power of two.
+@option maximum-offscreen-downloadable-tile-width
+	@option-type	numeric
+	@valid-range	1..
+	@default		256
+	@description	Do not download tiles of more than this width\
+					into offscreen memory
+
+@option maximum-offscreen-downloadable-tile-height
+	@option-type	numeric
+	@valid-range	1..
+	@default		256
+	@description	Do not download tiles of more than this height\
+					into offscreen memory
+
+#	Graphics engine loop timeout count
+@option	graphics-engine-loop-timeout-count
+	@option-type	numeric
+	@valid-range	1..
+	@default		200000
+	@description	Number of cycles to wait before signalling an error.
+					
+
+
+#	Controlling drawing code
+
+@option bitblt-options
+	@option-type	multiple-enumeration
+	@valid-range	use-ss-bitblt use-ms-bitblt \
+					use-sm-bitblt use-ms-stplblt 
+	@default		use-ms-bitblt use-ss-bitblt use-ms-stplblt\
+					use-sm-bitblt
+	@description	Controlling fill functionality.
+
+
+@option rectfill-options
+	@option-type	multiple-enumeration
+	@valid-range	use-solid-fill-rect use-tile-fill-rect\
+					use-stipple-fill-rect use-offscreen-memory\
+					use-pattern-registers use-two-color-tile-speedup\
+					use-reduced-stipple-speedup
+	@default		use-solid-fill-rect use-tile-fill-rect\
+					use-offscreen-memory use-pattern-registers\
+					use-stipple-fill-rect use-two-color-tile-speedup\
+					use-reduced-stipple-speedup
+	@description	Controlling fill functionality.
+
+@option linedraw-options
+	@option-type	multiple-enumeration
+	@valid-range	use-line-rectangles use-line-draw use-segment-draw\
+					use-dashed-lines use-dashed-segments use-pattern-registers
+	@default		use-segment-draw use-line-draw use-line-rectangles\
+					use-dashed-lines use-dashed-segments use-pattern-registers
+	@description	Controlling zero-width lines and segment draw \
+					functionality.
+
+#
+# Font control.
+#
+
+@option fontdraw-options
+	@option-type	multiple-enumeration
+	@valid-range	use-terminal-fonts use-non-terminal-fonts
+	@default		use-non-terminal-fonts use-terminal-fonts
+	@description	Controlling the kinds of fonts that can be drawn
+					using the SDD.
+
+@option max-number-of-glyphs-in-downloadable-font
+	@option-type	numeric
+	@valid-range	0..
+	@default		256
+	@description	The maximum number of glyphs in a font suitable\
+					for downloading.  0 means ignore this criterion.
+
+@option	number-of-downloadable-fonts
+	@option-type	numeric
+	@valid-range	0..
+	@default		32
+	@description	Number of downloaded fonts. `0' means to turn off\
+					font handling in the SDD.
+
+@option max-font-glyph-size
+	@option-type	string
+	@description	Dimensions of the biggest glyph that will be\
+					processed by the SDD.
+
+#	Arc drawing control
+@option	arcdraw-options
+	@option-type	multiple-enumeration
+	@valid-range	draw-one-bit-arcs
+	@default		draw-one-bit-arcs 
+	@description	Controls the drawing operation for arcs.
+
+#	Point draw control
+@option	pointdraw-options
+	@option-type	multiple-enumeration
+	@valid-range	use-plot-point
+	@default		use-plot-point
+	@description	Controlling plot point functionality.
+
+#	Spans fill control.
+@option spansfill-options
+	@option-type	multiple-enumeration
+	@valid-range	use-solid-fill-spans 
+	@default		use-solid-fill-spans
+	@description	Controlling spans fill functionality.
+
+#	Allow linear frame buffer access by the core server
+@option	allow-core-server-to-use-linear-frame-buffer
+	@option-type	unique-enumeration
+	@valid-range	yes no
+	@default		no
+	@description	Allow the core server to draw into the framebuffer.
+
+# 	Meta options
+@option	options-file
+	@option-type	option-file
+
+@option	options-variable
+	@option-type	option-environment
+

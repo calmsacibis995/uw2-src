@@ -1,0 +1,260 @@
+Uso: mount [-r] [-o opciones] servidor:vía directorio\n
+%s no está ejecutándose, no se puede montar %s\n
+%s: sin memoria para %s\n
+no es un sistema de archivos nfs, use servidor:vía formato\n
+el servidor está exportando nfs anterior a 4.0; limite grupos a 8\n
+error al montar %s: %s\n
+Opción no válida: %s\n
+%s falló: %s no es conocido\n
+%s: sin servicio horario para %s\n
+%s: (host %s, programa %d, versión %d) no hallados en ningún transporte\n
+no se pudo asociar a puerto reservado\n
+%s:%s servidor sin responder a %s\n
+acceso denegado para %s:%s\n
+%s no está compartido en %s\n
+%s: servicio NFS sin responder\n
+montando en segundo plano %s\n
+reintentar montaje %s\n
+%s montado correctamente\n
+dejando montaje en %s\n
+%s: no se puede abrir %s: %s\n
+%s: no puede bloquear %s: %s\n
+%s: no se puede crear %s: %s\n
+%s: no se puede %s %s: %s\n
+Uso: umount {servidor:vía | punto-montaje}\n
+%s:está ocupado\n
+%s: permiso denegado.\n
+%s:no está montado\n
+%s: sin memoria\n
+%s: no se puede truncar %s: %s
+no se puede poner entrada de montaje en %s: %s\n
+%s no está en formato servidor:vía\n
+Uso: share -F nfs [-o opciones] [-d descripción] nombre_vía\n
+%s falló para %s: %s\n
+%s: no es un nombre de vía completo\n
+%s: el subdirectorio (%s) ya está compartido\n
+%s: directorio padre (%s) ya compartido\n
+error al leer %s\n
+la opción %s se ha especificado más de una vez\n
+share -F nfs -o %s=cliente[:cliente] ...\n
+%s falló: %s\n
+la lista es demasiado larga (máximo %d)\n
+%s: dirección de red desconocida\n
+no se puede añadir %s a %s\n
+Uso:  unshare nombre-vía\n
+%s no está compartido\n
+Uso: dfmounts [-h] [host ...]\n
+%s: el servidor no está respondiendo para %s\n
+RECURSO       VIA DEL SERVIDOR                   CLIENTES\n
+desborde de tabla: sólo %d entradas aparecidas\n
+Uso: dfshares [-h] [host ...]\n
+RECURSO                                    ACCESO SERVIDOR  TRANSPORTE\n
+Uso: exportfs [-aviu] [-o opciones] directorio\n
+ninguna entrada para %s en %s\n
+ignoradas las opciones suministradas\n
+Uso: nfsping [ -a ] [ -s ] [ -c ] [ -o nombre_proceso ]\n
+%s no está ejecutándose\n
+%s no está ejecutándose: %s\n
+%s está funcionando\n
+nombre de proceso erróneo con opción -o\n
+%s falló para %s\n
+Uso: nfsstat [-cnrsz] [unix] [core]\n
+el kernel no está configurado con el código nfs y rpc del servidor.\n
+el kernel no está configurado con el código nfs y rpc del cliente.\n
+no se pueden escribir estadísticas en el kernel\n
+ninguna lista de nombres: %s\n
+\nrpc del cliente:\n
+llamadas   erróneas   retrans  id_erróneas tiempo_lím  espera     newcred\n
+\nrpc del servidor:\n
+llamadas   erróneas   rec_nula long_errónea xdrcall\n
+\nnfs del cliente:\n
+llamadas   erróneas   nclget     nclsleep\n
+\nnfs del servidor:\n
+llamadas   llamadas erróneas\n
+error de búsqueda o lectura de kernel: %s\n
+error de búsqueda o escritura en kernel: %s\n
+Uso: showmount [-a] [-d] [-e] [host]\n
+ningún sistema de archivos exportado para %s\n
+exportar lista para %s:\n
+(todos)
+Uso: biod\n
+Uso: bootparamd [-d]\n
+no se puede registrar (programa %d, versión %d) en %s\n
+devuelto svc_run\n
+no se puede liberar argumentos\n
+%s: no se puede leer %s: %s\n
+Uso: mountd [ -p programa_rpc]\n
+número de programa erróneo\n
+no se puede registrar (programa %d, versión %d) en %s
+devuelto svc_run
+%s falló en %s: %s
+no se puede enviar respuesta a %s
+no se puede enviar respuesta a %s: %m
+solicitud de montaje: %s falló para %s: %s
+%s: %s falló para %s: %m
+%s: no válido en línea %d
+%s: sin memoria
+%s: desborde recursivo\r\n
+%s: se llamó de forma recursiva al grupo de red %s\r\n
+%s: error de sintaxis en %s\r\n
+Uso: nfsd [ -a ] [ -p protocolo ] [ -t transporte ]\n
+no se pudo asociar\n
+%s: %s falló: %s\n
+no se pudo encontrar la entrada NC_TPI_CLTS de netconfig correspondiente al protocolo %s\n
+no existe dispositivo de netconfig\n
+%s: %s falló\n
+%s: asociar a dirección errónea\n
+Uso: lockd -t[tiempo_límite] -g[período_gracia] -d[depurar]\n
+%s: no se puede asignar espacio para %s
+petición descartada debido a un problema con el monitor de estado
+lockd destruido con kill bajo petición
+no se puede crear el servicio (%s, %s) para %s: %m
+%s devueltos
+no se encontró la entrada de monitor correspondiente a %s, la petición no está monitorizada
+%s: %s falló
+no se puede aumentar límite de descriptores de archivo a máximo %d (ignorado)
+longitud (%d) excede de la longitud máxima (%d)
+fuera de la ranura de la lista_de_procesos\n
+no se conoce el monitor de contacto (%d)\n
+problema con el tamaño de datos privados (%d) en relación con el monitor de estado\n
+la ubicación %s no suscribe al servicio de monitor de estado
+lockd no puede contactar con stadt local\n
+%s: %s valor %d no se conoce\n
+%s: no se puede liberar argumentos
+%s: fallo de %s: %m
+%s: no se puede despejar un bloqueo.
+%s: petición de reclaim (%x) no se puede enviar y no puede colocarse en cola para su posterior envío
+%s: no se puede convertir.
+%s: fuera de bloqueo.
+%s: no se puede definir un bloqueo.
+%s: no se puede desbloquear un bloqueo.
+%s: rpc no soportado
+%s: no se puede probar un bloqueo.
+%s: no se conoce el valor de retorno %d
+%s: petición de bloqueo de reclaim (%x) se devuelve debido a período de gracia, imposible
+%s: Petición de compartimiento de archivo de %s (modo %d, acceso %d) conflictos\ncon compartimiento para %s (modo %d, acceso %d)\n
+%s: el servidor no responde para %s
+%s: udp no puede enviar debido a caché insuficiente
+%s: el valor de %s (%d) es mayor que 16
+%s: el valor de %s (%d) no se soporta
+%s: no se puede contactar con el monitor de estado
+%s: el protocolo %s es desconocido
+%s: no se pudo registrar (programa %d, versión %d) en %s
+%s: %s no puede abrir la conexión: %s
+%s: la dirección correspondiente a %s desconocido en transporte %s
+Uso: statd -d[depurar] -D\n
+%s: no se puede contactar con lockd local en cambio de estado %s, es conveniente abandonar\n
+%s: falló %s correspondiente a %s: %s\n
+%s: falló %s desde %s hasta %s\n
+rpc.statd: no puede comunicar con statd de %s\n
+%s: no se puede liberar argumentos\n
+no se puede crear (%s, %s) correspondiente a %s: %s\n
+%s: %s devueltos\n
+Uso: pcnfsd\n
+no se puede crear el servicio %s
+no se pudo crear un distintivo
+%s: imposible configurar directorio de cola de espera %s\n
+%s: Falló rename de (%s -> %s) del archivo de cola de espera.\n
+rpc.pcnfsd: alarma su_pclose
+(Detectada configuración incompleta)
+rpc.pcnfsd: imposible popen() la consulta sobre la cola de lpstat
+rpc.pcnfsd: imposible popen() el estado de lp
+Esta cuenta ya no se puede utilizar.
+La contraseña correspondiente a esta cuenta ha vencido.
+La contraseña correspondiente a esta cuenta vencerá próximamente. Es conveniente cambiarla.
+No hay acceso a esta cuenta vía pcnfsd.
+rpc.pcnfsd: tiempo límite su_popen - proceso hijo muerto
+rpc.pcnfsd: rechazando la petición del usuario %s (uid %d)
+rpc.pcnfsd: no se puede crear conducto en su_popen
+Uso: automount [-nTv] [-t subopciones] [-M directorio] [-D n=s]\n               [-f archivo] [ dir asignación [-opciones_montaje] ]
+archivo maestro incorrecto\n
+directorio de montaje incorrecto\n
+valor de tiempo límite incorrecto\n
+conmutador de tiempo límite incorrecto\n
+asignación de variables de entorno incorrecta\n
+no se puede establecer los montajes actuales\n
+el directorio debe contener el nombre completo de la vía\n
+no se encuentran entradas de mapa\n
+transporte no disponible\n
+no se puede abrir la conexión correspondiente a %s\n
+no hay memoria\n
+no se puede crear distintivo del servidor\n
+no se puede registrar el servicio\n
+no se puede crear distintivo del servidor
+no se puede registrar el servicio
+auto_run devuelto
+no se puede montar: %m
+saliendo
+Hilo %d: no se puede crear hilo: %s
+%s: no se pudo encontrar id_de_dispositivo %04x (%04x) correspondiente a %s
+trace = %d
+detalle activado
+detallado desactivado
+ADVERTENCIA: se ignoró %s correspondiente a %s en %s
+%s: mapa %s, clave %s: incorrecto
+%s: entrada %s errónea en el mapa %s
+%s: renovar enlace correspondiente a %s
+%s: ADVERTENCIA: %s ya está montado en
+%s: ADVERTENCIA: desmontando fs montado
+%s: ERROR: no hay fs correspondiente a %s
+%s: línea %d: entrada errónea
+%s: ADVERTENCIA: %s:%s ya no está montado
+%s: %s:%s ya está montado en %s
+%s: caché del host activo llena
+%s: caché del host inactivo llena
+%s: los servidores no responden: %s
+%s: %s:%s -> %s es un enlace simbólico peligroso
+%s: host %s no responde
+%s: no hay servicio de NFS en %s
+%s: no hay servicio horario para %s
+%s: montaje de %s en %s: %m
+%s: %s se devolvió NULO
+%s: %s reintentar
+%s: ADVERTENCIA: %s es NULO
+%s: %s en %s: el servidor %s no responde
+%s: no se puede abrir %s: %m
+%s: no se puede bloquear %s: %m
+%s: Opción numérica %s errónea
+%s: el servidor %s no responde para %s
+%s: %s: no se pudo asociar al puerto reservado
+%s: el punto de montaje %s debe empezar por un /
+%s: punto de montaje jerárquico: %s y %s
+%s: %s ya está montado en %s
+%s:ADVERTENCIA: opción por defecto %s ignorada para asignación %s
+%s: asignación %s no encontrada
+%s: %s no es un directorio
+%s: ADVERTENCIA: %s no está vacío
+%s: %s: no se puede crear el directorio %s: %m
+%s: %s: ERROR: no se está usando rootfs
+%s: ERROR: no hay variable condicional
+%s: falló búsqueda de %s, defínala como no válida
+%s: ERROR: %s liberando petición desconocida (directorio %s, nombre %s)
+%s: ERROR: %s liberando petición desconocida %d
+%s: dirección de %s desconocida
+%s: no se pudieron encontrar las direcciones
+%s: %s: desborde de buffer procedente de %s
+%s: espacio previo en entrada de asignación %s en %s
+%s: clave errónea %s en asignación directa %s
+%s: clave %s errónea en asignación indirecta %s
+no se puede %s: %m
+no se puede crear %s: %s\n
+no se puede %s %s: %s\n
+%s: no se puede crear %s: %m
+%s: no se puede ejecutar stat %s: %m
+%s: lvnode != NULO
+%s: no hay memoria para %s
+ERROR: no hay entrada para la petición %d
+\n\tUso: automount [-nTv] [-t sub_opciones] [-M directorio] [-D n=s]\n\t               [-f archivo] [ dir map [-opciones_montaje] ]\n
+Uso: lockd -t[tiempo_límite] -g[período_gracia]\n
+Uso: mountd\n
+%s: llamada recursiva %s con %s
+%s: ERROR: no se está usando el sistema de archivos raíz
+%s: ERROR: %s es %s
+valor mínimo de hilos erróneo\n
+número mínimo de hilos no válido, se define como el valor por defecto %d\n
+valor máximo de hilos erróneo\n
+número máximo de hilos no válido, se define como el valor por defecto %d\n
+%s: ADVERTENCIA: %s no está montado
+%s: detectar enlace (%s, %s)
+%s: invalidar enlace (%s, %s)
+%s: reutilizar antiguo=%s para nuevo=%s

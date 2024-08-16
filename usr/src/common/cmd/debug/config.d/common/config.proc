@@ -1,0 +1,64 @@
+#ident	"@(#)debugger:config.d/common/config.proc	1.1"
+
+# In this configuration, the main window contains the process,
+# stack and source panes.  The symbols, command and event panes
+# are each in their own windows.  The disassembly window contains
+# the registers and disassembly panes.  This configuration is
+# probably most useful for multi-process or multi-thread debugging.
+
+Window "Source" auto 
+	Buttons 
+		Set_current 
+		Run 
+		Return 
+		Step_Stmt 
+		Next_Stmt 
+		Halt 
+		Destroy 
+		Popup "Symbols"
+	Process	4 
+	Stack	4 
+	Source	10 60 
+Window "Disassembly" 
+	Buttons 
+		Run 
+		Return 
+		Step_Inst 
+		Next_Inst 
+		Halt 
+		Destroy 
+		Popup "Command" "Cmd"
+		Popup "Source"
+	Status	1
+	Register	6  70
+	Disassembly	10 70
+Window "Symbols" 
+	Buttons 
+		Export 
+		Pin_Sym	 "Pin"
+		Unpin_Sym  "Unpin"
+		Set_Watchpoint  "Set Watch"
+		Popup "Command" "Cmd"
+		Popup "Disassembly" "Dis"
+		Popup "Event"
+		Popup "Source"
+	Status
+	Symbols 8
+Window "Event" 
+	Buttons Disable Enable Delete
+		Popup "Command" "Cmd"
+		Popup "Disassembly" "Dis"
+		Popup "Source"
+		Popup "Symbols"
+	Status	1 
+	Event	8 
+Window "Command" 
+	Buttons 
+		Interrupt 
+		Input 
+		Popup "Disassembly" "Dis"
+		Popup "Event"
+		Popup "Source"
+		Popup "Symbols"
+	Status 1 
+	Command 10 60

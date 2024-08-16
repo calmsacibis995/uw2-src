@@ -1,0 +1,584 @@
+#
+#ident	"@(#)dtupgrade:dtupgrade_utils.dot	1.9"
+#
+# dtupgrade_utils.dot - this script contains all the utility functions that
+#		will be used by graphics upgrade/overlay process!
+#
+# All functions should return 0 if the call is succesfule, otherwise
+#	it returns 1, unless specified otherwise!
+#
+# Available functions -
+#	AppendThisFile()
+#	CopyThisFile()
+#	CreateThisFile()
+#	EchoThis()
+#	FindUserHome()
+#	InsertThisLine()
+#	IsThisUserUpgraded()
+#	LinkThisFile()
+#	MakeThisDir()
+#	MoveThisDir()
+#	MoveThisFile()
+#	RelocateThisFile()
+#	RemoveLinesFromFile()
+#	RemoveThisDir()
+#	RemoveThisFile()
+#	ReplaceThisLine()
+#	SetDtUsers()
+#
+
+# AppendThisFile - append a given file content to <that_file>.
+#
+# This function takes 2 arguments,
+#	<that_file> - the file
+#	<this_file> - the content file that will be appended to <that_file>
+#
+AppendThisFile()
+{
+	DtUpgradeStatus=0
+
+	if [ ! -f $2 -o ! -f $1 ]
+	then
+		EchoThis "AppendThisFile: $2/$1 doesn't exist" ERR
+
+		DtUpgradeStatus=1
+		return
+	fi
+
+	if [ ! -z $2 ]	# only when there is something in it!
+	then
+		/usr/bin/cat $2 >> $1
+	fi
+}
+
+# CopyThisFile - copy a given file to a given destination
+#
+# This function takes 4 arguements and 1 optional argument,
+#	<this_file>  - the file
+#	<this_dst>   - the destination
+#	<this_perm>  - file permission
+#	<this_owner> - file ownership
+#	[this_group] - optional
+#
+CopyThisFile()
+{
+	DtUpgradeStatus=0
+
+	if [ ! -f $1 ]
+	then
+		EchoThis "CopyThisFile: $1 doesn't exist" ERR
+		DtUpgradeStatus=1
+
+		return
+	fi
+
+	if [ "$#" = 4 ]
+	then
+		this_group=`/usr/bin/id -gn $4`
+	else
+		this_group=$5
+	fi
+
+	if [ -d $2 ]
+	then
+		dst_file=$2/`/usr/bin/basename $1`
+	else				# it is a file, override it if exists...
+		dst_file=$2
+	fi
+
+	/usr/bin/cp    $1		$dst_file
+	/usr/bin/chmod $3		$dst_file
+	/usr/bin/chown $4		$dst_file
+	/usr/bin/chgrp $this_group	$dst_file
+}
+
+# CreateThisFile - create a file with the given name, permission, owner
+#
+# This function takes 4 arguments, and 1 optional argument,
+#	<this_file>   - the file name
+#	<this_content>- this content
+#	<this_perm>   - file permission
+#	<this_owner>  - file ownership
+#	[this_group]  - optional
+#
+CreateThisFile()
+{
+	DtUpgradeStatus=0
+
+	if [ -f $1 ]
+	then
+		EchoThis "CreateThisFile: $1 exists" ERR
+
+		DtUpgradeStatus=1
+		return
+	fi
+
+	if [ "$#" = 4 ]
+	then
+		this_group=`/usr/bin/id -gn $4`
+	else
+		this_group=$5
+	fi
+
+	if [ "$2" = "" ]
+	then
+		/usr/bin/touch	$1
+	else
+		echo "$2" >	$1
+	fi
+
+	/usr/bin/chmod $3		$1
+	/usr/bin/chown $4		$1
+	/usr/bin/chgrp $this_group	$1
+}
+
+# EchoThis - echo the given line based on $DtDebug.
+#
+# This function takes 1 argument and 1 optional argument,
+#	<this_line>
+#	[flag]
+#
+EchoThis()
+{
+	case $DtDebug in
+		all)
+			;;
+		err)
+			if [ "$2" != "ERR" ]
+			then
+				return;
+			fi;;
+		hdr)
+			if [ "$2" != "HDR" ]
+			then
+				return;
+			fi;;
+		err-hdr)
+			if [ "$2" != "ERR" -a "$2" != "HDR" ]
+			then
+				return;
+			fi;;
+		*) # included `none'
+			return;;
+	esac
+
+		# If I'm here, then I have to do something...
+	echo "$1" >> $DtUpgradeLog
+
+	if [ "$DtShowLogInConsole" = "yes" ]
+	then
+		echo "$1"
+	fi
+}
+
+# FindUserHome - locate user home directory.
+#
+# This function take 1 argument,
+#	<this_user> - the user id
+#
+# This function assumes the following variables -
+#	DtUpgradeTest, DtTopDir if DtUpgradeTest is `yes'
+#		       otherwise DtLoginDirPgm should be set.
+# When return, DtUpdateStatus will be set to 0 and dthome
+#	will contain the user home directory if the call
+#	is OK, otherwise `1' is returned.
+#
+FindUserHome()
+{
+	DtUpgradeStatus=0
+
+	if [ "$DtUpgradeTest" = "no" ]		# this is for real...
+	then
+		dthome=`$DtLoginDirPgm $1`
+
+		DtUpgradeStatus=$?
+	else
+		dthome=$DtTopDir/home/$1
+
+		if [ ! -d $dthome ]
+		then
+			DtUpgradeStatus=1
+		fi
+	fi
+
+	if [ $DtUpgradeStatus -ne 0 ]
+	then
+		EchoThis "FindUserHome: can't find $1's login dir" ERR
+	fi
+}
+
+# InsertThisLine - insert a given line to the beginning of a file
+#
+# This function takes 2 arguments,
+#	<this_file>
+#	<this_line>
+#
+# This function assumes the caller already checked the existence of
+# the file, no checking is done here.
+#
+InsertThisLine()
+{
+	/usr/bin/ed $1 > /dev/null <<!
+0a
+$2
+.
+w
+q
+!
+}
+
+# IsThisUserUpgraded - check whether a given user is already upgraded.
+#
+# This function takes 2 arguments,
+#	<this_user>
+#	<this_home>
+#
+# When return, DtUpgradeStatus is set to 0 if this user is not upgraded
+#	 yet, otherwise it returns 1.
+#
+# Assume that $ThisIdFile are defined by the caller.
+#
+IsThisUserUpgraded()
+{
+	DtUpgradeStatus=0
+
+	id_file=$2/$ThisIdFile
+
+	if [ -f $id_file ]
+	then
+		EchoThis "IsThisUserUpgraded: $1 is already upgraded" ERR
+		DtUpgradeStatus=1
+	else
+		# Look for previous upgrade marker and update for 
+		# point-release. For 2.0 to 2.01 update, just move 
+		# the marker file.
+
+		if [ -f $2/.UpgradeVer2* ]
+		then
+			EchoThis "IsThisUserUpgraded: $1 is already upgraded" ERR
+			EchoThis "IsThisUserUpgraded: moving $2/.Upgrade2* to $id_file" ERR
+			/usr/bin/mv -f $2/.UpgradeVer2* $id_file
+
+
+			DtUpgradeStatus=1
+		fi
+	fi
+}
+
+# LinkThisFile - link a given file to a given place
+#
+# This function takes 3 arguments, and 1 optional argument,
+#	<src_file>   - the source file
+#	<dst_file>   - the destination
+#	<this_owner> - file ownership
+#	[this_group] - optional
+#
+LinkThisFile()
+{
+	DtUpgradeStatus=0
+
+	if [ -f $1 -a ! -f $2 ]
+	then
+		/usr/bin/ln -s $1 $2
+
+		if [ "$#" = 3 ]
+		then
+			this_group=`/usr/bin/id -gn $3`
+		else
+			this_group=$4
+		fi
+
+		/usr/bin/chown -h $3		$2
+		/usr/bin/chgrp -h $this_group	$2
+	else
+		EchoThis "LinkThisFile: $1 doesn't exist or $2 exists" ERR
+		DtUpgradeStatus=1
+	fi
+}
+
+# MakeThisDir - create a directory with the given name, permission, owner
+#
+# This function takes 3 arguments, and 1 optional argument
+#	<this_dir>   - the directory name
+#	<this_perm>  - file permission
+#	<this_owner> - file ownership
+#	[this_group] - optional
+#
+# When DtUpgradeStatus is set to 0 if the call is successful,
+#	otherwise it returns 1.
+#
+MakeThisDir()
+{
+	DtUpgradeStatus=0
+
+	if [ -d $1 ]
+	then
+		EchoThis "MakeThisDir: $1 exists" ERR
+		DtUpgradeStatus=1
+
+		return
+	fi
+
+	if [ "$#" = 3 ]
+	then
+		this_group=`/usr/bin/id -gn $3`
+	else
+		this_group=$4
+	fi
+
+	/usr/bin/mkdir -p -m $2		$1
+	/usr/bin/chown $3		$1
+	/usr/bin/chgrp $this_group	$1
+}
+
+# MoveThisDir - mv a given dir $src_dir to $dst_dir$prefix
+#		it will append with `pid' at end if $dst_dir$prefix/$src_dir
+#		exists.
+#
+# This function takes 2 arguments and 1 optional argument,
+#	<src_dir> - the src directory
+#	<dst_dir> - the src directory
+#	[prefix]  - the prefix
+#
+MoveThisDir()
+{
+	DtUpgradeStatus=0
+
+	if [ ! -d $1 -o ! -d $2 ]
+	then
+		EchoThis "MoveThisDir: $1/$2 doesn't exist" ERR
+		DtUpgradeStatus=1
+
+		return
+	fi
+
+	base_name=`/usr/bin/basename $1`
+
+	if [ ! -d $2/$3$base_name ]
+	then
+		dst_dir=$2/$3$base_name
+	else
+		dst_dir=$2/$3$base_name.$$
+	fi
+
+	/usr/bin/mv -f $1 $dst_dir
+}
+
+# MoveThisFile - move a given file to a new directory.
+#
+# This function takes 4 arguments and 2 optional argument,
+#	<this_file> - have to be an existing file
+#	<this_dir>  - have to be an existing dir
+#	<this_perm> - file permission
+#	<this_owner>- file ownership
+#	[this_group]- optional
+#	[prefix]    - will guarantee `mv' to be successed!
+#
+MoveThisFile()
+{
+	DtUpgradeStatus=0
+
+	if [ ! -f $1 -o ! -d $2 ]
+	then
+	EchoThis "MoveThisFile: $1 is not a file or $2 is not a directory" ERR
+		DtUpgradeStatus=1
+
+		return
+	fi
+
+	if [ "$5" = "" ]
+	then
+		this_group=`/usr/bin/id -gn $4`
+	else
+		this_group=$5
+	fi
+
+	base_file=`/usr/bin/basename $1`
+	if [ "$6" = "" -o "$6" = "FORCE" ]
+	then
+		that_file=$2/$base_file
+	else
+		if [ ! -f $2/$6$base_file ]
+		then
+			that_file=$2/$6$base_file
+		else
+			that_file=$2/$6$base_file.$$
+		fi
+	fi
+
+	if [ ! -f $that_file -o "$6" = "FORCE" ]
+	then
+		/usr/bin/mv	-f $1		$that_file
+		/usr/bin/chmod	$3		$that_file
+		/usr/bin/chown	$4		$that_file
+		/usr/bin/chgrp	$this_group	$that_file
+	else
+		EchoThis "MoveThisFile: $that_file exists" ERR
+		DtUpgradeStatus=1
+	fi
+}
+
+# RelocateThisFile - move a given file/dir to a new location
+#
+# This function takes 2 arguments,
+#	<this_file> - the file or dir
+#	<this_dir>  - the location
+#
+RelocateThisFile()
+{
+	DtUpgradeStatus=0
+
+	if [ -h $1 ]			# Only allow a sym-link'd file
+	then
+		if [ -d $2 -o ! -f $2 ]
+		then
+			/usr/bin/mv -f $1 $2
+		else
+			EchoThis "RelocateThisFile: Can't move $1 to $2" ERR
+			DtUpgradeStatus=1
+		fi
+	else
+		if [ -d $1 -a ! -d $2 ]	# Rename a directory
+		then
+			/usr/bin/mv -f $1 $2
+		else
+			EchoThis "RelocateThisFile: can't move $1 to $2" ERR
+			DtUpgradeStatus=1
+		fi
+	fi
+}
+
+# RemoveLinesFromFile - removed unwanted lines from a given file (src_file)
+#		based on the key file (key_file).
+#
+# This function takes 2 arguments,
+#	<src_file> - a file contains unwanted lines, and
+#	<key_file> - a file contains the searching keys
+#
+RemoveLinesFromFile()
+{
+	DtUpgradeStatus=0
+
+	if [ ! -f $1 -o ! -f $2 ]
+	then
+		EchoThis "RemoveLinesFromFile: $1/$2 not exist" ERR
+		DtUpgradeStatus=1
+
+		return
+	fi
+
+	/usr/bin/ed $1 > /dev/null < $2
+}
+
+# RemoveThisDir - remove a given directory
+#
+# This function takes 1 argument and 1 optional argument
+#	<dir_name> - the directory
+#	[save_dir] - move things to `save_dir' if <dir_name> is not empty,
+#			and remove <dir_name> again afterward
+RemoveThisDir()
+{
+	DtUpgradeStatus=0
+
+	if [ ! -d $1 ]
+	then
+		EchoThis "RemoveThisDir: $1 doesn't exist" ERR
+		DtUpgradeStatus=1
+
+		return
+	fi
+
+	/usr/bin/rmdir $1		2> /dev/null
+
+	if [ $? -ne 0 ]
+	then
+		if [ "$2" != "" ]	# Assume $2 is a dir in this case...
+		then
+			/usr/bin/mv -f $1/?* $1/.?* $2 2>/dev/null
+			/usr/bin/rmdir $1	2> /dev/null
+		else
+			EchoThis "RemoveThisDir: $1 is not empty" ERR
+			DtUpgradeStatus=1
+		fi
+	fi
+}
+
+# RemoveThisFile - delete a given file/directory
+#
+# This function takes 1 argument,
+#	<this_file> - the file or the directory
+#
+RemoveThisFile()
+{
+	if [ -f $1 -o -h $1 ]
+	then
+		/usr/bin/rm -f $1
+	else
+		if [ -d $1 ]
+		then
+			RemoveThisDir $1
+		else
+			EchoThis "RemoveThisFile: $1 doesn't exist" ERR
+		fi
+	fi
+}
+
+# ReplaceThisLine - from a given key, replace that line by a given line
+#			if there is any change.
+#
+# This function takes 3 arguments,
+#	<src_file> - the file
+#	<this_key> - the key
+#	<new_line> - the line
+#
+ReplaceThisLine()
+{
+	DtUpgradeStatus=0
+
+	if [ ! -f $1 ]
+	then
+		EchoThis "ReplaceThisLine: $1 not exist" ERR
+
+		DtUpgradeStatus=1
+		return
+	fi
+
+	old_line=`/usr/bin/grep "$2" $1`
+
+	if [ "$old_line" = "$3" ]	# no change
+	then
+		return
+	fi
+
+	/usr/bin/ed $1 > /dev/null <<!
+s/$old_line/$3/
+.
+w
+q
+!
+}
+
+# SetDtUsers - verify whether the given users are desktop users,
+#	when return $DtUsers shall contain desktop user ids.
+#
+# This function assumes that $DtLoginMgrDir is defined prior to
+#	the call.
+#
+SetDtUsers()
+{
+	TmpFile=/tmp/$$dtusers$$
+	DtUsers=""
+	/usr/bin/ls $DtLoginMgrDir/Users > $TmpFile
+
+	for i in $*
+	do
+		/usr/bin/grep "^$i$" $TmpFile >/dev/null
+
+		if [ $? = 0 ]
+		then
+			DtUsers="$DtUsers $i"
+		fi
+	done
+
+	/usr/bin/rm -f $TmpFile
+}

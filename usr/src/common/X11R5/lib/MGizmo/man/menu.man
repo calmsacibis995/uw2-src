@@ -1,0 +1,254 @@
+'\"ident        "@(#)MGizmo:man/menu.man	1.2"
+.TH MenuGizmo 3L
+.SH NAME
+\f(CBMenuGizmo\f1 \- an abstract data type (ADT) that is used for the creation
+of a menu.
+There are five types of menus that can be created using \f(CBMenuGizmo\f1:
+menu bar, popup menu, pull down, option, and command menu.
+The \f(CBMenuGizmo\f1 consists of
+two data structures and a set of functions that operate on these data
+structures.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/MenuGizmo.h>
+
+Widget  GetMenu(Gizmo \fIg\fP);
+void    SetSubMenuValue(Gizmo \fIg\fP, Gizmo \fInew\fP, int n);
+.ft
+.fi
+.SH "DESCRIPTION"
+To create a \f(CBMenuGizmo\f1 an array of \f(CBMenuItems\fP data
+structures must first be populated with the items that are to be
+displayed in the menu.
+The pointer to this array of items is place in the 
+\f(CBMenuGizmo\f1 data structure.
+The menu is then created by calling \f(CBCreateGizmo\fP.
+The type of menu is specified by passing one of the following values to
+\f(CBCreateGizmo\fP:
+.PP
+.ft CB
+.nf
+GizmoClassRec *MenuBarGizmoClass;      /* Menu bar */
+GizmoClassRec *PopupMenuGizmoClass;    /* Popup menu */
+GizmoClassRec *OptionMenuGizmoClass;   /* Option menu */
+GizmoClassRec *PulldownMenuGizmoClass; /* Pulldown menu */
+GizmoClassRec *CommandMenuGizmoClass;  /* Command menu */
+.ft
+.fi
+.PP
+A menu can also be created by placing a pointer to a \f(CBMenuGizmo\fP
+in an appropriate \f(CBGizmo\fP data structure such as a
+\f(CBBaseWindowGizmo\fP.
+The type of the menu is then determined by the context of where the menu
+is being used.
+(For example, the menu specified in a \f(CBPopupGizmo\fP is a command menu.)
+The menu is created by calling the function \f(CBCreateGizmo\fP(3L) with
+the top-level \f(CBGizmo\fP, which contains the menu, as an argument.
+.PP
+The following is the definition of the \f(CBMenuItems\fP and \f(CBMenuGizmo\fP
+data structures:
+.PP
+.ft CB
+.nf
+typedef struct _MenuItems {
+        XtArgVal                sensitive;      /* Sensitivity of button */
+        char *                  label;          /* Button label */
+        char *                  mnemonic;       /* Button mnemonic */
+        ItemType                type;           /* Type button */
+        struct _MenuGizmo *     subMenu;
+        void                    (*function)();  /* SelectCB */
+        XtPointer               clientData;     /* client data */
+        XtArgVal                set;            /* Button state */
+} MenuItems;
+
+typedef struct _MenuGizmo {
+        HelpInfo *              help;           /* Help information */
+        char *                  name;           /* Name of menu Gizmo */
+        char *                  title;          /* Title of popup menu */
+        MenuItems *             items;          /* Menu items */
+        void                    (*function)();  /* SelectCB */
+        XtPointer               clientData;
+        uchar_t                 layoutType;     /* XmVERTICAL, XmHORIZONTAL */
+        short                   numColumns;     /* Number of rows or columns */
+        Cardinal                defaultItem;    /* Initial selected item */
+} MenuGizmo;
+.ft
+.fi
+.PP
+There are sixteen types of items that can be specified in a \f(CBMenuItems\fP
+data structure.
+These types are defined as the following:
+.PP
+.nf
+.ft CB
+typedef enum {
+        I_SEPARATOR_0_LINE = XmNO_LINE,
+        I_SEPARATOR_1_LINE,     /* Single line */
+        I_SEPARATOR_2_LINE,     /* Double line */
+        I_SEPARATOR_1_DASH,     /* Single dashed line */
+        I_SEPARATOR_2_DASH,     /* Double dashed line */
+        I_SEPARATOR_ETCHED_IN,  /* Shadow etched in */
+        I_SEPARATOR_ETCHED_OUT, /* Shadow etched out */
+        I_SEPARATOR_DASHED_IN,  /* Shadow etched in dashed */
+        I_SEPARATOR_DASHED_OUT, /* Shadow etched out dashed */
+        I_ARROW_UP_BUTTON,
+        I_ARROW_DOWN_BUTTON,
+        I_ARROW_LEFT_BUTTON,
+        I_ARROW_RIGHT_BUTTON,
+        I_PUSH_BUTTON,
+        I_RADIO_BUTTON,
+        I_TOGGLE_BUTTON
+} ItemType;
+.fi
+.PP
+\f(CBSetSubMenuValue\fP attaches the menu specified by \fInew\fP with
+the \fIn\fPth button in the menu specified by \fIg\fP.
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBMenuGizmo\fP:
+.IP \fBGetGizmoWidget\fP 28
+Returns the menu widget id.
+.IP \fBGetGizmoGizmo\fP 28
+Returns the handle to the \f(CBMenuGizmo\fP.
+.IP \fBGetItemWidgets\fP 28
+Returns the list of widget id for all the menu items. 
+.IP \fBGetGizmoCurrentValue\fP 28
+Undefined.
+.IP \fBGetGizmoPreviousValue\fP 28
+Undefined.
+.PP
+For menus only, the value of the name passed to \f(CBQueryGizmo\fP
+can have a qualifying number appended to it.
+This number specifies the item number within the menu.
+The number is separated from the name by a colon:
+.PP
+.nf
+	\fIname\fP:\fInumber\fP
+.fi
+.PP
+If \f(CBQueryGizmo\fP finds no match then the submenus (if any) are
+queried for the given name.
+.PP
+\f(CBGetMenu\fP returns the widget id for the specified Gizmo.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to various widgets depending on the
+type of menu being created:
+.IP MenuBarGizmoClass 28
+The widget returned from \fBXmCreateMenuBar\fP.
+.IP PopupMenuGizmoClass 28
+The widget returned from \fBXmCreatePopupMenu\fP.
+.IP OptionMenuGizmoClass 28
+The widget returned from \fBXmCreateOptionMenu\fP.
+.IP PulldownMenuGizmoClass 28
+The widget returned from \fBXmCreatePulldownMenu\fP.
+.IP CommandMenuGizmoClass 28
+The row column widget that parents this menu.
+.SH "USAGE"
+.PP
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/MenuGizmo.h>
+#include <Gizmo/MsgGizmo.h>
+#include <Gizmo/BaseWGizmo.h>
+#include <Gizmo/SpaceGizmo.h>
+
+static void     CreateWindow();
+
+static void
+editCB(Widget w, MenuGizmoCallbackStruct *cd, XtPointer callData)
+{
+        printf("EditCB\n");
+}
+
+static void
+newCB(Widget w, int num, XtPointer callData)
+{
+        CreateWindow();
+}
+
+static void
+exitCB(Widget w, int num, XtPointer callData)
+{
+        exit(0);
+}
+
+static MenuItems        fileItems[] = {
+        {True, "New",  "N", I_PUSH_BUTTON, NULL, newCB},
+        {True, "Exit", "E", I_PUSH_BUTTON, NULL, exitCB},
+        {0, NULL}
+};
+static MenuGizmo        fileMenu = {
+        NULL, "File", "File", fileItems, NULL, NULL, XmVERTICAL, 1
+};
+
+static MenuItems        editItems[] = {
+        {True, "Edit 1", "1", I_TOGGLE_BUTTON},
+        {True, "Edit 2", "2", I_TOGGLE_BUTTON},
+        {0, NULL}
+};
+static MenuGizmo        editMenu = {
+        NULL, "editMenu", "Edit", editItems, editCB, NULL, XmVERTICAL, 1
+};
+
+static MenuItems        items[] = {
+        {True, "File", "F", I_PUSH_BUTTON, NULL},
+        {True, "Edit", "E", I_PUSH_BUTTON, NULL},
+        {0, NULL}
+};
+static MenuGizmo        menu = {
+        NULL, "mainMenu", "menu bar", items, NULL, NULL, XmVERTICAL, 1
+};
+
+static MsgGizmo footer = {NULL, "footer", "Left", "Right"};
+
+BaseWindowGizmo base = {
+        NULL, "base", "Test", &menu, NULL, 0, &footer
+};
+
+Widget  toplevel;
+
+static void
+CreateWindow()
+{
+        Gizmo           handle;
+        Gizmo           menu;
+        static Gizmo    file = NULL;
+        static Gizmo    edit;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+        if (file == NULL) {
+                file = CreateGizmo(
+                        toplevel, PulldownMenuGizmoClass, &fileMenu, NULL, 0
+                );
+                edit = CreateGizmo(
+                        toplevel, PulldownMenuGizmoClass, &editMenu, NULL, 0
+                );
+        }
+        menu = GetBaseWindowMenuBar(handle);
+        SetSubMenuValue(menu, file, 0);
+        SetSubMenuValue(menu, edit, 1);
+        MapGizmo(BaseWindowGizmoClass, handle);
+}
+
+main(int argc, char *argv[])
+{
+        toplevel = InitializeGizmoClient(
+                "main", "main", "main", NULL, NULL, NULL, 0,
+                &argc, argv, NULL, NULL, NULL, NULL, NULL, 0,
+                NULL, NULL, NULL
+        );
+        CreateWindow();
+        GizmoMainLoop(NULL, NULL, NULL, NULL);
+}
+.ft
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP,
+PopupGizmo\f(CW(3L)\fP
+.ft

@@ -1,0 +1,12 @@
+#ident	"@(#)pkg.mpu:preremove	1.2"
+#ident	"$Header: $"
+
+PKGNAME=mpu
+
+#
+# Make sure LANG environment variable is set.  If it's not set
+# then default to the C-locale.
+#
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+rm -rf /etc/inst/locale/${LOCALE}/menus/${PKGNAME}

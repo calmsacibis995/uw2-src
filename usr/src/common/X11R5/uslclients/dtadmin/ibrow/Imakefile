@@ -1,0 +1,73 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)ibrow:Imakefile	1.5"
+
+#include        <Motif.tmpl>
+#include        <Motif.rules>
+
+#if Release5
+
+#define DoNormalLib	NO
+#define DoSharedLib	YES
+#include <Library.tmpl>
+#include <sv4Lib.tmpl>
+
+#else
+
+#define DynamicLibraryObjectRule()                                      @@\
+.c.o:                                                                   @@\
+                $(CC) -c -KPIC $(CFLAGS) $<
+
+#define SharedLibraryTarget(libname,objlist,dependlib,otherlib)         @@\
+lib/**/libname/**/.so:: objlist dependlib                               @@\
+        $(RM) lib/**/libname/**/.so                                     @@\
+        $(CC) $(YFLAGS) -G objlist -o lib/**/libname/**/.so -h lib/**/libname/**/.so.1 $(SHLIBFLAGS) dependlib otherlib
+
+#endif
+
+INSTPGMFLAGS = -m 0755
+SHLIBLDFLAGS = -G
+EXTRA_DEFINES= -DNOVELL
+    DTLIBSRC = $(LIBSRC)/Dt
+    DTILIBSRC = $(USLCLIENTSRC)/libDtI $(USLCLIENTSRC)/libMDtI
+    DTAMLIBSRC = $(USLCLIENTSRC)/dtadmin/dtamlib
+    DTAMLIB = $(DTAMLIBSRC)/libdtam.a
+    DTLIB = $(DTLIBSRC)/libDt.so
+    LOCAL_LIBS = $(DTLIB) $(DTAMLIB)
+
+    INCLUDES = -I$(LIBSRC) -I$(DTLIBSRC) -I$(DTILIBSRC)
+     LIBNAME = ibrow
+         LIB = lib$(LIBNAME).so
+
+        SRCS = ibrowlib.c
+
+OBJS = $(SRCS:.c=.o)
+
+#if Release5
+LibraryObjectRule()
+SharedLibraryDepTarget($(LIBNAME),$(SODTREV),$(OBJS),.,.,$(LOCAL_LIBS))
+/*FurSharedLibraryTarget($(LIBNAME),$(SODTREV),$(OBJS),.,.)*/
+
+InstallSharedLibrary($(LIBNAME),$(SODTREV),$(DESKTOPDIR)/ibrow)
+/*InstallFurLibrary($(LIBNAME),$(SODTREV),$(USRLIBDIR))*/
+#else
+all::	libibrow.so
+DynamicLibraryObjectRule()
+SharedLibraryDepTarget($(LIBNAME),$(OBJS),.,.,$(LOCAL_LIBS))
+InstallLibrary($(LIBNAME),$(DESKTOPDIR)/ibrow)
+#endif
+
+InstallProgram(ibrow.msgs,$(DESKTOPDIR)/ibrow)
+InstallProgram(GetInetBrowser,$(BINDIR))
+InstallNonExecFile(ibrow.cdb,$(USRLIBDIR)/classdb)
+InstallNonExecFile(pixmaps/ibrow.32,$(USRLIBDIR)/pixmaps)
+InstallNonExecFile(bitmaps/ibrow.32,$(USRLIBDIR)/bitmaps)
+InstallMsgCatalog(ibrow)
+
+DependTarget()

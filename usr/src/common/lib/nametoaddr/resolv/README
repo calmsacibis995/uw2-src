@@ -1,0 +1,13 @@
+#ident	"@(#)nametoaddr:common/lib/nametoaddr/resolv/README	1.1.5.1"
+#ident	"$Header: $"
+
+resolv.so	nametoaddr mapping using Domain Name Service.
+
+The shared library resolv.so is dynamically linked by the libnsl netdir
+functions when the /etc/netconfig file specifies /usr/lib/resolv.so.
+In earlier releases, resolv.so was built by linking resolv.o with
+its own copies of libresolv and libsocket object files.  Now,
+resolv.so is built just from resolv.o and is dynamically linked with
+libresolv.so, so it is much smaller than before.  This change also
+facilitates the consolidation of duplicate code in libsocket and
+nametoaddr/resolv.

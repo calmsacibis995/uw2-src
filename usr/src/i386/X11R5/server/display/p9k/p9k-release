@@ -1,0 +1,251 @@
+#!/usr/local/bin/perl	--	# -*- Mode: Perl -*-
+#
+# FILE 
+#
+#	p9k-release : create a release of the P9000 display library.
+# 
+# SYNOPSIS
+#
+#	p9k-release release-directory
+#
+# DESCRIPTION
+#
+#	Creates a release of P9000 with the current release number in
+#	the named directory.
+#
+# FILES
+#
+#	<source-files> 	: determined by $(ad -source).
+#
+# SEE ALSO
+#
+#	ad(1) 		: administration tool
+#	imake(1) 	: X Makefile generation tool
+#
+# AUTHOR 
+#
+#	jk
+#
+#
+
+#ident	"@(#)p9k:p9k/p9k-release	1.1"
+
+# option parser
+require "getopts.pl";
+
+# Variables
+$tmp_dir = $ENV{"TMPDIR"};
+
+if (!defined($tmp_dir)) { $tmp_dir = "/tmp"; }
+
+$version = "p9k-release 1.0.0";
+$source_file_generation_command = "ad -source -i ";
+$file_transfer_command = "cpio -pduL ";
+$source_preparation_command = "ad -make ";
+$error_file = "$tmp_dir/mr.$$";
+
+# Options
+$options_string = 's:f:m:e:';
+
+# Ignore file names matching the following pattern
+@match_ignore_pattern_list = 
+	('\.\.adfile', 
+	 '\.\.stampfile', 
+	 'cfg.*',
+	 'TO-DO',
+	 'RELEASE-PROCEDURE'
+	 );
+
+# Subroutines
+sub tool_usage
+{
+	print STDERR "usage : $0 [options] release-directory ...\n";
+	print STDERR "where options are :\n";
+	print STDERR "\t-s source-generation-command\
+		(default \"$source_file_generation_command\")\n";
+	print STDERR "\t-f file-transfer-command\
+		(default \"$file_transfer_command\")\n";
+	print STDERR "\t-m source-preparation-command\
+		(default \"$source_preparation_command\")\n";
+	print STDERR "\t-e error-file\
+		(default \"$error_file\")\n";
+	print STDERR "\n";
+	exit 1;
+}
+
+&tool_usage if @ARGV eq 0;
+
+# Parse options
+&Getopts($options_string);
+
+&tool_usage if @ARGV eq 0;
+
+if (defined($opt_s)) { $source_file_generation_command = "$opt_s"; }
+if (defined($opt_f)) { $file_transfer_command = "$opt_f"; }
+if (defined($opt_m)) { $source_preparation_command = "$opt_m"; }
+if (defined($opt_e)) { $error_file = "$opt_e"; }
+
+# Get the list of source files
+sub match_ignore_list
+{
+	local ($file) = @_;
+	foreach $i (@match_ignore_pattern_list)
+	{
+		if ($file =~ m,^$i$,)
+		{
+			return 1;
+		}	
+	}
+	0;	
+}
+
+
+# Mappings 	
+
+# Main program
+$release_directory = $ARGV[0];
+
+# First run the make command in the source directory
+
+print STDERR "$0 : preparing sources using \"$source_preparation_command\".\n";
+
+system("$source_preparation_command 2>> $error_file;");
+
+die "$0 : source preparation failed.\n" if ($?);
+
+# Get the release number
+$release_number = `sed -n -e '/DLIBRARY_VERSION/p' makefile`;
+$release_number =~ s/.*(\d.\d+).*\n/\1/;
+
+print STDERR "$0 : creating release \"$release_number\" in \"$release_directory\".\n";
+
+open (SOURCE_LIST, "$source_file_generation_command 2>>$error_file|");
+open (FILE_TRANSFER, 
+	"| $file_transfer_command $release_directory 2>>$error_file");
+
+while (<SOURCE_LIST>)
+{
+	chop;
+
+	$source_file = $_;
+
+	($base_name = $source_file) =~ s,^.*/,,;
+
+	next if (&match_ignore_list($base_name));
+
+	if ($source_file =~ m,/,o)
+	{
+		($dir_name = $source_file) =~ s,^(.*)/[^/]*$,\1,;
+	}
+	else
+	{
+		$dir_name = ".";
+	}
+
+	($suffix = $base_name) =~ s,^.*\.([^\.]*),\1,;
+	($prefix = $base_name) =~ s,^(.*)\.[^\.]*,\1,;
+
+	if ($base_name =~ m/^Imakefile$/o)
+	{
+		$imake_release_number = 
+			`sed -n -e '/DLIBRARY_VERSION/p' $source_file`;
+		if ($imake_release_number ne "")
+		{
+			$imake_release_number =~ s/.*(\d.\d+).*\n/\1/;
+
+			if ($release_number ne $imake_release_number)
+			{
+				die "$0 : mismatch in release numbers \"$source_file\".\n";
+			}
+		}
+
+		print FILE_TRANSFER "$source_file\n";
+
+	}
+	elsif ($base_name =~ m/^makefile$/o)	# copy under a new name.
+	{
+		$delayed_commands .= 
+			"cp $dir_name/$base_name \\\
+				$release_directory/$dir_name/makefile.stdenv;";
+	}
+	else
+	{
+		print FILE_TRANSFER "$source_file\n";
+	}
+	
+	if ($suffix eq "c")		# C file .. look for associated .h
+	{
+		$temp_file = "$dir_name/$prefix.h";
+		if (-r "$temp_file")
+		{
+			print FILE_TRANSFER "$temp_file\n";
+		}
+	}
+	elsif ($suffix eq "m")	# Munch file
+	{
+		$temp_file = "$dir_name/$prefix.c";
+		if (-r "$temp_file")
+		{
+			print FILE_TRANSFER "$temp_file\n";
+		}
+		else
+		{
+			die "$0 : missing source file \"$temp_file\".\n";
+		}
+	}
+	elsif ($suffix eq "gen")	# options file ... look for .c and .h
+	{
+		$temp_file = "$dir_name/$prefix.c";
+		if (-r "$temp_file")
+		{
+			print FILE_TRANSFER "$temp_file\n";
+		}
+		else
+		{
+			die "$0 : missing source file \"$temp_file\".\n";
+		}
+
+		$temp_file = "$dir_name/$prefix.h";
+		if (-r "$temp_file")
+		{
+			print FILE_TRANSFER "$temp_file\n";
+		}
+		else
+		{
+			die "$0 : missing source file \"$temp_file\".\n";
+		}
+	}
+	elsif ($suffix eq "sed")
+	{
+		$temp_file = "$dir_name/$prefix";
+		if (-r "$temp_file")
+		{
+			print FILE_TRANSFER "$temp_file\n";
+		}
+		else
+		{
+			die "$0 : missing source file \"$temp_file\".\n";
+		}
+	}
+	elsif ($suffix eq "m4")		# take the output of the M4 pass.
+	{
+		$temp_file = "$dir_name/$prefix";
+		if (-r "$temp_file")
+		{
+			print FILE_TRANSFER "$temp_file\n";
+		}
+		else
+		{
+			die "$0 : missing source file \"$temp_file\".\n";
+		}
+	}
+}
+
+# Wait for the transfer to finish
+close (FILE_TRANSFER);
+
+# Execute the delayed commands.
+
+system("$delayed_commands 2>> $error_file");
+
+exit 0;

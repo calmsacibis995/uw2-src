@@ -1,0 +1,65 @@
+#ident	"@(#)pkg.oam:i386/pkg/oam/preremove	1.5"
+#ident	"$Header: $"
+
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+#
+# Ensure OAM not in use prior to removal
+#
+
+endnotok() {
+	exit 3
+}
+
+trap 'endnotok' 1 2 3 15
+
+RUNFLG="`ps -ef | \
+	grep -v grep | \
+	grep 'fmli -i /usr/sadm/sysadm/menu/oam.init' | \
+	wc -l`"
+
+if [ ${RUNFLG} -ne 0 ]
+then
+	pfmt -s nostd -g ${PKGMSG}:51 "\n OA&M is currently in use. You may not remove it while it\n is being used. Please try again later.\n\n" 2>&1
+	endnotok
+fi
+
+# If any packages other than oam have .mi (menu interface)
+# files, handle them now.
+
+MI_PKGS="`ls /var/sadm/pkg/*/save/intf_install/*.mi 2>/dev/null | \
+	sed -e '/\/var\/sadm\/pkg\/'$PKGINST'\// d' \
+	    -e 's/\/var\/sadm\/pkg\/\([^\/]*\)\/.*/\1/' | \
+	sort -u`"
+
+if [ -n "$MI_PKGS" ]
+then
+	OPKGINST=$PKGINST
+	OPKGSAV=$PKGSAV
+	OAMBASE=/usr/sadm/sysadm
+	export PKGINST PKGSAV OAMBASE
+	for PKGINST in $MI_PKGS
+	do
+		PKGSAV=/var/sadm/pkg/$PKGINST/save
+		for i in /var/sadm/pkg/$PKGINST/save/intf_install/*.mi
+		do
+			/usr/sadm/install/bin/intf_remove $i
+		done
+		/usr/sadm/install/bin/ie_build
+	done
+	PKGINST=$OPKGINST
+	PKGSAV=$OPKGSAV
+
+fi
+		
+exit 0

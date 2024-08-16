@@ -1,0 +1,47 @@
+uso:\nypinit -c\nypinit -m\nypinit -s servidor_principal\ndonde:\n\t-c se usa para definir un cliente nis\n\t-m se usa para construir una base de datos del servidor nis principal\n\t-s se usa para una base de datos subordinada y\n     servidor_principal debe ser un servidor nis existente y disponible.\n
+Introduzca el nombre de dominio o teclee q para abandonar: 
+¿Es correcto %s? (s/n: s) 
+Arranque de NIS.... 
+Realizado\n
+Tiene que ser el administrador del NIS para ejecutar ypinit\n
+Cerrando NIS... 
+\nNo se puede obtener el nombre del host local. Compruebe la vía de acceso.\n
+\nNo se ha definido el nombre del host local. Defínalo.\n
+\nNo se puede obtener el nombre de dominio del host local.  Compruebe la vía de acceso.\n
+\nNo se ha definido el nombre de dominio del host local. Defínalo.\n
+\nEl nombre de dominio del host local se ha definido como '%s'\n
+¿Es correcto? [s/n: s] 
+\nEl directorio %s no existe.  Vuelva a instalar el paquete NIS.\n
+\nPara que el NIS funcione satisfactoriamente, es necesario construir una\nlista de servidores NIS.  Por favor, continúe añadiendo\nlos nombres de los servidores NIS en orden de preferencia, uno por\nlínea.  Después de terminar la lista, teclee <control D>.\n
+\tsiguiente host que se va a añadir:  %s\n
+'%s' no está en la base de datos del host. Para que NIS opere\ncorrectamente, es necesario añadir '%s' a /etc/hosts\n\n
+\tsiguiente host que se va a añadir:  
+La lista actual de servidores NIS es la siguiente:\n
+Es necesario volver a intentarlo desde el principio...\n";;
+%s se ha configurado como cliente NIS.\n
+El host especificado debería ser un servidor NIS principal en funcionamiento,\ny no este computador.\n
+¿Se puede destruir el %s existente y su contenido? [s/n: n]  
+No se puede limpiar el directorio antiguo %s.  Error fatal.\n
+De acuerdo.  Por favor, límpielo manualmente y vuelva a comenzar.  Hasta luego.\n
+No se puede hacer el directorio nuevo %s.  Error fatal.\n
+El directorio del dominio NIS es %s""/""%s\n
+\nLas siguientes bases de datos NIS se copiarán desde el servidor maestro:\n
+\nLas siguientes bases de datos NIS se crearán para este dominio:\n
+¿Son correctos? [s/n: s] 
+\nPor favor, edite el archivo /var/yp/YPMAPS y vuelva a comenzar.\n
+\nNo hay más preguntas.\n%s se ha configurado como servidor NIS subordinado.\n
+La instalación de la base de datos NIS requiere que responda\na algunas preguntas. Todas las preguntas se plantearán\n al comienzo del procedimiento.\n\n¿Desea abandonar el procedimiento cuando se produzcan errores no fatales? [s/n:\nn] 
+De acuerdo.  Por favor, recuerde rehacer manualmente lo que haya fallado.\nSi no lo hace, habrá partes del sistema (quizás el propio NIS)\nque no funcionen.\n";;
+No hay más preguntas.  El resto del procedimiento llevará entre\n5 y 10 minutos.\n
+Construyendo %s/%s/ypservers...\n
+No se pudo construir la base de datos NIS %s/%s/%s.\n
+Ejecutando %s/Makefile\n
+Error al ejecutar Makefile.\n
+%s se ha configurado como servidor NIS maestro con errores. No olvide\naveriguar cuáles han sido los problemas, y arreglarlos.\n\n
+%s se ha configurado como servidor NIS maestro sin errores.\n\n
+Imposible añadir tcpip_nis.so a /etc/netconfig\n
+No se pudo establecer contacto con las siguientes máquinas a través de la red.
+Aunque NIS se iniciará satisfactoriamente, se recomienda que\n\tusted verifique que cada una de las máquinas tiene una\n\tentrada en /etc/hosts y de que se puede acceder a ella a través\n\tde la red.  A continuación, vuelva a ejecutar ypinit.\n\n 
+\tNIS NO arrancará, puesto que no se puede acceder a\n\tninguna de las máquinas introducidas como servidores NIS a través de la\n\tred.\n\tPor favor, verifique que todos los servidores\n\tNIS tienen una entrada en /etc/hosts y de que es accesible a través\n\tde la red.  A continuación, vuelva a ejecutar ypinit.\n\n
+  No se pudo establecer contacto con el servidor\n\tNIS maestro, %s, a través de la red.
+\tNIS NO arrancará.\n\n\tPor favor, verifique que el servidor %s tiene una entrada en /etc/hosts\n\ty que se puede acceder a él a través de la red.  A continuación,\n\tvuelva a ejecutar ypinit.\n\n

@@ -1,0 +1,59 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)libclass:Imakefile	1.7"
+
+#if Release5
+#define DoNormalLib	YES
+#include <Library.tmpl>
+#include <sv4Lib.tmpl>
+#endif
+#include        <Motif.tmpl>
+#include        <Motif.rules>
+#include        <C++.tmpl>
+#include        <C++.rules>
+
+
+	
+     MDTILIBSRC = $(USLCLIENTSRC)/libMDtI
+
+           C++C = $(PFX)CC
+       C++FLAGS = $(DEBUG) -DNOVELL -DX_WCHAR -DXTFUNCPROTO $(ALLDEFINES) 
+       INCLUDES = -I../include -I$(LIBSRC) -I$(MDTILIBSRC) -I$(LIBSRC)/Xm  -I$(MDTILIBSRC)
+   INSTALLFLAGS = $(INSTINCFLAGS)
+        LIBNAME = uw
+            LIB = lib$(LIBNAME).a
+         MALLOC =
+#if !SystemV4
+         MALLOC = malloc.o
+#endif
+
+SRCS = \ 
+	BasicComponent.C \
+	Buttons.C \
+	Dialog.C \
+	ErrDialog.C \ 
+	Help.C \
+	InfoDialog.C \
+	Login.C \
+	MultiPList.C \
+	PDialog.C \
+	PList.C \
+	QDialog.C \
+	WarnDialog.C \
+	i18n.C 
+		
+OBJS = $(SRCS:.C=.o)
+
+LibraryObjectRule()
+NormalLibraryTarget($(LIBNAME),$(OBJS))
+
+install::	all
+InstallMsgCatalog(libclasses)
+
+DependTarget()

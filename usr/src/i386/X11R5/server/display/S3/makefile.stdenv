@@ -1,0 +1,278 @@
+#ident	"@(#)S3:S3/makefile.stdenv	1.3"
+
+#	NAME
+#
+#		makefile : Make file.
+#
+#	SYNOPSIS
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	AUTHORS
+#
+#
+#	HISTORY
+#
+
+#	AM directives.
+
+..source : 	s3_clks.def s3_modes.def s3_chips.def \
+			s3_vis.def s3_dacs.def s3_blt.code
+..source : global.h 
+..source : option.template
+..source : README.S3 
+..include : devices
+..special : SAVE SAVE2 lint
+
+#	Make variables.
+
+# cpp_options = 
+
+__cc_options__ = -DLIBRARY_NAME=\"LIBS3\" -DCHIPSET_NAME=\"S3\"\
+	-DLIBRARY_VERSION="\"1.03\""
+
+c_files = 	s3.c s3_state.c s3_regs.c s3_sline.c s3_cmap.c \
+			s3_cursor.c s3_fill.c s3_font.c s3_globals.c s3_gs.c \
+			s3_line.c s3_options.c s3_points.c s3_asm.c\
+			s3_arc.c s3_spans.c s3_bitblt.c s3_debug.c \
+			generic.c g_colormap.c g_gs.c g_omm.c g_regs.c g_state.c \
+			stdenv.c
+
+m_files = 	g__init__.m debug.m s3__init__.m s3__gs__.m \
+			s3__vtin__.m s3__vtout__.m
+
+as_s_files = s3_asmblr.s 
+as_o_files = ${as_s_files:.s=.o}
+
+#	Different types of makes.
+..made_debug:		libs3_${LOGNAME}_g.so
+..made_optimized: 	libs3_${LOGNAME}_O.so
+..made_profiled: 	libs3.a 
+
+# 	Determine the appropriate flags and the target
+_cc_options_ = $(shell directory_to_make_option cc)
+_ld_options_ = $(shell directory_to_make_option ld)
+_ar_options_ = $(shell directory_to_make_option ar)
+_as_options_ = $(shell directory_to_make_option as)
+
+..made: $(shell directory_to_make_option made)
+
+#	Standard make include file.
+
+include ${std_make_include_file}
+
+# 	Munch rules.
+$(munch_c_files) : $(non_munch_o_files)
+
+debug.c : debug.m $(non_munch_o_files)
+	$(munch) -d -i '^.*_debug$$' -f s3_debug_control $(non_munch_o_files) > $(@);
+
+g__init__.c : g__init__.m $(non_munch_o_files)
+	$(munch) -c -i '^generic_.*__initialize__$$' -f generic__initialize__\
+	-p g__init__.m $(non_munch_o_files) > $(@)
+
+s3__init__.c : s3__init__.m $(non_munch_o_files)
+	$(munch) -c -i '^s3_.*__initialize__$$' -f s3__initialize__ \
+	-p s3__init__.m $(non_munch_o_files) > $(@)
+
+s3__gs__.c : s3__gs__.m $(non_munch_o_files)
+	$(munch) -c -i '^s3_.*__gs_change__$$' -f s3__gs_change__ \
+	-p s3__gs__.m $(non_munch_o_files) > $(@)
+
+s3__vtin__.c : s3__vtin__.m $(non_munch_o_files)
+	$(munch) -c -i '^s3_.*__vt_switch_in__$$' -f s3__vt_switch_in__ \
+	-p s3__vtin__.m $(non_munch_o_files) > $(@)
+
+s3__vtout__.c : s3__vtout__.m $(non_munch_o_files)
+	$(munch) -c -i '^s3.*__vt_switch_out__$$' -f s3__vt_switch_out__ \
+	-p s3__vtout__.m $(non_munch_o_files) > $(@)
+
+s3_options.c : s3_opt.gen
+	genoptions -o $(@) -p 's3_options_' -i $(<)
+
+libs3_${LOGNAME}_g.so: $(o_files) $(as_o_files)
+	rm -f $@ libs3.so
+	$(ld) $(LD_OPTIONS) -o $@ -h $@ $(o_files) $(as_o_files) -lm
+	ln -s $@ libs3.so
+
+libs3_${LOGNAME}_O.so: $(o_files) $(as_o_files)
+	rm -f $@ libs3.so
+	$(ld) $(LD_OPTIONS) -o $@ -h $@ $(o_files) $(as_o_files) -lm
+	ln -s $@ libs3.so
+
+libs3.a: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ar) $(AR_OPTIONS) $@ $(o_files) $(as_o_files)  -lm
+	##$(am)
+
+s3.o : s3.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h global.h generic.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_arc.h s3_globals.h s3_asm.h s3_bitblt.h s3_cursor.h s3_fill.h s3_font.h s3_gs.h g_omm.h s3_line.h s3_points.h s3_sline.h s3_spans.h s3_cmap.h s3_vis.def s3_modes.def
+s3_state.o : s3_state.c s3_options.h stdenv.h global.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_asm.h
+s3_regs.o : s3_regs.c stdenv.h global.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h
+s3_sline.o : s3_sline.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_cmap.o : s3_cmap.c s3_options.h stdenv.h global.h s3_vis.def s3_dacs.def s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_globals.h s3_state.h s3_chips.def s3_clks.def
+s3_cursor.o : s3_cursor.c s3_options.h stdenv.h global.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def g_omm.h
+s3_fill.o : s3_fill.c stdenv.h global.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_asm.h
+s3_font.o : s3_font.c stdenv.h global.h s3_options.h s3_globals.h g_omm.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h
+s3_globals.o : s3_globals.c stdenv.h global.h
+s3_gs.o : s3_gs.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_omm.h s3_state.h s3_options.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_globals.h s3_asm.h
+s3_line.o : s3_line.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_options.o : s3_options.c stdenv.h global.h
+s3_points.o : s3_points.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_asm.o : s3_asm.c stdenv.h global.h s3_globals.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def
+s3_arc.o : s3_arc.c stdenv.h global.h s3_globals.h s3_options.h
+s3_spans.o : s3_spans.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_bitblt.o : s3_bitblt.c stdenv.h global.h s3_globals.h s3_options.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_blt.code
+s3_debug.o : s3_debug.c
+generic.o : generic.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_regs.h
+g_colormap.o : g_colormap.c stdenv.h global.h
+g_gs.o : g_gs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_omm.o : g_omm.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_regs.o : g_regs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_state.o : g_state.c g_gs.h stdenv.h global.h g_colormap.h
+stdenv.o : stdenv.c global.h
+g__init__.o : g__init__.c
+debug.o : debug.c
+s3__init__.o : s3__init__.c s3_options.h stdenv.h global.h
+s3__gs__.o : s3__gs__.c
+s3__vtin__.o : s3__vtin__.c
+s3__vtout__.o : s3__vtout__.c
+s3.d : s3.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h global.h generic.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_arc.h s3_globals.h s3_asm.h s3_bitblt.h s3_cursor.h s3_fill.h s3_font.h s3_gs.h g_omm.h s3_line.h s3_points.h s3_sline.h s3_spans.h s3_cmap.h s3_vis.def s3_modes.def
+s3_state.d : s3_state.c s3_options.h stdenv.h global.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_asm.h
+s3_regs.d : s3_regs.c stdenv.h global.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h
+s3_sline.d : s3_sline.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_cmap.d : s3_cmap.c s3_options.h stdenv.h global.h s3_vis.def s3_dacs.def s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_globals.h s3_state.h s3_chips.def s3_clks.def
+s3_cursor.d : s3_cursor.c s3_options.h stdenv.h global.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def g_omm.h
+s3_fill.d : s3_fill.c stdenv.h global.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_asm.h
+s3_font.d : s3_font.c stdenv.h global.h s3_options.h s3_globals.h g_omm.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h
+s3_globals.d : s3_globals.c stdenv.h global.h
+s3_gs.d : s3_gs.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_omm.h s3_state.h s3_options.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_globals.h s3_asm.h
+s3_line.d : s3_line.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_options.d : s3_options.c stdenv.h global.h
+s3_points.d : s3_points.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_asm.d : s3_asm.c stdenv.h global.h s3_globals.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def
+s3_arc.d : s3_arc.c stdenv.h global.h s3_globals.h s3_options.h
+s3_spans.d : s3_spans.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_bitblt.d : s3_bitblt.c stdenv.h global.h s3_globals.h s3_options.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_blt.code
+s3_debug.d : s3_debug.c
+generic.d : generic.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_regs.h
+g_colormap.d : g_colormap.c stdenv.h global.h
+g_gs.d : g_gs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_omm.d : g_omm.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_regs.d : g_regs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_state.d : g_state.c g_gs.h stdenv.h global.h g_colormap.h
+stdenv.d : stdenv.c global.h
+g__init__.d : g__init__.c
+debug.d : debug.c
+s3__init__.d : s3__init__.c s3_options.h stdenv.h global.h
+s3__gs__.d : s3__gs__.c
+s3__vtin__.d : s3__vtin__.c
+s3__vtout__.d : s3__vtout__.c
+s3.ln : s3.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h global.h generic.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_arc.h s3_globals.h s3_asm.h s3_bitblt.h s3_cursor.h s3_fill.h s3_font.h s3_gs.h g_omm.h s3_line.h s3_points.h s3_sline.h s3_spans.h s3_cmap.h s3_vis.def s3_modes.def
+s3_state.ln : s3_state.c s3_options.h stdenv.h global.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_asm.h
+s3_regs.ln : s3_regs.c stdenv.h global.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h
+s3_sline.ln : s3_sline.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_cmap.ln : s3_cmap.c s3_options.h stdenv.h global.h s3_vis.def s3_dacs.def s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_globals.h s3_state.h s3_chips.def s3_clks.def
+s3_cursor.ln : s3_cursor.c s3_options.h stdenv.h global.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def g_omm.h
+s3_fill.ln : s3_fill.c stdenv.h global.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_asm.h
+s3_font.ln : s3_font.c stdenv.h global.h s3_options.h s3_globals.h g_omm.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h
+s3_globals.ln : s3_globals.c stdenv.h global.h
+s3_gs.ln : s3_gs.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_omm.h s3_state.h s3_options.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_globals.h s3_asm.h
+s3_line.ln : s3_line.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_options.ln : s3_options.c stdenv.h global.h
+s3_points.ln : s3_points.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_asm.ln : s3_asm.c stdenv.h global.h s3_globals.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def
+s3_arc.ln : s3_arc.c stdenv.h global.h s3_globals.h s3_options.h
+s3_spans.ln : s3_spans.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_bitblt.ln : s3_bitblt.c stdenv.h global.h s3_globals.h s3_options.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_blt.code
+s3_debug.ln : s3_debug.c
+generic.ln : generic.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_regs.h
+g_colormap.ln : g_colormap.c stdenv.h global.h
+g_gs.ln : g_gs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_omm.ln : g_omm.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_regs.ln : g_regs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_state.ln : g_state.c g_gs.h stdenv.h global.h g_colormap.h
+stdenv.ln : stdenv.c global.h
+g__init__.ln : g__init__.c
+debug.ln : debug.c
+s3__init__.ln : s3__init__.c s3_options.h stdenv.h global.h
+s3__gs__.ln : s3__gs__.c
+s3__vtin__.ln : s3__vtin__.c
+s3__vtout__.ln : s3__vtout__.c
+##$(am)
+
+s3__gs__.d : s3__gs__.c
+s3__vtin__.ln : s3__vtin__.c
+g_colormap.d : g_colormap.c stdenv.h global.h
+s3__vtin__.d : s3__vtin__.c
+s3_globals.ln : s3_globals.c stdenv.h global.h
+s3_sline.d : s3_sline.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_gs.d : s3_gs.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_omm.h s3_state.h s3_options.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_globals.h s3_asm.h
+s3_arc.ln : s3_arc.c stdenv.h global.h s3_globals.h s3_options.h
+s3_cmap.ln : s3_cmap.c s3_options.h stdenv.h global.h s3_vis.def s3_dacs.def s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_globals.h s3_state.h s3_chips.def s3_clks.def
+g_colormap.ln : g_colormap.c stdenv.h global.h
+s3_bitblt.ln : s3_bitblt.c stdenv.h global.h s3_globals.h s3_options.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_blt.code
+s3_gs.ln : s3_gs.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_omm.h s3_state.h s3_options.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_globals.h s3_asm.h
+s3_font.ln : s3_font.c stdenv.h global.h s3_options.h s3_globals.h g_omm.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h
+s3_line.d : s3_line.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_spans.ln : s3_spans.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3.d : s3.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h global.h generic.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_arc.h s3_globals.h s3_asm.h s3_bitblt.h s3_cursor.h s3_fill.h s3_font.h s3_gs.h g_omm.h s3_line.h s3_points.h s3_sline.h s3_spans.h s3_cmap.h s3_vis.def s3_modes.def
+g_omm.ln : g_omm.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g__init__.d : g__init__.c
+s3__vtout__.d : s3__vtout__.c
+s3_asm.d : s3_asm.c stdenv.h global.h s3_globals.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def
+s3_asm.ln : s3_asm.c stdenv.h global.h s3_globals.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def
+s3_state.d : s3_state.c s3_options.h stdenv.h global.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_asm.h
+s3_regs.d : s3_regs.c stdenv.h global.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h
+s3_cmap.d : s3_cmap.c s3_options.h stdenv.h global.h s3_vis.def s3_dacs.def s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_globals.h s3_state.h s3_chips.def s3_clks.def
+s3_cursor.d : s3_cursor.c s3_options.h stdenv.h global.h s3_asm.h g_omm.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_globals.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def
+s3_fill.d : s3_fill.c stdenv.h global.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_asm.h
+s3_font.d : s3_font.c stdenv.h global.h s3_options.h s3_globals.h g_omm.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h
+s3_globals.d : s3_globals.c stdenv.h global.h
+s3_options.d : s3_options.c stdenv.h global.h
+s3_points.d : s3_points.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_arc.d : s3_arc.c stdenv.h global.h s3_globals.h s3_options.h
+s3_spans.d : s3_spans.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_bitblt.d : s3_bitblt.c stdenv.h global.h s3_globals.h s3_options.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_blt.code
+s3_debug.d : s3_debug.c
+generic.d : generic.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_regs.h
+g_gs.d : g_gs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_omm.d : g_omm.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_regs.d : g_regs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_state.d : g_state.c g_gs.h stdenv.h global.h g_colormap.h
+stdenv.d : stdenv.c global.h
+debug.d : debug.c
+s3__init__.d : s3__init__.c s3_options.h stdenv.h global.h
+s3.ln : s3.c /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h stdenv.h global.h generic.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_options.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def s3_arc.h s3_globals.h s3_asm.h s3_bitblt.h s3_cursor.h s3_fill.h s3_font.h s3_gs.h g_omm.h s3_line.h s3_points.h s3_sline.h s3_spans.h s3_cmap.h s3_vis.def s3_modes.def
+s3_state.ln : s3_state.c s3_options.h stdenv.h global.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_asm.h
+s3_regs.ln : s3_regs.c stdenv.h global.h g_regs.h g_state.h g_gs.h g_colormap.h s3_options.h
+s3_sline.ln : s3_sline.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_cursor.ln : s3_cursor.c s3_options.h stdenv.h global.h s3_asm.h g_omm.h s3_regs.h g_regs.h g_state.h g_gs.h g_colormap.h s3_globals.h s3_state.h s3_chips.def s3_clks.def s3_dacs.def
+s3_fill.ln : s3_fill.c stdenv.h global.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h s3_asm.h
+s3_line.ln : s3_line.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_options.ln : s3_options.c stdenv.h global.h
+s3_points.ln : s3_points.c stdenv.h global.h s3_globals.h s3_options.h s3_state.h g_state.h g_gs.h g_colormap.h s3_regs.h g_regs.h s3_chips.def s3_clks.def s3_dacs.def s3_gs.h g_omm.h
+s3_debug.ln : s3_debug.c
+generic.ln : generic.c g_state.h g_gs.h stdenv.h global.h g_colormap.h g_regs.h
+g_gs.ln : g_gs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_regs.ln : g_regs.c stdenv.h global.h g_state.h g_gs.h g_colormap.h
+g_state.ln : g_state.c g_gs.h stdenv.h global.h g_colormap.h
+stdenv.ln : stdenv.c global.h
+g__init__.ln : g__init__.c
+debug.ln : debug.c
+s3__init__.ln : s3__init__.c s3_options.h stdenv.h global.h
+s3__gs__.ln : s3__gs__.c
+s3__vtout__.ln : s3__vtout__.c
+
+##$(am)

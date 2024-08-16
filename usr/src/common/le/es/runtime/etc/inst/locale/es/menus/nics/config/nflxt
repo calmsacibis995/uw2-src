@@ -1,0 +1,32 @@
+NAME=Compaq_Netflex_Token_Family
+
+DRIVER_NAME=nflxt
+
+CLASS="nflxt nflx nflxsr"
+
+DEPEND=nflxsr
+
+TOKEN=true
+
+VERIFY=true
+
+BUS=EISA
+
+UNIT=1
+
+POST_SCRIPT="nflxt_post"
+
+EXTRA_FILES="/etc/netflex/cet_start
+/etc/netflex/cet_end
+/etc/netflex/ap.nflxsr
+/etc/netflex/unitok.bin
+/etc/netflex/unitokf.bin"
+
+CONFIG_CMDS="/etc/netflex/cet_start nflxt /etc/netflex 0
+/sbin/autopush -f /etc/netflex/ap.nflxsr"
+
+BOARD_IDS="CPQ6100 CPQ6101 CPQ6002"
+
+UPGRADE_CHECK=scripts/nflxt.upg
+
+OLD_DRIVER_NAME=nflxt

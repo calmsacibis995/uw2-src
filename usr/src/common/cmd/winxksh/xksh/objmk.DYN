@@ -1,0 +1,24 @@
+#ident	"@(#)winxksh:xksh/objmk.DYN	1.6"
+
+GENSYM_ARGS = kshall.o $(XKSH_OBJS) $(MALLOCOBJ) $(MORESYM)
+DYNFLAG = -DDYNLIB $(DYNSTATIC)
+
+allDYN: GENSYM $(TARGET)
+
+GENSYM: gensym kshall.o $(XKSH_OBJS) $(MALLOCOBJ)
+	./gensym gensym.c $(GENSYM_ARGS)
+
+$(TARGET): $(TARGET).o $(GENSYM_DEP) $(MALLOCOBJ)
+	$(CC) $(UFLAGS) $(ULDFLAGS) -o $(TARGET) $(TARGET).o $(MALLOCOBJ) $(LD_GENSYM) $(LIBDL) -lw -s
+	rm -f gensym.c gensym.o gensym.args libforce.so *.list *.pre 
+
+$(TARGET).o: kshall.o $(XKSH_OBJS)
+	$(LD) -r $(ULDFLAGS) -o $(TARGET).o kshall.o $(XKSH_OBJS)
+
+libforce.so: gensym.o
+	if [ -z "$(DSO_LD)" ];\
+	then\
+		$(CC) -G -h /usr/lib/libc.so.1 -o $@ gensym.o;\
+	else\
+		$(LD) -o $@ gensym.o;\
+	fi

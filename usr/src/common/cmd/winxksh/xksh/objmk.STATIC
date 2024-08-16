@@ -1,0 +1,26 @@
+#ident	"@(#)winxksh:xksh/objmk.STATIC	1.5"
+
+GENSYM_ARGS = kshall.o $(XKSH_OBJS) $(MALLOCOBJ) $(MORESYM) $(TOOLS)/usr/ccs/lib/libc.a dculib.a
+STATICFLAG = -DSTATICLIB $(DYNSTATIC)
+
+SUBLDFLAGS = -dn 
+
+allSTATIC: GENSYM $(TARGET)
+
+GENSYM: gensym kshall.o $(XKSH_OBJS) $(MALLOCOBJ)
+	cp $(TOOLS)/usr/lib/libresmgr.a dculib.a
+	./gensym gensym.c $(GENSYM_ARGS)
+
+$(TARGET): $(TARGET).o $(GENSYM_DEP) $(MALLOCOBJ)
+	@echo "Making $(TARGET)"
+	$(CC) $(UFLAGS) $(ULDFLAGS) -o $(TARGET).static $(TARGET).o libforce.o $(MALLOCOBJ) -L. -lw -s
+	rm -f gensym.c gensym.o gensym.args libforce.so *.list *.pre 
+
+$(TARGET).o: kshall.o $(XKSH_OBJS) dl.o
+	$(LD) -r $(ULDFLAGS) -o $(TARGET).o kshall.o $(XKSH_OBJS) dl.o
+
+dl.o:
+	$(CC) $(CFLAGS) -c dl.c
+
+libforce.so: gensym.o
+	$(LD) -r -o libforce.o gensym.o dculib.a

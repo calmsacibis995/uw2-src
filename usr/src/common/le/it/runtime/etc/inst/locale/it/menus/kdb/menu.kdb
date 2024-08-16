@@ -1,0 +1,79 @@
+.pageno
+Pagina %d di %d
+.ul
+Kernel Debugger
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Configurazione Kernel Debugger
+.ur
+Configurazione Kernel Debugger
+.ll
+.lr
+F1=Guida
+.top
+Il Kernel Debugger (KDB) può essere configurato in due modi: può essere
+sempre abilitato oppure può essere abilitato solo su richiesta. Se viene
+scelto il modo a richiesta, KDB deve essere abilitato manualmente prima
+di poter essere richiamato.
+
+KDB fornisce anche controlli di sicurezza opzionali che impediscono
+all'utente non autorizzato di richiamare il kernel debugger. Se i
+controlli di sicurezza non vengono attivati, dalla console è possibile
+avviare il kernel debugger con una sequenza di tasti, presentando così
+una potenziale breccia nella sicurezza se la console non si trova
+fisicamente in un luogo sicuro.
+
+.form
+2 2//ALWAYS::SEMPRE//DEMAND::SU RICHIESTA//Quando si vuole abilitare KDB?//DEMAND//
+// Freccia destra/sinistra per altra opzione (2 opzioni)//
+2 2//NO::NO//YES::SI//Devo attivare i controlli di sicurezza?//SECURITY//
+// Freccia destra/sinistra per altra opzione (2 opzioni)//
+.button
+Applica
+Reimposta
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+Il Kernel debugger è molto utile nello sviluppo di moduli software che
+verranno incorporati nel kernel. Il tipo più comune di modulo del kernel
+è un driver di dispositivo hardware.
+
+ABILITAZIONE DI KDB
+
+KDB può essere richiamato da una sequenza di tasti alla console, da un
+blocco di sistema, o dal comando "kdb". Comunque, può essere richiamato
+solo se è abilitato. KDB è abilitato quando viene caricato nel kernel.
+
+Se si sceglie di abilitarlo SEMPRE, KDB verrà sempre caricato nel kernel
+e potrà essere richiamato in ogni momento.
+
+Se si sceglie di abilitarlo SU RICHIESTA, KDB deve essere caricato con
+il comando "modadmin -l kdb" prima di poter essere richiamato. In
+seguito, KDB potrà essere scaricato con "modadmin -U kdb".
+
+Il vantaggio di avere KDB sempre abilitato consiste nel fatto che è
+pronto anche per un uso inaspettato. Lo svantaggio sta nel fatto che
+quando è abilitato, KDB occupa circa 250K di memoria centrale. Ciò
+influisce sulle prestazioni dei sistemi con poca memoria.
+
+CONTROLLI DI SICUREZZA
+
+KDB fornisce controlli di sicurezza opzionali che respingono i tentativi
+di accedere al kernel debugger da una sequenza di tasti alla console. In
+questo caso, per poter accedere al debugger l'utente deve eseguire il
+login usando un conto privilegiato e poi digitare il comando "kdb".
+
+Se il controllo di sicurezza non è abilitato, un utente può accedere al
+kernel debugger digitando una sequenza di tasti alla console senza dover
+eseguire il login. A meno che la console si trovi in una stanza chiusa a
+chiave o accessibile solo a persone conosciute, il controllo di
+sicurezza deve essere abilitato, per impedire violazioni della
+sicurezza.
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.working
+Attendere...
+.end

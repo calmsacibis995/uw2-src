@@ -1,0 +1,657 @@
+#ident\t"@(#)dthelp:Admin.Tools/DialMgr.hlp	1.23"
+^*version^1
+^*title^Dialup Setup
+^:Dialup_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Setting up and managing dialup communications
+^0^Dialup Setup
+^$10
+Dialup Setup
+
+Use Dialup Setup to set up communications over modems and direct
+connections. You can do the following with Dialup Setup:
+
+\to\t\k(Configure access to a remote system^^Configuring Access to a Remote System)
+\to\t\k(Configure an entry for a dialup device^^Configuring a Dialup Device Entry)
+\to\t\k(Copy a dialup device icon to a folder^^Copying a Dialup Device Icon to a Folder)
+\to\t\k(Copy a remote system icon to a folder^^Copying a Remote System Icon to a Folder)
+\to\t\k(Delete a dialup device entry^^Deleting a Dialup Device Entry)
+
+\to\t\k(Delete a remote system entry^^Deleting a Remote System Entry)
+\to\t\k(Dial up a random system^^Dialing Up a Random System) (that is, a system not configured
+\t \tfor remote access)
+\to\t\k(Search for a remote system entry^^Searching for a Remote System Entry)
+\to\t\k(View or modify the properties of a dialup device^^Viewing or Modifying the Properties of a Dialup Device)
+\to\t\k(View or modify the properties of a remote system^^Viewing or Modifying the Properties of a Remote System)
+
+See also:
+\s(Using Dialup Setup^dhelp "" ownerhb "Setting Up Modems and Other Serial Communications" "Using Dialup Setup" || helpLinkErr)
+
+^1^Configuring a Dialup Device Entry
+^$20
+Configuring a Dialup Device Entry
+
+Note: You must have \k(Change Dialup Setup permissions^dtadmin/user.hlp^Understanding Permissions) to be able to
+configure a dialup device entry.
+
+A dialup device lets you call up and log in to another system. 
+
+To configure an entry for a dialup device on your system, do the
+following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you are
+already in the Networking folder, go to Step 3.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears. 
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup" window^^Dialup Setup Window) appears.
+
+4.\tClick on Actions=>Setup Devices. The \k("Dialup Setup: Devices" window^^Dialup Setup: Devices Window)
+  \tappears.
+
+5.\tClick on Device=>New. The "Device Setup: Add New Device" window
+  \tappears with the following fields:
+
+  \to\tPort: - This is the physical connection for the device on your
+  \t \tcomputer. It can be a serial port (for example, COM1 represents
+  \t \tserial port 1) or another type of port. If you click on Other, you
+  \t \tmust type in the name of the port in the text box.  By default, Port
+  \t \tis set to COM1.
+
+  \to\tConnects to: - This is the name of the device, or modem, you are
+  \t \tusing. Click on the arrow box to bring up the Device Type List.
+  \t \tThen, click on the desired device type.  
+
+  \t \tNote: If you need to add a modem to the existing device type list, see
+  \t \t\s(Adding Dialer Entries^dhelp "" ownerhb "Setting Up Modems and Other Serial Communications" "Adding Dialer Entries" || helpLinkErr) in the System Owner Handbook, and also refer to
+  \t \tthe dtmodem(1M) command in the \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \to\tConfigure Port As: - Choose one of the following:
+
+  \t \t-\tBi-Directional - To allow calls to come into and out of the system.
+
+  \t \t \tNote: If you choose Bi-Directional, the system displays a
+  \t \t \tset of incoming speeds to choose from. By default, the speed is
+  \t \t \tset to 9600. The outgoing speed is set to Auto-Select. If you
+  \t \t \tchoose either 14400 and 28800, the system resests the speed to
+  \t \t \tthe next higher valid speed. The outgoing speed is always
+  \t \t \tAuto-Select.
+
+  \t \t-\tOutgoing Only - To allow calls to go out of the system, but not
+  \t \t \tallow calls to come into the system. By default, the speed
+  \t \t \tsetting for this type of modem is Auto-Select.
+
+  \t \t-\tIncoming Only - To allow calls to come into, but not out of, the
+  \t \t \tsystem.
+
+  \t \t \tNote: If you choose Incoming Only, the system displays a
+  \t \t \tset of speeds to choose from. By default, this speed is set
+  \t \t \tto 9600. If you choose either 14400 or 28800, the system
+  \t \t \tresets the speed to the next higher valid speed. The outgoing
+  \t \t \tspeed is always Auto-Select.
+
+  \t \t-\tPort is: - By default, this field is set to Enabled. If you want
+  \t \t \tto disable the port, click on Disabled.
+
+6.\tClick on Add to add an entry for the device and close the window.
+  \tAn icon representing the device appears in the "Dialup Setup: Devices"
+  \twindow. If desired, you can copy that icon to another folder. See
+  \t\k(Copying a Dialup Device Icon to a Folder).
+
+  \tNote: You can also click on Reset to restore the original settings,
+  \tor click on Cancel to dismiss the window without configuring the device.
+
+^1^Copying a Dialup Device Icon to a Folder
+^$30
+Copying a Dialup Device Icon to a Folder
+
+To copy a dialup device icon to another folder, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you are
+already in the Networking folder, go to Step 3.
+
+1.\tDouble-click on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup: Devices" window^^Dialup Setup: Devices Window)
+  \tappears.
+
+4.\t\d(Double-click^double-click) on the folder to which you want to copy the
+  \tdialup device icon.
+
+5.\t\d(Drag-and-drop^drag-and-drop) the desired device from the "Dialup Setup: Devices"
+\twindow onto the folder you opened in Step 4.
+
+  \tYou can now double-click on the dialup device icon to bring up the
+  \t\k("Dialup Setup: Quick Dial" window^^Dialing Up a Random System).
+
+Note: You can also copy a dialup device icon to one of your folders
+by using the \k(Copy to Folder) option.
+
+^2^Dialup Setup Window
+^$40
+Dialup Setup Window
+
+This is the main window for Dialup Setup functions. It displays the remote
+system that you can connect to using a modem or other device.
+
+Note: These systems are defined in your /etc/uucp/Systems file. 
+
+For more information on UNIX system files, see \s(Directories and Files^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Dialup Setup: Devices Window
+^$50
+Dialup Setup: Devices Window
+
+This window displays the devices connected to your system that you
+can use to dial up remote systems.
+
+Note: These devices are defined in your /etc/uucp/Devices file.
+
+For more information on UNIX system files, see \s(Directories and Files^dhelp as sysag "Directories and Files" "" || helpLinkErr).
+
+^2^Dialup Setup: Add New Device Window
+^$60
+Dialup Setup: Add New Device Window
+ 
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tPort: - This is the physical connection for the device on your
+  \t \tcomputer. It can be a serial port (for example, COM1 represents
+  \t \tserial port 1) or another type of port. If you click on Other,
+  \t \tyou must type in the name of the port in the text box.  By default,
+  \t \tPort is set to COM1.
+
+  \to\tConnects to: - This is the name of the device, or modem, you
+  \t \tare using. Click on the arrow box to bring up the Device Type
+  \t \tList. Then, click on the desired device type.  
+
+  \t \tNote: If you need to add a modem to the existing device type list, see
+  \t \t\s(Adding Dialer Entries^dhelp "" ownerhb "Setting Up Modems and Other Serial Communications" "Adding Dialer Entries" || helpLinkErr) in the System Owner Handbook, and also refer to
+  \t \tthe dtmodem(1M) command in the \s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \to\tConfigure Port As: - Choose one of the following:
+
+  \t \t-\tBi-Directional - To allow calls to come into and out of the system.
+
+  \t \t \tNote: If you choose Bi-Directional, the system displays a
+  \t \t \tset of incoming speeds to choose from. By default, the speed is
+  \t \t \tset to 9600. The outgoing speed is set to Auto-Select. If you
+  \t \t \tchoose either 14400 and 28800, the system resests the speed to
+  \t \t \tthe next higher valid speed. The outgoing speed is always
+  \t \t \tAuto-Select.
+
+  \t \t-\tOutgoing Only - To allow calls to go out of the system, but not
+  \t \t \tallow calls to come into the system. By default, the speed
+  \t \t \tsetting for this type of modem is Auto-Select.
+
+  \t \t-\tIncoming Only - To allow calls to come into, but not out of, the
+  \t \t \tsystem.
+
+  \t \t \tNote: If you choose Incoming Only, the system displays a
+  \t \t \tset of speeds to choose from. By default, this speed is set
+  \t \t \tto 9600. If you choose either 14400 or 28800, the system
+  \t \t \tresets the speed to the next higher valid speed. The outgoing
+  \t \t \tspeed is always Auto-Select.
+
+  \t \t-\tPort is: - By default, this field is set to Enabled. If you want
+  \t \t \tto disable the port, click on Disabled.
+
+2.\tClick on Add to add an entry for the device and close the window.
+  \tAn icon representing the device appears in the Dialup Setup: Devices
+  \twindow. If desired, you can copy that icon to another folder. See
+  \t\k(Copying a Dialup Device Icon to a Folder).
+
+See also:
+\k(Configuring a Dialup Device Entry)
+
+^1^Deleting a Dialup Device Entry
+^$70
+Deleting a Dialup Device Entry
+
+To delete a dialup device entry, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+ 
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. \k("Dialup Setup" window^^Dialup Setup Window) appears.
+
+4.\tClick on Actions=>Setup Devices. The \k("Dialup Setup: Devices" window^^Dialup Setup: Devices Window)
+  \tappears.
+
+5.\tClick on the device you want to delete. 
+
+6.\tClick on Device=>Delete. The icon representing the device disappears  
+  \tfrom the "Dialup Setup: Devices" window.
+
+
+^1^Configuring Access to a Remote System
+^$80
+Configuring Access to a Remote System
+
+Before you configure access to a remote system, you must do the following:
+
+  o  \k(Configure a Dialup Device Entry^^Configuring a Dialup Device Entry).
+
+  o  Get a login and a password on the system you want to connect to.
+
+  o  Get the phone number for the system you want to connect to.
+
+To configure access to a remote system, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+ 
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup" window^^Dialup Setup Window).
+
+4.\tClick on System=>New. The "Dialup Setup: Add New System" window
+  \tappears with the following fields:
+
+  \to\tSystem Name: - Type in the name of the remote system to which you
+  \t \twant to connect.
+
+  \to\tConnect Via: - Click on the device type you are using.
+
+  \to\tSpeed: - Click on the speed that matches the speed on your modem
+  \t \tor port. If you are not sure what speed to select, click on Auto-Select.
+  \t \tFor a direct connection, click on 19200.
+
+  \to\tPhone Number: - Type in the phone number for the system you want to
+  \t \tconnect to, including a 9 to dial out (if necessary), the area code
+  \t \t(if the number is not in your area code), and the seven-digit number.
+  \t \tFor example: 92015551234.
+
+  \t \tNote: This field is not available for direct connections.
+
+5.\tClick on Category=>Login Sequence for additional options if you plan
+  \tto send mail or transfer files to other systems using \k(UUCP^DesktopMgr/uucp.hlp^Using the UUCP Inbox) over
+  \ta dialup device.
+
+  \tNote: You must have \k(Change Dialup Setup permissions^dtadmin/user.hlp^Understanding Permissions) if you want to
+  \tchange the Login Sequence.
+      
+  \tThe following additional options appear:
+
+  \to\tPrompt: - Type in the text string you expect the remote system to
+  \t \tdisplay as a prompt.
+
+  \t \tNote: You do not have to enter the entire string. 
+
+  \to\tResponse: - Type in the text string that should be sent back to the
+  \t \tremote system in response to the prompt. 
+
+  \to\tCurrent Login Sequence: - Scroll through this list to display the
+  \t \tentries for Prompt and Response. The entries in this list must be
+  \t \tin the same order in which the remote system displays its prompts.
+  \t \tClick on one of the following:
+
+  \t \t-\tAdd - To put the current contents of Prompt and Response into
+  \t \t \tthe scroll list.
+
+  \t \t-\tModify - To replace the selected entry in Current Login Sequence
+  \t \t \twith the current contents of Prompt and/or Response.
+
+  \t \t-\tDelete to remove the selected entry from the scroll list.
+
+6.\tClick on Add (in the "Dialup Setup: Add New System" window). An entry
+  \tfor the remote system appears in the \k("Dialup Setup" window^^Dialup Setup Window). 
+
+  \tNote: To copy an icon representing the new system to another folder,
+  \tsee \k(Copying a Remote System Icon to a Folder). You can then log in
+  \tto the remote system by double-clicking on that icon and transfer files
+  \tto the remote system by \d(dragging-and-dropping^drag-and-drop) files onto that icon.
+
+^2^Dialup Setup: Add New System Window
+^$90
+Dialup Setup: Add New System Window
+
+In this window, do the following:
+
+1.\tSet the following options:
+
+  \to\tSystem Name: - Type in the name of the remote system to which you
+  \t \twant to connect.
+
+  \to\tConnect Via: - Click on the device type you are using.
+
+  \to\tSpeed: - Click on the speed that matches the speed on your modem
+  \t \tor port. If you are not sure what speed to select, click on
+  \t \tAuto-Select. For a direct connection, click on 19200.
+
+  \to\tPhone Number: - Type in the phone number for the system you
+  \t \twant to connect to, including a 9 to dial out (if necessary),
+  \t \tthe area code (if the number is not in your area code), and
+  \t \tthe seven-digit number. For example: 92015551234.
+
+  \t \tNote: This field is not available for direct connections.
+
+2.\tClick on Category=>Login Sequence for additional options if you
+  \tplan to send mail or transfer files to other systems using \k(UUCP^DesktopMgr/uucp.hlp^Using the UUCP Inbox)
+  \tover a dialup device.
+
+  \tNote: You must have \k(Change Dialup Setup permissions^dtadmin/user.hlp^Understanding Permissions) if you want to
+  \tchange the Login Sequence.
+      
+  \tThe following additional options appear:
+
+  \to\tPrompt: - Type in the text string you expect the remote system
+  \t \tto display as a prompt.
+
+  \t \tNote: You do not have to enter the entire string. 
+
+  \to\tResponse: - Type in the text string that should be sent back
+  \t \tto the remote system in response to the prompt. 
+
+  \to\tCurrent Login Sequence: - Scroll through this list to display
+  \t \tthe entries for Prompt and Response. The entries in this list
+  \t \tmust be in the same order in which the remote system displays
+  \t \tits prompts. Click on one of the following:
+
+  \t \t-\tAdd - To put the current contents of Prompt and Response into
+  \t \t \tthe scroll list.
+
+  \t \t-\tModify - To replace the selected entry in Current Login Sequence
+  \t \t \twith the current contents of Prompt and/or Response.
+
+  \t \t-\tDelete to remove the selected entry from the scroll list.
+
+3.\tClick on Add. The remote system appears in the \k("Dialup Setup" window^^Dialup Setup Window). 
+
+See also:
+\k(Configuring Access to a Remote System)
+
+^1^Deleting a Remote System Entry
+^$100
+Deleting a Remote System Entry
+
+To delete a remote system entry, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+ 
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup" window^^Dialup Setup Window) appears.
+
+4.\tClick on the system you want to delete.
+
+5.\tClick on System=>Delete. The system entry in the "Dialup Setup"
+  \twindow disappears.
+
+^1^Copying a Remote System Icon to a Folder
+^$110
+Copying a Remote System Icon to a Folder
+
+You can copy an icon representing a remote dialup system to one of your
+folders. You can then do a remote login to that system by double-clicking
+on that icon. 
+
+In addition, you can move a file to that remote system by simply
+\d(dragging and dropping^drag-and-drop) the file onto the remote system icon.
+
+To copy a remote system icon to one of your folders, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+ 
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup" window^^Dialup Setup Window) appears.
+
+4.\tDouble-click on the folder to which you want to copy the
+  \tremote dialup system icon.
+
+5.\tDrag-and-drop the desired system from the "Dialup Setup" window onto
+  \tthe folder you opened in Step 4.
+
+Note: You can also copy a remote system icon to one of your folders by
+using the \k(Copy to Folder) option.
+
+^2^Copy to Folder
+^$120
+Copy to Folder
+
+To copy a remote system icon or dialup device icon to one of your folders,
+do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+ 
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup: window^^Dialup Setup Window) appears.
+
+4.\tClick on Actions=>Setup. The \k("Dialup Setup: Devices" window^^Dialup Setup: Devices Window) appears.
+
+5.\tClick on the desired remote system or dialup device icon.
+
+6.\tClick on System=>Copy to Folder. The "Dialup Setup: Copy to Folder"
+  \twindow appears.
+
+7.\tClick on a folder name or the Parent Folder in the Folder(s) list
+  \tuntil you locate the desired folder.
+
+8.\tClick on Copy. The icon appears in the folder. 
+
+^1^Dialup Setup: Copy to Folder Window
+^$130
+Dialup Setup: Copy to Folder Window
+
+Click on a folder name or the Parent Folder in the Folder(s) List
+until you locate the folder to which you want to copy the remote dialup
+system icon. Then, click on Copy.
+
+^1^Searching for a Remote System Entry
+^$140
+Searching for a Remote System Entry
+
+If you have many remote system entries in the \k("Dialup Setup" window^^Dialup Setup Window),
+you can use Find to search for the desired entry.
+
+To search for a remote system entry, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+ 
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup" window^^Dialup Setup Window) appears.
+
+4.\tClick on Find.
+
+5.\tClick on one of the following:
+
+  \to\tSearch - The "Dialup Setup: Search" window appears. Type in the
+  \t \tdesired remote system name and click on Search. The system name
+  \t \tis highlighted in the "Dialup Setup" window.
+
+  \t \tNote: If the Desktop cannot find the remote system name you
+  \t \tare searching for, a pop-up error message window appears.
+
+  \to\tFirst - The system selects the first remote system entry in
+  \t \tthe "Dialup Setup" window.
+
+  \to\tLast - The system selects the last remote system entry in the
+  \t \t"Dialup Setup" window.
+
+^2^Dialup Setup: Search Window
+^$150
+Dialup Setup: Search Window
+
+Type in the desired remote system name and click on Search. The remote
+system entry is highlighted in the "Dialup Setup" window.
+
+^1^Dialing Up a Random System
+^$160
+Dialing Up a Random System
+
+To dial up a random system, that is, a remote system that you have not
+configured for remote access, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+ 
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup" window^^Dialup Setup Window) appears.
+
+4.\tClick on Actions=>Setup Devices. The \k("Dialup Setup: Devices" window^^Dialup Setup: Devices Window)
+  \tappears.
+
+5.\tClick on the device you want to dial through.
+
+6.\tClick on Actions=>Dial. The "Dialup Setup: Quick Dial" window appears
+  \twith the following fields:
+
+  \to\tPhone Number: Type in the phone number of the system you want
+  \t \tto connect to. This field applies only if the selected device
+  \t \tis a modem.
+
+  \to\tSpeed: - Click on the speed that matches the speed of your dialup
+  \t \tdevice. If you are not sure, click on Auto-Select.
+
+  \to\tParity: - Click on the \d(parity) of the system to which you are
+  \t \tconnecting. Some systems use parity for error checking.  If you are
+  \t \tcalling a UNIX system, select None.
+
+  \to\tCharacter Size: - Click on 7 if you are calling another UNIX system.
+  \t \tIf you are calling a system not running UNIX, you will probably
+  \t \tneed to click on 8, although some non-UNIX systems may use 7 bits.
+
+  \to\tDuplex Mode: Click on Full or Half, depending on the communications
+  \t \tsoftware your system is using. UnixWare operates in full duplex mode.
+
+  \t \tIf you are not directly connected to the system you are trying
+  \t \tto call, make sure your modem is set to full duplex.
+
+7.\tClick on Dial to call up the remote system.
+
+  \tNote: You can also click on Reset to restore the fields to their
+  \toriginal values, or on Cancel if you decide you do not want to
+  \tquick dial to another system.
+
+^2^Dialup Setup: Quick Dial Window
+^$170
+Dialup Setup: Quick Dial Window
+
+In this window, do the following options:
+
+1.\tSet the following options:
+
+  \to\tPhone Number: Type in the phone number of the system you want
+  \t \tto connect to. This field applies only if the selected device
+  \t \tis a modem.
+
+  \to\tSpeed: - Click on the speed that matches the speed of your dialup
+  \t \tdevice. If you are not sure, click on Auto-Select.
+
+  \to\tParity: - Click on the \d(parity) of the system to which you are
+  \t \tconnecting. Some systems use parity for error checking.  If you are
+  \t \tcalling a UNIX system, select None.
+
+  \to\tCharacter Size: - Click on 7 if you are calling another UNIX system.
+  \t \tIf you are calling a system not running UNIX, you will probably
+  \t \tneed to click on 8, although some non-UNIX systems may use 7 bits.
+
+  \to\tDuplex Mode: Click on Full or Half, depending on the communications
+  \t \tsoftware your system is using. UnixWare operates in full duplex mode.
+
+  \t \tIf you are not directly connected to the system you are trying
+  \t \tto call, make sure your modem is set to full duplex.
+
+2.\tClick on Dial to call up the remote system.
+
+See also:
+\k(Dialing Up a Random System)
+
+^1^Viewing or Modifying the Properties of a Dialup Device
+^$180
+Viewing or Modifying the Properties of a Dialup Device
+
+To view or modify the properties of a dialup device, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+ 
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup" window^^Dialup Setup Window) appears.
+
+4.\tClick on Actions=Setup Devices. The \k("Dialup Setup: Devices" window^^Dialup Setup: Devices Window)
+  \tappears.
+
+5.\tClick on the desired device.
+
+6.\tClick on Device=>Properties. The "Dialup Setup: Properties" window
+  \tappears.
+
+  \tSee Step 6 of \k(Configuring a Dialup Device Entry) for a description
+  \tof the fields in this window (fields are the same as fields in
+  \t\k("Dialup Setup: Add New Device" window^^Dialup Setup: Add New Device Window)).
+
+7.\tClick on Cancel if you are just viewing the properties. Click on
+  \tApply if you made changes to the properties.
+   
+^1^Viewing or Modifying the Properties of a Remote System
+^$190
+Viewing or Modifying the Properties of a Remote System
+
+To view or modify the properties of a remote system, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2. If you
+are already in the Networking folder, go to Step 3.
+ 
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on Networking. The "Folder: Networking" window appears.
+
+3.\tDouble-click on Dialup_Setup. The \k("Dialup Setup" window^^Dialup Setup Window) appears.
+
+4.\tClick on the desired remote system.
+
+5.\tClick on System=>Properties. The "Dialup Setup: Remote System
+  \tProperties" window appears.
+
+  \tSee Steps 4 and 5 of \k(Configuring Access to a Remote System) for
+  \ta description of the fields in this window (the fields are the same
+  \tas the fields for \k("Dialup Setup: Add New System" window^^Dialup Setup: Add New System Window).
+
+6.\tClick on Cancel if you are just viewing the properties. Click on
+  \tApply if you made changes to the properties.

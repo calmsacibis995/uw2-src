@@ -1,0 +1,86 @@
+.pageno
+Página %d de %d
+.ul
+Kernel Debugger
+.hhelp_ban
+Instrucciones
+.helpbanner
+Ayuda: Configuración del Kernel Debugger
+.ur
+Configuración del Kernel Debugger
+.ll
+.lr
+F1=Ayuda
+.top
+El Kernel Debugger (KDB) puede configurarse de dos formas:  
+puede estar activado todo el tiempo, o puede activarse sólo bajo 
+demanda.  Si se elige el modo de demanda, KDB se deberá activar 
+manualmente para poder invocarlo.
+
+KDB también proporciona comprobaciones opcionales de seguridad
+que prohiben que los usuarios no autorizados invoquen
+el depurador kernel.  Si no activa estas comprobaciones de seguridad,
+será posible entrar en él desde una secuencia de teclas
+de la consola, lo que presenta una violación de la seguridad en
+potencia si la consola no es segura físicamente.
+
+.form
+2 2//ALWAYS::SIEMPRE//DEMAND::A PETICION//¿Cuándo desea activar KDB?//DEMAND//
+//Flechas derecha/izquierda para la siguiente elección (2 opciones)//
+2 2//NO::NO//YES::SI//¿Desea activar las comprobaciones de seguridad?//SECURITY//
+//Flechas derecha/izquierda para la siguiente elección (2 opciones)//
+.button
+Aplicar
+Redefinir
+.help
+Pulse <F1> (o '?') en cualquier momento para obtener más información.
+
+El Kernel Debugger es de gran utilidad en el desarrollo de módulos de
+software que se van a incorporar al kernel.  El tipo de módulo kernel
+más conocido son los controladores de dispositivos de hardware.
+
+ACTIVACION DE KDB
+
+KDB se puede invocar mediante una secuencia de teclas en la consola,
+mediante una caída del sistema, o con el comando "kdb".
+Sólo se puede invocar si está activado.  KDB se activa
+cuando se carga en el kernel.
+
+Si elige que SIEMPRE esté activado, KDB quedará cargado en
+el kernel permanentemente, y será posible invocarlo en cualquier
+momento.
+
+Si escoge activarlo BAJO DEMANDA, KDB deberá cargarse primero
+con el comando  "modadmin -l kdb" para poder invocarlo.
+Subsecuentemente, KDB se puede descargar con
+"modadmin -U kdb"
+
+La ventaja de tener KDB siempre activado es que estará
+preparado incluso para su uso no previsto.  La desventaja es que,
+cuando está activado, KDB consume 250K aproximadamente de
+memoria principal.  Esto afectará al rendimiento de los sistemas
+cuya memoria sea reducida.
+
+COMPROBACIONES DE SEGURIDAD
+
+KDB proporciona comprobaciones de seguridad opcionales que hacen 
+que se rechacen los intentos de entrar en el depurador de kernel 
+desde la secuencia de teclas de una consola.  Para entrar en el 
+depurador en este caso, el usuario deberá entrar en el computador 
+usando una cuenta con privilegios, y, a continuación, teclear 
+el comando "kdb".
+
+Si no está activada la comprobación de seguridad, cualquier
+usuario puede teclear una secuencia de teclas desde la consola
+sin tener que acceder al ordenador, y entrar en el depurador de kernel.
+A menos que el computador se encuentre en una sala cerrada con llave,
+o que sólo sea accesible para un grupo controlado de personas, esta
+comprobación de seguridad se deberá mantener activada para evitar
+violaciones de la seguridad.
+.helpinst
+ESC=Salir de Ayuda  F1=Instrucciones  1=AvPág  2=RePág
+.hhelpinst
+ESC=Salir de instrucciones  1=AvPág  2=RePág
+.working
+Operando...
+.end

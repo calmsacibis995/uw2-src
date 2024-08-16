@@ -1,0 +1,34 @@
+#ident	"@(#)olpkg.oam:desktop/preinstall	1.5"
+#ident	"$Header: $"
+
+# there may be an existing system.mwmrc
+# if there is, then save it
+if [ -f /usr/X/lib/system.mwmrc ]; then
+        pfmt -s info -g ${PKGMSG}:52 "Saving /usr/X/lib/system.mwmrc to /usr/X/lib/system.mwmrc.OLD" ${PKGNAME} 2>&1
+        cp /usr/X/lib/system.mwmrc /usr/X/lib/system.mwmrc.OLD
+fi
+
+############# Begin UPGRADE AND OVERLAY #######################
+
+SCRIPTS=/usr/sbin/pkginst
+
+#  The volatile files saved for ${PKGINST} will be listed in 
+#  /var/sadm/upgrade/${PKGINST}.sav
+
+#  The initial V4 volatile files list for ${PKGINST} should be in 
+#  /etc/inst/up/patch/${PKGINST}.LIST
+
+[ "$PKGINSTALL_TYPE" = NEWINSTALL ] || {
+
+	${SCRIPTS}/pkgsavfiles ${PKGINST}
+
+	#  final list of volatile files to be saved is /tmp/${PKGINST}.sav
+	#  pkgsavefiles returns 1, if nothing to be merged.
+
+	[  $? = 1 ] && AUTOMERGE=NULL
+}
+
+############# End  UPGRADE AND OVERLAY #######################
+
+export AUTOMERGE
+exit 0

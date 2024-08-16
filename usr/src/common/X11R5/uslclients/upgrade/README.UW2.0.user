@@ -1,0 +1,124 @@
+
+
+
+	UnixWare 2 Upgrade: The New & Improved UnixWare Desktop!
+
+
+
+Welcome to UnixWare 2 !  You may have noticed a few changes from the
+UnixWare 1.1 Desktop.  You'll find answers to the following questions
+about your desktop account in this document:
+
+  * The UnixWare Desktop appears to have changed.  What's new?
+
+  * Will graphical applications I installed under UnixWare 1.1 continue 
+  to work after upgrade?
+
+  * I defined new file classes using the Icon_Setup utility. 
+  Will my modifications to the class database be preserved?
+
+  * What has happened to my .Xdefaults, .olinitrc, .olsetup and 
+  .dtfclass files?
+
+  * Where are Preferences/Keyboard and System_Setup/Terminal_Setup?
+	
+  * Where are the Backdrop_Library and Font_Setup?
+
+  * Where is the Fingertip Librarian?
+
+  * What happened to my customized color combination?
+
+  * My UnixWare 1.1 Desktop was in OPENLOOK mode, but after upgrade, it 
+  comes up in Motif mode. Why?
+
+  * Where are my Help notes?
+
+  * I appear to have lost important customizations to the UnixWare Desktop
+  during upgrade.  How can I recover them?
+
+
+For general information about the UnixWare Desktop, refer to the
+Desktop User Handbook, the System Owner's Handbook, or the Help_Desk.
+For information about system-wide upgrade changes, refer to
+/usr/X/adm/README.UW2.0.
+
+
+Q: The UnixWare Desktop appears to have changed.  What's new?  
+A: A new directory, Admin_Tools, has been added to the UnixWare Desktop.
+It contains desktop tools which used to be stored under System_Setup
+and Utilities.  A separate directory, Admin_Tools/Networking, has been
+created for networking related tools.  Tools installed in the
+Accessories directory have been moved to the Applications directory.
+
+If you had no personal files or applications in the Accessories,
+Utilities, and System_Setup directories, the directories have been removed.
+If not, you might want to consider moving your applications to these
+new directories.  If you had symbolic links files in their old location,
+you will need to recreate the links.
+
+Q: Will graphical applications I installed under UnixWare 1.1 continue to 
+work after upgrade?
+A: Yes.  They were left untouched by upgrade installation.
+Any class database additions made by applications were also copied
+into the new class database.  (Your UnixWare 1.1 class database
+has been saved under /usr/X/.SAV2.0/classdb for the C locale and
+/usr/X/.SAV2.0/locale/<locale_name>/classdb for non-C locales.)
+
+Q: I defined new file classes using the Icon_Setup utility. 
+Will my modifications to the class database be preserved?
+A: Yes.  Your personal classes have been preserved.
+
+Q: What has happened to my .Xdefaults, .olinitrc, .olsetup and 
+.dtfclass files?
+A: These files have been changed in UnixWare 2.  Where possible 
+(i.e., .Xdefaults, .dtfclass), your customizations have been preserved.
+To ensure proper system operation, a few changes were made.
+Your UnixWare 1.1 versions of these files have been saved in
+your home directory in the directory .SAV2.0.
+
+.Xdefaults: Keyboard and global font customizations have been removed.
+Customization of individual keys via the Keyboard preferences sheets
+is no longer supported.  The font resources have changed in
+UnixWare 2.  You can restore your font customizations with the Font
+tool under the Preferences directory.
+
+.dtfclass: The DataFile class in this file has been enhanced.
+Any personal classes that you added have been preserved.
+
+.olinitrc: This file has been replaced with the UnixWare 2 version,
+with your old version appended (but commented out).
+
+.olsetup: This file has been replaced with the UnixWare 2 version.
+Note that the OPENLOOK mode desktop is no longer supported.
+
+Q: Where are Preferences/Keyboard and System_Setup/Terminal_Setup?
+A: These features are not supported in UnixWare 2.
+
+Q: Where is the Fingertip Librarian?
+A: The Fingertip Librarian has been replaced by the Dynatext Document Browser.
+It can be found in the UnixWare Desktop under Applications/Online_Docs.
+
+Q: What happened to my customized color combination?
+A: The color property sheet has been improved for UnixWare 2.
+There are new pre-defined color-palettes.  Your desktop will
+start up with the default color palette.
+
+Q: My UnixWare 1.1 Desktop was in OPENLOOK mode, but after upgrade, it 
+comes up in Motif mode. Why?
+A: The UnixWare Desktop no longer supports OPENLOOK mode.
+
+Q: Where are my Help notes?
+A: UnixWare 2 is significantly different from UnixWare 1.1, so your
+notes may no longer be relevant.  Accordingly, the contents of the
+Help_Desk have been updated to reflect the new features, so the
+locations for your notes are gone.  Your UnixWare 1.1 notes have been
+preserved under your home directory in the file
+.SAV2.0/dthelp/<locale_name>/notes, where <locale_name> refers to the
+name of your locale.
+
+Q: I appear to have lost important customizations to the UnixWare Desktop 
+during upgrade.  How can I recover them?
+A: Your UnixWare 1.1 files that were replaced or merged with UnixWare 2 
+versions during upgrade have been saved under your home directory in 
+the directory .SAV2.0.
+

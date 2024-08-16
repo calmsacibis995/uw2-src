@@ -1,0 +1,29 @@
+#ident	"@(#)sc:local/lib/demorules	3.7"
+include $(LIBRULES)
+
+DEFLIST=-DSYSV
+INCLIST=-I../../$(LSCINC)
+LDFLAGS=
+CCFLAGS= -Tauto $(CFLAGS) $(OTHERCCFLAGS)
+LINKDIRS=-L../../$(LSCLIB)
+# XSCC is used rather than C++C due to overriding snafu
+C++CMD=$(XSCC) $(CCFLAGS) $(LDFLAGS) $(INCLIST) $(LINKDIRS)
+ARCHIVES=-l++ 
+
+CLEAN_DEMOS=$(RM) -f *.o *.ii *.E *.r a.out core
+
+# The default way to generate the .r and .V files
+# is simply to compile and run the .c file of the same name.
+
+.SUFFIXES: .r .E
+ 
+.c.r:
+	$(C++CMD) -o $*.E $< $(ARCHIVES)
+	@-./$*.E > $@
+
+.c.E:
+	$(C++CMD) -o $*.E $< $(ARCHIVES)
+
+.c.o:
+	$(C++CMD) -c $< $(ARCHIVES)
+

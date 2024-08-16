@@ -1,0 +1,91 @@
+.pageno
+Página %d de %d
+.ul
+Instalar sistema UNIX
+.hhelp_ban
+Instrucciones
+.helpbanner
+Ayuda: Selección del puerto ratón en serie
+.ur
+Selección del puerto del ratón en serie
+.ll
+Haga una selección. Pulse F1 para obtener ayuda.
+.lr
+F1=Ayuda
+.top
+Para usar un ratón en serie, debe decir al programa de instalación a qué
+puerto en serie se conecta su ratón.  Debe también indicar el número de
+botones de su ratón.  Si está usando un ratón compatible con Mouse Systems
+Corporation (MSC), debe seleccionar Sistemas del ratón.  Véase la utilidad
+de ayuda o el Manual de instalación para más información.
+
+Escriba la siguiente información sobre su ratón en serie.
+.form
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //COM1::tty00 (COM 1)//COM2::tty01 (COM 2)//    Puerto en serie donde conectar ratón://SPORT//
+#field options
+//Flechas derecha/izquierda para nueva elección (2 opciones)//
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //MICROSOFT::Microsoft//MSC::Mouse Systems//Tipo de ratón por defecto://PROTOCOL//
+#field options
+//Flechas derecha/izquierda para nueva elección (2 opciones)//
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+2 2 //2//3//Número de botones del ratón://MOUSEBUTTONS//
+#field options
+//Flechas derecha/izquierda para nueva elección (2 opciones)//
+#
+#
+.button
+Aplicar
+Redefinir
+.bottom
+Pulse <Tab> para mover el cursor entre los campos. Al terminar, mueva el
+cursor a "Aplicar" y pulse <Intro> para continuar.
+.help
+Para obtener instrucciones detalladas, pulse <F1> (o '?') en cualquier
+momento.
+
+PUERTO EN SERIE
+
+Para que el Sistema UNIX pueda manejar correctamente su ratón en serie,
+debe conocerse el puerto en serie al que ha conectado el ratón. Consulte
+la documentación correspondiente a su computador para saber si su ratón
+está conectado con tty00 (también conocido como COM1)o tty 01 (o COM2).
+
+TIPO DE RATON POR DEFECTO
+ 
+En la mayoría de los casos, UnixWare detectará automáticamente
+el tipo de ratón en serie conectado al sistema. No puede detectarse
+automáticmente el ratón Mouse Systems.  Para evitar problemas
+potenciales con el uso del ratón, debe especificar su
+modo operativo.
+
+El ratón compatible con Mouse Systems Corporation (MSC) es un ratón en serie 
+de tres botones similar al ratón en serie de Microsoft.  Antes de seleccionar
+este ratón, asegúrese de que el ratón está configurado para operar en 
+modo MCS.  Para seleccionar este modo, localice el conmutador de la parte
+inferior del ratón y deslícelo al modo de 3 botones o MSC. Si su ratón 
+compatible con MSC no encaja en esta descripción o no puede localizar el 
+conmutador, siga las instrucciones de la documentación de usuario que 
+viene con el ratón.
+
+Nota:   El modo Mouse Systems o MSC también se conoce como "PC Mouse".
+
+NUMERO DE BOTONES DE RATON
+
+Al utilizar el ratón con el entorno gráfico de usuario del Sistema UNIX,
+los diferentes botones del ratón le permitirán efectuar acciones tales
+como arrastrar y soltar, hacer doble clic y desplegar menús. Su ratón
+puede tener dos o tres botones; seleccione el número adecuado, por
+favor.
+
+Para más información, véase el manual de instalación.
+.helpinst
+ESC=Salir de Ayuda  F1=Instrucciones  1=AvPág  2=RePág
+.hhelpinst
+ESC=Salir de instrucciones  1=AvPág  2=RePág
+.working
+Cargando el controlador del ratón ...
+.end

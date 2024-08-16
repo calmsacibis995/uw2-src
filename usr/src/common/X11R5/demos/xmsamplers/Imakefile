@@ -1,0 +1,67 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)mdemos:xmsamplers/Imakefile	1.2"
+XCOMM 
+XCOMM (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+XCOMM ALL RIGHTS RESERVED 
+XCOMM 
+XCOMM 
+XCOMM Motif Release 1.2
+XCOMM 
+XCOMM   $RCSfile: Imakefile,v $ $Revision: 1.4.2.6 $ $Date: 1992/05/07 15:09:47 $
+#include	<Motif.tmpl>
+#include	<Motif.rules>
+EXTRA_LOAD_FLAGS = -z nodefs
+INCLUDES = -I. -I$(INCLUDESRC) -I$(MINCLUDESRC)
+        DEPLIBS = XmClientDepLibs
+LOCAL_LIBRARIES = XmClientLibs $(SYSLIBS)
+
+SRCS=	\
+	xmdialogs.c \
+	xmeditor.c \
+	xmfonts.c \
+	xmlist.c \
+	xmter.c \
+	xmform.c \
+	xmforc.c \
+	xmmap.c \
+	xmgetres.c \
+	xmapdef.c \
+	xmprotocol.c
+
+NormalLibraryObjectRule()
+
+MSimpleProgramTarget(xmdialogs)
+MSimpleProgramTarget(xmeditor)
+MSimpleProgramTarget(xmfonts)
+MSimpleProgramTarget(xmlist)
+MSimpleProgramTarget(xmprotocol)
+MSimpleProgramTarget(xmter)
+MSimpleProgramTarget(xmform)
+MSimpleProgramTarget(xmforc)
+MSimpleProgramTarget(xmmap)
+MSimpleProgramTarget(xmgetres)
+MSimpleProgramTarget(xmapdef)
+
+
+InstallProgram(xmdialogs,$(BINDIR))
+InstallProgram(xmeditor,$(BINDIR))
+InstallProgram(xmfonts,$(BINDIR))
+InstallProgram(xmlist,$(BINDIR))
+InstallProgram(xmprotocol,$(BINDIR))
+InstallProgram(xmter,$(BINDIR))
+InstallProgram(xmform,$(BINDIR))
+InstallProgram(xmforc,$(BINDIR))
+InstallProgram(xmmap,$(BINDIR))
+InstallProgram(xmgetres,$(BINDIR))
+InstallProgram(xmapdef,$(BINDIR))
+
+InstallAppDefaults(XMdemos)
+
+DependTarget()

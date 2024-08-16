@@ -1,0 +1,695 @@
+#ident	"@(#)mach:mach/README.mach	1.6"
+
+:: README ::
+------------
+
+Due to non-standards in the Intel video world, it is literally impossible
+for any vendor to test all the available combinations of the machines, monitors
+and video hardware. By default, most of the popular combinations are tested
+before any SDD is released.
+
+The Mach SDD has been designed to handle various non-standard env's so that
+it will ease the support and users can even try out various non-default
+options. A user can define the options in "/usr/X/lib/display/LIBMACH_OPTIONS"
+file or in an env variable, "DISPLIB_OPTIONS". For example, I can have
+the following lines in "/usr/X/lib/display/LIBMACH_OPTIONS" file:
+
+    verbose-startup=yes
+    dac-name=ati-68830
+    fontdraw-options=!use-ibm-mode
+
+The above options will print some verbose information about the hardware,
+force the ram-dac to "ati-68875" and turns OFF the ibm-mode to draw fonts.
+
+or I can set the same in a env variable. The env variable approach is used
+if you want to over-ride the default options and the one's defined in
+LIBMACH_OPTIONS file. For example, if I do (in "sh"):
+
+    DISPLIB_OPTIONS="dac-name=ati-68875"
+    export DISPLIB_OPTIONS
+
+The ram-dac will be forced to "ati-68875". The precedence of options
+is as follows (in order of decreasing priority):
+
+    a.  from the "DISPLIB_OPTIONS" environment variable
+    b.  from the "/usr/X/lib/display/LIBMACH_OPTIONS" file
+    c.  default options that were compiled into the library.
+
+The complete list of options supported in the MACH display library are
+given below.
+
+On architectures that support dumb frame buffer style access to the
+contents of video memory, further customization is possible using
+options specified in the environment variable "ULTRA_OPTIONS" and in
+the file "/usr/X/lib/display/ULTRA_OPTIONS".
+
+In order to use this linear frame buffer module, you will need to have
+the "lfb" kernel loadable module configured into your operating
+system.
+
+
+:: VIRTUAL RESOLUTIONS ::
+-------------------------
+
+The Mach display library allows you to view a high-resolution screen
+using a lower display resolution.  For example; you could set your
+display resolution to 640x480 while the underlying screen could be at
+a virtual resolution of 1024x768.  The library automatically switches
+on hardware panning when you set the display resolution to be less
+than the virtual resolution.  Moving the mouse beyond the edges of the
+screen causes the "view" of the virtual screen to pan in the direction
+of mouse motion, displaying more of the virtual screen in the process.
+
+For example, if you have a video monitor capable of displaying a
+640x480 image, and you wish to run the X server with a resolution of 
+1024x768, you could do the following.
+
+In your server config file (default: "/usr/X/defaults/Xwinconfig") you
+could set :
+
+	...
+	virtual_size = 1024x768
+	display_size = 640x480
+	...
+
+This will bring up a virtual screen of size "1024x768" with a
+displayed "view" into the screen of size "640x480".
+
+The supported display resolutions are : 640x480, 800x600, 1024x768,
+1120x750 and 1280x1024.  The only retrictions on the virtual
+resolutions chosen are that the horizontal width should be a multiple
+of 8.
+
+A CAVEAT: We have not completely tested the library with the hardware
+panning feature enabled.  You *may* encounter bugs when running the
+display library in this mode.
+
+	For R4 users, since the Xwinconfig file does not contain the 
+	'VIRTUAL SIZE' field the library looks for an environment variable
+	called 'ULTRA_VIRTUAL_DISPLAY' which contains the virtual screen size
+	in widthxheight format.
+
+	Ex: display size can be 1024x768, but can set env var,
+	ULTRA_VIRTUAL_SIZE="1280x1024"  if you have more than 1MB.
+
+:: OPTION DESCRIPTIONS FOR THE Mach DISPLAY LIBRARY ::
+------------------------------------------------------
+
+A list of options supported in the Mach display library follow.
+
+----------------
+
+#   Version number
+@option si-interface-version
+    @option-type    unique-enumeration
+    @valid-range    1-0 1-1 auto-configure
+    @default        auto-configure
+    @description    The version number that the SDD returns to the SI 
+                    server.
+
+@option verbose-startup
+    @option-type    unique-enumeration
+    @valid-range    yes no
+    @default        no
+    @description    Print messages about chipset configuration if
+                    set to `yes'.
+    
+#   Cursor types.
+@option cursor-type
+    @option-type    unique-enumeration
+    @valid-range    auto-configure hardware-cursor software-cursor 
+    @default        auto-configure
+    @description    Cursor implementation types.
+
+#   Cursor swapping
+@option cursor-byte-swap
+    @option-type    unique-enumeration
+    @valid-range    enabled disabled auto-configure
+    @default        auto-configure
+    @description    The cursor bits need to be byte swapped when using
+                    certain chipset revisions and in certain modes.
+
+#   Downloadable cursors.
+@option cursor-max-size
+    @option-type    string
+    @description    Maximum size of a cursor in WxH.
+
+#   Downloadable cursors.
+@option number-of-downloadable-cursors
+    @option-type    numeric
+    @valid-range    0..
+    @default        1
+    @description    Number of downloaded hardware cursors.  `0' means
+                    use internal @default.
+
+#   Fonts.
+@option number-of-downloadable-fonts
+    @option-type    numeric
+    @valid-range    0..
+    @default        32
+    @description    Number of downloaded fonts. `0' means to turn off
+                    font handling in the SDD.
+
+#   The number of glyphs in a font suitable for downloading.
+@option max-number-of-glyphs-in-downloadable-font
+    @option-type    numeric
+    @valid-range    0..
+    @default        256
+    @description    The maximum number of glyphs in a font suitable
+                    for downloading.  0 means ignore this criterion.
+
+#   Size of each individual glyph cacheable
+@option glyph-cache-size
+    @option-type    string
+    @default        "128x128"
+    @description    Cache glyphs smaller than this size in offscreen memory
+
+
+#   VT switch size
+@option vt-switch-save-lines
+    @option-type    numeric
+    @valid-range    -1..2048
+    @default        -1
+    @description    Number of lines of screen to save.  `-1' means
+                    save the whole screen.
+
+#   Graphics state
+@option number-of-graphics-states
+    @option-type    numeric
+    @valid-range    0..
+    @default        8
+    @description    Number of SDD graphics states. `0' means use
+                    internal @default.
+    
+#   Strategy decisions
+#   Size of the best tile and stipple as reported to SI.
+@option tile-best-size
+    @option-type    string
+    @default        "32x32"
+    @description    `Best tile size' as seen by the SI code.
+
+@option stipple-best-size
+    @option-type    string
+    @default        "32x32"
+    @description    `Best stipple size' as seen by the SI code.
+
+#   Controlling caching of offscreen memory parameters.
+@option offscreen-tile-padded-width
+    @option-type    numeric
+    @valid-range    0..
+    @default        128
+    @description    Pad small tiles to this value in offscreen memory.
+                    Should be a power of two.
+
+@option offscreen-tile-padded-height
+    @option-type    numeric
+    @valid-range    0..
+    @default        32
+    @description    Pad small tiles to this value in offscreen memory.
+                    Should be a power of two.
+
+@option offscreen-stipple-padded-width
+    @option-type    numeric
+    @valid-range    0..
+    @default        128
+    @description    Pad small stipples to this value in offscreen memory.
+                    Should be a power of two.
+
+@option offscreen-stipple-padded-height
+    @option-type    numeric
+    @valid-range    0..
+    @default        32
+    @description    Pad small stipples to this value in offscreen memory.
+                    Should be a power of two.
+
+#
+#       CRTC CONFIGURATION
+#
+#
+#   CRT start offset
+@option crtc-start-offset
+    @option-type    numeric
+    @valid-range    0..
+    @default        0
+    @description    Offset of start of display memory.
+
+#   CRTC parameters
+@option crtc-parameters
+    @option-type    string
+    @description    CRTC parameters in hexadecimal : h-total h-disp
+                    h-sync-strt h-sync-wid v-total v-disp v-sync-strt
+                    v-sync-wid disp-cntl clock-sel
+
+#   MODEDB parameters
+#
+#   This option provides for display mode initialization in the style of
+#	XFree86 by giving a modedb line. This is not always guaranteed to work, 
+#	but will give some flexibility for users to configure display modes.
+#
+#	When using modedb to initialize a display mode, the user should make 
+#	sure the following.
+#
+#	1. The clock on the board supports the clock frequency used 
+#	   in the modedb line.
+#
+#	2. The DAC on the board supports the clock frequency used.
+#
+#	3. The monitor used supports the refresh rate calculated from the
+#	   modedb parameters.
+#
+#   However, if the clock or/and the DAC doesn't support the clock frequency 
+#	used in the modedb line, the driver gives out the message and this
+#	option is ignored. But, it is the responsibility of the user to make 
+#	sure that the monitor supports the required refresh rate in the 
+#	particular resolution.
+#
+#   NOTE: Please note that the first field "name" in the modedb line should
+#   be removed when assigning the line to the option.
+#
+# Example:
+#	XFree86 ModeDB line:
+#		 "1024x768"     65    1024 1032 1208 1288    768  768  773  798
+#
+#	The option will be,
+# 	modedb-string="65    1024 1032 1208 1288    768  768  773  798"
+#
+@option modedb-string
+    @option-type    string
+    @description    ModeDB entry in the following format: 
+                    "Clock HorizontalTiming VerticalTiming Flags". 
+                    Clock is in MHz.
+                    The Timing field consists of Display, SyncStart,
+                        SyncEnd and Total timings in that order.
+                    Flags field may or may not be present. 
+                    Flags field may specify if a mode is interlaced 
+                    and hsync and vsync polarities.
+                    The two options modedb-string and crtc-parameters
+                    are mutually exclusive. However, if both are present,
+                    this option takes higher priority.
+
+#
+#       DAC CONFIGURATION
+#
+#   DAC.
+@option dac-name
+    @option-type    unique-enumeration
+    @valid-range    ati-68830 sierra-sc11-48x att-20c491 ti-tlc-34075 
+                    ati-68875-bfn ati-68875-cfn bt-478 ims-g178j-80z 
+                    bt-481 ims-g176j-80z bt-476 
+                    auto-detect
+    @default        auto-detect
+    @description    The type of DAC on board.
+
+@option dac-max-frequency
+    @option-type    numeric
+    @valid-range    0..
+    @default        0
+    @description    The maximum frequency of the DAC in Mhz.  `0'
+                    means use builtin values for the DAC.
+
+@option dac-blank-adjust
+    @option-type    numeric
+    @valid-range    -1..
+    @default        -1
+    @description    The numeric value of the blank adjust parameter
+                    when initializing the DAC.  This parameter depends on
+                    the selected display mode and the type of DAC.
+                    `-1' means use the builtin rules for this parameter.
+
+@option dac-pixel-delay
+    @option-type    numeric
+    @valid-range    -1..
+    @default        -1
+    @description    The numeric value of the pixel delay parameter for
+                    initializing the DAC.  This parameter depends on
+                    the selected display mode and the type of DAC
+                    present on board.  `-1' means use the builtin
+                    rules for this parameter.
+
+#   DAC Access delay count
+@option dac-access-delay-count
+    @option-type    numeric
+    @valid-range    1..
+    @default        10
+    @description    Number of cycles to wait between dac accesses.
+                    On fast machines, this value may need to be
+                    increased.
+
+#   DAC RGB width
+@option dac-rgb-width
+    @option-type    unique-enumeration
+    @valid-range    6 8 @default
+    @default        default
+    @description    Number of significant bits per R/G/B output.
+                    `default' will use the libraries internal values
+                    for the detected DAC type.
+
+#   DAC 24 bit option
+@option dac-24-bit-color-mode
+    @option-type    unique-enumeration
+    @valid-range    rgba abgr
+    @default        rgba
+    @description    Order of R/G/B pixels in a 32 bit word.  The DAC on
+                    board should support the selected mode.
+
+#   DAC 16 bit options
+@option dac-16-bit-color-mode
+    @option-type    unique-enumeration
+    @valid-range    555 565 655 664
+    @default        555
+    @description    Number of bits for R/G/B in 16 bit mode.  The DAC
+                    on board should support the selected mode.
+
+#   
+#   Overscan control -- mach32 only.
+@option overscan-color
+    @option-type    string
+    @description    Color name for the overscan color. (currently 
+                    unimplemented)
+
+@option overscan-h
+    @option-type    numeric
+    @valid-range    0..255
+    @default        0
+    @description    Register value for the horz_overscan register.
+    
+@option overscan-v
+    @option-type    numeric
+    @valid-range    0..65535
+    @default        0
+    @description    Register value for the vert_overscan register.
+    
+#
+#       VISUAL HANDLING
+#
+#   Supported visuals.
+@option screen-8-4-bit-visual-list
+    @option-type    multiple-enumeration
+    @valid-range    static-gray gray-scale static-color pseudo-color
+    @description    Supported display visuals in addition to the
+                    screen default visual specified in the server
+                    config file.  Caveat : the core server does not
+                    seem to handle multiple visuals per screen yet ...
+
+#   A description file for static colormaps
+@option static-colormap-description-file
+    @option-type    string
+
+#
+#       MONITOR CONFIGURATION
+#
+#   Monitor sync type
+@option monitor-sync-type
+    @option-type    unique-enumeration
+    @valid-range    composite-sync sync-on-green separate-sync
+    @default        composite-sync
+    @description    The monitor's SYNC type.
+
+
+#
+#       OFF SCREEN MEMORY MANAGER CONFIGURATION
+#
+#   Off-Screen Memory Manager Options.
+@option omm-named-allocation-list
+    @option-type    string
+    @default        ""
+    @description    Named allocation requests for the offscreen memory
+                    manager.  This option is primarily used to name
+                    `holes' in the video memory.
+                    
+
+@option omm-horizontal-constraint
+    @option-type    numeric
+    @valid-range    0..
+    @default        0
+    @description    The widths of all offscreen memory requests are
+                    rounded up to this value.  O means use an
+                    internal heuristic.  CAUTION: not fully implemented.
+
+@option omm-vertical-constraint
+    @option-type    numeric
+    @valid-range    0..
+    @default        0
+    @description    The heights of all offscreen memory requests are
+                    rounded up to this value.  0 means use an internal
+                    heuristic.  CAUTION: not fully implemented.
+
+@option	omm-neighbour-list-increment 
+	@option-type 	numeric
+	@valid-range	0..
+	@default		20
+	@description	Number of neighbour list nodes allocated at one time.\
+					Neighbour lists are managed during every allocate and\
+					free operation. 0 means use an internal heuristic.
+
+@option	omm-full-coalesce-watermark
+	@option-type 	numeric
+	@valid-range	0..
+	@default		2
+	@description  	If the number of currently allocated blocks falls below\
+					this value the omm will attempt a full coalesion operation.\
+					Remember that coalesion is an expensive operation.
+				
+@option	omm-hash-list-size 
+	@option-type 	numeric
+	@valid-range	0..
+	@default		512
+	@description	Size of the hash table of omm free blocks. 0 means use an\
+					an internal heuristic.
+
+#       BOARD CONFIGURATION
+#
+
+#   Video memory configuration
+@option video-memory-dimensions
+    @option-type    string
+    @description    Video memory organization in pixels (WxH).
+
+#   Chipset name : use this to override the auto-detection scheme.
+@option chipset-name
+    @option-type    unique-enumeration
+    @valid-range    mach-8 mach-32 auto-detect
+    @default        auto-detect
+    @description    The type of accelarator.
+
+#   Chipset revision
+@option chipset-revision
+    @option-type    string
+    @description    The revision of the graphics accelarator chipset.
+                    NULL (default) means auto-detect.
+    
+#   Clock chip.
+@option clock-chip-name
+    @option-type    unique-enumeration
+    @valid-range    18810 18810-2 18811-0 18811-1 18812-0
+    @default        18811-1
+    @description    The type of clock chip on the video board.
+
+#   IO Bus width
+@option io-bus-width
+    @option-type    unique-enumeration
+    @valid-range    16-bit 8-bit auto-detect
+    @default        auto-detect
+    @description    I/O bus width.
+
+#   Horizontal line draw optimization
+@option horizontal-line-draw-optimizations
+    @option-type    unique-enumeration
+    @valid-range    enabled disabled
+    @default        enabled
+    @description    Whether the graphics engine should use its
+                    internal horizontal line draw optimizations.
+
+#   Passthrough override
+@option passthrough-override
+    @option-type    unique-enumeration
+    @valid-range    enabled disabled
+    @default        disabled
+    @description    Enabled if a passthrough cable is not attached.
+
+#   DRAM video fifo depth.
+@option vram-fifo-depth
+    @option-type    numeric
+    @valid-range    -1..15
+    @default        8
+    @description    Trigger value for filling DRAM FIFO.  `-1' means
+                    try and use the value already on chip.
+
+#   Graphics engine loop timeout count
+@option graphics-engine-loop-timeout-count
+    @option-type    numeric
+    @valid-range    1..
+    @default        10000
+    @description    Number of cycles to wait before signalling an error.
+
+#   Graphics engine micro delay count
+@option graphics-engine-micro-delay-count
+    @option-type    numeric
+    @valid-range    1..
+    @default        40
+    @description    Number of cycles spin-wait between register accesses.
+
+#   Graphics engine fifo blocking factor.
+@option graphics-engine-fifo-blocking-factor
+    @option-type    numeric
+    @valid-range    1..16
+    @default        8
+    @description    Number of fifo entries to wait for by default.
+
+
+#   Controlling drawing code
+@option rectfill-options
+    @option-type    multiple-enumeration
+    @valid-range    use-solid-fill-rect use-tile-fill-rect
+                    use-stipple-fill-rect use-pattern-registers
+                    use-offscreen-memory use-large-offscreen-areas
+                    use-ibm-mode
+    @default        use-solid-fill-rect use-tile-fill-rect
+                    use-stipple-fill-rect use-pattern-registers
+                    use-offscreen-memory use-large-offscreen-areas
+                    use-ibm-mode
+    @description    Controlling fill functionality.
+
+#   Controlling drawing code
+@option bitblt-options
+    @option-type    multiple-enumeration
+    @valid-range    use-ss-bitblt use-ms-bitblt use-sm-bitblt
+                    use-ms-stplblt use-ibm-mode
+    @default        use-ss-bitblt use-ms-bitblt use-sm-bitblt
+                    use-ms-stplblt use-ibm-mode
+    @description    Controlling fill functionality.
+
+#   Controlling drawing code
+@option linedraw-options
+    @option-type    multiple-enumeration
+    @valid-range    use-line-draw use-pattern-registers
+                    use-line-rectangles use-segment-draw use-ibm-mode
+    @default        use-line-draw use-segment-draw
+                    use-line-rectangles use-pattern-registers use-ibm-mode
+    @description    Controlling line draw functionality.
+
+#   Spans fill control.
+@option spansfill-options
+    @option-type    multiple-enumeration
+    @valid-range    use-solid-fill use-stipple-fill
+                    use-tile-fill use-pattern-registers
+    @default        use-solid-fill use-stipple-fill
+                    use-tile-fill use-pattern-registers
+    @description    Controlling spans fill functionality.
+
+#   Point draw control
+@option pointdraw-options
+    @option-type    multiple-enumeration
+    @valid-range    use-plot-point
+    @default        use-plot-point
+    @description    Controlling plot point functionality.
+
+#   Font draw control
+@option fontdraw-options
+    @option-type    multiple-enumeration
+    @valid-range    draw-non-terminal-fonts draw-terminal-fonts
+                    use-offscreen-memory use-ibm-mode
+    @default        draw-non-terminal-fonts draw-terminal-fonts
+                    use-offscreen-memory use-ibm-mode
+    @description    Controlling the kinds of fonts the display library
+                    should handle, whether we should attempt to
+                    download fonts into offscreen memory and whether
+                    font drawing should be in ATI or IBM modes.
+
+#   Meta options
+@option options-file
+    @option-type    option-file
+
+@option options-variable
+    @option-type    option-environment
+
+----------------
+
+:: OPTIONS SUPPORTED BY THE ULTRA LIBRARY ::
+------------------------------------------------------------
+
+Options supported by the ATI-ULTRA board layer library are listed
+below.  You need to set these using environment variable
+"ULTRA_OPTIONS or file "/usr/X/lib/display/ULTRA_OPTIONS". 
+
+----------------
+
+@option frame-buffer-physical-address
+	@option-type	numeric
+	@valid-range	0..127
+	@default	0
+	@description	The physical address at which the ATI frame
+			buffer is mapped (in units of MB).  `0' means
+			try to use the existing memory aperture.
+					
+# Size of the frame buffer.
+@option frame-buffer-size
+	@option-type	numeric
+	@valid-range	0..
+	@default	0
+	@description	The size of the frame buffer in units of MB.  `0'
+			means auto-detect the size.
+
+#	Graphics state
+@option number-of-graphics-states
+	@option-type	numeric
+	@valid-range	0..
+	@default	8
+	@description	Number of SDD graphics states. `0' means use\
+			internal default.
+
+#	LFB enabling and disabling
+@option	use-linear-frame-buffer
+	@option-type	unique-enumeration
+	@valid-range	yes no auto-configure
+	@default	auto-configure
+	@description	Controls the usage of LFB layer code.  `yes'
+			forcibly switches on the LFB code, `no' switches
+			it off, and `auto-configure switches it `on' for EISA
+			and local bus architectures when the LFB driver is
+			present, and `off' for all others.
+
+# LFB page size
+@option linear-frame-buffer-page-size
+	@option-type	unique-enumeration
+	@valid-range	auto-configure 1 4
+	@default	auto-configure
+	@description	The page size for mapping the memory aperture.
+			Currently only `auto-configure' is supported.
+
+@option arc-cache-size
+	@option-type	numeric
+	@valid-range	0..
+	@default	16
+	@description	The number of arcs to cache in the display library
+			at a given time. `0' means switch off arc caching.
+
+# Drawing control options
+@option	bitblt-options
+	@option-type	multiple-enumeration
+	@valid-range	use-ms-bitblt use-sm-bitblt
+	@default	use-ms-bitblt use-sm-bitblt
+	@description	Flags to control bitblt operations.
+
+@option	pointdraw-options
+	@option-type 	multiple-enumeration
+	@valid-range	use-plot-points
+	@default	use-plot-points
+	@description	Flags to control point plotting operations.
+ 
+#	Arc drawing control
+@option	arcdraw-options
+	@option-type	multiple-enumeration
+	@valid-range	draw-one-bit-arcs
+	@default	draw-one-bit-arcs 
+	@description	Controls the drawing operation for arcs.
+
+# Meta options
+@option	options-file
+	@option-type	option-file
+
+@option	options-variable
+	@option-type	option-environment
+
+
+

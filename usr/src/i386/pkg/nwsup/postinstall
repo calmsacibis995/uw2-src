@@ -1,0 +1,21 @@
+#ident	"@(#)pkg.nwservice:postinstall	1.3"
+
+SCRIPTS=/usr/sbin/pkginst
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = "YES" ] && set -x
+
+if [ "$PKGINSTALL_TYPE" != "NEWINSTALL" ] 
+then
+	VER=`cat /etc/inst/save.user/${PKGINST}.ver 2>/dev/null`
+	if [ "x${VER}" = "x2.0" ]
+	then
+		for RFILE in `cat /var/sadm/pkg/${PKGINST}/install/rem.files`
+		do
+			rm -rf ${RFILE}	
+		done
+
+		removef ${PKGINST} - < /var/sadm/pkg/${PKGINST}/install/rem.files >/dev/null 2>&1
+		removef -f ${PKGINST}
+	fi
+fi
+

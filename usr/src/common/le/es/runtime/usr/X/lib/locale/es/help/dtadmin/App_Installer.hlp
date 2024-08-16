@@ -1,0 +1,355 @@
+#ident\t"@(#)dthelp:Admin.Tools/App_Installer.hlp       1.22"
+^*version^1
+^*title^Instalador de aplicaciones
+^:Instalador_Aplics
+^*width^70
+^+DesktopMgr/help.defs
+^?Instalación y eliminación de aplicaciones
+^0^Instalador de aplicaciones
+^$10
+Instalador de aplicaciones
+
+Use el instalador de aplicaciones para instalar software adicional en
+el sistema.  Para \k(instalar software de aplicaciones^^Instalación de aplicaciones). se copia la
+información contenida en un medio (como disquete o cinta de cartucho)
+en el disco duro del computador.
+
+Además de instalar software de aplicaciones, puede hacer lo siguiente
+con el Instalador de aplicaciones:
+
+\to\t\k(Ver el contenido de los conjuntos de aplicaciones instalados^^Visualización del contenido de los conjuntos de aplicaciones instaladas)
+\to\t\k(Ver las propiedades de las aplicaciones instaladas^^Visualización de propiedades de aplicaciones instaladas)
+\to\t\k(Suprimir aplicaciones instaladas^^Supresión de aplicaciones)
+
+Nota: Deberá tener \k(permiso para añadir/suprimir aplicaciones^dtadmin/user.hlp^Comprensión de los permisos)
+para poder instalar y suprimir aplicaciones en el escritorio.
+
+Véase también:
+\s(Uso del Instalador de aplicaciones^dhelp "pe.es" ownerhb "Instalación y compartimiento de aplicaciones" "Uso del Instalador de aplicaciones" || helpLinkErr)
+
+^1^Instalación de aplicaciones
+^$20
+Instalación de aplicaciones
+
+Nota: Antes de instalar una aplicación, es conveniente que revise
+\k(Lista de comprobación de instalación de aplicaciones).
+
+Para instalar una aplicación en el Escritorio, haga lo siguiente:
+
+1.\tInserte el medio (por ejemplo, cinta de cartucho o CD-ROM) que
+  \tcontenga la \d(paquete) en la unidad adecuada.
+
+  \tNota: Si ya está en la carpeta Herramientas_de_Admin, vaya al paso
+  \t3.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+3.\tHaga doble clic en Instalador_de_aplicaciones.  Aparecerá
+  \tla ventana "Instalador de aplicaciones".
+
+  \tEsta ventana está dividida en dos "paneles":  la mitad superior de
+  \tla pantalla muestra las aplicaciones sin instalar (que están en el
+  \tmedio), y la mitad inferior muestra las aplicaciones actualmente
+  \tinstaladas en el sistema (es posible que el sistema tarde unos
+  \tinstantes en \k(catalogar^^Ventana Instalador de aplicaciones: Catalogar) las aplicaciones).
+
+  \tNota: Si sólo desea ver el panel superior, haga clic en
+  \tVer=>Ocultar aplicaciones de nombre_de_sistema (por ejemplo,
+  \tOcultar aplicaciones de SystemA).  Si sólo desea ver el panel
+  \tinferior, haga clic en Ver=>Ocultar aplicaciones de medios (por
+  \tejemplo, Ver=>Ocultar aplicaciones de Disco_A).
+
+4.\tHaga clic en la aplicación o en el icono \d(conjunto de aplicaciones) (del
+  \tpanel superior) que desee instalar.
+
+  \tNota: Si está instalando una aplicación de Santa Cruz Software
+  \tOperation (SCO), véase \k(Soporte adicional para aplicaciones SCO).
+
+5.\tHaga clic en Instalar.  El sistema instalará la aplicación o
+  \tconjunto de aplicaciones en el Escritorio.
+
+Después de instalar la aplicación o conjunto de aplicaciones, puede
+instalar los programas individuales asociados con la aplicación o
+conjunto de aplicaciones de la \k(carpeta de aplicaciones^DesktopMgr/appl.hlp^Descripción general de la carpeta Aplicaciones) de usted o de
+otro usuario.
+
+Esto le permitirá arrancar la aplicación haciendo doble clic en su
+icono. Véase \k(Instalación de aplicaciones en la carpeta Aplicaciones).
+
+Además, puede crear un icono para la aplicación instalada.  Véase
+\k(Configuración de iconos^DesktopMgr/iconset.hlp^Configuración de iconos).
+
+Vea también:
+
+\s(Instalación de aplicaciones y de grupos de aplicaciones^dhelp "pe.es" ownerhb "Instalación y compartimiento de aplicaciones" "Instalación de aplicaciones y de grupos de aplicaciones" || helpLinkErr)
+\s(Adición de paquetes^dhelp "pe.es" ownerhb "Instalación y compartimiento de aplicaciones" " "Adición de paquetes" || helpLinkErr)
+
+^2^Lista de comprobación de instalación de aplicaciones
+^$30
+Lista de comprobación de instalación de aplicaciones
+
+Antes de instalar una aplicación, realice las tareas de la siguiente
+lista de comprobación a fin de prevenir los fallos evitables durante
+la instalación:
+
+\to\tLea el manual de instalación de la aplicación.  Es posible que la 
+\t \taplicación requiera lo siguiente:
+
+\t \t-\tQue determinado software esté instalado.
+
+\t \t-\tQue el sistema esté en un estado en particular.
+
+\t \t-\tQue acceda al sistema como un usuario especial.
+
+\to\tCompruebe que cuenta con el espacio en disco suficiente.  Las
+\t \tinstrucciones de instalación que se suministran con la aplicación
+\t \tdeberán informarle de la cantidad de espacio en disco duro que va
+\t \ta necesitar.  La \k(ventana "Estado del sistema"^dtadmin/dashboard.hlp^Visualización de la información del sistema) le indica el espacio
+\t \tdisponible en el sistema.
+
+\to\tAsegúrese de que está ejecutando la versión del sistema operativo
+\t \tUNIX que esperará la aplicación.
+
+^2^Ventana Instalador de aplicaciones: Catalogar
+^$40
+Ventana Instalador de aplicaciones: Catalogar
+
+Esta ventana aparecerá cuando seleccione el Instalador de aplicaciones
+desde la  \k(carpeta Herramientas de administración^DesktopMgr/admintools.hlp^Descripción general de la carpeta Herramientas_de_Admin).
+
+El sistema catalogará las aplicaciones que se estén ejecutando
+actualmente en el sistema, y las mostrará en la ventana de Instalador
+de aplicaciones.  Si no desea que el sistema realice esta operación,
+haga clic en Cancelar.
+
+^2^Aplicaciones actualmente instaladas en el panel del sistema
+^$60
+Aplicaciones actualmente instaladas en el panel del sistema
+
+Este panel muestra las aplicaciones actualmente instaladas en el
+sistema (donde "sistema" se reemplaza por el nombre del sistema de
+que se trate).
+
+Para seleccionar el tipo de aplicaciones que se verá en esta ventana, 
+haga clic en:
+
+\to\tAplicaciones mostradas=>Todas: Para ver tanto las aplicaciones del
+\t \tsistema como las añadidas posteriormente.
+
+\to\tAplicaciones mostradas=>Sistema: Para ver sólo las aplicaciones
+\t \tdel sistema.
+
+\to\tAplicaciones mostradas=>Añadidas: Para ver sólo las aplicaciones
+\t \tañadidas posteriormente.
+
+^2^Instalación de aplicaciones en la carpeta Aplicaciones
+^$70
+Instalación de aplicaciones en la carpeta Aplicaciones
+
+Para instalar un programa de una aplicación individual en la
+carpeta Aplicaciones, haga lo siguiente:
+
+1.\t\d(Haga doble clic^hacer doble clic) en la aplicación o
+  \t\d(conjunto de aplicaciones) deseados. Aparecerá al ventana "Instalador de
+  \taplicaciones: paquete" (donde \d(paquete) es elnombre de
+  \tla aplicación).
+
+  \tNota: Si está viendo un conjunto de aplicaciones, haga doble clic
+  \ten el paquete deseado de dicho conjunto.
+
+2.\tHaga clic en Copiar en carpeta.  Aparecerá la ventana "Instalador
+  \tde aplicaciones: Copiar en carpeta", con las siguientes opciones:
+
+  \to\tHaga clic en Propia para colocar la aplicación sólo en su propia
+  \t \tcarpeta Aplicaciones.
+
+  \to\tHaga clic en Usuarios actuales del Escritorio para colocar la
+  \t \taplicación en las carpetas de aplicaciones de todos los usuarios
+  \t \tdel Escritorio.
+
+  \to\tHaga clic en Usuarios actuales y futuros del Escritorio para
+  \t \tcolocar la aplicación en las carpetas Aplicaciones de los
+  \t \tusuarios del Escritorio tanto actuales como futuros.
+
+\to\tHaga clic en Usuarios específicos para seleccionar los usuarios en
+\t \tcuyas carpetas de aplicaciones se colocará la aplicación.  A
+\t \tcontinuación, escoja los usuarios de las listas desplegables de
+\t \tusuarios y grupos del Escritorio.
+
+3.\tHaga clic en OK para colocar la aplicación en la(s) carpeta(s)
+  \tAplicaciones y cerrar la ventana "Copiar a la
+  \tcarpeta", o en Aplicar para colocar la aplicación en la(s)
+  \tcarpeta(s) Aplicaciones sin cerrar la ventana "Copiar
+  \ta la carpeta".
+
+  \tNota: También puede hacer clic en Redefinir para volver a las
+  \topciones anteriorres, o en Cancelar para cerrar esta ventana sin
+  \tcolocar la aplicación en la(s) carpeta(s) Aplicaciones.
+
+^2^Ventana Instalador de aplicaciones: Paquete
+^$80
+Ventana Instalador de aplicaciones: Paquete
+
+Esta ventana aparecerá cuando haga doble clic en un icono que
+representa a un \d(paquete), donde paquete es el nombre de una
+aplicación, no un \d(conjunto^conjunto de aplicaciones), o cuando seleccione un
+icono que represente a una aplicación, haga clic en Mostrar programas.
+
+Desde esta ventana, puede hacer clic en \k(Copiar en carpeta^^Ventana Instalador de aplicaciones: Copiar en carpeta) para colocar
+la aplicación en la carpeta que desee.
+
+
+^2^Ventana Instalador de aplicaciones: Copiar en carpeta
+^$90
+Ventana Instalador de aplicaciones: Copiar en carpeta
+
+En esta ventana, haga lo siguiente
+
+1.\tDefina las siguientes opciones:
+
+  \to\tHaga clic en Propia para colocar la aplicación sólo en su propia
+  \t \tcarpeta Aplicaciones.
+
+  \to\tHaga clic en Usuarios actuales del Escritorio para colocar la
+  \t \taplicación en las carpetas de aplicaciones de todos los usuarios
+  \t \tdel Escritorio.
+
+  \to\tHaga clic en Usuarios actuales y futuros del Escritorio para
+  \t \tcolocar la aplicación en las carpetas Aplicaciones de los
+  \t \tusuarios del Escritorio tanto actuales como futuros.
+
+\to\tHaga clic en Usuarios específicos para seleccionar los usuarios en
+\t \tcuyas carpetas de aplicaciones se colocará la aplicación.  A
+\t \tcontinuación, escoja los usuarios de las listas desplegables de
+\t \tusuarios y grupos del Escritorio.
+
+2.\tHaga clic en OK para colocar la aplicación en la(s) carpeta(s) de
+  \taplicaciones-
+
+Véase también:
+\k(Instalación de aplicaciones en la carpeta Aplicaciones)
+
+
+^1^Soporte adicional para aplicaciones SCO
+^$100
+Soporte adicional para aplicaciones SCO
+
+Si está instalando una aplicación de Santa Cruz Software Operation
+(SCO), haga clic en Acciones=>Opciones.  Aparecerá la ventana
+"Opciones del instalador de aplicaciones".  Por defecto, la variable
+de entorno SCOMPAT está definida como 3.2.  Si la documentación
+suministrada con la aplicación especifica un valor distinto para
+esta variable, teclee el valor correcto y seleccione OK.
+
+^2^Ventana Instalador de aplicaciones: Opciones
+^$120
+Ventana Instalador de aplicaciones: Opciones
+
+Esta ventana le permite cambiar la variable de entorno SCOMPAT (que
+sólo se usa cuando se instalan aplicaciones SCO).
+
+Por defecto, esta variable está definida con el valor 3.2.  Para
+cambiarla, haga lo siguiente:
+
+\to\tTeclee el nuevo valor para la variable sobre el antiguo.
+
+\to\tHaga clic en OK.
+
+^1^Visualización del contenido de los conjuntos de aplicaciones instaladas
+^$130
+Visualización del contenido de los conjuntos de aplicaciones instaladas
+
+Para ver el contenido de un \d(conjunto de aplicaciones) instalado, haga lo
+siguiente:
+
+1.\tHaga clic en el icono que representa la aplicación deseada.
+
+2.\tHaga clic en Mostrar programas.  Aparecerá la ventana "Instalador
+  \tde aplicaciones: nombre_de_conjunto definido", donde
+  \tnombre_de_conjunto es el nombre del conjunto de aplicaciones, en
+  \tla que se muestran los \d(paquetes^paquete) del conjunto
+  \tde aplicaciones.
+
+^2^Ventana Instalador de aplicaciones: Definir nombre
+^$140
+Instalador de aplicaciones: ventana Nombre_de_conjunto definido
+
+Esta ventana muestra las aplicaciones que hay dentro de un conjunto,
+donde nombre_de_conjunto es el nombre del conjunto
+de aplicaciones.
+
+Desde esta ventana, se puede hacer lo siguiente:
+
+\to\tHaga clic en un \d(paquete) para mostrar una descripción
+\t \tdel paquete en la zona de pie de página de la ventana.
+
+\to\tPara actualizar la descripción del paquete de la zona de pie de
+\t \tpágina coloque el puntero del ratón sobre un icono no seleccionado
+\t \ty mantenga la tecla <Mayús> pulsada mientras pulsa el botón
+\t \tizquierdo del ratón.
+
+\to\tPara borrar la zona de pie de pagina correspondiente a un icono
+\t \tseleccionado, mantenga pulsada la tecla <Mayús> mientras
+\t \tpulsa el botón izquierdo del ratón.
+
+^1^Visualización de propiedades de aplicaciones instaladas
+^$150
+Visualización de propiedades de aplicaciones instaladas
+
+Para ver las propiedades de una aplicación instalada, haga lo
+siguiente:
+
+1.\tHaga clic en el icono que representa a la aplicación.
+
+2.\tHaga clic en Información.  Aparecerá la
+  \t\k(ventana "Instalador de aplicaciones: Información"^^Ventana Instalador de aplicaciones: Información), indicará
+  \tinformación como el número de versión, nombre del proveedor,
+  \tespacio en disco utilizado, etc.
+
+^2^Ventana Instalador de aplicaciones: Información
+^$170
+Ventana Instalador de aplicaciones: Información
+
+Esta ventana muestra la siguiente información acerca de una
+aplicación:
+
+\to\tNombre de la aplicación: El nombre de la aplicación abreviado
+\t \t(por ejemplo, tcpset)
+
+\to\tDescripción: El nombre de la aplicación (por ejemplo, Conjunto
+\t \tTCP/IP)
+
+\to\tCategoría: El tipo de aplicación (por ejemplo, conjunto o sistema)
+
+\to\tProveedor: La compañía que produjo la aplicación (por ejemplo,
+\t \tNovell)
+
+\to\tVersión: El número de versión de la aplicación (por ejemplo, 3.0)
+
+\to\tArquitectura: El tipo de Unidad central de procesos (CPU)
+\t \t(por ejemplo, 386 o SPARC)
+
+\to\tFecha de instalación: La fecha y hora en que usted (u otro
+\t \tusuario) haya instalado la aplicación del sistema (por ejemplo, 1
+\t \tene 1995 12:01 AM)
+
+\to\tTamaño: El tamaño de la aplicación en bloques, es decir, el
+\t \tespacio de espacio en disco que usa la aplicación (por ejemplo,
+\t \t13237 bloques)
+
+^1^Supresión de aplicaciones
+^$180
+Supresión de aplicaciones
+
+IMPORTANTE: Algunas aplicaciones y
+\d(conjuntos de aplicaciones^conjunto de aplicaciones) dependen de otras
+aplicaciones para poder ejecutarse.  Antes de suprimir una aplicación
+o conjunto de aplicaciones, asegúrese de que ninguna aplicación
+depende de los mismos para funcionar.
+
+Para suprimir una aplicación o conjunto de aplicaciones, haga clic
+en la aplicación o conjunto de aplicaciones deseado y, a
+continuación, haga clic en Suprimir.
+

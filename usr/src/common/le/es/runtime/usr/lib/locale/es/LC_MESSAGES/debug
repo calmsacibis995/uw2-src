@@ -1,0 +1,467 @@
+Advertencia: 
+Error: 
+Error fatal: 
+Error fatal: Error interno en %s en la línea %d\n
+Error interno en %s en la línea %d; el contenido del mensaje siguiente es sospechoso\n
+Uso:\n%s [opciones_comunes] [[-f all|none|procs] [-r] cmd_line]\n
+%s [opciones_comunes] [-f all|none|procs] [-l archivo_carga] proceso...\n
+%s [opciones_comunes] -c objeto archivo_principal\n
+        opciones_comunes: [-V] [-i c|x] [-X opt] [-d opciones_defecto] [-s vía] [-Ya|f|g,dir]\n
+Se ha creado el nuevo programa %s (proceso %s)\n
+%s abortado\n
+Proceso %s ejecutado; el nuevo ejecutable es %s, programa %s\n
+Proceso %s forked; el nuevo proceso %s se encuentra ahora bajo control\n
+Creación de imagen de la memoria principal de %s (proceso %s)\n
+Nuevo programa %s (proceso %s) atrapado\n
+Programa E/S redirigido a un pseudoterminal %s\n
+Programa    ID   ID proceso  Estado    Función    Localización    Comando\n
+%s%-10.10s %-7.7s %6d Memoria principal  %-10.10s %-15.15s %s\n
+ %-10.10s             -1 Muerto                              %s\n
+ %-10.10s             -1 Liberado                            %s\n
+%s%-10.10s %-7.7s %6d Ejecutando                          %s\n
+%s%-10.10s %-7.7s %6d Avanzando                           %s\n
+%s%-10.10s %-7.7s %6d Desconocido                        %s\n
+%s%-10.10s %-7.7s %6d Interrumpido  %-10.10s %-15.15s %s\n
+Asignación de dirección para %s\n Rango de dirección\t\tTamaño\t\tAcceso\tArchivo Objeto\n
+Eventos del %s, programa %s\n
+Eventos del programa (muerto) %s\n
+  ID  Tipo       Condición de cuenta                  Lista de Comandos\n
+  ID  Tipo       Condición de cuenta\n
+[%.4d]%s%s INTERRUMPIR %5d %-30s %s\n
+[%.4d]%s%s INTERRUMPIR %5d %s\n\tLista de Objetos:\t%s\n\tComando:\t%s\n
+[%.4d]%s%s LLAMADA SISTEMA %-2s %5d %-30s %s\n
+[%.4d]%s%s LLAMADA SISTEMA %-2s %5d %s\n\tLista de objetos:\t%s\n\tComando:\t%s\n
+[%.4d]%s%s SEÑAL            %-30s %s\n
+[%.4d]%s%s SEÑAL            %s\n\tLista de objetos:\t%s\n\tComando:\t%s\n
+[%.4d] %s ONSTOP                                          %s\n
+[%.4d] %s ONSTOP\n\tLista de objetos:\t%s\n\tComando:\t%s\n
+Disposición de señal para %s, programa %s\n
+%4d\tsig%-7s\tatrapado\n
+%4d\tsig%-7s\tignorado\n
+EVENTO [%d] asignado\n
+%s AVANZADO
+%s AVANZADO
+%s SUSPENDIDO
+SEÑALADO %d (%s) en %s
+ENTRADA DE LLAMADA AL SISTEMA %d (%s) en %s
+SALIDA DE LLAMADA DEL SISTEMA %d (%s) en %s
+ARCHIVO PRINCIPAL
+PARAR EVENTO ACTIVADO: %s%s en %s
+Señal: %s\n
+Señal: %s\Dirección incorrecta: %#x\n
+El proceso en curso es ahora %s, programa %s\n
+No más procesos\n
+El proceso %s ha salido\n
+Liberando y ejecutando proceso %s\n
+Liberando y suspendiendo proceso %s\n
+Liberando imagen situada en la memoria %s\n
+ [%s en %s]\n
+%d:\t<no hay texto fuente disponible>\n
+Desensamblamiento para %s, Programa %s\n
+Registrar contenido para %s, programa %s\n
+Volcado en bruto de %s, Programa %s\n
+Seguimiento de stacks correspondientes a %s, Programa %s\n
+%ssupuesto: %#x
+Símbolos de %s, Programa %s\nNombre               Localización     Línea\n
+Símbolos de %s, Programa %s\nNombre               Localización     Línea      Tipo\n
+Símbolos de %s, Programa %s\nNombre               Localización     Línea      Tipo                 Valor\n
+Símbolos de %s, Programa %s\nNombre               Localización     Línea      Valor\n
+%-20.20s %-15.15s %5.5s  %s (supuesto)\n
+%-20.20s %-15.15s %5.5s  %-11s (suponiendo int)\n
+%-20.20s %-15.15s %5.5s  %-3.3s (supuesto)       %s\n
+Estado inconsistente en función %s en la línea %d\n
+Avanzando %s para observar la expresión de interrupción\n
+Imposible iniciar %s, ya se está ejecutando\n
+No se puede arrancar %s, se trata de un archivo principal\n
+Detención imposible %s, se trata de un archivo principal\n
+Imposible reinicar ejecución de %s\n
+Imposible interrumpir %s\n
+Imposible configurar estado de señal en %s\n
+Imposible rastrear llamadas del sistema en %s\n
+Imposible configurar rastreo de errores en %s\n
+Imposible configurar el punto de ruptura en %#x de %s\n
+Imposible eliminar el punto de ruptura en %#x de %s\n
+Dirección del punto de ruptura nula en %s: %#x\n
+Imposible cancelar señal en proceso %s\n
+Imposible ejecutar los procesos seguidores (%s): %s\n
+Falló el comando fork en la creación de proceso%s\n
+Proceso %s forked: no se puede controlar hijo: %s\n
+El proceso ha sido vforked; reinicializar padre e hijo para evitar bloqueo\n
+Proceso %s ejecutado: no se pudo controlar nuevo ejecutable\n
+Nombre de programa %s ya se encuentra en uso; utilizando %s\n
+No se pudo acceder a %s\n
+Ningún evento activo con identificador %d\n
+Formato nulo para identificador de evento: \"%s\"\n
+No se pudo configurar el pseudoterminal: %s\n
+No se pudo leer desde el pseudoterminal %s: %s\n
+Imposible leer la asignación de memoria del proceso: %s\n
+Imposible encontrar tabla de subdivisión en %s\n
+Imposible evaluar la expresión de interrupción en %s\n
+Imposible encontrar alcance para expresión de interrupción en %s\n
+Imposible encontrar dirección de retorno para la función en curso %s\n
+Problema de formato del archivo principal\n
+Dificultades para acceder al archivo principal %s\n
+El archivo principal está truncado\n
+Imposible escribir en los registros del archivo principal\n
+Imposible leer registros para %s\n
+Imposible escribir registros para %s\n
+Problema al leer desde el proceso %s, dirección %#x\n
+Problema al escribir al proceso %s, dirección %#x\n
+La instrucción de parada dirigida al proceso %d ha sido interrumpida\nEl proceso se está ejecutando pero será interrumpido\n
+Imposible encontrar segmento de memoria para dirección %#x en proceso %s\n
+No existe ningún objeto concordante con el elemento en la lista de procesos: %s\n
+No se pudo abrir la librería compartida %s: %s\n
+Imposible controlar proceso %d: se ha ejecutado un programa setuid o settgid\n
+Error de E/S al proceso %d\n
+Error del sistema al intentar controlar el proceso %d\n
+Punto de ruptura configurado en la dirección de datos %#x en %s\n
+Punto de control configurado en la dirección de texto %#x en %s\n
+No se pudo copiar evento %d en el proceso %s\n
+No se pudo redefinir el evento %d en el proceso %s\n
+No soportado: la variable %s de depurador como valor de variable %s de depurador\n
+Información relativa al proceso de depuración desconocida en la posición %#x\n
+Información relativa al proceso de depuración desconocida\n
+Descripción de localización demasiado compleja\n
+Versión %d de archivo objeto desconocida\n
+Tipo %d de archivo objeto erróneo\n
+No existe ninguna información relativa al proceso de depuración en %s\n
+Imposible leer %d octetos del archivo objeto en la posición %#x\n
+Se están forzando tipos de puntero incompatibles\n
+No hay información de tipos relativa a %s, se asume int\n
+Formato de archivo objeto no válido\n
+Archivo objeto para el tipo de máquina erróneo\n
+Imposible construir descripción de tipo\n
+Imposible llamar %s (Interfaz de Ventana)\n
+Especificación de interfaz incorrecta: -i%s\n
+%s posterior a %s\n
+No se encuentra pendiente mientras se ejecuta el bucle\n
+Comando incorrecto para %s\n
+Falta la lista de eventos para %s\n
+No se pudo evaluar expresión\n
+No hay procesos\n
+Creación de registros ya activada\n
+No existe un comando logon anterior\n
+No se pudo crear %s: %s\n
+Imposible anexar a %s: %s\n
+Línea demasiado larga\n
+\"%s\" es un nombre de alias\n
+\"%s\" es un nombre de comando interno\n
+Corchete sin emparejar\n
+Paréntesis sin emparejar\n
+Llave sin emparejar\n
+Lista de procesos mal creada\n
+%s: No existe ese alias\n
+Sólo se admite un objeto activo con la opción -l\n
+¡No hay un comando anterior por el que sustituirlo!\n
+Falló el comando Shell y mandó la señal %d\n
+Falló el comando Shell y mandó la señal %d - volcado de imágenes\n
+La variable %s de usuario está sin definir\n
+No se autoriza el uso de la opción -i con el comando asociado\n
+Carácter irreconocible en %s\n
+Comillas sin emparejar en %s\n
+Constante numérica mal creada en %s\n
+Constante numérica mal creada en %s\n
+Nombre de archivo nulo en %s\n
+Comando Shell esperado en %s\n
+Redirección múltiple de E/S en %s\n
+Opción duplicada en %s\n
+Opción %s no válida en %s\n
+Opción esperada en %s\n
+Las opciones %s y %s se excluyen mútuamente\n
+No se autoriza el uso de la opción %s con %s\n
+Argumento incorrecto para -f\n
+Nombre de proceso esperado en %s\n
+Cadena esperada en %s\n
+Número decimal esperado en %s\n
+Localización esperada en %s\n
+Argumento esperado en %s\n
+Nombre de archivo esperado en %s\n
+Comando esperado en %s\n
+Señal esperada en %s\n
+Expresión esperada en %s\n
+Expresión entre paréntesis esperada en %s\n
+Comando o bloque esperado en %s\n
+Número de evento esperado en %s\n
+Número de evento o comando esperado en %s\n
+Identificador esperado en %s\n
+Los nombres de usuario del depurador deben empezar por '$'\n
+Demasiados argumentos en %s\n
+Error de sintaxis de localización en %s\n
+Señal duplicada en %s\n
+Especificación de llamada de sistema no válida en %s\n
+Argumento inesperado en %s\n
+Argumento no válido en %s\n
+Expresión de evento esperada en %s\n
+Estado inconsistente del analizador en %s\n
+Comando sin terminar\n
+Recursión de alias en %s\n
+Error de sintaxis en %s\n
+Palabra clave irreconocible en %s\n
+'}' inesperado\n
+Evento inactivo con el identificador especificado\n
+La cuenta se ignora para eventos onstop y de señal\n
+No se pudo determinar el directorio de trabajo actual: %s\n
+No se pudo cambiar el directorio de trabajo para %s: %s\n
+No se ha proporcionado ningún directorio y no se ha definido el HOME\n
+No se pudo abrir el archivo de alias por defecto %s: %s\n
+Se han proporcinado múltiples opciones %s; se utiliza la primera\n
+depuración: error interno - no se puede recuperar\n
+%s: no se autoriza el uso de la opción %s con %s\n
+%s: la opción -l es incorrecta con una línea de comando\n
+%s: la opción -r es incorrecta con un proceso activo\n
+%s: argumento incorrecto para la opción %s\n
+no se puede abrir %s: %s\n
+No se pudo coger %s\n
+No se puede cambiar el evento %d; uno de sus procesos no está activado\n
+No se autoriza el uso de la opción %s con este tipo de evento\n
+No existe un comando create previo\n
+No se pudo crear la línea de comando con conductos: %s\n
+Falló la ejecución de create: todos los procesos resultantes han sido abortados\n
+No se puede determinar el orden de octetos de la máquina principal\n
+No existe tal pseudoterminal: %s\n
+No existe el objeto %s nombrado\n
+El programa no dispone de un pseudoterminal asociado\n
+No se encontró el archivo fuente %s\n
+Especificación de localización no válida para comando de lista\n
+No hay ningún archivo fuente en curso\n
+No hay líneas en %s\n
+Sólo %d líneas en %s\n
+No hay coincidencia para expresión regular\n
+Expresión regular incorrecta\n
+No hay ninguna expresión regular anterior\n
+Número de trama %d fuera del alcance del proceso %s\n
+No se pudo abortar el proceso %s: %s\n
+No existe la entrada \"%s\"\n
+Utilizando %s para %s: podría haber otros casos de sobrecarga\n
+No hay información fuente para %s\n
+Lenguaje fuente desconocido: %s\n
+El nombre de programa \"%s\" ya está siendo utilizado\n
+No hay programas activos para el programa %s\n
+falló la evaluación
+Etiqueta de símbolo %d inesperada\n
+No se puede obtener información del símbolo para el proceso %s\n
+Falló la evaluación de %s\n
+Número no válido para la expresión de configuración\n
+La variable del depurador %s es sólo de lectura\n
+Valor no válido para la variable del depurador %s\n
+La información de línea no tiene dirección para la línea %s de archivo %d\n
+No se puede obtener dirección para símbolo %s\n
+Variable %s de depurador no válida en especificación de localización\n
+No existe función activa llamada %s\n
+Operación no válida en la ejecución del objeto %s\n
+Operación no válida en proceso muerto %s\n
+Operación no válida en el archivo principal %s\n
+No se puede utilizar concatenación en esta asignación\n
+Se necesita una cadena en este contexto\n
+La localización dada para %s está fuera de la actual función.\n
+Cadena de formato incorrecta para imprimir comando: %s\n
+La anchura del campo solicitada en el comando de impresión es demasiado larga: %d\n
+Dirección de texto incorrecta %#x\n
+Opcode desconocido en la dirección %#x\n
+Probable problema de desensamblamiento por no existir sección de texto\n
+La parte situada a la izquierda del operador %s no tiene valor\n
+La parte situada a la derecha del operador %s no tiene valor\n
+El operando del operador %s no tiene valor\n
+La parte situada a la izquierda del operador %s no es de tipo integral\n
+La parte situada a la derecha del operador %s no es de tipo integral\n
+El operando del operador %s no es de tipo integral\n
+La parte situada a la izquierda del operador %s no es de tipo aritmético\n
+La parte situada a la derecha del operador %s no es de tipo aritmético\n
+El operando del operador %s no es de tipo aritmético\n
+La parte situada a la izquierda del operador %s no es tipo escalar\n
+La parte situada a la derecha del operador %s no es de tipo escalar\n
+El operando del operador %s no es de tipo escalar\n
+La parte situada a la izquierda del operador %s no es un lvalue\n
+La parte situada a la izquierda del operador %s no es un lvalue\n
+La parte situada a la izquierda del operador %s no se refiere a un tipo de\nestructura\n
+El operando del operador %s es de tipo no válido\n
+El operando del operador %s no es un puntero\n
+No se puede determinar la dirección del operando del operador %s\n
+La parte situada a la izquierda del operador %s no es ni puntero ni matriz\n
+La parte situada a la izquierda del operador binario %s no es del tipo correcto\n
+La parte situada a la derecha del operador binario %s no es del tipo correcto\n
+Los operandos del operador %s son punteros para tipos incompatibles\n
+Sustracción de puntero incorrecta\n
+Los operandos del operador %s tienen tipos imcompatibles\n
+operador %s: el operando asignado no es un lvalue modificable\n
+No hay información de tipo para '%s'\n
+La expresión condicional en el operador '?:' no es de tipo escalar\n
+'condition ? a : b', los tipos de a y b son incompatibles\n
+En la parte izquierda de la suma no se especifica un tipo válido\n
+La parte derecha de la suma no tiene un valor\n
+Imposible sumar operando de la parte derecha con el tipo de la izquierda\n
+Tipo no válido\n
+'%s' no es una función, no se puede llamar\n
+Los argumentos transferidos a %s no corresponden con los tipos de parámetros formales\n
+Demasiados argumentos en la llamada a %s\n
+No se dan argumentos suficientes en la llamada a %s\n
+Variable del depurador desconocida: %s\n
+No hay información del símbolo para '%s'\n
+'%s' no es el nombre de una estructura o unión\n
+'%s' no es el nombre de una enumeración\n
+No se admite el operador %s\n
+Conversión de tipo incorrecta en ANSI/ISO C\n
+No se puede evaluar el argumento para la llamada de función\n
+Problema al configurar stack para la llamada de función en %s\n
+No se pudo recuperar correctamente el stack después de la llamada de función en %s\n
+Especificador %s de formato incorrecto\n
+Cadena de impresión formateada demasiado larga: se ha truncado\n
+Se ha encontrado un error de coma flotante; no se puede evaluar\n
+La cadena o constante de carácter no terminan\n
+Cadena de escape no estándar \\%s\n
+Se encontró una nueva línea en constante de cadena\n
+Constante de coma flotante mal creada\n
+%s en ^\n
+Operador %s no permitido en expresión de interrupción\n
+Constante de dirección de función incorrecta en este tipo de expresión de\ninterrupción\n
+No se puede exportar %s; no es una variable definida por el usuario\n
+No se pudo añadir %s al entorno\n
+Desborde de constante entera: %s\n
+Comentario mal creado\n
+Formato incorrecto para variable del depurador\n
+Anotación de elipsis incorrecta \'..\' - utilice \'...\'\n
+Digito(s) incorrecto(s) encontrado(s) en constante octal\n
+Carácter incorrecto %s\n
+No hay información de tipo para los parámetros de %s\n
+No se admite el operador %s; operador ignorado\n
+Prototipo de función incorrecta\n
+La parte izquierda del operador %s no se refiere a objeto de clase\n
+La parte derecha del operador %s no es un puntero\n
+Expresión a->*b; no se puede evaluar b\n
+Calificación de identificador nula\n
+La función %s en el calificador no es una función activa\n
+Calificador de la trama %d fuera de rango para tramas de stack activas\n
+No hay información fuente relativa al bloque en línea %d\n
+El número de línea %d no especifica un bloque\n
+El número de línea %d no especifica un bloque en la función en curso\n
+El identificador %s no es un typedef\n
+Llamada ambigua a función sobrecargada %s\n
+Se ha ignorado la clase de almacenamiento de objeto\n
+No se puede hacer la conversión de tipo\n
+Indice matricial %d por encima del límite para matriz (%d)\n
+No existe valor asociado a una cadena fija de enumeración %s\n
+No se puede determinar la dirección o el tipo de %s\n
+Imposible obtener valor para parte izquierda de declaración de asignación\n
+Imposible obtener valor para parte derecha de declaración de asignación\n
+Falló la derreferencia de puntero\n
+No se puede determinar la localización para incluir objeto en selección de\nmiembros\n
+Imposible manejar estructura o unión en el registro\n
+Imposible determinar localización del miembro %s\n
+El miembro seleccionado no representa un campo válido de estructura, clase o\nunión\n
+Tamaño del elemento de matriz desconocido\n
+No se puede obtener valor de índice de matriz\n
+No se puede calcular tamaño del objeto\n
+No se puede tomar la dirección del registro\n
+No se puede obtener valor para operando de la parte izquierda de %s\n
+No se puede obtener valor para operando de la parte derecha de %s\n
+No se puede obtener valor para operando de %s\n
+No se puede hacer puntero aritmético en operando de tamaño desconocido\n
+No se puede determinar el tamaño del objeto, se asume %d\n
+Sintaxis incorrecta para el comando fc\n
+Número fuera de rango para el comando fc\n
+No se encontró el comando anterior\n
+Comandos del depurador:\n
+Otros Temas:\n
+Señales válidas:\n
+Nombres de llamada al sistema válidos:\n
+Teclee \'alias\' para ver los alias actuales.\n
+Teclee \'ayuda <tema>\' para obtener explicaciones de comandos o temas.\n
+No existe ese comando o tema: %s\n
+No hay ayuda disponible sobre %s\n
+Se ha creado la imagen de memoria del hilo %d (%s)\n
+Se ha creado un nuevo hilo %d (%s)\n
+El hilo %s ha salido\n
+El hilo %s ha creado un nuevo hilo %s\n
+Se ha(n) creado %d hilo(s) para el proceso %s\n
+Se han creado imágenes de memoria de %d hilo(s) para el proceso %s\n
+El hilo en curso es ahora %s, programa %s\n
+El hilo multiplexado %s ha abandonado sus LWP\n
+El hilo multiplexado %s ha sido recogido por un LWP\n
+Se ha suspendido el hilo %s\n
+Se ha reiniciado el hilo %s\n
+Se ha reiniciado el hilo %s\n
+%s DETENIDO
+Se ha efectuado horquilla en el proceso %s (hilo %s); el nuevo proceso %s se encuentra ahora bajo control\n
+Problema al acceder a los datos de hilo en el archivo principal, proceso\n%s\n
+Problema al acceder a los datos de hilo en el proceso %s\n
+No se pudo controlar en proceso ligero %d para el proceso %s\n
+Operación no válida en el hilo inactivo %s\n
+Problema al establecer el hilo de ejecución sincrónica\n
+No se encuentra la información relativa al archivo principal para LWP %d\n
+Inconsistencia en la interfaz con la librería de hilos para el proceso %s\n
+Problema de lectura de las señales pendientes para %s\n
+Problema al cancelar las señales en %s\n
+No se encuentra la LWP especificada por el descriptor de hilo: %s\n
+No se pudo controlar el hilo %d para el proceso %s\n
+No se pudo controlar el nuevo hilo originado en el proceso %s\n
+Dirección incorrecta para la función de arranque del hilo en el hilo\ngenerado para el proceso %s\n
+Formato erróneo para el nombre de proceso: %s\n
+Formato erróneo para el nombre de hilo: %s\n
+Error del sistema al intentar controlar en proceso ligero %d\n
+Operación no válida en el hilo suspendido %s\n
+El contenido del registro es inconsistente: hilo %s para sustitución de contexto\n
+No se puede escribir en los registros: hilo %s para sustitución de contexto\n
+No se puede seleccionar el proceso de depuración\n
+Expresión: %s no genera un lvalue\n
+Se ha ignorado la opción -s para liberar en el hilo: %s\n
+El proceso %s tiene hilos: se necesita el ID de hilo en este contexto\n
+La LWP  para %s defectuosa no está conectada a un hilo de usuario\n
+%4d\tsig%-7s\talcanzado\t%#x\n
+%4d\tsig%-7s\tignorado\t%#x\n
+PARADO (fuera de LWP) %s
+'%s' no es una opción válida\n
+%s se encuentra sobrecargado. Introduzca el número de la función que hay que\nutilizar o 0 (cero) para cancelar: %s
+%s se encuentra sobrecargado. Introduzca el número de la función que hay que\nutilizar o 0 (cero) para cancelar: %s%d\tTodo lo arriba mencionado\n
+Llamando %s\n
+%s (ó %s)\n
+%sestático %s=%s\n
+No se puede dereferenciar void *\n
+No se pudo restaurar los registros correctamente después de la llamada de la función en %s\n
+Desborde de constante de coma flotante: %s\n
+Insuficiencia de la constante de coma flotante: %s\n
+La función %s no posee el puntero \"este\"; interrupción de todas las llamadas\n
+Disposición desconocida de la tabla virtual de funciones\n
+El operando de %s no puede ser una enumeración\n
+No se dispone de información para '%s' en '%s'\n
+El operando de sizeof no puede ser una función o un campo de bits\n
+No se acepta el uso del operador %s en las expresiones C\n
+Falta el objeto o el puntero de objeto en el miembro %s\n
+%s no es una clase básica de %s\n
+Aún no se aceptan las funciones de conversión\n
+El argumento de la función no tiene ningún valor\n
+No existe un archivo fuente en curso para %s\n
+El número de la línea debe ser un valor positivo\n
+Programa   ID      ID_proc Estado de hilo       Función    Ubicación      Comando\n
+%s%-9.9s %-7.7s %6d %6d Memoria principal %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Ejecutando                          %s\n
+%s%-9.9s %-7.7s %6d %6dAvanzando                           %s\n
+%s%-9.9s %-7.7s %6d %6d Desconocido                        %s\n
+%s%-9.9s %-7.7s %6d %6d Interrumpido  %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Fuera de LWP        %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Memoria principal fuera de LWP   %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Memoria principal suspendida   %-10.10s %-14.14s %s\n
+%s%-9.9s %-7.7s %6d %6d Suspendido      %-10.10s %-14.14s %s\n
+Uso:\n%s [opciones_comunes] [[-f all|none|procs] [-r] [-l loc_empezar] línea_comando]\n
+       opciones_comunes: [-V] [-i c|x] [-X opt] [-d opciones por defecto] [-s vía] [-Ya|g,dir]\n
+***** Error - opcode erróneo\n
+Número hexadecimal esperado en %s\n
+Listado fuente para %s, programa %s\n
+%4d\tsig%-7s\talcanzado\t%s\n
+%4d\tsig%-7s\tignorado\t%s\n
+Liberando y ejecutando %s\n
+Liberando y suspendiendo %s\n
+No se encuentra la dirección de retorno para la función en %s\n
+No se pudo copiar el evento %d a %s\n
+No se pudo redefinir el evento %d en %s\n
+No se puede modificar el evento %d; uno de sus objetos no está activo\n
+El número de trama %d se halla fuera de rango para %s\n
+Operación no válida en el objeto muerto %s\n
+Llamada ambigua a la función sobrecargada. Las opciones son:\n%s
+No se puede obtener la dirección asociada al símbolo %s: se ha asignado a un\nregistro\n
+El número de línea %d no especifica un bloque en el alcance actual\n
+Expresión regular %s no válida\n
+Expresión de ubicación no válida\n
+%s DETENIDO
+Comando no soportado desde la interfaz gráfica\n
+No se puede gestionar el cambio de estado del hilo durante el arranque del\nproceso: %s\n
+Se necesita una constante integral como límite de entradas de la matriz\n

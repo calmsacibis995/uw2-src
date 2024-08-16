@@ -1,0 +1,87 @@
+%% Dynamically Loadable Module (DLM) Parameters
+%C Dynamically Loadable Module (DLM) Parameters
+These tunable parameters are associated with Dynamically Loadable Module
+processing.
+% BDEV_RESERVE
+The number of empty slots reserved in the
+bdevsw,
+block device switch,
+table
+that can be used by a loadable block device driver.
+This parameter supports the loadable module feature.
+% CDEV_RESERVE
+The number of empty slots reserved in the
+cdevsw,
+character block device switch,
+table
+that can be used by a loadable block device driver.
+This parameter supports the loadable module feature.
+% DEF_UNLOAD_DELAY
+The global default auto-unload delay time.
+Loadable modules will not be auto-unloaded
+unless the module is idle for at least the number of seconds
+specified for this parameter.
+Each loadable module can override
+the global default for auto-unload delay
+by specifying its own auto-unload delay in the
+Mtune
+file for the module.
+The name of the module's unload delay tunable parameter,
+PREFIX_UNLOAD_DELAY,
+must begin
+with the ``prefix'' field from Master(4) converted to upper case letters.
+% FMOD_RESERVE
+The number of empty slots reserved in the
+fmodsw,
+strings modules switch,
+table
+that can be used by a loadable block device driver.
+This parameter supports the loadable module feature.
+% VFS_RESERVE
+The number of empty slots reserved in the
+vfssw,
+file systems switch,
+table
+that can be used by a loadable block device driver.
+This parameter supports the loadable module feature.
+%% Miscellaneous Parameters
+% MAXPMEM
+Specifies, if the value is non-zero,
+the maximum amount of physical memory the kernel can use.
+% NULLPTR
+Allows the null pointer workaround to be enabled and disabled.
+When the value is 1, null pointer reads are allowed;
+when the value if 0, null pointer reads are not allowed.
+% USER_RDTSC
+When non-zero, then user can use rdtsc instruction, if available.
+%% Process Limit Parameters
+%%% General Process Limit Parameters
+% MAXULWP
+Maximum number per user of additional lightweight processes (LWPs)
+created explicitly using _lwp_create.
+This number does not include the initial LWP that is automatically
+a part of every process.
+This limit is not enforced for privileged processes, that is,
+for those processes with the P_SYSOPS privilege.
+%% Timer and Scheduler Parameters
+% MAXCLSYSPRI
+Maximum global priority used by the
+SYS
+scheduling class
+for scheduling kernel processes.
+Changing this parameter changes the range
+of priorities used to schedule kernel processes
+and can have a significant effect on
+the performance of the system.
+In general there is no need to change this parameter
+unless you add new scheduling classes
+or reconfigure the priorities of
+other currently configured classes.
+The value of
+MAXCLSYSPRI
+is 100.
+%% XENIX Parameters
+%C XENIX Parameters
+These parameters are associated with the XENIX processing.
+% NSCRN
+Number of multi-screens for XENIX support.

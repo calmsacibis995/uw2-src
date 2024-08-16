@@ -1,0 +1,92 @@
+# ident "@(#)langsup:i386/ls/:mkperm	1.1"
+
+
+echo Changing permissions on LS source files. 
+
+# add owner write to all files
+find . -type f -follow -print |xargs chmod u+w 
+
+# add owner exec to selected files
+FLIST="./:mkcmd
+./:mkcodesets
+./:mketc
+./:mkfont
+./:mklocale
+./:mklp
+./:mkterminfo
+./:mkxim
+./keyboard/BE
+./keyboard/BE.437
+./keyboard/BE.850
+./keyboard/CA
+./keyboard/CA.850
+./keyboard/CA.863
+./keyboard/DE
+./keyboard/DE.437
+./keyboard/DE.850
+./keyboard/DK
+./keyboard/DK.850
+./keyboard/DK.865
+./keyboard/ES
+./keyboard/ES.437
+./keyboard/ES.850
+./keyboard/FR
+./keyboard/FR.437
+./keyboard/FR.850
+./keyboard/GB
+./keyboard/GB.437
+./keyboard/GB.850
+./keyboard/IS
+./keyboard/IS.850
+./keyboard/IT
+./keyboard/IT.437
+./keyboard/IT.850
+./keyboard/IT2
+./keyboard/IT2.437
+./keyboard/IT2.850
+./keyboard/NL
+./keyboard/NL.437
+./keyboard/NL.850
+./keyboard/NO
+./keyboard/NO.850
+./keyboard/NO.865
+./keyboard/PT
+./keyboard/PT.850
+./keyboard/PT.860
+./keyboard/SE
+./keyboard/SE.437
+./keyboard/SE.850
+./keyboard/de_CH
+./keyboard/de_CH.437
+./keyboard/de_CH.850
+./keyboard/es
+./keyboard/es.437
+./keyboard/es.850
+./keyboard/fr_CA
+./keyboard/fr_CA.850
+./keyboard/fr_CA.863
+./keyboard/fr_CH
+./keyboard/fr_CH.437
+./keyboard/fr_CH.850
+./mapchan/437.dk
+./mapchan/646DE
+./mapchan/646DK
+./mapchan/646ES
+./mapchan/646FR
+./mapchan/646IT
+./mapchan/646NO
+./mapchan/646PT
+./mapchan/646SE
+./mapchan/850.dk
+./mapchan/860.dk
+./mapchan/863.dk
+./mapchan/865.dk
+./mapchan/88591.dk"
+
+for i in $FLIST
+do
+	chmod a+x $i
+done
+
+echo Complete
+echo ""

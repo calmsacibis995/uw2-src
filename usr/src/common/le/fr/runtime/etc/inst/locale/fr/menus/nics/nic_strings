@@ -1,0 +1,352 @@
+#
+NIC_SELECTION_TITLE="Ecran de sélection de la carte d'interface réseau"
+#
+NO_NICS_MSG="
+ Attention : Aucune carte d'interface réseau n'a été sélectionnée.
+
+ Vous pouvez retourner à l'écran de sélection, quitter le coffret
+ d'installation du support NIC, ou seulement installer les modules de
+ support ODI (pour une utilisation avec d'autres pilotes de réseau ODI).
+"
+#
+MUST_SHUTDOWN="
+ ERREUR : En raison d'une affectation mémoire insuffisante, le pilote
+ choisi pour la carte d'interface réseau ne peut pas être chargé
+ maintenant. Redémarrez la machine pour achever l'installation du
+ pilote.
+"
+#
+TOO_MANY_BOARDS_INSTALLED="
+ ERREUR : Il y a trop de cartes installées dans votre machine
+ (les types sont listés ci-après).
+ Seulement UNE carte peut être installée afin que le pilote de réseau
+ fonctionne normalement. Vous devez éteindre la machine et
+ retirer toutes les cartes en trop sauf une, avant de la configurer.
+
+    IBM_AutoLANStreamer_MC_32  Olivetti_NCU_9180
+    IBM_EtherStreamer_MC_32    Olivetti_NCU_9181/S
+    IBM_LANStreamer_MC_16      Olivetti_NCU_9195
+    IBM_LANStreamer_MC_32      IBM_Token_Ring_16/4_Adapter_II
+
+"
+#
+TOO_MANY_IDTUNE_NICS_MSG="
+ ERREUR : Vous avez sélectionné trop de cartes (les types sont listés
+          ci-après). Le système permet la configuration d'une seule
+          carte de type suivant :
+
+    IBM_AutoLANStreamer_MC_32  Olivetti_NCU_9180
+    IBM_EtherStreamer_MC_32    Olivetti_NCU_9181/S
+    IBM_LANStreamer_MC_16      Olivetti_NCU_9195
+    IBM_LANStreamer_MC_32      IBM_Token_Ring_16/4_Adapter_II
+
+        Appuyez sur ENTREE pour retourner à l'écran de Selection.
+"
+#
+TOO_MANY_NICS_MSG="
+ ERREUR : Vous avez choisi trop de cartes d'interface réseau.
+        Ce système gère seulement jusqu'à 8 cartes.
+
+        Appuyez sur ENTREE pour retourner à l'écran de sélection.
+"
+#
+NIC_SELECTION_FOOTER="Entrez le nombre de cartes,  TAB pour de déplacer,
+F1=aide,  F6=liste étendue,  F10=appliquer"
+#
+RETURN="Retour à l'écran de sélection"
+CANCEL_NIC="Annuler l'installation du coffret NICS"
+CORE_STACK="Installer les modules de support ODI"
+SHUTDOWN="Eteindre l'ordinateur"
+#
+CHOOSE_FOOTER="Utiliser les touches flèche haut/bas pour sélectionner, et appuyez sur ENTREE."
+NO_NICS_TITLE="Aucune carte de réseau configurée"
+TOO_MANY_IDTUNE_NICS_TITLE="Trop de cartes de réseau spécialisé configurées"
+#
+TOO_MANY_NICS_TITLE="Trop de cartes de réseau configurées"
+#
+CHOOSE_INT_TITLE="Choisir la valeur de requête d'interruption"
+#
+CHOOSE_PORT_TITLE="Choisir l'adresse d'E/S"
+#
+CHOOSE_MEM_TITLE="Choisir l'adresse mémoire"
+#
+CHOOSE_CAB_TITLE="Sélectionner le type de câble"
+#
+CHOOSE_DMA_TITLE="Choisir le canal DMA"
+#
+CHOOSE_SLOT_TITLE="Choisir le numéro de connecteur"
+#
+# CFG_HRDWR_MSG="Press F10 to apply changes and continue."
+CFG_HRDWR_MSG=
+CFG_HRDWR_FOOTER="TAB pour se déplacer, F1=aide, F2=choix, F8=annuler, F10=appliquer et quitter"
+#
+CONFIG_TITLE="Ecran de configuration de la carte d'interface réseau"
+#
+CONFIG_PROMPT="Configuration de la carte réseau numéro %d :"
+#
+CFG_SUCCESS_MSG="
+ Le système a correctement configuré la(les) carte(s) réseau.
+ Ceci termine l'installation du support de carte d'interface réseau
+ (NICS).
+
+                Appuyez sur ENTREE pour continuer.
+"
+
+#
+PRESS_ANY_KEY_FOOTER="Appuyez sur ENTREE pour continuer"
+#
+PRESS_ANY_KEY_TO_EXIT_FOOTER="Appuyez sur ENTREE pour quitter l'installation du NICS"
+#
+PRESS_KEY_TO_RUN_DCU_FOOTER="Appuyez sur ENTREE pour lancer le DCU"
+#
+PRESS_KEY_TO_SHUTDOWN_FOOTER="Appuyez sur ENTREE pour arrêter le système."
+#
+PRESS_KEY_TO_REBOOT_FOOTER="Appuyez sur ENTREE pour redémarrer le système."
+#
+IDBUILD_FAILURE_TITLE="Options en cas d'incidents Idbuild"
+#
+IDBUILD_FAILURE_MSG="
+ Le module chargeable %s n'a pas pu être constitué.
+ Ce coffret n'est pas en mesure de définir le problème exact
+ mais il s'agit probablement d'un conflit de configuration
+ dans votre système.
+
+ Vous pouvez retourner à l'écran de sélection de la carte réseau,
+ ignorer la défaillance et continuer l'installation, ou bien
+ éteindre votre ordinateur et vérifier votre matériel réseau.
+"
+#
+MODADMIN_FAILURE_TITLE="Options en cas d'incident Modadmin"
+#
+MODADMIN_FAILURE_MSG="
+ Le module chargeable %s n'a pas pu être chargé.
+ Ce coffret n'est pas en mesure de définir le
+ problème exact mais il s'agit probablement d'un
+ conflit de configuration dans votre système.
+
+ Vous pouvez retourner à l'écran de sélection de la carte réseau,
+ ignorer la défaillance et continuer l'installation, ou bien
+ éteindre votre ordinateur et vérifier votre matériel réseau.
+"
+#
+CFG_SILENT_FAILURE_MSG="
+ Le système n'a pas pu configurer la carte de réseau
+ installée dans cette machine. Une description de l'erreur
+ se trouve dans le fichier /var/spool/nics.err. Lorsque vous pourrez
+ ouvrir une session, consultez ce fichier pour identifier le problème.
+
+ Appuyez sur ENTREE pour continuer.
+"
+#
+CFG_FAILURE_MSG="
+ Le système n'a pas pu détecter la(les) carte(s) réseau
+ spécifiée(s). La carte n'est pas installée correctement dans votre
+ ordinateur ou bien l'information entrée
+ ne correspond pas aux paramètres de la carte.
+
+ Vous pouvez retourner à l'écran de sélection de la carte réseau,
+ annuler l'installation du coffret NICS,
+ ou éteindre l'ordinateur et vérifier votre
+ matériel réseau.
+"
+#
+CFG_CONT="Continuer la configuration"
+#
+CFG_FAILURE_TITLE="Options en cas d'incidents de configuration"
+#
+CFG_EXIT_MSG="
+ Vous pouvez retourner à l'écran de sélection de la carte d'interface
+ réseau, annuler l'installation, ou si vous avez appuyé sur F8 par
+ erreur, retourner à l'écran de configuration.
+"
+#
+CFG_EXIT_TITLE="Choix de sortie de la configuration"
+#
+PROCESS_MESSAGE="
+ Configuration de la carte d'interface réseau en cours
+"
+#
+INSTALLING_DRIVER_MSG="
+ Installation des pilotes de(s) carte(s) réseau
+ sélectionnée(s).  Ceci va prendre quelques minutes.
+"
+#
+INSTALLING_CORE_STACK_MSG="
+ Installation des pilotes pour les modules de support
+ ODI.  Ceci va prendre quelques minutes"
+#
+REMOVING_DRIVER_MSG="
+ Retrait des pilotes de carte(s) réseau
+ précédemment configurée(s).  Un instant svp.
+"
+#
+CLEANUP_MSG="
+ Veuillez patienter pendant que l'installation du
+ coffret de support de la carte d'interface réseau s'achève.
+"
+#
+PLEASE_WAIT="Veuillez patienter"
+IRQ_VALUE="Valeur de requête d'interruption"
+IO_ADDR="Adresse d'E/S"
+MEM_ADDR="Adresse mémoire"
+CAB_TYPE="Type de câble"
+DMA_CHAN="Canal DMA"
+SLOT_NUM="Numéro de l'emplacement"
+ZERO_WAIT_STATE="Sans Etat d'Attente"
+INVALID_CHOICE_MSG="CHOIX INCORRECT - Appuyez sur F2 pour une liste de choix valides"
+FILL_ALL_FIELDS_MSG="Vous devez compléter tous les champs avant de quitter cet écran"
+#
+STARTUP_DISPLAY="
+ Mise en place du coffret de support de la carte d'interface de réseau.
+ Veuillez patienter jusqu'à la fin du processus d'initialisation.
+"
+#
+TERM_NOT_SET="La variable TERM DOIT être définie pour l'installation du coffret NICS."
+#
+NI_IRQ_CONFLICT_DISPLAY="
+ Attention : Le vecteur d'interruption utilisé pour votre carte
+ d'interface réseau pendant l'installation du réseau est maintenant
+ utilisé par un autre périphérique du système, et ne peut donc plus
+ être utilisé par la carte de réseau. Vous devrez choisir un autre
+ vecteur d'interruption lors de la configuration du pilote pour la carte
+ réseau et vous devrez ensuite reconfigurer votre carte réseau, en accord
+ avec les instructions du fabricant, afin d'utiliser cette nouvelle
+ valeur. Veillez à prendre note de la nouvelle valeur choisie afin d'en
+ disposer lors de la reconfiguration de votre carte réseau.
+
+ Le réseau ne sera pas opérationnel avant que la carte réseau ne soit
+ reconfigurée en utilisant la nouvelle valeur.
+"
+#
+NI_IO_CONFLICT_DISPLAY="
+ Attention : L'adresse d'E/S utilisée pour votre carte d'interface
+ réseau pendant l'installation du réseau est maintenant utilisée par
+ un autre périphérique du système, et ne peut donc plus être utilisée par
+ la carte réseau. Vous devrez choisir une autre adresse d'E/S lors de
+ la configuration du pilote pour la carte réseau et vous devrez ensuite
+ reconfigurer votre carte réseau, en accord avec les instructions du
+ fabricant, afin d'utiliser cette nouvelle valeur. Veillez à prendre
+ note de la nouvelle valeur choisie afin d'en disposer lors de la
+ reconfiguration de votre carte réseau.
+
+ Le réseau ne sera pas opérationnel avant que la carte de
+ réseau ne soit reconfigurée en utilisant la nouvelle valeur.
+"
+#
+NI_RAM_CONFLICT_DISPLAY="
+ Attention : L'adresse mémoire utilisée pour votre carte d'interface
+ réseau pendant l'installation du réseau est maintenant utilisée par
+ un autre périphérique du système, et ne peut donc plus être utilisée
+ par la carte réseau. Vous devrez choisir une autre adresse mémoire lors
+ de la configuration du pilote pour la carte réseau et vous devrez ensu
+ te reconfigurer votre carte réseau, en accord avec les instructions du
+ fabricant, afin d'utiliser cette nouvelle valeur. Veillez à prendre note
+ de la nouvelle valeur choisie afin d'en disposer lors de la
+ reconfiguration de votre carte réseau.
+
+ Le réseau ne sera pas opérationnel avant que la carte réseau
+ ne soit reconfigurée en utilisant la nouvelle valeur.
+"
+#
+NI_DMA_CONFLICT_DISPLAY="
+ Attention : Le canal DMA utilisé pour votre carte d'interface
+ réseau pendant l'installation du réseau est maintenant utilisé par un
+ autre périphérique du système, et ne peut donc plus être utilisé par
+ la carte réseau. Vous devrez choisir un autre canal DMA lors de la
+ configuration du pilote pour la carte réseau et vous devrez ensuite
+ reconfigurer votre carte réseau, en accord avec les instructions du
+ fabricant, afin d'utiliser cette nouvelle valeur. Veillez à prendre note
+ de la nouvelle valeur choisie afin d'en disposer lors de la
+ reconfiguration de votre carte réseau.
+
+ Le réseau ne sera pas opérationnel avant que la carte réseau ne soit
+ reconfigurée en utilisant la nouvelle valeur.
+"
+HELP_PAGE_FOOTER="Echap pour sortir de l'aide"
+EXT_LIST_PAGE_FOOTER="Echap pour sortir de la liste étendue"
+#
+UP_IRQ_CONFLICT_DISPLAY="
+ Attention : Le vecteur d'interruption utilisé pour votre carte réseau
+ pour UnixWare 1.1 est maintenant utilisé par un autre périphérique
+ du système, et ne peut donc plus être utilisé par la carte réseau. Vous
+ devrez choisir un autre vecteur d'interruption lors de la
+ configuration du pilote pour la carte réseau et vous devrez
+ ensuite reconfigurer votre carte réseau, en accord avec les instructions
+ du fabricant, afin d'utiliser cette nouvelle valeur. Veillez
+ à prendre note de la nouvelle valeur choisie afin d'en disposer lors de
+ la reconfiguration de votre carte réseau.
+
+ Le réseau ne sera pas opérationnel avant que la carte réseau
+ ne soit reconfigurée en utilisant la nouvelle valeur.
+"
+#
+UP_IO_CONFLICT_DISPLAY="
+ Attention : L'adresse d'E/S utilisée pour votre carte réseau
+ pour UnixWare 1.1 est maintenant utilisée par un autre périphérique
+ du système, et ne peut donc plus être utilisée par la carte réseau. Vous
+ devrez choisir une autre adresse d'E/S lors de la configuration du
+ pilote pour la carte réseau et vous devrez ensuite reconfigurer votre
+ carte réseau, en accord avec les instructions du fabricant, afin
+ d'utiliser cette nouvelle valeur. Veillez à prendre note de la nouvelle
+ valeur choisie afin d'en disposer lors de la reconfiguration de votre
+ carte réseau.
+
+ Le réseau ne sera pas opérationnel avant que la carte réseau ne soit
+ reconfigurée en utilisant la nouvelle valeur.
+"
+#
+UP_RAM_CONFLICT_DISPLAY="
+ Attention : L'adresse mémoire utilisée pour votre carte réseau
+ pour UnixWare 1.1 est maintenant utilisée par un autre périphérique
+ du système, et ne peut donc plus être utilisée par la carte réseau.
+ Vous devrez choisir une autre adresse mémoire lors de la configuration
+ du pilote pour la carte réseau et vous devrez ensuite reconfigurer
+ votre carte réseau, en accord avec les instructions du fabricant, afin
+ d'utiliser cette nouvelle valeur. Veillez à prendre note de la
+ nouvelle valeur choisie afin d'en disposer lors de la reconfiguration de
+ votre carte réseau.
+
+ Le réseau ne sera pas opérationnel avant que la carte réseau ne soit
+ reconfigurée en utilisant la nouvelle valeur.
+"
+#
+UP_DMA_CONFLICT_DISPLAY="
+ Attention : Le canal DMA utilisé pour votre carte réseau
+ pour UnixWare 1.1 est maintenant utilisé par un autre périphérique
+ du système, et ne peut donc plus être utilisé par la carte réseau.
+ Vous devrez choisir un autre canal DMA lors de la configuration du pilote
+ pour la carte réseau et vous devrez ensuite reconfigurer votre carte
+ réseau, en accord avec les instructions du fabricant, afin d'utiliser
+ cette nouvelle valeur. Veillez à prendre note de la nouvelle valeur
+ choisie afin d'en disposer lors de la reconfiguration de votre carte
+ réseau.
+
+ Le réseau ne sera pas opérationnel avant que la carte réseau ne soit
+ reconfigurée en utilisant la nouvelle valeur.
+"
+#
+RUN_DCU_DISPLAY="
+ Votre carte réseau a été correctement configurée mais il peut
+ toujours exister un conflit avec d'autres périphériques matériel.
+ L'utilitaire de configuration de périphérique (DCU) va être lancé
+ automatiquement pour vous aider à détecter tout conflit existant.
+
+ Appuyez sur ENTREE pour lancer le DCU.
+"
+#
+RUN_DCU_DISPLAY2="
+ Votre carte réseau a été correctement configurée mais il peut
+ toujours exister un conflit avec d'autres périphériques matériel.
+ L'utilitaire de configuration de périphérique (DCU) va être lancé
+ automatiquement pour détecter tout conflit existant.
+
+ Un instant svp.
+"
+#
+DCU_CONFLICT_DISPLAY_2="
+ Le système a détecté un conflit entre votre carte réseau
+ et un autre pilote installé dans le système.  A présent, vous devez
+ arrêter le système et reconfigurer votre matériel.
+
+ Appuyez sur ENTREE pour arrêter le système.
+"

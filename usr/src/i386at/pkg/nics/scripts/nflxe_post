@@ -1,0 +1,43 @@
+#ident	"@(#)pkg.nics:scripts/nflxe_post	1.8"
+
+DRV=nflxe
+
+cd /tmp/nics/nflxe
+
+# Since this script may possibly be invoked more than one time (since more
+# than one netflex board config file has this postinstall script listed as its
+# POST_SCRIPT ... a "flag" is used to indicate to subsequent invocations
+# that this script does not net need to be run again.
+if [[ ! -a S02$DRV ]]
+then
+	exit 0
+fi
+
+# These may have been moved by nflxt_post since nflxe and nflxt use the
+# same cet_start and cet_stop files
+
+if [[ -a /tmp/nics/nflx/cet_start ]]
+then
+	mv /tmp/nics/nflx/cet_start /etc/netflex/cet_start
+	mv /tmp/nics/nflx/cet_stop /etc/netflex/cet_stop
+	installf ${PKGINST} /etc/netflex/cet_start f 0555 root sys 2 NULL NULL
+	installf ${PKGINST} /etc/netflex/cet_stop f 0555 root sys 2 NULL NULL
+fi
+mv unieth.bin /etc/netflex/unieth.bin
+mv uniethf.bin /etc/netflex/uniethf.bin
+installf ${PKGINST} /etc/netflex/unieth.bin f 0555 root sys 2 NULL NULL
+installf ${PKGINST} /etc/netflex/uniethf.bin f 0555 root sys 2 NULL NULL
+mv S02$DRV /etc/rc2.d/S02$DRV
+installf ${PKGINST} /etc/rc2.d/S02$DRV f 0444 root sys 2 NULL NULL
+installf ${PKGINST} /etc/rc0.d/K85$DRV=/etc/rc2.d/S02$DRV l
+installf ${PKGINST} /etc/init.d/$DRV=/etc/rc2.d/S02$DRV l
+
+# Need to run start rc2.d script explicity from here because the rc2.d script
+# is not added to /etc/rc2.d until after we have rebooted and are executing
+# this script to install the rc2.d script.  If we do not run the rc2.d script
+# here the netflex NIC will not be initialized and therefore not usable.
+# (If we did not run the rc2.d script here we would have to reboot.  At the
+# subsequent reboot the netflex NIC would be initialized since the rc2.d script
+# had been installed during the previous boot). 
+sh /etc/rc2.d/S02$DRV start > /dev/null 2>&1 
+exit 0

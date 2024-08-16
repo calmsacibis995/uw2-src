@@ -1,0 +1,47 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r5xlock:Imakefile	1.6"
+
+/**/# Imakefile 22.2 89/09/20
+/**/# Imakefile - xlock
+/**/#
+/**/# Copyright (c) 1989 by Sun Microsystems, Inc.
+/**/#
+/**/#
+/**/# This file is provided AS IS with no warranties of any kind.  The author
+/**/# shall have no liability with respect to the infringement of copyrights,
+/**/# trade secrets or any patents by this file or any part thereof.  In no
+/**/# event will the author be liable for any lost revenue or profits or
+/**/# other special, indirect and consequential damages.
+/**/#
+/**/#
+/**/#
+       INCLUDES = -I$(TOP) -I$(TOP)/X11
+LOCAL_LIBRARIES = $(XLIB) $(XMULIB) $(XTOOLLIB)
+  SYS_LIBRARIES = -lm -lsocket -lgen
+        DEFINES = -DSYSV $(USL_DEFINES) -DDEF_FILESEARCHPATH=\"/usr/X/lib/%T/%N%S\" -DSTARSIZE=2
+
+           SRCS = xlock.c hsbramp.c usleep.c resource.c \
+        hopalong.c qix.c life.c image.c blank.c \
+        swarm.c rotor.c pyro.c flame.c worm.c
+           OBJS = xlock.o hsbramp.o usleep.o resource.o \
+        hopalong.o qix.o life.o image.o blank.o \
+        swarm.o rotor.o pyro.o flame.o worm.o
+
+ComplexProgramTarget(xlock)
+
+all:: xlock
+
+InstallProgramWithFlags(xlock,$(BINDIR), -m 04555 -o root)
+InstallManPage(xlock,$(MANDIR))
+InstallAppDefaults(XLock)
+InstallMsgCatalog(xlock)
+
+DependTarget()
+

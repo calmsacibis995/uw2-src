@@ -1,0 +1,26 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)vga256:vga256/devices/Imakefile	1.14"
+
+#include <Server.tmpl>
+#include <sv4Lib.rules>
+
+#define IHaveSubdirs
+
+DUMB_SVGA = et4k boca sigma ncr22e wdc1x t89 ati
+   GROUP1 = gd54xx wdc3x etw32 etw32p
+
+SUBDIRS = $(GROUP1) $(DUMB_SVGA)
+
+VGA256_VINFOFILE = vga256.vinfo
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+
+InstallMultiple($(VGA256_VINFOFILE),$(DISPLIBDIR))

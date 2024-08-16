@@ -1,0 +1,234 @@
+FOOTER_HEIGHT=2
+Yes=sì
+No=no
+MiniWelcome="
+Benvenuti nel modo di recupero d'emergenza.
+
+Ecco alcune utility disponibili in questo modo.
+Le utility disponibili sono vi, fsck, cpio, dd, gre, Is ecc.
+Se il disco rigido e integro e possibile installare i
+file system sotto /mnt usando il comando mountall. Per
+smontarli si utilizza il comando umountall.
+
+Per uscire da questa shell di recupero d'emergenza, digitare 'exit'.
+"
+DRF_NEXT_FLP="
+
+        Inserire il secondo dischetto di recupero
+
+            d'emergenza e premere <INVIO>.
+
+"
+DRF_HARD_MODS_WAIT="
+
+        Attendere. È in corso il
+
+ caricamento dei driver hardware del sistema.
+
+"
+DRF_SOFT_MODS_WAIT="
+
+        Attendere. È in corso il
+
+ caricamento dei driver software del sistema.
+
+"
+DRF_UNMNT_MSG="
+
+        Smontaggio di tutti i file system da /mnt.
+
+                    Attendere.
+"
+DRF_MNT_MSG="
+
+        Montaggio dei file system sul disco
+
+          rigido sotto /mnt. Attendere.
+"
+DRF_DSK_GOOD="
+        Il disco rigido è integro.
+
+      Premere <INVIO> per continuare.
+"
+DRF_DSK_BAD="
+        Il disco rigido NON è integro.
+
+        Premere <INVIO> per continuare.
+"
+DSK_SETUP="
+
+        Configurazione del disco rigido conforme 
+
+            alla configurazione originale.
+
+"
+DSK_SETUP_ERR="
+
+          Trovato un errore configurando il
+
+                       disco.
+
+              Premere <INVIO> per continuare.
+"
+DSK_RST_ERR="
+
+          Trovato un errore ripristinando il
+
+                      disco.
+
+            Premere INVIO per continuare.
+"
+DSK_RST_MSG="
+
+         Recupero dei dischi. 
+
+      (Impieghera parecchi minuti.)
+
+"
+RESTORE_SUCCESS="
+
+         Recupero dei dischi riuscito.
+
+         Premere <INVIO> per continuare
+
+"
+MAIN_TITLE="Menu recupero d'emergenza"
+SH_PROMPT="Accesso alla shell di UnixWare"
+MNT_PROMPT="Monta i file system del disco rigido sotto /mnt"
+UNMNT_PROMPT="Smonta i file system montati sotto /mnt"
+RESTORE_PROMPT="Ripristina da un nastro di recupero d'emergenza"
+REBOOT_PROMPT="Riavvia il sistema"
+DRF_SHELL="Accesso alla shell di UnixWare"
+DRF_MOUNT="Montaggio dei file system"
+DRF_UNMOUNT="Smonta i file system"
+DRF_RESTORE="Ripristina i dischi"
+DRF_REBOOT="Riavvia"
+GENERIC_FORM_FOOTER="Premere F1 per la guida"
+GENERIC_MENU_FOOTER="Usare i tasti freccia su/giù e <INVIO> per selezionare; F1 per la guida"
+GENERIC_WAIT_FOOTER="Attendere."
+GENERIC_HEADER="UnixWare 2 - Recupero d'emergenza"
+
+# For use in 'helpwin' script
+FIRST_PAGE_FOOTER="F1=Segue guida, Pag Giù, ESC per uscire dalla guida"
+MIDDLE_PAGE_FOOTER="F1=Segue guida, Pag Giù, Pag Su, ESC per uscire dalla guida"
+LAST_PAGE_FOOTER="F1=Segue guida, Pag Su, ESC per uscire dalla guida"
+ONLY_PAGE_FOOTER="F1=Segue guida, ESC per uscire dalla guida"
+MOREHELP_FOOTER="Usare i tasti freccia su/giù per selezionare o ESC per uscire dalla guida."
+MOREHELP_TITLE="Argomenti di guida correlati"
+
+TAPE_PROMPT="
+ Inserire il nastro nell'unità a nastro e premere
+<INVIO> quando si è pronti. Se è presente più di
+un'unità a nastro, accertarsi che siano tutte vuote
+meno quella che contiene il nastro di recupero
+d'emergenza. 
+
+Se il nastro è già nell'unità, premere <INVIO>.
+"
+TAPE_OPEN_ERROR="
+  Non è stata rilevata la presenza del nastro
+nell'unità. Accertarsi che il nastro sia ben inserito
+nell'unità, che l'eventuale fermo sia agganciato e
+che l'unità a nastro sia alimentata.
+
+             Premere <INVIO> per continuare."
+TAPE_READ_ERROR="
+   Il nastro nell'unita e illeggibile.
+Accertarsi che il nastro sia ben inserito
+nell'unita, che l'eventuale fermo sia agganciato e
+che l'unita a nastro sia alimentata.
+
+             Premere INVIO per continuare."
+NEXT_TAPE_PROMPT="
+   Togliere l'attuale nastro dall'unità e inserire
+
+              il nastro successivo.
+
+         Premere <INVIO> per continuare."
+#for use in Color_Console
+MONITOR_TYPE="
+Su un monitor a colori questo schermo appare in bianco su sfondo
+blu. Altrimenti questo monitor va considerato 'non a colori'.
+Di che tipo è il monitor collegato al computer?
+
+"
+MONITOR_FOOTER="Usare i tasti freccia per selezionare un tipo di monitor, poi premere <INVIO>."
+MONITOR_ENTRY="Selezionare il tipo di monitor"
+
+REBOOT_MSG="
+
+ *ACCERTARSI CHE L'UNITÀ DI AVVIAMENTO (DISCHETTO O CD-ROM) SIA VUOTA*
+
+  Quando si preme 'INVIO' il sistema viene spento e
+  riavviato.
+"
+SERIAL_FIELD="Numero di serie : "
+SERIAL_PROMPT="Immettere il numero di serie della copia di UnixWare e premere F10"
+SERIAL_TITLE="Modulo del numero di serie"
+INCORRECT_SNUM="Il numero di serie immesso non è corretto. Reimmetterlo e premere F10"
+SNUM_FATAL="
+
+        È stato immesso un numero di serie sbagliato per il
+        numero massimo di tentativi ammesso. La macchina verra
+        riavviata dopo aver premuto 'INVIO'.
+
+"
+COLOR_PROMPT="
+
+                Selezione tipo di monitor
+
+  UnixWare non è riuscito a determinare se il computer è
+  dotato di monitor a colori o monocromatico.
+
+  Per essere certi di leggere tutti gli schermi durante il ripristino, UnixWare
+  deve sapere di quale monitor si dispone.
+
+  Su un monitor a colori lo schermo presenta il testo bianco su sfondo blu
+  Altrimenti si tratta di un monitor monocromatico. Che tipo di
+  monitor è collegato al computer?
+
+  Le scelte sono:
+
+  1. Monitor a colori.
+  2. Monitor monocromatico.
+
+  Digitare '1' o '2' seguiti da 'INVIO': "
+
+RETENSION_WAIT="
+
+        Ritensione del nastro.
+
+   Impieghera circa tre minuti.
+
+"
+FLPY2_READ_ERROR_1="
+   Si è verificato un errore in lettura del secondo
+dischetto di emergenza. Verificare di avere il
+dischetto giusto e rilanciare la procedura di boot
+dall'inizio. Senza il secondo dischetto si può proseguire ma con
+capacità limitate.
+
+             Premere INVIO per continuare."
+FLPY2_READ_ERROR_2="
+   Si è verificato un errore in lettura del secondo
+dischetto di emergenza. Verificare di avere il
+dischetto giusto e rilanciare la procedura di boot
+dall'inizio. Senza il secondo dischetto si può proseguire ma con
+capacità limitate.
+
+             Premere INVIO per continuare."
+FS_MOD_LOAD_ERROR="
+   Si è verificato un errore nel caricare i moduli
+del file system. Verificare di avere il dischetto giusto e 
+rilanciare la procedura di boot
+dall'inizio. Senza il secondo dischetto si può proseguire ma con
+capacità limitate.
+
+             Premere INVIO per continuare."
+DISK_INFO_READ_MSG="
+
+        Lettura delle informazioni di configurazione
+
+                  del dischetto originale.
+
+"

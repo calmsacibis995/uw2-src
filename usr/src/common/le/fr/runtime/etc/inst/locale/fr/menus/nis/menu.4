@@ -1,0 +1,47 @@
+.ul
+Installation et configuration de NIS (Network Information Service)
+.lr
+F1=Aide
+.top
+`[ "$TYPE" != "1" ] && echo "  \n \n  Pour que NIS fonctionne correctement, nous devons définir un\n  ou plusieurs serveurs NIS :\n \n \n"`
+`[ "$first_loop" = "yes" ] && [ "$TYPE" = "1" ] && echo "  \n \n  Le serveur maître NIS est : $SERVER1\n \n \n"`
+`[ "$first_loop" = "yes" ] && [ "$TYPE" = "1" ] && echo "   Vous pouvez maintenant ne définir aucun serveur esclave NIS ou en\ndéfinir un ou plusieurs.\n \n"`
+.button
+Appliquer
+Réinitialiser
+.bottom
+Appuyez sur "TAB" pour faire passer le curseur d'un champ à un autre.
+Ensuite, placez le curseur sur "Appliquer" et appuyez sur "ENTREE" pour
+continuer.
+.form
+`[ "$first_loop" = "yes"  ] && [ "$TYPE" = "1" ] && echo "5 0 36//[A-z0-9 ]*//Nom de serveur ://SERVER2//"`
+#`[ "$first_loop" = "yes"  ] && [ "$TYPE" != "1" ] && echo "5 1 36//[A-z0-9 ]*//Server name://SERVER1//"`
+`[ "$first_loop" = "yes"  ] && echo "5 1 36//[A-z0-9 ]*//Nom de serveur ://SERVER1//"`
+`[ "$first_loop" = "yes" ] && echo "//Entrez le nom d'hôte d'un serveur NIS//"`
+`[ "$first_loop" = "no" ] && echo "5 0 36//[A-z0-9 ]*//Nom de serveur ://SERVER1//"`
+`[ "$first_loop" = "no" ] && echo "//Entrez le nom d'hôte d'un serveur NIS//"`
+5 0 36//[A-z0-9 ]*//Nom de serveur ://SERVER2//
+//Entrez le nom d'hôte d'un serveur NIS//
+5 0 36//[A-z0-9 ]*//Nom de serveur ://SERVER3//
+//Entrez le nom d'hôte d'un serveur NIS//
+`[ "$first_loop" = "no" ] && echo "5 0 36//[A-z0-9 ]*//Nom de serveur ://SERVER4//"`
+`[ "$first_loop" = "no" ] && echo "//Entrez le nom d'hôte d'un serveur NIS//"`
+#5 0 36//[A-z0-9 ]*//Server name://SERVER5//
+#//Enter host name of an NIS server//
+2 2//No::Non//Yes::Oui//Ajouter des serveurs NIS suppl.?://more_servers//
+//Les flèches gauche/droite pour choix suivant (2 options) //
+.help
+Si cette machine est un serveur maître NIS, entrez le nom de plusieurs
+machines définies comme serveurs NIS pour ce domaine ou n'entrez aucun
+nom. 
+
+Si cette machine est un serveur esclave NIS, entrez le nom de plusieurs
+machines définies comme serveurs NIS pour ce domaine ou n'entrez aucun
+nom. 
+
+Vérifiez que le fichier /etc/inet/hosts contient des entrées
+correspondant aux machines que vous avez indiquées. 
+
+Pour de plus amples informations, voir le Guide de l'administrateur NIS.
+.helpinst
+Suppr=Annuler F1=Aide ECHAP=Quitter l'aide 1=Page suiv. 2=Page préc.

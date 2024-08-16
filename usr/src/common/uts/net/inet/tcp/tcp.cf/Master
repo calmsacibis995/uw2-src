@@ -1,0 +1,11 @@
+#ident	"@(#)kern:net/inet/tcp/tcp.cf/Master	1.9"
+#ident	"$Header: $"
+$version 2
+$depend route inet ip net
+$interface ddi 6mp
+$interface base
+# non-conforming symbols:
+#   pm_denied BITMASKN_FFCSET
+# non-conforming due to inline expansion
+$entry start
+tcp	tcp	LSock	0	0	37

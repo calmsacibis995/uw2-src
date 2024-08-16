@@ -1,0 +1,70 @@
+-------------------- ~ ESCAPES ----------------------------
+~~              Indica una sola tilde
+~a,~A           Autógrafo (inserta 'sign','Sign' variable)
+~b usuarios     Añade usuarios a la lista Bcc
+~c usuarios     Añade usuarios a la lista Cc
+~d              Lee en el archivo dead.letter
+~e              Edita el buffer de mensaje
+~f mensajes     Lee en los mensajes, sin desplazamiento a la derecha
+~h              Pide Tema y las listas To, Cc y Bcc
+~i variable     Inserta una variable en un mensaje (~a := ~i sign)
+~m mensajes     Lee en los mensajes, con desplazamiento a la derecha
+                con una tabulación
+~p              Imprime el buffer del mensaje
+~q,~Q           Abandona la aplicación y guarda la carta en
+                $HOME/dead.letter
+~r,~< archivo   Lee un archivo en el buffer de mensajes
+~r,~< !comando  Lee la salida del comando en el mensaje
+~R              Marca un mensaje para acusar recibo
+~s tema         Define tema
+~t usuarios     Añade usuarios a la lista To
+~Tb             Conmuta entre el modo de texto/enriquecido negrita
+~Tf             Conmuta entre modo de texto/enriquecido fijo
+~Ti             Conmuta entre modo de texto/enriquecido cursiva
+~Tj             Altera la justificación, en particular:
+~Tjl            Hace que el texto/texto enriquecido subsiguiente
+                se justifique por la izquierda
+~Tjc            Centra el texto/texto enriquecido subsiguiente
+~Tjr            Hace que el texto/texto enriquecido subsiguiente
+                se justifiquen por la derecha
+~Tn             Fuerza un salto de línea en el texto/texto
+                enriquecido (salto de línea forzado)
+~Tu             Conmuta entre modo de texto/texto enriquecido subrayado
+                (activa y desactiva el subrayado)
+~Tv             Conmuta entre el modo de texto/texto enriquecido
+                verbatim (activa y desactiva verbatim)
+~T>             Sangra el texto/texto enriquecido por el margen
+                izquierdo
+~T>R            Cancela el sangrado del texto/texto enriquecido por
+                el margen derecho
+~T>s            Fuente más pequeña del texto/texto enriquecido
+~T>l            Fuente más grande del texto/texto enriquecido
+~T<             Cancelar el sangrado del texto/texto enriquecido
+                por el margen izquierdo
+~T<R            Sangra el texto/texto enriquecido por el margen derecho
+~T>s            Deshacer cambio a fuente de texto/texto enriquecido
+                más pequeña
+~T>l            Deshacer cambio a fuente de texto/texto enriquecido
+                más grande
+~TQ             Conmuta entre modo de texto/texto enriquecido de citas
+                (extracto)
+~Tz             Añade ~/.signature como firma de texto/texto enriquecido
+                literal
+~v              Invoca el editor de pantalla del mensaje
+~w archivo      Escribe mensaje en el archivo (sin encabezado)
+~x              Abandona sin guardar la carta
+~**             Añade datos multiparte no de texto (imágenes,
+                sonidos, etc.)
+~*Z             Añade el contenido de ~/.SIGNATURE como firma
+                multiparte
+~*+             Entra en modo de 8 bits para los caracteres no ASCII
+~*-             Sale del modo de 8 bits (volver a ASCII)
+~*^             Conmuta al modo ``Al revés'' (de derecha a izquierda)
+~*S             Conmuta los modos derecha-izquierda Y ocho bits
+~!comando       Ejecuta un comando del shell
+~|,~^ comando   Conduce el mensaje a través de un comando
+~:,~_ comando   Ejecuta un comando regular de mailx
+~.              fin de la introducción de datos
+~?              imprime este mensaje de ayuda
+~?+             muestra la asignación en modo de 8 bits
+-----------------------------------------------------------

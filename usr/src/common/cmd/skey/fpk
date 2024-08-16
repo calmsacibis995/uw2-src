@@ -1,0 +1,290 @@
+#ident	"@(#)skey:fpk	1.8"
+#ident	"$Header: $"
+
+trap '' 1 2 3 24
+
+_choice()
+{
+	RETURN_VALUE=""
+
+	#
+	# Present user with a choice to continue activation or
+	# to shutdown system
+	# 
+	${MENU} -f ${CHOICE} -o ${OUTFILE} 2> /dev/null
+
+	. ${OUTFILE}
+
+	if  [ "${RETURN_VALUE}" = "2" ]
+	then
+		umountall 1> /dev/null 2>&1
+		uadmin 2 0
+	fi
+}
+
+isfile()
+{
+	if [ -f "$1" ]
+	then
+		echo true
+	else
+		echo false
+	fi
+}
+
+Validate()
+{
+	case "$1" in
+	ASE*)	[ ${ASE_EXISTS:=`isfile "/var/sadm/pkg/as/pkginfo"`} = false ] \
+			&& return 1 ;;
+	PED*)	[ ${PED_EXISTS:=`isfile "/var/sadm/pkg/pe/pkginfo"`} = false ] \
+			&& return 1 ;;
+	*)	return 1 ;;
+	esac
+	/sbin/validate "$1" "$2" 2>/dev/null
+	return $?
+}
+
+one()
+{
+	echo $1
+}
+
+#
+# main()
+#
+DEVNAME=a
+KEYSFILE="/etc/config/licensekeys"
+SNUMFILE="/etc/.snum"
+SPECIAL_NUM="###"
+SERIAL_ID=''
+PKGNAME="fpk"
+MYNAME="S03fpk"
+OUTFILE="/tmp/${MYNAME}_out"
+MENU="/usr/sbin/menu"
+
+exec < /dev/console > /dev/console
+
+InterActive()
+{
+	# check if terminal is an at386
+	/usr/sbin/isat386
+	if [ $? = 0 ]
+	then
+		TERM=AT386	# color at386
+	fi
+
+	if [ "$TERMCAP" = "" ]
+	then
+		TERMCAP=/etc/termcap
+	fi
+	export TERM TERMCAP
+
+	if [ -z "$LC_ALL" -a -z "$LC_MESSAGES" ]
+	then
+		if [ -z "$LANG" ]
+		then
+			LNG=`defadm locale LANG 2>/dev/null`
+			if [ "$?" != 0 ]
+			then
+				LANG=C
+			else
+				eval $LNG
+			fi
+		fi
+		export LANG
+	fi
+
+	LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+	#
+	# If ${LOCALE} is not C-locale, must reset the variable TERM
+	#
+	if [ "$LOCALE" = "ja" ]
+	then
+		TERM=${TERM}-mb
+
+	elif [ "$LOCALE" != "C" ]
+	then
+		TERM=${TERM}-ie
+	fi
+	export TERM
+
+	#
+	# This script will present the user 4 information screens to:
+	#   - ask user to insert the floppy on the drive if the licensekeys
+	#     file is corructed/invalid-keys/empty
+	#
+	#   - let user know about failures
+	#
+	#   - Present user with a choice to continue activation or to shutdown
+	#     system
+	#
+	#   - let user know of successful completion
+	#
+	# The files for the above information screens will be installed
+	# in the base package under the directory "DIR".
+	#
+	#
+	# Default to C-locale if the menus in ${LOCALE}'s dir does not exist
+	#
+	DIR=/etc/inst/locale/${LOCALE}/menus/${PKGNAME}
+
+	if [ -f ${DIR}/menu.instr  -a \
+	     -f ${DIR}/menu.errmsg -a \
+	     -f ${DIR}/menu.choice -a \
+	     -f ${DIR}/menu.final ]
+	then
+		DIR=/etc/inst/locale/${LOCALE}/menus/${PKGNAME}
+	else
+		DIR=/etc/inst/locale/C/menus/${PKGNAME}
+	fi
+
+	INSTR="${DIR}/menu.instr"
+	ERRMSG="${DIR}/menu.errmsg"
+	CHOICE="${DIR}/menu.choice"
+	FINAL="${DIR}/menu.final"
+
+	#
+	#  Set up to use menu_colors; default to C-locale if ${LOCALE}'s dir has
+	#  no menu_colors.sh
+	#
+	if [ -f /etc/inst/locale/${LOCALE}/menus/menu_colors.sh ]
+	then
+		. /etc/inst/locale/${LOCALE}/menus/menu_colors.sh
+	else
+		. /etc/inst/locale/C/menus/menu_colors.sh
+	fi
+}
+
+#
+# Validate the licensekeys file. That is, determine if the file exists 
+# and if contains a valid AS or PE key pair.
+#
+
+if [ -s ${KEYSFILE} ]
+then
+	# save initial value of file descriptor 0 by dup to file descriptor 3
+	exec 3<&0
+
+	# redefine file descriptor 0 to be the data file
+	exec 0<${KEYSFILE}
+
+	while
+		read KEY1 KEY2
+	do
+		if Validate $KEY1 $KEY2
+		then
+			SERIAL_ID=${KEY1}
+			break
+		fi
+	done
+
+	#restore initial value of file descriptor 0 from file descriptor 3
+	exec 0<&3
+fi
+
+#
+# If the licenkeys file is not valid (e.i., it is corrupted/invalid-keys/empty)
+#
+ptr=InterActive
+while [ -z "${SERIAL_ID}" ]
+do
+	$ptr	# initialize for interactive operations [ becomes a noop ]
+	ptr=:
+	#
+       	# Prompt the user to insert the boot floppy
+	#
+	${MENU} -r -f ${INSTR} -o ${OUTFILE} 2> /dev/null
+
+	# Use the stamper command to read the key pair stamped on floppy
+	KEYPAIR=`/sbin/sflop -r ${DEVNAME} 2>/dev/null`
+
+	RET_CODE=${?}
+
+	if [ ${RET_CODE} -eq 0 ]
+	then
+
+		SERIAL_ID=`one ${KEYPAIR}`
+
+		#
+		# If this is the special OEMs serial number, clear the screen
+		# and exit.
+		#
+		if [ ${SERIAL_ID} = "${SPECIAL_NUM}" ]
+		then
+			${MENU} -c 2> /dev/null
+			exit 0
+		fi
+	
+		#
+		# validate the key pair read from floppy. Determine if the key
+		# pair is a valid AS or PE key pair.
+		#
+		if Validate $KEYPAIR
+		then
+			#
+			# Key pair read from floppy was valid, enter it
+			# in the licensekeys file
+			#
+			echo ${KEYPAIR} | /sbin/keyadm -a 2>/dev/null
+
+			# Set system limits
+			/sbin/keyadm -s 2>/dev/null
+
+			#
+			# Inform the user of successful completion
+			#
+			${MENU} -f ${FINAL} -o ${OUTFILE} 2> /dev/null
+
+			break
+		fi
+	fi
+
+	SERIAL_ID=
+
+	# Inform the user of failures and their possible causes
+
+	menu_colors warn
+
+	${MENU} -f ${ERRMSG} -o ${OUTFILE} 2> /dev/null
+
+	menu_colors regular
+
+	#
+	# Present user with a choice to continue activation or
+	# to shutdown system
+	# 
+	_choice
+
+done
+
+
+#
+# Instead of validating the SNUMFILE, Just overwrite it with the correct
+# information. It is less costly that way!!!
+#
+#
+# NOTE:
+# -----
+# SERIAL_ID is made of 14 characters. The first 4 characters represent the
+# product id and the last 10 characters represent the serial number.
+#
+# The serial number is made of the last 10 characters of the string SERIAL_ID.
+# However, If the first leading character of the serial number is a "0",
+# then only the last 9 characters of the string SERIAL_ID should be written
+# out to the SNUMFILE.
+# This test is a MUST!
+#
+case "${SERIAL_ID}" in
+????0* )
+	nawk -v foo="${SERIAL_ID}" '
+		BEGIN{print substr(foo, 6, 9)}' < /dev/null > ${SNUMFILE}
+        ;;
+* )
+	nawk -v foo="${SERIAL_ID}" '
+		BEGIN{print substr(foo, 5, 10)}' < /dev/null > ${SNUMFILE}
+        ;;
+esac
+
+exit 0

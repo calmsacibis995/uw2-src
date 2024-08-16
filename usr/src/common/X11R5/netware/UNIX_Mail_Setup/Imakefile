@@ -1,0 +1,112 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)umailsetup:Imakefile	1.17"
+#ident "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/UNIX_Mail_Setup/Imakefile,v 1.20 1994/09/23 00:17:58 betty Exp $"
+
+/**/#	Copyright (c) 1994 Novell
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+/**/#	Novell.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#include    <Motif.tmpl>
+#include    <Motif.rules>
+#include    <C++.tmpl>
+#include    <C++.rules>
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+ XLIBDIR     =  $(ROOT)/$(MACH)/usr/X/lib
+SETUPDIR     =  $(ROOT)/$(MACH)/usr/lib/setup
+
+ LD_RUN_PATH =  /usr/X/lib
+   LDOPTIONS = $(CDEBUGFLAGS) $(CCOPTIONS) $(LOCAL_LDFLAGS) 
+
+       DEBUG = -O
+ CDEBUGFLAGS = -O
+
+
+SRCS =		cDebug.C		\
+		setup.C			\
+		setupWin.C		\
+		controlArea.C		\
+		controlAreaCBs.C	\
+		actionArea.C		\
+		actionAreaCBs.C		\
+		passwdDialog.C		\
+		passwdDialogCBs.C	\
+		errorDialog.C
+
+HDRS =		cDebug.h		\
+		setup_txt.h		\
+		setup.h			\
+		controlArea.h		\
+		actionArea.h		
+
+OBJS =		cDebug.o		\
+		setup.o			\
+		setupWin.o		\
+		controlArea.o		\
+		controlAreaCBs.o	\
+		actionArea.o		\
+		actionAreaCBs.o		\
+		passwdDialog.o		\
+		passwdDialogCBs.o	\
+		errorDialog.o
+
+          PROGS = SetupApp 
+
+
+       DTLIBSRC = $(LIBSRC)/Dt
+          DTLIB = $(DTLIBSRC)/libDt.so
+      MDTILIBSRC = $(USLCLIENTSRC)/libMDtI
+         MDTILIB = $(MDTILIBSRC)/libMDtI.so
+
+       INCLUDES = -I$(INC) -I../include -I$(LIBSRC) -I$(LIBSRC)/Dt -I$(TOP) -I$(INCLUDESRC)
+
+          XLIBS = XmClientLibs $(XMULIB) $(DTLIB) $(XLIB) $(MDTILIB)
+  SYS_LIBRARIES = ../libcomponents/libuwc.a -lgen -lm -lsetup -lsocket
+       C++FLAGS = $(DEBUG) -DX_WCHAR -DFUNCPROTO -DXTFUNCPROTO $(INCLUDES)
+
+           C++C = LD_RUN_PATH=/usr/X/lib $(PFX)CC
+.SUFFIXES: .o .C .c
+
+all:: $(PROGS)
+
+NormalCPlusPlusProgramTarget($(PROGS),$(OBJS),$(LLIBS),$(XLIBS),$(SYS_LIBS))
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o bin -g bin -m 755)
+
+/**/#	Install ASCII configuration (definitions) file
+InstallNonExecFile(setup.def,$(SETUPDIR)/Mail_Setup)
+
+/**/#	Install process icon and mask
+InstallMultiple(umail48.icon,$(USRLIBDIR)/pixmaps)
+InstallNamedNonExec(umail48.mask,umail48.icon,$(USRLIBDIR)/bitmaps)
+
+/**/#	Install folder icon and mask
+InstallMultiple(pixmaps/umail32.icon,$(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/umail32.icon,$(USRLIBDIR)/bitmaps)
+
+/**/#	Install the message catalog file for this generic setup application
+InstallMsgCatalog(gensetup)
+
+/**/#	Install the message catalog file for this specific Mail Setup app
+InstallMsgCatalog(Mail_Setup)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()
+

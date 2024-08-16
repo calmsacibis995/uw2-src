@@ -1,0 +1,13 @@
+CLASS Expappl
+BEGIN
+	_CLASSNAME     "App Sharing";
+        _FILETYPE       EXEC;
+        _PATTERN       "App_Sharing";
+        _ICONFILE      "App_Sharing.icon";
+	MENU _Open	'(if /sbin/tfadmin -t App_Sharing 2>/dev/null;\
+			then\
+				/sbin/tfadmin App_Sharing;\
+			else\
+				exec "%F";\
+			fi)&';
+END

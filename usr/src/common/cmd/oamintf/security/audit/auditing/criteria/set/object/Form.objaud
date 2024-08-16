@@ -1,0 +1,319 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/criteria/set/object/Form.objaud	1.1.6.2"
+#ident  "$Header: Form.objaud 2.0 91/07/12 $"
+#	Module Name: Form.objaud
+form="Set Object Level Audit Criteria"
+
+framemsg=`readfile $INTFBASE/form.msg`
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+close=`rm -f $OBJAUDERR /tmp/$VPID.events /tmp/$VPID.tmpev 
+	/tmp/$VPID.tmpl1 /tmp/$VPID.tmpl2 /tmp/$VPID.levels;
+	unset -l EVENTS -l OP -l LEV2 -l LEV1 -l LEV3 -l LEV4 -l RLEV`
+
+`unset -l AUDITSET -l OBJEVEVTS -l OBJLOW -l OBJHIGH -l OBJLEV1 -l OBJLEV2 -l OBJLEV3 -l OBJLEV4`;
+`"$TFADMIN" auditset -dm | set -l AUDITSET`
+`echo "$AUDITSET" | fmlgrep "Object Level Audit Criteria:" | sed 's/^Object.*:  *//;s/ /,/g' | set -l OBJEVENTS`
+`echo "$AUDITSET" | sed '1,5d' | fmlgrep " - " | sed 's/^	//;s/ -.*//' | set -l OBJLOW`
+`echo "$AUDITSET" | sed '1,5d' | fmlgrep " - " | sed 's/^	//;s/.*- //' | set -l OBJHIGH`
+
+
+done=`set -l OBJAUDERR=/tmp/$VPID.objauderr;
+	getfrm |set -l FRAMEID;
+	unset -l OAUDARGS;
+	if [ -n "$EVENTS" ];
+	then
+		if [ -n "$OP" ]; 
+		then 
+			set -l OAUDARGS="-o $OP$EVENTS";
+		else 
+			set -l OAUDARGS="-o $EVENTS"; 
+		fi;
+	fi;
+	test -n "$LEV1" && set -l OAUDARGS="$OAUDARGS $LEV1";
+	test -n "$LEV2" && set -l OAUDARGS="$OAUDARGS $LEV2";
+	test -n "$LEV3" && set -l OAUDARGS="$OAUDARGS $LEV3";
+	test -n "$LEV4" && set -l OAUDARGS="$OAUDARGS $LEV4";
+	test -n "$RLEV" && set -l OAUDARGS="$OAUDARGS $RLEV";
+	message -f "Setting object level audit criteria.";
+	shell "$TFADMIN auditset  $!OAUDARGS" > /dev/null 2>$OBJAUDERR;
+	if [ $RET -ne 0 ]; 
+	then
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.objnok";
+	elif test -s "$OBJAUDERR"; 
+	then
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.objwok";
+	else
+		set -l CMD="OPEN TEXT $OBJ_DIR/Text.objok";
+	fi`$CMD
+
+# get event info (TYPES and CLASSES)
+`valevt obj | sed '/^$/d' > /tmp/$VPID.tmpev;
+ sed '/^[ 	].*$/d;/^$/d;s/alias //;s/ .*$//' 
+	/etc/security/audit/classes >>/tmp/$VPID.tmpev;
+ sort -u /tmp/$VPID.tmpev > /tmp/$VPID.events;`
+
+# get levels for validation later
+`lvlname | sed '/^Levels:/d;/^$/d;/Classifications/,$ d;s/^[0-9]*:*//;s/::/	/' > /tmp/$VPID.tmpl1;
+fmlcut -d"	" -f1 /tmp/$VPID.tmpl1 > /tmp/$VPID.tmpl2;
+fmlcut -d"	" -f2 /tmp/$VPID.tmpl1 >> /tmp/$VPID.tmpl2;
+sort -u /tmp/$VPID.tmpl2 > /tmp/$VPID.levels`
+
+#F1
+name=Operation on events:
+lininfo=Form.objaud:operation
+nrow=1
+ncol=3
+frow=1
+fcol=24
+rows=1
+columns=11
+value=replacement
+rmenu={ addition deletion replacement exception }
+valid=`if [ "$F1" = "addition" ]; then set -l OP="+";
+	elif [ "$F1" = "deletion" ]; then set -l OP="-";
+	elif [ "$F1" = "exception" ]; then set -l OP="!";
+	elif [ "$F1" = "replacement" ]; then unset -l OP;
+	else echo FALSE;
+	fi`
+invalidmsg= const "Error - Must enter addition, deletion, replacement, or exception."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F2
+name=Event type(s) or class(es):
+lininfo=Form.objaud:event
+nrow=2
+ncol=3
+frow=2
+fcol=31
+rows=1
+columns=35
+scroll=TRUE
+rmenu=OPEN MENU $OBJ_DIR/Menu.events
+value="$OBJEVENTS"
+valid=`message -f "Please Wait."; 
+	if [ -n "$F2" ]; 
+	then
+        	echo "$F2" | set -l EVENTS;
+        	if regex -v "$F2" '.*,.*';
+		then
+        		echo "$F2" |sed 's/,/ /g' | set -l GF2;
+			valforloop "$GF2" "grep \$i /tmp/$VPID.events";
+		else
+			fmlgrep "$F2" /tmp/$VPID.events;
+		fi;
+	fi`
+invalidmsg=const "Error - Must enter one or more valid event types or classes."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F3
+name=Operation on level:
+lininfo=Form.objaud:levoperation
+nrow=3
+ncol=3
+frow=3
+fcol=23
+rows=1
+columns=11
+value=replacement
+rmenu={ addition deletion replacement }
+valid=`if [ "$F3" = "addition" ]; then set -l OPLEV1="+";
+	elif [ "$F3" = "deletion" ]; then set -l OPLEV1="-";
+	elif [ "$F3" = "replacement" ]; then unset -l OPLEV1;
+	else echo FALSE;
+	fi`
+invalidmsg= const "Error - Must enter addition, deletion, or replacement."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F4
+name=Level:
+lininfo=Form.objaud:levels
+nrow=3
+ncol=36
+frow=3
+fcol=43
+rows=1
+columns=23
+scroll=TRUE
+rmenu={ `readfile /tmp/$VPID.levels` }
+valid=`if [ -n "$F4" ];
+	then
+		set -l LEV1="-l $OPLEV1$F4";
+	   	fmlgrep "$F4$" /tmp/$VPID.levels;
+	fi`
+invalidmsg= const "Error - Enter a valid level name."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F5
+name=Operation on level:
+lininfo=Form.objaud:levoperation
+nrow=4
+ncol=3
+frow=4
+fcol=23
+rows=1
+columns=11
+value=replacement
+rmenu={ addition deletion replacement }
+valid=`if [ "$F5" = "addition" ]; then set -l OPLEV2="+";
+	elif [ "$F5" = "deletion" ]; then set -l OPLEV2="-";
+	elif [ "$F5" = "replacement" ]; then unset -l OPLEV2;
+	else echo FALSE;
+	fi`
+invalidmsg= const "Error - Must enter addition, deletion, or replacement."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F6
+name=Level:
+lininfo=Form.objaud:levels
+nrow=4
+ncol=36
+frow=4
+fcol=43
+rows=1
+columns=23
+scroll=TRUE
+rmenu={ `readfile /tmp/$VPID.levels` }
+valid=`if [ -n "$F6" ];
+	then
+		set -l LEV2="-l $OPLEV2$F6";
+ 		fmlgrep "$F6$" /tmp/$VPID.levels;
+	fi`
+invalidmsg= const "Error - Enter a valid level name."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F7
+name=Operation on level:
+lininfo=Form.objaud:levoperation
+nrow=5
+ncol=3
+frow=5
+fcol=23
+rows=1
+columns=11
+value=replacement
+rmenu={ addition deletion replacement }
+valid=`if [ "$F7" = "addition" ]; then set -l OPLEV3="+";
+	elif [ "$F7" = "deletion" ]; then set -l OPLEV3="-";
+	elif [ "$F7" = "replacement" ]; then unset -l OPLEV3;
+	else echo FALSE;
+	fi`
+invalidmsg= const "Error - Must enter addition, deletion, or replacement."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F8
+name=Level:
+lininfo=Form.objaud:levels
+nrow=5
+ncol=36
+frow=5
+fcol=43
+rows=1
+columns=23
+scroll=TRUE
+rmenu={ `readfile /tmp/$VPID.levels` }
+valid=`if [ -n "$F8" ];
+	then
+		set -l LEV3="-l $OPLEV3$F8";
+		fmlgrep "$F8$" /tmp/$VPID.levels;
+	fi`
+invalidmsg= const "Error - Enter a valid level name."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F9
+name=Operation on level:
+lininfo=Form.objaud:levoperation
+nrow=6
+ncol=3
+frow=6
+fcol=23
+rows=1
+columns=11
+value=replacement
+rmenu={ addition deletion replacement }
+valid=`if [ "$F9" = "addition" ]; then set -l OPLEV4="+";
+	elif [ "$F9" = "deletion" ]; then set -l OPLEV4="-";
+	elif [ "$F9" = "replacement" ]; then unset -l OPLEV4;
+	else echo FALSE;
+	fi`
+invalidmsg= const "Error - Must enter addition, deletion, or replacement."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F10
+name=Level:
+lininfo=Form.objaud:levels
+nrow=6
+ncol=36
+frow=6
+fcol=43
+rows=1
+columns=23
+scroll=TRUE
+rmenu={ `readfile /tmp/$VPID.levels` }
+valid=`if [ -n "${F10}" ];
+	then
+		set -l LEV4="-l $OPLEV4${F10}";
+		fmlgrep "${F10}$" /tmp/$VPID.levels;
+	fi`
+invalidmsg= const "Error - Enter a valid level name."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F11
+name=Operation on level range:
+lininfo=Form.objaud:levroperation
+nrow=7
+ncol=3
+frow=7
+fcol=29
+rows=1
+columns=11
+value=replacement
+rmenu={ deletion replacement }
+valid=`if [ "${F11}" = "deletion" ]; then set -l OPLEV5="-";
+	elif [ "${F11}" = "replacement" ]; then unset -l OPLEV5;
+	else echo FALSE;
+	fi`
+invalidmsg= const "Error - Must enter deletion or replacement."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F12
+name="Level range:
+   Low:"
+lininfo=Form.objaud:levelrange
+nrow=8
+ncol=3
+frow=9
+fcol=8
+rows=1
+columns=15
+scroll=TRUE
+rmenu={ `readfile /tmp/$VPID.levels` }
+value="$OBJLOW"
+valid=`if [ -n "${F12}" ];
+	then
+		fmlgrep "${F12}" /tmp/$VPID.levels;
+	fi`
+invalidmsg= const "Error - Enter a level name for the low value of level range."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."
+
+#F13
+name=High:
+lininfo=Form.objaud:levelrange
+nrow=9
+ncol=25
+frow=9
+fcol=31
+rows=1
+columns=15
+scroll=TRUE
+rmenu={ `readfile /tmp/$VPID.levels` }
+value="$OBJHIGH"
+valid=`if [ -n "${F13}" -a -n "${F12}" ];
+	then
+		set -l RLEV="-r $OPLEV5${F12}-${F13}";
+		fmlgrep "${F12}" /tmp/$VPID.levels;
+	elif [ -n "${F12}" ];
+	then
+		echo FALSE;
+	fi`
+invalidmsg= const "Error - Enter a level name for the high value of level range."
+fieldmsg= const "Press the CHOICES function key. Press SAVE when you complete the form."

@@ -1,0 +1,84 @@
+.pageno
+Page %d de %d
+.ul
+Kernel Debugger
+.hhelp_ban
+Instructions
+.helpbanner
+Aide : configurer Kernel Debugger (Débogueur de noyau)
+.ur
+Configurer Kernel Debugger
+.ll
+.lr
+F1=Aide
+.top
+Le Kernel Debugger (KDB) peut être configuré de deux façons différentes :
+il peut être activé à tout moment ou uniquement à la demande. Si vous
+avez choisi le second mode, vous devrez activer manuellement le
+Débogueur de noyau avant de pouvoir l'appeler.
+
+Le Débogueur de noyau propose également en option des contrôles de
+sécurité qui empêchent tout utilisateur non autorisé d'appeler le
+débogueur de noyau. Si vous n'activez pas ces contrôles, tout
+utilisateur pourra accéder au débogueur de noyau en entrant une séquence
+de touches sur la console ; cela représente un risque potentiel si votre
+console n'est pas physiquement sécurisée.
+
+.form
+2 2//ALWAYS::TOUJOURS//DEMAND::A LA DEMANDE//Quand souhaitez-vous que KDB soit activé ?//DEMAND//
+//Touches fléchées Gauche/Droite pour choix suivant (2 options)//
+2 2//NO::NON//YES::OUI//Souhaitez-vous activer dispositifs de sécurité ?//SECURITY//
+//Touches fléchées Gauche/Droite pour choix suivant (2 options)//
+.button
+Appliquer
+Réinitialiser
+.help
+Pour obtenir des instructions détaillées, appuyez sur sur la touche "F1"
+(ou sur "?") à tout moment.
+
+Kernel Debugger est particulièrement utile lors du développement de
+modules logiciels qui doivent être intégrés au noyau. Le type de module
+noyau le plus courant est un pilote de périphérique matériel.
+
+ACTIVATION DE KDB
+
+KDB peut être appelé par une séquence de touches entrée sur la console,
+par la commande "kdb" ou lors d'une panne du système. Toutefois, il ne
+peut être appelé qu'à condition d'avoir été activé. KDB est activé
+lorsqu'il est chargé dans le noyau.
+
+Si vous choisissez de l'activer TOUJOURS, KDB sera chargé dans le noyau
+à tout moment et pourra être appelé à tout moment.
+
+Si vous choisissez de l'activer A LA DEMANDE, KDB doit d'abord être
+chargé au moyen de la commande "modadmin -l kdb" avant de pouvoir être
+appelé. Vous pourrez le décharger ultérieurement en utilisant "modadmin
+-U kdb".
+
+L'activation permanente de KDB présente un avantage : ce dernier peut
+être utilisé même dans des cas inattendus. Il présente également un
+désavantage : quand il est activé, le débogueur utilise environ 250 Ko
+de mémoire centrale. Cela a des répercussions sur les performances des
+systèmes disposant d'un espace mémoire réduit.
+
+CONTROLES DE SECURITE
+
+Grâce à des contrôles de sécurité proposés en option, KDB peut refuser
+son accès à des utilisateurs tentant de l'appeler au moyen d'une
+séquence de touches entrée sur la console. Pour accéder au débogueur,
+l'utilisateur doit alors ouvrir une session sur l'ordinateur en
+employant un compte privilégié, puis taper la commande "kdb".
+
+Si les contrôles de sécurité ne sont pas activés, un utilisateur peut
+entrer une séquence de touches sur la console sans devoir ouvrir une
+session sur l'ordinateur et accéder au débogueur de noyau. Si votre
+console n'est pas située dans un local fermé ou uniquement accessible à
+un groupe donné d'utilisateurs, activez ces contrôles de sécurité de
+façon à empêcher tout accès non autorisé.
+.helpinst
+ECHAP=Quitter l'aide F1=Instructions 1=Page suiv. 2=Page préc.
+.hhelpinst
+ECHAP=Quitter les instructions 1=Page suiv. 2=Page préc.
+.working
+Opération en cours...
+.end

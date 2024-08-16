@@ -1,0 +1,231 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)prtsetup2:Imakefile	1.25"
+#ident "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/Printer_Setup/Imakefile,v 1.32.2.1 1994/10/18 14:53:33 wrees Exp $"
+
+/**/#	Copyright (c) 1993 Univel
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+/**/#	Univel.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#include    <Motif.tmpl>
+#include    <Motif.rules>
+#include    <C++.tmpl>
+#include    <C++.rules>
+
+#EXTRA_LOAD_FLAGS = -z nodefs
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+XLIBDIR     =  $(ROOT)/$(MACH)/usr/X/lib
+
+LD_RUN_PATH =  /usr/X/lib
+
+          DEBUG =  -O
+    CDEBUGFLAGS = -O
+
+
+SRCS =	ps_application.C 		\
+		funcs.c					\
+		hostBrowse.C			\
+		lpsys.C					\
+		dispInfo.C 				\
+		fileSelect.C			\
+		iconObj.C				\
+		iconList.C				\
+		iconWin.C				\
+		ps_printer.C			\
+		ps_printerAcc.C			\
+		ps_printerWin.C			\
+		menuItem.C				\
+		menuBar.C				\
+		menuPulldown.C			\
+		ps_i18n.C				\
+		ps_actions.C			\
+		ps_actionsCB.C			\
+		toolbar.C				\
+		ps_xpmbutton.C			\
+		action.C				\
+		ps_main.C 				\
+		ps_ctrlprinter.C 		\
+		ps_useracc.C 			\
+		ps_dialog.C 			\
+		printUser.C 			\
+		ps_win.C 				\
+		ps_local.C 				\
+		ps_netware.C 			\
+		ps_unix.C 				\
+		ps_msg.C 				\
+		ps_question.C 			\
+		ps_nprinter.C 			\
+		ps_remote.C 			\
+		bindery.C 				\
+		ps_copy.C 				\
+		ps_mainwin.C 
+
+HDRS =	ps_application.h 		\
+		lpsys.h					\
+		hostBrowse.h			\
+		dispInfo.h 				\
+		fileSelect.h			\
+		iconObj.h				\
+		iconList.h				\
+		iconWin.h	 			\
+		ps_printer.h			\
+		ps_printerAcc.h			\
+		ps_printerWin.h			\
+		menuItem.h				\
+		menuBar.h				\
+		menuPulldown.h			\
+		ps_i18n.h				\
+		ps_actions.h			\
+		toolbar.h				\
+		ps_xpmbutton.h			\
+		action.h				\
+		ps_hdr.h 				\
+		ps_ctrlprinter.h 		\
+		ps_useracc.h 			\
+		ps_dialog.h 			\
+		printUser.h 			\
+		ps_win.h 				\
+		ps_copy.h	 			\
+		ps_local.h 				\
+		ps_netware.h 			\
+		ps_unix.h 				\
+		ps_msg.h 				\
+		ps_question.h 			\
+		ps_nprinter.h 			\
+		ps_remote.h 			\
+		bindery.h 				\
+		ps_mainwin.h 
+
+OBJS =	ps_application.o 		\
+		funcs.o					\
+		hostBrowse.o			\
+		lpsys.o					\
+		dispInfo.o 				\
+		fileSelect.o			\
+		iconObj.o				\
+		iconList.o				\
+		iconWin.o				\
+		ps_printer.o			\
+		ps_printerAcc.o			\
+		ps_printerWin.o			\
+		menuItem.o				\
+		menuBar.o				\
+		menuPulldown.o			\
+		ps_i18n.o				\
+		ps_actions.o			\
+		ps_actionsCB.o			\
+		toolbar.o				\
+		ps_xpmbutton.o			\
+		action.o				\
+		ps_main.o 				\
+		ps_ctrlprinter.o		\
+		ps_useracc.o 			\
+		ps_dialog.o				\
+		printUser.o 			\
+		ps_win.o 				\
+		ps_local.o 				\
+		ps_netware.o 			\
+		ps_unix.o 				\
+		ps_msg.o 				\
+		ps_question.o 			\
+		ps_nprinter.o 			\
+		ps_remote.o 			\
+		bindery.o 				\
+		ps_mainwin.o 			\
+		ps_copy.o	 			
+
+          PROGS = prtsetup 
+
+
+       DTLIBSRC = $(LIBSRC)/Dt 
+          DTLIB = $(DTLIBSRC)/libDt.so
+
+       INCLUDES = -DN_PLAT_UNIX -I../include -I$(INC)/nw -I$(LIBSRC) -I$(LIBSRC)/Dt 
+ EXTRA_INCLUDES = -I../../uslclients/libMDtI -I../../uslclients -I../../../cmd/lp/include -I../../../lib/libnpt -I$(INCLUDESRC) -I$(INC)
+
+          XLIBS = -L$(ROOT)/$(MACH)/usr/X/lib -lserver ../libclasses/libuw.a ../libcomponents/libuwc.a XmClientLibs $(XLIB) $(XTOOLLIB) $(XMULIB) $(DTLIB) -L../../lib/Xol -lOlit -lgen -lm -L../../../cmd/lp/lib/printers -llpprt -L../../../cmd/lp/lib/access -llpacc -L../../../cmd/lp/lib/lp -llp -L../../../cmd/lp/lib/msgs -llpmsg -L../../../cmd/lp/lib/systems -llpsys -L../../../cmd/lp/lib/oam -llpoam ../../../lib/libnpt/libnpt.a -L../../uslclients/libMDtI -lMDtI $(XLIB) -lsocket -lgen
+       C++FLAGS = $(DEBUG) -DX_WCHAR -DXTFUNCPROTO $(ALLDEFINES) 
+           C++C = LD_RUN_PATH=/usr/X/lib $(PFX)CC 
+      LDOPTIONS = $(CDEBUGFLAGS) $(CCOPTIONS) $(LOCAL_LDFLAGS)
+
+all:: $(PROGS)
+
+
+funcs.o: funcs.c
+	$(RM) $@
+	$(PFX)cc -c $(CFLAGS)  $*.c
+
+NormalCPlusPlusProgramTarget($(PROGS),$(OBJS),$(LLIBS),$(XLIBS),$(SYS_LIBS))
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 555)
+
+
+InstallMultiple(prtsetup48.icon, $(USRLIBDIR)/pixmaps)
+InstallMultiple(prt.stp48, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/prtsetup48.icon, $(USRLIBDIR)/bitmaps)
+InstallMultiple(prtsetup.icon, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/prtsetup.icon, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.lcl24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.lcl24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.rmt24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.rmt24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.nw24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.nw24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.prop24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.prop24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.copy24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.copy24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.control24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.control24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.rmt.acs24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.rmt.acs24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.user.acs24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.user.acs24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.nrprinter24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.nrprinter24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.default24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.default24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(p.delete24, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/p.delete24, $(USRLIBDIR)/bitmaps)
+InstallMultiple(ptr.stp32, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/ptr.stp32, $(USRLIBDIR)/bitmaps)
+InstallMultiple(ptr.rmt32, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/ptr.rmt32, $(USRLIBDIR)/bitmaps)
+InstallMultiple(dfltprt.icon, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/dfltprt.icon, $(USRLIBDIR)/bitmaps)
+InstallMultiple(ptr.nw32, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/ptr.nw32, $(USRLIBDIR)/bitmaps)
+InstallMultiple(ptrnw.def32, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/ptrnw.def32, $(USRLIBDIR)/bitmaps)
+InstallMultiple(ptrrmt.def32, $(USRLIBDIR)/pixmaps)
+InstallMultiple(bitmaps/ptrrmt.def32, $(USRLIBDIR)/bitmaps)
+InstallMultiple(ptr.system16, $(USRLIBDIR)/pixmaps)
+InstallMultiple(ptr.user16, $(USRLIBDIR)/pixmaps)
+InstallMultiple(ptr.pserv16, $(USRLIBDIR)/pixmaps)
+InstallMultiple(ptr.ptr16, $(USRLIBDIR)/pixmaps)
+InstallMultiple(Printers, $(DESKTOPDIR)/PrintMgr)
+
+InstallMsgCatalog(prtsetup2)
+InstallMsgCatalog(uimsgs)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+
+DependTarget()
+
+LintTarget()
+

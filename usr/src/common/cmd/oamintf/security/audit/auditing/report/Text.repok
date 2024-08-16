@@ -1,0 +1,21 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/report/Text.repok	1.1.4.2"
+#ident  "$Header: Text.repok 2.0 91/07/12 $"
+#	Module Name: Text.repok
+
+title="Event Log" 
+framemsg=`readfile $INTFBASE/trept.msg`
+lifetime=shortterm
+
+rows=18
+columns=75
+
+text="`readfile /tmp/$VPID.replog`"
+
+altslks
+name=CONT
+button=11
+action=update $!FRAMEID true
+
+name=CANCEL
+button=14
+action=CLEANUP

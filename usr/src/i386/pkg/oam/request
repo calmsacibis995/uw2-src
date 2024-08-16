@@ -1,0 +1,165 @@
+#ident	"@(#)pkg.oam:i386/pkg/oam/request	1.37"
+
+#
+#  Main routine
+#  
+
+#
+#  Make sure LOCALE environment variable is set.  If it's not set
+#  coming in to this request script, then default to the C-locale.
+#
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+UPGRADE_STORE=/etc/inst/save.user
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+
+MENU_RESP=$1
+
+#  Set up to use menu_colors; default to C-locale if ${LOCALE}'s dir has
+#  no menu_colors.sh
+#
+if [ -f /etc/inst/locale/${LOCALE}/menus/menu_colors.sh ]
+then
+	. /etc/inst/locale/${LOCALE}/menus/menu_colors.sh
+else
+	. /etc/inst/locale/C/menus/menu_colors.sh
+fi
+
+#
+#  Send the menus out to the correct directory
+#
+MENU_DIR=/etc/inst/locale/${LOCALE}/menus/${PKG}
+[ -d ${MENU_DIR} ] || mkdir -p ${MENU_DIR}
+
+MENUS="menu.oam menu.remove"
+
+for i in $MENUS
+do
+   if [ ! -f ${MENU_DIR}/$i ]
+   then
+      if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKG}/$i ]
+      then
+           cp ${REQDIR}/inst/locale/${LOCALE}/${PKG}/$i ${MENU_DIR}
+      else
+           cp ${REQDIR}/${PKG}/$i ${MENU_DIR}
+      fi
+   fi
+done
+
+#  set INSTALL_MODE to CUSTOM, if not set
+[ "$INSTALL_MODE" ] || INSTALL_MODE=CUSTOM
+
+############# Begin UPGRADE AND OVERLAY #######################
+
+UPDIR=/etc/inst/up
+[ -d $UPDIR ] || mkdir -p $UPDIR
+SCRIPTS=/usr/sbin/pkginst
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = YES ] && set -x
+
+PKGINSTALL_TYPE=NEWINSTALL
+
+#chkpkgrel, returns a code, indicating which version of this pkg is installed.
+#Return code 2 indicates overlay of the same or older version. For overlay,
+#existence of the file $UPGRADE_STORE/$PKGINST.ver indicates presence of older
+#version. This file contains the old version.
+
+#	${SCRIPTS}/chkpkgrel returns    0 if pkg is not installed
+#					1 if pkg if unknown version
+#					2 if overlay possible
+#					4 if upgrade possible
+#					9 if newer pkg is installed
+
+${SCRIPTS}/chkpkgrel
+PKGVERSION=$?
+case $PKGVERSION in
+	2)	PKGINSTALL_TYPE=OVERLAY	;;
+	4)	PKGINSTALL_TYPE=UPGRADE	;;
+      1|9)	# Installed version cannot be ugraded or overlayed. Warn
+                # user to remove it and reinstall it. 
+		if [ -f /etc/inst/scripts/postreboot.sh ] 
+		then
+			pfmt -s nostd -g ${PKGMSG}:5 "Installed version OAM package must be removed before this version can be installed.\n"
+		else
+			menu_colors warn
+			menu -f ${MENU_DIR}/menu.remove -o /dev/null >/dev/tty 2>/dev/null < /dev/tty
+		fi
+		exit 3 ;;
+	*)	;;
+esac
+
+[ $AUTOMERGE ] || AUTOMERGE="Yes"
+
+# clean up the file $UPGRADE_STORE/oam.env created by chkpkgrel
+
+# rm -f $UPGRADE_STORE/oam.env
+
+############# End  UPGRADE AND OVERLAY #########################
+
+
+CLASSES="none OAM_basic OAM_extended OAMmif OAM_bhelp OAM_ehelp"
+
+SYSADM="replace"
+
+echo CLASSES=\"${CLASSES}\" >> ${MENU_RESP}
+echo SYSADM=\"${SYSADM}\" >> ${MENU_RESP}
+echo AUTOMERGE=\"${AUTOMERGE}\" >> ${MENU_RESP}
+echo PKGINSTALL_TYPE=\"${PKGINSTALL_TYPE}\" >> ${MENU_RESP}
+
+# Are we running the request script from the PE or AS install
+# on the boot media? If so, bail out right now. We'll create the
+# sysadm login and prompt for password on reboot.
+
+[ -f /etc/inst/scripts/postreboot.sh ] && {
+	echo foo > /etc/inst/scripts/askAboutOAM
+	exit 0
+}
+
+#  Now, decide if we need to add the sysadm user.  If it already
+#  exists, don't bother.  Otherwise, create the user.
+#
+grep sysadm /etc/passwd > /dev/null 2>&1
+
+if [ $? -ne 0 ]
+then
+	#
+	#  Create the login
+	#
+	useradd -i -o -u 0 -g 0 -c "general system administration" -d /usr/sadm -m sysadm >/dev/null 2>&1
+
+fi
+
+#
+#  Invoke the menu that informs user that the password will be required
+#  for the sysadm user.
+#
+menu_colors regular
+menu -f ${MENU_DIR}/menu.oam -o /dev/null
+
+#
+#  In all cases, reset the sysadm user's password and get a new one.
+#  Also, check to make sure passwd executed correctly and reinvoke
+#  if necessary.
+#
+passwd -d sysadm
+DONE=0
+
+while [ "${DONE}" = "0" ]
+do
+	pfmt -s nostd -g ${PKGMSG}:4 "Changing password for sysadm\n"
+	/usr/bin/passwd sysadm
+	if [ $? = 0 ]
+	then
+		DONE=1
+	fi
+done
+

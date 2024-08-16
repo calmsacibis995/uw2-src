@@ -1,0 +1,48 @@
+#ident	"@(#)appshare:exportUTemp	1.1"
+#! /bin/sh
+#       Script Template for Shared X Applications
+#       Need to have LD_LIBRARY_PATH exported
+#       PATH also
+#       $1 is the display name argument
+REMAPPL=*AppType-
+export REMAPPL
+
+CONSEM=no
+export CONSEM
+DISPLAY=$1
+export DISPLAY
+LD_LIBRARY_PATH=:/usr/X/lib:/usr/X/lib:/usr/X/lib
+export LD_LIBRARY_PATH
+PATH=$PATH:/sbin:/usr/sbin:/usr/bin:/etc::/usr/X/bin::/bin:/usr/X/lib:/usr/ucb:/usr/X
+export PATH
+TERM=xterm
+export TERM
+TERMCAP=/etc/termcap
+export TERMCAP
+TIMEZONES=`/usr/bin/grep TZ= /etc/TIMEZONE | /usr/bin/cut -d= -f2`
+for ENTRY in $TIMEZONES
+do
+	TZ=$ENTRY
+	export TZ
+done
+XWINHOME=/usr/X
+export XWINHOME
+
+if test -r $HOME/.olsetup
+then
+   GUITYPE=`/usr/bin/grep XGUI= $HOME/.olsetup | /usr/bin/cut -d= -f2`
+   XGUI=`echo $GUITYPE | /usr/bin/cut -d" " -f1`
+   export XGUI
+else
+   XGUI=MOTIF
+   export XGUI
+fi
+
+# "*App-" is a reserved word. 
+# It is replaced by the name of the selected application.
+# Its existence and placement are important.
+# DO NOT DELETE IT  
+case $REMAPPL in
+"X_APPLICATION") *App-;;
+"TEXT_APPLICATION") xterm -e *App-;;
+esac

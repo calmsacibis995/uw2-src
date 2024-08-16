@@ -1,0 +1,2281 @@
+# This file contains the help messages used by the Command Line interface.
+# Each help message is bracketed by lines starting with ++.
+# The debugger does not depend on the size (number of lines) of any message,
+# but it does depend on the order of the messages.  New messages MUST be
+# added to the end of the file.
+
+++ !
+NOM
+! - exécution d'une commande shell.
+
+RESUME
+! cmd_line
+!!
+
+DESCRIPTION
+Exécute une commande shell. Le reste de la ligne est transmis au shell
+pour être interprété. En particulier, les données ne sont PAS redirigées
+par le débogueur mais par le shell. La variable $SHELL, lorsqu'elle est
+définie, comporte le chemin d'accès complet du shell à utiliser. Si
+$SHELL n'est pas définie, c'est /usr/bin/sh qui est employé. Le
+débogueur attend que la commande s'achève, mais ne prend pas le
+contrôle des processus résultants.
+
+!! indique que la dernière commande shell doit être réexécutée.
+
+VOIR EGALEMENT
+create, redirection
+++
+
+++ alias
+NOM
+alias - ajout, recencement ou suppression des alias.
+
+RESUME
+jetons des noms d'alias ...
+alias [nom]
+alias -r nom
+
+DESCRIPTION
+La première forme crée un alias "nom" pour les "jetons". Tous les
+caractères qui se trouvent avant le retour chariot ou le commentaire
+seront considérés comme faisant partie de la définition. Les alias
+existants ou les commandes débogueur peuvent être redéfinis sous un nom
+d'alias. Une fois que cette définition est effectuée, l'utilisation de
+l'alias équivaut à taper la séquence de symboles qu'il remplace. Les
+alias peuvent être définis par d'autres alias, mais non de façon
+récursive.
+
+Les définitions d'alias peuvent contenir les identificateurs spéciaux
+$1, $2,... Chacun de ces identificateurs spéciaux $n est remplacé, dans
+une définition d'alias, par le énième argument de l'appel d'alias, les
+arguments étant classés par ordre croissant à partir de 1. Chaque
+argument doit être précédé par un espace blanc et se terminer par un
+espace, un caractère d'interligne, le caractère de commentaire (#) ou le
+début d'un bloc ({). Les identificateurs spéciaux $1, $2, ... ne seront
+pas remplacés à l'intérieur d'une chaîne entre guillemets.
+
+Si la définition d'un alias comporte l'identificateur spécial $#, au
+cours de l'appel de l'alias, celui-ci sera remplacé par le nombre
+d'arguments qui interviennent effectivement dans cet appel. Si la
+définition de l'alias comporte l'identificateur spécial $*, au cours de
+l'appel de l'alias, celui-ci sera remplacé par une liste de tous les
+arguments transmis au cours de cet appel, chaque argument étant séparé
+des autres par un espace.
+
+S'il n'y a pas d'arguments, la commande alias affiche la liste de tous
+les alias actuels. S'il y a un seul nom, l'alias correspondant
+s'affiche.
+
+L'option -r de la commande alias supprime tous les alias correspondants
+au nom indiqué.
+
+EXEMPLES
+alias
+alias i
+alias i step -i
+alias edit list $1@1
+alias print_list while($1) { print *$1; set $1 = $1->next }
+alias b if ($# > 0) { stop $* } else { stop %list_file@%list_line }
+alias -r i
+++
+
+++ stop
+NOM
+stop - définition ou affichage des événements stop.
+
+RESUME
+stop [-p liste_proc] [[-q] [-c nombre] expr_stop [commande]]
+stop [-p liste_proc]
+
+DESCRIPTION
+Un événement stop spécifie une condition de l'espace adresse d'un
+programme qui induit le débogueur à arrêter l'exécution du programme.
+"expr_stop" correspond à une ou plusieurs expressions liées avec les
+opérateurs spéciaux && (et) ou || (ou). Les expressions peuvent
+consister en :
+
+1) un emplacement
+        Un emplacement dans le texte du programme - ceux-ci peuvent se
+        comparer à la ponctuation classique.
+
+2) (expr)
+        Une expression dans le langage actuel - ce type d'expression
+         top devient vraie en même temps que l'expression elle-même ;
+
+3) *lvalue
+        Un emplacement dans les données du programme pouvant être
+        modifié - ce type d'expression se réalise lorsque la valeur
+        change.
+
+Les expressions expr_stop sont continuellement évaluées par le
+débogueur lorsque le processus sujet est en cours d'exécution. Lorsque
+l'expression entière devient vraie, le débogueur annonce une occurrence
+de l'événement et exécute la commande optionnelle qui y est associée.
+
+Pour plus d'informations, reportez-vous à expr_stop.
+
+L'option -q indique que le débogueur ne déclare pas l'événement.
+
+L'option -c indique que l'événement ne se déclenche qu'après un certain
+nombre de fois ou l'expression expr_stop devient vraie, nombre indiqué par
+"nombre". L'événement se déclenchera toutes les autres fois ou
+l'expression devient vraie.
+
+La deuxième syntaxe de la commande stop recense tous les événements
+stop pour les processus indiqués.
+
+A la différence de ce qui se produit pour la plupart des commandes, si
+l'option -p n'est pas fournie à la commande stop, celle-ci va
+s'appliquer à tous les processus dérivés du programme actuel (%program).
+
+EXEMPLES
+stop myfile.c@230
+stop *bar
+stop (x == 5)
+stop foo && (a > 7)
+stop (a == 4) || (b == 7)
+
+VOIR EGALEMENT
+%program, %verbose, assoccmd, delete, disable, enable, events,
+expr, emplacement, liste_proc, scope, expr_stop
+++
+
+
+++ break
+NOM
+break - sortie d'une boucle while.
+
+RESUME
+break
+
+DESCRIPTION
+La commande break force le débogueur à sortir de la boucle while
+la plus profonde concernée par la commande.
+
+EXEMPLES
+while($i < 10) { if (x[$i] == $myvar) break; set $i = $i + 1 }
+
+VOIR EGALEMENT
+continue, while
+++
+
+
+++ continue
+NOM
+continue - continuation de l'exécution de la prochaine itération de
+la boucle while.
+
+RESUME
+continue
+
+DESCRIPTION
+La commande continue force le débogueur à commencer l'exécution
+de la prochaine itération de la boucle while la plus profonde
+concernée par la commande. L'exécution démarre avec la réévaluation
+de l'expression de la boucle.
+
+EXEMPLES
+while (i < 20) { step; if (i % 2) continue; p i, x[i] }
+
+VOIR EGALEMENT
+break, while
+++
+
+
+++ cancel
+NOM
+cancel - annulation des signaux en attente.
+
+RESUME
+cancel [-p liste_proc] [signal ...]
+
+DESCRIPTION
+Les signaux spécifiés sont annulés pour les processus
+indiqués (%proc par défaut). Si un des signaux a été intercepté
+par le débogueur dans un des processus spécifiés, ces signaux ne
+seront pas reçus par ces processus lorsque leur exécution
+reprend. Si aucun signal n'est spécifié, tous les signaux en
+attente pour les processus indiqués vont être annulés.
+
+EXEMPLES
+cancel
+cancel segv
+cancel -p all sigfpe sigemt
+
+VOIR EGALEMENT
+kill, liste_proc, signal, signames
+++
+
+
+++ create
+NOM
+create - création ou contrôle d'un ou plusieurs processus nouveaux.
+
+RESUME
+create [-dr] [-f all|none|procs] [-l start_loc] [cmd_line]
+
+DESCRIPTION
+La commande create prend une ligne de commande de type shell et crée un
+ou plusieurs processus. La ligne de commande peut inclure une redirection
+d'entrée et/ou de sortie, ainsi qu'un canal shell. Tous les processus
+résultants s'arrêtent à l'emplacement spécifié par "start_loc".
+Si aucun emplacement de démarrage n'est spécifié ou que l'emplacement
+indiqué est introuvable dans l'espace adresse du processus, ce
+dernier s'arrête à la fonction "main". Si aucune fonction "main" n'existe,
+le processus s'arrête à l'adresse indiquée dans l'en-tête du
+fichier objet. Pour créer et exécuter un processus, tapez "create...",
+puis "run". 
+
+Si aucune "cmd_line" n'est specifiée, c'est la "cmd_line"  précédente
+qui est utilisée. Tout processus créé à partir d'invocations existantes
+de cette "cmd_line" est détruit.
+
+Un identificateur de processus débogueur propre est attribué à chaque
+processus créé. Il est possible de faire référence à un processus par
+cet identificateur ou par l'id du processus système dans les commandes
+acceptant l'option -p. Le premier processus créé dans un pipeline
+devient le processus actuel (%proc). Tous les processus créés à partir
+d'un exécutable simple (via fork (2)) peuvent être référencés par le nom
+de cet exécutable (nom programme).
+
+Si l'option -r est spécifiée, les entrées/sorties du processus sont
+redirigées vers un pseudo-terminal. Toutes les sorties sont précédées
+du nom de ce pseudo-terminal. S'il est nécessaire de fournir des entrées
+à ce processus, la commande "input" doit être utilisée. L'option -d
+indique qu'il ne doit pas y avoir de redirection. Si aucune des deux
+options n'est spécifiée, le mode spécifié par %redir sera utilisé (par
+défaut, pas de redirection).
+
+Si -f est employée avec un argument "none" (aucune), le débogueur ne
+suivra pas les processus enfants d'un processus utilisant la duplication
+("fork"). Si l'option -f est employée avec, soit la valeur "all" (tous),
+soit la valeur "procs" (processus), tous les processus enfant seront
+contrôlés par le débogueur (ces processus pouvant être libérés du
+contrôle du débogueur en utilisant la commande "release"). Si l'option
+-f n'est pas spécifiée, le fonctionnement du débogueur sera contrôlé par
+%follow (le fonctionnement par défaut étant de suivre tous les processus
+enfant).
+
+EXEMPLES
+create
+create -f none myprog 1 2 3
+create myprog 1 2 3 | myfilter1 | myfilter2
+
+VOIR EGALEMENT
+!, %follow, %program, %redir, grab, input, liste_proc, rename, release
+++
+
+
+++ delete
+NOM
+delete - suppression des événements.
+
+RESUME
+delete numéro_événement ...
+delete -a [-p liste_proc] [type_événement]
+
+DESCRIPTION
+La première syntaxe supprime les événements correspondant
+aux numéros d'événements spécifiés.
+
+La deuxième syntaxe supprime tous les événements du type spécifié,
+type_évènement (si aucun n'est spécifié, tous les types), pour les
+processus indiqués (si aucun n'est indiqué, le processus actuel).
+"type_évènement" peut être défini par "onstop", "signal", "stop" ou
+"syscall".
+
+
+EXEMPLES
+delete 1 3 5
+delete -a -p p1
+delete -a stop
+delete -a syscall
+
+VOIR EGALEMENT
+change, disable, enable, events, onstop, liste_proc,
+signal, stop, syscall
+++
+
+
+++ dis
+NOM
+dis - désassemblage des instructions machine.
+
+RESUME
+dis [-p liste_proc] [-c nombre_instr] [emplacement]
+
+DESCRIPTION Désassemble les instructions "instr_count" dans chaque
+processus spécifié (%proc par défaut). Si aucune instruction n'est
+donnée, la valeur par défaut de count est %num_lines, qui commence a 10
+et peut être modifiée.
+
+Si un "emplacement" est spécifié, le désassemblage commence à l'adresse
+précisée pour chaque processus indiqué. Si un "emplacement" n'est pas
+spécifié, le première commande dis après déclenchement d'un événement
+ou après remise à zéro de %frame, commencera à %loc. Les prochaines
+commandes dis continuent à partir de l'adresse qui suit la dernière
+instruction affichée par la commande dis précédente.
+
+EXEMPLES
+dis
+dis -c 20 main
+dis file.c@10
+
+VOIR EGALEMENT
+%frame, %loc, %num_lines, dump, emplacement, print, liste_proc
+++
+
+
+++ disable
+NOM
+disable - désactivation des événements
+
+RESUME
+disable numéro_événement ...
+disable -a [-p liste_proc] [type_événement]
+
+DESCRIPTION
+La première syntaxe désactive les événements correspondants aux
+numéros spécifiés.
+
+La deuxième syntaxe désactive tous les événements spécifiés par 
+type_événement (si aucun type n'est spécifié, tous les types) pour les 
+processus indiqués (lorsqu'aucun n'est spécifié, le processus actuel). 
+"type_événement" peut être défini par  "onstop", "signal", "stop" ou
+"syscall".
+
+Les événements désactivés n'ont aucun effet sur les processus auxquels
+ils s'appliquent, mais ils ne sont pas supprimés. Ils pourront être
+réinstallés par "enable".
+
+EXEMPLES
+disable 3 5
+disable -a -p p1
+disable -a onstop
+disable -a signal
+
+VOIR EGALEMENT
+change, delete, enable, events, onstop, liste_proc, signal,
+stop, syscall
+++
+
+++ dump
+NOM
+dump - affiche le contenu de la mémoire
+
+RESUME
+dump [-p liste_proc] [-c nombre_octet] emplacement
+
+DESCRIPTION
+La commande dump affiche le contenu de la mémoire pour
+chaque processus spécifié (%thread ou %proc par défaut).
+"nombre_octet" (%nbr_octets par défaut) octets, 16 octets par
+ligne, en hexadécimal et ASCII vont s'afficher, en commençant à
+l'adresse indiquée par un "emplacement".
+
+%num_bytes commence à 256, mais peut être modifié.
+
+EXEMPLES
+dump -c 16 myptr
+dump %esp
+dump 0x80001248
+
+VOIR EGALEMENT
+%num_bytes, dis, emplacement, print, liste_proc
+++
+
+
+++ enable
+NOM
+enable - activation des événements
+
+RESUME
+enable numéro_événement ...
+enable -a [-p liste_proc] [type_événement]
+
+DESCRIPTION
+La première syntaxe active les événements correspondants aux numéros
+d'événements spécifiés.
+
+La  deuxième syntaxe active tous les événements du type spécifié (si
+aucun type n'est spécifié, tous les types) pour les processus indiqués
+(lorsqu'aucun n'est spécifié, le processus actuel). "type_événement"
+peut être défini par "onstop", "signal", "stop" ou "syscall".
+
+Seuls les événements préalablement désactivés peuvent être activés.
+Une fois activé, l'événement affecte à nouveau le processus dans lequel
+il est défini.
+
+EXEMPLES
+enable 3 5
+enable -a -p p1
+enable -a stop
+enable -a signal
+
+VOIR EGALEMENT
+change, delete, disable, events, onstop, liste_proc, signal,
+stop, syscall
+++
+
+
+++ events
+NOM
+events - liste des événements
+
+RESUME
+events [-p liste_proc] [numéro_événement ...]
+
+DESCRIPTION
+Si aucun argument n'est spécifié, la commande events
+affiche une liste de tous les événements stop, des signaux, des appels
+système ou des actions onstop du processus actuel. Avec l'option -p,
+elle affiche les événements associés aux processus spécifiés.
+
+Lorsqu'un ou plusieurs numéros d'événements sont indiqués, la commande
+events affiche la liste complète de ces événements. Cette liste
+comporte tous les processus pour lesquels l'événement est défini et, le
+cas échéant,  tout le bloc de commandes associé.
+
+EXEMPLES
+events
+events -p p1,p2
+events 3
+
+VOIR EGALEMENT
+change, delete, disable, enable, onstop, liste_proc, signal,
+stop, syscall
+++
+
+
+++ grab
+NOM
+grab - prend le contrôle des processus en cours ou d'une image du noyau.
+
+RESUME
+grab  [-f all|none|procs] [-l load_file] live_object ...
+grab -c fichier_image_mémoire fichier_objet
+
+DESCRIPTION
+La première syntaxe prend un ou plusieurs indicateurs de
+processus ; le débogueur va essayer de prendre le contrôle de chacun
+des processus spécifiés (le contrôle n'est garanti qu'avec les
+autorisations correspondantes). Chaque processus peut être spécifié à
+l'aide d'un chemin d'accès /proc ou d'un id processus.
+
+L'option -l indique qu'un fichier objet de remplacement à utiliser pour
+charger les symboles du processus. Si l'option -l est spécifiée, vous
+ne pouvez indiquer qu'un seul processus.
+
+Si l'option -f n'a aucun argument ("none"), le débogueur ne suit pas les
+processus enfants d'un processus  qui se duplique. Si -f a pour
+arguments "all" ou "procs", tous les processus enfants vont être sous
+contrôle du débogueur (ces processus peuvent être libérés du contrôle
+du débogueur avec la commande "release"). Si aucune option -f n'est
+spécifiée, le comportement du débogueur va être dicté par %follow
+(par défaut, tous les processus enfants).
+
+La deuxième syntaxe ouvre et examine un fichier source et son fichier
+objet correspondant. Les images noyau créées par Grab peuvent être
+examinées en utilisant toutes les commandes disponibles pour l'examen
+des processus en cours d'exécution, mais sans que l'on puisse les
+modifier ou les lancer.
+
+Les processus examinés avec Grab, comme les processus créés normalement,
+reçoivent un identificateur de processus du débogueur et peuvent
+être référencés soit avec cet identificateur, soit par l'id de leur
+processus système, soit encore par le nom du programme dont ils
+proviennent. Le premier processus examiné par grab devient le
+processus actuel (%proc).
+
+EXEMPLES
+grab 123
+grab -f procs /proc/123 3455
+grab -l myobject /proc/3455
+grab -c core.save myobject
+
+VOIR EGALEMENT
+%follow, %proc, %program, create, liste_proc, release, rename
+++
+
+
+++ help
+NOM
+help - demande de l'aide
+
+RESUME
+help [sujet]
+
+DESCRIPTION
+Le "sujet" peut être un alias, un nom de commande ou un sujet
+d'aide quelconque. Si aucun sujet n'est spécifié, la liste des
+commandes disponibles et des sujets s'affiche.
+
+EXEMPLES
+help
+help stop
+help b
+help emplacement
+++
+
+
+++ if
+NOM
+if - branchement conditionnel.
+
+RESUME
+if (expr) cmd
+if (expr) cmd else cmd
+
+DESCRIPTION
+L'évaluation de l'expression s'effectue en langage actuel
+(%db_lang ou %lang) dans le contexte du processus actuel (%proc).
+Si l'expression est vraie, la partie "then" est exécuté. Dans le
+cas contraire, c'est la partie "else" (si spécifié) qui sera
+exécuté. "cmd" peut représenter une commande simple ou un bloc de
+commandes.
+
+EXEMPLES
+stop  file.c@myfunc { if (x < 10) run; else print x }
+
+VOIR EGALEMENT
+%db_lang, %lang, bloc, expr, scope, while
+++
+
+
+++ input
+NOM
+input - envoi d'une entrée à un processus.
+
+RESUME
+input [-p nom_proc|-r pseudo-tty] [-n] chaîne
+
+DESCRIPTION
+Si un processus a été créé en utilisant la commande "create -r", ses
+entrées et ses sorties, ainsi que les entrées/sorties des autres
+processus dérivés du même programme, sont redirigées vers un
+pseudo-terminal. Pour envoyer une entrée à un tel processus, la
+commande "input" doit être utilisée.
+
+"pseudo-tty" est le nom du pseudo-terminal sur lequel les entrées
+doivent être dirigées. Le débogueur affiche le nom du pseudo-terminal
+à coté des sorties redirigées du processus. Il est également possible
+d'afficher le nom du processus ou celui du programme. Si aucun processus
+ou nom de pseudo-terminal n'est spécifié, le pseudo-terminal associé au
+programme actuel est celui qui sera utilisé.
+
+L'entrée "chaîne" est envoyée au pseudo-terminal indiqué ou au
+pseudo-terminal associé au processus (ou au programme) spécifié. Une
+nouvelle ligne est ajoutée à la fin de la chaîne, à moins que l'option
+-n ne soit spécifiée.
+
+EXEMPLES
+input -r pts1 "voici une chaîne de caractères"
+input -p myprog "en voici une autre"
+
+VOIR EGALEMENT
+%redir, create
+++
+
+
+++ jump
+NOM
+jump - modification du compteur de programme du processus.
+
+RESUME
+jump [-p liste_proc] emplacement
+
+DESCRIPTION Vous devez interrompre le processus pour pouvoir lui
+appliquer cette commande. La commande jump définit le compteur du
+programme du processus indiqué (par défaut %proc) à l'adresse spécifiée
+par un "emplacement". L'exécution du processus reprend à cette adresse.
+
+L'emplacement peut être n'importe quelle adresse dans le texte du processus
+spécifié, mais il faut néanmoins faire attention. La commande jump
+n'essaye pas de s'adapter à la pile de processus si cette adresse est
+en dehors de la fonction actuelle. Il faut également faire attention en
+l'appliquant à des codes pouvant avoir des effets secondaires non
+négligeables.
+
+RESUME
+jump 10
+jump -p p2 main+8
+
+VOIR EGALEMENT
+emplacement, liste_proc
+++
+
+
+++ kill
+NOM
+kill - envoie un signal à un processus
+
+RESUME
+kill [-p liste_proc] [signal]
+
+DESCRIPTION
+"signal" est transmis aux processus indiqués (%proc par défaut).
+Les signaux peuvent être spécifiés par leur nom ou leur numéro. Un nom
+de signal peut être ou non accompagné du préfixe "SIG". Les majuscules
+ou les minuscules ont la même valeur. Si aucun signal n'est donné, la
+commande kill utilise les signaux SIGKILL.
+
+EXEMPLES
+kill -p all
+kill sigfpe
+kill -p p3 8
+
+VOIR EGALEMENT
+cancel, liste_proc, signal, signames
+++
+
+
+++ list
+NOM
+list - affiche les lignes de code source.
+
+RESUME
+list [-p liste_proc] [-c nombre] [id_proc@][nom_fichier@]nom_fonc
+list [-p liste_proc] [-c nombre] [id_proc@][nom_fichier@]num_ligne
+list [-p liste_proc] [-c nombre] /expreg/
+list [-p listeproc] [-c nombre] ?expreg?
+list [-p listeproc] [-c nombre]
+
+DESCRIPTION
+La commande list affiche les lignes source pour les processus spécifiés
+ou pour le processus actuel, si liste_proc n'est pas spécifié.
+
+Les quatre premières syntaxes spécifient des points de départ pour
+l'affichage. Les deux premières permettent de spécifier les processus,
+les fichiers, les fonctions et les numéros de lignes. Si un processus
+est spécifié, il se substitue à tout autre processus donné par l'option
+-p. La troisième syntaxe trouve la prochaine ligne correspondant à
+l'expression régulière ed (1)-style. La quatrième recherche en sens
+inverse à partir de la ligne actuelle. La barre oblique ou le point
+d'interrogation fermant la chaîne peuvent être omis, à moins qu'une
+autre commande ne vienne sur la même ligne. La dernière syntaxe
+continue l'affichage à partir du fichier et de la ligne où se terminait
+le dernier affichage ou à partir de  %file@%line après déclenchement
+d'un événement ou de la remise à zéro de %frame.
+
+Si une limite ("count") a été spécifiée, le nombre de lignes
+correspondant sera affiché, sinon seules %num_lines lignes seront
+affichées, cette valeur partant de 10 et pouvant être changé.
+
+Après l'affichage d'un bloc de lignes, %list_file devient le nom du
+fichier affiché et %list_lines le numéro de la dernière ligne de code
+source qui a été affichée.
+
+EXEMPLES
+list -c 20
+list myfile@1
+list myfunc
+list /x/
+list ?foobar
+list /
+
+VOIR EGALEMENT
+%file, %frame, %line, %list_file, %list_line, emplacement,
+print, liste_proc, expr_rég
+++
+
+++ map
+NOM
+map - affiche l'allocation des adresses virtuelles.
+
+RESUME
+map [-p liste_proc]
+
+DESCRIPTION
+Affiche la table des adresses virtuelles d'un ou plusieurs processus.
+Si aucun argument n'est spécifié, affiche la table du processus courant
+(%proc). Avec l'option -p, affiche la table de chaque processus
+représenté par l'ensemble de processus indiqués.
+
+VOIR EGALEMENT
+create, grab, liste_proc
+++
+
+
+++ symbols
+NOM
+symbols - affiche les noms, les valeurs et les types des symboles.
+
+RESUME
+symbols [-p liste_proc] [-o objet] [-n nom_fichier] [-dfgltuv] [modèle]
+
+DESCRIPTION
+Affiche la liste des noms de variables visibles dans la trame actuelle
+(%frame) des processus spécifiés (%proc par défaut). Si aucune option
+n'est spécifiée (ou si -l est précisée) , elle affiche les noms locaux
+définis dans la fonction actuelle (%func). L'option -f permet
+d'afficher uniquement les noms visibles et locaux pour le fichier
+actuel (%file). Si "nom_fichier" est spécifié dans l'option -n, ce sont les
+symboles de ce fichier qui s'affichent. L'option -g affiche uniquement
+les noms en général visibles, définis dans l'objet actuel (fichier
+exécutable ou bibliothèque partagée). Si elle est accompagnée de
+l'option -o, l'option -g affiche les noms visibles définis à
+l'intérieur d'un objet spécifié. L'option -d affiche les variables
+intégrées du débogueur. L'option -u affiche les variables définies par
+l'utilisateur et gérées par le débogueur.
+
+Si un argument de type sh(1) est utilisé, celui-ci restreint encore plus
+l'affichage pour n'y inclure que les noms de variables correspondants à
+l'argument de recherche.
+
+L'option -t affiche les types de symboles, en plus de leurs noms.
+L'option -v affiche les valeurs de ces symboles. Notez bien que lorsque
+le langage actuel est C++, l'option -v n'affiche pas des membres de
+classe static. Ces derniers peuvent s'afficher lorsqu'on imprime le
+symbole.
+
+EXEMPLES
+symbols -ftv
+symbols -g -o libc.so.1 exec*
+
+VOIR EGALEMENT
+%file, %frame, %func, modèle, print, liste_proc
+++
+
+
+++ print
+NOM
+print - imprime la valeur d'une expression.
+
+RESUME
+print [-p liste_proc] [-f format] [-v] expr, ...
+
+DESCRIPTION
+Affiche les résultats de l'évaluation des listes d'expressions séparées
+par des virgules. L'évaluation de ces expressions s'effectue dans le
+contexte des processus spécifiés (%proc par défaut). L'option -f
+requiert un format (which see). Les expressions peuvent comporter des
+variables de programme, des variables intégrées du débogueur
+(comme %line par exemple) et des variables définies par l'utilisateur
+($myvar, $HOME). Lors de l'évaluation de l'appel d'une fonction, le
+débogueur crée une trame de pile pour cette fonction et l'exécute. Les
+événements du débogueur sont désactivés pendant l'exécution de la
+fonction. L'évaluation des expressions se fait en langage actuel
+(%lang ou %db_lang). Chaque expression est suivie d'un espace et une
+nouvelle ligne est ajoutée à la fin, à moins qu'un autre format ne soit
+spécifié.
+
+L'option -v affiche des informations plus détaillées. Les informations
+supplémentaires comprennent des prototypes de fonctions  pour toutes les
+fonctions, appelés par le débogueur lors de l'évaluation de
+l'expression. Ceci est utile en C++ afin de voir comment les fonctions
+surchargées sont résolues. L'option -v affichera également la structure
+générée par le compilateur et les membres des classes, comme les
+pointeurs en direction des tables de fonctions virtuelles.
+
+La commande "set" peut également être utilisée afin d'évaluer des
+expressions du langage. Par contre, elle n'imprime pas le résultat d'une
+expression. Elle est utilisée principalement pour évaluer une expression
+pouvant avoir des effets secondaires, comme une assignation.
+
+EXEMPLES
+print %line, %file, %func
+print "a[i] == ", a[i]
+print *ptr->next
+print -f "0x%x\n" main
+print -v myfunc(1, 2, 3)
+
+VOIR EGALEMENT
+%db_lang, %lang, C++, expr, format, liste_proc, scope, set
+++
+
+++ ps
+NOM
+ps - état du processus.
+
+RESUME
+ps [-p liste_proc]
+
+DESCRIPTION
+Affiche la liste d'état des processus sous contrôle. Si aucune option -p
+n'est spécifiée, l'état de tous les processus sous contrôle est affiché.
+Le processus actuel (%proc) est signalé par un astérisque (*).
+
+VOIR EGALEMENT
+liste_proc
+++
+
+++ pwd
+NOM
+pwd - affiche le répertoire de travail actuel.
+
+RESUME
+pwd
+
+DESCRIPTION
+pwd affiche le répertoire de travail actuel du débogueur.
+
+VOIR EGALEMENT
+cd
+++
+
+++ quit
+NOM
+quit - sort du débogueur.
+
+RESUME
+quit
+
+DESCRIPTION
+Sort du débogueur. Tous les processus contrôlés seront arrêtés 
+(s'ils ont été créés) ou libérés et lancés (s'ils étaient 
+contrôlés par la commande grab).
+
+VOIR EGALEMENT
+release
+++
+
+++ release
+NOM
+release - libère un ou plusieurs processus sous contrôle.
+
+RESUME
+release [-s] [-p liste_proc]
+
+DESCRIPTION
+Les processus indiqués (%proc par défaut) ne sont plus sous contrôle du
+débogueur. Avec l'option -s, chaque processus est libéré dans un état
+arrêté ; sinon chaque processus est libéré et peut continuer son
+exécution. Un processus peut être libéré même s'il n'a pas été saisi
+par le débogueur ; ce qui signifie que les processus créés peuvent
+aussi être libérés.
+
+EXEMPLES
+release -p p1
+release -s
+
+VOIR EGALEMENT
+liste_proc, quit
+++
+
+++ run
+NOM
+run - définit les processus en cours d'exécution
+
+RESUME
+run [-p liste_proc] [-bfr] [-u emplacement]
+
+DESCRIPTION
+Définit la liste des processus en cours d'exécution (%proc par défaut).
+L'option -f indique que le débogueur exécute le processus en premier
+plan : il attendra l'arrêt du processus avant de rendre la main à
+l'utilisateur. L'option -b indique une exécution en arrière-plan (pas
+d'attente). Le contrôle passe immédiatement aux mains de l'utilisateur
+et le processus est lancé. Si aucune de ces deux options -f ou -b n'est
+spécifiée, la valeur par défaut est indiquée par la variable %wait du
+débogueur.
+
+L'option -r fait que le processus continue à s'exécuter jusqu'au retour
+de la fonction actuelle. L'option -u spécifie l'adresse (un
+"emplacement") d'où il faut commencer l'exécution.
+
+EXEMPLES
+run -p all -b
+run -r
+run -u 108
+
+VOIR EGALEMENT
+%wait, emplacement, liste_proc, step
+++
+
+++ script
+NOM
+script - exécute une commande script du débogueur.
+
+RESUME
+script [-q] fname
+
+DESCRIPTION
+Lit et exécute des commandes du débogueur à partir d'un fichier.
+Les commandes sont affichées avant leur exécution, à moins que l'option
+-q ne soit spécifiée. Les scripts pouvant être imbriqués.
+++
+
+++ set
+NOM
+set - modifie la valeur d'une variable du débogueur ou d'un programme.
+
+RESUME
+set [-p liste_proc] [-v] variable_débog_ou_utilisateur [=] expr [,expr...]
+set [-p liste_proc] [-v]expression_langue
+
+DESCRIPTION
+La commande "set" possède deux syntaxes. La première est utilisée
+afin d'allouer une nouvelle valeur à une variable interne du
+débogueur ou une variable définie par l'utilisateur et gérée par
+le débogueur (par exemple, %lang ou $foo). Les valeurs correctes
+pour l'expression "expr" dépendent de la variable. Certaines
+variables, comme %lang, accepte une série de nom spécialement
+définis. D'autres variables peuvent accepter toutes les
+expressions du débogueur ou d'un langage qui peuvent être
+converties en chaîne de caractères. Dans le cas d'une liste de
+chaînes de caractères (et de variables utilisateurs) séparées par
+des virgules, les valeurs des chaînes de caractères de ces
+expressions sont concaténées. Voir la commande "help" de chaque
+variable du débogueur pour afficher les valeurs correctes dans
+chaque cas.
+
+Dans sa deuxième syntaxe, la commande set peut être utilisée pour
+l'évaluation de toute expression de langage, bien que
+généralement elle soit utilisée pour l'évaluation de l'expression
+d'un assignement. Si plusieurs processus sont spécifiés, la
+commande est évaluée dans le contexte de chaque processus dans
+l'ordre.
+
+L'option -v affiche les prototypes des fonctions, pour toutes les
+fonctions appelées par le débogueur lors de l'évaluation de
+l'expression. Ceci est utile en C++ afin de voir comment les fonction
+surchargées sont résolues.
+
+EXEMPLES
+set %global_path = %global_path, ":src/new/mydir"
+set -p all %path = "mydir"
+ set %frame 2
+set %eax = 0x3421
+set x = 3
+set -v myfunc(a, b)
+
+VOIR EGALEMENT
+%db_lang, %lang, C++, expr, liste_proc, scope, uservars
+++
+
+
+++ signal
+NOM
+signal - définit ou affiche les signaux pour un processus.
+
+RESUME
+signal [-p liste_proc] [-iq] [signal ... [commande]]
+
+DESCRIPTION
+Lorsqu'un signal est transmis à un processus, le débogueur, par défaut,
+va intercepter le signal et annoncer cette occurrence. Le signal peut
+être annulé à l'aide de la commande "cancel" ou le processus peut
+continuer et recevoir le signal. L'option -i accompagnée d'un ou
+plusieurs noms ou numéros de signaux (voir "kill"), indique que le
+débogueur va ignorer ces signaux (il ne va pas les intercepter pour la
+liste de processus donnés par liste_proc). Un nom de signal peut être ou
+non accompagné du préfixe "SIG". Les majuscules ou les minuscules ont
+la même valeur. Si le signal est spécifié à nouveau sans l'option -i,
+l'action par défaut de ce signal est rétablie.
+
+Si une commande est donnée avec un groupe de signaux, le débogueur
+établit un événement pour ce groupe. L'événement peut être effacé,
+désactivé ou activé, tout comme les événements "stop", "onstop" et
+"syscall". Des événements multiples peuvent être alloués au même signal.
+Effacer tous lesévénements pour un signal donné n'enlève pas l'action
+par défaut du débogueur pour ce signal. L'option -q indique que le
+signal ne sera pas annoncé.
+
+Sans arguments, cette commande affiche la liste des signaux
+correspondant à la liste des processus fournie par liste_proc.
+
+A la différence de ce qui se produit pour la plupart des commandes, si
+l'option -p n'est pas fournie à la commande stop, celle-ci va
+s'appliquer à tous les processus dérivés du programme actuel (%program).
+
+EXEMPLES
+signal -i fpe emt
+signal SIGFPE
+signal 8 { if (x == 0) cancel 8; run }
+
+VOIR EGALEMENT
+assoccmd, cancel, delete, disable, enable, kill, liste_proc, signames
+++
+
+++ step
+NOM
+step - lance un processus pas à pas.
+
+RESUME
+step [-p liste_proc] [-ibfoq] [-c nombre]
+
+DESCRIPTION
+Les processus indiqués (%proc par défaut) sont exécutés pas à pas un
+certain nombre de fois, nombre déterminé par "nombre" (par défaut
+nombre=1). Si "nombre" est explicitement défini par 0, cela indique
+que l'exécution se répète, jusqu'a une interruption ou un arrêt
+provoqué par un événement.
+
+L'option -i indique que les instructions s'exécuteront pas à pas ; si
+elle n'est pas spécifiée, ce seront les commentaires qui seront exécutés
+pas à pas. L'option -o indique que les appels à des fonctions
+s'exécutent comme étant une seule instruction ; si elle n'est pas
+spécifiée, le contenu de l'appel à la fonction sera exécuté pas à pas.
+
+L'option -f spécifie que le débogueur attend l'arrêt du processus
+avant de rendre la main à l'utilisateur (c.à.d. que le processus
+s'exécute en premier plan). L'option -b indique une exécution en
+arrière-plan (pas d'attente). Le processus est lancé, mais le
+contrôle passe immédiatement aux mains de l'utilisateur. Si
+aucune de ces deux options -f ou -b n'est spécifiée, la valeur
+par défaut est indiquée par la variable %wait du débogueur.
+
+L'option -q indique que l'exécution pas à pas doit être
+'discrète' ; le débogueur n'affiche pas l'id du processus en
+cours d'exécution et n'imprime pas la ligne du code source qui va
+être exécuté.
+
+EXEMPLES
+step -io
+step -b
+step -p all -c 10
+
+VOIR EGALEMENT
+%verbose, %wait, processus, liste_proc, run
+++
+
+
+++ halt
+NOM
+halt - arrête un processus s'exécutant en arrière-plan.
+
+RESUME
+halt [-p liste_proc]
+
+DESCRIPTION
+Le débogueur oblige chacun des processus indiqués (%proc par
+défaut) à arrêter immédiatemment son exécution. La requête peut
+ne pas avoir un effet immédiat à cause des temps d'attente
+système et des fluctuations dans l'ordre des tâches.
+
+La commande "halt" ne s'applique pas aux processus qui
+s'exécutent en premier plan, le débogueur ne rendant pas la main
+à l'utilisateur avant l'arrêt de ces processus. Pour arrêter un
+processus ou un ensemble de processus s'exécutant en premier
+plan, utilisez la touche d'interruption (généralement
+"suppression").
+
+VOIR EGALEMENT
+%wait, liste_proc, run, step
+++
+
+++ syscall
+NOM
+syscall - mets en place le suivi des appels systèmes.
+
+RESUME
+syscall [-p liste_proc] [[-eqx] [-c nombre] call ... [commande]]
+
+DESCRIPTION
+Indique les actions à entreprendre lorsqu'un processus entre dans un
+appel système ou en sort. Si aucun argument n'est spécifié, affiche la
+liste des appels actuels pour les processus indiqués.
+
+Lorsqu'un ou plusieurs noms ou numéros d'appel système sont
+indiqués, le débogueur suspend le processus de ces appels système
+en entrée (-e, défaut) et/ou en sortie (-x). L'appel système sera
+annoncé et toutes les "commandes" qui lui sont associées seront
+exécutées.
+
+L'option -q spécifie que l'événement ne sera pas annoncé.
+L'option -c spécifie que l'événement se déclenchera un certain
+nombre de fois (donné par "nombre") avant que le débogueur
+n'interrompe le processus. Le processus s'arrêtera à toutes les
+occurrences suivantes.
+
+Utilisez "help sysnames" pour obtenir une liste des noms des
+appels systèmes corrects, les majuscules et les minuscules
+n'étant pas prise en compte.
+
+A la différence de ce qui se produit pour la plupart des
+commandes, si l'option -p n'est pas fournie à la commande
+syscall, celle-ci va s'appliquer à tous les processus dérivés du
+programme actuel (%program).
+
+EXEMPLES
+syscall -c 10 write { if (fd == 5) run }
+syscall -qx read
+
+VOIR EGALEMENT
+%program, assoccmd, delete, disable, enable, events, liste_proc
+++
+
+
+++ regs
+NOM
+regs - affiche le contenu des registres du processeur.
+
+RESUME
+regs [-p liste_proc]
+
+DESCRIPTION
+Affichage hexadécimal du contenu des registres du processeur pour
+les processus spécifiés (par défaut : %proc).
+
+VOIR EGALEMENT
+dis, dump, liste_proc
+++
+
+
+++ stack
+NOM
+stack - affiche le retour des appels de fonction.
+
+RESUME
+stack [-p liste_proc] [-f trame] [-c nombre] [-a adresse ] [ -s pile ]
+
+DESCRIPTION
+Affiche les fonctions actives pour les processus indiqués (%proc par
+défaut). Cet affichage comprend leurs noms, ainsi que les noms et les
+valeurs des arguments et le numéro de ligne ou d'adresse active dans
+chaque fonction. Les noms des fonctions, les noms des arguments et les
+numéros de ligne peuvent ne pas être disponibles lorsque les
+informations symboliques sont insuffisantes.
+
+"nombre" spécifie le nombre de trames à afficher. Si aucun chiffre n'est
+indiqué, l'affichage est effectué pour toute la pile. L'option -f
+spécifie le numéro de trame par lequel doit commencer l'affichage. La
+numérotation des trames commence par 0 pour le bas de la pile (trame
+initiale).
+
+Les options -a et -s vous permettent de spécifier une adresse de départ
+(compteur du programme) et/ou une valeur de départ pour le pointeur de
+la pile. Ceci est parfois utile lorsque l'on essaye d'obtenir un
+traçage de la pile pour un processus qui a effectué un saut à une
+adresse non-admise ou un processus dont le pointeur de pile a été
+altéré. Ces deux options ont besoin d'une adresse en base hexadécimale.
+
+EXEMPLES
+stack -p p2
+stack -f 2 -c 3
+stack -a 0x80494958 -s 0xbfff8004
+
+VOIR EGALEMENT
+liste_proc
+++
+
+++ while
+NOM
+while - boucle conditionnelle.
+
+RESUME
+while (expr) cmd
+
+DESCRIPTION
+L'évaluation de "expr" s'effectue en langage actuel (%lang ou %db_lang)
+dans le contexte du processus actuel (%proc). Si "expr" est vrai, "cmd"
+est exécutée. Cette séquence se répete ensuite. "cmd" peut correspondre
+à une commande simple ou à un bloc.
+
+EXEMPLES
+while ($foo < 10) { print $foo, a[$foo]; set $foo = $foo + 1 }
+
+VOIR EGALEMENT
+%db_lang, %lang, bloc, break, continue, expr, if, scope
+++
+
+
+++ cd
+NOM
+cd - change le répertoire de travail actuel.
+
+RESUME
+cd [nom_chemin]
+
+DESCRIPTION
+cd change le répertoire de travail actuel du débogueur en celui qui
+est spécifié par "nomchemin". Si aucun répertoire n'est donné, cd utilise
+le répertoire spécifié par la variable d'environnement HOME.
+
+VOIR EGALEMENT
+pwd
+++
+
+++ change
+NOM
+change - modifie un événement existant.
+
+RESUME
+change num_événement [-p liste_proc] [-evqx] [-c nombre]
+        [expr_stop|call...|signal...] [{commandes}]
+
+DESCRIPTION
+num_événement doit être au début et correspond au numéro d'un événement
+existant et correct. Les autres options vous permettent de modifier les
+divers attributs de cet événement : 
+1) la liste des processus auxquels il s'applique (-p), 
+2) la verbose (-q pour pas de verbose, -v pour verbose), 
+3) pour les appels système, si l'événement doit se produire à
+     l'entrée de l'appel, à sa sortie ou aux deux à la fois (-ex), 
+4) pour les événements stop et les appels système le nombre d'occurences
+     de l'événement avant qu'il soit annoncé (-c), 
+5) ainsi que l'expression, la liste d'appels système ou la liste de
+     signaux associés à un événement. Pour finir 
+6) les commandes associées, qui devront être entre accolades {}.
+
+EXEMPLES
+change 3 -q
+change 5 -p p2 -c 10
+change 7 { print "x == ", x }
+change 9 -x write
+
+VOIR EGALEMENT
+assoccmd, delete, disable, enable, events, onstop,
+liste_proc, signal, stop, syscall
+++
+
+++ export
+NOM
+export - ajoute un ensemble nom/valeur à l'environnement.
+
+RESUME
+export $nom_utilisateur
+
+DESCRIPTION
+La command "export" exporte une variable définie par
+l'utilisateur et gérée par le débogueur dans l'environnement. La
+variable "nom_utilisateur" , ainsi que sa valeur actuelle, font alors
+partie de l'environnement qui est reçu par le processus créé par
+le débogueur. Si la valeur de $nom_utilisateur change, elle doit être
+exportée de nouveau, afin que la nouvelle valeur fasse partie de
+l'environnement. Notez que "nom_utilisateur" est exportée sans le
+préfixe "$".
+
+VOIR EGALEMENT
+uservars
+++
+
+++ fc
+NOM
+fc - recherche, modifie et exécute de nouveau des commandes.
+
+RESUME
+fc [-e ename] [-nlr] [première [dernière]]
+fc -e - [old=new] [commande]
+
+DESCRIPTION
+"fc" permet d'utiliser des commandes d'édition et de rappel de
+style ksh(1). Sous sa première syntaxe, un groupe de commandes de
+"première" à "dernière" sont sélectionnées à partir des dernières
+commandes HISTSIZE qui ont été entrées. Les arguments "première" et
+"dernière" peuvent être spécifiés, soit en tant que chaîne de
+caractères, soit en tant que numéros. Une chaîne de caractères
+est utilisée pour localiser les commandes les plus récentes en
+commençant par la chaîne spécifiée. Un chiffre négatif peut être
+donné en tant que décalage à partir du numéro de la commande
+actuelle.
+
+Si  l'option -l est spécifiée, les commandes sont affichées sur la
+sortie standard. Autrement, l'éditeur "ename" est lancé sur un fichier
+temporaire contenant les commandes. Si "ename" n'est pas fourni, la
+valeur de la variable d'environnement FCEDIT (par défaut : /usr/bin/ed)
+est utilisée comme éditeur. Lorsque l'édition est terminée, les
+commandes éditées sont exécutées.
+
+Si "première" n'est pas spécifiée, la valeur par défaut est la commande
+précédente pour l'édition et -16 pour l'affichage. L'option -r inverse
+l'ordre des commandes ; l'option -n supprime le numéro des commandes
+lors de l'affichage.
+
+Dans sa deuxième syntaxe, la "commande" est exécutée de
+nouveau après que la substitution "old=new" (ancienne=nouvelle)
+ait eu lieu. Si la commande n'est pas spécifiée, la valeur par
+défaut est la commande précédente.
+
+VOIR EGALEMENT
+%mode
+++
+
+++ logoff
+NOM
+logoff - arrête la consignation des sessions.
+
+RESUME
+logoff
+
+DESCRIPTION
+Arrete la consignation des sessions.
+
+VOIR EGALEMENT
+logon
+++
+
+
+++ logon
+NOM
+logon - lance la consignation des sessions.
+
+RESUME
+logon [fichier_consignation]
+
+DESCRIPTION
+Lance la consignation des sessions. Toutes les sorties du
+débogueur sont envoyées dans un "fichier_consignation". Chaque
+ligne de sortie est précédée d'un signe "#" (commentaire). Les
+commandes du débogueur sont également envoyées dans le
+fichier_consignation, mais sans être précédées du signe "#". Si
+le nom d'un fichier de consignation n'est pas spécifié, le
+dernier fichier de consignation utilisé par la session de
+débogage actuelle est celui qui sera utilisé. Les nouvelles
+commandes et les nouvelles sorties sont ajoutées à ce fichier.
+Les fichiers de consignation peuvent être utilisés comme script
+de commande pour le débogueur.
+
+VOIR EGALEMENT
+logoff, script
+++
+
+
+++ onstop
+NOM
+onstop - l'action se poursuit lorsque le processus s'arrête.
+
+RESUME
+onstop [-p liste_proc] [commande]
+
+DESCRIPTION
+Si aucun argument n'est spécifié pour "commande", liste les actions
+onstop en cours pour la liste des processus indiqués par "liste_proc".
+
+"commande" peut correspondre à une commande simple ou à un bloc. Si une
+commande ou un bloc est indiqué, ces commandes seront exécutées à
+chaque arrêt d'un processus (dans le contexte de ce processus). L'arrêt
+comprend l'exécution pas à pas et l'arrêt d'un autre événement débogueur
+(signal, syscall,stop).
+
+A la différence de ce qui se produit pour la plupart des commandes, si
+l'option -p n'est pas fournie à la commande onstop, celle-ci va
+s'appliquer à tous les processus dérivés du programme actuel (%program).
+
+EXEMPLES
+onstop -p p2
+onstop { print i, x[i] }
+
+VOIR EGALEMENT
+%program, delete, disable, enable, events, signal, stop, syscall
+++
+
+++ rename
+NOM
+rename - change le nom sous lequel un programme est connu.
+
+RESUME
+rename nom_prog nom
+
+DESCRIPTION
+Lorsqu'un processus est saisi ou créé, le nom de
+l'exécutable dont dérive ce processus peut être utilisé pour
+servir de référence à tous les processus qui dérivent de cet
+exécutable et servir dans toute liste de processus (liste_proc).
+rename spécifie le nouveau nom de ce programme.
+
+VOIR EGALEMENT
+create, grab, liste_proc
+++
+
+++ %file
+NOM
+%file - le fichier source actuel.
+
+DESCRIPTION
+%file est défini par le nom du fichier source associé à la
+trame actuelle, le cas échéant, lorsqu'un processus s'arrête ou lorsque
+%frame est modifié. Chaque processus a son propre fichier %file. La
+première commande "list" après la définition de %frame, affichera la
+source à partir de %file si aucun nom de fichier n'est indiqué. Vous ne
+pouvez pas modifier %file de façon explicite.
+
+VOIR EGALEMENT
+%frame, %line, %list_file, %list_line, list
+++
+
+++ %follow
+NOM
+%follow - est-ce que le débogueur doit suivre les processus enfants ?
+
+DESCRIPTION
+Le débogueur contrôle pour l'utilisateur les processus qui ont
+été créés par le débogueur (avec la commande "create"), ou pris
+en charge (avec la commande "grab") alors qu'il était déja en
+train de s'exécuter. Si %follow est suivi soit de "all" soit de
+"procs", le débogueur prend également le contrôle des processus
+enfant de tout les processus sous contrôle qui utilisent la
+duplication ("fork"). Si %follow est suivi de "none", aucun
+processus enfant ne sera controlé. Le mode global de contrôle mis
+en place par %follow peut être remplacé par des commandes
+"create" ou "grab" individuelles. Tous les processus contrôlés 
+peuvent être libérés avec la commande "release".
+
+La valeur par défaut de %follow est "all".
+
+VOIR EGALEMENT
+create, grab, release, set
+++
+
+++ %frame
+NOM
+%frame - le numéro de la trame actuelle dans la pile d'appel.
+
+RESUME
+Indique la portée par défaut pour les listings source, les tables
+de symboles, le désassemblage et l'évaluation de l'expression.
+%frame est défini par le numéro de la trame supérieure (en
+comptant à partir de 0 pour "_start") lorsqu'un processus
+s'arrête. Chaque processus a sa propre %frame. Vous pouvez
+définir %frame de façon explicite via la commande "set". La
+définition de %frame va également redéfinir les variables
+associées %db_lang, %file, %func, %line et %loc pour maintenir
+une perspective logique du contexte actuel.
+
+VOIR EGALEMENT
+%db_lang, %file, %func, %line, %loc
+++
+
+
+++ %func
+NOM
+%func - la fonction actuelle.
+
+DESCRIPTION
+%func est défini par le nom de la fonction correspondant à la
+trame actuelle (%frame) , dès qu'un processus s'arrête ou que
+%frame est modifié. Chaque processus a son propre %func. Vous
+pouvez définir %func de façon explicite via la commande "set",
+mais uniquement pour une fonction ayant une trame active dans la
+pile ; %frame (ainsi que les variables associées %db_lang, %file,
+%func, %line et %loc) sera mis à jour afin de refléter le nouveau
+contexte.
+
+VOIR EGALEMENT
+%frame
+++
+
+
+++ %lang
+NOM
+%lang - le langage actuel.
+
+DESCRIPTION
+Indique le langage actuel. S'il est défini, il se substitue à la valeur
+donnée par %db_lang. Les chaînes possibles sont les suivantes :
+        C       ANSI C
+        C++     C++ version 2
+Si %lang n'a pas été défini ou défini par la chaîne nulle (""), le
+débogueur utilise %db_lang comme langage actuel. Les commandes
+utilisant %lang dans l'évaluation d'expressions comportent if, print,
+set, stop, while.
+
+VOIR EGALEMENT
+%db_lang, expr
+++
+
+++ %loc
+NOM
+%loc - l'emplacement actuel.  
+
+DESCRIPTION
+Indique le point d'exécution actuel, %loc est défini par le contenu du
+"program counter" (compteur du programme) pour la trame actuelle
+lorsqu'un processus s'arrête ou lorsque %frame est modifié. Chaque
+processus a son propre %loc. Vous ne pouvez pas modifier %loc de façon
+explicite. La première commande "dis" après la définition des %frame va
+désassembler les instructions commençant à %loc, si aucun emplacement
+n'est donné de façon explicite.
+
+VOIR EGALEMENT
+%frame, dis
+++
+
+++ %list_file
+NOM
+%list_file - le nom du fichier qui a été listé en dernier.
+
+DESCRIPTION
+%list_file garde une trace du dernier fichier affiché par la
+commande list. %list_file change à chaque fois que la commande
+list est exécutée et revient sur le nom du fichier contenant
+l'emplacement actuel (%loc) dans la trame actuelle (%frame) à
+chaque fois qu'un chemin d'exécution (ou un processus ne
+contenant qu'un seul chemin d'exécution) s'arrête ou que %frame
+est modifiée. Chaque chemin d'exécution (ou chaque processus ne
+contenant qu'un seul chemin d'exécution) possède sa propre
+%list_file.
+
+VOIR EGALEMENT
+%file, %frame, %line, %list_line, list
+++
+
+++ %list_line
+NOM
+%list_line - affiche le numéro de la dernière ligne affichée.
+
+DESCRIPTION
+%list_line garde la dernière ligne affichée par la commande
+"list". %list_line change quand la commande "list" est exécutée
+et est aussi réinitialisé au numéro de ligne qui contient
+l'emplacement actuel (%loc) de la trame actuelle (%frame) quand
+un processus s'arrête ou une %frame est changée. Chaque processus
+a son propre %list_line.
+
+VOIR EGALEMENT
+%file, %frame, %line, %list_file, list
+++
+
+++ %line
+NOM
+%line - le numéro de la ligne actuelle.
+
+DESCRIPTION
+%line est défini par le numéro de ligne de l'emplacement actuel (%loc)
+dans la trame actuelle (%frame) lorsqu'un processus s'arrête ou lorsque
+%frame est modifié. Chaque processus a son propre %line. La première
+commande "list" après la définition de %frame va afficher la source
+commençant  à %line si aucun emplacement n'est spécifié. Vous ne pouvez
+pas définir %line de façon explicite.
+
+VOIR EGALEMENT
+%frame, %file, %list_file, %list_line, list
+++
+
+++ %mode
+NOM
+%mode - le mode d'édition de la ligne actuelle.
+
+DESCRIPTION
+Debug gère les historiques de commandes (ainsi que l'édition des commandes)
+du style ksh(1). %mode est le mode d'édition utilisé pour l'édition des
+lignes de commande. %mode contient la valeur de la variable
+d'environnement VISUAL ou, si cette dernière n'existe pas, la valeur de
+la variable d'environnement EDITOR. Cette valeur peut être modifiée à
+tout moment en utilisant la commande "set". Les valeurs correctes
+sont "vi" et "emacs". Toute autre valeur de %mode interdira l'édition
+des commandes.
+
+VOIR EGALEMENT
+fc
+++
+
+++ %path
+NOM
+%path - le chemin de recherche local pour les fichiers sources.
+
+DESCRIPTION
+Chaque programme possède son propre %path. La valeur de %path est
+une liste de noms de répertoires, séparés par deux points.
+Lorsque le débogueur tente d'afficher les lignes de code source à
+partir d'un fichier, il va chercher dans les répertoires indiqués
+dans %path un fichier avec le nom correct. Apres avoir recherché
+la liste des chemins d'accès locaux pour le programme indiqué, le
+débogueur va chercher dans sa liste globale de chemin d'accès
+(%global_path).
+
+VOIR EGALEMENT
+%global_path
+++
+
+++ %proc
+NOM
+%proc - le processus actuel.
+
+DESCRIPTION
+Cette variable contient le nom du processus actuel. Elle peut être
+définie de façon explicite à l'aide de la commande "set" ou de façon
+implicite à l'aide de "create", "grab" ou "release". La définition de
+%proc définit également de façon implicite %program et %frame.
+
+VOIR EGALEMENT
+%frame, %program, liste_proc
+++
+
+++ %program
+NOM
+%program - le programme actuel.
+
+DESCRIPTION
+Cette variable comporte le nom du programme qui contient le processus
+actuel (%proc). Vous pouvez modifier ce nom de façon explicite en
+utilisant la commande "set" ou de façon implicite avec les commandes
+"create", "grab" ou "release". Les programmes sont nommés d'après le
+fichier exécutable dont ils dérivent et peuvent être renommés avec la
+commande "rename". La définition de %program redéfinit également de
+façon implicite %proc, %thread et %frame.
+
+VOIR EGALEMENT
+%proc, liste_proc
+++
+
+++ %prompt
+NOM
+%prompt - l'invite du débogueur.
+
+DESCRIPTION
+Le débogueur demande à l'utilisateur une entrée en affichant la valeur
+de %prompt. La valeur par défaut est "debug>". Vous pouvez changer la
+valeur de %prompt avec la commande "set".
+++
+
+++ %thisevent
+NOM
+%thisevent - le numéro de l'événement qui est géré actuellement.
+
+DESCRIPTION
+Avec une commande associée, %thisevent évaluera le numéro de l'événement
+auquel les commandes sont associées. Vous ne pouvez pas modifier la
+valeur de %thisevent de manière explicite.
+
+VOIR EGALEMENT
+%lastevent, assoccmd
+++
+
+
+++ %lastevent
+NOM
+%lastevent - le numéro de l'événement créé le plus récent.
+
+DESCRIPTION
+Apres une commande qui alloue un numéro d'événement (stop,
+signal, syscall ou onstop), %lastevent évaluera jusqu'àu numéro 
+qui vient d'être alloué. Vous ne pouvez pas modifier la valeur
+de %lastevent de manière explicite.
+
+VOIR EGALEMENT
+%thisevent
+++
+
+
+++ assoccmd
+NOM
+assoccmd - une commande du débogueur ou un bloc.
+
+DESCRIPTION
+Plusieurs commandes acceptent de manière optionnelle une commande
+ou des blocs de commandes associés. Ces commandes doivent
+apparaitre en dernier dans la liste des arguments et comprendre
+des commandes possédant leurs propres comandes associées - ce qui
+revient à dire que les commandes associées peuvent être
+imbriquées. Les commandes seront exécutéesà chaque fois que les
+événements en cause (stop, signal, etc.) se produiront. A
+ l'intérieur d'une commande associée, %thisevent contient le
+numéro de l'événement traité. Le chemin d'exécution ou le
+processus qui rencontre l'événement devient temporairement le
+processus actuel lorsque les commandes seront exécutées.
+
+VOIR EGALEMENT
+%thisevent, bloc, onstop, signal, stop, syscall
+++
+
+++ bloc
+NOM
+bloc - une liste de commandes.
+
+DESCRIPTION
+Une commande ou une liste de commandes séparées par des
+points-virgules et entre accolades. Les blocs peuvent être
+utilisés comme commandes associées (which see) ou peuvent
+apparaître indépendamment d'autres commandes. Les blocs peuvent
+être utilisés pour regrouper des commandes afin de rediriger leur
+sortie avec une seule redirection (which see).
+
+EXEMPLES
+{ if (i) print *ptr; else print *mptr } > myfile
+
+VOIR EGALEMENT
+assoccmd, redirection
+++
+
+++ format
+NOM
+format - le format de la sortie de la commande "print".
+
+DESCRIPTION
+Le format est une chaîne de caractères similaire à celle qui est aceptée
+par la routine printf du langage C. Chaque format doit avoir
+la syntaxe suivante :
+        %[flags][width][.[precision]][conversion_character]
+        format_character
+Tous les champs doivent avoir la même signification que dans la routine
+printf. La largeur et la précision sont limités à 1024. Les paramètres
+depositionnement de printf et les caractères au format 'n' ne sont
+pasacceptés. Chaque type de format correspond à l'une des expressions
+données dans la commande print, dans l'ordre dans lequel ils apparaissent
+Les caractères qui ne font pas partie des définitions de format sont
+imprimés tel quel. Les caractères de formatage ont les significations :
+        c       caractère non signé
+        d,i     entier décimal signé
+        e,E     virgule flottante du style [-]d.ddde+/-dd
+        f       virgule flottante du style [-]ddd.dddd
+        g,G     virgule flottante dans l'un des styles ci-dessus
+        o       entier octal non signé
+        p       void * (pointeur général ; adresse hexadécimale)
+        s       chaîne de caractères
+        u       entier décimal non signé
+        x,X     entier hexadécimal non signé
+        z       débogueur style par défaut pour l'expression
+        %       %
+
+VOIR EGALEMENT
+print
+++
+
+++ emplacement
+NOM
+emplacement - un adresse à l'intérieur d'un processus.
+
+DESCRIPTION
+La syntaxe d'un indicateur d'adresse est :
+        adresse[+-constante]
+        [nom_proc@][nom_fichier@]ligne
+        [nom_proc@][nom_fichier@]fonction[+-constante]
+Ici "adresse" correspond à l'adresse d'un programme octal ou hexadécimal
+et "constante" est un entier décimal.
+
+EXEMPLES
+17              un numéro de ligne du fichier actuel (%file)
+foo.c@17        un numéro de ligne dans un autre fichier
+0x80801234      une adresse
+main            un nom ou une étiquette de fonction
+main+3          trois octets après l'étiquette
+p1@main         un nom de fonction dans un processus spécifié
+%loc            l'emplacement actuel
+%line           le numéro de ligne et de fichier actuels
+%r0             un registre
+%r0+80          un registre plus un décalage
+%pc-4           un registre moins un décalage
+$myvar          une variable définie par l'utilisateur
+
+VOIR EGALEMENT
+%file, %line, %loc, liste_proc, scope, uservars
+++
+
+++ liste_proc
+NOM
+liste_proc - une liste des noms de processus.
+
+DESCRIPTION
+Une liste de "procnames" (noms de processus), séparés par des virgules.
+La plupart des commandes acceptent une "liste_proc" avec l'option -p.
+Une liste de ce genre ne doit pas contenir de blancs.
+
+Un nom de processus (procname) peut être défini par :
+1) le mot clé "all", signalant tous les processus sous contrôle,
+2) un nom de programme généré par un utilisateur ou un débogueur,
+   indiquant tous les processus dérivés de ce programme,
+3) un id processus généré par le débogueur sous la forme pn (c.à.d. p1,
+   p2...),
+4) la variable %program du débogueur, indiquant tous les processus
+   dérivés du programme actuel,
+5) la variable %proc du débogueur, indiquant le processus actuel,
+6) un entier décimal correspondant à l'id du processus système d'un
+   processus sous contrôle,
+7) toute variable définie par un utilisateur (c.à.d. $foo) ayant la
+   valeur d'un entier, interprétée comme id de processus système,
+8) toute variable définie par un utilisateur avec la valeur de la chaîne
+   pouvant s'interpréter comme une ou plusieurs des formes décrites
+   ci-dessus.
+
+VOIR EGALEMENT
+liste_proc, %proc, %program, rename, uservars
+++
+
+++ redirection
+NOM
+redirection - changement de la destination de la sortie du débogueur.
+
+DESCRIPTION
+Une commande ou un bloc de commandes, peut recevoir le suffixe ">",
+suivi d'un nom de fichier ou un "|" et une invite du Shell UNIX(r).
+Ceci entraîne une redirection de la sortie en direction du fichier ou
+l'envoi de cette sortie sur une invite. Vous pouvez également utiliser
+">>", qui ajoute la sortie à la fin du fichier, au lieu d'en remplacer
+le contenu, le cas échéant.
+
+EXEMPLES
+stack > save.stack
+symbols -gtv | grep int | pg
+
+VOIR EGALEMENT
+bloc
+++
+
+++ modèle
+NOM
+modèle - une expression de recherche de style sh(1).
+
+DESCRIPTION
+Un ensemble de caractères utilisé pour filtrer la sortie des commandes
+"symbols".
+        *       Remplace tous les caractères, y compris la chaîne "null".
+        ?       Remplace un seul caractere.
+        [...]   Remplace les caractères compris entre les crochets, les
+                registres étant acceptés et ! en tant que premier
+                caractere indiquant la négation
+
+VOIR EGALEMENT
+symbols
+++
+
+++ expr_rég
+NOM
+expr_rég - une expression de recherche de style ed(1).
+
+DESCRIPTION
+Une expression de recherche est utilisée pour rechercher un modèle dans
+un fichier source avec la commande "list".
+        .       Est l'équivalent d'un caractere quelconque, à
+                l'exception d'une fin de ligne
+        [...]   Est l'équivalent d'un (ou de plusieurs) des caractères
+                compris entre crochets, les  registres étant acceptés
+                et ^ indiquant une négation
+        *       Indique zéro ou plusieurs occurences des expressions
+                précédentes
+        ^       Est l'équivalent du caractere "null" au début d'une
+                ligne
+        $       Est l'équivalent du caractere "null" à la fin d'une
+                ligne
+        \{m\}   Est l'équivalent de m occurences des expressions
+                précédentes
+        \{m,\}  Indique au moins m occurences des expressions de
+                recherche précédentes
+        \{m,n\} Est l'équivalent des occurences de m jusqu'à n (compris)
+        \(...\) Est la même équivalence que ...
+        \nombre Est l'équivalent de la énième expression entre
+                parenthèses de la même expression
+        \<      Est l'équivalent de la chaîne "null" en début de mot
+        \>      Est l'équivalent de la chaîne "null" à la fin d'un mot
+
+VOIR EGALEMENT
+list
+++
+
+++ uservars
+NOM
+uservars - variables définies par l'utilisateur et gérées par le
+débogueur.
+
+DESCRIPTION
+Les noms commençant par dollar ($) sont réservés à l'utilisateur
+du débogueur. Au démarrage, le débogueur importe l'environnement
+ du shell en tant qu'ensemble initial de variables définies par
+l'utilisateur. Vous pouvez créer une nouvelle variable avec la
+commande "set". Les variables définies par l'utilisateur sont de
+type "chaîne de caractères" ; elles sont converties en valeurs
+nuémriques chaque fois que cela est nécessaire avec strtol(3).
+
+VOIR EGALEMENT
+export, set
+++
+
+++ %db_lang
+NOM
+%db_lang - la variable interne du débogueur correspondant
+au langage actuel.
+
+DESCRIPTION
+%db_lang est le langage de l'objet actuel et est utilisé par le
+débogueur pour l'évaluation des expressions de langage. Il est défini
+par le débogueur en fonction des informations contenues dans le fichier
+objet lui-même. Si le débogueur ne peut pas déterminer le langage de
+l'objet actuel, %db_lang prend par défaut la valeur C. Si %lang est
+défini explicitement, il a priorité sur le langage de l'objet actuel.
+Les commandes faisant intervenir %db_lang dans l'évaluation
+d'expressions  comportent if, print, set, stop, whatis et while.
+
+VOIR EGALEMENT
+%lang, C++, expr
+++
+
+++ %global_path
+NOM
+%global_path - le chemin de recherche global du débogueur.
+
+DESCRIPTION
+La valeur de %global_path doit être une liste de noms de
+répertoires, séparés par deux points (":"). Lorsque le débogueur
+tente d'afficher le code source provenant d'un fichier, il va
+chercher dans les répertoires indiqués par le %path local les
+fichiers portant le même nom que le programme. Apres avoir
+cherché dans la liste locale, le débogueur va chercher dans la
+liste globale de recherche (%global_path). %global_path peut
+également être modifié à l'invite du débogueur avec l'option -s.
+
+VOIR EGALEMENT
+%path
+++
+
+++ %num_bytes
+NOM
+%num_bytes - le nombre d'octets à afficher par défaut.
+
+DESCRIPTION
+Si la commande "dump" n'est pas donnée avec l'option -c, elle n'affiche
+que %num_bytes octets. La valeur initiale de %num_bytes est 256 et
+elle peut être modifiée avec la commande "set".
+
+VOIR EGALEMENT
+dump
+++
+
+++ %num_lines
+NOM
+%num_lines -- nombre de lignes à afficher.
+
+DESCRIPTION
+Si la commande "dis" ou la commande "list" sont données sans
+l'option -c, chaque commande affiche un nombre de lignes
+équivalent à %num_lines. La valeur initiale de %num_lines est de
+10 et cette valeur peut être modifiée avec la commande "set".
+
+VOIR EGALEMENT
+dis, list
+++
+
+++ %result
+NOM
+%result - état de l'exécution de commandes du débogueur.
+
+DESCRIPTION
+Apres l'exécution de chaque commande du débogueur, le résultat de
+ son exécution est conservé en %result. 0 indique une exécution
+réussie. Une autre valeur que 0 indique un échec lors de
+l'exécution. 
+++
+
+++ %verbose
+NOM
+%verbose - niveau de détails des événements du débogueur.
+
+DESCRIPTION
+Lorsqu'un processus sous contrôle du débogueur s'arrête, un message
+indiquant la raison de cet arrêt s'affiche, ainsi que l'id du processus
+et la ligne source suivante, le cas échéant, ou la ligne de texte
+désassemblé suivante. %verbose permet de contrôler le contenu de ce
+message. Les valeurs possibles sont :
+        quiet   pas de message à l'arrêt d'un processus,
+        source  seule la source suivante ou la ligne de désassemblage
+                s'affichent,
+        events  si un événement a provoqué l'arrêt, il est également
+                affiché (ceci ne vaut pas pour les événements stop
+                demandés, halts ou single steps),
+        reason  la raison pour laquelle cet arrêt s'est produit,
+                ainsi que les événements et les stops demandés,
+        all     fournit tous les détails disponibles (généralement
+                équivalente à reason)
+
+Le mode par défaut est "reason". Le mode quiet peut également être
+spécifié comme option -q pour certaines commandes du débogueur. Ces
+options -q individuelles ont la priorité sur le mode verbose.
+
+VOIR EGALEMENT
+change, signal, step, stop, syscall
+++
+
+++ %wait
+NOM
+%wait - exécution synchrone ou asychrone des commandes.
+
+DESCRIPTION
+Lorsque le débogueur exécute un processus, il va normalement attendre
+que le processus s'arrête pour rendre la main à l'utilisateur. Si %wait
+est défini par "background", 0 ou "no", le débogueur passe en mode
+asynchrone. En mode asynchrone, les commandes lançant un processus
+repassent immédiatement sous contrôle de l'utilisateur, sans attendre
+l'arrêt du processus. Le mode par défaut est restauré si %wait est
+défini par "foreground", 1 ou "yes". Les options -f et -b des commandes
+run et step ont la priorité sur %wait global.
+
+VOIR EGALEMENT
+run, step
+++
+
+++ expr_stop
+NOM
+expr_stop - traitement de l'espace adresse des expressions
+d'événements
+
+DESCRIPTION
+Les expr_stop sont des expressions spéciales qui sont acceptées
+par la commande stop. Une expr_stop consiste en un ou plusieurs
+événements, joints par les opérateurs spéciaux && (and) ou ||
+(or). Ces opérateurs sont associés à gauche (left-associative),
+mais le débogueur ne garantit pas l'ordre dans lequel leurs
+opérandes seront évalués. Chaque événement peut être :
+        emplacement ( expr ) *lvalue
+
+Chaque type d'événement stop possède une action qui lui permettra d'être
+pris en compte par le débogueur. Lorsqu'une action de ce type a lieu,
+l'expression stop toute entiere est évaluée afin de déterminer si elle
+est "vraie". Si cela est le cas, l'événement se déclenche de la maniere
+normale (le débogueur informe alors l'utilisateur de l'événement et
+exécute les commandes associées).
+
+un "emplacement" correspond à une adresse dans le texte du processus
+où le débogueur peut définir un point d'interruption. Lorsque le
+processus atteint ce point, le débogueur prend note de cet événement.
+Si à cet emplacement, les stop_events s'appliquent à une fonction,
+l'expression est vraie aussi longtemps que la fonction est active. Si à
+cet emplacement,  les stop_events s'appliquent à une adresse ou à un
+numéro de ligne précis, l'expression est vraie uniquement lorsque le
+processus atteint cette adresse ou cette ligne. Tapez "help emplacement"
+pour obtenir la syntaxe complète de la commande emplacement. Lorsque le
+langage actuel est C++, les emplacements des événements_d'arrêt peuvent
+faire intervenir des fonctionnalités spécifiques à ce langage. Tapez
+"help C++" pour plus de détails.
+
+"expr" peut être une expression correct dans le langage actuel (%lang ou
+%db_lang). Le débogueur remarque le stop_event lorsque l'un des
+identificateurs compris dans l'expression voit sa valeur modifiée.
+L'expression entiere est ensuite évaluée dans le contexte du langage
+actuel.
+
+"lvalue" peut être une expression quelconque dans le langage actuel qui
+serait correcte à gauche d'une déclaration d'assignement dans ce
+langage. Le débogueur remarque cet événement lorsque le contexte de
+l'emplacement change. Le changement en lui-même rend vrai cette sorte
+de stop_event.
+
+Des expr_stop plus puissantes peuvent être créées en combinant des
+stop_events avec des opérateurs && (and). Par exemple, pour s'arrêter à
+l'intérieur d'une fonction a alors que la fonction b est également
+active, tapez "stop a && b". Pour s'arrêter lorsque la valeur d'une
+expression x devient vraie à l'intérieur d'une fonction y, tapez "stop
+y && (x)".
+
+EXEMPLES
+stop myfile.c@230
+stop *bar
+stop (x == 5)
+stop foo && (a > 7)
+stop (a == 4) || (b == 7)
+
+VOIR EGALEMENT
+%db_lang, %lang, C++, expr, emplacement, scope, stop
+++
+
+++ %redir
+NOM
+%redir - le processus d'E/S doit-il être redirigé ?
+
+DESCRIPTION
+%redir contrôle le comportement de la commande create. Par défaut, la
+commande create ne redirige pas les E/S d'un processus qu'elle vient
+de créer, à oins que l'option -r ne soit indiquée. Si %redir possède
+ la valeur 1 ou "yes", create redirigera les E/S du processus, à
+moins que l'option -n ne soit indiquée. Le comportement par défaut peut
+être remis en place en remettant %redir sur 0 ou sur "no".
+
+VOIR EGALEMENT
+create, grab, input
+++
+
+
+++ expr
+NOM
+expr - expressions du débogueur
+
+DESCRIPTION
+Les expressions du débogueur suivent la syntaxe et la sémantique
+du langage actuel (%lang ou %db_lang). Le débogueur accepte les
+expressions contenant des combinaisons de variables et de
+fonctions du programme, de noms qualifiés, de variables internes
+au débogueur et des variables internes au débogueur définies par
+l'utilisateur. Un nom qualifié indique un identificateur du
+programme qui ne sera pas visible dans le contexte actuel. La
+syntaxe de ces noms qualifiés est la suivante :
+        [[thread_id]@][[fichier_source]@][[fonction]@][[num_ligne]
+        @]identifier
+     ou [[thread_id]@]num_trame@identifier 
+     ou [[thread_id]@]nom_objet@[fichier_source@]identifier
+
+Le nom qualifié est évalué de gauche à droite et les ambigüités peuvent
+être levées par la définition de @. "num_trame" et "fonction" doivent
+correspondre à des fonctions actives. "nom_objet" indique tout objet
+(fichier exécutable ou bibliothèque partagée) composant le processus.
+
+Lorsque le langage employé est le C, la commande "debug" gère
+l'évalustion de toutes les expressions correctes en C ANSI, à
+l'exception de celles qui impliquent des extensions par macro, par
+structure ou par énumérations de déclarations de types.
+Un exemple de déclaration de type, dans une expression est la suivante :
+       ((struct { int i; char c; } *)p)->c = 'a';
+
+Lorsque le langage actuel est C++, le débogueur accepte un
+sous-ensemble d'expressions C++. Pour plus de détails, reportez-vous à
+C++.
+
+Lorsque l'expression commençe par un tiret (-) ou contient des
+caractères ayant une signification spéciale pour le débogueur, elle
+doit être entre parenthèses, entre accolades ou entre crochets. Les
+caractères ayant une signification spéciale sont les suivants : >, >>,
+|, ||, &&, #, les virgules, les points-virgules et les caractères de
+retour chariot.
+
+VOIR EGALEMENT
+%db_lang, %lang, C++, if, print, scope, set, stop, expr_stop,
+uservars, while
+++
+
+++ scope
+NOM
+scope - visibilité d'un identificateur de programme.
+
+DESCRIPTION
+Les commandes du débogueur qui acceptent des emplacements
+ou des expressions peuvent référencer les identificateurs dans les
+programmes contrôlés, comme : les fonctions, les paramêtres, les
+variables, les labels, les types, les structures et les marques d'union,
+les noms de membres et les énumérations littérales. Les emplacements
+peuvent également référencer des numéros de ligne dans le code source.
+La visibilité d'un nom pour le débogueur, à n'importe quel moment,
+dépend de l'état du programme à ce moment (contexte) et des informations
+de déboguage fournies par le programme au débogueur.
+
+Les numéros de lignes du code source, les noms des variables locales
+d'une fonction particulière, les noms des paramêtres, les noms des types
+les structures, les étiquettes d'union, les noms des membres et les
+énumérations littérales, ne sont disponibles que si le fichier dans
+lequel ils sont référencés a été compilé en indiquant l'option -g au
+compilateur. Les noms des fonctions et variables statiques ou globales
+sont disponibles si le fichier qui les définit a été compilé avec
+l'option -g ou si la table des symboles du programme n'a pas été
+enlevée.
+
+Les numéros des lignes du code source, les fonctions et les variables
+statiques ne sont visibles que lorsque le contexte actuel est présent à
+l'intérieur du fichier, c'est-à-dire si le programme a été arrêté à
+l'intérieur du code généré a partir de ce fichier. Les paramêtres de
+fonction ne sont visibles que si le contexte actuel est contenu dans
+cette fonction. Les variables locales ne sont visibles que lorsque le
+contexte actuel est visible à l'intérieur du bloc qui les définit.
+
+Les identificateurs qui ne sont pas visibles dans le contexte courant
+peuvent souvent être accédés a des emplacements ou dans des expressions
+en utilisant des noms qualifiés. Voir "expr" et "emplacement" pour une
+syntaxe complète.
+
+Les symboles définis dans les bibliothéques partagées ne peuvent
+être visualisés que si ces bibliothèques sont chargées par
+l'éditeur de liens dynamiques. Généralement, au premier lancement
+d'un programme, seuls les symboles définis dans le programme et
+dans libc.so peuvent être visualisés. Une fois que le programme
+passe l'étape _start ou même au delà, d'autres bibliothèques
+partagées sont disponibles. Les symboles des bibliothèques
+partagées chargées par des appels à dlopen(3X) ne sont
+disponibles qu'après un appel.
+
+VOIR EGALEMENT
+%frame, %func, %line, expr, emplacement
+++
+
+++ whatis
+NOM
+whatis - affiche le type d'une expression.
+
+RESUME
+whatis [-p liste_proc] expr
+
+DESCRIPTION
+whatis affiche le type d'expression du contexte actuel (%frame).
+Lorsqu'une liste de processus (liste_proc) est indiquée, le type
+d'expression est évalué dans le contexte de chaque processus de cette
+liste. Expr peut correspondre à une expression du langage actuel.
+
+Si une variable est une structure ou un type de classe, "whatis
+variable" affichera le nom de la structure ou de la classe. "whatis
+structure_tag_name" ou "whatis type_name" affichera toutes les
+informations concernant ce type, y compris les membres de la structure
+et les constantes d'énumération.
+
+Si on lui donne en entrée un pointeur en direction d'une classe
+d'objets possédant des fonctions virtuelles et que le débogueur peut
+déterminer que le type d'objet sur lequel on pointe est dérivé d'une
+classe de base, whatis affichera a la fois la classe de base et la
+classe dérivée.
+
+EXEMPLES
+whatis i
+whatis main
+whatis (i + 1) * 2.0
+whatis struct foobar
+
+VOIR EGALEMENT
+%db_lang, C++, expr
+++
+
+++ C++
+NOM
+C++ - Spécificité du langage C++
+
+DESCRIPTION
+Le débogueur va reconnaître un fichier objet compilé à l'aide de la
+version 2.0 de C++ Compilation System ou du traducteur de C++ cfront
+(version 2.1 ou 3.0) et va définir le langage actuel (%db_lang)
+comme étant C++. Les noms s'affichent comme dans la source C++ et non
+comme ils apparaissent dans le fichier objet.
+
+Lorsque le langage actuel est C++, le débogueur accepte un
+sous-ensemble d'expressions faisant partie de C++, parmi
+lesquelles on trouve les suivantes :
+
+     o  Toutes les expressions acceptées lorsque C constitue le langage
+        actuel,
+     o  Appels adressés à des fonctions membre, dont font partie les
+        fonctions membre virtuelles et les fonctions membre statiques,
+     o  Appels adressés à des fonctions surchargées,
+     o  Expressions utilisant des noms de types comme typedefs,
+     o  Expressions utilisant des fonctions opérateur surchargées et
+     o  Expressions accédant aux membres des classes grâce au pointeur
+        implicite "this", lorsque le processus ou le chemin d'exécution
+        est arrêté dans une fonction associée aux membres des classes.
+
+Les commandes print et set ont une option -v (verbose) qui permet
+d'afficher des information détaillées, comprenant les prototypes
+de toutes les fonctions appelées par le débogueur pour
+l'évaluation d'une expression. Cette option est particulièrement
+utile pour une bonne compréhension de ce qui peut se passer dans
+les expressions qui utilisent des fonctions ou des opérateurs
+surchargés. Cette option -v affiche également, pour la commande
+print, une structure et des membres de classe générés par
+compilateur, tels que des pointeurs de tables de fonctions
+virtuelles.
+
+Lorsqu'il existe un pointeur d'objet de classe de base avec des
+fonctions virtuelles et que le débogueur peut déterminer que le
+type d'objet vers lequel est dirigé le pointeur est une classe
+dérivée de la classe de base, la commande whatis va afficher la
+classe de base et le classe qui en dérive. La commande print va
+également afficher l'objet comme d'un type dérivé.
+
+Lors de l'impression d'une structure ou d'une classe, la commande
+print va afficher les membres de classe static, en signalant
+qu'il s'agit de membres statiques. Notez bien que les symboles de
+-v n'affichent pas ce type de membres. Notez également que les
+membres de classe générés par compilateur ne s'affichent qu'avec
+l'option -v de la commande print.
+
+Les points d'interruption (événements stop) peuvent se définir avec :
+
+     o  des fonctions membres de classe, comprenant les fonctions
+        constructor, destructor et de conversion,
+     o  des opérateurs surchargés et
+     o  des fonctions surchargées qui utilisent le prototype complet ou
+     o  des fonctions surchargées n'ayant pas d'information prototype.
+        Dans ce cas, le débogueur affiche une liste de fonctions et vous
+        demande d'en sélectionner une ou la totalité.
+
+Un événement stop peut également être créé pour une combinaison
+d'objet spécifique et de fonction membre en utilisant la syntaxe
+"stop pointer->function" ou "stop object.function". Le débogueur
+n'arrête le processus, au moment ou la fonction est entrée, que
+si "ce" pointeur correspond à l'objet spécifié. S'il s'agit d'une
+fonction virtuelle, le débogueur définit le point d'interruption
+sur la fonction de remplacement appropriée.
+
+EXEMPLES
+print *this
+print -v ptr->overloaded_f(1, 2)
+whatis ptr_to_base stop C::f(int)
+stop C::C
+stop C::~C
+stop C::operator int()
+stop C::operator+
+stop ptr->f(char *)
+
+VOIR EGALEMENT
+%db_lang, expr, print, set, stop, whatis
+++

@@ -1,0 +1,132 @@
+
+
+
+        UnixWare 2 Upgrade:  El escritorio de UnixWare nuevo y mejorado
+
+
+
+Bienvenido a UnixWare 2.  Es posible que haya advertido algunos 
+cambios con respecto al Escritorio UnixWare 1.1.  En este documento 
+encontrará las respuestas a las siguientes preguntas relativas a su 
+cuenta de escritorio:
+
+  * Aparentemente, el Escritorio UnixWare ha cambiado. 
+  ¿Qué novedades presenta?
+
+  * ¿Seguirán funcionando las aplicaciones gráficas instaladas bajo 
+  UnixWare 1.1 después de la instalación?
+
+  * Definí clases nuevas de archivos usando la utilidad Config_Iconos. 
+¿Se conservarán las modificaciones realizadas en la base de datos de clases?
+
+  * ¿Qué ha ocurrido con mis archivos .Xdefaults, .olinitrc, .olsetup y 
+  .dtfclass?
+
+  *¿Dónde están Preferencias/Teclado y Config_Sistema/Config_Terminal?
+         
+  *¿Dónde están la Librería_de_fondo y Config_Fuentes?
+
+  * ¿Dónde está Fingertip Librarian?
+
+  * ¿Qué ha ocurrido con mi combinación de colores personalizada?
+
+  * Mi Escritorio UnixWare 1.1 estaba en modo OPENLOOK, pero, después de 
+  la actualización, aparece en modo Motif.  ¿Cuál es la razón?
+
+  * ¿Dónde están mis notas de Ayuda?
+
+  * Aparentemente, durante la actualización he perdido personalizaciones 
+  importantes del Escritorio UnixWare.  ¿Cómo puedo recuperarlas?
+
+
+Para obtener información general acerca del Escritorio UnixWare, 
+consúltese el Manual del usuario del Escritorio, el Manual del propietario del
+ sistema, o el Escritorio_de_ayuda.  Para obtener información acerca 
+de los cambios realizados en todo el sistema, consúltese 
+/usr/X/adm/README.UW2.0.
+
+
+P:  Aparentemente, el Escritorio UnixWare ha cambiado.  ¿Qué novedades 
+presenta?
+R:  Se ha añadido un nuevo directorio, Herramientas_de_Admin, al 
+Escritorio UnixWare.  Contiene las herramientas de escritorio que 
+anteriormente se almacenaban en Config_Sistema y Utilidades.  Se ha 
+creado un directorio independiente, Herramientas_de_Admin/Redes, para 
+las herramientas correspondientes a la red.  Las herramientas instaladas 
+en el directorio Accesorios se han trasladado al directorio Aplicaciones.
+
+Si no tenía archivos ni aplicaciones personales en los directorios 
+Accesorios, Utilidades y Config_Sistema, éstos se habrán 
+suprimido.  En caso contrario, es posible que desee considerar trasladar 
+sus aplicaciones a estos nuevos directorios.  Si tenía archivos 
+con enlaces simbólicos en su ubicación antigua, deberá volver a crear los enlaces.
+
+P: ¿Seguirán funcionando las aplicaciones gráficas instaladas bajo 
+UnixWare 1.1 después de la instalación?
+R: Sí.  La instalación de la actualización no las ha modificado en
+ absoluto.  Todas las adiciones a la base de datos de clase 
+realizadas por las aplicaciones se copiaron también en la nueva 
+base de datos de clase (la base de datos de clase de UnixWare 1.1 
+se ha guardado en /usr/X/.SAV2.0/classdb para la nacionalidad de C y en 
+/usr/X/.SAV2.0/locale/<nombre_nacionalidad>/classdb para las nacionalidades no C).
+
+P: He definido clases nuevas de archivos usando la utilidad 
+Config_iconos. ¿Se conservarán las modificaciones realizadas 
+en la base de datos de clases? 
+R: Sí.  Se han conservado las clases personales.
+
+P: ¿Qué ha ocurrido con mis archivos .Xdefaults, .olinitrc, .olsetup 
+y .dtfclass?
+R: Estos archivos se han modificado en UnixWare 2.  En los casos en 
+que ha sido posible (es decir, .Xdefaults, .dftclass), se han 
+conservado las personalizaciones.  Para garantizar un funcionamiento 
+correcto del sistema, se han realizado algunos cambios.  Las 
+versiones de UnixWare 1.1 de estos archivos se han guardado en su directorio personal, en el directorio .SAV2.0.
+
+.Xdefaults: Las personalizaciones del teclado y de las fuentes 
+globales se han suprimido.  La personalización de las teclas 
+individuales a través de las hojas de preferencias del Teclado ya no se 
+soporta.  Los recursos de las fuentes han cambiado en UnixWare 2.  
+Puede restaurar las personalizaciones de fuentes con la herramienta
+Fuentes que está en el directorio Preferencias.
+
+.dftclass: La clase DataFile de este archivo se ha mejorado. 
+Todas las clases personales que usted hubiese añadido se han conservado.
+
+.olinitrc:  Este archivo se ha reemplazado por la versión de UnixWare 2, 
+su versión antigua está anexada  al mismo (pero se ha marcado como comentario).
+
+.olsetup:  Este archivo se ha reemplazado por la versión de UnixWare 2.  
+Obsérvese que ya no se soporta el modo OPENLOOK de escritorio.
+
+P: ¿Dónde están Preferencias/Teclado y Config_Sistema/Config_Terminal?
+R: Estas funcionalidades ya no se soportan en UnixWare 2.
+
+P: ¿Dónde está Fingertip Librarian?
+R: Fingertip Librarian ha sido reemplazado por el Observador de documentos de Dynatext.  
+Está ubicado en el Escritorio UnixWare en Aplicaciones/Doc_en_línea.
+
+P: ¿Qué ha ocurrido con mi combinación de colores personalizada?
+R: La hoja de propiedades de colores se ha mejorado para 
+UnixWare 2.  Existen paletas de colores predefinidos nuevas.  
+El escritorio arrancará con la paleta de colores por defecto.
+
+P: Mi Escritorio UnixWare 1.1 estaba en modo OPENLOOK, pero, después de 
+la actualización, aparece en modo Motif.  ¿Cuál es la razón? 
+R: El Escritorio UnixWare ya no soporta el modo OPENLOOK.
+
+P: ¿Dónde están mis notas de Ayuda?
+R: UnixWare 2 es significativamente distinto de 
+UnixWare 1.1, de modo que es posible que las notas ya no sean relevantes.  
+De acuerdo con esto, el contenido del Escritorio_de_ayuda 
+se ha actualizado con el fin de reflejar las nuevas funcionalidades, 
+con lo que ya no se encuentran en él las ubicaciones 
+de sus notas.  Las notas de UnixWare 1.1 se han conservado en su directorio 
+personal en el archivo .SAV2.0/dthelp/<nombre_nacionalidad>/notes, donde <nombre_nacionalidad> hace referencia al nombre de su nacionalidad.
+
+P:  Aparentemente, durante la actualización he perdido personalizaciones 
+importantes del Escritorio UnixWare.  ¿Cómo puedo recuperarlas? 
+R: Los archivos de UnixWare 1.1 que han sido reemplazados o 
+fusionados con las versiones de UnixWare 2 durante la actualización 
+se han guardado en su directorio personal en el directorio .SAV2.0
+

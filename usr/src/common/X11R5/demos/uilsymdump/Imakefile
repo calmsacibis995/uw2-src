@@ -1,0 +1,33 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)mdemos:uilsymdump/Imakefile	1.2"
+XCOMM 
+XCOMM (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC. 
+XCOMM ALL RIGHTS RESERVED 
+XCOMM 
+XCOMM 
+XCOMM Motif Release 1.2
+XCOMM 
+XCOMM   $RCSfile: Imakefile,v $ $Revision: 1.5 $ $Date: 92/03/13 15:44:01 $
+#include	<Motif.tmpl>
+#include	<Motif.rules>
+EXTRA_LOAD_FLAGS = -z nodefs
+
+INCLUDES = -I. -I$(INCLUDESRC) -I$(MINCLUDESRC) -I$(MCLIENTSRC) -I$(MLIBSRC)
+LOCAL_LIBRARIES = UilClientLibs
+LOCAL_LIBRARIES = $(UILLIB) $(MRESOURCELIB) $(XMLIB) $(XTOOLLIB) $(XLIB) -lnsl -lsocket $(SYSLIBS)
+
+SRCS=uilsymdump.c
+
+OBJS=uilsymdump.o
+
+MSimpleProgramTarget(uilsymdump)
+InstallProgram(uilsymdump,$(BINDIR))
+
+DependTarget()

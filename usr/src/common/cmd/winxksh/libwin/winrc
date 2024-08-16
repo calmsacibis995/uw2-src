@@ -1,0 +1,1472 @@
+#ident "@(#)winxksh:libwin/winrc	1.16"
+
+struct form_data id:short count:short flds e_cb h_cb l_cb ecb_parm hcb_parm lcb_parm
+nl='
+'
+tab='	'
+WIN_EV='@longp:&win_eval'
+
+COLOR_BLACK=0
+COLOR_RED=1
+COLOR_GREEN=2
+COLOR_YELLOW=3
+COLOR_BLUE=4
+COLOR_MAGENTA=5
+COLOR_CYAN=6
+COLOR_WHITE=7
+
+BLACK=$COLOR_BLACK
+RED=$COLOR_RED
+GREEN=$COLOR_GREEN
+YELLOW=$COLOR_YELLOW
+BLUE=$COLOR_BLUE
+MAGENTA=$COLOR_MAGENTA
+CYAN=$COLOR_CYAN
+WHITE=$COLOR_WHITE
+
+integer FORMSIZE
+
+call -r strdup "@string_t:|helpwin na|"
+defhelp=$_RETX
+
+# Unless otherwise stated every function returns 0 for success and 1
+# for failure (the shell standard)
+
+# Make sure that $1 is a number and is between $2 and $3
+function numrange
+{
+	case "$1" in
+	[0-9]*([0-9]))
+		;;
+	*)
+		eval errmsg "$BADNUM"
+		return 1
+	esac
+	if (( $1 < $2 || $1 > $3 ))
+	then
+		eval errmsg "$BADNUM"
+		return 1
+	fi
+	return 0
+}
+
+function input_handler
+{
+	call input_handler ${1:-0}
+}
+
+# Put an error out to the message line, noting that it is an error
+function errmsg
+{
+	msg "$@"
+	error_pending=on
+}
+
+# Put a message to the message line, only if the current message is
+# not an error
+function msgnoerr
+{
+	if [ -n "$error_pending" ]
+	then
+		error_pending=
+		return 0
+	fi
+	msg "$@"
+}
+
+function iscolor
+{
+	if [ -z "$no_color" ]
+	then
+		cdecl longp no_color='&no_color'
+		cprint -v no_color no_color
+	fi
+	(( !no_color ))
+}
+
+function beep
+{
+	call beep
+}
+
+# Print out usage message and return from calling function
+# Notice that by putting return in trap 0, this is exiting the calling
+# function
+function usage
+{
+	trap "return 1" 0
+	print -u2 "$usage"
+}
+
+# For each parameter, create a function and parameter variable
+function funcize
+{
+	typeset i
+	for i
+	do
+		if eval [ -n \"\$$i\" ]
+		then
+			eval ${i}func="\"$WIN_EV\""
+		else
+			eval ${i}func=0
+		fi
+	done
+}
+
+#int open_form(int (*entry_cb)(int id, void *), void *ecb_parm,
+#	      int (*help_cb)(int id, void *),  void *hcb_parm,
+#              int (*leave_cb)(int id, void *), void *lcb_parm);
+# Creates a new form
+#
+# Other side effects:
+#       FID is id of this form
+#       Previous form with id FID will have its data freed
+#       FORMFREES[FID] is populated with data that needs to be freed
+#
+# The form is not put on the screen or associated with a window until
+# 'run_form'
+function open_form
+{
+	FORMHELP=$defhelp
+	typeset frees i entry= help="$defhelp" exit= usage='open_form
+\t\t-fentry pre-field-entry-callback-line
+\t\t-entry entry-callback-line
+\t\t-exit exit-callback-line
+\t\t-help help-callback-line'
+	FIELDCNT=0
+	unset FIELDS
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-help)
+			shift
+			call -r strdup "@string_t:|$1|"
+			help="$_RETX"
+			FORMHELP="$1"
+			frees="$frees $_RETX"
+			;;
+		-fentry)
+			shift
+			FIELDENTRY="$1"
+			;;
+		-entry)
+			shift
+			call -r strdup "@string_t:|$1|"
+			entry="$_RETX"
+			frees="$frees $_RETX"
+			;;
+		-exit)
+			shift
+			call -r strdup "@string_t:|$1|"
+			exit="$_RETX"
+			frees="$frees $_RETX"
+			;;
+		esac
+		shift
+	done
+	typeset entryfunc helpfunc exitfunc
+	funcize entry help exit
+	if call -n open_form "$entryfunc" "$entry" "$helpfunc" "$help" "$exitfunc" "$exit"
+	then
+		FID=$_RETD
+		FORMFREES[FID]=$frees
+		return 0
+	else
+		return 1
+	fi
+}
+
+# If $3 is non-zero marks field $2 of form $1 as invisible
+# if $3 is zero marks field $2 of form $1 as visible
+function fld_invisible
+{
+	call -v fld_invisible $1 $2 $3
+}
+
+# If $3 is non-zero marks field $2 of form $1 as gray
+# if $3 is zero marks field $2 of form $1 as non-gray
+function fld_gray
+{
+	call -v fld_gray $1 $2 $3
+}
+
+# Changes the prompt of field $2 of form $1 to $3
+function fld_pchange
+{
+	call -v fld_pchange $1 $2 "@string_t:|$3|"
+}
+
+# Changes the contents of field $2 of form $1 to $3
+function fld_change
+{
+	call -v fld_change $1 $2 "@string_t:|$3|"
+}
+
+#int add_field(short p_xloc, short p_yloc, short p_fcolor, short p_color,
+#	      short p_flags, short i_xloc, short i_yloc,
+#	      short i_fcolor, short i_bcolor, short i_flags,
+#	      char *mask, char *buffer, char *p_text,
+#	      short n_fld, short p_fld, short flags, short title_flg
+#	      char *(*choice_cb)(int, void *), void *ccb_parm,
+#	      int (*entry_cb)(int, void *), void *ecb_parm,
+#	      int (*help_cb)(int, void *),  void *hcb_parm,
+#	      int (*exit_cb)(int, void *),  void *lcb_parm);
+#
+# Add a field to last opened form
+#
+# Other side effects:
+#      After return FIELDCNT is the id of this field + 1
+#      All freeable info is placed in FORMFREES[FID]
+function add_field
+{
+	typeset def= buf varname= var= usage='add_field varname
+\t\t-p prompt
+\t\t-px prompt-x-coordinate -py prompt-y-coordinate
+\t\t-pfg prompt-foreground -pbg prompt-background
+\t\t-ix input-x-coordinate -iy input-y-coordinate
+\t\t-ifg input-foreground-color -ibg input-background-color
+\t\t-ilen input-length
+\t\t-invisible
+\t\t-gray
+\t\t-title
+\t\t-choice_callback choice_callback_line
+\t\t-entry_callback entry_callback_line
+\t\t-help_callback help_callback_line
+\t\t-exit_callback exit_callback_line'
+	if [ "$FIELDCNT" = 0 ]
+	then
+		integer px=1 py=1 ix=-1 iy=1
+	else
+		integer px=${LASTPX:-0} py=${LASTPY:-0}+1 ix=${LASTIX:-0} iy=${LASTIY:-0}+1
+	fi
+	integer ilen=32
+	typeset titleflg=0 pfg=$COMBO2_FG pbg=$COMBO2_BG ifg=$COMBO1_FG ibg=$COMBO1_BG invisible=0 gray=0 prompt=
+	typeset choice= help="$FORMHELP" exit=
+	if [ -n "$FIELDENTRY" ]
+	then
+		typeset entry="$FIELDENTRY"
+	else
+		typeset entry=
+	fi
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-title)
+			titleflg=1024
+			;;
+		-p)
+			shift
+			prompt=$1
+			;;
+		-bg)
+			shift
+			pbg=$1
+			ibg=$1
+			;;
+		-fg)
+			shift
+			pfg=$1
+			ifg=$1
+			;;
+		-pfg)
+			shift
+			pfg=$1
+			;;
+		-pbg)
+			shift
+			pbg=$1
+			;;
+		-px)
+			shift
+			px=$1
+			;;
+		-py)
+			shift
+			py=$1
+			;;
+		-ifg)
+			shift
+			ifg=$1
+			;;
+		-ibg)
+			shift
+			ibg=$1
+			;;
+		-ix)
+			shift
+			ix=$1
+			;;
+		-iy)
+			shift
+			iy=$1
+			;;
+		-ilen)
+			shift
+			ilen=$1
+			# Make it big enough for multibyte characters
+			integer use_ilen=$1*4
+			typeset -L$ilen mask=XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+			;;
+		-invisible)
+			invisible=4
+			;;
+		-gray)
+			gray=2
+			;;
+		-choice)
+			shift
+			call -r strdup "@string_t:|$1|"
+			FORMFREES[FID]="${FORMFREES[FID]} $_RETX"
+			choice="$_RETX"
+			;;
+		-help)
+			shift
+			call -r strdup "@string_t:|$1|"
+			FORMFREES[FID]="${FORMFREES[FID]} $_RETX"
+			help="$_RETX"
+			;;
+		-entry)
+			shift
+			if [ -n "$FIELDENTRY" ]
+			then
+				call -r strdup "@string_t:|$FIELDENTRY; $1|"
+			else
+				call -r strdup "@string_t:|$1|"
+			fi
+			FORMFREES[FID]="${FORMFREES[FID]} $_RETX"
+			entry="$_RETX"
+			;;
+		-exit)
+			shift
+			call -r strdup "@string_t:|$1|"
+			FORMFREES[FID]="${FORMFREES[FID]} $_RETX"
+			exit="$_RETX"
+			;;
+		*)
+			if [ -n "$varname" ]
+			then
+				print -u2 'Second variable name'
+				usage
+			fi
+			eval def="\"\${$1}\""
+			varname=$1
+		esac
+		shift
+	done
+	if (( ilen > 0 ))
+	then
+		if [ -z "$varname" -o -z "$mask" ]
+		then
+			print -u2 No variable name specified
+			usage
+		fi
+		if (( ix < 0))
+		then
+			ix=px+${#prompt}+2
+		fi
+		LASTIX=$ix
+		LASTIY=$iy
+		eval $varname=${mask}${mask}${mask}${mask}
+		case "$varname" in
+		*([A-Za-z]))
+			[ -z "$VARPROTECT" ] || readonly $varname
+		esac
+		FORMVARS[FID]="$FORMVARS[FID] $varname"
+		call -r env_get $varname
+		buf=$_RETX
+		call strcpy $buf "@string_t:|$def|"
+	else
+		buf=0
+		mask=0
+	fi
+	LASTPX=$px
+	LASTPY=$py
+	#typeset -i prev=FIELDCNT next=FIELDCNT
+	typeset -i prev=FIELDCNT next=FIELDCNT+1
+	if [ "$FIELDCNT" != 0 ]
+	then
+		prev=prev-1
+	fi
+	typeset entryfunc helpfunc exitfunc choicefunc
+	funcize choice entry help exit
+	call -v add_field \
+		$px $py $pfg $pbg 0 \
+		$ix $iy $ifg $ibg 0 \
+		"$mask" $buf "@string_t:|$prompt|" \
+		$next $prev "128|$invisible|$gray|$titleflg" \
+		"$choicefunc" "$choice" \
+		"$entryfunc" "$entry" \
+		"$helpfunc" "$help" \
+		"$exitfunc" "$exit"
+	let FIELDCNT=FIELDCNT+1
+}
+
+# Frees all internal data structures of check-box
+function destroy_check
+{
+	typeset i cid=${1:-$CID}
+	for i in ${CHECKFREES[cid]}
+	do
+		call -v free $i
+	done
+	call -v destroy_check ${cid}
+}
+
+# Frees all internal data structures of radio-box
+function destroy_radio
+{
+	typeset i rid=${1:-$RID}
+	for i in ${RADIOFREES[rid]}
+	do
+		call -v free $i
+	done
+	call -v destroy_radio ${rid}
+}
+
+# Frees all internal data structures of form
+function destroy_form
+{
+	typeset fid=${1:-$FID}
+	for i in ${FORMFREES[fid]}
+	do
+		call -v free $i
+	done
+	call -v destroy_form ${fid}
+}
+
+# Frees all internal data structures of menu
+function destroy_menu
+{
+	typeset mid=${1:-$MID}
+	for i in ${MENUFREES[MID]}
+	do
+		call -v free $i
+	done
+	call -v destroy_menu ${mid}
+}
+
+# Place a window on the screen of size $1 by $2, using user-supplied
+# criteria.   All unrecognized arguments are passed through to
+# open_window.  Window size is forced to conform to screen maxima.
+function place_window
+{
+	integer lastline lastcol startline startcol
+	integer left=1 right=1 above=1 below=1 cols=0 i=0 lines=0 bord=2
+	typeset args
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-left)
+			shift
+			left=$1
+			;;
+		-right)
+			shift
+			right=$1
+			;;
+		-above)
+			shift
+			above=$1
+			;;
+		-noborder)
+			args[(i=i+1)]="$1"
+			bord=0
+			;;
+		-below)
+			shift
+			below=$1
+			;;
+		-*)
+			args[(i=i+1)]="$1"
+			;;
+		*)
+			if (( !cols ))
+			then
+				cols=$1
+			elif (( !lines ))
+			then
+				lines=$1
+			else
+				args[(i=i+1)]="$1"
+			fi
+		esac
+		shift
+	done
+	if (( left+right == 0 ))
+	then
+		startcol=0
+	else
+		startcol='(COLUMNS-cols-bord)*left/(left+right)'
+		(( startcol < 0 )) && startcol=0
+	fi
+	lastcol=startcol+cols+bord-1
+	(( lastcol >= COLUMNS )) && lastcol=COLUMNS-1
+	if (( above+below == 0 ))
+	then
+		startline=$HEADBOTLINE+1
+	else
+		startline='(MSGLINE-lines-bord-HEADBOTLINE-1)*above/(above+below)+HEADBOTLINE+1'
+		(( startline < 0 )) && startline=0
+	fi
+	lastline=startline+lines+bord-1
+	(( lastline >= LINES )) && lastline=LINES-1
+	open_window $startcol $startline $lastcol $lastline "${args[@]}"
+}
+
+# Create a window on the screen.
+#
+# Side effects:
+#      CURWIN is set to id of new window
+#      CURWIN_FG is set to foreground color of new window
+#      CURWIN_BG is set to background color of new window
+#
+# Defaults:
+#      Bordered window
+#      Foreground color: $COMBO1_FG
+#      Background color: $COMBO1_BG
+#int create_window(short xup, short yup, short xbot, short ybot, short border,
+#            short fcolor, short bcolor , unsigned short win_attr);
+function open_window
+{
+	integer lastline lastcol startline startcol border=$DEFBORD fg=$COMBO1_FG bg=$COMBO1_BG border_color=-1
+	typeset title=
+	typeset frees current= noncurrent=
+	typeset usage='open_window top_left_x top_y bottom_x bottom_right_y
+\t\t-noborder
+\t\t-current callback-for-window-becoming-current
+\t\t-noncurrent callback-for-window-becoming-noncurrent
+\t\t-border_fg border_color
+\t\t-title title
+\t\t-fg foreground
+\t\t-bg background'
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-current)
+			shift
+			call -r strdup "@string_t:|$1|"
+			frees="$frees $_RETX"
+			current="$_RETX"
+			;;
+		-noncurrent)
+			shift
+			call -r strdup "@string_t:|$1|"
+			frees="$frees $_RETX"
+			noncurrent="$_RETX"
+			;;
+		-title)
+			shift
+			title=$1
+			;;
+		-bg)
+			shift
+			bg=$1
+			;;
+		-fg)
+			shift
+			fg=$1
+			;;
+		-border_fg)
+			border=$DEFBORD
+			shift
+			border_color=$1
+			;;
+		-noborder)
+			border=8
+			;;
+		-*)
+			print -u2 Unrecognized option $1
+			usage
+			;;
+		*)
+			if [ -z "$startcol" ]
+			then
+				startcol=$1
+			elif [ -z "$startline" ]
+			then
+				startline=$1
+			elif [ -z "$lastcol" ]
+			then
+				lastcol=$1
+			elif [ -z "$lastline" ]
+			then
+				lastline=$1
+			else
+				print -u2 Unrecognized option $1
+				usage
+			fi
+		esac
+		shift
+	done
+	if (( border_color < 0 ))
+	then
+		case "$bg" in
+		$CYAN)
+			border_color=$BLACK
+			;;
+		*)
+			border_color=$CYAN
+		esac
+	fi
+	CURWIN_FG=$fg
+	CURWIN_BG=$bg
+	typeset currentfunc noncurrentfunc
+	funcize current noncurrent
+	call -n create_window $startcol $startline $lastcol $lastline $border $fg $bg 0 "@string_t:|$title|" 0 $border_color $bg 0 "$currentfunc" "$current" "$noncurrentfunc" "$noncurrent"
+	if [ "$?" = 0 ]
+	then
+		CURWIN=$_RETD
+		return 0
+	else
+		return 1
+	fi
+}
+
+# Create a new menu.
+#
+# Side effects:
+#      WID is set to id of new menu
+#      CUR_MENU_HELP is set to the value of the -help option
+#      MENUFREES[MID] is the list of addresses to free
+#int start_menu(int (*entry_cb)(void *), void *ecb_parm,
+#	       int (*exit_cb)(void *), void *lcb_parm,
+#	       short xloc, short yloc, short xs, short fcolor, short bcolor)
+function open_menu
+{
+	typeset usage='open_menu
+\t\t-select_bg selection-background-color
+\t\t-select_fg selection-foreground-color
+\t\t-x x-coordinate-of-menu
+\t\t-y y-coordinate-of-menu
+\t\t-entry entry-callback-line
+\t\t-exit exit-callback-line
+\t\t-help help-callback-line'
+	integer x=0 y=0
+	typeset i fg=$MENU_SELECT_FG bg=$MENU_SELECT_BG ret frees= entry= exit=
+	CUR_MENU_HELP="$defhelp"
+	let CUR_MENU_ITEM=0
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-x)
+			shift
+			x=$1
+			;;
+		-y)
+			shift
+			y=$1
+			;;
+		-sbg)
+			shift
+			bg=$1
+			;;
+		-sfg)
+			shift
+			fg=$1
+			;;
+		-help)
+			shift
+			call -r strdup "@string_t:|$1|"
+			CUR_MENU_HELP="$_RETX"
+			frees="$frees $_RETX"
+			;;
+		-entry)
+			shift
+			call -r strdup "@string_t:|$1|"
+			entry=$_RETX
+			frees="$frees $_RETX"
+			;;
+		-exit)
+			shift
+			call -r strdup "@string_t:|$1|"
+			exit="$_RETX"
+			frees="$frees $_RETX"
+			;;
+		esac
+		shift
+	done
+	typeset entryfunc exitfunc
+	funcize entry exit
+	call -n start_menu "$entryfunc" "$entry" "$exitfunc" "$exit" $x $y $fg $bg
+	ret=$?
+	MID=$_RETD
+	MENUFREES[MID]="$frees"
+	return $ret
+}
+
+# Add an item to the current menu.
+#
+# Side effects:
+#        CUR_MENU_ITEM counts the number of items in the menu
+#add_menu_item(char *text,ushort flags, short fcolor, short bcolor,
+#	      int (*ecb)(int,void *), void *ecb_parm,
+#	      int (*lcb)(int,void *), void *lcb_parm,
+#	      int (*hcb)(int,void *), void *hcb_parm,
+#	      int (*scb)(int,void *), void *scb_parm)
+function add_menu_item
+{
+	typeset usage='add_menu_item text
+\t\t-gray
+\t\t-invisible
+\t\t-bg background-color
+\t\t-fg foreground-color
+\t\t-select select-callback-line
+\t\t-entry entry-callback-line
+\t\t-exit exit-callback-line
+\t\t-help help-callback-line'
+	typeset text= fg=$CURWIN_FG bg=$CURWIN_BG entry= exit= help=$CUR_MENU_HELP select= gray=0 invisible=0
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-bg)
+			shift
+			bg=$1
+			;;
+		-fg)
+			shift
+			fg=$1
+			;;
+		-help)
+			shift
+			call -r strdup "@string_t:|$1|"
+			help="$_RETX"
+			MENUFREES[MID]="${MENUFREES[MID]} $_RETX"
+			;;
+		-invisible)
+			invisible=4
+			;;
+		-gray)
+			gray=2
+			;;
+		-entry)
+			shift
+			call -r strdup "@string_t:|$1|"
+			entry="$_RETX"
+			MENUFREES[MID]="${MENUFREES[MID]} $_RETX"
+			;;
+		-exit)
+			shift
+			call -r strdup "@string_t:|$1|"
+			exit="$_RETX"
+			MENUFREES[MID]="${MENUFREES[MID]} $_RETX"
+			;;
+		-select)
+			shift
+			call -r strdup "@string_t:|$1|"
+			select="$_RETX"
+			MENUFREES[MID]="${MENUFREES[MID]} $_RETX"
+			;;
+		*)
+			if [ -n "$text" ]
+			then
+				usage
+			fi
+			text="$1"
+		esac
+		shift
+	done
+	if [ -z "$text" ]
+	then
+		usage
+	fi
+	let CUR_MENU_ITEM=CUR_MENU_ITEM+1
+	typeset entryfunc exitfunc helpfunc selectfunc
+	funcize entry exit help select
+	call add_menu_item "@string_t:|$text|" "$invisible|$gray" $fg $bg "$entryfunc" "$entry" "$exitfunc" "$exit" "$helpfunc" "$help" "$selectfunc" "$select"
+}
+
+# Put a message to the message line, if it is a change
+function msg
+{
+	if [ "$CURMSG" != "$*" ]
+	then
+		CURMSG="$*"
+		wputstr $MSGWID "$nl$nl$nl"
+		wclear $MSGWID
+		wputstr $MSGWID "$*"
+	fi
+}
+
+# Put a footer to the footer window, if it is a change
+# The tricky part here is that for monochrome monitors, we need to
+# make sure to fill the whole window with spaces (in reverse video).
+function footer
+{
+	if [ "$CURFOOT" != "$*" ]
+	then
+		CURFOOT="$*"
+		case "$CURFOOT" in
+		*"$nl"*)
+			;;
+		*)
+			if (( ${#CURFOOT} > COLUMNS ))
+			then
+				typeset -L$COLUMNS tmp=
+				tmp=${CURFOOT}
+				CURFOOT=$tmp$nl${CURFOOT#$tmp}
+			fi
+		esac
+		typeset i
+		integer j=1
+		typeset OIFS="$IFS" IFS="$nl"
+		set -- $CURFOOT
+		IFS="$OIFS"
+		call Wclear_nw $FOOTWID
+		while (( j <= $FOOTER_HEIGHT ))
+		do
+			eval i="\"\$$j\""
+			if (( j > 1 ))
+			then
+				wputstr $FOOTWID "$nl"
+			fi
+			integer len="(COLUMNS-${#i})/2" len2=COLUMNS-len
+			typeset -L$len buf=
+			typeset -L$len2 buf2="$i"
+			wputstr $FOOTWID "$buf$buf2"
+			let j=j+1
+		done
+	fi
+}
+
+# Make the menu runnable, making $2 current item
+function run_menu
+{
+	call run_menu ${1:-$MID} $2
+}
+
+# Make the form runnable
+function run_form
+{
+	call run_form ${1:-$FID}
+}
+
+# Close the window
+function wclose
+{
+	call Wclose ${1:-$CURWIN}
+}
+
+# Clear the window
+function wclear
+{
+	call Wclear ${1:-$CURWIN}
+}
+
+# Go to location $2 $3 on window $1
+function wgotoxy
+{
+	call Wgotoxy $1 $2 $3
+}
+
+# Print the string $2 to window $1
+function wputstr
+{
+	call Wputstr_ascii $1 "@string_t:|$2|"
+}
+
+# Printf to window $1
+function wprintf
+{
+	typeset wid=$1 fmt="$2"
+	shift 2
+	call Wprintf $wid "@string_t:|$fmt|" "$@"
+}
+
+# Set the attribute $2 to window $1
+function wsetattr
+{
+	call Wsetattr $1 "@long:$2"
+}
+
+# Create a new radio box
+#
+# Side effects:
+#        RID is the id of the new radio box
+#        RADIOFREES[RID] is populated with data that needs to be freed
+#
+#int open_radio(short fcolor, short bcolor,
+#	int (*entry_cb)(int id, void *), void *ecb_parm,
+#	int (*help_cb)(int id, void *), void *hcb_parm,
+#	int (*leave_cb)(int id, void *), void *lcb_parm)
+
+function open_radio
+{
+	typeset usage='open_radio
+\t\t-bg background-color
+\t\t-fg foreground-color
+\t\t-entry entry-callback-line
+\t\t-exit exit-callback-line
+\t\t-help help-callback-line'
+
+	typeset ret frees= entry= exit= help="$defhelp"
+	integer fg=$COMBO1_FG bg=$COMBO1_BG
+	frees=
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-bg)
+			shift
+			bg=$1
+			;;
+		-fg)
+			shift
+			fg=$1
+			;;
+		-help)
+			shift
+			call -r strdup "@string_t:|$1|"
+			help="$_RETX"
+			frees="$frees $_RETX"
+			;;
+		-entry)
+			shift
+			call -r strdup "@string_t:|$1|"
+			entry=$_RETX
+			frees="$frees $_RETX"
+			;;
+		-exit)
+			shift
+			call -r strdup "@string_t:|$1|"
+			exit="$_RETX"
+			frees="$frees $_RETX"
+			;;
+		esac
+		shift
+	done
+	typeset entryfunc exitfunc helpfunc
+	funcize entry exit help
+	call -n open_radio "$fg" "$bg" "$entryfunc" "$entry" "$helpfunc" "$help" "$exitfunc" "$exit"
+	ret=$?
+	RID=$_RETD
+	RADIOFREES[RID]="$frees"
+	return $ret
+}
+
+# Add an item to the current radio box
+#
+# Side effects:
+#         None
+#int add_radio(char *item, int (*entry_cb)(int id, void *), void *ecb_parm,
+#	int (*help_cb)(int id, void *), void *hcb_parm,
+#	int (*leave_cb)(int id, void *), void *lcb_parm)
+function add_radio
+{
+	typeset usage='add_radio text
+\t\t-entry entry-callback-line
+\t\t-exit exit-callback-line
+\t\t-help help-callback-line'
+	typeset text= entry= exit= help="$defhelp"
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-help)
+			shift
+			call -r strdup "@string_t:|$1|"
+			help="$_RETX"
+			RADIOFREES[RID]="${RADIOFREES[RID]} $_RETX"
+			;;
+		-entry)
+			shift
+			call -r strdup "@string_t:|$1|"
+			entry="$_RETX"
+			RADIOFREES[RID]="${RADIOFREES[RID]} $_RETX"
+			;;
+		-exit)
+			shift
+			call -r strdup "@string_t:|$1|"
+			exit="$_RETX"
+			RADIOFREES[RID]="${RADIOFREES[RID]} $_RETX"
+			;;
+		*)
+			if [ -n "$text" ]
+			then
+				print -u2 'Text specified twice'
+				usage
+			fi
+			text="$1"
+		esac
+		shift
+	done
+	if [ -z "$text" ]
+	then
+		print -u2 'No text specified'
+		usage
+	fi
+	typeset entryfunc exitfunc helpfunc selectfunc
+	funcize entry exit help
+	call add_radio "@string_t:|$text|" "$entryfunc" "$entry" "$helpfunc" "$help" "$exitfunc" "$exit"
+}
+
+
+# Since the internal routines will figure out how to display the
+# radio box, ask the dimensions of the radio box
+#int radio_runparms(int id, char *buf, int rows)
+function radio_runparms
+{
+	cdecl 'char [20]' buf=
+	call -c radio_runparms $1 buf $2
+	typeset buf
+	cprint -v buf buf
+	buf=${buf#?}
+	buf=${buf%?}
+	set -- $buf
+	RADIO_WIN_WIDTH=$1
+	RADIO_WIN_HEIGHT=$2
+	RADIO_COLS=$3
+	RADIO_ROWS=$4
+}
+
+# Make the radio runnable
+# run_radio id selected rows
+function run_radio
+{
+	call run_radio "$@"
+}
+
+# Create a new radio box
+#
+# Side effects:
+#        CID is the id of the new check box
+#        CHECKFREES[CID] is populated with data that needs to be freed
+#
+#int open_check(short fcolor, short bcolor,
+#	int (*entry_cb)(int id, void *), void *ecb_parm,
+#	int (*help_cb)(int id, void *), void *hcb_parm,
+#	int (*leave_cb)(int id, void *), void *lcb_parm)
+
+function open_check
+{
+	typeset usage='open_check
+\t\t-bg background-color
+\t\t-fg foreground-color
+\t\t-entry entry-callback-line
+\t\t-exit exit-callback-line
+\t\t-help help-callback-line'
+
+	integer x=0 y=0
+	typeset i ret frees= entry= exit=
+	integer fg=$COMBO1_FG bg=$COMBO1_BG
+	frees=
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-bg)
+			shift
+			bg=$1
+			;;
+		-fg)
+			shift
+			fg=$1
+			;;
+		-help)
+			shift
+			call -r strdup "@string_t:|$1|"
+			help="$_RETX"
+			frees="$frees $_RETX"
+			;;
+		-entry)
+			shift
+			call -r strdup "@string_t:|$1|"
+			entry=$_RETX
+			frees="$frees $_RETX"
+			;;
+		-exit)
+			shift
+			call -r strdup "@string_t:|$1|"
+			exit="$_RETX"
+			frees="$frees $_RETX"
+			;;
+		esac
+		shift
+	done
+	typeset entryfunc exitfunc helpfunc
+	funcize entry exit help
+	call -n open_check "$fg" "$bg" "$entryfunc" "$entry" "$helpfunc" "$help" "$exitfunc" "$exit"
+	ret=$?
+	CID=$_RETD
+	CHECKFREES[CID]="$frees"
+	return $ret
+}
+
+# Add an item to the current check box
+#
+# Side effects:
+#         None
+#int add_check(char *item, short selected ,
+#	int (*on_cb)(int id, void *), void *on_cb_parm,
+#	int (*off_cb)(int id, void *), void *off_cb_parm,
+#	int (*entry_cb)(int id, void *), void *ecb_parm,
+#	int (*help_cb)(int id, void *), void *hcb_parm,
+#	int (*leave_cb)(int id, void *), void *lcb_parm)
+function add_check
+{
+	typeset usage='add_check text
+\t\t-is_selected
+\t\t-on on-callback-line
+\t\t-off off-callback-line
+\t\t-entry entry-callback-line
+\t\t-exit exit-callback-line
+\t\t-gray
+\t\t-help help-callback-line'
+	typeset text= fg=$COMBO1_FG bg=$COMBO1_BG entry= exit= help="$defhelp" on= off=
+	integer _gray=0 _selected=0
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-gray)
+			_gray=2
+			;;
+		-is_selected)
+			_selected=1
+			;;
+		-help)
+			shift
+			call -r strdup "@string_t:|$1|"
+			help="$_RETX"
+			CHECKFREES[CID]="${CHECKFREES[CID]} $_RETX"
+			;;
+		-entry)
+			shift
+			call -r strdup "@string_t:|$1|"
+			entry="$_RETX"
+			CHECKFREES[CID]="${CHECKFREES[CID]} $_RETX"
+			;;
+		-exit)
+			shift
+			call -r strdup "@string_t:|$1|"
+			exit="$_RETX"
+			CHECKFREES[CID]="${CHECKFREES[CID]} $_RETX"
+			;;
+		-off)
+			shift
+			call -r strdup "@string_t:|$1|"
+			off="$_RETX"
+			CHECKFREES[CID]="${CHECKFREES[CID]} $_RETX"
+			;;
+		-on)
+			shift
+			call -r strdup "@string_t:|$1|"
+			on="$_RETX"
+			CHECKFREES[CID]="${CHECKFREES[CID]} $_RETX"
+			;;
+		*)
+			if [ -n "$text" ]
+			then
+				usage
+			fi
+			text="$1"
+		esac
+		shift
+	done
+	if [ -z "$text" ]
+	then
+		usage
+	fi
+	typeset entryfunc exitfunc helpfunc selectfunc onfunc offfunc
+	funcize entry exit help on off
+	call add_check "@string_t:|$text|" "$_selected|$_gray" "$onfunc" "$on" "$offfunc" "$off" "$entryfunc" "$entry" "$helpfunc" "$help" "$exitfunc" "$exit"
+}
+
+# Make the check box runnable
+function run_check
+{
+	call run_check "$@"
+}
+
+# Since the internal routines will figure out how to display the
+# check box, ask the dimensions of the check box
+#int check_runparms(int id, char *buf, int rows)
+function check_runparms
+{
+	cdecl 'char [20]' buf=
+	call -c check_runparms $1 buf $2
+	typeset buf
+	cprint -v buf buf
+	buf=${buf#?}
+	buf=${buf%?}
+	set -- $buf
+	CHECK_WIN_WIDTH=$1
+	CHECK_WIN_HEIGHT=$2
+	CHECK_COLS=$3
+	CHECK_ROWS=$4
+}
+
+# Octal 410 is where the function keys sit (see curses.h)
+function set_hotkey
+{
+	call -F set_hotkey 0410+$1 '@longp:&ksh_eval' "@string_t:|$2|"
+}
+
+# The internal routines do almost all of the work.
+# All that needs to be set up is the callback for new page
+function open_help
+{
+	typeset usage='open_help -help help-on-help-callback -page page_callback filename' filename
+	if [ -n "$HELPHELP" ]
+	then
+		call -v free "$HELPHELP"
+		HELPHELP=
+	fi
+	if [ -n "$PAGE_CALLBACK" ]
+	then
+		call -v free "$PAGE_CALLBACK"
+		PAGE_CALLBACK=
+	fi
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-page)
+			shift
+			call -r strdup "@string_t:|$1|"
+			PAGE_CALLBACK="$_RETX"
+			;;
+		-help)
+			shift
+			call -r strdup "@string_t:|$1|"
+			HELPHELP="$_RETX"
+			;;
+		*)
+			filename=$1
+		esac
+		shift
+	done
+	if [ -z "$filename" ]
+	then
+		usage
+	fi
+	typeset HELPHELPfunc
+	funcize HELPHELP
+	if [ -n "$PAGE_CALLBACK" ]
+	then
+		call open_help "@string_t:|$filename|" "@longp:&help_eval" "$PAGE_CALLBACK" "$HELPHELPfunc" "$HELPHELP"
+	else
+		call open_help "@string_t:|$filename|" 0 0 "$HELPHELPfunc" "$HELPHELP"
+	fi
+}
+
+# The internal routines do almost all of the work.
+function run_help
+{
+	call run_help "@string_t:|$1|"
+}
+
+# This sets up a form which is tabular
+function setup_table
+{
+	integer offset=0
+	typeset usage='setup_table
+\t\t-rows rows
+\t\t-cols cols
+\t\t-offset offset
+\t\t-titles title-array
+\t\t-widths width-array'
+	typeset page_form=N
+	FORMSIZE=1000
+	while [ -n "$1" ]
+	do
+		case "$1" in
+		-offset)
+			shift
+			offset=$1
+			;;
+		-rows)
+			shift
+			let TABLE_ROWS=$1
+			;;
+		-cols)
+			shift
+			let TABLE_COLS=$1
+			;;
+		-page)
+			page_form=Y
+			;;
+		-titles)
+			shift
+			TITLEVAR=$1
+			;;
+		-widths)
+			shift
+			WIDTHVAR=$1
+			;;
+		esac
+		shift
+	done
+	[ "$page_form" = Y ] && FORMSIZE=$TABLE_ROWS
+	integer i=0
+	typeset eq='=============================='
+	while (( (i=i+1) <= TABLE_COLS ))
+	do
+		TABLE_OFFSET[i]=$offset
+		eval add_field -title -ilen 0 -py 0 -px $offset -p "\"\${$TITLEVAR[i]}\""
+		unset tmp
+		eval typeset -L\${$WIDTHVAR[i]} tmp="$eq"
+		add_field -title -ilen 0 -py 1 -px $offset -p ${tmp}
+		eval offset=offset+$WIDTHVAR[i]+3
+	done
+	TABLE_WIDTH=$offset-3
+	TABLE_CUR_ROW=1
+	TABLE_CUR_COL=1
+}
+
+function next_row
+{
+	let 'TABLE_CUR_ROW=TABLE_CUR_ROW%FORMSIZE'
+	[ $TABLE_CUR_ROW -eq 0 ] && next_page
+	let TABLE_CUR_ROW+=1
+	let TABLE_CUR_COL=1
+}
+
+function next_page
+{
+	call next_formpage
+	let TABLE_CUR_ROW+=1
+}
+
+# Populate the next field of the form
+# Pass unrecognized options to add_field
+function next_field
+{
+	let TABLE_CUR_COL=TABLE_CUR_COL+1
+	eval integer width=$WIDTHVAR[TABLE_CUR_COL-1]
+	add_field -ilen $width -iy $TABLE_CUR_ROW+1 -ix ${TABLE_OFFSET[TABLE_CUR_COL-1]} -py $TABLE_CUR_ROW+1 "$@"
+}
+
+# Populate the next field of the form, which is a prompt-only
+# Pass unrecognized options to add_field
+function next_field_prompt
+{
+	let TABLE_CUR_COL=TABLE_CUR_COL+1
+	if [ "$1" = -l ]
+	then
+		integer indent=0
+		shift
+	else
+		eval integer indent=$WIDTHVAR[TABLE_CUR_COL-1]/2-${#1}/2
+	fi
+	typeset -L$indent buf=
+	typeset prompt=$1
+	shift
+	add_field -p "$buf$prompt" -ilen 0 -py $TABLE_CUR_ROW+1 -px ${TABLE_OFFSET[TABLE_CUR_COL-1]} -iy $TABLE_CUR_ROW+1 "$@"
+}
+
+# Display $1 wait for a keystroke and go away
+function display
+{
+	if [ "$1" = -w ]
+	then
+		integer wait=1
+		shift
+	else
+		integer wait=0
+	fi
+	integer cols=0 lines=0
+	typeset tmp="$1" tmp2= tmp3="$1"
+	shift
+
+	while :
+	do
+		tmp2="${tmp%%$nl*}"
+		if (( ${#tmp2} > cols ))
+		then
+			cols=${#tmp2}
+		fi
+		let lines=lines+1
+		if [ "$tmp" = "$tmp2" ]
+		then
+			break
+		fi
+		tmp=${tmp#*$nl}
+	done
+	(( cols > COLUMNS-2 )) && cols=COLUMNS-2
+	place_window $cols $lines "$@"
+	if [ $? = 0 ]
+	then
+		wputstr $CURWIN "$tmp3"
+		if (( wait ))
+		then
+			call win_set_input '@longp:&Wclose' $CURWIN
+		fi
+	else
+		print -u2 "failed place_window $cols $lines $@"
+	fi
+}
+
+function gauge_start
+{
+	integer GAUGEPER=1
+	GAUGECHAR=' '
+	BAD_GAUGE=false
+	if (( $1 > COLUMNS - 2 ))
+	then
+		if (( $1 > (COLUMNS - 2) * 2 )) 
+		then
+			display -w "Internal error in $0 -- too many parts"
+			input_handler
+			BAD_GAUGE=true
+			return
+		fi
+		(( GAUGEWIDTH = $1 / 2 ))
+		WIDEGAUGE=true
+		FLIPFLOP=true
+	else
+		WIDEGAUGE=false
+		while (( (GAUGEPER+1) * $1 + 2 < COLUMNS ))
+		do
+			let GAUGEPER=GAUGEPER+1
+			GAUGECHAR="$GAUGECHAR "
+		done
+		(( GAUGEWIDTH = $1 * GAUGEPER ))
+	fi
+	place_window -below 0 "$GAUGEWIDTH" 2 -title "$GAUGE_TITLE"
+	GAUGEWID=$CURWIN
+	GAUGELINE=
+	if iscolor
+	then
+		call Wsetcolor $GAUGEWID $WHITE $BLUE
+	else
+		wsetattr $GAUGEWID 0
+	fi
+	wgotoxy $GAUGEWID $GAUGEWIDTH/2-1 0
+	wputstr $GAUGEWID "0%"
+}
+
+function gauge_add
+{
+	$BAD_GAUGE && return
+	$WIDEGAUGE && {
+		if $FLIPFLOP
+		then
+			FLIPFLOP=false
+		else
+			FLIPFLOP=true
+			return
+		fi
+	}
+	call Wclear_nw $GAUGEWID
+	GAUGELINE="$GAUGELINE$GAUGECHAR"
+	if iscolor
+	then
+		call Wsetcolor $GAUGEWID $BLACK $CYAN
+	else
+		wsetattr $GAUGEWID 01000000
+	fi
+	wputstr $GAUGEWID "$nl$GAUGELINE"
+	if iscolor
+	then
+		call Wsetcolor $GAUGEWID $WHITE $BLUE
+	else
+		wsetattr $GAUGEWID 0
+	fi
+	integer pct="100*${#GAUGELINE}/GAUGEWIDTH"
+
+	# Should only happen if WIDEGAUGE=true and number of parts is odd.
+	(( pct > 100 )) && pct=100
+
+	if (( pct < 10 ))
+	then
+		wgotoxy $GAUGEWID $GAUGEWIDTH/2-1 0
+	else
+		wgotoxy $GAUGEWID $GAUGEWIDTH/2-2 0
+	fi
+	wputstr $GAUGEWID "$pct%"
+}

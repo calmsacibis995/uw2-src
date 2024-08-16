@@ -1,0 +1,614 @@
+<!-- Style sheet for printing IMI documents.
+
+  Copyright 1992, Electronic Book Technologies.  All rights reserved.
+-->
+
+<!ENTITY	link.indent	CDATA	"12"	>
+<!ENTITY	link.side	CDATA	"right"	>
+<!ENTITY	min.left	CDATA	"52"	>
+<!ENTITY	sample.side	CDATA	"left"	>
+<!ENTITY	std.color	CDATA	"black"	>
+<!ENTITY	std.font	CDATA	"times"	>
+<!ENTITY	std.justify	CDATA	"left"	>
+<!ENTITY	std.leading	CDATA	"12"	>
+<!ENTITY	std.left	CDATA	"88"	>
+<!ENTITY	std.right	CDATA	"52"	>
+<!ENTITY	std.size	CDATA	"10"	>
+<!ENTITY	std.slant	CDATA	"roman"	>
+<!ENTITY	std.vert	CDATA	"12"	>
+<!ENTITY	std.weight	CDATA	"medium"	>
+<!ENTITY	subscript	CDATA	"-2"	>
+<!ENTITY	title.color	CDATA	"blue"	>
+<!ENTITY	title.font	CDATA	"helvetica"	>
+<!ENTITY	title.justify	CDATA	"left"	>
+<!ENTITY	title.leading	CDATA	"16"	>
+<!ENTITY	title.size	CDATA	"14"	>
+
+<sheet >
+
+
+
+<?INSTED COMMENT: GROUP emphs>
+
+<group name="emphs">
+	<font-slant>	Italic	</>
+</group>
+
+<style name="CMD" group="emphs">
+	<font-weight>	Bold	</>
+	<font-slant>	Roman	</>
+</style>
+
+<style name="FILE" group="emphs">
+</style>
+
+<style name="FUNC" group="emphs">
+	<font-slant>	Roman	</>
+</style>
+
+<style name="INLINE" group="emphs">
+</style>
+
+<style name="PROP" group="emphs">
+</style>
+
+<style name="RESV" group="emphs">
+	<font-slant>	Roman	</>
+</style>
+
+<style name="SCRIPT" group="emphs">
+</style>
+
+
+
+<?INSTED COMMENT: GROUP equations>
+
+<group name="equations">
+	<hide>	Children	</>
+	<break-before>	False	</>
+	<break-after>	False	</>
+	<inline>	equation	</>
+</group>
+
+<style name="F" group="equations">
+</style>
+
+<style name="FD" group="equations">
+	<font-size>	18	</>
+	<space-before>	10	</>
+	<space-after>	10	</>
+	<break-before>	line	</>
+	<break-after>	line	</>
+</style>
+
+<style name="TEX" group="equations">
+	<font-size>	10	</>
+	<space-before>	10	</>
+	<space-after>	10	</>
+	<hide>	Children	</>
+	<break-before>	Line	</>
+	<break-after>	Line	</>
+	<inline>	equation target=me()	</>
+</style>
+
+
+
+<?INSTED COMMENT: GROUP title>
+
+<group name="title">
+	<font-family>	helvetica	</>
+	<font-weight>	Bold	</>
+	<left-indent>	15	</>
+	<line-spacing>	20	</>
+	<space-before>	12	</>
+	<justification>	Left	</>
+	<break-before>	line	</>
+</group>
+
+<style name="APPENDIX,TITLE" group="title">
+	<font-size>	18	</>
+	<line-spacing>	20	</>
+	<space-before>	36	</>
+	<text-before>Appendix format(cnum(parent()),LETTER):  </>
+</style>
+
+<style name="CHAPTER,TITLE" group="title">
+	<font-size>	18	</>
+	<left-indent>	if(eq(cnum(ancestor()),1),15,45)	</>
+	<first-indent>	if(eq(cnum(ancestor()),1),0,-30)	</>
+	<line-spacing>	20	</>
+	<space-before>	36	</>
+	<text-before>if(eq(cnum(ancestor()),1),,join(sub(cnum(parent()),1),'. '))</>
+</style>
+
+<style name="LABEL" group="title">
+	<font-size>	10	</>
+	<line-spacing>	12	</>
+	<space-before>	12	</>
+</style>
+
+<style name="MAP,TITLE" group="title">
+	<font-size>	12	</>
+	<line-spacing>	14	</>
+	<space-before>	12	</>
+</style>
+
+
+
+<?INSTED COMMENT: UNGROUPED STYLES FOLLOW>
+
+<style name="#ANNOT">
+	<font-slant>	italic	</>
+	<font-size>	9	</>
+	<line-spacing>	10	</>
+	<space-before>	5	</>
+	<space-after>	5	</>
+	<break-before>	line	</>
+	<break-after>	line	</>
+</style>
+
+<style name="#FOOTER">
+	<font-family>	times	</>
+	<font-weight>	Medium	</>
+	<font-slant>	Italic	</>
+	<font-size>	10	</>
+	<line-spacing>	12	</>
+	<justification>	Right	</>
+	<text-before>content(if(ancestor(CHAPTER), typechild('TITLE',ancestor(CHAPTER)),typechild('TITLE',ancestor(APPENDIX)) ) ) - Page if(ancestor(CHAPTER),if(eq(cnum(ancestor(CHAPTER)),1),pagenum(),decr(cnum(ancestor(CHAPTER)))-pagenum()),format(cnum(ancestor(APPENDIX)),LETTER)-pagenum()</>
+</style>
+
+<style name="#HEADER">
+	<font-family>	times	</>
+	<font-weight>	Medium	</>
+	<font-slant>	Italics	</>
+	<font-size>	10	</>
+	<line-spacing>	12	</>
+	<justification>	Left	</>
+	<text-before>content(typechild(TITLE,typechild(TITLEPG,typechild(FRONT,typechild(IMIDOC,root()))))) - Release 2.2 for Unix systems</>
+</style>
+
+<style name="#ROOT">
+	<font-family>	times	</>
+	<font-weight>	Medium	</>
+	<font-slant>	Roman	</>
+	<font-size>	10	</>
+	<foreground>	black	</>
+	<left-indent>	88	</>
+	<right-indent>	52	</>
+	<line-spacing>	12	</>
+</style>
+
+<style name="#SDATA">
+	<font-family>	attr(font)	</>
+	<font-weight>	attr(weight)	</>
+	<character-set>	attr(charset)	</>
+	<text-before>char(attr(code))</>
+</style>
+
+<style name="#TAGS">
+	<foreground>	purple	</>
+</style>
+
+<style name="ABLOCK">
+	<hide>	All	</>
+</style>
+
+<style name="ART">
+	<space-before>	12	</>
+	<break-before>	line	</>
+	<inline>	raster filename="attr(FILE).tif"	</>
+	<text-before>Figure if(gt(cnum(ancestor(CHAPTER)),1),join(sub(cnum(ancestor(CHAPTER)),1),-gcnum():),gcnum():) attr(TITLE)  </>
+</style>
+
+<style name="ART,#TEXT-BEFORE">
+	<font-family>	&title.font	</>
+	<font-weight>	bold	</>
+	<font-size>	10	</>
+	<line-spacing>	12	</>
+	<space-before>	6	</>
+	<space-after>	2	</>
+	<justification>	left	</>
+</style>
+
+<style name="AUTHOR">
+	<font-family>	helvetica	</>
+	<font-size>	14	</>
+	<line-spacing>	20	</>
+	<space-before>	10	</>
+	<justification>	Left	</>
+	<break-before>	line	</>
+</style>
+
+<style name="B">
+	<font-weight>	Bold	</>
+</style>
+
+<style name="CELLRULE">
+	<hide>	All	</>
+	<column>	True	</>
+</style>
+
+<style name="CHAPTER">
+	<break-before>	section	</>
+</style>
+
+<style name="COPYRTPG,DATE">
+	<font-family>	helvetica	</>
+	<font-size>	14	</>
+	<line-spacing>	16	</>
+	<space-before>	18	</>
+	<justification>	Left	</>
+	<hide>	Text	</>
+	<break-before>	line	</>
+</style>
+
+<style name="DATE">
+	<font-family>	helvetica	</>
+	<font-size>	14	</>
+	<line-spacing>	16	</>
+	<space-before>	10	</>
+	<justification>	Left	</>
+	<break-before>	line	</>
+</style>
+
+<style name="DOCLINK">
+	<font-slant>	Italics	</>
+	<foreground>	red	</>
+	<right-indent>	12	</>
+	<break-before>	line	</>
+</style>
+
+<style name="EMPH">
+	<select>	EMPH.toupper(attr(type))	</>
+</style>
+
+<style name="EMPH.ATTR">
+	<font-slant>	Roman	</>
+</style>
+
+<style name="EMPH.BUTTON">
+	<font-slant>	Italics	</>
+</style>
+
+<style name="EMPH.CMD">
+	<font-weight>	Bold	</>
+	<font-slant>	Roman	</>
+</style>
+
+<style name="EMPH.DEFAULT">
+	<font-slant>	Italic	</>
+</style>
+
+<style name="EMPH.FILE">
+	<font-slant>	Italic	</>
+</style>
+
+<style name="EMPH.FUNC">
+	<font-slant>	Roman	</>
+</style>
+
+<style name="EMPH.INPUT">
+	<font-family>	courier	</>
+</style>
+
+<style name="EMPH.MENU">
+	<font-slant>	Roman	</>
+</style>
+
+<style name="EMPH.OUTPUT">
+	<font-family>	courier	</>
+</style>
+
+<style name="EMPH.PROP">
+	<font-slant>	Italic	</>
+</style>
+
+<style name="EMPH.PVAL">
+	<font-slant>	Italic	</>
+</style>
+
+<style name="EMPH.RESV">
+	<font-slant>	Roman	</>
+</style>
+
+<style name="EXAMPLE">
+	<hide>	Children	</>
+</style>
+
+<style name="I">
+	<font-slant>	Italics	</>
+</style>
+
+<style name="IMIDOC">
+	<font-family>	times	</>
+	<font-weight>	Medium	</>
+	<font-slant>	Roman	</>
+	<font-size>	10	</>
+	<foreground>	black	</>
+	<left-indent>	30	</>
+	<right-indent>	12	</>
+	<line-spacing>	12	</>
+</style>
+
+<style name="ITEM">
+	<left-indent>	+=20	</>
+	<break-before>	False	</>
+</style>
+
+<style name="ITEM,LIST">
+	<left-indent>	+=20	</>
+	<space-after>	1	</>
+	<break-before>	line	</>
+	<break-after>	line	</>
+</style>
+
+<style name="ITEM,P">
+	<space-after>	2	</>
+</style>
+
+<style name="LIST">
+	<select>	LIST.attr(type)	</>
+</style>
+
+<style name="LIST.">
+	<left-indent>	+=20	</>
+	<space-before>	6	</>
+	<space-after>	1	</>
+	<break-before>	line	</>
+</style>
+
+<style name="LIST.NUM">
+	<left-indent>	+=20	</>
+	<space-before>	4	</>
+	<break-before>	line	</>
+</style>
+
+<style name="LIST.TRIPLE">
+	<left-indent>	+=20	</>
+	<space-before>	4	</>
+	<break-before>	line	</>
+</style>
+
+<style name="MAP">
+	<break-before>	if(eq(cnum(),1),Line,Page)	</>
+</style>
+
+<style name="MARKER">
+	<font-weight>	Medium	</>
+	<hide>	text	</>
+	<break-before>	line	</>
+	<text-before>switch(attr(type,parent(LIST)),'triple', format(cnum(),word('LETTER decimal roman',countword(qtag(), x,'eq(var(x),'LIST')',',')))., 'num', cnum()., 'default', content())</>
+</style>
+
+<style name="NAME">
+	<width>	100	</>
+	<column>	True	</>
+</style>
+
+<style name="NOTICE">
+	<font-family>	helvetica	</>
+	<font-size>	14	</>
+	<line-spacing>	16	</>
+	<space-before>	20	</>
+	<break-before>	line	</>
+</style>
+
+<style name="OWNER">
+	<font-family>	helvetica	</>
+	<font-size>	18	</>
+	<line-spacing>	20	</>
+	<space-before>	18	</>
+	<justification>	Left	</>
+	<hide>	Text	</>
+	<break-before>	line	</>
+</style>
+
+<style name="P">
+	<space-before>	12	</>
+	<break-before>	line	</>
+</style>
+
+<style name="PART,TITLE">
+	<font-family>	helvetica	</>
+	<font-weight>	Bold	</>
+	<font-size>	24	</>
+	<foreground>	blue	</>
+	<left-indent>	52	</>
+	<line-spacing>	28	</>
+	<space-before>	60	</>
+	<justification>	Left	</>
+	<break-before>	line	</>
+</style>
+
+<style name="PROPERTY">
+	<break-before>	Line	</>
+</style>
+
+<style name="PVERBATIM">
+	<break-before>	Line	</>
+</style>
+
+<style name="RM">
+	<font-weight>	Medium	</>
+	<font-slant>	Roman	</>
+</style>
+
+<!--
+<style name="TBLOCK">
+	<hide> 	Children 	</>
+	<script> 	ebt-reveal stylesheet=attr(TYPE).pri 	</> 
+</style>
+
+ arbor style read in, 12/17/92 by lnr -->
+<style name="ROWRULE">
+	<hrule>	Before	</>
+	<break-before>	Line	</>
+</style>
+
+<style name="SECTION,TITLE">
+	<font-family>	helvetica	</>
+	<font-weight>	Bold	</>
+	<font-size>	16	</>
+	<foreground>	blue	</>
+	<left-indent>	52	</>
+	<line-spacing>	20	</>
+	<space-before>	40	</>
+	<justification>	Left	</>
+	<break-before>	line	</>
+</style>
+
+<style name="SIDEBAR">
+	<right-indent>	12	</>
+	<hide>	Children	</>
+	<script>	ebt-reveal stylesheet="sidebar"	</>
+</style>
+
+<style name="SP.ICONSHOW">
+	<left-indent>	36	</>
+	<space-before>	12	</>
+	<icon-position>	Inline	</>
+	<break-before>	line	</>
+	<icon-type>	attr(TITLE)	</>
+</style>
+
+<style name="SP.SUB">
+	<vertical-offset>	&subscript	</>
+</style>
+
+<style name="SP.TEX">
+	<icon-position>	Right	</>
+	<hide>	Children	</>
+	<break-after>	Line	</>
+	<script>	ebt-reveal root=me() stylesheet=texeqn.pri	</>
+	<icon-type>	default	</>
+</style>
+
+<style name="SPECIAL">
+	<font-family>	&title.font	</>
+	<select>	SP.toupper(attr(type))	</>
+</style>
+
+<style name="SS2,ST">
+	<font-family>	helvetica	</>
+	<font-weight>	Bold	</>
+	<font-size>	10	</>
+	<foreground>	blue	</>
+	<left-indent>	52	</>
+	<line-spacing>	14	</>
+	<space-before>	12	</>
+	<justification>	Left	</>
+	<break-before>	line	</>
+</style>
+
+<style name="STYLE">
+	<font-family>	helvetica	</>
+	<space-before>	6	</>
+	<space-after>	6	</>
+	<break-before>	Line	</>
+	<text-before>if(attr(NAME), Property setting\(s\) for style attr(NAME):, Property setting:)</>
+</style>
+
+<style name="STYLE,#TEXT-BEFORE">
+	<font-family>	helvetica	</>
+	<font-weight>	Bold	</>
+	<font-size>	-=1	</>
+</style>
+
+<style name="SUBBLOCK,LABEL">
+	<font-slant>	Italics	</>
+	<space-before>	8	</>
+	<justification>	Left	</>
+	<break-before>	Line	</>
+</style>
+
+<style name="SUBBLOCK,P">
+	<space-after>	8	</>
+	<break-before>	if(eq(cnum(),1),None,Line)	</>
+</style>
+
+<style name="SUBBLOCK,VERBATIM">
+	<font-family>	courier	</>
+	<font-size>	8	</>
+	<left-indent>	+=12	</>
+	<space-before>	0	</>
+	<space-after>	12	</>
+	<justification>	verbatim	</>
+	<break-before>	Line	</>
+</style>
+
+<style name="SUBTITLE">
+	<font-family>	helvetica	</>
+	<font-size>	14	</>
+	<line-spacing>	20	</>
+	<space-before>	10	</>
+	<justification>	Left	</>
+	<break-before>	line	</>
+</style>
+
+<style name="SYMBOL">
+	<font-family>	symbol	</>
+	<font-weight>	Medium	</>
+</style>
+
+<style name="TABLE">
+	<space-before>	12	</>
+	<break-before>	Line	</>
+</style>
+
+<style name="TABLECELL">
+	<left-indent>	+=div(tableinfo(arbor,left-indent,5),2)	</>
+	<width>	sub(div(tableinfo(arbor,width,5),2),15)	</>
+	<justification>	tableinfo(arbor,justification)	</>
+	<column>	True	</>
+</style>
+
+<style name="TABLECELL,LIST">
+	<space-before>	4	</>
+	<break-before>	line	</>
+</style>
+
+<style name="TABLECELL,P">
+	<left-indent>	if(eq(cnum(ancestor()),1), +=5, +=0)	</>
+	<right-indent>	if(eq(cnum(ancestor()),1), +=5, +=0)	</>
+	<break-before>	if(eq(cnum(ancestor()),1), None, Line)	</>
+</style>
+
+<style name="TABLEROW">
+	<font-weight>	if(eq(cnum(),1),Bold,Medium)	</>
+	<font-slant>	if(eq(cnum(),1),Italics,Roman)	</>
+	<space-before>	4	</>
+	<space-after>	4	</>
+	<break-before>	Line	</>
+</style>
+
+<style name="TITLEPG,TITLE">
+	<font-family>	helvetica	</>
+	<font-weight>	Bold	</>
+	<font-size>	24	</>
+	<line-spacing>	28	</>
+	<justification>	Left	</>
+	<break-before>	line	</>
+</style>
+
+<style name="UL">
+	<font-slant>	Italics	</>
+</style>
+
+<style name="VALUE">
+	<left-indent>	+=110	</>
+	<column>	True	</>
+</style>
+
+<style name="VERBATIM">
+	<font-family>	courier	</>
+	<font-size>	8	</>
+	<left-indent>	+=12	</>
+	<space-before>	if(eq(tag(lsibling()),'VERBATIM'),2,8)	</>
+	<space-after>	if(eq(tag(rsibling()),'VERBATIM'),2,8)	</>
+	<justification>	verbatim	</>
+	<break-before>	line	</>
+</style>
+
+
+
+</sheet>

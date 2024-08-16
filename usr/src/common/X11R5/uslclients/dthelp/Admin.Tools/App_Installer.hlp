@@ -1,0 +1,315 @@
+#ident\t"@(#)dthelp:Admin.Tools/App_Installer.hlp	1.22"
+^*version^1
+^*title^Application Installer
+^:App_Installer
+^*width^70
+^+DesktopMgr/help.defs
+^?Installing and removing applications
+^0^Application Installer
+^$10
+Application Installer
+
+Use Application Installer to install additional software to your system. You
+\k(install application software^^Installing Applications) by copying the information from some media (such
+as a floppy disk or cartridge tape) to your computer's hard disk.
+
+In addition to installing application software, you can do the following
+with Application Installer:
+
+\to\t\k(View the contents of installed application sets^^Viewing the Contents of Installed Application Sets)
+\to\t\k(View the properties of installed applications^^Viewing the Properties of Installed Applications) 
+\to\t\k(Remove existing applications^^Removing Applications)
+
+Note: You must have \k(Add/Remove Applications permission^dtadmin/user.hlp^Understanding Permissions) to be able to
+install and remove applications on your Desktop.
+
+See also:
+\s(Using Application Installer^dhelp "" ownerhb "Installing and Sharing Applications" "Using Application Installer" || helpLinkErr)
+
+^1^Installing Applications
+^$20
+Installing Applications
+
+Note: Before you install an application, you may want to review the
+\k(Application Installation Checklist). 
+
+To install an application on your Desktop, do the following:
+
+1.\tInsert into the appropriate drive the media (for example, cartridge
+  \ttape or CD-ROM) that contains the \d(package) you want to install.
+
+  \tNote: If you are already in the Admin_Tools folder, go to Step 3.
+
+2.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+3.\tDouble-click on App_Installer. The "Application Installer" window appears.
+ 
+  \tThis window is split into two "panes"- the top half of the screen displays
+  \tthe uninstalled applications (that are on your media), and the bottom half
+  \tdisplays the applications currently installed on your system (be patient-
+  \tit may take a few seconds for the system to \k(catalog^^Application Installer: Cataloging Window) your applications.
+    
+  \tNote: If you want to see only the top pane, click on View=>Hide
+  \tApplications on system-name (for example, Hide Applications on SystemA).
+  \tIf you only want to see the bottom pane, click on View=>Hide Applications
+  \ton the media (for example, View=>Hide Applications on Disk_A).
+
+4.\tClick on the application or \d(application set) icon (in the top pane)
+  \tyou want to install.
+
+  \tNote: If you are installing a Santa Cruz Software Operation (SCO) see
+  \t\k(Additional Support for SCO Applications).
+
+5.\tClick on Install. The system installs the application or application set
+  \tonto your Desktop.  
+  
+After you install an application or application set, you can install the
+individual application programs associated with the application or application
+set in your (and other user's) \k(Applications folder^DesktopMgr/appl.hlp^Overview of the Applications Folder).
+
+This allows you to start the application by double-clicking on its icon.
+See \k(Installing Applications in the Applications Folder).
+
+In addition, you can create an icon for the installed application. See
+\k(Icon Setup^DesktopMgr/iconset.hlp^Icon Setup).
+
+See also:
+
+\s(Installing Applications and Application Sets^dhelp "" ownerhb "Installing and Sharing Applications" "Installing Applications and Application Sets" || helpLinkErr)
+\s(Adding Packages^dhelp "" ownerhb "Installing and Sharing Applications" "Adding Packages" || helpLinkErr)
+
+^2^Application Installation Checklist
+^$30
+Application Installation Checklist
+
+Before you install an application, go through the following checklist to
+prevent simple failures during installation:
+
+\to\tRead the application's Installation Guide. The application may require
+\t \tthe following:
+
+\t \t-\tThat certain software is installed.
+
+\t \t-\tThat the system be in a particular state.
+
+\t \t-\tThat you log in as a special user.
+
+\to\tCheck that you have enough hard disk space. The installation instructions
+\t \tthat come with the application should tell you how much hard disk space
+\t \tyou will need. The \k("System Status" window^dtadmin/dashboard.hlp^Displaying System Information) tells you how much available
+\t \tspace you have on your system. 
+
+\to\tMake sure you are running the version of the UNIX operating system
+\t \texpected by the application.
+
+^2^Application Installer: Cataloging Window
+^$40
+Application Installer: Cataloging Window
+
+This window appears when you select Application Installer from the
+\k(Admin Tools folder^DesktopMgr/admintools.hlp^Overview of the Admin_Tools Folder).
+
+The system catalogs the applications you currently have running on your
+system, then displays them in the "Application Installer" window. If you do
+not want the system to catalog your applications, click on Cancel.
+
+^2^Applications Currently Installed on system Pane
+^$60
+Applications Currently Installed on system Pane
+
+This pane displays the applications currently installed on your system
+(where "system" is replaced by your own system's name).
+
+To select the type of applications you see in this window, click on the
+following:
+
+\to\tApplications to Show=>All - To view both system and add-on applications.
+
+\to\tApplications to Show=>System - To view only system applications.
+
+\to\tApplications to Show=>Add-On - To view only add-on applications.
+
+^2^Installing Applications in the Applications Folder
+^$70
+Installing Applications in the Applications Folder
+
+To install an individual application program in the Applications
+folder, do the following:
+
+1.\t\d(Double-click^double-click) on the desired application or \d(application set).
+  \tThe "Application Installer: package" window (where \d(package) is the
+  \tname of the application) appears.
+
+  \tNote: If you are looking at an application set, double-click on the
+  \tdesired package within that set.
+
+2.\tClick on Copy to Folder. The "Application Installer: Copy to Folder"
+  \twindow appears with the following options:
+
+  \to\tClick on Self to put the application in your Applications folder
+  \t \tonly.
+
+  \to\tClick on Current Desktop Users to put the application in the Application
+  \t \tFolders of all current Desktop users.
+
+  \to\tClick on Current and Future Desktop Users to put the application in the
+  \t \tApplications folders for both current and future Desktop users.
+
+  \to\tClick on Specific Users to select the users who will get the application
+  \t \tin their Application folders. Then, choose from the Desktop Users and
+  \t \tGroups scroll lists.
+
+3.\tClick on OK to put the application in the Applications folder(s) and
+  \tdismiss the "Copy to Folder" window, or on Apply to put the application
+  \tin the Applications folder(s) without dismissing the "Copy to Folder"
+  \twindow.
+
+  \tNote: You can also click on Reset to go back to the previous options, or
+  \tclick on Cancel to dismiss this window without putting the application
+  \tinto the Applications folder(s).
+
+^2^Application Installer: package Window
+^$80
+Application Installer: package Window
+
+This window appears when you double-click on an icon representing a \d(package)
+(where package is the name of an application, not a \d(set^application set) or when you select
+an icon representing an application and click on Show Programs.
+
+From this window, you can click on \k(Copy to Folder^^Application Installer: Copy to Folder Window) to move the application to the
+desired folder.
+
+
+^2^Application Installer: Copy to Folder Window
+^$90
+Application Installer: Copy to Folder Window
+
+In this window, do the following:
+
+1.\tSet the Following options:
+
+  \to\tClick on Self to put the application in your Applications folder
+  \t \tonly.
+
+  \to\tClick on Current Desktop Users to put the application in the
+  \t \tApplication Folders of all current Desktop users.
+
+  \to\tClick on Current and Future Desktop Users to put the application
+  \t \tin the Applications folders for both current and future Desktop users.
+
+  \to\tClick on Specific Users to select the users who will get the
+  \t \tapplication in their Application folders. Then, choose from the
+  \t \tDesktop Users and Groups scroll lists.
+
+2.\tClick on OK to put the application in the Applications folder(s).
+
+See also:
+\k(Installing Applications in the Applications Folder)
+
+
+^1^Additional Support for SCO Applications
+^$100
+Additional Support for SCO Applications
+
+If you are installing a Santa Cruz Software Operation (SCO) application,
+click on Actions=>Options. The "Application Installer Options" window appears.
+By default, the SCOMPAT Environment Variable is set to 3.2. If the
+documentation that came with your application specifies a different value
+for this variable, type in the correct value and select OK.
+
+^2^Application Installer: Options Window
+^$120
+Application Installer: Options Window
+
+This window allows you to change the SCOMPAT Environment Variable (used
+only when installing SCO applications).
+
+By default, this variable is set to 3.2. To change the default variable, do
+the following:
+
+\to\tType over the default with the desired new variable.
+
+\to\tClick on OK.
+
+^1^Viewing the Contents of Installed Application Sets
+^$130
+Viewing the Contents of Installed Application Sets
+
+To view the contents of an installed \d(application set), do the following:
+
+1.\tClick on the icon representing the desired application.
+
+2.\tClick on Show Programs. The "Application Installer: set-name Set" window
+  \tappears (where set-name is the name of the application set), displaying
+  \tthe \d(packages^package) in the application set.
+
+^2^Application Installer: set-name Set Window
+^$140
+Applications Installer: set-name Set Window
+
+This window displays the applications within a set, where set-name is the
+name of the application set.
+
+From this window, you can do the following:
+
+\to\tClick on a \d(package) to display a description of that package in the
+\t \twindow footer.
+
+\to\tUpdate the package description in the footer by moving the mouse pointer
+\t \tover an unselected icon and pressing and holding <Shift> while you press
+\t \tthe left mouse button.
+
+\to\tClear the footer on a selected icon by pressing and holding <Shift>
+\t \twhile you press the left mouse button.
+
+^1^Viewing the Properties of Installed Applications
+^$150
+Viewing the Properties of Installed Applications
+
+To view the properties of an installed applications, do the following:
+
+1.\tClick on the icon representing the application. 
+
+2.\tClick on Info. The \k("Application Installer: Info" window^^Application Installer: Info Window) appears, displaying
+  \tinformation such as the version number, the vendor name, the disk
+  \tspace used, and so forth.
+
+^2^Application Installer: Info Window
+^$170
+Application Installer: Info Window
+
+This window displays the following information about an application:
+
+\to\tApplication Name - An abbreviation of the application name (for
+\t \texample, tcpset)
+
+\to\tDescription - The name of the application (for example, TCP/IP Set)
+
+\to\tCategory - The type of application (for example, set or system)
+
+\to\tVendor - The company that produced the application, (for example,
+\t \tNovell)
+
+\to\tVersion - The version number of the application (for example, 3.0)
+
+\to\tArchitecture - The type of Central Processing Unit (CPU) (for
+\t \texample, 386 or SPARC)
+
+\to\tDate Installed - The date and time you (or another user) installed the
+\t \tapplication on your system (for example, Jan 1 1994 12:01 AM)
+
+\to\tSize - The size of the application in blocks, that is, the amount of
+\t \tdisk space the application uses (for example, 13237 blocks)
+
+^1^Removing Applications
+^$180
+Removing Applications
+
+Important! Some applications and \d(application sets^application set) depend on
+other applications to run. Before you remove an application or application
+set, be sure that no other applications depend on it to function.
+
+To remove an application or an application set, click on the desired
+application or application set, then click on Remove.
+

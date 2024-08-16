@@ -1,0 +1,62 @@
+.pageno
+Pagina %d di %d
+.ul
+Installazione sistema operativo UNIX
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Ambiente utente
+.ur
+Ambiente utente
+#.ll
+#THIS SPACE LEFT INTENTIONALLY BLANK
+.lr
+F1=Guida
+.top
+E stato scelto il seguente utente tra i login utente esistenti.
+Scegliere un ambiente utente. Per ulteriori informazioni consultare lo
+schermo di guida.
+
+
+  Nome e cognome: `echo $USERNAME`
+   Nome di login: `echo $USERID`
+Numero di utente: `echo $USERNUM`
+.form
+2 2//MOTIF::Motif//NONE::Nessuno//Proprio ambiente utente://DESKTOP//
+#field options
+//Altre opzioni con freccia destra/sinistra//
+#
+#TYPE_ENUM <# of choices> //choice 1//choice 2//..//choice n//field label//
+#field options
+`[ "${INSTALL_MODE}" = "Custom" ] && echo "//Altre opzioni con freccia destra/sinistra//"`
+#
+.button
+Applica
+Reimposta
+.bottom
+Premere <Tab> per portare il cursore da un campo all'altro. Alla fine,
+portare il cursore su "Applica" e premere <Invio> per continuare.
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+E stato scelto un login di utente esistente. Ora si deve scegliere un
+ambiente per l'utente e indicare se questo utente sarà il proprietario
+del computer. Qui sotto viene descritto ciascun campo in maggior
+dettaglio.
+
+AMBIENTE UTENTE
+
+Se il proprietario vuole eseguire automaticamente un ambiente utente
+grafico dopo il login nel computer, selezionare l'interfaccia utente
+grafica. Se si seleziona "Nessuno", dopo il login nel computer l'utente
+esegue per default la shell del sistema UNIX.
+
+L'interfaccia grafica fornita è Motif. Se l'utente non la conosce bene,
+deve selezionare il valore di default.
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.working
+Attendere...
+.end

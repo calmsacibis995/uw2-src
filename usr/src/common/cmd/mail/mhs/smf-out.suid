@@ -1,0 +1,262 @@
+#!/usr/gnu/bin/perl --
+# -*-Perl-*-
+# MHS-Gate -- gateway MHS and Unix mail
+# (C) Copyright 1992-1994 Novell, Inc.   All Rights Reserved.
+# Jack Thomasson, Senior Consultant, Novell Consulting Services
+# Modified for UnixWare by Scott Harrison, Software Engineer Consultant, Novell
+# convert ARPAmail format to SMF and drop off for MHS pickup
+#ident	"@(#)mail:common/cmd/mail/mhs/smf-out.suid	1.8"
+
+open(STDERR, ">>/var/spool/smf/LOG");
+push(@INC, "/usr/lib/mail/surrcmd");
+
+# used by sub diemsg in mhsConfig
+@DIEMSG = ("configuration information",
+	   "netdir.tab: could not open",
+	   "/tmp/FIFO: could not mknod",
+	   "attachment command: could not exec",
+	   "uudecode: could not exec",
+	   "message body attachment: could not create",
+	   "message: could not deliver",
+	   );
+
+require "mhsConfig";
+require "splitAddr";
+require "getopts.pl";
+
+%precedence = ("special-delivery", 'U',
+	       "first-class", 'N',
+	       "junk", 'O');
+@keep = ("Subject",
+	 "X-\\S+",
+	 "O-\\S+");
+$keep = join('|', @keep);
+%offset = ("UT",  "+0000",
+	   "GMT", "+0000",
+	   "UCT", "+0000",
+	   "EST", "-0500", "EDT", "-0400",
+	   "CST", "-0600", "CDT", "-0500",
+	   "MST", "-0700", "MDT", "-0600",
+	   "PST", "-0800", "PDT", "-0700",
+	   "A",   "-0100", "B",   "-0200", "C",   "-0300", "D",   "-0400",
+	   "E",   "-0500", "F",   "-0600", "G",   "-0700", "H",   "-0800",
+	   "I",   "-0900", "J",   "-1000", "K",   "-1100", "M",   "-1200",
+	   "N",   "+0100", "O",   "+0200", "P",   "+0300", "Q",   "+0400",
+	   "R",   "+0500", "S",   "+0600", "T",   "+0700", "U",   "+0800",
+	   "V",   "+0900", "W",   "+1000", "X",   "+1100", "Y",   "+1200",
+	   "Z",   "+0000");
+
+
+sub Inet2SMF {
+  $_ = $_[$[];
+  s/^\s*(.*\S)?\s*$/$1/;		# remove leading and traiing whitespace
+  return "-MaiSer-@$mhsWG" if (/^@?$/);	# empty or just "@"
+  local($addr, $user, $host, $cmt, $tmp);
+  # separate address from comment
+  if (/(.*\S)?\s*<\s*(.*\S)\s*>$/) {
+    # comment <address>
+    ($cmt, $addr) = ($1, $2);
+    $cmt = " ($cmt)" if ($cmt);
+  }
+  elsif (/(.*\S)\s*(\(.*\))/) {
+    # address (comment)
+    ($addr, $cmt) = ($1, " $2");
+  }
+  else {
+    # address
+    $addr = $_;
+  }
+  # decompose address
+  if ($addr =~ /(.*)@(.*)/) {
+    ($user, $host) = ($1, $2);
+  }
+  else {
+    $user = $addr;
+  }
+  if ($user =~ /\b(Mailer-Daemon|Postmaster)\b/i || $user eq "") {
+    return "-MaiSer-@$mhsWG$cmt {SMTP:$addr}";
+  }
+  elsif ($user =~ /:/) {
+    # that was easy, fall out
+  }
+  elsif ($host =~ s/\.?$domain$//io) {
+    $user =~ s/_/ /g;
+    $host =~ s/_/ /g;
+    if ($host eq "") {
+      return "$user@$mhsWG$cmt";
+    }
+    elsif ($host =~ /^$mhsWGS$/io) {
+      return ($SMFVersion == 71)
+	? "$user@$host.$mhsWG$cmt"
+	  : "$user@$host$cmt";
+    }
+    elsif ($host =~ s/\.?$inetGW$//io) {
+      local($ext);
+      $user =~ s/#(\d{3})#/sprintf("%c", $1)/eg;
+      $user =~ s/#([au])#/($tmp = $1) =~ tr[au]'@_', $tmp/eg; # GMHS SMTP Module compatible
+      $host = $1 if ($user =~ s/%([^%]+)$//);
+      $ext = " $1" if ($user =~ s/({.*})$//);
+      $host = $mhsWG if ($host eq "");
+      return "$user@$host$cmt$ext";
+    }
+  }
+  return ($SMFVersion == 71)
+    ? "SMTPADDR@$mhsGW.$mhsWG$cmt {SMTP:$addr}"
+      : "SMTP-" . ++$uniq . "@$mhsGW$cmt {SMTP:$addr}";
+}
+
+# command line args: [-h <hopcount>] -r <from> <userlist> ...
+# jam command line args into more meaningful names and reformat
+do Getopts('h:r:');
+$hopCount = $opt_h;
+$sender = $opt_r;
+++$hopCount;
+$sender = &Inet2SMF($sender);
+foreach (@ARGV) {
+  $_ = &Inet2SMF($_);
+}
+$sendTo = join(",\n\t", @ARGV);
+$toSeen = $fromSeen = 0;
+@ARGV = ("-");				# clear ARGV
+
+# read header stuff into @ARPA
+while (<STDIN>) {
+  s/\r$//;
+  last if (/^$/);
+  if (s/^\s+//) {
+    # join continuation line to previous line
+    $ARPA[$#ARPA] =~ s/\s*$/ $_/;	# append with my choice of whitespace
+  }
+  else {
+    push(@ARPA, $_);
+  }
+}
+
+# reformat header into @SMF
+#push(@SMF, "SMF-$SMFVersion\n230Sender: $sender\n242Send-to: $sendTo\n20MCB-options: YD\n");
+if ($SMFVersion == 70) {
+    $signature="\003";
+} else {
+    $signature = "SMF-$SMFVersion";
+}
+push(@SMF, "SMF-$SMFVersion\n230Sender: $sender\n242Send-to: $sendTo\n20MCB-options: YD\n");
+$receivedSeen = 0;
+foreach (@ARPA) {
+  study;
+  if (s/^(((Reply-|Apparently-)?To|CC|From): )//i) {
+    local($tmp) = ($1);
+    chop;
+    local(@addr) = &splitInet($_);
+    foreach (@addr) {
+      $_ = &Inet2SMF($_);
+    }
+    $_ = $tmp;
+    if (/^CC/i) {
+      $_ = "Copies-To: ";
+    }
+    elsif (/^Apparently-to/i) {
+      $_ = "To: ";
+    }
+    if (/^To: /i) {
+      $toSeen = 1;
+    }
+    elsif (/^From: /i) {
+      $fromSeen = 1;
+    }
+    push(@SMF, $_ . join(",\n\t", @addr)."\n");
+    next;
+  }
+  elsif (/^(Date: )(\w{3}, )?(\d\d?) (\w{3}) (\d{2,4}) (\d\d:\d\d:\d\d) (\S+)/i) {
+    local($tmp, $junk, $day, $mon, $year, $time, $zone) = ($1, $2, $3, $4, $5, $6, $7);
+    $zone = $offset{$zone} if (defined($offset{$zone}));
+    $zone = "+0000" unless ($zone =~ /^[+-]/);
+    $year -= 1900 if ($year >= 1900 && $year <= 1999);
+    push(@SMF, $tmp . "$day-$mon-$year $time $zone\n");
+    next;
+  }
+  elsif (/^Return-Receipt-To: [^,\n]+/i) {
+    $SMF[$[] =~ s/(MCB-options: .)./$1Y/i; # and hope it was going to sender
+    next;
+  }
+  elsif (/^($keep):/io) {
+    push(@SMF, $_) if (length($_) < 512);
+    next;
+  }
+  # insert a Received line before other Received lines, count Received lines
+  elsif (/^(X-)?Received:/i && $receivedSeen++ <= 0) {
+    push(@SMF, "X-Received: by $inetGW.$domain id Ux$$; " .
+	 	`date '+%a, %d %b %y %H:%M:%S %Z'`);
+  }
+  push(@SMF, "X-$_") if ($SMFVersion == 71 && /^(\S+): / && length($_) < 512);
+}
+undef @ARPA;				# reclaim memory for @message
+push(@SMF, "From: $sender\n") unless ($fromSeen);
+push(@SMF, "To: $sendTo\n") unless ($toSeen);
+$hopCount = $receivedSeen if (++$receivedSeen > $hopCount);
+
+# read message body into @message and scan for binary attachments
+$bodyLength = 0;
+while (<STDIN>) {
+  # check for uuencode 'begin'
+  if (/^\s*begin\s+[0-7]*\s+(\S+)/) {
+    $tmp = $1;
+    $cmd = ($tmp =~ s/\.Z$//) ? "uncompress" : "cat";
+    push(@attachmentName, $tmp);
+    $fifo = "/tmp/FIFO$$";
+    $attach = "a$$$#attachmentName";
+    system("mknod $fifo p") || &diemsg(2);
+    if (fork() == 0) {
+      # child process
+      #exec("$cmd <$fifo >$MV/mhs/mail/parcel/$attach")
+      exec("$cmd <$fifo | nwwritefile $CNFG{MAILSERV} $MV/mhs/mail/gates/$mhsGW/iparcel/$attach")
+	|| &diemsg(3);
+    }
+    open(ATTACH, "|-")
+      || exec "uudecode" || &diemsg(4);
+    print ATTACH "begin 644 $fifo\n";
+    while (<STDIN> && !(/^\s*end/)) {
+      print ATTACH;
+    }
+    print ATTACH "end\n";
+    close(ATTACH);
+    while(wait > 0) { }
+    unlink($fifo);
+    next;
+  }
+  s/\r*$/\r/;
+  push(@message, $_);
+  $bodyLength += length($_);
+}
+
+if ($bodyLength > 64000) {
+  push(@attachmentName, "msgbody.txt");
+  $attach = "a$$$#attachmentName";
+  # open(ATTACH, ">$MV/mhs/mail/parcel/$attach")
+  #open(ATTACH, ">$MV/mhs/mail/gates/$mhsGW/iparcel/$attach")
+  open(ATTACH, "| nwwritefile $CNFG{MAILSERV} $MV/mhs/mail/gates/$mhsGW/iparcel/$attach")
+    || &diemsg(5);
+  print ATTACH @message;
+  close(ATTACH);
+  wait;
+  @message = ("The message body exceeded MHS' 64KB limit.\r\n",
+              "The original message body is now contained in the\r\n",
+              "attachment named \"msgbody.txt\".\r\n");
+}
+  
+# if there were attachments add the information into @SMF
+if ($#attachmentName >= $[) {
+  push(@SMF, "Attachment: a$$" . join(",\n\ta$$", "0"..$#attachmentName) . "\n");
+  push(@SMF, "Attachment-name: " . join(",\n\t", @attachmentName) . "\n");
+}
+
+# hand off to MHS
+# open(MHS, ">$MV/mhs/mail/snd/ux$$")
+#open(MHS, ">$MV/mhs/mail/gates/$mhsGW/in/ux$$")
+$file = "$MV/mhs/mail/gates/$mhsGW/in/ux$$";
+open(MHS, "| nwwritefile $CNFG{MAILSERV} $file.new")
+  || &diemsg(6);
+print MHS @SMF, "220Hop-count: $hopCount\n\n"; # header
+print MHS @message;			# rest of text
+close(MHS);
+system("nwrenamefile $CNFG{MAILSERV} $file.new $file");
+exit $?;

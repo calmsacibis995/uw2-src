@@ -1,0 +1,28 @@
+#ident	"@(#)pkg.nics:config/SMC_9000	1.2"
+
+NAME=SMC_9000
+
+DRIVER_NAME=SMC9K
+
+INT="2 3 10 11"
+
+PORT="
+300-31F 320-33F 340-35F 360-37F
+"
+
+CLASS=SMC9K
+
+ETHER=true
+
+BUS=ISA
+
+CUSTOM_NUM=1
+
+CUSTOM[1]='
+ODISTR1
+MEDIA_TYPE=AUTO
+MEDIA
+Cable Type
+/etc/inst/locale/C/menus/nics/help/cable_type
+Select Cable Type
+'

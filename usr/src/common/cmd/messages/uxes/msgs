@@ -1,0 +1,258 @@
+#ident	"@(#)messages:common/cmd/messages/uxes/msgs	1.19"
+/*	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.	*/
+/*	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.	*/
+/*	  All Rights Reserved  	*/
+
+/*	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.	*/
+/*	The copyright notice above does not evidence any   	*/
+/*	actual or intended publication of such source code.	*/
+
+argvtostr failed\n
+Memory allocation failed\n
+Command name \"%s\" already exists\n
+User \"%s\" already exists\n
+Role name \"%s\" is not unique\n
+Undefined user \"%s\"\n
+Process privilege \"%s\" does not exist in command \"%s\"\n
+Incorrect usage\n
+\nusage: adminuser [-n] [-o role[,...]]\n                 [-a cmd:path[:priv[:priv...]][,...]]\n                 user ...\n       adminuser [-o role[,...]]\n                 [-r cmd[:priv[:priv...]][,...]]\n                 [-a cmd:path[:priv[:priv...]][,...]]\n                 user ...\n       adminuser [-d] user ...\n       adminuser\n
+%s:\n
+roles:     <none>\n
+roles:     
+Commands:\n     <none>\n
+Commands:\n
+           %s:%s 
+Role name \"%s\" already exists\n
+Undefined role name \"%s\"\n
+\nusage: adminrole [-n] [-a cmd:path[:priv[:priv...]][,...]] role ...\n       adminrole [-r cmd[:priv[:priv...]][,...]] \n                 [-a cmd:path[:priv[:priv...]][,...]] role ...\n       adminrole [-d] role ... \n       adminrole \n
+%s:\t<empty>\n
+%s:
+\t%s:%s 
+Invalid process privilege: \"%s\"\n
+Duplicate process privilege: \"%s\"\n
+Unrecognized privilege number: \"%d\"\n
+<unknown> 
+Cannot execute program file\n
+Undefined command name \"%s\"\n
+User not allowed\n
+Cannot set up maximum privilege set\n
+\nusage:\ttfadmin [role:] cmd [args]\n\ttfadmin -t [role:] cmd [args]\n
+Insufficient command specification: \"%s\"\n
+Full command pathname must be specified\n
+Full path to TFM database must be specified\n
+Cannot read role list for user \"%s\"\n
+TFM database does not exist\n
+Cannot initialize TFM database\n
+Cannot add user \"%s\"\n
+Cannot add role \"%s\"\n
+Cannot alter user \"%s\"\n
+Cannot alter role \"%s\"\n
+User \"%s\" currently being changed, try again later\n
+Role \"%s\" currently being changed, try again later\n
+Cannot remove role \"%s\"\n
+Cannot remove user \"%s\"\n
+Cannot change command \"%s\"\n
+Cannot change role list for user \"%s\"\n
+Improper command name: \"%s\"\n
+incorrect usage\n
+usage: chlvl level file1 [file2 ...]\n
+program error\n
+invalid security level specified\n
+LTDB is inaccessible\n
+permission denied for file \"%s\"\n
+file \"%s\" is not 'tranquil' (i.e. file is open and/or mapped)\n
+security level specified is not within device range for file \"%s\"\n
+file system for file \"%s\" does not support per-file labels\n
+system service not installed\n
+file \"%s\" is inaccessible\n
+abort to enforce least privilege\n
+file system for file \"%s\" is mounted read-only\n
+missing CLASS_OBJ entry for \"%s\"\n
+invalid ACL type for \"%s\"\n
+permission denied for \"%s\"\n
+file \"%s\" not found\n
+stat failed for file \"%s\", %s\n
+malloc failed\n
+acl failed for file \"%s\", %s\n
+# file: %s\n
+# owner: 
+# group: 
+default:
+user::
+user:
+group::
+group:
+class:
+other:
+\t#effective:
+usage: getacl [-ad] file ...\n
+acl failed for \"%s\", %s\n
+incompatible options specified\n
+duplicate entries: \"%s\"\n
+duplicate entries for \"%s\": \"%s\"\n
+illegal entry specification, \"%s\"\n
+required entry for file owner, file group, \"class\", or \"other\" not specified\n
+aclsort call failed\n
+aclsort call failed for \"%s\"\n
+can't open file \"%s\", %s\n
+\"%s\", line %d; invalid ACL entry\n
+file owner, file group, \"class\", and \"other\" entries may not be deleted\n
+unknown type \"%s\"\n
+unknown user-id \"%s\"\n
+unknown group-id \"%s\"\n
+unknown permission \"%s\"\n
+matching entry not found in ACL for \"%s\": \"%s\"\n
+only file owner, file group, \"class\", or \"other\" may be specified for \"%s\"\n
+default ACL entries may only be set on directories, not on \"%s\"\n
+\nusage: setacl [-r]\n
+              [-m [[d[efault]:]u[ser]::operm | perm[,]]\n
+                  [[d[efault]:]u[ser]:uid:operm | perm[,...]]\n
+                  [[d[efault]:]g[roup]::operm | perm[,]]\n
+                  [[d[efault]:]g[roup]:gid:operm | perm[,...]]\n
+                  [[d[efault]:]c[lass]:operm | perm[,]]\n
+                  [[d[efault]:]o[ther]:operm | perm]]\n
+              [-d [[d[efault]:]u[ser]:uid[,...]]\n
+                  [[d[efault]:]g[roup]:gid[,...]]\n
+                  [[d[efault]:]u[ser]::[,]]\n
+                  [[d[efault]:]g[roup]::[,]]\n
+                  [[d[efault]:]c[lass]:[,]]\n
+                  [[d[efault]:]o[ther]:[,]]]\n
+              object(s)\n
+        or\n
+       setacl [-r]\n
+              -s u[ser]::operm | perm[,]\n
+                 [d[efault]:u[ser]::operm | perm[,]]\n
+                 g[roup]::operm | perm[,]\n
+                 [d[efault]:g[roup]::operm | perm[,]]\n
+                 c[lass]:operm | perm[,]\n
+                 [d[efault]:c[lass]:operm | perm[,]]\n
+                 o[ther]:operm | perm[,]\n
+                 [d[efault]:o[ther]:operm | perm[,]]\n
+                 [[d[efault]:]u[ser]:uid:operm | perm[,...]]\n
+                 [[d[efault]:]g[roup]:gid:operm | perm[,...]]\n
+       setacl [-r] -f file_name object(s)\n
+usage: lvldelete [-r] -a alias_name[,alias_name...]\n
+                                       [-r] -c cat_id[,cat_id...]\n
+                                       [-r] -f level_name\n
+                                       [-r] -h class_id[,class_id...]\n
+                                       [-r] -l lid[,lid...]\n
+\nLevel Identifiers(LIDs):\n
+\nClassifications:\n
+\nCategories:\n
+\nAlias Names:\n
+\nLevels:\n
+\nusage: lvlname [[-r] -a alias_name::level_name]\n
+               [[-r] -c #:c_name[,#:c_name...]\n
+               [[-r] -h #:h_name[,#:h_name...]\n
+               [[-r] -l [level_identifier::]level_name]\n
+               [-p]\n
+where\n
+       alias_name       - alias assigned to a fully qualified level\n
+       c_name           - name associated with a non-hierarchical category\n
+       h_name           - name associated with a hierarchical classification\n
+       level_identifier - number (LID) assigned to a fully qualified level\n
+       level_name       - fully qualified level, h_name[:c_name[,c_name]...]\n
+       #                - a classification or category number\n
+usage: lvlprt [-s]\n
+illegal option argument -- \"%s\"\n
+invalid number \"%s\"\n
+invalid name \"%s\"\n
+invalid level name \"%s\"\n
+name \"%s\" is reserved\n
+LID \"%d\" is reserved\n
+name \"%s\" is already in use as an alias, classification, or category\n
+Identifier \"%s\" is reserved for system use\n
+invalid level identifier \"%s\", level identifier must be numeric\n
+classification number \"%s\" currently unnamed\n
+classification number \"%s\" already assigned\n
+classification name \"%s\" currently not defined\n
+classification number \"%s\" is out of range (1 - %d)\n
+category number \"%s\" currently unnamed\n
+category number \"%s\" already assigned\n
+category name \"%s\" currently not defined\n
+category number \"%s\" is out of range (1 - %d)\n
+level identifier \"%s\" currently unnamed\n
+level identifier \"%s\" is in valid-inactive state\n
+level identifier \"%d\" is already assigned to a level\n
+level name \"%s\" currently not defined\n
+level name \"%s\" is already in use\n
+level identifier \"%s\" is out of range (1 - %d)\n
+alias for level name \"%s\" already assigned\n
+alias name \"%s\" currently not defined\n
+cannot create LTDB\n
+cannot close LTDB\n
+LTDB is currently being modified\n
+cannot unlock LTDB\n
+cannot seek through LTDB\n
+cannot read from LTDB\n
+cannot write to LTDB\n
+cannot read from history log\n
+cannot write to history log\n
+history log is inaccessible\n
+cannot close history log\n
+cannot create history log\n
+no memory to store user requests\n
+no memory to read from history log\n
+no memory to write to history log\n
+no memory to convert LID to fully qualified level\n
+no memory to sort output\n
+LTDB out of sync while processing level name \"%s\"\n
+classification or category comprising level for LID \"%d\" is currently unnamed\n
+classification or category comprising level for alias \"%s\" is currently unnamed\n
+next automatically assigned LID incorrect; assign level name \"%s\" at end of file\n
+next automatically assigned LID overflow; level name \"%s\" not assigned\n
+failed argvtostr\n
+cannot open backup files for LTDB\n
+cannot write backup files for LTDB\n
+file %s does not exist\n
+cannot access file %s\n
+cannot create file for user %s\n
+file for user %s already exists\n
+%s\n
+\tusage: maccnv\n
+unable to change directory to /etc/security/ia/level\n
+unable to translate %s\n
+bad entry found in password file - skipping entry\n
+invalid combination of options -r & -v\n
+Usage: mldmode [ -r | -v string]\n
+illegal option -- %s\n
+multilevel mode=%s\n
+exec failed, errno = %d\n
+usage: admalloc [-m][-o][-w level -u user,group] [-r hilevel-lolevel] device ...\n       admalloc -s\n       admalloc -d[-f] [device]...\n
+%s is not defined in Device Database\n
+%s is already allocated\n
+allocation not permitted for \"%s\" for %s\n
+\"%s\" is undefined or inaccessible for %s\n
+\"%s\" state is not allowed for %s\n
+specified level or level range not allowed for %s\n
+Device Database not accessible - notify administrator\n
+Device Database in inconsistent state - notify administrator\n
+invalid level %s\n
+%s busy\n
+security information for %s inaccessible\n
+LTDB not accessible - notify administrator\n
+%s does not dominate %s\n
+Device Database in use - Try again later\n
+\"%s\" or \"%s\" undefined on system\n
+\"%d\" or \"%d\" undefined on system\n
+permission denied for %s\n
+usage: devstat -Z|z [device]...\n
+invalid combination of options -Z & -z\n
+permission denied\n
+\"%s\" is not defined in Device Database\n
+\"%s\" is undefined or inaccessible for \"%s\"\n
+\"%s\" is undefined or inaccessible\n
+\"%s\" is not a disk-based block or character special file for \"%s\"\n
+\"%s\" is not a disk-based block or character special file\n
+insufficient memory\n
+device name: %s\n
+path name  : %s\n
+\tstate       : %s\n
+\tmode        : %s\n
+\thigh        : %s\n
+\tlow         : %s\n
+\tuse count   : %d\n
+\trelease flag: %s\n
+\"%s\" lacks requested privilege for \"%s\"\n
+\nusage:\ttfadmin [role:] cmd [args]\n\ttfadmin -t [role:] cmd[:priv[:priv...]]\n
+Usage: mldmode [ -r | -v [string] ]\n

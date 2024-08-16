@@ -1,0 +1,53 @@
+Mon Mar 28 15:31:48 1994  A. Joseph Koshy  (koshy@orthanc)
+
+	* Imakefile: Changed the library version number to "1.00" for the
+	Q5 load.
+
+Sat Mar 26 16:43:24 1994  A. Joseph Koshy  (koshy@orthanc)
+
+	* l_globals.h (DEFAULT_ULTRA_INIT_COMPATIBILITY_INVALID_VIRTUAL_DISPLAY_STRING_MESSAGE): 
+	Message for the usage of environment variable "ULTRA_VIRTUAL_DISPLAY".
+
+	* ultra.c (lfb_compatibility_init): Environment variable
+	"ULTRA_VIRTUAL_DISPLAY" is checked for virtual display size in
+	backward compatibility mode.  This change was done by Kumar Talluri.
+
+Sat Mar  5 10:09:17 1994  A. Joseph Koshy  (koshy@orthanc)
+
+	* ultra.c (lfb_initialize_lfb_state): changed offset of LFB
+	mapping call to pass the actual physical address instead of `0'.
+
+Thu Feb 24 14:35:53 1994  A. Joseph Koshy  (koshy@orthanc)
+
+	* l_globals.h (DEFAULT_LFB_STARTUP_MESSAGE): Fixed typo in message.
+
+Thu Feb 17 06:42:43 1994  Joseph Koshy  (koshy@omni)
+
+	* l_arc.c (lfb_arc_draw_one_bit_arc): added check for arcs with
+	height/width of zero.  The protocol says that these are to be
+	treated as lines, so we now bounce such an arc back to SI.
+
+Tue Feb  8 03:41:24 1994  Joseph Koshy  (koshy@omni)
+
+	* ultra.c (DM_InitFunction): Added check for standard option 
+	files in /usr/X/display etc. to the DM_InitFunction.  Moved this out 
+	of the compatibility init.
+
+	* l_arc.c: Added module for drawing arcs in the LFB layer.
+
+Mon Jan  31 08:05:26 1994  Joseph Koshy  (koshy@omni)
+
+	* Check for presence of "/dev/lfb" in the beginning.  If this is
+	not present the auto-configure mode assumes that we don't have
+	LFB. 
+
+Thu Jan  6 06:34:48 1994  Joseph Koshy  (koshy@omni)
+
+	* lfb.c (lfb_initialize_lfb_state): added checks against defaults
+	for the frame buffer address and frame buffer size options.
+
+Mon Jan  3 17:24:46 1994  A. Joseph Koshy  (koshy@orthanc)
+
+	* LFB porting completed.
+
+

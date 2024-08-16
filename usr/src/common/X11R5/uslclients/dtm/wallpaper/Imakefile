@@ -1,0 +1,33 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)dtm:wallpaper/Imakefile	1.2"
+
+#if Release5
+#include <sv4Lib.tmpl>
+#endif
+#include        <Motif.tmpl>
+#include        <Motif.rules>
+
+EXTRA_LOAD_FLAGS = -z nodefs
+
+          SRCS = dtsetbg.c
+
+OBJS = $(SRCS:.c=.o)
+
+       INCLUDES = -I./ -I$(LIBSRC)
+LOCAL_LIBRARIES = XmClientLibs
+        DEPLIBS = XmClientDepLibs
+
+MSimpleProgramTarget(dtsetbg)
+InstallProgram(dtsetbg,$(BINDIR))
+InstallProgram(dtwallpaper,$(BINDIR))
+
+DependTarget()
+
+LintTarget()

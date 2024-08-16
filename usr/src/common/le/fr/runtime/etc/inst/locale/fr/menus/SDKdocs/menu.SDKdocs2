@@ -1,0 +1,72 @@
+.ul
+Installation des manuels SDK
+.ur
+Sélectionner l'accès CD-ROM
+.lr
+F1=Aide
+.top
+Vous pouvez accéder à la documentation à partir du CD-ROM.
+Si vous effectuez l'installation à partir du disque CD-ROM,
+vous pouvez aussi avoir accès à la documentation à partir de ce
+dernier. Vous pouvez également choisir d'installer certains
+manuels sur le disque, tout en vous réservant la possibilité
+d'accéder au reste de la documentation à partir du CD-ROM.
+Notez que vous devez monter le disque CD-ROM pour accéder aux
+manuels. Pour obtenir de plus amples informations, appuyez sur F1.
+
+D'où souhaitez-vous accéder à la documentation ?
+
+.button
+Appliquer
+Réinitialiser
+.bottom
+Appuyez sur "TAB" pour faire passer le curseur d'un champ à un autre.
+Placez le curseur sur "Appliquer" et appuyez sur "ENTREE" pour continuer.
+.form
+
+2 2//NO::Non//YES::Oui//Accéder aux guides à partir du CD-ROM ?//CDROM//
+//Touches fléchées Gauche/Droite pour choix suivant (2 options)//
+
+2 2//YES::Oui//NO::Non//Installer guides sur le disque ?//DISK//
+//Touches fléchées Gauche/Droite pour choix suivant (2 options)//
+
+.hhelp_ban
+Instructions
+.helpbanner
+Aide : installation des manuels relatifs au kit de développement
+logiciel
+.help
+Pour obtenir des instructions détaillées, vous pouvez à tout moment
+appuyer sur la touche F1 (ou sur "?").
+
+ACCES A LA DOCUMENTATION A PARTIR DU CD-ROM
+Si vous avez décidé d'accéder à la  documentation à partir du CD-ROM,
+cette installation va mettre à jour le fichier de configuration .ebtrc
+de façon à ce que le programme de lecture puisse trouver les manuels sur
+le CD-ROM. Vous devez monter le CD-ROM pour pouvoir avoir accès aux
+manuels à partir de ce dernier. Utilisez la commande :
+
+        mount -F cdfs -r /dev/cdrom/cCbBtTlL /installr
+
+où C, B, T et L sont des variables : 
+        C correspond au numéro de la carte contrôleur SCSI à laquelle 
+          le CD est connecté,
+        B au numéro du bus (généralement 0, mais il peut aller de 0 à 7)
+        T à l'ID cible (ID associée à l'unité sur le bus utilisé)
+        L au numéro d'unité logique SCSI (généralement 0).
+
+Cherchez les chiffres que vous devez associer aux lettres C, B, T et L
+dans le répertoire /dev/cdrom.
+
+Pour plus d'informations, voir le guide du propriétaire système.
+
+.pageno
+Page %d de %d
+.optstring
+Les options disponibles sont :
+.helpinst
+ECHAP=Quitter l'aide F1=Instructions 1=Page suiv. 2=Page préc.
+.hhelpinst
+ECHAP=Quitter les instructions 1=Page suiv. 2=Page préc.
+.end
+

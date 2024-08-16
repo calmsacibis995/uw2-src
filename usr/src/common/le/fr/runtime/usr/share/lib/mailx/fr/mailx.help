@@ -1,0 +1,102 @@
+                commandes mailx
+
+!,shell [commande]                   échappement shell
+alias,group utilisateur ...          déclaration d'alias pour les noms
+                                     utilisateur
+alternates utilisateur               établissement de noms de rechange
+                                     pour votre nom d'ouverture de session
+bedit [listemsg]                     édition de messages binaires
+bprint [listemsg]                    impression de messages binaires
+Bprint [listemsg]                    impression de messages binaires avec tous les en-têtes
+btop [listemsg]                      impression des lignes $toplines des
+                                     messages binaires
+bvisual [listemsg]                   édition des messages binaires avec
+                                     éditeur $VISUAL
+cd,chdir [répertoire]                passage au répertoire indiqué ou au
+                                     répertoire personnel si aucun
+                                     répertoire n'est spécifié
+copy [listemsg] fichier              sauvegarde les messages dans un fichier
+                                     sans les marquer comme sauvegardés
+Copy [listemsg]                      même chose que pour copy, utilise un
+                                     fichier portant le nom de l'auteur
+
+delete [listemsg]                    suppression des messages
+discard,ignore header                ignore le champ en-tête lors de
+                                     l'impression du message
+dp,dt [listemsg]                     suppression des messages et affichage du
+                                     message suivant
+echo chaîne                          impression de la chaîne
+edit [listemsg]                      édition des messages
+folder,file nom de fichier           attribue aux boîtes à lettres un nom
+                                     de fichier
+folders                              recense les fichiers du répertoire du
+                                     dossier en cours
+followup,followupall [message]       réponse au message et sauvegarde de
+                                     la copie
+Followup,Followupall [listemsg]      réponse aux messages et sauvegarde de
+                                     la copie
+forward,Forward [listemsg] [utilisateurs]    envoi de messages
+                                             aux utilisateurs
+from [listemsg]                      affichage des lignes d'en-têtes
+                                     des messages
+header [message]                     impression de la page d'en-têtes
+                                     des messages actifs
+Headers [listemsg]                   impression d'en-têtes des messages
+                                     en format non limité
+help,?                               impression du message d'aide
+hold,preserve [listemsg]             sauvegarde des messages dans
+                                     la boîte à lettres
+list                                 affichage de toutes les commandes
+                                     (sans explications supplémentaires)
+mail,mailall utilisateur             envoi à un utilisateur donné
+Mail,Mailrecord utilisateur          envoi à un utilisateur donné et
+                                     sauvegarde d'une copie
+mbox [listemsg]                      sauvegarde des messages dans la boîte
+                                     aux lettres et sortie du programme
+newmail,inc                          recherche de nouveaux messages
+New,Unread [listemsg]                marquage des messages comme nouveaux
+next [message]                       passage au message suivant
+pipe,| [listemsg] [cmd-shell]        transmission des messages à la
+                                     commande shell
+Pipe [listemsg] [cmd-shell]          transmission des messages à la commande
+                                     en ignorant les en-têtes
+print,type [listemsg]                impression des messages
+Print,Type [listemsg]                impression des messages avec
+                                     tous les en-têtes
+quit                                 quitte le programme tout en conservant
+                                     les messages qui n'ont pas été lus
+reply,respond,replyall [message]     réponse à l'auteur et aux
+                                     destinataires du message
+Reply,Respond,replysender [listemsg] réponse aux auteurs des messages
+retain header                        Masquage du champ en-tête lors de
+                                     l'impression du message
+save [listemsg] fichier              sauvegarde (par annexion) de
+                                     messages dans le fichier
+Save [listemsg]                      sauvegarde des messages dans un
+                                     fichier au nom de l'auteur
+set [no]variable[=valeur]            définition de la valeur de la variable
+showheaders listemsg liste en-têtes  affichage des en-têtes donnés pour
+                                     les messages indiqués
+size [listemsg]                      impression de la taille des messages
+source fichier                       lecture des commandes du fichier
+top [listemsg]                       impression des lignes $toplines
+                                     des messages
+touch [listemsg]                     permet de forcer la sauvegarde des
+                                     messages en quittant
+unalias utilisateur                  suppression d'alias
+undelete [listemsg]                  restauration des messages supprimés
+undiscard,unignore header            rajout du champ en-tête dans la
+                                     liste imprimée
+unretain header                      ajout du champ en-tête dans la
+                                     liste ignorée
+version                              impression de la version
+visual [listemsg]                    édition de la liste à l'aide
+                                     de l'éditeur $VISUAL
+write [listemsg] fichier             écriture des messages sans en-têtes
+xit,exit                             quitte en sauvegardant tous les messages
+z [+/-]                              affichage de la page suivante
+                                     [précédente] de 10 en-têtes
+
+[listemsg] est facultatif et spécifie les messages en
+indiquant leur numéro, leur auteur, leur sujet ou
+type. La valeur par défaut est le message actif.

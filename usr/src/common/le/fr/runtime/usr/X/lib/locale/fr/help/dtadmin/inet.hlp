@@ -1,0 +1,1175 @@
+#ident\t"@(#)dthelp:Admin.Tools/inet.hlp        1.27"
+^*version^1
+^*title^Configuration d'Internet
+^:Conf_Internet
+^*width^70
+^+DesktopMgr/help.defs
+^?Conf_Internet
+^0^Configuration d'Internet
+^$10
+Configuration d'Internet
+
+Utilisez Configuration d'Internet pour permettre à votre système de
+communiquer avec d'autres systèmes connectés à des réseaux TCP/IP.
+
+Remarque : UUCP, DNS, NIS et Configuration du routage sont disponibles
+seulement pour les utilisateurs dotés des autorisations
+\k(Modifier configuration d'Internet^dtadmin/user.hlp^Présentation des autorisations).
+
+L'option Configuration d'Internet vous permet également d'exécuter les
+opérations suivantes :
+
+\to\t\k(Ajouter un nouveau système dans la Liste des systèmes^^Ajout d'un système dans la liste des systèmes)
+\to\t\k(Modifier le masque de réseau et l'adresse de diffusion de votre système^^Configuration du routage)
+\to\t\k(Configurer votre système pour la gestion de réseaux TCP/IP^^Configuration de votre système en vue de la mise en réseau TCP/IP)
+\to\t\k(Configurer votre système de façon à ce qu'il utilise un routeur par défaut^^Configuration du routage)
+\to\t\k(Copier une entrée de la Liste des domaines dans la Liste des systèmes^^Listage des domaines)
+\to\t\k(Copier une icône associée à un système à distance dans un dossier^^Copie de l'icône d'un système à distance dans un dossier)
+\to\t\k(Supprimer un système de la Liste des systèmes^^Suppression d'un système de la liste des systèmes)
+\to\t\k(Afficher la liste des domaines^^Listage des domaines)
+
+\to\t\k(Afficher la Liste des systèmes^^Liste des systèmes)
+\to\t\k(Rechercher une entrée correspondant à un système spécifique^^Recherche d'un système)
+\to\t\k(Configurer l'accès des utilisateurs à distance au système local^^Configuration de l'accès des utilisateurs à distance aux systèmes locaux)
+\to\t\k(Configurer l'accès à un serveur Services réseau du domaine^^Accès à DNS)
+\to\t\k(Configurer l'accès à votre serveur Services d'informations réseau^^Accès à DNS)
+\to\t\k(Configurer votre système pour les transferts de fichiers UUCP^^Configuration du transfert UUCP)
+\to\t\k(Visualiser les caractéristiques d'un système^^Visualisation des caractéristiques du système)
+
+Voir également :
+\s(Définition et configuration de TCP/IP^dhelp "pe.fr" ownerhb "Définition et configuration de TCP/IP" "" || helpLinkErr)
+\s(Introduction à la Configuration de TCP/IP^dhelp as netag "Setting Up TCP/IP" "Introduction to TCP/IP Setup" || helpLinkErr)
+
+^1^Configuration de votre système en vue de la mise en réseau TCP/IP
+^$20
+Configuration de votre système en vue de la mise en réseau TCP/IP
+
+Si vous n'avez pas entré d'adresse réseau permettant la mise en réseau
+TCP/IP (Transmission Control Protocol/Internet Protocol) pendant
+l'installation, le système affiche automatiquement la fenêtre
+Configuration d'Internet : configurer le système local la première
+fois que vous cliquez à deux reprises sur Configuration_Internet.
+
+Pour configurer votre système en vue de la mise en réseau TCP/IP,
+procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \tConfiguration d'Internet : configurer le système local qui
+  \tcomporte les champs suivants s'affiche :
+
+  \to\tNom du système - Affiche le nom de votre système.
+
+  \to\tAdresse réseau - Tapez l'adresse de votre système. Si vous ne
+  \t \tconnaissez pas l'adresse réseau de votre système, prenez contact
+  \t \tavec votre administrateur système qui vous affectera cette
+  \t \tadresse.
+
+  \t \tVeuillez ne compléter les trois champs suivants que si votre
+  \t \tentreprise a accès à un \k(DNS serveur^^Accès à DNS)
+
+  \to\tNom du domaine : - Entrez le nom correspondant au domaine de
+  \t \tvotre entreprise. Le nom du domaine doit comporter une extension
+  \t \t.com, .edu, .gov., etc. Par exemple, site1.companyA.com.
+
+  \to\tServeur DNS : - Entrez le nom du serveur de noms associé au
+  \t \tdomaine principal de votre division.
+
+  \to\tAdresse réseau - Entrez l'adresse correspondant au serveur DNS.
+
+4.\tCliquez sur OK pour sauvegarder vos modifications.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \tannuler les modifications que vous n'avez pas encore appliquées,
+  \tou sur Annuler pour refermer la fenêtre sans sauvegarder les
+  \tmodifications.
+
+Voir également :
+\s(Installation de TCP/IP^dhelp as netag "Setting Up TCP/IP" "Installing TCP/IP" || helpLinkErr)
+\s(Configuration de TCP/IP au niveau de la ligne de commande^dhelp "pe.fr" ownerhb "Définition et configuration de TCP/IP" "Configuration de TCP/IP au niveau de la ligne de commande" || helpLinkErr)
+
+^1^Configuration de l'accès des utilisateurs à distance aux systèmes locaux
+^$30
+Configuration de l'accès des utilisateurs à distance aux systèmes locaux
+
+ Vous pouvez configurer votre système de façon à ce que les
+ utilisateurs des autres systèmes (y compris vous-même) puissent s'y
+ connecter et échanger des fichiers avec vous (par exemple, en
+ utilisant les commandes rlogin et rcp).
+
+Pour définir l'accès à votre système local pour les utilisateurs à
+distance, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \t"Configuration d'Internet" apparaît.
+
+  \tRemarque : si vous avez configuré votre système pour l'accès à un
+  \t\k(serveur DNS^^Accès à DNS) (DNS), le système affiche par défaut la
+  \t\k(vue Liste des domaines^^Listage des domaines).
+
+  \tSi vous n'avez pas configuré votre système pour l'accès DNS, le
+  \tsystème affiche la \k(vue Liste des systèmes^^Liste des systèmes). Cliquez sur le système
+  \tà partir duquel les utilisateurs vont se connecter.
+
+4.\tCliquez sur Actions=>Accès des utilisateurs à distance. La fenêtre
+  \t"Configuration d'Internet : accès des \tutilisateurs à distance"
+  \tapparaît. Elle propose les options suivantes :
+
+  \to\tNom du système : - Cette case de texte comporte le nom du
+  \t \tsystème actuellement sélectionné dans la fenêtre principale
+  \t \t"Configuration d'Internet". Si vous souhaitez configurer l'accès
+  \t \tà distance pour un autre système, vous pouvez modifier le nom du
+  \t \tsystème en écrasant le nom actuel et en appuyant sur la touche
+  \t \t<Tab>.
+
+  \to\tSupprimer les restrictions liées au mot de passe : par défaut,   \t
+  \t \tce champ est paramétré sur "Accès à votre compte personnel."
+  \t \tCela signifie que vous définissez l'accès des utilisateurs à
+  \t \tdistance pour votre ouverture de session uniquement.
+
+  \t \tSi vous êtes doté de
+  \t \t\k(l'autorisation Modifier configuration d'Internet^dtadmin/user.hlp^Présentation des autorisations), vous pouvez
+  \t \tégalement supprimer les restrictions liées au mot de passe pour
+  \t \ttout utilisateur local (/etc/hosts.equiv) en cliquant sur
+   \t \t"Utilisateurs à distance associés à des comptes locaux."
+
+  \t \tLes utilisateurs à distance du système spécifié qui disposent
+  \t \td'un compte sur votre système pourront alors se connecter à
+  \t \tvotre système sans entrer de mot de passe.
+
+  \to\tUtilisateurs sur <nomsystème> pouvant librement accéder à votre
+  \t \tcompte/leur compte :
+  \t \t-\tCliquez sur l'une des options suivantes :
+
+  \t \t-\tPersonne - Option par défaut que vous devez utiliser si vous
+  \t \t \tsouhaitez que personne ne puisse accéder à votre compte ou au
+  \t \t \tcompte d'un autre utilisateur sans entrer de mot de passe.
+
+   \t \t-\tVous-même - Si vous souhaitez vous connecter à ce système à
+   \t \t \tpartir du système à distance en utilisant le même ID
+   \t \t \td'ouverture de session (le système ne vous demandera aucun mot
+   \t \t \tde passe).
+
+  \t \t-\tTous les utilisateurs - Si vous souhaitez que tous les
+  \t \t \tutilisateurs du système à distance puissent se connecter sans
+  \t \t \tfournir de mot de passe. L'utilisateur doit disposer d'un
+  \t \t \tcompte sur votre système. Cette option n'est disponible que si
+  \t \t \tvous avez sélectionné "Supprimer les restrictions liées au
+  \t \t \tmot de passe" pour les "Utilisateurs à distance disposant de
+  \t \t \tcomptes locaux."
+
+  \t \t-\tUtilisateurs spécifiques - Si vous souhaitez que des
+  \t \t \tutilisateurs spécifiques puissent accéder à leur compte ou à
+  \t \t \tvotre propre compte sans entrer de mot de passe.
+
+  \t \t \tSi vous sélectionnez Utilisateurs spécifiques, la fenêtre
+  \t \t \ts'agrandit ; elle inclut maintenant des champs complémentaires
+  \t \t \tpermettant d'ajouter des utilisateurs dans la liste. Voir
+  \t \t \t\k(Sélection d'utilisateurs spécifiques) pour de plus amples informations.
+
+5.\tCliquez sur OK pour sauvegarder les modifications et refermer la
+  \tfenêtre , ou sur Appliquer pour sauvegarder les modifications sans
+  \trefermer la fenêtre.
+
+Voir également :
+\s(Fichiers de /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr)
+
+^2^Listage des domaines
+^$40
+Listage des domaines
+
+Pour afficher la liste de domaines, cliquez sur Afficher=>Liste de
+domaines.
+
+Cette liste affiche par défaut les systèmes dans votre
+domaine local.
+
+Pour visualiser et sélectionner d'autres domaines (et sous-domaines),
+procédez comme suit :
+
+1.\tEntrez dans la case de texte Nom du domaine le nom du domaine de
+  \tvotre choix (c'est-à-dire le nom du domaine où réside le système
+  \trecherché).
+
+2.\tCliquez sur Mettre à jour liste.
+
+   \tSi le domaine en question comprend des sous-domaines, ces derniers
+   \tsont affichés au début de la liste de domaines.
+
+3.\tAffichez le contenu d'un sous-domaine en cliquant deux fois sur
+  \tl'entrée du sous-domaine. Une nouvelle liste affichant le
+  \tcontenu de ce sous-domaine apparaît à droite de l'écran.
+
+  \tVous pouvez continuer à cliquer sur les sous-domaines pour les
+  \tfaire apparaître tous. Toutefois, seulement trois niveaux de
+  \tdomaines peuvent apparaître simultanément dans une fenêtre. S'il
+  \texiste plus de trois niveaux, utilisez les flèches vers la gauche
+  \tou la droite  situées au centre de votre écran pour vous déplacer
+  \tdans la liste.
+
+4.\tRecherchez dans ces listes le système de votre choix, puis cliquez sur
+  \tl'entrée correspondante.
+
+Pour ajouter un système de la Liste des domaines dans le fichier
+/etc/hosts, cliquez sur Système=>Copier dans la Liste des systèmes.
+
+Voir également : \k(Liste des systèmes)
+
+^2^Liste des systèmes
+^$50
+Liste des systèmes
+
+La Liste des systèmes affiche le contenu de votre fichier /etc/hosts.
+
+Pour afficher la liste de systèmes, cliquez sur Afficher=>Liste de
+systèmes.
+
+Remarque : si le fichier /etc/hosts ne contient qu'une seule entrée
+correspondant à votre système, cette liste n'est pas accessible.
+
+Cliquez sur le système souhaité, puis sur OK.
+
+Remarque : Si \k(DNS^^Accès à DNS) est configuré sur votre système, vous
+pouvez visualiser le \k(Listage des domaines) en cliquant sur
+Visualiser=>Liste des domaines.
+
+Voir également : \k(Ajout d'un système dans la liste des systèmes)
+\k(Suppression d'un système de la liste des systèmes)
+\k(Visualisation des caractéristiques du système)
+
+^2^Sélection d'utilisateurs spécifiques
+^$60
+Sélection d'utilisateurs spécifiques
+
+Choisissez l'une des options suivantes :
+
+\to\t\k(Ajouter des utilisateurs spécifiques dans la liste Utilisateurs autorisés^^Ajout d'utilisateurs spécifiques)
+\to\t\k(Modifier des entrées dans la liste Utilisateurs autorisés^^Modification d'utilisateurs spécifiques)
+\to\t\k(Effacer des entrées dans la liste Utilisateurs autorisés^^Suppression d'utilisateurs spécifiques)
+
+^3^Ajout d'utilisateurs spécifiques
+^$70
+Ajout d'utilisateurs spécifiques
+
+Pour ajouter des utilisateurs spécifiques dans la liste des
+utilisateurs ayant accès à votre système, procédez comme suit :
+
+1.\tEntrez l'ID d'ouverture de session désirée dans la case de texte
+  \tréservée à cet effet.
+
+2.\tCliquez sur Ajouter. L'ID d'ouverture de session est transféré
+  \tdans la case Utilisateurs autorisés.
+
+3.\tRépétez les étapes 1 et 2 pour chaque utilisateur que vous
+  \tsouhaitez ajouter dans la liste. Lorsque vous avez terminé,
+  \tcliquez sur OK pour sauvegarder les ID d'ouverture de session et
+  \trefermer la fenêtre, ou cliquez sur Appliquer pour sauvegarder les
+  \tID d'ouverture de session sans refermer la fenêtre.
+
+Remarque : si vous définissez l'accès à votre compte personnel, soyez
+prudent lorsque vous ajoutez des utilisateurs dans cette liste.
+N'oubliez pas que tous les utilisateurs ajoutés pourront se connecter
+à votre compte et accéder à vos fichiers sans entrer de mot de passe.
+
+^3^Modification d'utilisateurs spécifiques
+^$80
+Modification d'utilisateurs spécifiques
+
+Pour modifier une entrée de la liste Utilisateurs autorisés, procédez
+comme suit :
+
+1.\tCliquez sur l'ID d'ouverture de session désiré dans la liste
+  \tUtilisateurs autorisés.
+
+2.\tApportez les modifications requises à l'ID d'ouverture de session.
+
+3.\tCliquez sur Modifier.
+
+4.\tCliquez sur OK pour sauvegarder les modifications et refermer la
+  \tfenêtre, ou sur Appliquer pour sauvegarder les modifications sans
+  \trefermer la fenêtre.
+
+^3^Suppression d'utilisateurs spécifiques
+^$90
+Suppression d'utilisateurs spécifiques
+
+Pour effacer un utilisateur de la liste Utilisateurs autorisés,
+procédez comme suit :
+
+1.\tCliquez sur l'ID d'ouverture de session désiré dans la liste
+  \tUtilisateurs autorisés.
+
+2.\tCliquez sur Effacer pour supprimer l'ID d'ouverture de session.
+
+3.\tCliquez sur OK pour sauvegarder les modifications et refermer la
+  \tfenêtre, ou sur Appliquer pour sauvegarder les modifications sans
+  \trefermer la fenêtre.
+
+^2^Fenêtre Configuration d'Internet : définir l'accès local
+^$100
+Fenêtre Configuration d'Internet : définir l'accès local
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tDéfinissez les options suivantes:
+
+  \to\tNom du système : - Cette case de texte comporte le nom du
+  \t \tsystème actuellement sélectionné dans la fenêtre principale
+  \t \t"Configuration d'Internet". Si vous souhaitez configurer l'accès
+  \t \tà distance pour un autre système, vous pouvez modifier le nom du
+  \t \tsystème en écrasant le nom actuel et en appuyant sur la touche
+  \t \t<Tab>.
+
+  \to\tSupprimer les restrictions liées au mot de passe : par défaut,   \t
+  \t \t\tce champ est paramétré sur "Accès à votre compte personnel."
+  \t \tCela signifie que vous définissez l'accès des utilisateurs à
+  \t \tdistance pour votre ouverture de session uniquement.
+
+  \t \tSi vous êtes doté de
+  \t \t\k(l'autorisation Modifier configuration d'Internet^dtadmin/user.hlp^Présentation des autorisations), vous pouvez
+  \t \tégalement supprimer les restrictions liées au mot de passe pour
+  \t \ttout utilisateur local (/etc/hosts.equiv) en cliquant sur
+   \t \t"Utilisateurs à distance associés à des comptes locaux."
+
+  \t \tLes utilisateurs à distance du système spécifié qui disposent
+  \t \t d'un compte sur votre système pourront alors se connecter à
+  \t \t votre système sans entrer de mot de passe.
+
+  \to\tUtilisateurs sur <nomsystème> pouvant librement accéder à votre
+  \t \tcompte/leur compte :
+  \t \t-\tCliquez sur l'une des options suivantes :
+
+  \t \t-\tPersonne - Option par défaut que vous devez utiliser si vous
+  \t \t \tsouhaitez que personne ne puisse accéder à votre compte ou au
+  \t \t \tcompte d'un autre utilisateur sans entrer de mot de passe.
+
+   \t \t-\tVous-même - Si vous souhaitez vous connecter à ce système à
+   \t \t \tpartir du système à distance en utilisant le même ID
+   \t \t \td'ouverture de session (le système ne vous demandera aucun mot
+   \t \t \tde passe).
+
+  \t \t-\tTous les utilisateurs - Si vous souhaitez que tous les
+  \t \t \tutilisateurs du système à distance puissent se connecter sans
+  \t \t \tfournir de mot de passe. L'utilisateur doit disposer d'un
+  \t \t \tcompte sur votre système. Cette option n'est disponible que si
+  \t \t \tvous avez sélectionné "Supprimer les restrictions liées au
+  \t \t \tmot de passe" pour les "Utilisateurs à distance disposant de
+  \t \t \tcomptes locaux."
+
+  \t \t-\tUtilisateurs spécifiques - Si vous souhaitez que des
+  \t \t \tutilisateurs spécifiques puissent accéder à leur compte ou à
+  \t \t \tvotre propre compte sans entrer de mot de passe.
+
+  \t \t \tSi vous sélectionnez Utilisateurs spécifiques, la fenêtre
+  \t \t \ts'agrandit ; elle inclut maintenant des champs complémentaires
+  \t \t \tpermettant d'ajouter des utilisateurs dans la liste. Voir
+  \t \t \t\k(Sélection d'utilisateurs spécifiques) pour de plus amples informations.
+
+2.\tCliquez sur OK pour sauvegarder les modifications et refermer la
+  \tfenêtre, ou sur Appliquer pour sauvegarder les modifications sans
+  \trefermer la fenêtre.
+
+Voir également:
+\k(Configuration de l'accès des utilisateurs à distance aux systèmes locaux)
+
+^1^Ajout d'un système dans la liste des systèmes
+^$110
+Ajout d'un système dans la liste des systèmes
+
+Pour ajouter un nouveau système dans \k(Liste des systèmes), procédez comme
+suit:
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \t"Configuration d'Internet" apparaît. Remarque : vérifiez que vous
+  \tavez affiché la \k(vue Liste des systèmes^^Liste des systèmes).
+
+4.\tSélectionnez un emplacement de la liste en cliquant sur un
+  \tsystème. Ce nouveau système sera ajouté sur la ligne figurant
+  \tau-dessus de cette entrée.
+
+5.\tCliquez sur Système=>Nouveau. La fenêtre "Configuration d'Internet
+  \t: Ajouter nouveau système" apparaît. Elle propose les champs
+  \tsuivants :
+
+  \to\tNom du système : - Entrez le nom du système avec lequel vous
+  \t \tsouhaitez communiquer.
+
+  \to\tAdresse réseau - Entrez l'adresse réseau. Si vous êtes configuré
+  \t \tpour \k(l'accès DNS^^Accès à DNS), vous pouvez cliquer sur Obtenir adresse et le
+  \t \tsystème recherchera l'adresse du système pour vous.
+
+  \t \tRemarque : si le système appartient à un domaine différent du
+  \t \tvôtre, vous devez entrer le nom du domaine dans le champ Nom du
+  \t \tsystème situé ci-dessus.
+
+  \to\tCommentaire - Entrez tout commentaire digne d'intérêt.
+  \t \tPar exemple, le numéro du local où est placée la machine, le nom
+  \t \tdu propriétaire de la machine, etc.
+
+6.\tCliquez sur OK pour sauvegarder les modifications et refermer la
+  \tfenêtre, ou sur Appliquer pour sauvegarder les modifications sans
+  \trefermer la fenêtre.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \tannuler toutes les modifications qui n'ont pas encore été
+  \tappliquées ou sur Annuler pour refermer la fenêtre sans appliquer
+  \tles modifications.
+
+^2^Fenêtre Configuration d'Internet : ajouter un système
+^$120
+Fenêtre Configuration d'Internet : ajouter un système
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tDéfinissez les options suivantes:
+
+  \to\tNom du système : - Entrez le nom du système avec lequel vous
+  \t \tsouhaitez communiquer.
+
+  \to\tAdresse réseau - Entrez l'adresse réseau. Si vous êtes configuré
+  \t \tpour \k(l'accès DNS^^Accès à DNS), vous pouvez cliquer sur Obtenir adresse et le
+  \t \tsystème recherchera l'adresse du système pour vous.
+
+  \t \tRemarque : si le système appartient à un domaine différent du
+  \t \tvôtre, vous devez entrer le nom du domaine dans le champ Nom du
+  \t \tsystème figurant ci-dessus.
+
+  \to\tCommentaire - Entrez tout commentaire digne d'intérêt.
+  \t \tPar exemple, le numéro du local où est placée la machine, le nom
+  \t \tdu propriétaire de la machine, etc.
+
+2.\tCliquez sur OK pour sauvegarder les modifications et refermer la
+  \tfenêtre, ou sur Appliquer
+
+Voir également:
+\k(Ajout d'un système dans la liste des systèmes)
+
+^1^Suppression d'un système de la liste des systèmes
+^$130
+Suppression d'un système de la liste des systèmes
+
+Pour supprimer un système de \k(Liste des systèmes), procédez comme suit:
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \t"Configuration d'Internet" apparaît. Remarque : vérifiez que vous
+  \tavez affiché la \k(vue Liste des systèmes^^Liste des systèmes).
+
+4.\tCliquez sur l'entrée associée au système que vous souhaitez
+  \teffacer.
+
+5.\tCliquez sur Système=>Effacer. L'entrée associée au système est
+  \tsupprimée de la Liste des systèmes.
+
+^1^Configuration du transfert UUCP
+^$140
+Configuration du transfert UUCP
+
+Si vous avez \k(l'autorisation Changer configuration d'Internet^dtadmin/user.hlp^Présentation des autorisations),
+vous pouvez configurer votre système pour recevoir et envoyer du
+courrier et effectuer des transferts de fichiers via les réseaux
+TCP/IP à l'aide de l'utilitaire UNIX UUCP (copie d'UNIX-à-UNIX).
+
+Remarque : le propriétaire ou l'administrateur du système à distance
+doit également configurer son système pour les transferts UUCP.
+
+Pour accepter les transferts UUCP (copie d'UNIX à UNIX) provenant d'un
+système à distance, exécutez les opérations suivantes :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \t"Configuration d'Internet" apparaît.
+
+4.\tCliquez sur le système pour lequel vous souhaitez configurer
+  \tl'accès UUCP (à partir de \k(Listage des domaines) ou de
+  \t\k(Liste des systèmes)).
+
+5.\tCliquez sur Actions=>Configuration du transfert UUCP. La fenêtre
+  \t"Configuration d'Internet : Configuration du transfert UUCP"
+  \tapparaît. Elle comporte les options suivantes :
+
+  \to\tNom du système : - Par défaut, cette case de texte affiche le
+  \t \tnom du système actuellement sélectionné dans la fenêtre
+  \t \tprincipale "Configuration d'Internet" . Vous pouvez modifier
+  \t \tle nom du système en écrasant le nom figurant actuellement
+  \t \tdans la case de texte et en appuyant sur <Tab>.
+
+  \to\tAdresse réseau : - Par défaut, ce champ comporte l'adresse du
+  \t \tsystème actuellement sélectionné. Si vous avez modifié le nom
+  \t \tdans la case de texte Nom du système, ces champs sont vierges.
+
+  \t \tSi vous avez \k(accès à DNS^^Accès à DNS), vous pouvez cliquer sur Obtenir
+  \t \tadresse pour que le système recherche l'adresse réseau et
+  \t \tcomplète les champs. Si vous n'avez pas accès à DNS, demandez
+  \t \tl'adresse à votre administrateur réseau et entrez-la.
+
+  \to\tStatut actuel : Acceptation/Refus à partir de - Indique si les
+  \t \ttransferts de fichiers UUCP sont acceptés pour le système
+  \t \tspécifié.
+
+6.\tCliquez sur Accepter. Le système ajoute le système dans le fichier
+  \t/etc/uucp/Systems.tcp.
+
+  \tRemarque : vous pouvez supprimer un système de
+  \t/etc/uucp/Systems.tcp en cliquant sur Refuser.
+
+^2^Fenêtre Configuration d'Internet : configurer le transfert UUCP
+^$150
+Fenêtre Configuration d'Internet : configurer le transfert UUCP
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tDéfinissez les options suivantes:
+
+  \to\tNom du système : - Par défaut, cette case de texte affiche le
+  \t \tnom du système actuellement sélectionné dans la fenêtre
+  \t \tprincipale "Configuration d'Internet". Vous pouvez modifier le
+  \t \tnom du système en écrasant le nom figurant actuellement dans la
+  \t \tcase de texte et en appuyant sur <Tab>.
+
+  \to\tAdresse réseau : - Par défaut, ce champ comporte l'adresse du
+  \t \tsystème actuellement sélectionné. Si vous avez modifié le nom
+  \t \tdans la case de texte Nom du système, ces champs sont vierges.
+
+  \t \tSi vous avez \k(accès à DNS^^Accès à DNS), vous pouvez cliquer sur Obtenir
+  \t \tadresse pour que le système recherche l'adresse réseau et
+  \t \tcomplète les champs. Si vous n'avez pas accès à DNS,
+  \t \tprocurez-vous l'adresse auprès de votre administrateur système
+  \t \tet entrez-la.
+
+  \to\tStatut actuel : Acceptation/Refus à partir de - Indique si les
+  \t \ttransferts de fichiers UUCP sont acceptés pour le système
+  \t \tspécifié.
+
+2.\tCliquez sur Accepter. Le système ajoute le système dans
+  \t/etc/uucp/Systems.tcp.
+
+Voir également:
+\k(Configuration du transfert UUCP)
+
+
+^1^Accès à DNS
+^$160
+Accès à DNS
+
+Vous ne devez pas indiquer d'entrées dans votre fichier /etc/hosts
+pour chaque système auquel vous souhaitez accéder. Si votre entreprise
+a accès à un serveur DNS, votre système peut retrouver des
+informations relatives à ces systèmes à partir de ce serveur.
+
+Si vous avez \k(l'autorisation de modifier la configuration d'Internet^dtadmin/user.hlp^Présentation des autorisations),
+vous pouvez configurer l'accès à un serveur DNS comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \t"Configuration d'Internet" apparaît.
+
+4.\tCliquez sur Actions=>Accès à DNS. La fenêtre "Configuration
+  \td'Internet : accès à DNS" s'affiche. Elle comporte les champs
+  \tsuivants:
+
+  \to\tNom du domaine : - Entrez le nom du domaine correspondant à
+  \t \tvotre entreprise. Ce nom doit comprendre une extension a .com,
+  \t \t.edu, .gov, etc. Par exemple, site1.companyA.com.
+
+  \to\tNom du serveur : - Entrez le nom du serveur de noms du domaine
+  \t \tprimaire correspondant à votre division.
+
+  \to\tAdresse réseau : - Entrez l'adresse du serveur spécifié dans
+  \t \tServeur de noms.
+
+  \to\tServeurs - Utilisez la barre de défilement pour vous
+  \t \tdéplacer dans la liste des serveurs DNS existants (définis dans
+  \t \tle fichier /etc/resolv.conf).
+
+  \t \tVous pouvez cliquer sur l'une des options suivantes:
+
+  \t \t-\tAjouter - Pour intégrer les entrées actuelles figurant dans
+  \t \t \tles cases de texte Serveur de noms et Adresse réseau dans la
+  \t \t \tliste de défilement.
+
+  \t \t-\tModifier - Permet de remplacer l'entrée sélectionnée par le
+  \t \t \tcontenu actuel des cases Serveur de noms et Adresse réseau.
+
+  \t \t-\tEffacer - Permet de supprimer l'entrée sélectionnée d'une
+  \t \t \tliste de défilement.
+
+5.\tCliquez sur OK pour sauvegarder les modifications.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \tannuler les modifications que vous n'avez pas encore appliquées,
+  \tou sur Annuler pour refermer la fenêtre sans sauvegarder les
+  \tmodifications.
+
+Voir également :
+\s(Introduction à l'administration du service DNS^dhelp as netag "Using Domain Name Service with TCP/IP" "" || helpLinkErr)
+
+^2^Fenêtre Configuration d'Internet : accès DNS
+^$170
+Fenêtre Configuration d'Internet : accès DNS
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tDéfinissez les options suivantes:
+
+  \to\tNom du domaine : - Entrez le nom du domaine correspondant à
+  \t \tvotre entreprise. Ce nom doit comprendre une extension a .com,
+  \t \t.edu, .gov, etc. Par exemple, site1.companyA.com.
+
+  \to\tNom du serveur : - Entrez le nom du serveur de noms du domaine
+  \t \tprimaire correspondant à votre division.
+
+  \to\tAdresse réseau : - Entrez l'adresse du serveur spécifié dans
+  \t \tServeur de noms.
+
+  \to\tServeurs - Utilisez la barre de défilement pour vous
+  \t \tdéplacer dans la liste des serveurs DNS existants (définis dans
+  \t \tle fichier /etc/resolv.conf).
+
+  \t \tVous pouvez cliquer sur l'une des options suivantes:
+
+  \t \t-\tAjouter - Pour intégrer les entrées actuelles figurant dans
+  \t \t \tles cases de texte Serveur de noms et Adresse réseau dans la
+  \t \t \tliste de défilement.
+
+  \t \t-\tModifier - Permet de remplacer l'entrée sélectionnée par le
+  \t \t \tcontenu actuel des cases Serveur de noms et Adresse réseau.
+
+  \t \t-\tEffacer - Permet de supprimer l'entrée sélectionnée d'une
+  \t \t \tliste de défilement.
+
+2.\tCliquez sur OK pour sauvegarder vos modifications.
+
+Voir également:
+\k(Accès à DNS)
+
+^1^Accès à DNS
+^$180
+Accès à DNS
+
+Remarque: si vous configurez votre système de façon à ce qu'il puisse
+accéder à un serveur NIS, NIS n'est pas automatiquement activé pour
+tous les services spécifiques tels que la gestion des utilisateurs ou
+des hôtes.
+
+Si vous avez \k(l'autorisation de gérer les infos utilisateur via NIS^dtadmin/user.hlp^Présentation des autorisations),
+vous pouvez configurer votre système pour qu'il utilise un serveur
+Network Information System (NIS) comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \t"Configuration d'Internet" apparaît.
+
+4.\tCliquez sur Actions=>Accès à NIS. La fenêtre "Configuration
+  \td'Internet : accès à NIS" propose les champs suivants:
+
+  \to\tNom du domaine NIS : - Entrez le nom du domaine correspondant à
+  \t \tvotre entreprise.
+
+  \t \tRemarque : il ne doit pas nécessairement s'agir du nom de votre
+  \t \t\k(domaine DNS^^Accès à DNS).
+
+  \to\tServeur NIS : entrez le nom du serveur NIS correspondant à votre
+  \t \tentreprise.
+
+  \to\tServeurs NIS - Utilisez la barre de défilement pour vous
+  \t \tdéplacer dans la liste des serveurs NIS existants.
+
+  \t \tVous pouvez effectuer les opérations suivantes dans cette liste:
+
+  \t \t-\tCliquez sur Ajouter pour transférer l'entrée figurant dans la
+  \t \t \tcase de texte Serveur NIS dans la liste de défilement.
+
+  \t \t-\tCliquez sur Modifier pour remplacer l'entrée sélectionnée dans
+  \t \t \tla liste de défilement par le contenu actuel de la case
+  \t \t \tServeur NIS.
+
+  \t \t-\tCliquez sur Effacer pour supprimer l'entrée sélectionnée de la
+  \t \t \tliste de défilement.
+
+5.\tCliquez sur OK pour sauvegarder les modifications.
+
+  \tVous pouvez également cliquer sur Réinitialiser pour annuler
+  \ttoutes les modifications que vous n'avez pas encore appliquées ou
+  \tsur Annuler pour refermer la fenêtre sans sauvegarder les
+  \tmodifications.
+
+Voir également : 
+\s(Introduction à la Configuration NIS^dhelp as netag "Setting Up NIS" "" || helpLinkErr)
+\s(A propos de l'administration NIS^dhelp as netag "Introduction to NIS Administration" "" || helpLinkErr)
+
+^2^Fenêtre Configuration d'Internet : accès à NIS
+^$190
+Fenêtre Configuration d'Internet : accès à NIS
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tDéfinissez les options suivantes:
+
+  \to\tNom du domaine NIS : - Entrez le nom du domaine correspondant à
+  \t \tvotre entreprise.
+
+  \t \tRemarque : il ne doit pas nécessairement s'agir du nom de votre
+  \t \t\k(domaine DNS^^Accès à DNS).
+
+  \to\tServeur NIS : entrez le nom du serveur NIS correspondant à votre
+  \t \tentreprise.
+
+  \to\tServeurs NIS - Utilisez la barre de défilement pour vous
+  \t \tdéplacer dans la liste des serveurs NIS existants.
+
+  \t \tVous pouvez effectuer les opérations suivantes dans cette liste:
+
+  \t \t-\tCliquez sur Ajouter pour transférer l'entrée figurant dans la
+  \t \t \tcase de texte Serveur NIS dans la liste de défilement.
+
+  \t \t-\tCliquez sur Modifier pour remplacer l'entrée sélectionnée dans
+  \t \t \tla liste de défilement par le contenu actuel de la case
+  \t \t \tServeur NIS.
+
+  \t \t-\tCliquez sur Effacer pour supprimer l'entrée sélectionnée de la
+  \t \t \tliste de défilement.
+
+2.\tCliquez sur OK pour sauvegarder vos modifications.
+
+Voir également :
+\k(Accès à DNS)
+
+^1^Configuration du routage
+^$200
+Configuration du routage
+
+Lorsque vous aurez configuré votre système pour la gestion de réseaux,
+vous pourrez communiquer avec d'autres systèmes de votre réseau local.
+Toutefois, pour accéder à des systèmes extérieurs à votre réseau
+local, vous devrez peut-être configurer \d(masque de réseau) et
+\d(adresse de diffusion) de votre système et indiquer un routeur qui vous
+permette d'accéder à des systèmes extérieurs à votre réseau local.
+
+Pour configurer votre système de façon à ce qu'il puisse accéder à
+\d(routeur) au sein de votre réseau local, ou pour modifier le
+masque de réseau et l'adresse de diffusion de votre système, procédez
+comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \t"Configuration d'Internet" apparaît.
+
+4.\tCliquez sur Actions=>Configuration du routage. La fenêtre
+  \t"Configuration d'Internet : configuration du routage" apparaît.
+  \tElle propose les champs suivants :
+
+  \tPour le masque de sous-réseau :
+
+  \to\tType de sous-réseau : - Cliquez sur la classe appropriée (si
+  \t \tvous ne savez pas à quelle classe votre réseau appartient,
+  \t \tconsultez votre administrateur réseau). Si votre réseau n'est
+  \t \tpas configuré comme un réseau de classe standard, sélectionnez
+  \t \tAutre. Une case de texte Masque apparaît ; entrez l'ID du masque
+  \t \tde réseau au format hexadécimal (par exemple, FFFF0000).
+
+  \to\tID réseau : - Indique la partie de l'adresse du système local
+  \t \tqui est considérée comme l'identificateur réseau (en fonction du
+  \t \ttype de sous-réseau actuellement sélectionné).
+
+  \t \tRemarque : ce champ n'apparaît que si vous sélectionnez la
+  \t \tclasse A, B ou C comme type de sous-réseau.
+
+  \to\tID système : - Indique la partie de l'adresse du système local
+  \t \tqui est considérée comme l'identificateur système (en fonction
+  \t \tdu type de sous-réseau actuellement sélectionné).
+
+  \t \tRemarque : ce champ n'apparaît que si vous sélectionnez la
+  \t \tclasse A, B ou C comme type de sous-réseau.
+
+  \tPour le routage réseau :
+
+  \to\tRouteur par défaut : - Entrez le nom du système utilisé comme
+  \t \t\d(routeur) au sein de votre réseau local. Ce routeur
+  \t \tdoit être "dans l'étape qui suit" votre système (c'est-à-dire
+  \t \tqu'il doit être directement connecté au réseau local).
+
+  \to\tAdresse réseau : - Entrez l'adresse du routeur par défaut.
+  \t \tSi votre système est configuré pour \k(l'accès DNS^^Accès à DNS), vous pouvez
+  \t \tcliquer sur Obtenir adresse. Le système recherche alors
+  \t \tl'adresse du routeur.
+
+  \to\tMettre à jour les tables de routage à l'aide des infos diffusées :
+  \t \t- Cliquez sur cette case à cocher si vous souhaitez exécuter
+  \t \tle programme acheminé (c'est-à-dire le démon de l'itinéraire).
+
+   \t  \tPour plus d'informations sur routed (1M), voir
+   \t  \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \t \tRemarque : lorsque vous spécifiez "routed", le système cherche à
+  \t \tdétecter des informations concernant le mode d'accès aux
+  \t \tsystèmes non reliés à votre réseau local.
+
+5.\tCliquez sur OK pour sauvegarder les modifications.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \tannuler toutes les modifications que vous n'avez pas encore
+  \tappliquées ou sur Annuler pour refermer la fenêtre sans
+  \tsauvegarder les modifications.
+
+Voir également :
+\s(Configuration du routage^dhelp as netag "Setting Up TCP/IP" "Setting Up Routing" || helpLinkErr)
+\s(Utilisation du démon routed^dhelp as netag "Setting Up Routers and Subnetworks" "Using the routed Daemon" || helpLinkErr)
+
+^2^Fenêtre Configuration d'Internet : configurer le routage
+^$210
+Fenêtre Configuration d'Internet : configurer le routage
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tDéfinissez les options suivantes:
+
+  \tPour le masque de sous-réseau :
+
+  \to\tType de sous-réseau : - Cliquez sur la classe appropriée (si
+  \t \tvous ne savez pas à quelle classe votre réseau appartient,
+  \t \tconsultez votre administrateur système). Si votre réseau n'est
+  \t \tpas configuré comme un réseau de classe standard, sélectionnez
+  \t \tAutre. Une case de texte Masque apparaît ; entrez l'ID du masque
+  \t \tde réseau au format hexadécimal (par exemple, FFFF0000).
+
+  \to\tID réseau : - Indique la partie de l'adresse du système local
+  \t \tqui est considérée comme l'identificateur réseau (en fonction du
+  \t \ttype de sous-réseau actuellement sélectionné).
+
+  \t \tRemarque : ce champ n'apparaît que si vous sélectionnez la
+  \t \tclasse A, B ou C comme Type de sous-réseau.
+
+  \to\tID système : - Indique la partie de l'adresse du système local
+  \t \tqui est considérée comme l'identificateur système (en fonction
+  \t \tdu type de sous-réseau actuellement sélectionné).
+
+  \t \tRemarque : ce champ n'apparaît que si vous sélectionnez la
+  \t \tclasse A, B ou C comme type de sous-réseau.
+
+  \tPour le routage réseau :
+
+  \to\tRouteur par défaut : - Entrez le nom du système utilisé comme
+  \t \t\d(routeur) au sein de votre réseau local. Ce routeur
+  \t \tdoit être "dans l'étape qui suit" votre système (c'est-à-dire
+  \t \tqu'il doit être directement connecté au réseau local].
+
+  \to\tAdresse réseau : - Entrez l'adresse du routeur par défaut.
+  \t \tSi votre système est configuré pour \k(l'accès DNS^^Accès à DNS), vous pouvez
+  \t \tcliquer sur Obtenir adresse. Le système recherche alors
+  \t \tl'adresse du routeur.
+
+  \to\tMettre à jour les tables de routage à l'aide des infos diffusées :
+  \t \t- Cliquez sur cette case à cocher si vous souhaitez exécuter
+  \t \tle programme acheminé (c'est-à-dire le démon de l'itinéraire).
+
+   \t  \tPour plus d'informations sur routed (1M), voir
+   \t  \t\s(Command Reference^dhelp refman uarm "" "" || helpLinkErr).
+
+  \t \tRemarque : lorsque vous spécifiez "routed", le système cherche à
+  \t \tdétecter des informations concernant le mode d'accès aux
+  \t \tsystèmes non reliés à votre réseau local.
+
+2.\tCliquez sur OK pour sauvegarder les modifications.
+
+
+Voir également :
+\k(Configuration du routage)
+
+^2^Fenêtre Configuration d'Internet : ajouter un système
+^$215
+Fenêtre Configuration d'Internet : ajouter un système
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tDéfinissez les options suivantes:
+
+  \to\tNom du système : - Entrez le nom du système avec lequel vous
+  \t \tsouhaitez communiquer.
+
+  \to\tAdresse réseau - Entrez l'adresse réseau. Si vous êtes configuré
+  \t \tpour \k(l'accès DNS^^Accès à DNS), vous pouvez cliquer sur Obtenir adresse et le
+  \t \tsystème recherchera l'adresse du système pour vous.
+
+  \t \tRemarque : si le système appartient à un domaine différent du
+  \t \tvôtre, vous devez entrer le nom du domaine dans le champ Nom du
+  \t \tsystème situé ci-dessus.
+
+  \to\tCommentaire - Entrez tout commentaire digne d'intérêt.
+  \t \tPar exemple, le numéro du local où est placée la machine, le nom
+  \t \tdu propriétaire de la machine, etc.
+
+2.\tCliquez sur OK pour sauvegarder les modifications et refermer la
+  \tfenêtre, ou sur Appliquer pour sauvegarder les modifications sans
+  \trefermer la fenêtre.
+
+Voir également:
+\k(Ajout d'un système dans la liste des systèmes)
+
+^1^Copie de l'icône d'un système à distance dans un dossier
+^$220
+Copie de l'icône d'un système à distance dans un dossier
+
+Vous pouvez créer une icône pour chaque système à distance contenu
+dans votre \k(Listage des domaines) ou \k(Liste des systèmes). Vous pouvez alors
+cliquer deux fois sur cette icône chaque fois que vous souhaitez vous
+connecter ou transférer des fichiers sur ce système à distance.
+
+Pour créer une icône représentant le système à distance, procédez
+comme suit :
+
+1.\tCliquez sur le système désiré dans la Liste des domaines ou la
+  \tListe des systèmes.
+
+2.\tOuvrez le dossier dans lequel vous souhaitez copier l'icône du
+  \tsystème à distance.
+
+3.\t\d(Déposez^faire glisser) l'icône du système à distance sur le
+  \tdossier que vous avez ouvert à l'étape 2.
+
+Remarque : vous pouvez également utiliser l'option de menu Copier dans
+dossier pour créer une icône de système à distance. Voir
+\k(Fenêtre Configuration d'Internet : copier dans dossier).
+
+Voir également :
+\k(Ouverture de session à distance^Accès_distance/Remote_Access.hlp^Ouverture de session à distance)
+
+^2^Fenêtre Configuration d'Internet : copier dans dossier
+^$230
+Fenêtre Configuration d'Internet : copier dans dossier
+
+Cette fenêtre vous permet de copier une entrée correspondant à un
+système à distance dans le dossier désiré. Une fois cette opération
+effectuée, une icône représentant ce système à distance apparaît dans
+le dossier.
+
+Exécutez les opérations suivantes :
+
+1.\tCliquez sur un nom de dossier ou sur le Dossier parent figurant
+  \tdans la liste Dossier(s) jusqu'à ce que le dossier désiré
+  \tapparaisse.
+
+2.\tEntrez le nom que vous souhaitez attribuer à l'icône dans le champ
+  \tNom de l'icône. Par défaut, ce nom est identique à celui du
+  \tsystème.
+
+3.\tCliquez sur Copier. Une icône représentant ce système à distance
+  \tapparaît dans le dossier. Vous pouvez maintenant exécuter les
+  \topérations suivantes :
+
+  \to\t\d(Cliquez deux fois^cliquer deux fois)) sur l'icône du système à
+  \t \tdistance chaque fois que vous souhaitez vous connecter à ce
+  \t \tsystème à distance.
+
+  \to\t\d(Faites glisser^faire glisser) un fichier sur l'icône du
+  \t \tsystème à distance chaque fois que vous souhaitez transférer un
+  \t \tfichier sur ce système à distance.
+
+^1^Visualisation des caractéristiques du système
+^$240
+Visualisation des caractéristiques du système
+
+Pour visualiser les caractéristiques associées à une entrée du
+système, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \t"Configuration d'Internet" apparaît.
+
+4.\tCliquez sur le système désiré dans \k(Listage des domaines) ou
+  \t\k(Liste des systèmes).
+
+5.\tCliquez sur Système=>Caractéristiques. La
+  \t\k(fenêtre "Configuration d'Internet : Caractéristiques"^^Fenêtre Configuration d'Internet : caractéristiques) apparaît.
+
+    Remarque : si vous avez affiché la vue Liste des domaines, vous
+  \tne pouvez pas modifier les caractéristiques du système.
+  \tSi vous avez affiché la vue Liste des systèmes,
+  \tvous pouvez apporter des modifications qui seront prises en compte
+  \tdans le fichier /etc/hosts.
+
+Voir également :
+\s(Fichiers figurant dans /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^2^Fenêtre Configuration d'Internet : caractéristiques
+^$250
+Fenêtre Configuration d'Internet : caractéristiques
+
+Si vous avez affiché la vue \k(Listage des domaines), cette fenêtre affiche
+le nom du système et l'adresse réseau correspondante.
+
+Si vous avez affiché la vue \k(Liste des systèmes), vous pouvez modifier
+les caractéristiques comme suit :
+
+1.\tEntrez le nom du système souhaité.
+
+2.\tEntrez l'adresse de ce système, ou si vous avez \k(accès à DNS^^Accès à DNS),
+  \tcliquez sur Obtenir adresse pour que Configuration d'Internet
+  \trecherche l'adresse.
+
+3.\tEntrez un commentaire [le cas échéant].
+
+4.\tCliquez sur OK pour sauvegarder les modifications et refermer la
+  \tfenêtre, ou sur Appliquer pour sauvegarder les modifications sans
+  \trefermer la fenêtre. Le système sauvegarde les modifications dans
+  \tle fichier /etc/hosts.
+
+  \tRemarque : vous pouvez également cliquer sur Réinitialiser pour
+  \tannuler toutes les modifications qui n'ont pas encore été
+  \tappliquées, ou sur Annuler pour refermer la fenêtre sans
+  \tsauvegarder les modifications.
+
+Voir également :
+\s(Fichiers figurant dans /etc^dhelp as sysag "Directories and Files" "Files in /etc" || helpLinkErr)
+
+^1^Recherche d'un système
+^$260
+Recherche d'un système
+
+Pour rechercher un système, procédez comme suit :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_Internet. La fenêtre
+  \t"Configuration d'Internet" apparaît.
+
+4.\tCliquez sur l'une des options suivantes :
+
+  \to\tTrouver=>Rechercher - Permet d'afficher la fenêtre
+  \t \t"Configuration d'Internet : rechercher". Entrez le nom du
+  \t \tsystème que vous recherchez et cliquez sur Rechercher. Le
+  \t \tsystème repère et met en surbrillance le système dans
+  \t \t\k(Listage des domaines) ou \k(Liste des systèmes) (en fonction de la vue
+  \t \tactuellement sélectionnée).
+
+  \to\tTrouver=>Premier - Permet de localiser et de mettre en
+  \t \tsurbrillance le premier système de la liste.
+
+  \to\tTrouver=>Dernier - Permet de localiser et de mettre en
+  \t \tsurbrillance le dernier système de la liste.
+
+Voir également :
+\k(Fenêtre Configuration d'Internet : rechercher)
+
+^2^Fenêtre Configuration d'Internet : rechercher
+^$270
+Fenêtre Configuration d'Internet : rechercher
+
+Entrez le nom du système que vous recherchez et cliquez sur
+Rechercher.
+
+Remarque : si vous n'êtes pas sûr de connaître le nom complet du
+système, ou si vous ne souhaitez pas entrer ce nom complet, entrez les
+premiers caractères et cliquez sur Rechercher pour que le système
+effectue la recherche pour vous.
+
+Par exemple, supposons que votre entreprise dispose des systèmes
+appelés site1, site2, site3, etc. Si vous souhaitez rechercher
+"site2.", il vous suffit de taper "site" dans le champ Nom du système,
+de cliquer sur Rechercher ; le système localise alors la première
+occurrence de "site." Dans ce cas, la première occurrence est "site1".
+Cliquez sur Rechercher une nouvelle fois ; le système détecte alors
+"site2".
+

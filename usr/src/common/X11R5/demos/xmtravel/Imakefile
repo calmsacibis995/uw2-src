@@ -1,0 +1,34 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)mdemos:xmtravel/Imakefile	1.2"
+/**/# (c) Copyright 1989, 1990, 1991, 1992, 1993 OPEN SOFTWARE FOUNDATION, INC. 
+/**/# ALL RIGHTS RESERVED 
+/**/# 
+/**/# Motif Release 1.2.2
+
+/**/# This set-up assumes that this source is in the Motif source
+/**/# tree. If not, adjust INCLUDES and LOCAL_LIBRARIES to point to the location
+/**/# of installed files on your system. You may be able to invoke imake with
+#include	<Motif.tmpl>
+#include	<Motif.rules>
+EXTRA_LOAD_FLAGS = -z nodefs
+/**/# -DUseInstalled and have this done automatically.
+
+INCLUDES = -I. -I$(UILSRC) -I$(MTOOLKITSRC) -I$(LIBSRC) -I$(MINCLUDESRC)
+DEPLIBS = MrmClientDepLibs
+LOCAL_LIBRARIES = MrmClientLibs
+
+SRCS = client_cb.c dialog.c menu_cb.c trip_cb.c xmtravel.c
+OBJS = client_cb.o dialog.o menu_cb.o trip_cb.o xmtravel.o
+
+NormalLibraryObjectRule()
+
+MComplexProgramTarget(xmtravel,$(LOCAL_LIBRARIES),$(SYSLIBS))
+
+InstallAppDefaults(XMtravel)

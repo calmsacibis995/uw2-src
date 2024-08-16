@@ -1,0 +1,55 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)vga16:vga16/devices/t89/Imakefile	1.5"
+
+/**/#
+/**/# If the Makefile is lost or corrupted, to generate a new Makefile:
+/**/# 
+/**/#  /usr/X/bin/imake -DUseInstalled -DTOPDIR=. -DCURDIR=. -I/usr/X/lib/config
+/**/#
+/**/# change SRCFILE to your file name
+/**/#
+
+#define VendorDisplayModuleRule()			@@\
+.c.o:							@@\
+	$(CC) -c -O -Xa -Dix86 $(ALLINCLUDES) $<; @@\
+							@@\
+all:: $(VENDORLIB) 					@@\
+$(VENDORLIB):: $(OBJS)					@@\
+	$(CC) $(YFLAGS) -G $(OBJS) -o $(VENDORLIB) $(CORELIB) @@\
+	@echo $(VENDORLIB) generated. 			@@\
+							@@\
+install:: all						@@\
+	$(INSTALL) $(INSTLIBFLAGS) $(VENDORLIB) $(DISPLIBDIR) @@\
+	$(INSTALL) $(INSTDATFLAGS) $(CFGFILE) $(DISPLIBDIR)
+
+
+       BASE = t89
+       SRCS = $(BASE)_16.c
+       OBJS = $(BASE)_16.o
+    CORELIB = ../../libvga16.so.$(DISPLIBREV)
+  VENDORLIB = $(BASE)_16.so.$(DISPLIBREV)
+    ARCHLIB = $(BASE)_16.a
+    CFGFILE = $(BASE).16dat
+
+   INCLUDES = -I./ -I../.. -I$(TOP)/server/ddx/si -I$(TOP)/X11
+     LFLAGS = -buxz
+
+#ifdef XWINSharedDisplayLibrary
+VendorDisplayModuleRule()
+#else
+all:	$(ARCHLIB)
+NormalLibraryTarget ($(BASE)_16, $OBJS)
+#endif /* XWINSharedDisplayLibrary */
+
+clean::
+	$(RM) *.so
+
+DependTarget()
+

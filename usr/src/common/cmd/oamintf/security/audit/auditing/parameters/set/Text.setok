@@ -1,0 +1,24 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/parameters/set/Text.setok	1.1.3.2"
+#ident  "$Header: Text.setok 2.0 91/07/12 $"
+#	Module Name: Text.setok
+
+title="Confirmation of Setting Event Log Parameters"
+
+framemsg=`readfile $INTFBASE/trept.msg`
+lifetime=shortterm
+
+
+rows=2
+columns=53
+
+text="
+The event log parameters have been set as specified."
+
+altslks
+name=CONT
+button=11
+action=update $FRAMEID true
+
+name=CANCEL
+button=14
+action=CLEANUP

@@ -1,0 +1,13 @@
+#ident	"@(#)kern-i386at:kernmap	1.9"
+#ident	"$Header: $"
+
+phys=LOAD ?RX P0xF000 V0xF000;
+kvphystokv=V0xC0000000;
+kvphystokv:.kvphystokv;
+text=A0x1000;
+data=A0x1000;
+phys: ?A : pstart/_drv.o;
+phys:.phys;
+data:.data;
+bki=NOTE;
+bki:BKI;

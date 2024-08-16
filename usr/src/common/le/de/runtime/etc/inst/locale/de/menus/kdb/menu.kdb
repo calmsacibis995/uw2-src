@@ -1,0 +1,83 @@
+.pageno
+Seite %d von %d
+.ul
+Kernel Debugger (Kern-Testhilfeprogramm)
+.hhelp_ban
+Anweisungen
+.helpbanner
+Hilfe: Kernel Debugger konfigurieren
+.ur
+Kernel Debugger konfigurieren
+.ll
+.lr
+F1=Hilfe
+.top
+Der Kernel Debugger (KDB) kann auf zwei Arten konfiguriert werden:
+Er kann entweder permanent oder nur auf Anforderung aktiviert werden. 
+Wird letztere Konfiguration gewählt, muß KDB vor dem Aufruf manuell 
+aktiviert werden.
+
+KDB bietet als Option auch Sicherheitsprüfungen, die verhindern, 
+daß ein Unbefugter den Kernel Debugger aufruft. Wenn Sie diese 
+Prüfungen nicht aktivieren, kann KDB mit einer Tastenfolge von der 
+Konsole aus eingeben, was potentielle Sicherheitsrisiken birgt, wenn 
+die Konsole physisch nicht gesichert ist.
+
+.form
+2 2//ALWAYS::IMMER//DEMAND::AUF ANFRAGE//Wann möchten Sie KDB aktiviert haben?//DEMAND//
+// Links/Rechts-Pfeiltasten für nächste Option (2 Optionen)//
+2 2//NO::NEIN//YES::JA//Möchten Sie Sicherh.süberprüf. einschalten?//SECURITY//
+// Links/Rechts-Pfeiltasten für nächste Option (2 Optionen)//
+.button
+Anwenden
+Zurücksetzen
+.help
+Wenn Sie detaillierte Anweisungen benötigen, können Sie
+jederzeit die 'F1' (oder '?') -Taste drücken.
+
+Der Kernel Debugger ist sehr nützlich für die Entwicklung von 
+Software-Modulen, die in den Kern integriert werden sollen. Der 
+gebräuchlichste Typ eines Kern-Moduls ist ein Hardware-Gerätetreiber.
+
+KDB AKTIVIEREN
+
+KDB kann durch eine Tastenfolge auf der Konsole, einen Systemabsturz 
+oder den Befehl "kdb" aufgerufen werden. Der Aufruf ist jedoch nur 
+möglich, wenn KDB aktiviert ist. Dies ist der Fall, wenn der Debugger 
+in den Kern geladen ist.
+
+Wenn Sie IMMER wählen, wird KDB permanent in den Kern geladen und 
+kann jederzeit aufgerufen werden.
+
+Wenn Sie AUF ANFRAGE wählen, muß KDB zunächst mit dem Befehl 
+"modadmin -l kdb" geladen werden, ehe er aufgerufen werden kann. 
+Später kann KDB mit dem Befehl "modadmin -U kdb" entladen werden.
+
+Der Vorteil, KDB ständig aktiviert zu haben, liegt darin, daß er 
+auch in nicht vorhergesehenen Fällen bereitsteht. Der Nachteil ist, 
+daß der aktivierte KDB etwa 250 K Arbeitsspeicher benötigt. Dies 
+beeinträchtigt bei Systemen mit kleinen Speichern die Systemleistungen.
+
+SICHERHEITSPRÜFUNGEN
+
+KDB bietet als Option Sicherheitsprüfungen, die dazu führen, daß 
+Versuche zurückgewiesen werden, den Kernel Debugger über eine 
+Tastenfolge auf der Konsole einzugeben. Das Programm kann in diesem 
+Fall nur aufgerufen werden, wenn sich der Benutzer beim Computer mit 
+einem besonderen Konto angemeldet hat und dann den Befehl "kdb" 
+eingibt.
+
+Sind die Sicherheitsprüfungen nicht aktiviert, kann ein Benutzer 
+eine Tastenfolge über die Konsole eingeben, ohne sich beim Computer 
+anzumelden, und den KDB aktivieren. Wenn Ihre Konsole sich nicht in 
+einem Raum befindet, der abgeschlossen ist oder nur von einer 
+überprüfbaren Gruppe von Personen betreten werden kann, sollten die 
+Sicherheitsprüfungen aktiviert werden, um Sicherheitsprobleme zu 
+vermeiden.
+.helpinst
+ESC=Hilfe verlassen  F1=Anweisungen  1=Vor  2=Zurück
+.hhelpinst
+ESC=Anweisungen verlassen  1=Vor  2=Zurück
+.working
+Wird bearbeitet...
+.end

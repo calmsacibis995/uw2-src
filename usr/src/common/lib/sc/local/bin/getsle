@@ -1,0 +1,86 @@
+#!/bin/sh 
+#ident	"@(#)sc:local/bin/getsle	3.1" 
+###############################################################################
+#
+# C++ Standard Components, Release 3.0.
+#
+# Copyright (c) 1991, 1992 AT&T and Unix System Laboratories, Inc.
+# Copyright (c) 1988, 1989, 1990 AT&T.  All Rights Reserved.
+#
+# THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T and Unix System
+# Laboratories, Inc.  The copyright notice above does not evidence
+# any actual or intended publication of such source code.
+#
+###############################################################################
+
+#set -x
+complist=
+badargs=0
+manualonly=0
+set -- `getopt l:mpx $*`
+if [ $? -ne 0 ]
+then 	badargs=1
+fi
+here=`pwd`
+for i in $*
+do 	case $i in
+	-l)	case $2 in
+		/*)	complist=$2;;
+		*)	complist=$here/$2;;
+		esac
+		shift; shift;;
+	-m)	manualonly=1
+		shift;;
+	-x)	set -x
+		shift;;
+	--)	shift; break;;
+	-*)	shift;;
+	esac
+done
+if test $badargs -eq 1
+then 	echo
+	echo "usage: getsle [-m] [-l complist]" 1>&2
+	echo "-m = get manual only" 1>&2
+	echo "complist = file containing list of components to get (defaults" 1>&2
+	echo "    to ./complist)" 1>&2
+	exit 2
+fi
+
+targetdir=`pwd`
+
+if [ -z "$complist" ]
+then	complist=$targetdir/complist
+fi
+if [ ! -f $complist ]
+then	echo "getsle: can't open $complist!" 1>&2
+	exit 2
+fi
+
+if [ ! -d $targetdir/src ]
+then	mkdir $targetdir/src
+fi
+
+# now get the components!
+
+cd $targetdir
+for comp in `cat $complist`
+do	if [ ! -d $targetdir/src/$comp ]
+	then	mkdir $targetdir/src/$comp
+	fi
+	cd $targetdir/src/$comp
+	rm -rf *
+	if [ $manualonly -eq 1 ]
+	then	if [ ! -d man ]
+		then	mkdir man
+		fi
+		echo "qgetting manpages for $comp" 1>&2
+		(cd man; qget $comp:man)
+	else	echo "qgetting $comp" 1>&2
+		qget $comp
+		# turn on the executable bits that qstar turned off
+		chmod +x bin/* lib/* 2>/dev/null
+	fi
+
+	# now invert the man and incl directories.
+	# inversion used to be done here, now it's done by prepprod.
+done

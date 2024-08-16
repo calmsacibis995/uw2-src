@@ -1,0 +1,178 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)vga256:vga256/Imakefile	1.30"
+
+
+#include <Server.tmpl>
+#include <sv4Lib.rules>
+
+#ifdef SIRevision2_0
+/*
+ * This macro is not defined in R6 - instead of putting it in config dir,
+ * we will define it here, because this is the only Imakefile that uses it
+ */
+#ifndef SharedLibraryTarget1
+#define SharedLibraryTarget1(libname,rev,solist,down,up)		@@\
+AllTarget(Concat(lib,libname.so.rev))					@@\
+									@@\
+Concat(lib,libname.so.rev):  solist					@@\
+	-@if [ -f $@ ]; then $(MV) $@ O$@; fi				@@\
+	(cd down; $(CC) -G -o up/$@ $(SHLIBLDFLAGS) -h $@ solist)	@@\
+	$(RM) Concat(lib,libname.so)					@@\
+	$(LN) $@ Concat(lib,libname.so)					@@\
+									@@\
+clean::									@@\
+	$(RM) Concat(lib,libname.so.rev) Concat(lib,libname.so)
+#endif
+
+.c.o:
+	$(RM) $@
+	${CC} -DV256LIB_VERSION='"2.01"' -DSI_2_0 -DVGA_PAGE_SIZE="(64*1024)" $(CFLAGS) -Xa -c $*.c
+
+   INCLUDES = -I.  -I../../si -I$(TOP)/X11 -I$(TOP)/programs/Xserver/include
+
+#else /* SIRevision2_0 */
+
+/*
+ *  	compilation option forced to -Xa, since -Xc does not recognize "asm"
+ *	keyword, which is called by "sys/inline.h" and used in all the files in
+ *	this directory
+ *
+ *  The reason to define .c.o: here is that the $(CCOPTIONS) is passed on 
+ *  command line from server dir, so there is no easy way to overwrite the default
+ *  option (-Xc). Eventhough CFLAGS has -Xc, since we are forcing -Xa after CFLAGS,
+ *  all other previously defined -X options are ignored.
+ */
+.c.o:
+	$(RM) $@
+	${CC} -DV256LIB_VERSION='"2.01"' -DVGA_PAGE_SIZE="(64*1024)" $(CFLAGS) -Xa -c $*.c
+
+   INCLUDES = -I.  -I../../ddx/si -I../../../X11 -I../../include
+
+#endif /* SIRevision2_0 */
+
+/*
+ * Debugging the server with dynamically linked library is sometimes painful
+ * To statically link libvga256.a into the server:
+ *
+ * #undef XWINSharedDisplayLibrary
+ * and define a VENDOR_DIR; this can be any one of the directories under
+ * devices
+ *
+ * and do:
+ *	make clean
+ *	make Makefile
+ *	make
+ *	cd ../../.. (ie: to the server dir)
+ *	make Xwin_a (make sure SDD=.....libvga256.a in the server/Makefile)
+ */
+
+/* #undef XWINSharedDisplayLibrary
+*/
+
+/*
+ * for archive, we have to include the objects from one of the directories
+ * under "devices", so that these objects are archived into libvga256.a
+ */ 
+#if XWINSharedDisplayLibrary
+VENDOROBJS =
+#else
+/*
+ * change this to the driver directory that you want to debug
+ */
+VENDOROBJS = ./devices/gd54xx/?*.o
+#endif
+
+#define IHaveSubdirs
+SUBDIRS = devices
+
+VGA256_VERSION = 2.01
+
+NONPROFTMP=cat
+PROFTMP=m4 m4.def mcount.def 
+ASMTMP=$(NONPROFTMP)
+
+/* BEGIN: COMPATIBILITY SECTION */
+/*
+ * NOTE: These comments are for those who are concerned about maintaining
+ * compatability with older (SI spec 1.0) server. In other words, if you want
+ * your DM to work with both the new and old servers (SI specs 1.1 and 1.0
+ * respectively), read this, else you can ignore this section
+ *
+ * The file, v1compat.c is left in this directory only for reference. DM
+ * writers who want to support both the old (pre SI v1.1) and new X servers
+ * should go through this file carefully
+ */
+#define Compatibility 1
+
+#if Compatibility
+COMPAT_SRC = v1compat.c
+COMPAT_OBJ = v1compat.o
+#else
+COMPAT_SRC =
+COMPAT_OBJ =
+VENDOR_OBJ =
+#endif
+
+/* END: COMPATIBILITY SECTION */
+
+SRCS =	v256.c v256data.c v256gs.c v256color.c \
+	v256bitblt.c v256spreq.c v256rop.c v256dlfont.c \
+	v256curs.c v256points.c v256fill.c v256tile.c \
+	v256stpl.c v256bstpl.c v256sl.c v256line.c v256lnclip.c \
+	vtio.c newfill.c cfbrrop.c fFillCopy.s fFillXor.s v256asm.s \
+	v256ffillrct.s v256FLine.s v256Line.c v256as.c \
+	v256Fstpl.s $(COMPAT_SRC)
+
+OBJS =  v256.o v256data.o v256gs.o v256color.o \
+	v256bitblt.o v256spreq.o v256rop.o v256dlfont.o \
+	v256curs.o v256points.o v256fill.o v256tile.o \
+	v256stpl.o v256bstpl.o v256sl.o v256line.o v256lnclip.o \
+	vtio.o newfill.o cfbrrop.o fFillCopy.o fFillXor.o v256asm.o \
+	v256ffillrct.o v256FLine.o v256Line.o v256as.o \
+	v256Fstpl.o $(COMPAT_OBJ)
+
+     LFLAGS = -buxz
+
+#if XWINSharedDisplayLibrary
+
+SHLIBLDFLAGS =
+SharedLibraryTarget1(vga256,2,$(OBJS),.,.)
+
+InstallSharedLibrary(vga256,2,$(DISPLIBDIR))
+
+#else /* XWINSharedDisplayLibrary */
+
+CDEBUGFLAGS = ServerCDebugFlags -DVGA_PAGE_SIZE="(64*1024)"
+NormalLibraryTarget(vga256,$(OBJS) $(VENDOROBJS))
+
+#endif /* XWINSharedDisplayLibrary */
+
+MakeSubdirs($(SUBDIRS))
+ForceSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))
+DependTarget()
+
+install::
+	$(INSTALL) $(INSTALLFLAGS) README.vga256 $(DESTDIR)$(DISPLIBDIR)
+
+.s.o:
+	$(ASMTMP) $*.s > tmp.c
+	$(CC) -P $(INCLUDES) tmp.c
+	sed -e "/^\#ident/d" -e "s/\% /\%/g" tmp.i > tmp.s
+	$(CC) -c tmp.s
+	mv tmp.o $*.o
+	@if [ -d shared ]; then \
+		$(CC) -c -O tmp.s; \
+		$(MV) tmp.o ./shared/$*.o; \
+	fi
+	/bin/rm -f tmp.s tmp.c
+
+lint: ${CFILES} ${LIBCFILES}
+	$(LINT) $(LFLAGS) -Clibvga256 $(INCLUDES) $(SRCS) >lint.out 2>&1

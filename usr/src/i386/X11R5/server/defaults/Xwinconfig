@@ -1,0 +1,26 @@
+KEYBOARD = us
+FONTPATH = "lib/fonts/misc,lib/fonts/75dpi,lib/fonts/100dpi"
+
+#
+# Primary Screen definition
+#
+DEFINE SCREEN 0
+        chipset = STDVGA	# video chipset
+         memory = 512		# video memory
+          class = VGA16		# class of this DisplayModule
+          model = VGA		# the core drawing lib for this class
+     vendor_lib = stdvga.so.2	# chip specific drawing lib
+   virtual_size = 640x480	# actual Frame Buffer size
+   display_size = 640x480	# display (viewing) size within the FB
+         visual = StaticColor	# visual for this class
+       fb_depth = 4		# number of colors
+         device = /dev/console	# device used
+        monitor = STDVGA	# type of monitor
+   monitor_size = 10x8		# size of the monitor
+   refresh-rate = 60
+  monitor_specs = NONE		# info passed to vendor lib - optional
+  info2classlib = NONE		# info passed to class lib - optional
+ info2vendorlib = NONE		# info passed to vendor lib - optional
+         vendor = "Standard VGA"
+     configfile = stdvga.dat
+END

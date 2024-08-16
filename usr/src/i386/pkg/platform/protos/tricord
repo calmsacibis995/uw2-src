@@ -1,0 +1,24 @@
+#ident	"@(#)pkg.platform:i386/pkg/platform/protos/tricord	1.2"
+
+!default 775 root sys 1 NULL NULL
+d tricord /tmp/ims
+
+!default 0500 root root 1 NULL NULL
+v tricord /tmp/ims/Driver.o=/mp/etc/conf/pack.d/ims/Driver.o
+v tricord /tmp/ims/Space.c=$PACKDIR/ims/space.c
+v tricord /tmp/ims/Master=$MASTDIR//ims
+v tricord /tmp/ims/Node=$NODEDIR/ims
+v tricord /tmp/ims/System=$SYSDIR/ims
+
+!default	0444	root	sys	2 NULL NULL
+f tricord /etc/init.d/ims	
+l tricord /etc/rc0.d/K99ims=/etc/init.d/ims
+l tricord /etc/rc1.d/K99ims=/etc/init.d/ims
+l tricord /etc/rc2.d/S99ims=/etc/init.d/ims
+
+!default	0555	bin	bin	4 NULL NULL
+f tricord /usr/bin/imsd
+f tricord /usr/include/sys/ims.h
+f tricord /usr/include/sys/ims_mrp.h
+f tricord /usr/include/sys/imsd.h
+f tricord /usr/include/sys/triccs.h

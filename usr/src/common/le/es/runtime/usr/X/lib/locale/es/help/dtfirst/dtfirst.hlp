@@ -1,0 +1,229 @@
+#ident\t"@(#)dthelp:Herram.Admin./dtfirst.hlp     1.20"
+^*version^1
+^*title^Primera configuración
+^:Primera_configuración
+^*width^70
+^+DesktopMgr/help.defs
+^?Primera configuración
+^0^Primera configuración
+^$10
+Primera configuración
+
+Después de instalar UnixWare, puede personalizar el entorno del
+sistema. A continuación se proporciona una lista de tareas de la
+primera configuración que es posible que desee llevar a cabo antes de
+comenzar a usar UnixWare.  Haga clic (es decir, pulse y vuelva a
+soltar rápidamente el botón izquierdo del ratón) sobre la tarea
+resaltada que desee realizar.
+
+Aparecerá una pantalla de ayuda con una descripción breve de la tarea,
+o una explicación de la razón por la que es conveniente llevarla a
+cabo.  Desde esta pantalla de ayuda puede hacer lo siguiente:
+
+\to\tObtener información e instrucciones adicionales sobre cómo
+\t \trealizar la tarea, a través de la ayuda interactiva o de la
+\t \tdocumentación impresa de UnixWare.
+
+ \t\tNota:  Para obtener información sobre cómo usar la ayuda
+ \t\tinteractiva, haga clic en \k(Uso de la ayuda^DesktopMgr/help.hlp^Utilización de la ayuda).
+
+\to\tInvocar la tarea (en los casos en que sea posible).
+
+Nota:  No tiene que llevar a cabo todas las tareas de configuración.
+Escoja las tareas de configuración que sean apropiadas para su propio
+entorno.  Si decide no configurar ninguna tarea, o algunas de ellas,
+siempre dispondrá de la posibilidad de volver a esta pantalla de ayuda
+haciendo doble clic (es decir, pulsando y soltando rápidamente el
+botón izquierdo del ratón dos veces) en el icono Primera_configuración
+del \k(Escritorio de ayuda^DesktopMgr/helpdesk.hlp^Descripción general del Escritorio de ayuda).
+
+No obstante, incluso en el caso de que decida no realizar ninguna otra
+tarea, le recomendamos que lleve a cabo la primera de la lista
+"Creación de disquetes de recuperación en caso de emergencia".
+
+Nota: Si pulsa en cualquier elemento de la lista siguiente y quiere
+volver a esta pantalla de ayuda, pulse en el botón Retroceder de la
+parte superior de la pantalla.
+
+\to\t\k(Creación de propiedades del Editor de textos)
+\to\t\k(Incremento de la resolución de la pantalla)
+\to\t\k(Configuración del sistema para redes TCP/IP)
+\to\t\k(Configuración del sistema para la conexión en red)
+\to\t\k(Configuración del sistema para el envío de correo a usuarios de otras redes)
+\to\t\k(Configuración de una impresora)
+\to\t\k(Instalación de aplicaciones UNIX)
+\to\t\k(Instalación de DOS y Windows)
+\to\t\k(Configuración del sistema para acceso a NetWare)
+\to\t\k(Creación de cintas de recuperación en caso de emergencia)
+
+Tras completar la configuración por primera vez, recomendamos la
+lectura de la información general sobre el sistema. Pulse en
+\k(Introducción al Escritorio de UnixWare^DesktopMgr/desktop.hlp^Introducción al Escritorio UnixWare).
+
+Nota: Para obtener una lista de las marcas registradas mencionadas
+en este sistema de ayuda, pulse en \k(Marcas registradas^DesktopMgr/trademark.hlp^Marcas comerciales).
+
+
+^1^Creación de propiedades del Editor de textos
+^$20
+Creación de propiedades del Editor de textos
+
+El disquete de recuperación en caso de emergencia es un disquete
+personalizado del sistema.  En el caso de que el sistema se deteriore,
+este disquete le permite colocar al sistema UnixWare en un estado en
+el que es posible reparar el daño.
+
+Para obtener las instrucciones acerca de cómo crear disquetes de
+recuperación en caso de emergencia, véase "Recuperación del sistema",
+en el Manual del propietario del sistema.
+
+Para crear un disquete de recuperación de emergencia, haga clic en
+\s(Crear disquete de recuperación de emergencia^/usr/X/bin/xterm -t "`gettxt dtfirst2:10 \"Crear disquete de emergencia\"`" -E $XWINHOME/adm/dtexec -P root su root -c "'/sbin/emergency_disk -g diskette1'").
+
+^1^Incremento de la resolución de la pantalla
+^$30
+Incremento de la resolución de la pantalla
+
+Puede modificar la resolución de la pantalla de vídeo para incrementar
+la cantidad de información que puede ver en ella, y para incrementar
+también el número de colores que usa el sistema en la misma.
+
+Para obtener más información, pulse en \k(Configuración de la pantalla^dtadmin/video.hlp^Configuración de visualización).
+
+Para incrementar la resolución del vídeo, haga clic en
+\s(Configurar visualización^/sbin/tfadmin gsetvideo -p || /usr/bin/gettxt dtfirst2:11 "No se pudo incrementar el vídeo." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Configuración del sistema para redes TCP/IP
+^$40
+Configuración del sistema para redes TCP/IP
+
+Si no configuró el protocolo TCP/IP (Protocolo de control de
+transmisión/Protocolo Internet) durante la instalación inicial,
+o si no cuenta con un servidor de arranque (bootp) en el entorno
+(consulte este extremo con el administrador de sistemas),
+deberá configurar TCP/IP para poder enviar correo a los
+usuarios de otros sistemas y para acceder a las impresoras
+de otros sistemas UNIX.
+
+Es posible que desee además configurar el acceso a un servidor DNS
+(Servicio de nombre de dominio), a un servidor NIS (Servicio de
+información de la red), un encaminador de red, etcétera.  Todas estas
+tareas de configuración, incluida la de TCP/IP, se llevan a cabo
+usando la funcionalidad de Configuración Internet.
+
+
+Para obtener más información, pulse en \k(Configuración Internet^dtadmin/inet.hlp^Configuración de Internet).
+
+Para configurar las redes TCP/IP, haga clic en \s(Configurar TCP/IP^/sbin/tfadmin inet || /usr/bin/gettxt dtfirst2:12 "No se pudo invocar la configuración de redes TCP/IP." | /usr/X/desktop/rft/dtmsg).
+
+
+^1^Configuración del sistema para la conexión en red
+^$50
+Configuración del sistema para la conexión en red
+
+Si necesita acceder a otro sistema a través de la red telefónica vía
+módem (por ejemplo, en el caso de que se encuentre en una oficina
+remota y necesite conectarse con su oficina), deberá configurar el
+sistema para la conexión en red.
+
+Para obtener más información, haga clic en
+\k(Configuración de la conexión^dtadmin/DialMgr.hlp^Configuración de conexiones).
+
+Para configurar su sistema para redes de marcado mediante módem, haga
+clic en \s(Configurar redes de marcado^/sbin/tfadmin dialup || /usr/bin/gettxt dtfirst2:13 "No se pudo invocar la configuración de redes de marcado." | /usr/X/desktop/rft/dtmsg).
+
+^1^Configuración del sistema para el envío de correo a usuarios de otras redes
+^$60
+Configuración del sistema para el envío de correo a usuarios de otras redes
+
+Si quiere configurar su sistema para que contacte con un servidor de
+correo que sepa cómo enviar correos a sistemas UNIX en otras redes,
+debe usar Configuración del correo para configurar el correo. Para más
+información, pulse en \k(Configuración del correo^Mail_Setup/Mail_Setup.hlp^Configuración de correo).
+
+Para configurar el correo, haga clic en \s(Configurar correo^/sbin/tfadmin Mail_Setup || /usr/bin/gettxt dtfirst2:14 "No se pudo configurar el correo." | /usr/X/desktop/rft/dtmsg).
+
+Si el sistema es un Servidor de aplicaciones y desea que se convierta
+en una gateway entre los usuarios del correo del sistema UNIX y los
+usuarios del correo MHS, deberá usar Configuración de MHS para
+configurar el correo.  Para obtener más información, haga clic en
+\k(Configuración_de_MHS^MHS_Setup/MHS_Setup.hlp^Configuración de MHS).
+
+Para configurar un gateway MHS, haga clic en \s(Configurar gateway MHS^/sbin/tfadmin MHS_Setup || /usr/bin/gettxt dtfirst2:15 "No se pudo configurar un gateway MHS." | /usr/X/desktop/rft/dtmsg).
+
+^1^Configuración de una impresora
+^$70
+Configuración de una impresora
+
+Antes de poder enviar solicitudes de impresión a una impresora local o
+remota, deberá configurar el acceso a dicha impresora.
+
+Para obtener más información, véase \k(Configuración de impresoras^dtadmin/Printer_Setup.hlp^Configuración de impresoras).
+
+Para configurar una impresora, haga clic en \s(Configurar impresora^/sbin/tfadmin prtsetup -o || /usr/bin/gettxt dtfirst2:16 "No se pudo configurar la impresora." | /usr/X/desktop/rft/dtmsg).
+
+^1^Instalación de aplicaciones UNIX
+^$80
+Instalación de aplicaciones UNIX
+
+Es posible que desee instalar otras aplicaciones o paquetes
+adicionales UNIX en el sistema después de la instalación inicial de
+UnixWare.  Por ejemplo, es posible que desee instalar el paquete
+ASdocs a fin de tener acceso a la totalidad de la documentación
+interactiva sobre el Servidor de aplicaciones UnixWare.
+
+Para obtener más información, haga clic en \k(Instalador de aplicaciones^dtadmin/App_Installer.hlp^Instalador de aplicaciones).
+
+Para instalar una aplicación UNIX, haga clic en \s(Instalar aplicaciones UNIX^/sbin/tfadmin PackageMgr || /usr/bin/gettxt dtfirst2:17 "No se pudo instalar una aplicación UNIX." | /usr/X/desktop/rft/dtmsg).
+
+Nota:  No puede usar el Instalador de aplicaciones para añadir
+aplicaciones en DOS o Windows.  Véase \k(Instalación de DOS y Windows).
+
+^1^Instalación de DOS y Windows
+^$90
+Instalación de DOS y Windows
+
+Si desea instalar DOS o Windows en el sistema UnixWare, o aplicaciones
+en DOS o Windows, deberá acceder al entorno DOS
+\d(haciendo doble clic^hacer doble clic) en el icono Instalar_Windows o
+MS-DOS.
+
+Para obtener más información, véase "Trabajo con DOS y Windows", del
+Manual del usuario del escritorio.
+
+
+^1^Configuración del sistema para acceso a NetWare
+^$100
+Configuración del sistema para acceso a NetWare
+
+Si tiene acceso a servidores NetWare, puede mejorar la conectividad
+NetWare volviendo a configurar los parámetros del protocolo de gestión
+de red NetWare IPX/SPX.  Por ejemplo, si el sistema tiene múltiples
+placas de gestión de red, puede configurarlas para la gestión de red
+NetWare y el encaminamiento NetWare IPX.
+
+También puede activar el estado de los stacks de la red NetWare
+IPX/SPX a fin de poder realizar su seguimiento y control desde otro
+sistema.
+
+Para obtener más información, véase \k(Configuración de NetWare^NetWare_Setup/NetWare_Setup.hlp^Configuración de NetWare).
+
+Para configurar un acceso a NetWare, haga clic en \s(Configurar acceso a NetWare Access^/sbin/tfadmin nwsetup || /usr/bin/gettxt dtfirst2:18 "No se pudo configurar el acceso a NetWare." | /usr/X/desktop/rft/dtmsg).
+
+^1^Creación de cintas de recuperación en caso de emergencia
+^$110
+Creación de cintas de recuperación en caso de emergencia
+
+Después de instalar todos los productos y aplicaciones adicionales,
+proteja el sistema creando cintas de recuperación en caso de
+emergencia.
+
+Para obtener información acerca de la creación de cintas de
+recuperación en caso de emergencia, véase "Recuperación del sistema"
+en el Manual del propietario del sistema.
+
+Nota: Si realizó una instalación de actualización, debe crear también
+una copia de seguridad completa nueva de su sistema. Véase
+\k(CopiaSeg_Restaurar^dtadmin/backup.hlp^CopiaSeg-Restaurar).
+

@@ -1,0 +1,34 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#pragma ident	"@(#)mdemos:view/german/uid/Imakefile	1.1"
+XCOMM (c) Copyright 1989, 1990, 1991, 1992 OPEN SOFTWARE FOUNDATION, INC.  
+XCOMM ALL RIGHTS RESERVED  
+XCOMM 
+XCOMM Motif Release 1.2.1
+
+#include	<Motif.tmpl>
+#include	<Motif.rules>
+EXTRA_LOAD_FLAGS = -z nodefs
+INCLUDES = -I. -I$(MINCLUDESRC) -I$(UILSRC) -I$(MTOOLKITSRC) -I$(LIBSRC)
+
+.uil.uid:
+	$(RM) $@
+	$(UIL) -o $@ $*.uil  -I$(UILSRC)
+
+
+UILS1= fileview.uil
+
+NormalLibraryObjectRule()
+
+MComplexUidTarget_1(fileview)
+
+install::
+	$(RM) $(UIDDIR)/fileview.uid
+
+InstallNonExecFile(fileview.uid,$(UIDDIR)/german/uid)

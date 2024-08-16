@@ -1,0 +1,77 @@
+#ident	"@(#)pkg4.i386:ccs/postinstall	1.6"
+#-------
+# This edits /etc/profile.
+#
+# During installation, it appends a line which will make
+# the new compilation system the default.
+#
+# PKGINST should be provided by the installation service.
+#-------
+#Set up localized messaging
+PKMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKMSG} ]
+then 
+	if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKMSG} -a \
+		-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+	then
+		cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+		/usr/lib/locale/${LOCALE}/LC_MESSAGES
+		
+		installf ${PKGINST} /usr/lib/locale/${LOCALE}/LC_MESSAGES
+	fi
+fi
+#-------
+
+PROFILE=/etc/profile
+
+#-------
+# Add /usr/ccs/bin to path in /etc/profile
+#-------
+echo 'PATH=$PATH:/usr/ccs/bin  #**UNIXWARE CCS** Installed by pkginst' $PKGINST>>/etc/profile
+#-------
+
+#-------
+# Take care of /usr/lib/cpp.
+#-------
+
+if	[ ! -f /usr/lib/cpp -a ! -h /usr/lib/cpp -a -f /usr/ccs/lib/cpp ]
+then	ln -s /usr/ccs/lib/cpp /usr/lib/cpp
+fi
+
+#-------
+# Take care of libcrypt.a
+#-------
+if	[ ! -f /usr/lib/libcrypt_d.a ]
+then	
+	rm -f /usr/lib/libcrypt.a
+	ln /usr/lib/libcrypt_i.a /usr/lib/libcrypt.a
+fi
+
+#-------
+# Take care of symbolic links for files in /usr/ccs/bin
+#-------
+if [ ! -f /bin/cc ]
+then
+a=`pwd`
+cd /usr/ccs/bin
+for i in *
+do
+if [ ! -f /usr/bin/$i -a ! -h /usr/bin/$i ]
+then	ln -s /usr/ccs/bin/$i /usr/bin/$i
+fi
+done
+cd $a
+fi
+
+## link /usr/ccs/bin/ld and /usr/bin/idld if the system is Destiny
+## (pkg=base; version=1 or higher)
+
+version=`pkgparam base VERSION 2>/dev/null`
+[ "$version" -ge 1 ] && [ -x /usr/bin/idld ] && {
+	rm -f /usr/bin/idld
+	ln /usr/ccs/bin/ld /usr/bin/idld
+}
+
+exit 0

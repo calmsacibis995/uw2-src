@@ -1,0 +1,16 @@
+#ident	"@(#)kern:io/udev/udev.cf/Master	1.1"
+#ident	"$Header: $"
+#
+# This pseudo-device handles dynamic device number allocation.
+# Dynamic device numbers are used for pseudo-filesystems and for
+# compatibility aliases for older non-EFT applications.
+#
+# Increase the range of major numbers (last two fields) to allow
+# for more dynamic device numbers; each major number supports 256
+# device numbers.  The major number range must also be changed in
+# /etc/conf/cf.d/res_major
+#
+$version 2
+$interface base
+$entry init open close strategy
+udev	udev_	bck	99999	50-57	50-57

@@ -1,0 +1,19 @@
+%% Kernel Memory Allocator (KMA) Parameters
+% KMA_PAGEOUT_POOL
+Controls the size of a chunk of memory which is dedicated for use
+by the kernel memory allocator while executing in the pageout LWP.
+It is the number of bytes reserved for pageout daemon (includes overhead).
+The purpose is to allow pageout operations that might otherwise
+be blocked waiting for memory to proceed, thereby avoiding deadlock.
+This value should only be increased if a system hang is observed,
+and analysis of the kernel's behavior
+(for example using kdb or crash)
+shows that a pageout deadlock was responsible.
+% KMAGBTIME
+Specifies the number of seconds between giveback runs.
+This is also known as the kernel memory allocator's giveback interval.
+This tunable specifies how much time there is between successive attempts
+by the kernel memory allocator to give back unused memory (for possible use by
+processes or file systems).
+Increasing this value increases the kernel allocator's requirement for memory.
+Decreasing it increases the CPU usage of the giveback attempts.

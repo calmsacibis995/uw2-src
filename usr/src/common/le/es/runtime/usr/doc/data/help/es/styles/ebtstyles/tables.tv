@@ -1,0 +1,51 @@
+<!-- Stylesheet for the table of contents window, IMI documents.
+
+  Copyright 1992 Electronic Book Technologies.  All rights reserved.
+-->
+
+<!ENTITY	std.font	CDATA	"helvetica"	>
+
+<!ENTITY tablist CDATA "Lista de tablas">
+<sheet>
+
+
+
+<?INSTED COMMENT: UNGROUPED STYLES FOLLOW>
+
+<!-- Style"#toc-annot" is reserved, and defines the appearance of the
+     bookmarks, word frequencies, location markers, etc. in left margin.
+-->
+<style name="#TOC-ANNOT">
+	<font> 	annotation 	</>
+	<foreground> 	#ff3c82 	</>
+	<line-spacing> 	16 	</>
+</style>
+
+<style name="BLOCK,TBLOCK">
+	<font-family>	&std.font;	</>
+	<font-size> 	14 	</>
+	<line-spacing> 	20 	</>
+	<left-indent> 	12 	</>
+	<first-indent> 	-5 	</>
+	<space-before> 	4 	</>
+	<title-tag> 	#TEXT-BEFORE 	</>
+	<text-before> 	content(nchild(1,parent(BLOCK,me()))) 	</>
+	<break-before> 	True 	</>
+</style>
+
+<!-- Title of Book, inside front matter -->
+<style name="TITLEPG,TITLE">
+	<font-family>	&std.font;	</>
+	<font-size> 	18 	</>
+	<left-indent> 	5 	</>
+	<line-spacing> 	24 	</>
+	<space-before> 	4 	</>
+	<space-after> 	4 	</>
+	<title-tag> 	#TEXT-BEFORE	</>
+	<text-before> 	&tablist; </>
+	<break-before> 	True 	</>
+</style>
+
+
+
+</sheet>

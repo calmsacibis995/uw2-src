@@ -1,0 +1,38 @@
+.ul
+Installazione e configurazione di Network Information Service (NIS)
+.lr
+F1=Guida
+.top
+`[ "$def_dom" ] &&  echo "\n \n \nIl nome di dominio NIS per questa macchina e: $def_dom\n \n"`
+`[ "$def_dom" ] &&  echo "\nPer cambiare il nome di dominio, immettere qui sotto il nuovo nome:\n"`
+.bottom
+Premere <Tab> per portare il cursore da un campo all'altro. Alla fine,
+portare il cursore su "Applica" e premere <Invio> per continuare.
+.form
+
+
+#`[ "$def_dom" ] && echo "2 1//YES::$def_dom//Enter host's NIS domain name://def_dom\n \n//"`
+#`[ "$def_dom" ] && echo "// Left/Right arrow keys for next choice (2 choices)//"`
+5 1 30//[A-z0-9 ]*//Nome di dominio NIS://def_dom//
+//Premere <INVIO> per accettare questo nome come nome di dominio NIS //
+
+
+.button
+Applica
+Reimposta
+#`[ "$def_dom" ] echo "2 1 //:: $DEF_DOMAIN//Enter local host's NIS domain name ://def_dom//"`
+#2 1//:://Enter local host's NIS domain name ://def_dom//
+#//To accept current domain name press enter //
+#
+#
+.help
+Prima di configurare il proprio host per NIS, si deve determinare il
+dominio NIS in cui l'host verrà configurato. Una volta individuato il
+dominio NIS, immettere il nome del dominio nel riquadro presentato da
+questo menu.
+
+Per ulteriori informazioni sull'impostazione del nome di dominio NIS,
+consultare la Guida dell'Amministratore NIS.
+.helpinst
+Canc=Annulla  F1=Guida  Esc=Fine Guida  1=Avanti  2=Indietro
+

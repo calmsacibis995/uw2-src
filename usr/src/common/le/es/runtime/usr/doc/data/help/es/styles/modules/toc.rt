@@ -1,0 +1,131 @@
+<!-- /lfs/doc/DMG/Projects/sgml/sccs/styles/modules/s.toc.rt 1.3 94/09/08 -->
+<style name="#TOC-ANNOT">
+   <font-family>	&annfam; </>
+   <font-size>		&annsize; </>
+   <foreground>		&annclr; </>
+</style>
+
+<style name="BOOK">
+   <font-family>	&bodfam; </>
+   <font-size>		&bodsize; </>
+   <line-spacing>	&bodspac; </>
+   <left-indent>	&tocin; </>
+   <break-before>	line </>
+   <title-tag>		TITLE </>
+   <character-set>	iso8859-1 </>
+</style>
+
+<style name="BOOK,TITLE">
+   <font-size>		&dtsize; </>
+   <line-spacing>	&dtspac; </>
+   <space-before>	&dtfore; </>
+   <space-after>	&dtaft; </>
+   <font-weight>	bold </>
+   <break-before>	line </>
+</style>
+
+<!-- Hierarchical elements below the chapter level -->
+
+<group name="sect">
+   <title-tag>		TITLE </>
+   <left-indent>	+=&in1; </>
+</group>
+
+<group name="secttitle">
+   <break-before>	line </>
+   <space-before>	&stfore; </>
+</group>
+
+<style name="SECT1">
+   <title-tag>		TITLE </>
+   <left-indent>	&s1lin; </>
+</style>
+<style name="SECT1,TITLE" group="secttitle"> </style>
+
+<style name="SECT2" group="sect"> </style>
+<style name="SECT2,TITLE" group="secttitle"> </style>
+
+<style name="SECT3" group="sect"> </style>
+<style name="SECT3,TITLE" group="secttitle"> </style>
+
+<style name="SECT4" group="sect"> </style>
+<style name="SECT4,TITLE" group="secttitle"> </style>
+
+<style name="PARTINTRO">
+   <title-tag>		TITLE </>
+   <left-indent>	&s1lin; </>
+</style>
+<style name="PARTINTRO,TITLE" group="secttitle"> </style>
+
+<style name="BOOK,REFENTRY" group="container">
+   <left-indent>	&chlin; </>
+   <title-tag>		REFNAMEDIV,REFNAME </>
+</style>
+
+<style name="BOOK,REFERENCE" group="container">
+   <left-indent>	&chlin; </>
+   <title-tag>		TITLE </>
+</style>
+
+<style name="REFENTRY" group="container">
+   <title-tag>		REFMETA,REFENTRYTITLE </>
+</style>
+
+<style name="REFNAME">
+   <break-before>	line </>
+</style>
+
+<style name="REFMETA,REFENTRYTITLE" group="secttitle">
+   <text-after>(content(rsibling(MANVOLNUM)))</>
+</style>
+
+<style name="REFSYNOPSISDIV" group="sect">
+   <left-indent>	+=&in1; </>
+   <title-tag>		TITLE </>
+</style>
+<style name="REFSYNOPSISDIV,TITLE" group="secttitle"> </style>
+
+<style name="REFSECT1" group="sect"> </style>
+<style name="REFSECT1,TITLE" group="secttitle"> </style>
+
+<style name="REFSECT2" group="sect"> </style>
+<style name="REFSECT2,TITLE" group="secttitle"> </style>
+
+<style name="MSGENTRY">
+   <title-tag>		MSG,MSGMAIN,MSGTEXT </>
+   <left-indent>	+=&in1; </>
+</style>
+<style name="MSG,MSGMAIN,MSGTEXT" group="secttitle"> </style>
+
+<style name="GLOSSARYENTRY">
+   <title-tag>		GLOSSARYTERM </>
+   <left-indent>	+=&in1; </>
+</style>
+<style name="GLOSSARYTERM" group="secttitle"> </style>
+
+<style name="REPLACEABLE">
+   <font-slant>		&bodslan; </>
+</style>
+
+<style name="XMARK">
+   <hide>		all </>
+</style>
+
+<!-- Index styles -->
+
+<style name="IDXTERM">
+   <break-before>	line </>
+   <title-tag>		ILEVEL1,ITERM </>
+   <left-indent>	&s1lin; </>
+</style>
+<style name="ILEVEL1,ITERM" group="secttitle"> </style>
+
+<group name="idxh">
+   <title-tag>		ITERM </>
+   <left-indent>	+=&in2; </>
+</group>
+<style name="ILEVEL2" group="idxh"> </style>
+<style name="ILEVEL3" group="idxh"> </style>
+
+<style name="ITERM" group="secttitle"> </style>
+

@@ -1,0 +1,31 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)r5fonts:Imakefile	1.1"
+
+XCOMM $XConsortium: Imakefile,v 1.28 91/07/16 23:03:55 gildea Exp $
+#define IHaveSubdirs
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+#if BuildFonts
+FONTDIRS = bdf scaled
+#endif
+
+#if BuildPexExt
+PEXDIRS = PEX
+#endif
+
+#if BuildFontServer
+SERVERDIRS = server
+#endif
+
+/* clients must be built before font dirs */
+SUBDIRS = lib clients $(FONTDIRS) $(PEXDIRS) $(SERVERDIRS)
+
+MakeSubdirs($(SUBDIRS))
+DependSubdirs($(SUBDIRS))

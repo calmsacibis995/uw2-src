@@ -1,0 +1,42 @@
+<!-- /lfs/doc/DMG/Projects/sgml/sccs/styles/modules/s.nums.ent 1.2 94/08/09 -->
+<!ENTITY	partnum		"if(isnull(attr(LABEL,ancestor(PART))),,if(eq(attr(LABEL,ancestor(PART)),auto),&ptwd; format(gcnum(ancestor(PART)),ROMAN) ,&ptwd; attr(LABEL,ancestor(PART)) ))">
+
+<!ENTITY	chapnum		"if(isnull(attr(LABEL, ancestor(CHAPTER))),,if(eq(attr(LABEL,ancestor(CHAPTER)),auto),&chwd; gcnum(ancestor(CHAPTER)) ,&chwd; attr(LABEL,ancestor(CHAPTER)) ))">
+
+<!ENTITY	appxnum		"if(isnull(attr(LABEL, ancestor(APPENDIX))),,if(eq(attr(LABEL,ancestor(APPENDIX)),auto),&appwd; format(gcnum(ancestor(APPENDIX)),LETTER) ,&appwd; attr(LABEL,ancestor(APPENDIX)) ))">
+
+<!ENTITY	sptnum		"if(isnull(attr(LABEL,ancestor(PART))),,if(eq(attr(LABEL,ancestor(PART)),auto),&ptwd; format(gcnum(ancestor(PART)),ROMAN). ,&ptwd; attr(LABEL,ancestor(PART)). ))">
+
+<!ENTITY	schnum		"if(isnull(attr(LABEL, ancestor(CHAPTER))),,if(eq(attr(LABEL,ancestor(CHAPTER)),auto),&chwd; gcnum(ancestor(CHAPTER)). ,&chwd; attr(LABEL,ancestor(CHAPTER)). ))">
+
+<!ENTITY	sapnum		"if(isnull(attr(LABEL, ancestor(APPENDIX))),,if(eq(attr(LABEL,ancestor(APPENDIX)),auto),&appwd; format(gcnum(ancestor(APPENDIX)),LETTER). ,&appwd; attr(LABEL,ancestor(APPENDIX)). ))">
+
+<!ENTITY	tptnum		"if(isnull(attr(LABEL,ancestor(PART))),,if(eq(attr(LABEL,ancestor(PART)),auto),format(gcnum(ancestor(PART)),ROMAN). ,attr(LABEL,ancestor(PART)). ))">
+
+<!ENTITY	tchnum		"if(isnull(attr(LABEL, ancestor(CHAPTER))),,if(eq(attr(LABEL,ancestor(CHAPTER)),auto),gcnum(ancestor(CHAPTER)). ,attr(LABEL,ancestor(CHAPTER)). ))">
+
+<!ENTITY	tapnum		"if(isnull(attr(LABEL, ancestor(APPENDIX))),,if(eq(attr(LABEL,ancestor(APPENDIX)),auto),format(gcnum(ancestor(APPENDIX)),LETTER). ,attr(LABEL,ancestor(APPENDIX)). ))">
+
+<!ENTITY	tblnum		"if(eq(0,ancestor(APPENDIX)),
+	if(isnull(attr(LABEL)),&tblwd;. ,if(eq(attr(LABEL),auto),&tblwd; gcnum(ancestor(CHAPTER))-gcnum(). ,&tblwd; attr(LABEL). )),
+	if(isnull(attr(LABEL)),&tblwd;. ,if(eq(attr(LABEL),auto),&tblwd; format(gcnum(ancestor(APPENDIX)),LETTER)-gcnum(). ,&tblwd; attr(LABEL). )))">
+
+<!ENTITY	ttblnum		"if(eq(0,ancestor(APPENDIX)),
+	if(isnull(attr(LABEL,ancestor(TABLE))),&tblabbr;. ,if(eq(attr(LABEL,ancestor(TABLE)),auto),&tblabbr; gcnum(ancestor(CHAPTER))-gcnum(ancestor(TABLE)). ,&tblabbr; attr(LABEL,ancestor(TABLE)). )),
+	if(isnull(attr(LABEL,ancestor(TABLE))),&tblabbr;. ,if(eq(attr(LABEL,ancestor(TABLE)),auto),&tblabbr; format(gcnum(ancestor(APPENDIX)),LETTER)-gcnum(ancestor(TABLE)). ,&tblabbr; attr(LABEL,ancestor(TABLE)). )))">
+
+<!ENTITY	tbltitl		"if(eq(0,ancestor(APPENDIX)),
+	if(isnull(attr(LABEL)),content(typechild(TITLE)),if(eq(attr(LABEL),auto),&tblwd; gcnum(ancestor(CHAPTER))-gcnum(). content(typechild(TITLE)),&tblwd; attr(LABEL). content(typechild(TITLE)))),
+	if(isnull(attr(LABEL)),content(typechild(TITLE)),if(eq(attr(LABEL),auto),&tblwd; format(gcnum(ancestor(APPENDIX)),LETTER)-gcnum(). content(typechild(TITLE)),&tblwd; attr(LABEL). content(typechild(TITLE)))))">
+
+<!ENTITY	fignum		"if(eq(0,ancestor(APPENDIX)),
+	if(isnull(attr(LABEL,ancestor(FIGURE))),&figwd;. ,if(eq(attr(LABEL,ancestor(FIGURE)),auto),&figwd; gcnum(ancestor(CHAPTER))-gcnum(ancestor(FIGURE)). ,&figwd; attr(LABEL,ancestor(FIGURE)). )),
+	if(isnull(attr(LABEL,ancestor(FIGURE))),&figwd;. ,if(eq(attr(LABEL,ancestor(FIGURE)),auto),&figwd; format(gcnum(ancestor(APPENDIX)),LETTER)-gcnum(ancestor(FIGURE)). ,&figwd; attr(LABEL,ancestor(FIGURE)). )))">
+
+<!ENTITY	tfignum		"if(eq(0,ancestor(APPENDIX)),
+	if(isnull(attr(LABEL,ancestor(FIGURE))),&figabbr;. ,if(eq(attr(LABEL,ancestor(FIGURE)),auto),&figabbr; gcnum(ancestor(CHAPTER))-gcnum(ancestor(FIGURE)). ,&figabbr; attr(LABEL,ancestor(FIGURE)). )),
+	if(isnull(attr(LABEL,ancestor(FIGURE))),&figabbr;. ,if(eq(attr(LABEL,ancestor(FIGURE)),auto),&figabbr; format(gcnum(ancestor(APPENDIX)),LETTER)-gcnum(ancestor(FIGURE)). ,&figabbr; attr(LABEL,ancestor(FIGURE)). )))">
+
+<!ENTITY	figtitl		"if(eq(0,ancestor(APPENDIX)),
+	if(isnull(attr(LABEL,ancestor(FIGURE))),content(typechild(TITLE,ancestor(FIGURE))),if(eq(attr(LABEL,ancestor(FIGURE)),auto),&figwd; gcnum(ancestor(CHAPTER))-gcnum(ancestor(FIGURE)). content(typechild(TITLE,ancestor(FIGURE))),&figwd; attr(LABEL,ancestor(FIGURE)). content(typechild(TITLE,ancestor(FIGURE))))),
+	if(isnull(attr(LABEL,ancestor(FIGURE))),content(typechild(TITLE,ancestor(FIGURE))),if(eq(attr(LABEL,ancestor(FIGURE)),auto),&figwd; format(gcnum(ancestor(APPENDIX)),LETTER)-gcnum(ancestor(FIGURE)). content(typechild(TITLE,ancestor(FIGURE))),&figwd; attr(LABEL,ancestor(FIGURE)). content(typechild(TITLE,ancestor(FIGURE))))))">

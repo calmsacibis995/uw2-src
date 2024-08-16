@@ -1,0 +1,481 @@
+'\"ident        "@(#)MGizmo:man/gizmo.man	1.1"
+.TH Gizmo 3L
+.SH NAME
+\f(CBGizmo\f1 \- the Gizmo Library is a set of routines for creating
+and managing abstract data types (ADT).
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+
+Widget  InitializeGizmoClient(
+                char *\fIname\fP, char *\fIclass\fP,
+                XrmOptionDescRec *\fIoptions\fP, Cardinal \fInumOptions\fP, 
+                int *\fIargc\fP, char *\fIargv[]\fP,
+                XtPointer \fIbase\fP, XtResourceList \fIresources\fP, Cardinal \fInumResources\fP, 
+                ArgList \fIargs\fP, Cardinal \fInumArgs\fP, char *\fIresourceName\fP
+        );
+void    InitializeGizmos(char *\fIApplicationName\fP);
+Gizmo   CreateGizmo(
+                Widget \fIparent\fP, GizmoClass \fIgizmoClass\fP, Gizmo \fIgizmo\fP,
+                ArgList \fIarg\fP, int \fInum\fP
+        );
+void    FreeGizmo(GizmoClass \fIgizmoClass\fP, Gizmo \fIgizmo\fP);
+void    GizmoMainLoop(
+                void (*\fIinputCB\fP)(), XtPointer \fIinputData\fP,
+                void (*\fIotherCB\fP)(), XtPointer \fIotherData\fP
+        );
+void    MapGizmo(GizmoClass \fIgizmoClass\fP, Gizmo \fIgizmo\fP);
+void    ManipulateGizmo(
+                GizmoClass \fIgizmoClass\fP, Gizmo \fIgizmo\fP, ManipulateOption \fIoption\fP
+        );
+XtPointer QueryGizmo(
+                GizmoClass \fIgizmoClass\fP, Gizmo \fIgizmo\fP, int \fIoption\fP, char *\fIname\fP
+        );
+Gizmo   SetGizmoValueByName(
+                GizmoClass \fIgizmoClass\fP, Gizmo \fIgizmo\fP, char *\fIname\fP, char *\fIvalue\fP
+        )
+char *  GetGizmoText(char *label);
+Pixmap  PixmapOfFile(Widget \fIw\fP, char *\fIfname\fP, int *\fIwidth\fP, int *\fIheight\fP);
+Cardinal AppendArgsToList(
+                ArgList \fIoriginal\fP, Cardinal \fInumOriginal\fP,
+                ArgList \fIadditional\fP, Cardinal \fInumAdditional\fP
+        );
+void    GizmoRegisterHelp(Widget \fIw\fP, HelpInfo *\fIhelp\fP);
+void    PostGizmoHelp(Widget \fIw\fP, HelpInfo *\fIhelp\fP);
+.ft
+.fi
+.SH "DESCRIPTION"
+The Gizmo Library provides routines for initializing clients; and
+creating and displaying standard Motif objects such as base windows,
+popup windows and menus.
+These routines give applications a similar look-and-feel.
+.PP
+\fBGizmo.h\fP defines the following public data structures:
+.PP
+.nf
+.ft CB
+
+typedef struct _HelpInfo {
+        char *          appTitle;
+        char *          title;
+        char *          filename;
+        char *          section;
+} HelpInfo;
+
+typedef struct _GizmoRec {
+        GizmoClass      gizmoClass;
+        Gizmo           gizmo;
+        Arg *           args;
+        Cardinal        numArgs;
+} GizmoRec, *GizmoArray;
+.ft
+.fi
+.PP
+\fBGizmo.h\fP defines the following enumerated data type for manipulating
+and querying Gizmos:
+.PP
+.ft CB
+.nf
+typedef enum {
+        GetGizmoValue,          /* From Widget to current value */
+        ApplyGizmoValue,        /* From current value to previous value */
+        ResetGizmoValue,        /* From previous value to current value */
+        ReinitializeGizmoValue  /* From initial value to current value */
+} ManipulateOption;
+
+typedef enum {
+        GetGizmoCurrentValue,   /* Retrieve the Gizmo current value */
+        GetGizmoPreviousValue,  /* Retrieve the Gizmo previous value */
+        GetGizmoWidget,         /* Retrieve the Gizmo Widget */
+        GetGizmoGizmo           /* Retrieve the named Gizmo */
+} QueryOption;
+.fi
+.ft
+.PP
+\fIgizmoClass\fP defines the type of Gizmo being used.
+\fIgizmoClass\fP can have one of the following values:
+.IP \fBAlphaGizmoClass\fP 25
+An area where a list of text data is displayed one item at a time.
+.IP \fBBaseWindowGizmoClass\fP 25
+A default top-level window.
+.IP \fBChoiceGizmoClass\fP 25
+Menus with associated initial, current and previous values.
+.IP \fBComboBoxGizmoClass\fP 25
+An area consisting of a button and a popup scrolling list that is displayed
+when the button is depressed.
+.IP \fBContainerGizmoClass\fP 25
+A container for other Gizmos.
+The container itself can be one of the following Motif containers: scrolled
+window, bulletin board, form, row column, frame or paned window.
+.IP \fBFileGizmoClass\fP 25
+A path finder window.
+.IP \fBInputGizmoClass\fP 25
+An input field.
+.IP \fBLabelGizmoClass\fP 25
+An area containing a text label.
+.IP \fBListGizmoClass\fP 25
+An area where multiple, selectable lines of text may be displayed in a list.
+.IP \fBPulldownMenuGizmoClass\fP 25
+A pull down menu.
+.IP \fBMenuBarGizmoClass\fP 25
+A menu bar.
+.IP \fBPopupMenuGizmoClass\fP 25
+A popup menu.
+.IP \fBCommandMenuGizmoClass\fP 25
+A command menu.
+.IP \fBOptionMenuGizmoClass\fP 25
+An option menu.
+.IP \fBModalGizmoClass\fP 25
+A modal popup window.
+.IP \fBMsgGizmoClass\fP 25
+An area consisting of a message field.
+.IP \fBNumericGizmoClass\fP 25
+An area where numeric data is displayed.
+.IP \fBPopupGizmoClass\fP 25
+A popup window.
+.IP \fBScaleGizmoClass\fP 25
+An area where numeric data is displayed and manipulated via a slider.
+.IP \fBSeparatorGizmoClass\fP 25
+A separator visual.
+.IP \fBSpaceGizmoClass\fP 25
+A spacing visual.
+.IP \fBTextGizmoClass\fP 25
+An area where multiple lines of text may be displayed and/or entered by a
+user.
+.PP
+\fBInitializeGizmoClient\fP is used to initialize a Gizmo client.
+This initialization includes initialization of Gizmo-specific data structures,
+toolkit initialization, setting of the application id, and desktop
+initialization.  
+\fBInitializeGizmoClient\fP calls the function \fBInitializeGizmos\fP.
+The arguments to \fBInitializeGizmoClient\fP are:
+.IP \fIname\fP 15
+The class name of the shell widget.
+.IP \fIclass\fP 15
+The class name of the application.
+.IP \fIoption\fP 15
+The means by which the command line is parsed for application-specify
+resources.
+.IP \fInumOptions\fP 15
+The number of items in the \fIoption\fP list.
+.IP \fIargc\fP 15
+A pointer to number of command line arguments.
+.IP \fIargv\fP 15
+The command line arguments.
+.IP \fIbase\fP 15
+The address where the resources (from \f(CBXtGetApplicationResources\fP)
+are to be written.
+.IP \fIresources\fP 15
+The list of resources to be retrieved by \f(CBXtGetApplicationResources\fP.
+.IP \fInumResources\fP 15
+The number of resources in \fIresources\fP.
+.IP \fIargs\fP 15
+A resource list used to override the resources retrieved from the
+resource database (from \f(CBXtGetApplicationResources\fP).
+.IP \fInumArgs\fP 15
+The number of arguments in that list.
+.IP \fIresourceName\fP 15
+The resource name supplied to \f(CBDtSetAppId\fP.
+.PP
+\fBInitializeGizmos\fP is used to initialize the
+internal data structures used by the Gizmo library.
+No other initialization is done by this routine.
+.PP
+\fBCreateGizmo\fP is used to copy a Gizmo tree and create the widget
+tree corresponding to the Gizmo tree..
+This routine takes a pointer to a publicly defined Gizmo template and
+uses this template to create a widget tree.
+The routine then returns a handle to the copied Gizmo.
+This handle is then used in all of the routines that manipulate Gizmos.
+.PP
+\fBFreeGizmo\fP frees the Gizmo structure created by \fBCreateGizmo\fP.
+\fBFreeGizmo\fP takes the value returned by \fBCreateGizmo\fP as
+its argument.
+.PP
+\fBGizmoMainLoop\fP performs the same function as \fBXtMainLoop\fP,
+but it also provides callback routines that get called whenever there
+is a event.
+The \fBinputCB\fP gets called whenever there is a \fBButtonPress\fP or
+\fBKeyPress\fP event.
+This callback is typically called when the application needs to clear
+a message after an user action.
+The \fBotherCB\fP gets called if there is no \fBinputCB\fP specified and
+the event is neither a \fBButtonPress\fP or \fBKeyPress\fP event.
+.PP
+\fBMapGizmo\fP calls whatever X library routines necessary to display the
+Gizmo tree, on the display, as the top most window.
+.PP
+\fBManipulateGizmo\fP is used to perform various operations on a Gizmo
+tree.
+Many of the Gizmos, provided by the Gizmo library, maintain a current,
+previous and initial value for the widget used by the Gizmo.
+For example, the \fBScaleGizmo\fP's values would be based on the value
+maintained by the scale widget.
+When a Gizmo is first created its initial, current and previous values
+are all obtained from the value supplied in the Gizmo template.
+\fBManipulateGizmo\fP allows the program to modify these values as follows:
+.IP \fBGetGizmoValue\fP 25
+Retrieve the value from the widget and store it in the current Gizmo value.
+.IP \fBApplyGizmoValue\fP 25
+Set the previous Gizmo value equal to the current Gizmo value.
+.IP \fBResetGizmoValue\fP 25
+Set the current Gizmo value equal to the previous Gizmo value and set the
+widget to this value.
+.IP \fBReinitializeGizmoValue\fP 25
+Set the current Gizmo value equal to the initial Gizmo value and set the
+widget to this value.
+.PP
+\fBManipulateGizmo\fP traverses the entire Gizmo tree and performs the
+manipulate function on all of the appropriate Gizmos (those that maintain
+Gizmo values).
+.PP
+\fBQueryGizmo\fP searches a Gizmo tree for the Gizmo with a name equal to
+\fIname\fP (Gizmo names should be unique, but when more than one Gizmo
+has the same name then the Gizmo closest to the root of the Gizmo tree is
+used.
+The value returned from \fBQueryGizmo\fP depends on the value of \fIoption\fP:
+.IP \fBGetGizmoCurrentValue\fP 25
+Return the current value stored in the Gizmo.
+.IP \fBGetGizmoPreviousValue\fP 25
+Return the previous value stored in the Gizmo.
+.IP \fBGetGizmoWidget\fP 25
+Return the widget for this Gizmo.
+Since each Gizmo is implemented using a different number and variety of
+widgets the particular Gizmo manual page should be consulted to determine
+what widget is actually returned.
+.IP \fBGetGizmoGizmo\fP 25
+Return the Gizmo that has the name equal to \fIname\fP.
+.PP
+\fBSetGizmoValueByName\fP is used to set the value of
+a resource of a widget within a Gizmo tree.
+\fIname\fP specifies the name of the Gizmo and \fIvalue\fP specifies the
+resource value the widget is to be set to.
+Each Gizmo that allows the setting of a value (via a specific subroutine call)
+also has a class definition for setting that value.
+When \fBSetGizmoValueByName\fP is called the specified Gizmo tree is
+parsed for the named Gizmo and when found the class definition for that
+Gizmo is called in order to set the value.
+.PP
+\fBGetGizmoText\fP converts a string to a localized message.
+The string must have the following format:
+.PP
+.nf
+.ft CB
+        \fIcatalog name\fP\fB:\fP\fIcatalog number\fP \f(CBFS\fP \fIdefault text\fP
+.fi
+.ft
+.PP
+Where:
+.PP
+.nf
+.TP 16
+\fIcatalog name\fP
+is the name of the message catalog.
+.TP 16
+\fIcatalog number\fP
+is the message number within that catalog.
+.IP \f(CBFS\fP 16
+is a field separator defined in \fBGizmo.h\fP.
+.IP \fIdefault text\fP 16
+is the text to be displayed in the case where no message catalog exists.
+.PP
+For example:
+.PP
+.nf
+.ft CB
+        \fB"mail:25" FS "Default text"\fP
+.fi
+.ft
+.PP
+\fBPixmapOfFile\fP returns a \fBPixmap\fP for the file \fIfname\fP.
+The \fIwidth\fP and \fIheight\fP of the pixmap are also returned.
+\fBPixmapOfFile\fP caches the pixmaps that it reads and therefore
+multiple reads of \fIfname\fP do not occur if \fBPixmapOfFile\fP is
+called more than once with the same value for \fIfname\fP.
+.PP
+\fBAppendArgsToList\fP appends the \fIadditional\fP \fBArgList\fP
+to the end of \fIoriginal\fP and returns \fInumOriginal\fP +
+\fInumAdditional\fP.
+\fIadditional\fP must have enough memory to contain \fInumOriginal\fP
++ \fInumAdditional\fP \fBArgList\fP values.
+.PP
+\fBGizmoRegisterHelp\fP registers a callback for the given widget.
+This callback gets called whenever \fBF1\fP key is pressed and \fIwidget\fP has
+input focus.
+\fBPostGizmoHelp\fP is called from within the callback.
+.PP
+\fBPostGizmoHelp\fP enqueues a request to \f(CWdtm\fP to display a help message.
+\fIHelpInfo\fP contains the following information:
+.IP \fIappTitle\fP 10
+This is used in the help window title of the format: <\fIapp_title\fP>:<topic>
+.IP \fItitle\fP 10
+This is used in the help window title to override the section name.
+.IP \fIfilename\fP 10
+The name of the help file.
+It can be a full or relative path name.
+.IP \fIsection\fP 10
+This is the section tag or name.
+If this value is NULL, the first section is displayed.
+.SH "USAGE"
+The following example creates a popup window containing an input field
+and a menu.
+(This sample program only gives a basic overview of the process of
+creating gizmos.
+The programmer should consult other Gizmo manual
+pages for more detailed information on each Gizmo.)
+.PP
+.nf
+.ft CB
+
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/MenuGizmo.h>
+#include <Gizmo/InputGizmo.h>
+#include <Gizmo/PopupGizmo.h>
+
+void ApplyCB();
+void ResetCB();
+void CancelCB();
+void HelpCB();
+
+HelpInfo        AppHelp = {
+        "Application", "The Application", "appName" "/" "appName.hlp", "10"
+};
+
+InputGizmo inputField = {&AppHelp, "input", "Initial string", 25, ApplyCB, NULL};
+
+GizmoRec input[] = {
+        {InputGizmoClass, &inputField}
+};
+
+MenuItems inputItems[] = {
+        {True, "Apply",  "A", I_PUSH_BUTTON, NULL, ApplyCB},
+        {True, "Reset",  "R", I_PUSH_BUTTON, NULL, ResetCB},
+        {True, "Cancel", "C", I_PUSH_BUTTON, NULL, CancelCB},
+        {True, "Help",   "H", I_PUSH_BUTTON, NULL, HelpCB},
+        {0, NULL}
+};
+
+MenuGizmo inputMenu = {
+        NULL, "inputMenu", "Input", inputItems, NULL, NULL, XmHORIZONTAL, 1
+};
+
+PopupGizmo popup = {
+        NULL, "base", "Test", &inputMenu, input, XtNumber(input)
+};
+
+Gizmo handle;
+
+main(int argc, char *argv[])
+{
+        Widget  toplevel;
+
+        toplevel = InitializeGizmoClient(
+                "main", "main", "main", NULL, NULL, NULL, 0,
+                &argc, argv, NULL, NULL, NULL, NULL, NULL, 0,
+                NULL, NULL, NULL
+        );
+        handle = CreateGizmo(toplevel, PopupGizmoClass, &popup, NULL, 0);
+        MapGizmo(PopupGizmoClass, handle);
+        GizmoMainLoop(NULL, NULL, NULL, NULL);
+}
+
+void
+ApplyCB(Widget w, XtPointer clientData, XtPointer callData)
+{
+        char *  input;
+
+        /* Get current value from widget */
+        ManipulateGizmo(PopupGizmoClass, handle, GetGizmoValue);
+        /* Set previous value to the current value */
+        ManipulateGizmo(PopupGizmoClass, handle, ApplyGizmoValue);
+
+        /* Get the current value from the Gizmo */
+        input = (char *)QueryGizmo(
+                PopupGizmoClass, handle, GetGizmoCurrentValue, "input"
+        );
+        printf("Input field = %s\n", input);
+}
+
+void
+ResetCB(Widget w, XtPointer clientData, XtPointer callData)
+{
+        /* Set widget and the current value equal to the previous value */
+        ManipulateGizmo(PopupGizmoClass, handle, ResetGizmoValue);
+}
+
+void
+CancelCB(Widget w, XtPointer clientData, XtPointer callData)
+{
+        exit(0);
+}
+
+void
+HelpCB(Widget w, XtPointer clientData, XtPointer callData)
+{
+        Widget  shell = GetPopupGizmoShell(handle);
+
+        PostGizmoHelp (shell, &AppHelp);
+}
+.ft
+.fi
+.PP
+The program first specifies an \fBInputGizmo\fP that has as its name
+"\f(CWinput\fP".
+The name of the Gizmo must be unique and is used for identification and
+retrieval of the Gizmo.
+.PP
+The address of the \fIinputField\fP is specified in a \fBGizmoRec\fP
+along with the class of the Gizmo (\fBInputGizmoClass\fP).
+More than one Gizmo can be specified in a \fIGizmoRec\fP and each of these
+gizmos must be typed by a corresponding \fIGizmoClass\fP.
+The \fBGizmoClass\fP identifies the type of the Gizmo to
+\fBCreateGizmo\fP.
+The address of the \fBGizmoRec\fP \fIinput\fP is then placed in the
+\fBPopupGizmo\fP.
+.PP
+The program then defines a menu containing three buttons.
+The buttons are specified in an array of \fBMenuItems\fP structures.
+The address of this array is placed in the \fBMenuGizmo\fP structure.
+The address of the \fBMenuGizmo\fP structure is then placed in the
+\fBPopupGizmo\fP structure.
+.PP
+The Gizmo tree is created by calling \fBCreateGizmo\fP.
+Once again the type of Gizmo being created is specified by the
+\fBGizmoClass\fP.
+The Gizmo is mapped by calling \fBMapGizmo\fP.
+.PP
+Finally, \fBGizmoMainLoop\fP is called in place of \fBXtMainLoop\fP to
+process input events.
+.PP
+The callback \fBApplyCB\fP calls \fBManipulateGizmo\fP with an option of
+\fBGetGizmoValue\fP such that the value in the widget is placed in the
+current value of the Gizmo.
+The second call to \fBManipulateGizmo\fP sets the previous value of the
+Gizmo equal to the current value just retrieved.
+Thus, when \fBResetCB\fP is called the value of the widget will always
+be reset to this new value.
+The current value from the Gizmo is retrieved using \fBQueryGizmo\fP.
+.PP
+\fBResetCB\fP simply uses \fBManipulateGizmo\fP to reset the Gizmo's
+current value to its previous value.
+.SH "REFERENCES"
+.ft CB
+AlphaGizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP,
+ChoiceGizmo\f(CW(3L)\fP,
+ComboBoxGizmo\f(CW(3L)\fP,
+ContainerGizmo\f(CW(3L)\fP,
+FileGizmo\f(CW(3L)\fP,
+InputGizmo\f(CW(3L)\fP,
+LabelGizmo\f(CW(3L)\fP,
+ListGizmo\f(CW(3L)\fP,
+MenuGizmo\f(CW(3L)\fP,
+ModalGizmo\f(CW(3L)\fP,
+MsgGizmo\f(CW(3L)\fP,
+NumericGizmo\f(CW(3L)\fP,
+PopupGizmo\f(CW(3L)\fP,
+ScaleGizmo\f(CW(3L)\fP,
+SeparatorGizmo\f(CW(3L)\fP,
+SpaceGizmo\f(CW(3L)\fP,
+TextGizmo\f(CW(3L)\fP

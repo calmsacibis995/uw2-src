@@ -1,0 +1,135 @@
+#ident	"@(#)pkg4.i386:edebug/postinstall	1.12"
+#
+
+if [ "$DTINSTALL" = "n" ]
+then
+	exit 0
+fi
+
+#Set up localized messaging
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then 
+	if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+		-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+	then
+		cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+		/usr/lib/locale/${LOCALE}/LC_MESSAGES
+		
+		installf ${PKGINST} /usr/lib/locale/${LOCALE}/LC_MESSAGES
+	fi
+fi
+
+CLASSFILE=/usr/X/lib/classdb/dtadmin
+if [ ! -f $CLASSFILE ]
+then
+	# desktop not installed?
+	# this can happen if user specifically chooses
+	# graphical interface installation even in the absence
+	# of dtm pkg. this is not recommended but the graphical 
+	# interface should work if one doesn't care about
+	# desktop-specific features.
+	exit 0
+fi
+# add debug.cdb to dtadmin
+grep "^INCLUDE debug.cdb;" $CLASSFILE >/dev/null 2>&1
+if [ $? != 0 ]
+then
+	ed $CLASSFILE >/dev/null <<!
+$
+a
+INCLUDE debug.cdb;
+.
+w
+q
+!
+	if [ $? != 0 ]
+	then
+		# file not writable?
+		pfmt -s nostd -g ${PKGMSG}:2 "can't update file: %s\n" $CLASSFILE
+		exit 1
+	fi
+fi
+
+# add entry to Help_Desk
+HDFILE=/usr/X/desktop/Help_Desk
+if [ ! -f $HDFILE ]
+then
+	pfmt -s nostd -g ${PKGMSG}:3 "file %s does not exist\n" $HDFILE
+	exit 1
+fi
+grep "^debug" $HDFILE >/dev/null 2>&1
+if [ $? != 0 ]
+then
+	ed $HDFILE >/dev/null <<!
+$
+a
+debug0,0{_DFLT_ICONLABEL="Debugger";_ICONLABEL="Debugger";_DESCRP="A multi-process source-level debugger";_ICONFILE="debug.32";_HELPFILE="debug/debug.hlp"}
+.
+w
+q
+!
+	if [ $? != 0 ]
+	then
+		# file not writable?
+		pfmt -s nostd -g ${PKGMSG}:2 "can't update file: %s\n" $HDFILE
+		exit 1
+	fi
+fi
+
+if [ "$DTINSTALLICONS" = "n" ]
+then
+	# don't install icons; set by desktop ApplicationInstaller
+	exit 0
+fi
+
+# check for sanity
+DAYONEDIR=/usr/X/desktop/LoginMgr/DayOne
+USERDIR=/usr/X/desktop/LoginMgr/Users
+LOGDIRCMD=/usr/X/adm/upgrade/dtlogindir
+if [ ! -d $DAYONEDIR -o ! -d $USERDIR -o ! -x $LOGDIRCMD ]
+then
+	# desktop clobbered? or installing on pre 2.0 systems?
+	# not sure how this can happen, but just in case...
+	pfmt -s nostd -g ${PKGMSG}:4 "desktop icon installation failed\n"
+	exit 1
+fi
+
+# add link to Applications folder for all future desktop users
+DTAPPDIR=/usr/X/desktop/Applications
+ln -s /usr/ccs/bin/debug $DTAPPDIR/Debug
+installf $PKGINST $DTAPPDIR/Debug=/usr/ccs/bin/debug s
+
+# add links to Applications folder for all existing desktop users
+for login in `ls $USERDIR`
+do
+	if [ -f $DAYONEDIR/$login ]
+	then
+		hdir=`$LOGDIRCMD $login`
+		if [ $? -ne 0 ]
+		then
+			# desktop user with no home dir ?
+			continue
+		fi
+		locale=`cat $DAYONEDIR/$login`
+		appdir=`LC_ALL=$locale /usr/bin/gettxt dayone:4 "Applications"`
+		if [ -d $hdir/$appdir ]
+		then
+			debug=`LC_ALL=$locale /usr/bin/gettxt dayone:10 "Debug"`
+			if [ -s $hdir/$appdir/$debug -o -f $hdir/$appdir/$debug -o -h $hdir/$appdir/$debug ]
+			then
+				# remove old link
+				rm -f $hdir/$appdir/$debug
+			fi
+			ln -s /usr/ccs/bin/debug $hdir/$appdir/$debug
+			# register link in pkging contents file so that
+			# pkgrm can automatically remove it
+			installf $PKGINST $hdir/$appdir/$debug=/usr/ccs/bin/debug s
+		fi
+	fi
+done
+installf -f $PKGINST
+
+exit 0

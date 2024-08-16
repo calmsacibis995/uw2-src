@@ -1,0 +1,55 @@
+#ident	"@(#)cmd-inet:common/cmd/cmd-inet/usr.sbin/in.gated/gated.egp	1.2"
+#ident	"$Header: $"
+
+#
+#	STREAMware TCP
+#	Copyright 1987, 1993 Lachman Technology, Inc.
+#	All Rights Reserved.
+#
+
+#
+#	Copyright (c) 1982, 1986, 1988
+#	The Regents of the University of California
+#	All Rights Reserved.
+#	Portions of this document are derived from
+#	software developed by the University of
+#	California, Berkeley, and its contributors.
+#
+
+#
+#   sample EGP config file
+#
+
+traceoptions general kernel icmp egp protocol ;
+
+autonomoussystem 519 ;
+
+rip no;
+
+egp yes {
+	group ASin 519 {
+		neighbor	128.212.64.1 ;
+	} ;
+} ;
+
+static {
+	default gateway 128.212.64.1 pref 100 ;
+} ;
+
+propagate proto egp as 519 {
+	proto rip gateway 128.212.64.1 {
+		announce 128.212 metric 2 ;
+	} ;
+	proto direct {
+		announce 128.212 metric 2 ;
+	} ;
+} ;
+
+propagate proto rip {
+	proto default {
+		announce 0.0.0.0 metric 1 ;
+	} ;
+	proto rip {
+		noannounce all ;
+	} ;
+} ;

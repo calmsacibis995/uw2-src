@@ -1,0 +1,120 @@
+
+
+
+        Mise à jour UnixWare 2 : le nouveau Bureau UnixWare amélioré !
+
+
+
+Bienvenue à UnixWare 2 ! Vous avez peut-être remarqué que certains
+changements sont intervenus sur le Bureau, par rapport à la version 1.1
+d'UnixWare. Dans ce document, vous trouverez des réponses aux questions
+que voici :
+
+  * Le Bureau d'UnixWare a changé : qu'elles sont les nouveautés ?
+
+  * Les applications graphiques installées sous la version 1.1
+  fonctionneront-elles avec cette mise à jour ?
+
+  * Les modifications apportées aux fichiers app-defaults d'UnixWare 1.1
+  vont-elles être conservées ?
+
+  * Les modifications apportées à la base de données de classes
+  d'UnixWare 1.1 vont-elles être conservées ?
+
+  * Où sont Bibliothèque_de_toile_de_fond et Configuration_police ?
+        
+  * Où est Fingertip Librarian ?
+
+  * J'ai installé un pilote de périphérique vidéo personnalisé sous
+  UnixWare 1.1. Fonctionnera-t-il avec cette version ?
+
+  * Où se trouve setvideomode?
+
+  * Il semble bien que j'aie perdu d'importantes modifications
+  apportées au Bureau d'UnixWare lors de la mise à jour. Comment les
+  retrouver ?
+
+
+Pour obtenir des informations générales concernant le Bureau d'UnixWare,
+consultez le manuel de l'utilisateur du Bureau, le manuel du
+propriétaire du système ou le Bureau_Aide. Pour plus de détails
+concernant les modifications apportées par la mise à jour aux noms
+d'ouverture de sessions des utilisateurs, consultez le fichier
+README.UW2.0 qui se trouve dans les répertoires privés des utilisateurs.
+
+
+Q : le Bureau d'UnixWare a changé : qu'elles sont les nouveautés ?
+R : un nouveau répertoire, Outils_Admin, à été ajouté au Bureau
+d'UnixWare. Il contient des outils faisant partie du Bureau et qui
+étaient habituellement stockés sous Configuration_Système et
+Utilitaires. Un autre répertoire, Outils_Admin/Gestion de réseau, à été
+créé pour les outils réseau. Par ailleurs, les outils qui se trouvaient
+sous Accéssoires, ont été déplacés sous Applications. Pour chaque
+compte utilisateur existant, si ces répertoires étaient vides après
+l'installation de la version 2 d'UnixWare, ils ont été supprimés. Les
+nouveaux comptes utilisateur créés n'auront pas de répertoires pour
+Configuration_Système, Utilitaires ou Accéssories.
+
+Q : est-ce que les applications graphiques installées sous la version
+1.1 fonctionneront avec cette mise à jour ?
+R : oui. L'installation de la mise à jour ne les affecte pas. Tous les
+ajouts apportés par les applications dans la base de données de classes
+sont également copiés dans la nouvelle base de données. (Votre base de
+données de classes UnixWare 1.1 a été sauvegardée sous
+/usr/X/.SAV2.0/classdb pour la localisation C et sous
+/usr/X/.SAV2.0/locale/<nom_localisation>/classdb pour les localisations
+non-C.
+
+Q : est-ce que les modifications apportées aux fichiers app-defaults
+d'UnixWare 1.1 vont être conservées ?
+R : oui pour la plupart d'entre elles. Cependant, dans certains cas, les
+modifications pour UnixWare 2 requièrent que le fichier app-defaults soit
+mis à jour. Pour les fichiers app-defaults mis à jour, les versions
+d'UnixWare 1.1 sont sauvegardées dans /usr/X/.SAV2.0/app-defaults (pour
+les versions localisation C) et dans
+/usr/X/.SAV2.0/locale/<nom_localisation>/app-defaults (pour les versions
+localisation non-C).
+
+Q : Est-ce que les modifications apportées à la base de données de
+classes de UnixWare 1.1 vont être conservées ?
+R : Oui. Une fois la base
+de données de classes UnixWare 2 installée, les modifications que vous
+aviez apportées à la base de données de classes de la version 1.1 sont
+incorporées à la nouvelle base de données. Vos fichiers base de données
+de classes UnixWare 1.1 sont sauvegardés sous /usr/X/.SAV2.0/classdb
+(pour localisation C) et sous
+/usr/X/.SAV2.0/locale/<nom_localisation>/classdb (pour localisation
+non-C).
+
+Q : Ou sont Bibliothèque_Toilesdefond et Configuration_Polices ?
+R : Bibliothèque_Toilesdefond a été renommé Wallpaper. L'outil
+Configuration_Polices a été renommé Fonts et placé dans le répertoire
+Préférences.
+
+Q : Où se trouve Fingertip Librarian?
+R : Fingertip Librarian est remplacé par le Programme de lecture de
+documents Dynatext. Il est sur le Bureau UnixWare sous
+Applications/Docs_Enligne.
+
+Q : J'ai installé un pilote de périphérique vidéo personnalisé sous
+UnixWare 1.1. Est-ce qu'il fonctionnera avec cette version ?
+R : Peut-être. Cela dépend du type de pilote. Pour des questions de
+sécurité, UnixWare 2 sera en mode VGA au premier démarrage du Bureau.
+Le client Configuration_Affichage (sous Outils_Admin) peut être utilisé
+pour changer la définition vidéo. Contrôlez dans Configuration_Affichage
+la liste de cartes vidéo prises en charge par UnixWare 2. Etant donné
+que UnixWare 2 prend en charge davantage de cartes que la version 1.1
+votre carte est peut-être maintenant prise en charge par le système de
+base. Dans le cas contraire, vous devrez réinstaller votre pilote vidéo.
+
+Q : Où est setvideomode ?
+R :  setvideomode a été remplacé par un outil Configuration_Affichage
+graphique (sous Outils_Admin). setvideomode est toujours disponible sous
+/usr/X/lib/display.
+
+Q : Il semble bien que j'aie perdu d'importantes modifications
+apportées au Bureau d'UnixWare lors de la mise à jour. Comment les
+retrouver ?
+R : vos fichiers système UnixWare 1.1 remplacés par ou
+fusionnés avec ceux de la version 2 pour la mise à jour, ont été
+sauvegardés sous /usr/X/.SAV2.0.  

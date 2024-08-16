@@ -1,0 +1,34 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)r4xinit:Imakefile	1.22"
+
+            SRCS = xinit.c proctimeout.c
+            OBJS = xinit.o proctimeout.o
+
+all:: xinit
+
+xinit: $(OBJS) $(DEPLIBS)
+	$(RM) $@
+	LD_RUN_PATH=$(XWINHOME)/lib $(CC) -o $@ $(OBJS) $(LDOPTIONS) $(LOCAL_LIBRARIES) $(LDLIBS) $(EXTRA_LOAD_FLAGS)
+	$(CHMOD) u+s ./xinit
+
+install::
+	$(RM) $(BINDIR)/xinit
+	$(INSTALL) -c $(INSTPGMFLAGS)  xinit $(DESTDIR)$(BINDIR)
+	$(RM) $(BINDIR)/olinit
+	$(LN) $(BINDIR)/xinit $(BINDIR)/olinit
+	$(RM) $(BINDIR)/desktop
+	$(LN) $(BINDIR)/xinit $(BINDIR)/desktop
+	$(CHMOD) u+s $(BINDIR)/xinit
+	$(CHMOD) u+s $(BINDIR)/olinit
+	$(CHMOD) u+s $(BINDIR)/desktop
+
+InstallMsgCatalog(xinit)
+
+DependTarget()

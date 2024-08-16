@@ -1,0 +1,249 @@
+argvtostr a échoué\n
+Allocation de mémoire impossible\n
+Le nom de commande \"%s\" existe déjà\n
+L'utilisateur \"%s\" existe déjà\n
+Nom de rôle \"%s\" déjà attribué\n
+Utilisateur non défini \"%s\"\n
+Privilège de processus \"%s\" inexistant dans commande \"%s\"\n
+Utilisation incorrecte\n
+\nSyntaxe : adminuser  [-n] [-o rôle[,...]]\n                     [-a cmd:path[:priv[:priv...]][,...]]\n                 utilisateur...\n             adminuser[-o rôle[,...]]\n                 [-r cmd[:priv[:priv...]][,...]]\n                 [-a cmd:path[:priv[:priv...]][,...]]\n                 utilisateur...\n             adminuser [-d]  utilisateur...\n             adminuser\n
+%s :\n
+rôles :     <aucun>\n
+rôles :     
+Commandes :\n     <aucune>\n
+Commandes :\n
+           %s : %s 
+Nom de rôle \"%s\" déjà attribué\n
+Nom de rôle non défini \"%s\"\n
+\nSyntaxe : adminrole [-n] [-a cmd:path[ :priv[ :priv...]][,...]] rôle ...\n          adminrole [-r cmd[ :priv[ :priv...]][,...]]\n                    [-a cmd:chemin[:priv[:priv...]][,...]] rôle ...\n             adminrole [-d]  rôle ...\n             adminrole\n
+%s : \t<vide>\n
+%s:
+\t%s : %s 
+Privilège de processus incorrect : \"%s\"\n
+Privilège de processus en double : \"%s\"\n
+Numéro de privilège non reconnu : \"%d\"\n
+<inconnu> 
+Fichier programme impossible à exécuter\n
+Nom de commande non défini \"%s\"\n
+Utilisateur non autorisé\n
+Impossible de définir la valeur de privilège maximale\n
+\nsyntaxe : \ttfadmin [rôle: ] cmd [args]\n\ttfadmin -t [rôle: ] cmd [args]\n
+Intitulé de la commande insuffisant : \"%s\"\n
+Indiquez le chemin d'accès complet à la commande\n
+Indiquez le chemin d'accès complet à la base de données TFM\n
+Impossible de lire la liste des rôles associés à l'utilisateur \"%s\"\n
+Base de données TFM inexistante\n
+Base de données TFM impossible à initialiser\n
+Impossible d'ajouter utilisateur \"%s\"\n
+Impossible d'ajouter rôle \"%s\"\n
+ Impossible de modifier utilisateur \"%s\"\n
+Impossible de modifier rôle \"%s\"\n
+Utilisateur \"%s\" en cours de modification, essayez plus tard\n
+Rôle \"%s\" en cours de modification, essayez plus tard\n
+Impossible de supprimer rôle \"%s\"\n
+Impossible de supprimer utilisateur \"%s\"\n
+Impossible de modifier commande \"%s\"\n
+Impossible de modifier la liste des rôles associés à l'utilisateur \"%s\"\n
+Nom de commande incorrect : \"%s\"\n
+syntaxe incorrecte\n
+syntaxe : chlvl niveau fichier1 [fichier2 ...]\n
+erreur programme\n
+le niveau de sécurité indiqué est incorrect\n
+LTDB est inaccessible\n
+autorisation refusée pour fichier \"%s\"\n
+ \"%s\" est un fichier non 'tranquille' (c'est-à-dire ouvert et/ou assigné)\n
+le niveau de sécurité indiqué n'est pas compris dans l'échelle des périphériques\nassociée au fichier \"%s\"\n
+le système de fichiers associé au fichier \"%s\" n'accepte pas les étiquettes par\nfichier\n
+service système non installé\n
+impossible d'accéder au fichier \"%s\"\n
+abandon pour appliquer les privilèges minimaux\n
+ \"%s\" fait partie d'un système de fichiers montés, accessibles en lecture\nseulement\n
+il manque l'entrée CLASS_OBJ associée à \"%s\"\n
+type ACL incorrect pour \"%s\"\n
+autorisation refusée pour \"%s\"\n
+le fichier \"%s\" est introuvable\n
+l'exécution de stat sur fichier \"%s\" a échoué, %s\n
+malloc a échoué\n
+acl sur fichier \"%s\" non exécutée, %s\n
+N° fichier : %s\n
+N° de propriétaire : 
+N° groupe : 
+valeur par défaut :
+utilisateur ::
+utilisateur :
+groupe ::
+groupe :
+classe :
+autre :
+\tN° effectif :
+syntaxe : getacl [-ad] fichier ...\n
+exécution de acl sur \"%s\" a échoué, %s\n
+les options indiquées sont incompatibles\n
+entrées en double : \"%s\"\n
+entrées en double pour \"%s\" : \"%s\"\n
+entrée incorrecte, \"%s\"\n
+entrée requise pour le propriétaire du fichier, groupe de fichiers, \"class\", ou\n\"other\" non spécifiée\n
+appel aclsort a échoué\n
+l'appel aclsort a échoué pour \"%s\"\n
+Impossible d'ouvrir le fichier \"%s\", %s\n
+\"%s\", ligne %d ; entrée ACL incorrecte\n
+les entrées propriétaire du fichier, groupe de fichiers, \"class\" et \"other\" ne\npeuvent pas être supprimées\n
+type inconnu \"%s\"\n
+ID utilisateur inconnu \"%s\"\n
+ID groupe inconnu \"%s\"\n
+autorisation inconnue \"%s\"\n
+ACL ne contient pas l'entrée correspondant à \"%s\" : \"%s\"\n
+seules les entrées propriétaire de fichier, groupe de fichiers, \"class\" ou\n\"other\" peuvent être indiquées pour \"%s\"\n
+les entrées ACL par défaut peuvent être définies seulement dans les répertoires,\net non dans \"%s\"\n
+\nsyntaxe : setacl [-r]\n
+              [-m [[d[efault]:]u[ser]::operm | perm[,]]\n
+                  [[d[efault]:]u[ser]:uid:operm | perm[,...]]\n
+                  [[d[efault]:]g[roup]::operm | perm[,]]\n
+                  [[d[efault]:]g[roup]:gid:operm | perm[,...]]\n
+                  [[d[efault]:]c[lass]:operm | perm[,]]\n
+                  [[d[efault]:]o[ther]:operm | perm]]\n
+              [-d [[d[efault]:]u[ser]:uid[,...]]\n
+                  [[d[efault]:]g[roup]:gid[,...]]\n
+                  [[d[efault]:]u[ser]::[,]]\n
+                  [[d[efault]:]g[roup]::[,]]\n
+                  [[d[efault]:]c[lass]:[,]]\n
+                  [[d[efault]:]o[ther]:[,]]]\n
+              objet(s)\n
+        ou\n
+       setacl [-r]\n
+              -s u[ser]::operm | perm[,]\n
+                 [d[efault]:u[ser]::operm | perm[,]]\n
+                 g[roup]::operm | perm[,]\n
+                 [d[efault]:g[roup]::operm | perm[,]]\n
+                 c[lass]:operm | perm[,]\n
+                 [d[efault]:c[lass]:operm | perm[,]]\n
+                 o[ther]:operm | perm[,]\n
+                 [d[efault]:o[ther]:operm | perm[,]]\n
+                 [[d[efault]:]u[ser]:uid:operm | perm[,...]]\n
+                 [[d[efault]:]g[roup]:gid:operm | perm[,...]]\n
+       setacl[-r] -f nom_fichier objet(s)\n
+syntaxe : lvdelete [-r] -a nom_alias[,nom_alias...]\n
+                                       [-r] -c id_cat[,id_cat...]\n
+                                       [-r] -f nom_niveau\n
+                                       [-r] -h id_classe[,id_classe...]\n
+                                       [-r] -l lid[,lid...]\n
+\nIdentificateurs de niveau (LID) :\n
+\nClassifications :\n
+\nCatégories :\n
+\nAlias :\n
+\nNiveaux :\n
+\nsyntaxe : lvlname [[-r] -a nom_alias::nom_niveau]\n
+               [[-r] -c #:nom_c[,#:nom_c...]\n
+               [[-r] -h #:nom_h[,#:nom_h...]\n
+               [[-r] -l [identificateur_niveau::]nom_niveau]\n
+               [-p]\n
+où\n
+       nom_alias       - alias attribué à un niveau entièrement habilité\n
+       nom_c            - nom associé à une catégorie non-hiérarchique\n
+       nom_h            - nom associé à une classification hiérarchique\n
+       identificateur_niveau - nombre (LID) associé à un niveau totalement\n       habilité\n
+       nom_niveau       - niveau totalement habilité, nom_h[:nom_c[,nom_c]...]\n
+       N°                - numéro de catégorie ou de classification\n
+syntaxe : lvlprt [-s]\n
+argument d'option incorrect  -- \"%s\"\n
+numéro non valable \"%s\"\n
+nom incorrect \"%s\"\n
+nom de niveau incorrect \"%s\"\n
+le nom \"%s\" est réservé\n
+l'identificateur LID \"%d\" est réservé\n
+le nom \"%s\" désigne déjà un alias, une classification ou une catégorie\n
+L'identificateur \"%s\" est réservé pour un emploi système\n
+l'identificateur de niveau \"%s\" est incorrect ; il doit s'agir d'une valeur\nnumérique\n
+le numéro de classification \"%s\" n'est pas attribué actuellement\n
+le numéro de classification \"%s\" est déjà attribué\n
+le nom de classification \"%s\" n'est pas défini actuellement\n
+le numéro de classification \"%s\" n'est pas compris dans le registre (1 - %d)\n
+le numéro de catégorie \"%s\" n'est pas attribué actuellement\n
+le numéro de catégorie \"%s\" est déjà attribué\n
+le nom de catégorie \"%s\" n'est pas défini actuellement\n
+le numéro de catégorie \"%s\" n'est pas compris dans la fourchette (1 - %d)\n
+l'identificateur de niveau \"%s\" n'est pas attribué actuellement\n
+l'identificateur de niveau \"%s\" est à l'état inactif\n
+l'identificateur de niveau \"%d\" est déjà attribué à un niveau\n
+le nom de niveau \"%s\" n'est pas défini actuellement\n
+le nom de niveau \"%s\" est déjà employé\n
+l'identificateur de niveau \"%s\" n'est pas compris dans le registre (1 - %d)\n
+l'alias du nom de niveau \"%s\" est déjà attribué\n
+l'alias \"%s\" n'est pas défini actuellement\n
+impossible de créer LTDB\n
+impossible de fermer LTDB\n
+LTDB est en cours de modification\n
+impossible de déverrouiller LTDB\n
+recherche dans LTDB impossible\n
+impossible de lire depuis LTDB\n
+impossible d'écrire dans LTDB\n
+impossible de lire depuis le journal de consignation\n
+impossible d'écrire dans le journal de consignation\n
+impossible d'accéder au journal de consignation\n
+impossible de fermer le journal de consignation\n
+ impossible de créer le journal de consignation\n
+mémoire insuffisante pour stocker les requêtes utilisateur\n
+mémoire insuffisante pour lire depuis le journal de consignation\n
+mémoire insuffisante pour écrire dans le journal de consignation\n
+mémoire insuffisante pour convertir LID en un niveau totalement habilité\n
+mémoire insuffisante pour trier les résultats\n
+LTDB désynchronisé en cours de traitement du nom de niveau \"%s\"\n
+la classification ou la catégorie comportant le niveau de LID \"%d\" est\nactuellement sans nom\n
+la classification ou la catégorie comprenant le niveau associé à l'alias \"%s\"\nn'a actuellement pas de nom\n
+le prochain identificateur LID affecté automatiquement est incorrect ; affectez\nle nom de niveau \"%s\" à la fin du fichier\n
+le prochain identificateur LID affecté automatiquement dépasse les limites ; le\nnom de niveau \"%s\" n'est pas affecté\n
+argvtostr a échoué\n
+impossible d'ouvrir les fichiers de sauvegarde relatifs à LTDB\n
+impossible d'écrire les fichiers de sauvegarde relatifs à LTDB\n
+fichier %s inexistant\n
+impossible d'accéder au fichier %s\n
+impossible de créer le fichier associé à l'utilisateur %s\n
+le fichier associé à l'utilisateur %s existe déjà\n
+%s\n
+\tsyntaxe : maccnv\n
+impossible de passer au répertoire /etc/security/ia/level\n
+impossible de traduire %s\n
+entrée incorrecte détectée dans le fichier des mots de passe - passer à la suivante\n
+combinaison des options -r & -v non valable\n
+Syntaxe : mldmode [ -r | -v chaîne]\n
+%s : option incorrecte\n
+mode multiniveau =%s\n
+exec a échoué, nº d'erreur = %d\n
+syntaxe : admalloc [-m][-o][-w niveau -u utilisateur,groupe]\n                   [-r niveau_sup-niveau_inf] périphérique ...\n          admalloc -s\n       admalloc -d[-f] [périphérique]...\n
+%s n'est pas défini dans la base de données des périphériques\n
+%s est déjà affecté\n
+affectation non autorisée pour \"%s\" pour %s\n
+\"%s\" est non défini ou non accessible pour %s\n
+état \"%s\" non autorisé pour %s\n
+le niveau ou l'échelle de niveaux indiqué n'est pas autorisé(e) pour %s\n
+Impossible d'accéder à la base de données des périphériques - signalez-le à\nl'administrateur\n
+L'état de la base de données des périphériques est incohérent - signalez-le à\nl'administrateur\n
+niveau non autorisé %s\n
+%s occupé\n
+impossible d'accéder aux informations relatives à la sécurité de %s \n
+impossible d'accéder à LTDB - signalez-le à l'administrateur\n
+%s ne domine pas %s\n
+La base de données des périphériques est en cours d'utilisation - Essayez plus\ntard\n
+\"%s\" ou \"%s\" indéfini sur le système\n
+\"%d\" ou \"%d\" indéfini sur le système\n
+autorisation refusée pour %s\n
+syntaxe : devstat -Z|z [périphérique]...\n
+combinaison des options -Z et -z non valable\n
+autorisation refusée\n
+\"%s\" n'est pas défini dans la base de données des périphériques\n
+\"%s\" non défini ou non accessible pour \"%s\"\n
+\"%s\" non défini ou non accessible\n
+\"%s\" n'est pas un bloc à disques, ni un fichier de caractères spéciaux pour\n\"%s\"\n
+\"%s\" n'est pas un bloc à disques, ni un fichier de caractères spéciaux\n
+mémoire insuffisante\n
+nom du périphérique : %s\n
+chemin d'accès : %s\n
+\tétat         : %s\n
+\tmode        : %s\n
+\thaut       : %s\n
+\tbas         : %s\n
+\tutiliser nombre : %d\n
+\tdrapeau de mise à jour : %s\n
+\"%s\" ne dispose pas des privilèges requis pour \"%s\"\n
+\nsyntaxe : \ttfadmin [rôle:] cmd [args]\n\ttfadmin -t [rôle:] cmd[:priv[:priv...]]\n
+Syntaxe : mldmode [ -r | -v [chaîne] ]\n

@@ -1,0 +1,23 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/criteria/set/user/Text.userok	1.1.3.2"
+#ident  "$Header: Text.userok 2.0 91/07/12 $"
+#	Module Name: Text.userok
+
+title="Confirmation of Setting Audit Criteria"
+
+framemsg=`readfile $INTFBASE/trept.msg`
+lifetime=shortterm
+
+rows=2
+columns=50
+
+text="
+The auditing criteria have been set as specified."
+
+altslks
+name=CONT
+button=11
+action=update $FRAMEID true
+
+name=CANCEL
+button=14
+action=CLEANUP

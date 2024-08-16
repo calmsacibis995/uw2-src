@@ -1,0 +1,98 @@
+'\"ident	"@(#)MGizmo:man/alpha.man	1.1"
+.TH AlphaGizmo 3L
+.SH NAME
+\f(CBAlphaGizmo\f1 \- an abstract data type (ADT) that specifies an area
+where a list of text data is displayed one item at a time.
+Two arrow buttons are
+used to manipulate the data, one to select the next item on the list, the other
+to select the previous item on the list.
+The \f(CBAlphaGizmo\fP consists of a data structure and two
+functions that operate on this Gizmo.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/AlphaGizmo.h>
+
+void   SetAlphaGizmoValue(AlphaGizmoP *\fIgizmo\fP, char *\fIvalue\fP);
+char * GetAlphaGizmoValue(AlphaGizmoP *\fIgizmo\fP);
+.ft
+.fi
+.SH "DESCRIPTION"
+An \f(CBAlphaGizmo\fP is create by populating an \f(CBAlphaGizmo\fP data
+structure
+and placing it's address in a \f(CBGizmoRec\fP structure.
+Ultimately, a \f(CBGizmoRec\fP structure is placed in one of the container
+Gizmos and the display is created by making a call to the function
+\f(CBCreateGizmo\fP(3L).
+Following is the definition of the \f(CBAlphaGizmo\fP data type:
+.PP
+.nf
+.ft CB
+typedef struct _AlphaGizmo {
+        HelpInfo *      help;
+        char *          name;
+        int             initialPosition;
+        char **         items;
+        int             numItems;
+} AlphaGizmo;
+.fi
+.PP
+\f(CBSetAlphaGizmoValue\fP is used primarily to set the initial
+value of the Gizmo, although it may be used at any time to select an
+arbitrary value.
+.PP
+\f(CBGetAlphaGizmoValue\fP is used to retrieve the current value
+of the spin button.
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBAlphaGizmo\fP:
+.IP \fBGetGizmoWidget\fP 25
+Returns the spin button widget id.
+.IP \fBGetGizmoGizmo\fP 25
+Returns the handle to the \f(CBAlphaGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 25
+Returns the current value of the Gizmo.
+.IP \fBGetGizmoPreviousValue\fP 25
+Returns the previous value of the Gizmo.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the spin button.
+.SH "USAGE"
+.nf
+.ft CB
+char *          list[] = {
+        "item 1",
+        "item 2",
+        "item 3",
+        "item 4",
+        "item 5"
+};
+
+AlphaGizmo      alpha1 = {
+        NULL,
+        "alpha1",
+        0,
+        list,
+        XtNumber(list)
+};
+
+GizmoRec        record1[] = {
+        {AlphaGizmoClass, &alpha1}
+};
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", NULL, record1, XtNumber(record1)
+};
+
+main()
+{
+        Gizmo   handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP

@@ -1,0 +1,44 @@
+#ident	"@(#)pkg.nw:postremove	1.8"
+#!/bin/sh
+#ident	"$Id: postremove,v 1.10 1994/09/21 18:21:32 vtag Exp $"
+
+#
+# remove changes to system files
+#
+sh /var/sadm/pkg/nwnet/install/nwservices remove > /tmp/nwservices
+cp /tmp/nwservices /etc/inet/services
+sh /var/sadm/pkg/nwnet/install/nwnetconfig remove > /tmp/nwnetconfig
+cp /tmp/nwnetconfig /etc/netconfig
+
+#
+#	Remove drivers
+#
+cd /etc/conf
+
+for i in nspx ripx ipx
+do
+	/etc/conf/bin/idinstall -d $i
+done
+
+#
+#	Deconfigure nvt
+#
+/usr/sbin/sacadm -r -p nvt 2>/dev/null
+rm -fr /dev/NVT
+
+#
+#	Remove /var netware directories
+#
+rm -fr /var/netware /var/spool/sap
+
+#
+#	Remove .pid files
+#
+rm -f /etc/netware/*.pid
+
+#
+#	Make sure pid files are gone
+#
+rm -f /etc/netware/*.pid
+
+exit 0

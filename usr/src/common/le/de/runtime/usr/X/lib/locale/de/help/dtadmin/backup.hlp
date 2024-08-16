@@ -1,0 +1,450 @@
+#ident\t"@(#)dthelp:Admin.Tools/backup.hlp      1.26"
+^*version^1
+^*title^Sichern-Wiederherstellen
+^:Sichern-Wiederherstellen
+^*width^70
+^+DesktopMgr/help.defs
+^?Dateien sichern und wiederherstellen
+^0^Sichern-Wiederherstellen
+^$10
+Sichern-Wiederherstellen
+
+Sichern-Wiederherstellen bietet Ihnen folgende Möglichkeiten:
+
+\to\t\k(Daten sichern^^Dateien sichern), d. h. Daten Ihrer Festplatte auf entfernbaren
+\t \tMedien (z. B. Disketten oder Magnetbändern) oder in einer
+\t \tanderen Datei sichern.
+\to\t\k(Daten wiederherstellen^^Dateien wiederherstellen), d. h. Daten auf
+\t \tder Festplatte Ihres System wiederherstellen.
+\to\t\k(Ein Sicherungsskript speichern^^Sicherungsskript speichern).
+
+Siehe auch:
+\k(Überblick über den Ordner "Disketten-usw."^dtadmin/disk.hlp^Überblick über den Ordner Disketten-etc.)
+\s(Der Service "Sichern"^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(Der Service "Wiederherstellen"^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^1^Dateien sichern
+^$20
+Dateien sichern
+
+Bevor Sie eine Sicherung durchführen, sollten Sie die Diskette oder
+das Band etikettieren und mit Datum versehen,
+
+Um Dateien Ihres Systems zu sichern, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf Sichern-Wiederherstellen.
+
+  \tHinweis: Sie können auch den \k(Ordner Disketten usw.^dtadmin/disk.hlp^Überblick über den Ordner Disketten-etc.) direkt
+  \taufrufen und die rechte Maustaste auf dem Symbol des gewünschten
+  \tDatenträgers (z. B. Band, CD-ROM oder Platte) drücken und
+  \tgedrückt halten und anschließend Sichern anklicken.
+
+  \tDas Fenster "Sicherungskopie" erscheint mit folgenden Optionen:
+
+  \to\tSichern in: -Klicken Sie den Pfeil für eine Liste anderer
+  \t \tAuswahlmöglichkeiten an, wie etwa eine Diskette (z.B. Laufwerk
+  \t \tA), eine Datei auf Ihrem Festplattenlaufwerk (Datei), usw.
+  \t \tKlicken Sie die entsprechende Option an.
+
+  \t \tWenn Sie Datei auswählen, erscheint ein Zielfeld. Geben Sie
+  \t \tden vollständigen \d(Pfad) ein, unter dem Sie Ihre
+  \t \tDateien und Ordner sichern möchten (verwenden Sie diese Option,
+  \t \twenn Sie eine Datei oder einen Ordner auf Ihrer Festplatte oder
+  \t \tauf einer Platte auf einem fernen System, auf das Sie Zugriff
+  \t \thaben, sichern möchten).
+
+  \t \tHinweis: Wenn Sie Sicherungskopien auf einer Diskette oder einem
+  \t \tMagnetband erstellen, legen Sie jetzt die Diskette oder das
+  \t \tMagnetband in das entsprechende Laufwerk ein. Falls Sie eine
+  \t \tDiskette verwenden, muß Sie richtig formatiert sein. Weitere
+  \t \tInformationen über die Formatierung finden Sie unter
+  \t \t\k(Disketten formatieren^dtadmin/floppy.hlp^Disketten formatieren).
+
+  \to\tSicherungsklasse: - Diese Option ist nur für Benutzer mit
+  \t \tSystemeigentümerberechtigungen verfügbar (siehe
+  \t \t\k(Mit Berechtigungen umgehen können^dtadmin/user.hlp^Mit Berechtigungen umgehen können)).
+
+  \t \tKlicken Sie eine der folgenden Optionen an:
+
+  \t \t-\tGanzes System -  Sichert das ganze Dateisystem. Hinweis:
+  \t \t \tDie Funktion Sichern verwendet die Datei /etc/ignore, um
+  \t \t \tfestzulegen, welche Verzeichnisse bei der Sicherung des ganzen
+  \t \t \tSystems ignoriert werden, sollten Sie diese Datei vorher
+  \t \t \tüberprüfen. Falls dort Verzeichnisse eingetragen sind,
+  \t \t \tdie Sie sichern möchten, müssen Sie diese Einträge aus der
+  \t \t \tDatei entfernen.
+
+  \t \t \tHinweis: Das Auswählen einer Sicherungskopie des ganzen
+  \t \t \tSystems ist kein Ersatz für die Erstellung einer Diskette oder
+  \t \t \teines Bands für die Wiederherstellung im Notfall. Sie können
+  \t \t \tIhr gesamtes System nicht von einer kompletten Systemsicherung
+  \t \t \taus wiederherstellen. Informationen über die Erstellung von
+  \t \t \tNotfallwiederherstellungsbändern und -disketten finden Sie im
+  \t \t \tSystemeigentümerhandbuch unter "System wiederherstellen".
+
+  \t \t-\tPersönliche Dateien - Sichert die Dateien und Ordner in Ihrem
+  \t \t \tteigenen \d(Stammordner^home-Verzeichnis).
+
+  \t \t-\tDateien anderer Benutzer - Um Dateien anderer Benutzer zu
+  \t \t \tsichern. Klicken Sie \k(Benutzerliste^^Fenster Sicherungskopie: Benutzerliste) an und dann die
+  \t \t \tgewünschte(n) Benutzer-ID(s).
+
+  \t \t \tHinweis: Beim Sichern der Dateien eines anderen Benutzers wird
+  \t \t \tnur dessen Stammordner mit Inhalt gespeichert, nicht
+  \t \t \taber alle Dateien auf dem System, deren Eigentümer
+  \t \t \tdieser Benutzer ist.
+
+  \to\tTyp: -  Klicken Sie eine der folgenden Möglichkeiten an:
+
+  \t \t-\tVollständig - Sichert alle Dateien der ausgewählten
+  \t \t \tSicherungsklasse.
+
+  \t \t-\tGeänderte Dateien - Sichert nur die Dateien, die seit der
+  \t \t \tletzten vollständigen Sicherungskopie geändert wurden.
+
+  \t \t \tWarnung: Sollten Sie der \k(Systemeigentümer^dtadmin/user.hlp^Mit Berechtigungen umgehen können) sein und
+  \t \t \tDateien für andere Benutzer auf dem System sichern, beachten
+  \t \t \tSie, daß das System den letzten Zeitpunkt, zu dem eine
+  \t \t \tSicherung für einen beliebigen Benutzer durchgeführt wurde,
+  \t \t \tals letzte Sicherungskopie ansieht, und nicht das letzte Mal,
+  \t \t \tan dem eine Sicherungskopie für einen bestimmten Benutzer
+  \t \t \tdurchgeführt wurde. Angenommen Sie starten als Systeneigentümer
+  \t \t \teine inkrementale Sicherungskopie für Benutzer A um 10:00, und
+  \t \t \tdiese Sicherungskopie ist um 10:30 abgeschlossen. Anschließend
+  \t \t \tstarten Sie eine inkrementale Sicherungskopie für Benutzer B.
+  \t \t \tDas System wird nur die Dateien sichern, die Benutzer B
+  \t \t \tzwischen 10:00 und 10:30 (dem Zeitpunkt der letzten
+  \t \t \tSicherungskopie) geändert hat. Jegliche andere Dateien, die
+  \t \t \tBenutzer B seit der letzten Sicherungskopie seiner Dateien
+  \t \t \tgeändert hat, werden nicht gesichert.
+
+  \t \t \tHinweis: Wenn Sie eine Datei nach der letzten vollständigen 
+  \t \t \tSicherung an eine andere Speicherstelle verschieben, wird
+  \t \t \tdiese Datei bei der nächsten Sicherung geänderter
+  \t \t \tDateien nicht berücksichtigt. Da sich das Änderungsdatum
+  \t \t \tder Datei nicht geändert hat, wird diese Datei nicht als
+  \t \t \tgeänderte Datei betrachtet.
+
+  \t \t-\tAusgewählte Dateien - Um nur solche Dateien und Ordner zu
+  \t \t \tsichern, die Sie zum Fenster
+  \t \t \t"Sicherungskopie"\d(ziehen-und-ablegen) haben.
+
+  \t \t \tSie können auch \k(Bearbeiten=>Ausschließen^^Ausschließen) anklicken, um  
+  \t \t \tDateien und Ordner aus der Sicherungsliste auszuschließen.
+
+  \to\tSicherungsprotokoll erstellen: - Klicken Sie dieses Feld an,
+  \t \twenn das System eine Datei erstellen soll, die alle gesicherten
+  \t \tDateien und Ordner auflistet.
+
+  \to\tNur lokale Dateien sichern: - Klicken Sie dieses Feld an, wenn
+  \t \talle Dateien, die sich physisch auf einem fernen System
+  \t \tbefinden, übersprungen werden sollen.
+
+3.\tKlicken Sie Jetzt sichern an, wenn die Sicherungskopie sofort
+  \terstellt werden soll.
+
+  \tWenn Sie die Sicherungskopie für später programmieren möchten,
+  \tklicken Sie "Später sichern" an, und geben Sie
+  \tdie gewünschten Informationen
+  \tim \k(Fenster "Task-Scheduler: Task hinzufügen"^^Fenster Task-Scheduler: Task hinzufügen) ein.
+
+  \tDas Fenster "Sicherungskopie: Bestätigung" erscheint. Klicken Sie
+  \tauf "Fortfahren", um mit der Sicherungskopie weiterzumachen, oder
+  \tauf "Abbrechen", wenn Sie nicht mit der Sicherungskopie fortfahren
+  \tmöchten.
+
+  \tHinweis: Wenn auf dem Band oder der Diskette im Laufwerk bereits
+  \tDateien vorhanden sind, erscheint das Fenster "Sicherungskopie:
+  \tDaten überschreiben?". Klicken Sie Überschreiben an, wenn das
+  \tSystem die Dateien auf dem Datenträger überschreiben kann, oder
+  \tentfernen Sie den aktuellen Datenträger und ersetzen ihn durch
+  \teinen anderen, bevor Sie Überschreiben anklicken.
+
+  \tDas \k(Fenster "Sichern findet statt"^^Fenster Sicherungskopie wird erstellt) erscheint. Die Namen der
+  \tgesicherten Dateien werden während des Verfahrens im Fußteil des
+  \tFensters "Sicherungskopie" angezeigt.
+
+  \tNach Abschluß des Verfahrens erscheint im Fußteil des Fensters
+  \t"Sicherungskopie" die Meldung: Sichern abgeschlossen.
+
+  \tHinweis: Für den Fall, daß Sie dieselben Dateien zu einem späteren
+  \tZeitpunkt mit denselben Optionen erneut sichern möchten, siehe
+  \t\k(Sicherungsskript speichern).
+
+4.\tEntfernen Sie das Band oder die Diskette aus dem Laufwerk.
+
+Siehe auch:
+\s(Der Service Sichern^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(Systemsicherungsdisketten erstellen^dhelp "pe.de" ownerhb "System wiederherstellen" "Systemsicherungsdisketten erstellen" || helpLinkErr)
+\s(Systemsicherungsbänder erstellen^dhelp "pe.de" ownerhb "System wiederherstellen" "Systemsicherungsbänder erstellen" || helpLinkErr)
+
+^2^Fenster Sicherungskopie: Benutzerliste
+^$30
+Fenster Sicherungskopie: Benutzerliste
+
+Dieses Fenster klappt auf, wenn Sie Dateien anderer Benutzer
+anklicken. Um in der Sicherungsliste einen Benutzer hinzuzufügen,
+gehen Sie wie folgt vor:
+
+1.\tKlicken Sie die gewünschte Benutzer-ID an.
+
+2.\tKlicken Sie OK an, um den Benutzer in der Liste hinzuzufügen und
+  \tdas Fenster zu verlassen. Klicken Sie Anwenden an, um den
+  \tBenutzer in der Sicherungsliste hinzuzufügen, ohne das Fenster zu
+  \tverlassen (oder klicken Sie Abbrechen an, wenn Sie keinen
+  \tBenutzer in der Liste hinzufügen möchten).
+
+  \tIm Fenster "Sicherungskopie" erscheint das Symbol für den
+  \tStammordner des Benutzers.
+
+Hinweis: Wenn Sie einen Benutzer aus der Liste auswählen, sichert das
+System nur die Dateien im \d(home-Verzeichnis) dieses Benutzers, d. h.
+wenn der Benutzer Dateien besitzt, die sich nicht in seinem
+Stammordner befinden, werden diese Dateien nicht automatisch
+gesichert.
+
+^2^Ausschließen
+^$50
+Ausschließen
+
+Um Dateien und Ordner aus der Sicherungsliste zu entfernen, gehen Sie
+wie folgt vor:
+
+1.\tKlicken Sie im Fenster "Sicherungskopie" die Dateien und Ordner
+  \tan, die Sie nicht in die Sicherungskopie aufnehmen möchten.
+
+2.\tKlicken Sie Bearbeiten=>Ausschließen an. Das System entfernt die
+  \tDateien und Ordner aus der Sicherungsliste.
+
+^2^Fenster Sicherungskopie: Bestätigung
+^$70
+Fenster Sicherungskopie: Bestätigung
+
+Dieses Fenster erscheint, wenn Sie die Sicherungskopie starten.
+Klicken Sie Fortfahren an, um mit der Sicherung fortzufahren,
+klicken Sie Abbrechen an, wenn Sie nicht forfahren möchten.
+
+^2^Fenster Sicherungskopie: Daten überschreiben?
+^$80
+Fenster Sicherungskopie: Daten überschreiben?
+
+Dieses Fenster erscheint, wenn Sie eine Sicherungskopie auf einem Band
+oder einer Diskette erstellen, das/die bereits Dateien enthält.
+
+Sie haben folgende Möglichkeiten:
+
+\to\tKlicken Sie Überschreiben an, wenn die vorhandenen Dateien
+\t \tüberschrieben werden können.
+
+\to\tEntfernen Sie den Datentr,ger aus dem Laufwerk, wenn Sie die
+\t \tDateien behalten m"chten. Legen Sie einen neuen Datentr,ger ein,
+\t \tund klicken Sie sberschreiben an. Sie müssen sicher sein,
+\t \tdaá auf diesem Datentr,ger vorhandene Dateien zerst"rt werden
+\t \tk"nnen, da das System die Warnmeldung für vorhandene Dateien
+\t \tnicht ein zweites Mal anzeigt.
+
+\to\tKlicken Sie Beenden an, um das Sicherungsverfahren anzuhalten,
+\t \tund starten Sie es mit einem anderen Band oder einer anderen
+\t \tDiskette erneut.
+
+^2^Fenster Sicherungskopie wird erstellt
+^$90
+Fenster Sicherungskopie wird erstellt
+
+Dieses Fenster erscheint, wenn das System den Index für Ihr
+Sicherungsarchiv erstellt. Klicken Sie Abbrechen an, wenn Sie das
+Sicherungsverfahren anhalten möchten.
+
+^2^Fenster Task-Scheduler: Task hinzufügen
+^$100
+Fenster Task-Scheduler: Task hinzufügen
+
+Dieses Fenster erscheint, wenn Sie Später sichern auswählen.
+Beachten Sie, daß das System das Feld Task bereits ausgefüllt hat.
+Die Optionen in diesem Fenster stellen Sie wie folgt ein:
+
+\to\tZeit - Geben Sie den Zeitpunkt (in Stunden und Minuten im
+\t \t24-Stunden-Format) an, zu dem die Sicherungskopie gestartet werden
+\t \tsoll. Beispiel: Wenn das Programm um 6 Uhr nachmittags starten
+\t \tsoll, geben Sie 18:00 ein.
+
+\to\tJede - Klicken Sie Stunde oder Minute an, um die Zeitangabe  \t
+\t \tzu überschreiben und das Programm jede Stunde oder Minute
+\t \tauszuführen.
+
+\to\tZeitpunkt -  Um das Programm an einem bestimmten Wochentag oder
+\t \teinem bestimmten Datum auszuführen, gehen Sie wie folgt vor:
+
+\t \t- Wenn Sie Wochentag anklicken, klicken Sie im nächsten Feld  
+\t \t \t(ebenfalls Wochentag) das Pfeilfeld an, um das Menü der  
+\t \t \tWochentage abzurollen. Klicken Sie den gewünschten Tag an,  
+\t \t \tz. B. Jeden Tag, Sonntag, Montag usw.
+
+\t \t-\tWenn Sie Datum anklicken, erscheinen die Felder Monat und
+\t \t \tTag. Klicken Sie die Pfeile in den Feldern an, um die
+\t \t \tMenüs der Monate und Tage abzurollen. Klicken Sie den
+\t \t \tgewünschten Monat und Tag an. Beispiel: Am ersten Montag jeden
+\t \t \tMonats.
+
+Wenn Sie diese Operationen abgeschlossen haben, klicken Sie Task
+hinzufügen (1) an.
+
+^1^Dateien wiederherstellen
+^$120
+Dateien wiederherstellen
+
+Um Dateien wiederherzustellen, gehen Sie wie folgt vor:
+
+1.\tLegen Sie das Magnetband oder die Diskette mit den Dateien,
+  \tdie Sie wiederherstellen möchten, in das erforderliche Laufwerk
+  \tein.
+
+2.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner: Verwaltungs_Tools"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf "Sichern-Wiederherstellen". Das Fenster
+  \t"Wiederherstellen" erscheint mit folgenden Feldern:
+
+  \tHinweis: Sie können auch direkt zum \k(Ordner Disketten usw.^dtadmin/disk.hlp^Überblick über den Ordner Disketten-etc.) gehen
+  \tund \tauf das erforderliche Gerätesymbol doppelklicken, um das
+  \tFenster Wiederherstellen aufzurufen.
+
+  \to\tWiederherstellen von: - Klicken Sie den Datenträger an, aus dem
+  \t \tSie Dateien wiederherstellen möchten. Beispiel: Datei,
+  \t \tMagnetband, Diskette_A oder Diskette_B.
+
+  \t \tHinweis: Wenn Sie Datei wählen, erscheint das Feld
+  \t \tZieldatei. Geben Sie den vollständigen \d(Pfad) der
+  \t \tDatei an, aus der Sie wiederherstellen.
+
+  \to\tVorhandene Dateien überschreiben: - Klicken Sie dieses Feld an,
+  \t \twenn Sie möchten, daß die Wiederherstellung jegliche vorhandene
+  \t \tDateien mit denselben Namen ersetzt.
+
+  \to\tDateien anzeigen: - Klicken Sie dieses Feld an, wenn die Dateien
+  \t \tund Ordner auf dem Datenträger (Magnetband, Diskette oder
+  \t \tDatei), aus dem Sie wiederherstellen, aufgelistetet werden
+  \t \tsollen. Wählen Sie die Dateien aus, die Sie wiederherstellen
+  \t \tmöchten.
+
+5.\tKlicken Sie Wiederherstellen an. Das
+  \t\k(Fenster "Wiederherstellen findet statt"^^Fenster Wiederherstellung findet statt) erscheint. Die Namen der
+  \tDateien der wiederhegestellten Dateien \twerden während des
+  \tVerfahrens im Fußteil des Fensters Wiederherstellen angezeigt.
+
+  \tWenn alle Dateien wiederherstellt sind, erscheint im Fußteil des
+  \tFensters Wiederherstellen die Meldung Wiederherstellen
+  \tabgeschlossen.
+
+Siehe auch:
+\s(Der Service Wiederherstellen^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^2^Fenster Wiederherstellung findet statt
+^$130
+Fenster Wiederherstellung findet statt
+
+Dieses Fenster zeigt Ihnen an, daß das System dabei ist, Dateien
+wiederherzustellen. Wenn Sie die Wiederherstellung nicht fortsetzen
+möchten, klicken Sie Abbrechen an.
+
+^1^Sicherungsskript speichern
+^$140
+Sicherungsskript speichern
+
+Sie können die Sicherungsdateien und ausgewählten Sicherungsoptionen
+in einem Sicherungsskript speichern. Wenn Sie dann später diese
+Sicherung erneut durchführen möchten, können Sie einfach dieses Skript
+aufrufen, um sie auszuführen.
+
+Um ein Sicherungsskript zu speichern, gehen Sie im Fenster
+"Sicherungskopie" wie folgt vor:
+
+1.\tKlicken Sie Datei=>Speichern Als an. Das Fenster
+  \t"Sicherungskope: Skript speichern" erscheint.
+
+2.\tGeben Sie den Namen der Datei ein, in der Sie die Dateiliste
+  \tspeichern möchten. Beispiel: Wenn Sie die Liste für eine tägliche
+  \tSicherung speichern, können Sie die Datei z. B. "daily" nennen.
+
+3.\tKlicken Sie Speichern an. Das System speichert das
+  \tSicherungsskript mit den Sicherungsoptionen in der von Ihnen
+  \tangegebenen Datei mit der Erweiterung .bkup. Beispiel: Wenn Sie
+  \tdie Datei "daily" nennen, speichert das System das
+  \tSicherungsskript als daily.bkup.
+
+4.\tVerwenden Sie dieses Skript, wenn Sie denselben Satz Dateien das
+  \tnächste Mal speichern möchten (siehe \k(Sicherungsskript verwenden)).
+
+^2^Fenster Sicherungskopie: Skript speichern
+^$150
+Fenster Sicherungskopie: Skript speichern
+
+Informationen zum Ausfüllen dieser Optionen finden Sie unter
+\k(Sicherungsskript speichern).
+
+Siehe auch: \k(Sicherungsskript verwenden)
+
+^1^Sicherungsskript verwenden
+^$160
+Sicherungsskript verwenden
+
+Um eine Sicherungskopie ausgehend von einem gespeicherten
+Sicherungsskript zu erstellen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf Sichern-Wiederherstellen. Das Fenster
+  \t"Sicherungskopie" erscheint.
+
+3.\tKlicken Sie Datei=Öffnen an. Das Fenster "Backup: Skript öffnen"
+  \terscheint.
+
+4.\tMit den Pfeilen können Sie sich im Ordner nach oben und unten
+  \tbewegen, um die Datei mit dem gewünschten Sicherungsskript zu
+  \tfinden.
+
+5.\tKlicken Sie den Dateinamen an. Der Name erscheint im Textfeld
+  \tDatei.
+
+6.\tKlicken Sie Öffnen an. Die im Sicherungsskript angegebenen
+  \tDateinamen und ausgewählten Optionen erscheinen im Fenster
+  \t"Sicherungskopie".
+
+7.\tKlicken Sie Sichern an. Das System sichert die im Sicherungsskript
+  \tangegebenen Dateien.
+
+  \tHinweis: Sie können Sichern auch später anklicken, wenn Sie die
+  \tSicherung für einen späteren Zeitpunkt programmieren möchten.
+
+^2^Fenster Sicherungskopie: Skript öffnen
+^$170
+Fenster Sicherungskopie: Skript öffnen
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tMit den Pfeilen können Sie sich im Ordner nach oben und unten
+  \tbewegen, um die Datei mit dem gewünschten Sicherungsskript zu
+  \tfinden.
+
+2.\tKlicken Sie den Dateinamen an. Der Name erscheint im Textfeld
+  \tDatei.
+
+3.\tKlicken Sie Öffnen an. Die im Sicherungsskript angegebenen
+  \tDateinamen und ausgewählten Optionen erscheinen im Fenster
+  \t"Sicherungskopie".
+
+4.\tKlicken Sie Sichern an. Das System sichert die im
+  \tSicherungsskript angegebenen Dateien.

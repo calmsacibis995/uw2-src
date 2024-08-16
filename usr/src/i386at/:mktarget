@@ -1,0 +1,18 @@
+#ident	"@(#)mk:i386at/:mktarget	1.1.1.2"
+#ident "$Header: $"
+
+Root=$1
+Mach=$2
+TargDir=${Root}/${Mach}
+
+# Check for the existance of target directories
+[ -d ${TargDir} ] || mkdir -p ${TargDir}
+
+cat -s target.dirs	|	# print contents of the target directory list
+egrep -v "^$|^#"	|	# get rid of blank lines and comments
+while read TARGETDIR
+do
+	[ -d ${TargDir}/${TARGETDIR} ] || mkdir ${TargDir}/${TARGETDIR}
+done
+
+exit 0

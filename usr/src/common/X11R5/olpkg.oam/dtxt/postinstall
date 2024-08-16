@@ -1,0 +1,186 @@
+#ident	"@(#)olpkg.oam:dtxt/postinstall	1.30"
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+#
+#	USL Basic Graphics Utilities
+#
+
+PKGMSG=${PKG}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+
+# for an upgrade installation, remove font files listed in dtfonts.dat,
+# move everything from /usr/X/lib/fonts/mitType1 to /usr/X/lib/fonts/type1,
+# rebuild the type1 fonts.scale and fonts.dir files, remove the mitType1
+# and Xol directories and, finally, remove the Xwinfont file
+
+[ "$PKGINSTALL_TYPE" = "UPGRADE" ] && {
+cat /usr/X/adm/upgrade/dtfonts.dat | while read f
+do
+	rm -f $f
+done
+
+( cd /usr/X/lib/fonts/mitType1 ; find . ! -name fonts.\* -print | cpio -pmd ../type1 ; )
+
+/usr/X/bin/mkfontscale /usr/X/lib/fonts/type1
+/usr/X/bin/mkfontsdir  /usr/X/lib/fonts/type1
+
+rm -fr /usr/X/lib/fonts/Xol /usr/X/lib/fonts/mitType1
+rm -f /usr/X/defaults/Xwinfont
+
+# make the contents file reflect what the day1 desktop will be and
+# remove tired, old, obsolete files
+
+VarSadmInstall=/var/sadm/install
+DtDir=/usr/X
+DtUpgDir=$DtDir/adm/upgrade
+Tmp=/tmp
+
+DataFile=$DtUpgDir/dtold_files.dat
+Cnts=$VarSadmInstall/contents
+PkgInst=$Tmp/pkgs$$
+
+rm -f $PkgInst
+
+# function to locate target file $VarSadmInstall/contents and to do
+# the actual cleanup (removef'ing and rm -f'ing)
+#
+GrepTarget()
+{
+	targ=$1
+	X=`grep "$targ [a-z] " $Cnts | head -1`
+	[ "$X" = "" ] &&  {
+		X=`grep "$targ.* [a-z] " $Cnts | head -1`
+		}
+	[ "$X" = "" ] &&  {
+		b="/`basename $targ`"
+		X=`grep "$b [a-z] " $Cnts | head -1`
+		}
+	[ "$X" = "" ] || {
+		set $X
+		f=$1
+		fl=`echo $f | cut -f1 -d=`
+		ty=$2
+		cl=$3
+		shift 3
+
+		while [ $# -gt 0 ]
+		do
+			p=$1
+			shift
+			pk=`echo $p | cut -f1 -d:`
+			pkginfo -q $pk 2>/dev/null
+			if [ $? -eq 0 ]
+			then
+				removef $pk $fl
+				grep $pk $PkgInst > /dev/null
+				[ $? -ne 0 ] && echo $pk >> $PkgInst
+			else
+				pk=""
+			fi
+		done
+	}
+
+	[ -f $targ -o -h targ ] && { 
+		rm -f $targ > /dev/null 2>&1
+	}
+
+	[ -d $targ ] && { 
+		rmdir $targ > /dev/null 2>&1
+	}
+}
+
+cat $DataFile | while read F1
+do
+	set $F1
+	while [ "$1" != "" ]
+	do
+		GrepTarget $1
+		shift 1
+	done
+done
+
+cat $PkgInst | while read P1
+do
+	removef -f $P1
+done
+rm -f $PkgInst
+}
+
+#
+# now make sure that the fonts.dir files are up-to-date
+# The empty type1 dir is needed for font server to run.
+
+/usr/X/bin/mkfontdir /usr/X/lib/fonts/misc
+[ ! -s /usr/X/lib/fonts/type1/fonts.dir ] && echo 0 > /usr/X/lib/fonts/type1/fonts.dir
+
+#
+# check for /etc/services file, if present check for font server
+# entry, if one exists do nothing, otherwise add one to the /etc/services file
+#
+
+if [ -s /etc/services ]
+then
+	if [ ! "`/usr/bin/grep xfont /etc/services`" ]
+	then
+		echo "xfont	7000/tcp	# font server" >> /etc/services
+	fi
+fi
+
+#
+# we need to cat dtruntime.ab into dtruntime.so.1, then cleanup
+#
+
+cat /usr/X/desktop/dtruntime.ab >> /usr/X/desktop/dtruntime.so.1
+installf ${PKGINST} /usr/X/desktop/dtruntime.so.1 f 0644 bin bin
+installf -f ${PKGINST}
+
+removef ${PKGINST} /usr/X/desktop/dtruntime.ab >/dev/null 2>&1
+rm -rf /usr/X/desktop/dtruntime.ab
+removef -f ${PKGINST} >/dev/null 2>&1
+ 
+############# Begin UPGRADE AND OVERLAY #######################
+
+SCRIPTS=/usr/sbin/pkginst
+
+[ "$AUTOMERGE" = NULL ] || {
+#	If AUTOMERGE=Yes, ${SCRIPTS}/olscripts will 
+#	merge the config files listed in $UPGRADE_STORE/${PKGINST}.sav.
+#	If merge failed, it informs user which files the merge failed.
+
+#	If AUTOMERGE=No, ${SCRIPTS}/olscripts will 
+#	inform user where there old config files live and that
+#	the system will use new versions of the config. files
+
+#	request and preinstall set AUTOMERGE to one of "Yes" or NULL
+#	"No" is not currently possible.
+
+
+	${SCRIPTS}/pkgmrgconf "${PKGINST}" "$AUTOMERGE" "$NAME"
+}
+
+${SCRIPTS}/up_cleanup "${PKGINST}"
+############# End   UPGRADE AND OVERLAY #######################
+
+#
+# Now clean up
+#
+rm -rf /tmp/pkg > /dev/null 2>&1
+exit ${errflag}

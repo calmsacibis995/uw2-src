@@ -1,0 +1,189 @@
+#ident\t"@(#)dthelp:Admin.Tools/Install_Server.hlp      1.11"
+^*version^1
+^*title^Server di installazione
+^:Server_di_installazione
+^*width^70
+^+DesktopMgr/help.defs
+^?Caricamento e configurazione dei pacchetti UnixWare
+^0^Server di installazione
+^$10
+Server di installazione
+
+Usare il server di installazione per caricare i pacchetti software sul
+sistema (tanto quelli del sistema, quanto quelli aggiuntivi) ed
+abilitare il sistema a fungere da server di installazione di rete per
+gli altri sistemi. Ovvero, impostare il sistema in modo che gli altri
+utenti possano caricare i pacchetti lungo la rete e nei rispettivi
+sistemi.
+
+Per usare il server di installazione si deve avere
+il \k(Permesso di configurazione dell'installazione della rete^dtadmin/user.hlp^Comprensione dei permessi)
+
+Si può caricare il software da un'unità CD-ROM, cartuccia a nastro, o
+a dischetti che si trovano in locale sul proprio sistema. Si può
+copiare il software in un'area di spooling sul disco rigido, o se si
+usa un CD-ROM, \d(pubblicizza) direttamente dal CD. Se si sceglie
+di pubblicizzare direttamente dal CD-ROM, si deve lasciare il CD
+nell'unità CD-ROM.
+
+Con il server di installazione, è possibile fare quanto segue:
+
+\to\t\k(Carica UnixWare e altri pacchetti software aggiuntivi^^Caricamento pacchetti software)
+\to\t\k{Abilita il Servizio di installazione della rete^^Abilitazione del NIS (Network Installation Service)}
+\to\t\k(Disabilita il Servizio di installazione della rete^^Disabilitazione di Network Installation Service)
+\to\t\k(Mostra le proprietà del software caricato per l'installazione della rete^^Visualizzazione delle propriertà software)
+\to\t\k(Rimuovere il software caricato per l'installazione della rete^^Rimozione del software)
+
+Vedi anche:
+"Configurazione e amministrazione di un server di installazione" nel Manuale di installazione
+\s{Uso del server di installazione (solo Application Server)^dhelp "pe.it" ownerhb "Installazione e condivisione delle applicazioni" "impostare e installare pacchetti da un server di installazione" || helpLinkErr}
+
+
+^1^Caricamento pacchetti software
+^$20
+Caricamento pacchetti software
+
+Per caricare i pacchetti software UnixWare o i pacchetti software
+aggiuntivi, fare quanto segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.\t\d(Fare dopio clic^doppio clic) su Strumenti_ammin nella
+  \tfinestra \k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tStrumenti_ammin".
+
+2.\tDoppio clic su Server_Installazione. Appare la finestra
+  \t"Configurazione del server di installazione di rete".
+
+3.\tFare clic su Pacchetto software. Appare una finestra a comparsa.
+
+4.\tFare clic su uno degli elementi seguenti:
+
+  \to\tCarica sistema - Se si stanno installando i pacchetti software
+  \t \trelativi a UnixWare.
+
+  \to\tCarica pacchetto aggiuntivo - Se si stanno installando pacchetti
+  \t \taggiuntivi.
+
+  \tAppare la finestra "Carica pacchetto" con i seguenti campi:
+
+  \to\tAccesso al pacchetto da: - Fare clic sul rettangolo in alto a
+  \t \tdestra nella casella accanto al campo per scorrere il menu di
+  \t \tdispositivi configurati nel sistema. Fare clic sul dispositivo
+  \t \tappropriato da cui si ha l'accesso ai pacchetti software (per
+  \t \tesempio, CD-ROM, cartuccia a nastro, o un altro server di
+  \t \tinstallazione della rete).
+
+  \t \tNota: Se si seleziona un altro server di installazione della
+  \t \trete, è possibile scaricare il software da quel server lungo la
+  \t \tla rete sul proprio disco rigido.
+
+  \to\tNome del pacchetto software - Fare doppio clic sui pacchetti che
+  \t \tsi desidera installare.
+
+  \to\tCopia nel sistema - Per copiare i pacchetti software sul disco
+  \t \trigido.
+
+  \t \tSe si sta installando da un altro server di installazione della
+  \t \trete, si deve selezionare questa opzione e copiare il pacchetto
+  \t \tsoftware sul sistema locale.
+
+  \to\tCopia sul dispositivo - Per lasciare il pacchetto sul
+  \t \tdispositivo. Non dimenticare di conservare i supporti nel
+  \t \tdispositivo, altrimenti non si potrà avere accesso al pacchetto
+  \t \tsoftware.
+
+
+^1^Abilitazione del NIS (Network Installation Service)
+^$30
+Abilitazione del NIS (Network Installation Service)
+
+Per abilitare il servizio di installazione della rete, fare quanto
+segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.  \d(Doppio clic^doppio clic) su Strumenti_Ammin nella
+    \k(finestra "Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+    Strumenti_Ammin.".
+
+2.\tFare doppio clic su Server_Installazione. Appare la finestra
+  \t"Configurazione del server di installazione".
+
+3.  Fare clic su Azioni=>Abilita. Il servizio di installazione della
+    rete viene abilitato.
+
+^1^Disabilitazione di Network Installation Service
+^$40
+Disabilitazione di Network Installation Service
+
+Per disabilitare il servizio di installazione della rete, fare quanto
+segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.  \d(Doppio clic^doppio clic) su Strumenti_Ammin nella
+    \k(finestra "Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+    Strumenti_Ammin.".
+
+2.\tFare doppio clic su Server_Installazione. Appare la finestra
+  \t"Configurazione del server di installazione".
+
+3.  Fare clic su Azioni=>Disabilita. Il servizio di installazione
+    della rete viene disabilitato.
+
+^1^Visualizzazione delle propriertà software
+^$50
+Visualizzazione delle propriertà software
+
+Per visualizzare le proprietà di un pacchetto software che è stato
+caricato per l'installazione della rete, fare quanto segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.  \d(Doppio clic^doppio clic) su Strumenti_Ammin nella
+    \k(finestra "Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+    Strumenti_Ammin.".
+
+2.\tDoppio clic su Server_Installazione. Appare la finestra
+  \t"Configurazione del server di installazione di rete".
+
+3.\tFare clic sull'icona che rappresenta il pacchetto software da
+  \tvisualizzare.
+
+4.\tFare clic su Pacchetto=>Informazioni. Appare la finestra
+  \t"Informazioni sul pacchetto" in cui appaiono le informazioni
+  \tseguenti relative al pacchetto.
+
+  \to\tIl numero di versione.
+
+  \to\tIl nome del fornitore.
+
+  \to\tIl tipo di architettura su cui gira il pachetto.
+
+  \to\tUn conteggio dei file.
+
+^1^Rimozione del software
+^$60
+Rimozione del software
+
+Per rimuovere il software che è stato caricato per l'installazione
+della rete, fare quanto segue:
+
+Nota: Se ci si trova già nella cartella Strumenti_Ammin, passare al
+punto 2.
+
+1.  \d(Doppio clic^doppio clic) su Strumenti_Ammin nella
+    \k(finestra "Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+    Strumenti_Ammin.".
+
+2.\tFare doppio clic su Server_Installazione. Appare la finestra
+  \t"Configurazione del server di installazione".
+
+3.\tFare clic sull'icona che rappresente il pacchetto da rimuovere.
+
+4.\tFare clic su Pacchetto=>Rimuovi. Il pacchetto viene cancellato.

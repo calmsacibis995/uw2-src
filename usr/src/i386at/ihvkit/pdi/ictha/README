@@ -1,0 +1,57 @@
+#ident	"@(#)ihvkit:pdi/ictha/README	1.4"
+
+The current directory contains all of the files necessary to natively build
+and install a non-SCSI tape driver.  Observe the following precautions 
+before building and installing the driver:
+
+1) Read the commented section of hba.h and initialize sdi.h to the appropriate
+   value:
+
+	#define PDI_VERSION	1  for UNIXWARE 1.1
+
+	The hba.h available with UnixWare-2.0 has the correct value for
+	PDI_VERSION.
+
+
+2) Make sure that the hardware is configured for the corret system parameter
+   values: IRQ, I/O, addr, etc as provided in ictha.cf/System.
+
+3a) If you are using a UNIXWARE-1.1 system, observe the following rules:
+
+   Unconfigure the ict driver by modifying /etc/conf/sdevice.d/ict: 
+
+	change the Y to a N.
+
+   Modify the dcd driver entry that uses the interrupt vector 5:
+
+   	change the Y to a N. 
+
+   Rebuild the kernel and reboot the system.
+
+   On the new kernel do the following:
+
+	The current directory contains a separate set of configuration 
+	files to be used when compiling this driver on a 1.1 platform.  
+	Save the configuration files under ictha.cf (2.0 version of config 
+	files) and replace them with the 1.1 versions available under 
+	ictha_1.1.cf
+
+   	(a) Execute make -f ictha.mk to build and install the driver.
+
+   	(b) Add an entry for ictha to /etc/loadmods.
+
+		echo "6:1:ictha:ictha" >> /etc/loadmods
+
+	(d) idbuild -B && init 6.
+
+3b) If you are using a UnixWare 2.0 based system:
+
+	(a) Save a copy of ictha.h (/usr/include/sys).
+	(b) Execute make -f ictha.mk to build and install the driver.
+	(c) idbuild -B && init 6.
+
+
+4) If no entries for the ictha driver are available in /etc/loadmods, then add 
+the following entry to the /etc/loadmods file
+
+	6:1:ictha:ictha

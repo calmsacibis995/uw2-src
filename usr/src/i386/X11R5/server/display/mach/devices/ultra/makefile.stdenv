@@ -1,0 +1,140 @@
+#ident	"%W%"
+
+#				-*-Mode: Makefile; -*-
+#	FILE
+#		makefile : Make file.
+#
+#	SYNOPSIS
+#
+#	DESCRIPTION
+#
+#	RETURNS
+#
+#	ENVIRONMENT VARIABLES
+#
+#	FILES
+#
+#	SEE ALSO
+#
+#	CAVEATS
+#
+#	BUGS
+#
+#	AUTHORS
+#
+#	HISTORY
+#
+#	AM directives.
+..source  :	l_globals.h Imakefile
+..source  : ChangeLog
+..source : ultra.dat ultraplus.dat ultrapro.dat vantage.dat
+
+# 	Make variables
+
+c_files = l_opt.c ultra.c l_gs.c l_bitblt.c l_points.c l_arc.c
+
+m_files = debug.m l__pi__.m l__po__.m l__gs__.m
+
+_cpp_options_ = -I../.. -I../../../os_lfb
+
+__cc_options__ = -DLIBRARY_NAME=\"ULTRA\" \
+	-DCHIPSET_NAME=\"ATI-ULTRA-LFB\"\
+	-DLIBRARY_VERSION="\"1.03\""
+ 
+#	Assembler files
+
+as_s_files = 
+as_o_files = ${as_s_files:.s=.o}
+
+# 	What are we building?
+..made: $(shell directory_to_make_option made)
+
+..made_debug:	ultra_${LOGNAME}_g.so
+..made_optimized: ultra_${LOGNAME}_O.so
+..made_profiled: ultra.a
+
+_cc_options_ = $(shell directory_to_make_option cc)
+_ld_options_ = $(shell directory_to_make_option ld) ../../libmach.so 
+_as_options_ = $(shell directory_to_make_option as)
+_ar_options_ = $(shell directory_to_make_option ar)
+
+#	Standard make include file.
+
+include ${std_make_include_file}
+
+
+# 	Munch rules.
+$(munch_c_files) : $(non_munch_o_files)
+
+debug.c : debug.m $(non_munch_o_files)
+	$(munch) -d -i '^.*_debug$$' -f lfb_debug_control $(non_munch_o_files) > $(@)
+
+# LFB pre-initialize functions : called before the chipset layer is
+# initialized
+l__pi__.c : l__pi__.m $(non_munch_o_files)
+	$(munch) -c -i '^lfb_.*__pre_initialize__$$' \
+	-f lfb__pre_initialize__ \
+	-p l__pi__.m $(non_munch_o_files) > $(@)
+
+# LFB post-initialize functions : called after the chipset 
+# layer has initialized itself.
+l__po__.c : l__po__.m $(non_munch_o_files)
+	$(munch) -c -i '^lfb_.*__post_initialize__$$' \
+	 -f lfb__post_initialize__ \
+	-p l__po__.m $(non_munch_o_files) > $(@)
+
+# Graphics state change functions.
+l__gs__.c : l__gs__.m $(non_munch_o_files)
+	$(munch) -c -i '^lfb_.*__gs_change__$$'\
+ 	-f lfb__gs_change__ -p l__gs__.m $(non_munch_o_files) > $(@)
+
+# Option handling code
+l_opt.c : l_opt.gen
+	genoptions -o $(@) -p 'lfb_options_' -i $(<)
+
+ultra_${LOGNAME}_g.so: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ld) $(LD_OPTIONS) -o $@ $(o_files) $(as_o_files) -lm
+
+ultra_${LOGNAME}_O.so: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ld) $(LD_OPTIONS) -o $@ $(o_files) $(as_o_files) -lm
+
+ultra.a: $(o_files) $(as_o_files)
+	rm -f $@
+	$(ar) $(AR_OPTIONS) $@ $(o_files) $(as_o_files)
+
+##$(am)
+
+l_opt.o : l_opt.c ../../stdenv.h ../../global.h
+ultra.o : ultra.c ../../stdenv.h ../../global.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_opt.h ../../../os_lfb/lfb_map.h l_globals.h
+l_gs.o : l_gs.c l_opt.h ../../stdenv.h ../../global.h ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_globals.h
+l_bitblt.o : l_bitblt.c l_opt.h ../../stdenv.h ../../global.h ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_gs.h l_globals.h
+l_points.o : l_points.c l_opt.h ../../stdenv.h ../../global.h ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_globals.h l_gs.h
+l_arc.o : l_arc.c ../../stdenv.h ../../global.h l_globals.h l_opt.h ../../m_state.h ../../m_opt.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../m_bitblt.h ../../m_globals.h ../../m_colormap.h ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_gs.h
+l_opt.d : l_opt.c ../../stdenv.h ../../global.h
+ultra.d : ultra.c ../../stdenv.h ../../global.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_opt.h ../../../os_lfb/lfb_map.h l_globals.h
+l_gs.d : l_gs.c l_opt.h ../../stdenv.h ../../global.h ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_globals.h
+l_bitblt.d : l_bitblt.c l_opt.h ../../stdenv.h ../../global.h ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_gs.h l_globals.h
+l_points.d : l_points.c l_opt.h ../../stdenv.h ../../global.h ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_globals.h l_gs.h
+l_arc.d : l_arc.c ../../stdenv.h ../../global.h l_globals.h l_opt.h ../../m_state.h ../../m_opt.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../m_bitblt.h ../../m_globals.h ../../m_colormap.h ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_gs.h
+debug.d : debug.c
+l__pi__.d : l__pi__.c l_opt.h ../../stdenv.h ../../global.h
+l__po__.d : l__po__.c l_opt.h ../../stdenv.h ../../global.h
+l__gs__.d : l__gs__.c
+l_opt.ln : l_opt.c ../../stdenv.h ../../global.h
+ultra.ln : ultra.c ../../stdenv.h ../../global.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_opt.h ../../../os_lfb/lfb_map.h l_globals.h
+l_gs.ln : l_gs.c l_opt.h ../../stdenv.h ../../global.h ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_globals.h
+l_bitblt.ln : l_bitblt.c l_opt.h ../../stdenv.h ../../global.h ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_gs.h l_globals.h
+l_points.ln : l_points.c l_opt.h ../../stdenv.h ../../global.h ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_bitblt.h ../../m_globals.h ../../m_opt.h ../../m_colormap.h ../../m_state.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_globals.h l_gs.h
+l_arc.ln : l_arc.c ../../stdenv.h ../../global.h l_globals.h l_opt.h ../../m_state.h ../../m_opt.h ../../g_state.h ../../g_gs.h ../../g_colormap.h ../../m_regs.h ../../g_regs.h ../../m_dacs.def ../../m_clocks.def ultra.h ../../mach.h /export/home/orthanc/x-usl/src/usl-q2/server/ddx/si/sidep.h /export/home/orthanc/x-usl/src/usl-q2/X11/X.h /export/home/orthanc/x-usl/src/usl-q2/X11/Xmd.h ../../generic.h ../../m_bitblt.h ../../m_globals.h ../../m_colormap.h ../../m_visual.def ../../m_cursor.h ../../m_fill.h ../../m_font.h ../../m_gs.h ../../g_omm.h ../../m_line.h ../../m_points.h ../../m_scanline.h ../../m_spans.h ../../m_modes.def l_gs.h
+debug.ln : debug.c
+l__pi__.ln : l__pi__.c l_opt.h ../../stdenv.h ../../global.h
+l__po__.ln : l__po__.c l_opt.h ../../stdenv.h ../../global.h
+l__gs__.ln : l__gs__.c
+debug.o : debug.c
+l__pi__.o : l__pi__.c l_opt.h ../../stdenv.h ../../global.h
+l__po__.o : l__po__.c l_opt.h ../../stdenv.h ../../global.h
+l__gs__.o : l__gs__.c
+
+##$(am)

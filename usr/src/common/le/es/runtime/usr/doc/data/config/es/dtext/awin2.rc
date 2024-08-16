@@ -1,0 +1,47 @@
+<!-- Annotation manager main window -->
+
+<menu label="Anotación" mnemonic="A" command="annot">
+
+<item label="Mostrar" mnemonic="M" command="show" parent="annot">
+<menu label="Ir a" mnemonic="I" command="goto" parent="annot">
+<item label="Previa" mnemonic="P" command="goto-prev" parent="goto">
+<item label="Actual" mnemonic="A" command="goto-current" parent="goto">
+<item label="Siguiente" mnemonic="S" command="goto-next" parent="goto">
+
+<item label="sep" genre=separator parent="annot">
+<item label="Suprimir" mnemonic="S" command="delete" parent="annot">
+
+<item label="sep" genre=separator parent="annot">
+<item label="Exportar..." mnemonic="E" command="export" parent="annot">
+<item label="Cerrar ventana" mnemonic="C" command="close" parent="annot">
+
+
+<menu label="Grupo de filtros" mnemonic="G" command="fgroup">
+
+<item label="Nuevo grupo" mnemonic="N" command="new" parent="fgroup">
+<item label="Abrir..." mnemonic="A" command="open" parent="fgroup">
+
+<item label="sep" genre=separator parent="fgroup">
+<item label="Guardar" mnemonic="G" command="save" parent="fgroup">
+<item label="Guardar como..." mnemonic="r" command="save-as" parent="fgroup">
+
+<item label="sep" genre=separator parent="fgroup">
+<item label="Suprimir..." mnemonic="S" command="remove" parent="fgroup">
+
+
+<menu label="Clasificar" mnemonic="C" command="sortby" genre=exclusive>
+
+<item label="Título" mnemonic="T" command="title" parent="sortby" genre=radio>
+<item label="Propietario" mnemonic="P" command="owner" parent="sortby" genre=radio>
+<item label="Acceso" mnemonic="A" command="access" parent="sortby" genre=radio>
+<item label="Fecha" mnemonic="F" command="date" parent="sortby" genre=radio>
+<item label="Tipo" mnemonic="i" command="type" parent="sortby" genre=radio>
+<item label="Posición" mnemonic="s" command="location" parent="sortby" genre=radio>
+
+<menu label="Ayuda" mnemonic="y" command="help">
+<item label="Ayuda contextual" command="help-context" parent="help">
+<item label="Trabajo con anotaciones" command="help-working-annots" 
+	parent="help">
+<item label="Uso del Gestor de anotaciones" command="help-annotmgr-using" 
+	parent="help">
+

@@ -1,0 +1,65 @@
+#ident	"@(#)bkrs:common/cmd/bkrs/bkintf.d/backups/bksetup/except/display/Form.display	1.5.2.2"
+#ident  "$Header: Form.display 1.2 91/06/21 $"
+form="Display Entries in a Backup Exception List"
+
+help=OPEN TEXT $INTFBASE/Text.itemhelp $LININFO
+
+framemsg=`readfile $INTFBASE/form.msg`
+
+done=`message -w; set -e TABLE=$F1;
+                        set -e PATTERN=$F2;
+                        shell 'TFILE=/tmp/bkex$$
+                        echo "Exception list file is $TABLE" >$TFILE
+                        if [ "$PATTERN" = "all" ]
+                        then
+                                bkexcept -t "$TABLE" >>$TFILE 2>&1
+                                RC=$?
+                        else
+                                bkexcept -d "$PATTERN" -t "$TABLE" >>$TFILE 2>&1                                RC=$?
+                        fi
+                        echo $TFILE
+                        exit $RC' | set -l FILE;
+                        unset -e TABLE;
+                        unset -e PATTERN;
+			getfrm | set -l FNUM;
+			regex -e -v "$RET"
+				'^0' 'OPEN TEXT $OBJ_DIR/Text.display $FILE $FNUM'
+				'^.*$' 'OPEN TEXT $OBJ_DIR/Text.errs $FILE $FNUM' `
+
+begrow=any
+begcol=any
+
+# File Name field - F1
+name=File name:
+lininfo=F1
+nrow=2
+ncol=2
+
+frow=2
+fcol=13
+rows=1
+columns=50
+
+value=`brfindtab bkexcept`
+
+scroll=true
+choicemsg="Enter the file name containing the exception list."
+
+valid=`valpath -gw "$F1"`
+
+invalidmsg="$F1 is not a regular file or is not writable."
+
+# Patterns field - F2
+name=Pattern(s):
+lininfo=F2
+nrow=3
+ncol=2
+
+frow=3
+fcol=14
+rows=3
+columns=50
+
+value=all
+scroll=true
+choicemsg="Enter patterns for the entries you want to display or 'all'."

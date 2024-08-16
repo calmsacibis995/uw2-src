@@ -1,0 +1,85 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)olwm:Imakefile	1.38"
+
+           STAR = *
+      XOLLIBSRC = $(TOP)/lib/Xol
+
+          DEBUG = 
+
+          SRCS = \
+		 Window.c \
+		 Menu.c \
+		 Event.c \
+		 Icon.c \
+		 Misc.c \
+		 Strings.c \
+		 Help.c \
+		 Display.c \
+		 Extern.c \
+                 wm.c \
+		 WMStep.c \
+		 MotifDecor.c \
+		 MotifMetrics.c \
+		 MotifIDec.c \
+		 MotifIPos.c \
+		 MotifRes.c \
+		 Parse.c \
+                 wmm.c
+
+         OBJS = \
+		 Window.o \
+		 Menu.o \
+		 Event.o \
+		 Icon.o \
+		 Misc.o \
+		 Strings.o \
+		 Help.o \
+		 Display.o \
+		 Extern.o \
+                 wm.o \
+		 WMStep.o \
+		 MotifDecor.o \
+		 MotifMetrics.o \
+		 MotifIDec.o \
+		 MotifIPos.o \
+		 MotifRes.o \
+		 Parse.o \
+                 wmm.o
+       
+       HEADERS = \
+                 WMStepP.h \
+                 WMStep.h \
+		 Strings.h \
+		 Extern.h \
+		 ProcDeclar.h \
+                 wm.h \
+		 deficon.xpm
+
+       INCLUDES = -I$(LIBSRC) -I$(LIBSRC)/Xol
+LOCAL_LIBRARIES = XolClientLibs
+        DEPLIBS = XolClientDepLibs
+      CCOPTIONS = $(FURCCOPTIONS)
+
+#ifndef SystemV4
+SYSAUX_LIBRARIES = -lc_s -lm
+#endif
+
+ComplexProgramTarget(olwm)
+
+#if UslLocalityTuning
+FurComplexProgramTarget(olwm)
+
+install:: olwm
+	$(INSTALL) -c $(INSTPGMFLAGS) olwm.F $(DESTDIR)$(BINDIR)
+	$(MV) $(DESTDIR)$(BINDIR)/olwm $(DESTDIR)$(BINDIR)/olwm.nf
+	$(MV) $(DESTDIR)$(BINDIR)/olwm.F $(DESTDIR)$(BINDIR)/olwm
+#endif
+
+InstallAppDefaults(olwm)

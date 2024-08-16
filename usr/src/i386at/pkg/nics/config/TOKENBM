@@ -1,0 +1,47 @@
+#ident	"@(#)pkg.nics:config/TOKENBM	1.5"
+
+NAME=IBM_Token_Ring_16/4_Adapter_II
+
+DRIVER_NAME=TOKENBM
+
+INT="9 10 11 15"
+
+PORT="86A0-86AF 96A0-96AF A6A0-A6AF B6A0-B6AF C6A0-C6AF D6A0-D6AF E6A0 E6AF F6A0-F6AF"
+
+DMA="5 6 7"
+
+CLASS=TOKENBM
+
+TOKEN=true
+
+BUS=ISA
+
+IDTUNE_NUM=5
+
+IDTUNE_ARRAY[1]="MSM_1KCHUNKS 6"
+IDTUNE_ARRAY[2]="MSM_2KCHUNKS 2"
+IDTUNE_ARRAY[3]="MSM_6KCHUNKS 16"
+IDTUNE_ARRAY[4]="MSM_10KCHUNKS 0"
+IDTUNE_ARRAY[5]="MSM_36KCHUNKS 1"
+
+CUSTOM_NUM=2
+
+CUSTOM[1]='
+ODISTR1
+MAX_TX=4
+4
+Transmit buffers
+/etc/inst/locale/C/menus/nics/help/tx_buf_num
+Select Number of Transmit Buffers
+'
+
+CUSTOM[2]='
+ODISTR2
+RXB=4
+4
+Receive buffers
+/etc/inst/locale/C/menus/nics/help/rx_buf_num
+Select Number of Receive Buffers
+'
+
+REBOOT=true

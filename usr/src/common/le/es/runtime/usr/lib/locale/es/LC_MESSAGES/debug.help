@@ -1,0 +1,2370 @@
+# This file contains the help messages used by the Command Line interface.
+# Each help message is bracketed by lines starting with ++.
+# The debugger does not depend on the size (number of lines) of any message,
+# but it does depend on the order of the messages.  New messages MUST be
+# added to the end of the file.
+
+++ !
+NOMBRE
+! : ejecutar un comando del shell.
+
+SINOPSIS
+! línea_de_comandos 
+!!
+
+DESCRIPCIÓN
+Ejecutar un comando del shell.  
+El resto de la línea se pasa al shell para su 
+interpretación.  En particular, 
+el redireccionamiento no lo realiza el 
+depurador, sino el shell.  La variable $SHELL, 
+si está definida, contiene la totalidad del nombre de la vía de acceso 
+del shell que se vaya a usar.  Si $SHELL no está definida, se usa 
+/usr/bin/sh.  El depurador espera a que el comando se termine, pero 
+no toma el control de los procesos resultantes.
+
+!! especifica que el último comando del shell se debe volver a ejecutar.
+
+VÉASE TAMBIÉN
+create, redireccionamiento
+++
+
+++ alias
+NOMBRE
+alias : añadir, listar o suprimir alias.
+
+SINOPSIS
+alias nombre testigos ...
+alias [nombre]
+alias -r nombre
+
+DESCRIPCIÓN
+El primer formato hace que el "nombre" sea un alias para los
+"testigos".  Todos los caracteres hasta el cambio delínea o el
+comentario se toman como parte de la definición.  Los alias existentes
+o los comandos del depurador se pueden volver a definir como un nombre
+de alias.  Una vez definidos, usar el alias es equivalente a teclear
+la secuencia de testigos a la que reemplaza.  Los alias se pueden
+definir en términos de otros alias, pero no de forma recurrente.
+
+Las definiciones de alias pueden contener los identificadores 
+especiales $1, $2, ...  Cada uno de estos identificadores 
+especiales $n de la definición de un alias se reemplaza por 
+el n argumento de la invocación del alias, donde los argumentos 
+se numeran comenzando por el número 1.  Cada argumento debe ir 
+precedido de un espacio en blanco y seguido de un 
+espacio en blanco, un símbolo de nueva línea, el carácter de 
+comentario (#) o el comienzo de un bloque ({).  Los identificadores 
+especiales $1, $2, ... no se sustituirán dentro de una cadena que vaya 
+entre comillas.
+
+Si la definición de un alias contiene el identificador especial $#, 
+se reemplazará durante la invocación del alias por el número de 
+argumentos que se utilicen en realidad durante la invocación 
+del alias actual.  Si la definición de un alias contiene el 
+identificador especial $*, se sustituirá durante la invocación 
+del alias por una lista de todos los argumentos pasados durante
+la invocación del alias actual, cada uno de ellos separado de los
+demás por un espacio en blanco.
+
+Cuando no se especifican argumentos, alias lista todos 
+los alias actuales.  Con un solo nombre, muestra el alias correspondiente a dicho nombre.
+
+Con la opción -r, alias suprime todos los alias existentes para el nombre.
+
+EJEMPLOS
+alias
+alias i
+alias i step -i
+alias edit list $1@1
+alias print_list while($1) { print *$1; set $1 = $1->next }
+alias b if ($# > 0) { stop $* } else { stop %list_file@%list_line }
+alias -r i
+++
+
+++ stop
+NOMBRE
+stop:  define o lista los eventos de parada
+
+SINOPSIS
+stop [-p lista_procesos] [[-q] [-c cuenta] expr_parada [comando]]
+stop [-p lista_procesos]
+
+DESCRIPCIÓN
+Un evento de parada especifica alguna condición en el espacio de
+direcciones de un programa que hará que el depurador detenga la
+ejecución del programa.  Una "expr_parada" se compone de una o
+más expresiones enlazadas mediante los operadores especiales &&
+(y) o || (o).  Las expresiones pueden ser:
+
+1) de ubicación
+        Una ubicación en el texto del programa: estas suelen ser como
+        los puntos de interrupción tradicionales;
+
+2) (expr)
+        Una expresión en el lenguaje actual: este tipo de expresión
+        de stop es verdadera cuando la expresión es verdadera;
+
+3) *Valor izda.
+        Una ubicación de los datos del programa que se puede 
+        modificar:  este tipo de expresión es verdadera cuando el valor cambia.
+
+El depurador evalúa continuamente las expresiones de parada
+cuando el proceso correspondiente está ejecutándose.
+Cuando la totalidad de la expresión toma el valor
+verdadero, el depurador anuncia que se ha producido 
+el evento, y ejecuta el "comando" asociado opcional.
+
+Véase expr_parada para obtener más información.
+
+La opción -q especifica que el depurador no va a anunciar el evento.
+
+La opción -c especifica que el evento no se activará durante
+tantas veces como se indique en "cuenta" en las cuales la expresión de
+parada sea verdadera. El evento se activará todas las veces subsiguientes
+que la expresión de parada sea verdadera.
+
+El segundo formato del comando stop lista todos los eventos 
+de parada correspondientes al proceso indicado.
+
+Al contrario de lo que ocurre con la mayor parte de los 
+demás comandos, si no se indica la opción -p 
+con el comando stop sus acciones se aplican a todos 
+los procesos derivados del programa actual 
+(%program).
+
+EJEMPLOS
+stop myfile.c@230
+stop *bar
+stop (x == 5)
+stop foo && (a > 7)
+stop (a == 4) || (b == 7)
+
+VÉASE TAMBIÉN
+%program, %verbose, comando_asociado, delete, disable, 
+enable, events, expr, ubicación, lista_procesos, 
+accesibilidad, expr_parada
+++
+
+
+++ break
+NOMBRE
+break:  interrumpe el bucle while.
+
+SINOPSIS
+break
+
+DESCRIPCIÓN
+El comando break hace que el depurador salga del bucle while cerrado más interno.
+
+EJEMPLOS
+while($i < 10) { if (x[$i] == $myvar) break; set $i = $i + 1 }
+
+VÉASE TAMBIÉN
+continue, while
+++
+
+
+++ continue
+NOMBRE
+continue: continúa la siguiente iteración del bucle while.
+
+SINOPSIS
+continue
+
+DESCRIPCIÓN
+El comando continue hace que el depurador comience la ejecución de 
+la siguiente iteración del bucle while cerrado más interno.  
+La ejecución comienza por la nueva evaluación de la expresión del bucle.
+
+EJEMPLOS
+while (i < 20) { step; if (i % 2) continue; p i, x[i] }
+
+VÉASE TAMBIÉN
+break, while
+++
+
+
+++ cancel
+NOMBRE
+cancel:  cancela las señales pendientes.
+
+SINOPSIS
+cancel [-p lista_procesos] [signal ...]
+
+DESCRIPCIÓN
+Las "señales" especificadas quedan canceladas en los 
+procesos nombrados (%proc por defecto).  
+Si alguna de las señales ha sido interceptada por 
+el depurador en cualquiera de los procesos 
+nombrados, dichos procesos no recibirán esas señales 
+cuando se reanude la ejecución.  Si no se 
+indica ninguna señal, se cancelarán todas las 
+señales pendientes correspondientes a los procesos 
+nombrados.
+
+EJEMPLOS
+cancel
+cancel segv
+cancel -p all sigfpe sigemt
+
+VÉASE TAMBIÉN
+kill, lista_procesos, signal, signames
+++
+
+
+++ create
+NOMBRE
+create:  crea y controla uno o más procesos nuevos.
+
+SINOPSIS
+create [-dr] [-f all|none|procs] [-l ubicación_inicial] [línea_comandos]
+
+DESCRIPCIÓN
+create toma una línea de comandos de tipo shell y crea uno o
+más procesos.  La línea de comandos puede incluir un
+redireccionamiento de entrada y/o salida, y puede incluir un
+conducto de shell.  Todos los procesos resultantes se detienen en
+la ubicación especificada en "ubicación_de_inicio".  Si no se
+especifica ninguna ubicación inicial, o la ubicación especificada
+no se puede encontrar dentro del espacio de direcciones de un
+proceso, el proceso se detiene en la función "main". Si no existe
+ninguna función denominada "main", el proceso se detiene en la
+dirección especificada en el encabezado del archivo de objetos.
+Para crear y ejecutar un proceso, se teclea "create ..." y, a
+continuación, "run". 
+
+Si no se indica ninguna "línea_de_comandos", se volverá a 
+usar la línea de comandos anterior.  Todos los procesos creados a 
+partir de invocaciones anteriores de dicha línea de comandos se destruirán con kill.
+
+A cada uno de los procesos creados se le asigna un 
+identificador de proceso del depurador.  Se puede 
+hacer referencia al proceso mediante su identificador, 
+o mediante su id de proceso del sistema en los 
+comandos que admiten la opción -p.  El primer proceso 
+creado en un conducto se convierte en el 
+proceso actual (%proc).  También se puede hacer 
+referencia a todos los procesos creados a partir de 
+un solo ejecutable (con fork(2)) por el nombre de dicho 
+ejecutable (el nombre del programa).
+
+Si se indica la opción -r, la entrada y salida del 
+proceso se redireccionarán a un pseudo terminal.  Toda la 
+salida se etiqueta con el nombre de dicho pseudo terminal.  Si es 
+necesario facilitar entrada a un proceso, se debe usar el comando "input".  
+La opción -d especifica que no se redireccionará.  Si no se 
+indica ninguna de las dos opciones, se usará el modo 
+especificado por %redir (por defecto, sin redireccionamiento).
+
+Si se indica -f con el argumento "none", el depurador no seguirá a
+los procesos hijos de ninguno de los procesos creados
+en los que se efectúan horquillas. 
+Si se indica -f con los argumentos "all" o "procs", el depurador 
+controlará todos los procesos hijos (para que el depurador no 
+controle estos procesos se usa "release").  Si no se indica -f, el 
+comportamiento del depurador se regirá por %follow (el valor por 
+defecto es seguir por todos los hijos).
+
+EJEMPLOS
+create
+create -f none myprog 1 2 3
+create myprog 1 2 3 | myfilter1 | myfilter2
+
+VÉASE TAMBIÉN
+!, %follow, %program, %redir, grab, input, 
+lista_procesos, rename, release
+++
+
+
+++ delete
+NOMBRE
+delete: suprime eventos.
+
+SINOPSIS
+delete núm_evento ...
+delete -a [-p lista_procesos] [tipo_evento]
+
+DESCRIPCIÓN
+El primer formato suprime los eventos correspondientes a los 
+números de los eventos que se indiquen.
+
+El segundo formato suprime todos los eventos 
+del tipo_evento especificado (todos los tipos, si no se 
+especifica ninguno) de los procesos especificados 
+(el proceso actual, si no se indica ninguno).  El 
+"tipo_evento" puede ser "onstop", "signal", 
+"stop" o "syscall".
+
+
+EJEMPLOS
+delete 1 3 5
+delete -a -p p1
+delete -a stop
+delete -a syscall
+
+VÉASE TAMBIÉN
+change, disable, enable, events, onstop, 
+lista_procesos, signal, stop, syscall
+++
+
+
+++ dis
+NOMBRE
+dis:  desensambla instrucciones en código máquina.
+
+SINOPSIS
+dis [-p lista_procesos] [-c cuenta_instrucciones] [ubicación]
+
+DESCRIPCIÓN
+Desensambla las instrucciones de "cuenta_de_instrucciones" 
+en cada uno de los procesos e hilos 
+especificados (valor por defecto, %thread o %proc).  
+Si no se indica ninguna cuenta_de_instrucciones, 
+el valor por defecto de la cuenta será %num_lines.  
+%num_lines comienza en el 10, y se puede modificar.
+
+Si se indica una "ubicación", 
+el desensamblaje comienza en la ubicación indicada en cada 
+uno de los procesos o hilos especificados. Si no se indica ninguna
+ubicación, la primera vez que se ejecute dis después de que se provoque
+un evento, o después de haber redefinido %frame,  comenzará en %loc. Los
+comandos dis subsiguientes continuarán a partir de la dirección
+inmediatamente posterior a la última instrucción mostrada por el comando
+dis anterior.
+
+EJEMPLOS
+dis
+dis -c 20 main
+dis file.c@10
+
+VÉASE TAMBIÉN
+%frame, %loc, %num_lines, dump, ubicación, print, lista_procesos
+++
+
+
+++ disable
+NOMBRE
+disable:  desactiva eventos.
+
+SINOPSIS
+disable núm_evento ...
+disable -a [-p lista_procesos] [tipo_evento]
+
+DESCRIPCIÓN
+El primer formato desactiva los eventos correspondientes a 
+los números de los eventos indicados.
+
+El segundo formato desactiva todos los eventos 
+del tipo_evento especificado (todos los tipos si no se 
+especifica ninguno) de los procesos indicados (el proceso  
+actual si no se especifica ninguno).  
+El "tipo_evento" puede ser "onstop", 
+"signal", "stop" o "syscall".
+
+Los eventos desactivados no afectan a los procesos ni 
+hilos a los que se aplican, pero no se 
+suprimen.  Es posible volver a activarlos usando 
+"enable".
+
+EJEMPLOS
+disable 3 5
+disable -a -p p1
+disable -a onstop
+disable -a signal
+
+VÉASE TAMBIÉN
+change, delete, enable, events, onstop, 
+lista_procesos, signal, stop, syscall
+++
+
+++ dump
+NOMBRE
+dump:  muestra el contenido de la memoria.
+
+SINOPSIS
+dump [-p lista_procesos] [-c cuenta_bytes] ubicación
+
+DESCRIPCIÓN
+Dump muestra el contenido de la memoria para cada uno de los 
+procesos especificados 
+(el valor por defecto es %proc).  
+Muestra los bytes de la "cuenta_de_bytes", 
+16 bytes por línea, en hexadecimal y ASCII, 
+comenzando por la dirección indicada en "ubicación".
+
+%num_bytes comienza por 256 y se puede cambiar.
+
+EJEMPLOS
+dump -c 16 myptr
+dump %esp
+dump 0x80001248
+
+VÉASE TAMBIÉN
+%num_bytes, dis, ubicación, print, lista_procesos
+++
+
+
+++ enable
+NOMBRE
+enable:  activa eventos.
+
+SINOPSIS
+enable núm_evento ...
+enable -a [-p lista_procesos] [tipo_evento]
+
+DESCRIPCIÓN
+El primer formato activa los eventos correspondientes a los 
+números de eventos especificados.
+
+El segundo formato activa todos los eventos 
+del tipo especificado (todos los tipos si no se 
+especifica ninguno) de los procesos indicados (el proceso 
+actual, si no se especifica ninguno).  
+El "tipo_evento" puede ser "onstop", 
+"signal", "stop" o "syscall".
+
+Sólo se pueden activar los eventos desactivados.  Una vez 
+activado, el evento volverá a afectar al proceso en el 
+que esté definido.
+
+EJEMPLOS
+enable 3 5
+enable -a -p p1
+enable -a stop
+enable -a signal
+
+VÉASE TAMBIÉN
+change, delete, disable, events, onstop, 
+lista_procesos, signal, stop, syscall
+++
+
+
+++ events
+NOMBRE
+events:  lista eventos.
+
+SINOPSIS
+events [-p lista_procesos] [núm_evento ...]
+
+DESCRIPCIÓN
+Sin argumentos, events lista todos los eventos de parada (stop), acciones 
+de señal (signal), acciones de llamada al sistema (syscall), 
+y acciones que se llevan a cabo en la parada (onstop) para el proceso actual.  
+Con la opción -p, lista los eventos asociados 
+a los procesos indicados.
+
+Si se indican uno o más números de evento, 
+events proporciona una lista completa de los eventos 
+especificados.  El listado completo incluye 
+todos los procesos para los que el evento 
+esté definido y el bloque de comandos asociado 
+completo, si existe.
+
+EJEMPLOS
+events
+events -p p1,p2
+events 3
+
+VÉASE TAMBIÉN
+change, delete, disable, enable, onstop, lista_procesos, signal,
+stop, syscall
+++
+
+
+++ grab
+NOMBRE
+grab:  controla el proceso activo o la imagen de la memoria principal.
+
+SINOPSIS
+grab  [-f all|none|procs] [-l arch_carga] objeto_activo ...
+grab -c archivo_principal archivo_objetos
+
+DESCRIPCIÓN
+El primer formato admite uno o más 
+especificadores de procesos; el programa de depuración 
+tratará de controlar cada uno de los procesos especificados 
+(el control se obtiene sólo si se dispone de los 
+permisos adecuados).  Se puede especificar cada 
+proceso como una /vía de acceso de proceso o un 
+id de proceso.
+
+La opción -l especifica un archivo de objetos alternativo que 
+se usará para cargar los símbolos correspondientes 
+al proceso.  Si se usa la opción -l, sólo se podrá especificar 
+un proceso.
+
+Si se indica -f con el argumento "none", el depurador 
+no seguirá por los procesos hijos de ninguno de 
+los procesos controlados por grab en los que se efectúa horquilla.  
+Si se indica -f con los argumentos "all" o "procs", el 
+depurador controlará todos los procesos hijos (para 
+que el depurador no controle estos procesos se 
+usa "release").  Si no se indica -f, el comportamiento 
+del depurador se regirá por %follow (el valor por 
+defecto es seguir por todos los hijos).
+
+El segundo formato abre un archivo de memoria principal 
+y su archivo de objetos correspondiente para su 
+examen.  
+Las imágenes de la memoria principal sometidas al 
+comando grab se pueden examinar usando todos los 
+comandos disponibles para examinar procesos activos, 
+pero no se pueden alterar ni ejecutar.
+
+A los procesos sometidos a la acción de
+grab, al igual que ocurre con los creados, se les asigna un
+identificador de proceso del depurador, y se puede hacer
+referencia a los mismos mediante dicho identificador, mediante el
+identificador de proceso del sistema o mediante el programa del
+que se derivan.  El primer proceso al que se aplica grab se
+convierte en el proceso actual (%proc).
+
+EJEMPLOS
+grab 123
+grab -f procs /proc/123 3455
+grab -l myobject /proc/3455
+grab -c core.save myobject
+
+VÉASE TAMBIÉN
+%follow, %proc, %program, create, lista_procesos, release, rename
+++
+
+
+++ help
+NOMBRE
+help:  solicita ayuda.
+
+SINOPSIS
+help [tema]
+
+DESCRIPCIÓN
+"tema" puede ser cualquier alias, nombre de comando, 
+o tema de la ayuda.  Si no se especifica 
+ningún tema, aparecerán los comandos y temas disponibles.
+
+EJEMPLOS
+help
+help stop
+help b
+help ubicación
+++
+
+
+++ if
+NOMBRE
+if: ramal condicional
+
+SINOPSIS
+if (expr) comando
+if (expr) comando else comando
+
+DESCRIPCIÓN
+La "expr" se evalúa en el lenguaje actual  (%db_lang o %lang), 
+dentro del contexto de proceso actual.  
+Si la evaluación es verdadera, se ejecutará la parte "then".  
+En caso contrario, se ejecutará la parte "else".  
+"comando" puede ser un solo comando o un bloque.
+
+EJEMPLOS
+stop  file.c@myfunc { if (x < 10) run; else print x }
+
+VÉASE TAMBIÉN
+%db_lang, %lang, bloque, expr, accesibilidad, while
+++
+
+
+++ input
+NOMBRE
+input:  envía entrada a un proceso.
+
+SINOPSIS
+input [-p nombre_proceso|-r pseudo_tty] [-n] cadena
+
+DESCRIPCIÓN
+Si un proceso se creó usando "create -r", su entrada y salida, 
+además de la E/S de todos los demás procesos derivados 
+del mismo programa, se habrán redireccionado a un 
+pseudo-terminal.  Para enviar entrada a un proceso de 
+esas características, se debe usar el comando input.
+
+"pseudo_term" es el nombre del pseudo terminal al que se debe 
+redireccionar la entrada.  El depurador etiqueta todos los 
+procesos redireccionados con el nombre del pseudo terminal.  
+Como alternativa, se puede proporcionar 
+un nombre de proceso o programa.  Si no se indica ningún 
+proceso ni pseudo_term, se toma el pseudo terminal 
+asociado con el programa actual.
+
+La "cadena" de entrada se envía al pseudo 
+terminal especificado, o al pseudo terminal asociado con el 
+proceso o programa especificados.  Al final de 
+la cadena se añade un salto de línea, a no ser 
+que se indique la opción -n.
+
+EJEMPLOS
+input -r pts1 "esto es una cadena"
+input -p myprog "esto es otra cadena"
+
+VÉASE TAMBIÉN
+%redir, create
+++
+
+
+++ jump
+NAME
+jump:  cambia el contador de programa del proceso.
+
+SINOPSIS
+jump [-p lista_procesos] ubicación
+
+DESCRIPCIÓN
+Antes de poder aplicar con éxito este comando, es necesario 
+suspender el proceso.  jump define el contador del programa 
+correspondiente a los procesos (%proc por defecto) como la 
+dirección especificada en "ubicación".  Cuando se 
+reanude la ejecución del proceso comenzará desde 
+esta dirección.
+
+La ubicación puede ser cualquier dirección del texto del proceso
+especificado, pero se deberán extremar las precauciones, porque jump
+no trata de ajustar el stack del proceso si la dirección se encuentra
+fuera de la función actual.  También se deberá tener cuidado cuando se
+aplique jump en código que pueda tener efectos secundarios importantes.
+
+SINOPSIS
+jump 10
+jump -p p2 main+8
+
+VÉASE TAMBIÉN
+ubicación, lista_procesos
+++
+
+
+++ kill
+NOMBRE
+kill:  envía una señal a un proceso.
+
+SINOPSIS
+kill [-p lista_procesos] [signal]
+
+DESCRIPCIÓN
+A los procesos nombrados (%proc, por defecto) se 
+les envía una "señal".  Se pueden especificar las 
+señales por su número o su nombre.  El nombre de una señal 
+se puede indicar con o sin el prefijo "SIG".  
+No se tienen en cuenta las mayúsculas y/o minúsculas.  
+Si no se especifica ninguna señal, kill usa SIGKILL.
+
+EJEMPLOS
+kill -p all
+kill sigfpe
+kill -p p3 8
+
+VÉASE TAMBIÉN
+cancel, lista_procesos, signal, signames
+++
+
+
+++ list
+NOMBRE
+list:  muestra líneas del código fuente.
+
+SINOPSIS
+list [-p lista_procesos] [-c cuenta] [id_proceso@][archivo@]función
+list [-p lista_procesos] [-c cuenta] [id_proceso@][archivo@]núm_línea
+list [-p lista_procesos] [-c cuenta] /expr_regular/
+list [-p lista_procesos] [-c cuenta] ?expr_regular?
+list [-p lista_procesos] [-c cuenta]
+
+DESCRIPCIÓN
+List muestra las líneas de código fuente correspondientes al 
+proceso o procesos especificados, o del proceso actual si no se 
+especifica ninguno.
+
+Los cuatro primeros formatos especifican los puntos iniciales de
+las líneas mostradas.  Los dos primeros permiten especificar el
+proceso, archivo, función y nº de línea.  Si se especifica un proceso,
+se ignorarán los procesos indicados en la opción -p.  El tercer formato
+encuentra la siguiente línea que coincida con la expresión regular de
+tipo ed(1).  El cuarto formato busca hacia atrás desde la línea actual. 
+La barra o signo de interrogación de cierre se pueden omitir, a no ser
+que otro comando aparezca a continuación en la misma línea.  El último
+formato continúa la visualización desde el archivo y línea en que se
+detuvo la lista anterior, o desde %file@%line después de que se provoque
+un evento o se redefina %frame.
+
+Si se indica una cuenta, se mostrará el número de líneas correspondiente
+a la misma.  De lo contrario, se mostrarán las líneas correspondientes a 
+%num_lines.  %num_lines comienza por 10 y se puede modificar.
+
+Después de mostrar un bloque de líneas, se define %list_file 
+como el nombre del archivo mostrado y %list_line se define
+como el número de la última línea de código fuente mostrada.
+
+EJEMPLOS
+list -c 20
+list myfile@1
+list myfunc
+list /x/
+list ?foobar
+list /
+
+VÉASE TAMBIÉN
+%file, %frame, %line, %list_file, %list_line, ubicación,
+print, lista_procesos, expr_regular
+++
+
+++ map
+NAME
+map:  muestra el mapa de direcciones virtuales.
+
+SINOPSIS
+map [-p lista_procesos]
+
+DESCRIPCIÓN
+Muestra el mapa de direcciones virtuales para uno o más 
+procesos.  Sin argumentos, muestra el mapa 
+correspondiente al proceso actual (%proc).  Con la opción -p, 
+muestra el mapa de cada proceso representado por el 
+conjunto de procesos dado.
+
+VÉASE TAMBIÉN
+create, grab, lista_procesos
+++
+
+
+++ symbols
+NOMBRE
+symbols:  muestra los nombres, valores y tipos de los símbolos.
+
+SINOPSIS
+symbols [-p lista_procesos] [-o objeto] [-n archivo] [-dfgltuv] [patrón]
+
+DESCRIPCIÓN
+Muestra la lista de nombres de variables visiblesdesde la trama actual
+(%frame) en los procesos especificados (por defecto %proc).
+Sin opciones (o con la opción -l), muestra los nombres locales
+definidos en la función actual (%func).
+La opción -f muestra sólo los nombres visibles que son locales
+al archivo actual (%file). Si se indica un "nombre de archivo"
+con la opción -n, en su lugar se muestran los símbolos de ese archivo.
+La opción -g muestra sólo los nombres globales visibles definidos en el
+objeto actual (librería compartida o de archivos ejecutables).
+Cuando se usa con la opción -o, la opción -g muestra los nombres
+globales definidos en un objeto especificado.
+La opción -d muestra variables integradas del depurador.
+La opción -u muestra las variables de usuario mantenidas por el
+depurador.
+
+Si se indica un patrón de tipo sh(1), restringirá aún más la 
+información mostrada, de forma que sólo se mostrarán 
+aquellos nombres que coincidan con el patrón.
+
+La opción -t muestra los tipos de símbolos además 
+de los nombres.  La opción -v muestra los valores de 
+los símbolos.  Obsérvese que, cuando el lenguaje 
+actual es C++, symbols -v no muestra los miembros 
+de la clase estática.  Estos últimos se pueden 
+mostrar en pantalla imprimiendo el símbolo con el 
+comando "print".
+
+EJEMPLOS
+symbols -ftv
+symbols -g -o libc.so.1 exec*
+
+VÉASE TAMBIÉN
+%file, %frame, %func, patrón, print, lista_procesos
+++
+
+
+++ print
+NOMBRE
+print:  imprime el valor de una expresión.
+
+SINOPSIS
+print [-p lista_procesos] [-f formato] [-v] expr, ...
+
+
+DESCRIPCIÓN
+Muestra los resultados de evaluar una lista de expresiones separadas por
+comas.  Las expresiones se evalúan dentro del contexto de los procesos
+que se indiquen (el valor por defecto es %proc).  La opción -f requiere
+un formato.  Las expresiones pueden contener variables de programas,
+variables integradas del depurador (%line, por ejemplo), y variables
+definidas por el usuario ($myvar, $HOME).  La evaluación de la llamada
+a una función tiene como resultado que el depurador crea una trama de
+stack para dicha función y la ejecute.  Los eventos del depurador se
+desactivan durante la ejecución de la función.  Las expresiones se
+evalúan en el lenguaje actual (%lang o %db_lang).  Después de cada
+expresión se imprime un espacio, y al final se añade un salto de línea,
+a no ser que se especifique un formato.
+
+La opción -v proporciona información más detallada.  
+La información adicional incluye prototipos de 
+función de todas las funciones a las que llama 
+el depurador cuando evalúa la expresión.  Esto es de 
+gran utilidad en C++ para ver cómo se resuelven 
+las funciones sobrecargadas.  La opción -v también 
+mostrará los miembros de clase y estructura 
+generados por el compilador, tales como los punteros 
+correspondientes a las tablas de funciones 
+virtuales.
+
+También es posible usar el comando "set" para evaluar las expresiones 
+del lenguaje.  Sin embargo, "set" no imprime el resultado de una 
+expresión. Se usa principalmente para evaluar una expresión en relación
+con los efectos secundarios que puede provocar, tales como la asignación.
+
+EJEMPLOS
+print %line, %file, %func
+print "a[i] == ", a[i]
+print *ptr->next
+print -f "0x%x\n" main
+print -v myfunc(1, 2, 3)
+
+VÉASE TAMBIÉN
+%db_lang, %lang, C++, expr, formato, lista_procesos, accesibilidad, set
+++
+
+++ ps
+NOMBRE
+ps: lista el estado de los procesos.
+
+SINOPSIS
+ps [-p lista_procesos]
+
+DESCRIPCIÓN
+Lista el estado de los procesos controlados.  Si no 
+se indica la opción -p, lista el estado de todos los procesos controlados.  
+El proceso actual (%proc), se marca con un asterisco (*).
+
+VÉASE TAMBIÉN
+lista_procesos
+++
+
+++ pwd
+NOMBRE
+pwd:  imprime el directorio de trabajo actual.
+
+SINOPSIS
+pwd
+
+DESCRIPCIÓN
+pwd imprime el directorio de trabajo actual del depurador.
+
+VÉASE TAMBIÉN
+cd
+++
+
+++ quit
+NOMBRE
+quit:  abandona el depurador.
+
+SINOPSIS
+quit
+
+DESCRIPCIÓN
+Sale del depurador.  Todos los procesos controlados se destruirán con 
+kill (si se habían creado) o se liberarán y ejecutarán (si se habían 
+sometido a la acción de grab).
+
+VÉASE TAMBIÉN
+release
+++
+
+++ release
+NOMBRE
+release:  libera uno o más procesos controlados.
+
+SINOPSIS
+release [-s] [-p lista_procesos]
+
+DESCRIPCIÓN
+El depurador dejará de controlar y de realizar el 
+seguimiento de los procesos nombrados 
+(por defecto %proc).  Con la opción -s, los procesos 
+se liberan en un estado de parada; sin ella cada 
+proceso se libera y se permite su ejecución.  Es posible 
+liberar un proceso incluso en el caso de que el 
+depurador no lo haya controlado con el comando 
+grab; es decir, también es posible liberar los procesos 
+creados con create.
+
+EJEMPLOS
+release -p p1
+release -s
+
+VÉASE TAMBIÉN
+lista_procesos, quit
+++
+
+++ run
+NOMBRE
+run:  ejecuta los procesos.
+
+SINOPSIS
+run [-p lista_procesos] [-bfr] [-u ubicación]
+
+DESCRIPCIÓN
+Ejecuta la lista especificada de procesos (por defecto, %proc).  La 
+opción -f especifica que el depurador va a ejecutar el proceso en 
+primer plano, es decir, esperará a que el proceso se detenga para 
+devolver el control al usuario.  La opción -b especifica ejecución en 
+segundo plano (sin espera).  El control se devuelve inmediatamente al
+usuario, y se inicia el proceso.  Si no se especifica -f ni -b, el valor
+por defecto vendrá determinado por el valor de la variable %wait del
+depurador.
+
+La opción -r hace que el proceso se ejecute hasta que 
+vuelve la función actual.  La opción -u especifica una 
+"ubicación" en la que ejecutarse.
+
+EJEMPLOS
+run -p all -b
+run -r
+run -u 108
+
+VÉASE TAMBIÉN
+%wait, ubicación, lista_procesos, step
+++
+
+++ script
+NOMBRE
+script - ejecuta un guión de comandos del depurador.
+
+SINOPSIS
+script [-q] archivo
+
+DESCRIPCIÓN
+Lee y ejecuta los comandos del depurador 
+desde un archivo.  Los comandos se muestran en pantalla (echo) 
+antes de su ejecución, a no ser que se indique 
+la opción -q.  Los guiones se pueden anidar.
+++
+
+++ set
+NOMBRE
+set:  modifica una variable del depurador o de un programa.
+
+SINOPSIS
+set [-p lista_procesos] [-v] var_depurador_o_usuario [=] expr
+    [,expr...]
+set [-p lista_procesos] [-v] expresión_lenguaje
+
+DESCRIPCIÓN
+El comando set tiene dos formatos.  El primero se usa para asignar
+un nuevo valor a una variable integrada del depurador o variable de
+usuario mantenida por el depurador (por ejemplo, %lang o $foo).  Los
+valores válidos de expr dependen de la variable.  Algunas, como %lang,
+toman una serie de nombres definidos especialmente.  Otras pueden tomar
+cualquier expresión de lenguaje que se pueda convertir a un valor de
+cadena.  En el caso de una lista de cadenas y variables de usuario
+(separadas por comas), los valores de cadena de estas expresiones están
+concatenados.  Véase la ayuda sobre cada una de las variables del
+depurador para obtener sus valores válidos específicos.
+
+En el segundo formato, set se puede usar para 
+evaluar cualquier expresión de lenguaje, aunque su uso 
+típico es la evaluación de una expresión de 
+asignación.  Si se especifica más de un proceso, el 
+comando se evalúa, de forma sucesiva, dentro 
+del contexto de cada proceso.
+
+La opción -v lista los prototipos de función de todas las funciones a
+las que llama el depurador mientras evalúa una expresión.  Esto es de
+gran utilidad en C++ para ver cómo se resuelven las funciones sobrecargadas.
+
+EJEMPLOS
+set %global_path = %global_path, ":src/new/mydir"
+set -p all %path = "mydir"
+set %frame 2
+set %eax = 0x3421
+set x = 3
+set -v myfunc(a, b)
+
+VÉASE TAMBIÉN
+%db_lang, %lang, C++, expr, lista_procesos, accesibilidad, vars_de_usuario
+++
+
+
+++ signal
+NOMBRE
+signal:  define o lista las acciones de señales para un proceso.
+
+SINOPSIS
+signal [-p lista_procesos] [-iq] [signal ... [comando]]
+
+DESCRIPCIÓN
+Cuando se incluye una señal en un proceso, el depurador, por defecto,
+intercepta la señal y avisa que ha tenido lugar.  Entonces, la señal 
+se puede cancelar usando el comando "cancel", o se puede dejar que el
+proceso continúe y reciba la señal.  La opción -i con uno o más nombres
+o números de señal (véase "kill") especifica que el depurador ignorará
+esas señales (y no interceptará aquéllas correspondientes a los procesos
+indicados en lista_procesos).  Los nombres de las señales se pueden
+indicar con o sin el prefijo "SIG".  No hay distinción entre mayúsculas
+y minúsculas. Si se vuelve a especificar la señal sin la opción -i, se
+vuelve a establecer la acción por defecto correspondiente a dicha señal.
+
+Si se indica un comando con un conjunto de señales, 
+el depurador establecerá un evento para dicho 
+conjunto.  Este evento se podrá suprimir, desactivar y 
+activar, al igual que los eventos "stop", 
+"onstop" y "syscall".  Es posible asignar múltiples 
+eventos para la misma señal.  Aunque se supriman 
+todos los eventos correspondientes a una señal dada 
+no se suprime la acción por defecto del 
+depurador para esa señal.  La opción -q indica que 
+el evento de la señal no se va a anunciar.
+
+Sin argumentos, lista las acciones de las señales correspondientes a
+la lista de procesos indicada en lista_procesos.
+
+Al contrario de lo que ocurre con la mayor parte de 
+los comandos, si no se indica ninguna opción -p con 
+el comando signal, sus acciones se aplicarán a todos los 
+procesos derivados del programa actual (%program).
+
+EJEMPLOS
+signal -i fpe emt
+signal SIGFPE
+signal 8 { if (x == 0) cancel 8; run }
+
+VÉASE TAMBIÉN
+comando_asociado, cancel, delete, disable, enable, kill, lista_procesos, signames
+++
+
+++ step
+NOMBRE
+step:  recorre el proceso paso a paso.
+
+SINOPSIS
+step [-p lista_procesos] [-ibfoq] [-c cuenta]
+
+DESCRIPCIÓN
+Los procesos nombrados (por defecto, %proc) 
+se recorrerán paso a paso tantas veces 
+como indique "cuenta" (valor por defecto: 1).  Una 
+cuenta explícita de 0 indica ejecutar step 
+repetidamente, hasta que un evento lo detenga o interrumpa.
+
+Con la opción -i, el comando step se ejecutará 
+de instrucción en instrucción;  sin esta opción, de 
+sentencia en sentencia.  Con la opción -o, step 
+se realizará sin entrar en las llamadas de función 
+(tratará cada subrutina como una sola instrucción);  
+sin ella, entrará en las llamadas de función.
+
+La opción -f especifica que el depurador esperará 
+hasta que el proceso se detenga antes de devolver el 
+control al usuario, es decir, ejecutará el proceso 
+en primer plano.  La opción -b especifica que la 
+ejecución se llevará a cabo en segundo plano (sin 
+espera).  Se inicia el proceso, pero se devuelve el 
+control inmediatamente al usuario.  Si no se especifica 
+-f ni -b, el valor por defecto vendrá determinado 
+por la variable del depurador %wait.
+
+La opción -q especifica que el depurador no anunciará 
+el identificador del proceso para el que se esté 
+ejecutando el comando step, ni imprimirá la siguiente 
+línea de código fuente.
+
+EJEMPLOS
+step -io
+step -b
+step -p all -c 10
+
+VÉASE TAMBIÉN
+%verbose, %wait, proceso, lista_procesos, run
+++
+
+
+++ halt
+NOMBRE
+halt:  detiene un proceso que se está ejecutando en segundo plano.
+
+SINOPSIS
+halt [-p lista_procesos]
+
+DESCRIPCIÓN
+El depurador ordena a todos los procesos nombrados (por 
+defecto, %proc) que suspendan la ejecución inmediatamente.  
+Es posible que la solicitud 
+no se lleve a efecto 
+instantáneamente, debido a las variaciones de 
+la planificación y la latencia del sistema.
+
+"halt" no tiene utilidad para los procesos que se 
+ejecuten en primer plano, puesto que el depurador no 
+devuelve el control al usuario hasta que dichos 
+procesos se detienen.  Para detener un proceso que se 
+esté ejecutando en primer plano, pulse la tecla de 
+interrupción (generalmente, "Supr").
+
+VÉASE TAMBIÉN
+%wait, lista_procesos, run, step
+++
+
+++ syscall
+NAME
+syscall:  define el seguimiento de las llamadas al sistema.
+
+SINOPSIS
+syscall [-p lista_procesos] [[-eqx] [-c cuenta] call ... [comando]]
+
+DESCRIPCIÓN
+Especifica las acciones que se llevarán a 
+cabo cada vez que un proceso entre o salga 
+de una llamada al sistema.  Sin argumentos, lista las 
+acciones actuales de llamada al sistema correspondientes 
+a los procesos nombrados.
+
+Si se indican uno o más nombres o números de 
+llamadas al sistema, el depurador suspenderá el proceso 
+al entrar (-e, por defecto) y/o salir (-x) de esas llamadas 
+al sistema.  Se anunciará el evento de llamada 
+al sistema, y se ejecutarán todos los "comandos" asociados.
+
+La opción -q especifica que no se anunciarán los 
+eventos.  La opción -c especifica que el evento se 
+provocará tantas veces como indica "cuenta" antes 
+de que el depurador suspenda el proceso.  El 
+proceso se suspenderá, subsiguientemente, todas 
+las veces que se provoque el evento.
+
+Use "help sysnames" para obtener la lista de los 
+nombres válidos de las llamadas al sistema.  No hay distinción entre
+mayúsculas y minúsculas.
+
+Al contrario de lo que ocurre con la mayor parte de 
+los demás comandos, si no se indica la opción -p del c
+omando syscall, sus acciones se aplican a todos 
+los procesos derivados del programa actual (%program).
+
+EJEMPLOS
+syscall -c 10 write { if (fd == 5) run }
+syscall -qx read
+
+VÉASE TAMBIÉN
+%program, comando_asociado, delete, disable, enable, events, lista_procesos
+++
+
+
+++ regs
+NAME
+regs:  muestra el contenido de los registros del procesador.
+
+SINOPSIS
+regs [-p lista_procesos]
+
+DESCRIPCIÓN
+Muestra en hexadecimal el contenido de los registros 
+del procesador correspondientes a los procesos especificados (por 
+defecto, %proc).
+
+VÉASE TAMBIÉN
+dis, dump, lista_procesos
+++
+
+
+++ stack
+NAME
+stack:  muestra el seguimiento inverso de la llamada a la función.
+
+SINOPSIS
+stack [-p lista_procesos] [-f trama] [-c cuenta] [-a dirección ] [ -s stack ]
+
+DESCRIPCIÓN
+Muestra las funciones activas correspondientes a los procesos 
+nombrados (por defecto, %proc).  Las funciones se 
+muestran con sus nombres, nombre y valor de sus 
+argumentos, así como el número de línea activa 
+o dirección de la función.  Los nombres de las 
+funciones, los nombres de los argumentos, y los 
+números de las líneas pueden no estar disponibles si 
+no hay suficiente información simbólica.
+
+"cuenta" indica el nombre de tramas que se deben mostrar.  
+Si no se especifica ninguna, se mostrará el stack 
+completo.  La opción -f especifica el número de 
+tramas con que se comenzará a mostrar.  Las 
+tramas se numeran desde 0 comenzando por la parte 
+inferior del stack (trama inicial).
+
+Las opciones -a y -s le permiten especificar una 
+dirección inicial (contador de programa) y/o valor inicial 
+para el puntero del stack.  Esto puede resultar de 
+gran utilidad cuando se trate de obtener el 
+seguimiento de un stack para un proceso que haya 
+saltado a alguna dirección no válida, o cuyo 
+puntero de stack esté deteriorado.  En ambas opciones 
+la dirección se deberá indicar en hexadecimal.
+
+EJEMPLOS
+stack -p p2
+stack -f 2 -c 3
+stack -a 0x80494958 -s 0xbfff8004
+
+VÉASE TAMBIÉN
+lista_procesos
+++
+
+++ while
+NOMBRE
+while:  bucle condicional
+
+SINOPSIS
+while (expr) comando
+
+DESCRIPCIÓN
+La "expr" se evalúa en el lenguaje actual 
+(%lang o %db_lang) dentro del 
+contexto del proceso actual (%proc).  Si el resultado de la 
+evaluación es verdadero, se ejecuta el "comando".  
+En ese caso, se repite la secuencia.  "comando" puede 
+ser un solo comando o un bloque.
+
+EJEMPLOS
+while ($foo < 10) { print $foo, a[$foo]; set $foo = $foo + 1 }
+
+VÉASE TAMBIÉN
+%db_lang, %lang, bloque, break, continue, expr, if, accesibilidad
+++
+
+
+++ cd
+NOMBRE
+cd:  cambia el directorio de trabajo actual.
+
+SINOPSIS
+cd [vía_acceso]
+
+DESCRIPCIÓN
+cd cambia el directorio de trabajo actual del depurador 
+por el directorio indicado en "nombre_de_vía_de_acceso".  
+Si no se indica ningún nombre de vía de acceso, 
+cd usa el directorio especificado en la 
+variable de entorno HOME.
+
+VÉASE TAMBIÉN
+pwd
+++
+
+++ change
+NOMBRE
+change:  modifica un evento existente.
+
+SINOPSIS
+change núm_evento [-p lista_procesos] [-evqx] [-c cuenta]
+        [expr_parada|call...|signal...] [{comandos}]
+
+DESCRIPCIÓN
+event_num debe aparecer en primer lugar y es el número de un evento válido y
+existente.  Las restantes opciones le permiten modificar los diversos atributos
+de dicho evento:  
+1) la lista de procesos a la que se aplica (-p);  
+2) el nivel de detalle de la información facilitada (-q indica que no se avisará,
+   y -v que se proporcionará información detallada);  
+3) para las llamadas del sistema, si el evento tiene lugar al entrar, al salir o
+   en ambos casos (-ex);  
+4) para los eventos de parada y de llamada al sistema, el número de veces que se
+   produce el evento antes de anunciarlo (-c);  
+5) la expresión, lista de llamadas al sistema o lista de señales asociadas a un
+   evento;  y 
+6) los comandos asociados (que deberán indicarse entre llaves {}).
+
+EJEMPLOS
+change 3 -q
+change 5 -p p2 -c 10
+change 7 { print "x == ", x }
+change 9 -x write
+
+VÉASE TAMBIÉN
+assocmd, delete, disable, enable, events, 
+onstop, lista_procesos, signal, stop, syscall
+++
+
+++ export
+NAME
+export:  añade un par nombre-valor al entorno.
+
+SINOPSIS
+export $nombre_de_usuario
+
+ESCRIPCIÓN
+Exporta una variable definida por el usuario y mantenida por el depurador al
+entorno.  "username" (y su valor actual) pasa a formar parte del entorno que
+reciben los procesos creados por el depurador.  Si el valor de 
+$nombre_de_usuario cambia, se deberá volver a exportar para que el nuevo valor
+pase a formar parte del entorno.  Obsérvese que "nombre_de_usuario" se exporta
+sin el prefijo $.
+
+VÉASE TAMBIÉN
+vars_de_usuario
+++
+
+++ fc
+NOMBRE
+fc: encuentra, edita y vuelve a ejecutar comandos.
+
+SINOPSIS
+fc [-e ename] [-nlr] [primero [último]]
+fc -e - [antiguo=nuevo] [comando]
+
+DESCRIPCIÓN
+"fc" proporciona edición y recuperación de comandos del tipo ksh(1).  En el
+primer formato, se seleccionan una serie de comandos desde "primero" hasta 
+"último" de entre los últimos comandos HISTSIZE introducidos.  Los argumentos
+primero y último se pueden especificar como números o cadenas. Se usa una cadena
+para ubicar el comando más reciente que comience por la cadena dada.  Se usa un
+número negativo como desviación con respecto al número de comando actual.
+
+Si se indica la opción -l, los comandos se enumeran en la salida estándar.
+De lo contrario, se invoca al programa editor "ename" en un archivo temporal
+que contiene los comandos.  Si no se suministra ename, se usa como editor el
+valor de la variable de entorno FCEDIT (por defecto, /usr/bin/ed).  Una vez
+completada la edición, se ejecutan los programas editados.
+
+Si no se especifica el primero, el valor por defecto 
+es el comando anterior para la edición y el -16 para 
+el listado. La opción -r invierte el orden de los 
+comandos;  la opción -n suprime los números de los 
+comandos al realizar el listado.
+
+En el segundo formato, el "comando" se vuelve a ejecutar 
+después de haber llevado a cabo la 
+sustitución "antiguo=nuevo".  Si no se proporciona 
+ningún comando, se toma por defecto el comando 
+anterior.
+
+VÉASE TAMBIÉN
+%mode
+++
+
+++ logoff
+NOMBRE
+logoff:  detiene el registro de entrada a la sesión.
+
+SINOPSIS
+logoff
+
+DESCRIPCIÓN
+Cancela el registro de entrada a la sesión.
+
+VÉASE TAMBIÉN
+logon
+++
+
+
+++ logon
+NOMBRE
+logon:  comienza el registro de entrada a la sesión.
+
+SINOPSIS
+logon [arch_registro]
+
+ESCRIPCIÓN
+Comienza el registro de entrada a la sesión.  Toda la salida del depurador
+se envía a "archivo_de_registro".  Cada línea de salida va precedida por un
+signo # (comentario).  Los comandos del depurador también se envían a 
+archivo_de_registro, pero sin el signo # delante.  Si no se especifica 
+ningún archivo_de_registro, se toma por defecto el último archivo_de_registro
+usado en la sesión del depurador.  Los nuevos comandos y salidas se añaden al
+final de este archivo.  Los archivos de registro creados por el depurador se
+pueden usar como guiones de los comandos del depurador.
+
+VÉASE TAMBIÉN
+logoff, script
+++
+
+
+++ onstop
+NOMBRE
+onstop:  define la acción que se llevará a cabo cuando se detenga el 
+proceso.
+
+SINOPSIS
+onstop [-p lista_procesos] [comando]
+
+DESCRIPCIÓN
+Sin un argumento para "comando", lista las acciones onstop actuales 
+correspondientes a la lista de procesos especificada 
+en "lista_procesos".
+
+"comando" puede ser un solo comando o un bloque de 
+comandos.  Si se especifica un comando o un bloque, cada vez 
+que uno de los procesos especificados 
+se detiene, se ejecutan los comandos (en el 
+contexto de dicho proceso).  La parada 
+incluye las etapas individuales y la parada de 
+otro evento del depurador (signal, syscall, stop).
+
+Al contrario de lo que ocurre con la mayor parte de los demás 
+comandos, si no se indica la opción -p para el comando onstop, 
+sus acciones se aplicarán a todos los procesos 
+derivados del programa actual (%program)
+
+EJEMPLOS
+onstop -p p2
+onstop { print i, x[i] }
+
+VÉASE TAMBIÉN
+%program, delete, disable, enable, events, signal,
+stop, syscall
+++
+
+++ rename
+NOMBRE
+rename:  modifica el nombre por el que se conoce a un programa.
+
+SINOPSIS
+rename nombre_del_programa nombre
+
+DESCRIPCIÓN
+Cuando se crea un proceso, o se controla con grab, el nombre del
+ejecutable del que se derivó el proceso se puede usar para hacer
+referencia a todos los procesos derivados de ese ejecutable, y se
+pueden usar en cualquier lista_procesos.  rename especifica un nuevo 
+nombre que se deberá usar para ese programa.
+
+VÉASE TAMBIÉN
+create, grab, lista_procesos
+++
+
+++ %file
+NOMBRE
+%file:  el archivo de origen actual.
+
+DESCRIPCIÓN
+%file se define como el nombre del archivo de origen asociado a la
+trama actual, si ésta es conocida, siempre que un proceso se detiene o
+se modifica %frame.  Cada proceso tiene su propio %file.  El primer
+comando "list" posterior a la definición de %frame mostrará el código
+fuente de %file si no se especifica ningún nombre de archivo.  No se
+puede cambiar %file explícitamente.
+
+VÉASE TAMBIÉN
+%frame, %line, %list_file, %list_line, list
+++
+
+++ %follow
+NOMBRE
+%follow:  ¿debe seguir el depurador por el proceso hijo?
+
+DESCRIPCIÓN
+El depurador controla los procesos para el usuario que hayan sido
+creados por el depurador como resultado del comando "create", o
+que el depurador haya comenzado a controlar mientras ya se estaban
+ejecutando como resultado del comando "grab".  Si se define %follow
+ya sea en "all" o "procs", el depurador también controlará los
+procesos hijo de todos los procesos controlados en los que se efectúa
+horquilla.  Si el valor definido para %follow es "none", no se
+controlará ningún proceso hijo.  Los valores establecidos por los
+comandos "grab" o "create" individuales pueden prevalecer sobre el
+modo global definido con %follow.  Todos los procesos controlados se
+pueden liberar de este control mediante el comando "release".
+
+El valor por defecto de %follow es "all" (todos).
+
+VÉASE TAMBIÉN
+create, grab, release, set
+++
+
+++ %frame
+NOMBRE
+%frame:  el número de trama actual del stack de llamadas.
+
+SINOPSIS
+La accesibilidad por defecto para los listados de código fuente,
+búsqueda de símbolos, desensamblaje y evaluación de expresiones.  
+%frame toma el valor del número de la trama superior (se empieza
+a contar por la trama inicial que es el 0) siempre que un proceso se 
+detiene.  Cada proceso tiene su propio %frame.  %frame se puede
+definir explícitamente a través del comando "set".  Si se define 
+%frame, también se redefinirán las variables relacionadas %db_lang,
+%file, %func, %line, %list_file, %list_line y %loc, a fin de mantener
+una visión coherente del contexto actual.
+
+VÉASE TAMBIÉN
+%db_lang, %file, %func, %line, %loc
+++
+
+
+++ %func
+NOMBRE
+%func:  la función actual.
+
+DESCRIPCIÓN
+%func se define como el nombre de la función correspondiente a la trama
+actual (%frame) siempre que se detiene un proceso, o se modifica %frame.
+Cada proceso tiene su propia %func.  Se puede definir %func explícitamente
+con el comando "set", pero sólo como una función que tenga una trama activa
+del stack (y las variables relacionadas %db_lang, %file, %func, %line, 
+%list_file, %list_line y %loc) también se actualizarán a fin de reflejar el
+nuevo contexto.
+
+VÉASE TAMBIÉN
+%frame
+++
+
+
+++ %lang
+NOMBRE
+%lang:  el lenguaje actual.
+
+DESCRIPCIÓN
+Es el lenguaje actual.  Si está definido, prevalece sobre el valor 
+de %db_lang.  Las cadenas válidas que se pueden asignar a %lang son:
+        C       ANSI C
+        C++     C++ versión 2 
+Si %lang no está definido, o está definido con la cadena nula (""),
+el depurador usará %db_lang como lenguaje actual.  Los 
+comandos que usan %lang para evaluar una expresión son:
+if, print, set, stop, while.
+
+VÉASE TAMBIÉN
+%db_lang, expr
+++
+
+++ %loc
+NOMBRE
+%loc:  la ubicación actual.  
+
+DESCRIPCIÓN
+El punto actual de ejecución, %loc toma el valor del "contador de
+programa" correspondiente a la trama actual siempre que se 
+detiene un proceso, o que se modifica %frame.  Cada proceso 
+tiene su propia %loc.  No es posible modificar %loc explícitamente.
+El primer comando "dis" que se ejecute después de haber definido
+%frame desensamblará las instrucciones, comenzando por el punto
+indicado en %loc, si no se indica ninguna ubicación explícitamente.
+
+VÉASE TAMBIÉN
+%frame, dis
+++
+
+++ %list_file
+NOMBRE
+%list_file:  el nombre del último archivo listado.
+
+DESCRIPCIÓN
+%list_file controla cuál es el último archivo mostrado con el
+comando list. %list_file cambia siempre que se ejecuta el comando
+list, y también se redefine como el nombre del archivo que
+contiene la ubicación actual (%loc) de la trama actual (%frame)
+cada vez que se detiene un proceso, o que se cambia %frame.  Cada
+proceso tiene su propio %list_file.
+
+VÉASE TAMBIÉN
+%file, %frame, %line, %list_line, list
+++
+
+++ %list_line
+NOMBRE
+%list_line:  el número de la línea listada en último lugar.
+
+DESCRIPCIÓN
+%list_line controla la última línea visualizada por el comando list.
+%list_line cambia cada vez que se ejecuta el comando list y también
+se restaura al número de línea que contiene la ubicación actual
+(%loc) en la trama actual (%frame) cada vez que se detiene un proceso
+o se cambia %frame. Cada proceso tiene su propio %list_line.
+
+VÉASE TAMBIÉN
+%file, %frame, %line, %list_file, list
+++
+
+++ %line
+NOMBRE
+%line:  el nombre de la línea actual.
+
+
+DESCRIPCIÓN
+%line toma el valor del número de línea que contiene la ubicación actual
+(%loc) de la trama actual (%frame) cada vez que se detiene un proceso, o
+que cambia %frame.  Cada proceso tiene su propia %line.  El primer comando
+"list" que se ejecute después de haber definido %frame, mostrará el código
+fuente comenzando por %line si no se especifica ninguna ubicación.  No es
+posible definir %line explícitamente.
+
+VÉASE TAMBIÉN
+%frame, %file, %list_file, %list_line, list
+++
+
+++ %mode
+NOMBRE
+%mode:  el modo de edición de líneas actual.
+
+DESCRIPCIÓN
+El depurador soporta la historia y edición de comandos de tipo ksh(1).
+%mode es el modo de edición utilizado para la edición de las líneas 
+de comandos.  %mode se define en el arranque como el valor de la 
+variable de entorno VISUAL, o, si ésta no existe, como el valor de 
+la variable de entorno EDITOR.  Se puede redefinir en cualquier 
+momento usando el comando "set".  Los valores válidos son "vi" y 
+"emacs".  Si se trata de asignar cualquier otro valor a %mode, la 
+edición de comandos quedará cancelada.
+
+VÉASE TAMBIÉN
+fc
+++
+
+++ %path
+NOMBRE
+%path:  la vía de acceso de búsqueda local para los archivos de origen.
+
+DESCRIPCIÓN
+Cada programa tiene su propia %path.  El valor de %path debe ser una
+lista de nombres de directorios separados por punto y coma.  Cuando el 
+depurador trata de mostrar las líneas de código fuente de un archivo, 
+buscará en los directorios enumerados en %path el archivo que tenga 
+el nombre correcto.  Una vez que haya buscado en la lista de la vía de 
+acceso local correspondiente al programa en cuestión, el depurador 
+buscará en la lista de la vía de acceso global (%global_path).
+
+VÉASE TAMBIÉN
+%global_path
+++
+
+++ %proc
+NOMBRE
+%proc:  el proceso actual.
+
+DESCRIPCIÓN
+Esta variable contiene el nombre del proceso actual.  Se puede 
+definir explícitamente con el comando "set", o implícitamente con 
+"create", "grab" o "release".  Al definir %proc se definen también 
+implícitamente %program y %frame.
+
+VÉASE TAMBIÉN
+%frame, %program, lista_procesos
+++
+
+++ %program
+NOMBRE
+%program:  el programa actual.
+
+DESCRIPCIÓN
+Esta variable contiene el nombre del programa que contiene el
+proceso actual (%proc). Es posible definirla explícitamente con
+el comando "set", o implícitamente con "create", "grab" o
+"release".  Los programas reciben el nombre del archivo
+ejecutable del que se derivan, y se pueden renombrar usando el
+comando "rename".  Cuando se define %program con "set", se
+definen también, implícitamente, %proc, %thread y %frame.
+
+VÉASE TAMBIÉN
+%proc, lista_procesos
+++
+
+++ %prompt
+NOMBRE
+%prompt:  la cadena del indicador del depurador.
+
+DESCRIPCIÓN
+El depurador pide al usuario que teclee información imprimiendo 
+en pantalla el valor de %prompt.  El valor por defecto es "debug> ".  
+Puede cambiar %prompt con el comando "set".
+++
+
+++ %thisevent
+NOMBRE
+%thisevent:  el número del evento que se está gestionando actualmente.
+
+DESCRIPCIÓN
+Dentro de un comando asociado, %thisevent tomará el valor 
+del número del evento con el que los comandos están asociados.  
+No se puede modificar el valor de %thisevent 
+explícitamente.
+
+VÉASE TAMBIÉN
+%lastevent, comando_asociado
+++
+
+
+++ %lastevent
+NOMBRE
+%lastevent:  el número del evento de más reciente creación.
+
+DESCRIPCIÓN
+Después de un comando que asigne un número de 
+evento (stop, signal, syscall u onstop),  
+%lastevent tomará el valor del número del 
+evento que se acabe de asignar.  No se puede 
+modificar explícitamente el valor de %lastevent.
+
+VÉASE TAMBIÉN
+%thisevent
+++
+
+
+++ comando_asociado
+NOMBRE
+comando_asociado:  un comando o bloque del depurador.
+
+DESCRIPCIÓN
+Varios comandos admiten opcionalmente un comando o bloque de
+comandos asociado. Este debe aparecer en último lugar en la lista
+de argumentos, y puede incluir comandos con sus propios comandos
+asociados (es decir, los comandos asociados se pueden anidar).
+El comando o comandos se ejecutarán siempre que se produzca el
+evento relevante en cada caso (stop, signal, etc.).  Dentro de un
+comando asociado, %thisevent contiene el número del evento que se
+esté gestionando. El proceso o hilo en el que esté el evento se
+convierte temporalmente en el actual, mientras los comandos se ejecutan.
+
+VÉASE TAMBIÉN
+%thisevent, bloque, onstop, signal, stop, syscall
+++
+
+++ bloque
+NOMBRE
+bloque:  una lista de comandos.
+
+DESCRIPCIÓN
+Un comando o una lista de comandos separados 
+por punto y coma, entre llaves.  Los bloques 
+se pueden usar como comandos_asociados 
+o pueden ser independientes de los demás 
+comandos.  Los bloques se pueden usar para agrupar 
+comandos para redireccionar su salida con un 
+solo redireccionamiento.
+
+EJEMPLOS
+{ if (i) print *ptr; else print *mptr } > myfile
+
+VÉASE TAMBIÉN
+comando_asociado, redireccionamiento
+++
+
+++ formato
+NOMBRE
+formato:  la forma que toma la salida del comando "print".
+
+DESCRIPCIÓN
+El formato es una cadena de caracteres similar a la aceptada 
+por la rutina printf del lenguaje C.
+Toda especificación de formato puede tener la forma siguiente:
+%[indicadores][anchura][.[precisión]][carácter_conversión]carácter_formato
+Todos los campos tienen el mismo significado que en la rutina printf.
+La anchura y la precisión están limitadas a 1024. No se aceptan
+los parámetros posicionales ni el carácter de formato 'n' de printf.
+Cada especificación de formato corresponde a una de las expresiones
+indicadas en el comando print, en el orden en que aparece.
+Los caracteres que no forman parte de las especificaciones de
+formato se imprimen tal y como se indican. Los caracteres de formato
+tienen los siguientes significados:
+        c       carácter sin signo
+        d,i     entero decimal con signo
+        e,E     coma decimal del tipo [-]d.ddde+/-dd
+        f       coma decimal del tipo [-]ddd.dddd
+        g,G     coma decimal de cualquiera de los dos tipos anteriores
+        o       entero octal sin signo
+        p       vacío * (puntero genérico; dirección hexadecimal)
+        s       cadena
+        u       entero decimal sin signo
+        x,X     entero hexadecimal sin signo
+        z       formato por defecto del depurador para la expresión
+        %       %
+
+VÉASE TAMBIÉN
+print
+++
+
+++ ubicación
+NOMBRE
+ubicación:  una dirección de un proceso.
+
+DESCRIPCIÓN
+La sintaxis de un especificador de ubicación es:
+        dirección[+-constante]
+        [nombre_proceso@][nombre_archivo@]línea
+        [nombre_proceso@][nombre_archivo@]función[+-constante]
+donde "dirección" es una dirección del programa en octal o hexadecimal,
+y "constante" es un número entero decimal.
+
+EJEMPLOS
+17              un número de línea del archivo actual (%file)
+foo.c@17        un número de línea de otro archivo
+0x80801234      una dirección
+main            un nombre o etiqueta de función
+main+3          tres bytes después de la etiqueta
+p1@main         un nombre de función de un proceso especificado
+%loc            la ubicación actual
+%line           el archivo y número de línea actuales
+%r0             un registro
+%r0+80          un registro al que se suma una desviación
+%pc-4           un registro al que se resta una desviación
+$myvar          una variable definida por el usuario
+
+VÉASE TAMBIÉN
+%file, %line, %loc, lista_procesos, accesibilidad, vars_de_usuario
+++
+
+++ lista_procesos
+NOMBRE
+lista_procesos:  lista de nombres de procesos.
+
+DESCRIPCIÓN
+Una lista de nombres de procesos separados por comas.  
+La mayor parte de los comandos 
+aceptan una "lista_procesos" usando la opción -p.  
+En una lista_procesos no debe haber espacios en blanco.
+
+Un nombre_de_proceso puede consistir en:
+1) la palabra clave "all" (todos), que denota todos los 
+   procesos controlados, 
+2) el nombre de un programa generado por el usuario o el 
+   depurador, que denota todos los procesos derivados de dicho programa, 
+3) un id de proceso generado por el depurador con 
+   la forma pn (por ejemplo, p1, p2, etc.), 
+4) la variable %program del depurador, que denota todos 
+   los procesos derivados del programa actual, 
+5) la variable %proc del depurador, que denota el 
+   proceso actual, 
+6) un número entero decimal, correspondiente al id de 
+   sistema de un proceso controlado, 
+7) cualquier variable definida por el usuario (por 
+   ejemplo, $foo) cuyo valor sea un número entero, y 
+   que se interpreta como el id de sistema de un proceso, 
+8) cualquier variable definida por el usuario cuyo 
+   valor sea una cadena que se pueda interpretar de una de las 
+   formas indicadas anteriormente, o como una lista de ellas.
+
+VÉASE TAMBIÉN
+lista_procesos, %proc, %program, rename, vars_de_usuario
+++
+
+++ redireccionamiento
+NOMBRE
+redireccionamiento:  modificación del destino de la salida del depurador.
+
+DESCRIPCIÓN
+A cualquier comando o bloque se le puede añadir 
+el sufijo '>' y un nombre de archivo, o el signo '|' y 
+una línea de comandos del shell del Sistema UNIX(r).  
+Esto ejerce el efecto de redireccionar la salida del 
+comando al archivo, o de conducirla al comando del shell. 
+También se puede usar ">> nombre_de_archivo", 
+con lo que se añadirá la salida al archivo, en lugar 
+de reemplazar su contenido actual, si existe.
+
+EJEMPLOS
+stack > save.stack
+symbols -gtv | grep int | pg
+
+VÉASE TAMBIÉN
+bloque
+++
+
+++ patrón
+NOMBRE
+patrón:  una expresión regular del tipo sh(1).
+
+DESCRIPCIÓN
+Se trata de un patrón usado para filtrar la salida del comando "symbols".
+        *       Hace coincidir cualquier cadena, incluida la cadena nula
+        ?       Hace coincidir cualquier carácter individual
+        [...]   Hace coincidir los caracteres que estén entre los corchetes,
+                        se permiten rangos, y ! como primer
+                        carácter significa negación
+
+VÉASE TAMBIÉN
+symbols
+++
+
+++ expr_reg
+NOMBRE
+expr_reg:  una expresión regular del tipo ed(1).
+
+DESCRIPCIÓN
+Se trata de una expresión regular usada para buscar un patrón en
+un archivo de origen con el comando "list". 
+       .       Hace coincidir cualquier carácter, excepto del de salto de línea
+        [...]  Hace coincidir los caracteres que se encuentren entre los corchetes,
+                        se permiten rangos, y ^ indica negación
+        *       Indica cero, o más de la RE anterior
+        ^       Hace coincidir la cadena nula al comienzo de una línea
+        $       Hace coincidir la cadena nula al final de la línea
+        \{m\}   Indica que la RE anterior se ha producido m veces exactamente 
+        \{m,\}  Indica que la RE anterior se ha producido un mínimo de m veces
+        \{m,n\} Indica que la RE anterior se ha producido desde m hasta n, ambas incluidas
+        \(...\) Hace coincidir la misma cadena que coincide con ... 
+        \digit  Hace coincidir la n-ésima RE entre paréntesis de la misma expresión
+        \<      Hace coincidir la cadena nula al comienzo de una palabra
+        \>      Hace coincidir la cadena nula al final de una palabra.
+
+VÉASE TAMBIÉN
+list
+++
+
+++ vars_de_usuario
+NOMBRE
+vars_de_usuario:  variables definidas por el usuario y mantenidas 
+por el depurador.
+
+DESCRIPCIÓN
+Los nombres que comienzan por el signo del dólar ($) 
+se reservan para el usuario del depurador.  Al arrancar, 
+el depurador importa el entorno del shell y 
+lo adopta como conjunto inicial de variables 
+definidas por el usuario.  Es posible crear nuevas 
+variables usando el comando "set".  Las 
+variables definidas por el usuario son de tipo 
+"cadena";  se convierten a un valor numérico cuando ello 
+es necesario usando strtol(3).
+
+VÉASE TAMBIÉN
+export, set
+++
+
+++ %db_lang
+NOMBRE
+%db_lang:  el lenguaje que el depurador considera internamente como 
+lenguaje actual.
+
+DESCRIPCIÓN
+%db_lang es el lenguaje del proceso actual y lo usa el 
+depurador para evaluar las expresiones de lenguaje.  
+Lo define el depurador basándose en la información contenida
+en el archivo de objetos propiamente dicho.  Si el depurador
+no puede determinar el lenguaje del objeto actual, %db_lang
+tomará el valor por defecto C.  
+Si se define %lang explícitamente, su valor prevalecerá sobre
+el lenguaje del objeto actual.  Los comandos que usan %db_lang
+para evaluar las expresiones son if, print, set, stop, whatis y while.
+
+VÉASE TAMBIÉN
+%lang, C++, expr
+++
+
+++ %global_path
+NOMBRE
+%global_path:  la vía de acceso global de búsqueda del depurador
+
+
+DESCRIPCIÓN
+El valor de %global_path debe ser una lista de directorios separados por punto
+y coma.  Cuando el depurador trata de mostrar las líneas de código fuente de
+un archivo, buscará en los directorios listados en la %path local
+correspondiente al programa de que se trate, hasta que encuentre un archivo
+cuyo nombre sea el correcto.  Una vez realizada la búsqueda en la lista de la
+vía de acceso local correspondiente al programa, el depurador buscará en la
+lista de la vía de acceso global (%global_path).  Esta variable también se
+puede definir desde la línea de comandos del depurador con la opción -s.
+
+VÉASE TAMBIÉN
+%path
+++
+
+++ %num_bytes
+NOMBRE
+%num_bytes:  el número de bytes por defecto que se incluirán en el 
+volcado.
+
+DESCRIPCIÓN
+Si no se indica la opción -c con el comando "dump", 
+realizará el volcado de tantos bytes como 
+se indique en %num_bytes.  El valor inicial de esta variable 
+es 256, y se puede modificar usando el comando "set".
+
+VÉASE TAMBIÉN
+dump
+++
+
+++ %num_lines
+NOMBRE
+%num_lines:  el número de líneas que se van a aparecer en la pantalla.
+
+DESCRIPCIÓN
+Si no se indica la opción -c con los comandos "dis" o "list", 
+cada uno de ellos mostrará tantas líneas como indique %num_lines.  
+El valor inicial de %num_lines es 10, y se puede 
+modificar con el comando "set".
+
+VÉASE TAMBIÉN
+dis, list
+++
+
+++ %result
+NOMBRE
+%result:  estado de ejecución de los comandos del depurador.
+
+DESCRIPCIÓN
+Después de ejecutar cada uno de los comandos del depurador, 
+el estado resultante de la ejecución se almacena en %result.  
+0 indica que la ejecución ha sido satisfactoria.  Un valor distinto de 
+cero 
+indica que la ejecución ha fallado.
+++
+
+++ %verbose
+NOMBRE
+%verbose:  el nivel de detalle para los eventos del depurador.
+
+DESCRIPCIÓN
+Cuando se detiene un proceso controlado por el depurador, el depurador
+normalmente imprime en pantalla un mensaje que indica la razón de la
+parada, el id del proceso y la siguiente línea de código fuente, si 
+está disponible, o la siguiente línea del texto desensamblado.  
+%verbose se puede usar para controlar esta salida.
+Los valores válidos son:
+        quiet   (silencioso) no se genera ninguna salida cuando se detiene
+                un proceso
+        source  (cód. fuente) sólo se muestra la siguiente línea de cód. 
+                fuente o desensamblada
+        events  (eventos) si la parada ha sido provocada por un evento, 
+                éste también se muestra (no incluye las paradas solicitadas
+                (por halt o step)
+        reason  (razón) proporciona la razón de la parada, incluidos 
+                los eventos y las paradas solicitadas
+        all     (todos) es el nivel de detalle más alto (actualmente
+                es equivalente a reason)
+
+El valor por defecto es "reason" (razón). 
+También se puede especificar el modo de no 
+generación de avisos con la opción -q 
+de algunos comandos del depurador.  Estas opciones -q 
+individuales prevalecen sobre el modo indicado por %verbose.
+
+VÉASE TAMBIÉN
+change, signal, step, stop, syscall
+++
+
+++ %wait
+NOMBRE
+%wait:  indica ejecución de comandos síncrona o asíncrona.
+
+DESCRIPCIÓN
+Cuando el depurador pone en marcha un proceso, normalmente espera 
+a que el proceso se detenga antes de devolver el control al usuario.  
+Si se define %wait como "background" (segundo plano), 0 o 
+"no", el depurador entrará en modo asíncrono.  En el modo asíncrono,
+los comandos que ponen en marcha un proceso devuelven inmediatamente
+el control al usuario, sin esperar a que el proceso se detenga.  Si
+se define %wait como "foreground" (primer plano), 1 o "yes" (sí), se
+vuelve al modo por defecto.  Las opciones -f y -b de los comandos run
+y step prevalecen sobre la variable %wait global.
+
+VÉASE TAMBIÉN
+run, step
+++
+
+++ expr_parada
+NOMBRE
+expr_parada - expresiones de eventos del espacio de memoria
+de procesos.
+
+DESCRIPCIÓN
+Las expr_parada son expresiones especiales 
+aceptadas por el comando stop.  Una expresión 
+de parada se compone de uno o más eventos_de_parada, 
+unidos por los operadores especiales && (y) y || (o).  
+Estos operadores son asociativos por la izquierda, 
+pero el depurador no garantiza el orden en 
+que se evalúan los operadores.  Los eventos_de_parada pueden ser:
+        ubicación
+        ( expr )
+        *lvalue
+
+Cada tipo de evento de parada cuenta con alguna 
+acción que hará que el depurador lo advierta.  
+Cuando se produce una de estas acciones, se evalúa
+la totalidad de la expresión_de_stop, para comprobar
+si es "verdadera".  En este caso, el evento se provoca
+normalmente (el depurador informa al usuario del evento,
+y ejecuta los comandos asociados al mismo),
+
+Una "ubicación" es una dirección del texto del proceso en la que el
+depurador puede definir un punto de interrupción.  Cuando un proceso 
+alcanza la ubicación especificada el depurador advierte el evento.  Para
+los eventos_de_parada de ubicación que hacen referencia a nombres de función,
+la expresión es verdadera siempre que la función esté activa.  Para los
+eventos_de_parada de ubicación que se aplican a una dirección o número de
+línea en particular, la expresión es verdadera sólo cuando el proceso se
+encuentra en dicha dirección o línea.  Teclee "help ubicación" para obtener la
+sintaxis completa de ubicación.  Cuando el lenguaje actual es C++, los eventos
+de parada de ubicación también pueden usar las funcionalidades específicas del
+C++.  Teclee "help C++ para obtener información detallada al respecto.
+
+"expr" puede ser cualquier expresión válida en el lenguaje actual
+(%lang o %db_lang).  
+El depurador advierte el evento_de_parada cuando cualquiera de los
+identificadores de la expresión cambia de valor.  Entonces, la totalidad
+de la expresión se evalúa dentro del contexto del lenguaje actual.
+
+"lvalue" puede ser cualquier expresión del lenguaje actual que
+sería válida en el lado izquierdo de una sentencia de asignación
+en dicho lenguaje.  El depurador advierte este evento cuando el
+contenido de la ubicación cambia.  El cambio propiamente dicho
+hace que este tipo de evento_de_parada sea verdadero.
+
+Es posible crear expresiones de parada más potentes combinando 
+eventos_de_parada, mediante el operador especial && (y).  
+Por ejemplo, para detenerse en la función "a" sólo 
+cuando la función "b" esté también activa, 
+teclee "stop a && b".  Para detener el proceso cuando el 
+valor de una expresión "x" sea verdadero 
+para la función "y", teclee "stop y && (x)".
+
+EJEMPLOS
+stop myfile.c@230
+stop *bar
+stop (x == 5)
+stop foo && (a > 7)
+stop (a == 4) || (b == 7)
+
+VÉASE TAMBIÉN
+%db_lang, %lang, C++, expr, ubicación, accesibilidad, stop
+++
+
+++ %redir
+NOMBRE
+%redir:  ¿se debe redireccionar la E/S del proceso?
+
+DESCRIPCIÓN
+%redir rige el comportamiento del comando create.  
+Por defecto, create no redirecciona 
+la E/S de los procesos que crea, a no ser que se 
+especifique la opción -r.  Si se asigna el valor 1 o 
+"yes" (sí) a %redir, crate redireccionará la E/S del 
+proceso, a no ser que se indique la opción -n.  Es 
+posible volver a asignar a %redir el valor por defecto, 
+dándole el valor 0 o "no".
+
+VÉASE TAMBIÉN
+create, grab, input
+++
+
+
+++ expr
+NOMBRE
+expr:  expresión del depurador.
+
+DESCRIPCIÓN
+Las expresiones del depurador siguen la sintaxis y semántica
+del lenguaje actual (%lang o %db_lang).  El depurador admite
+expresiones que contengan cualquier combinación de variables
+o funciones de programas, nombres cualificados, variables
+integradas del depurador y variables definidas por el usuario.
+Un nombre cualificado especifica un identificador de programa
+que puede no estar visible en el contexto actual.  La sintaxis es:
+     [[id_proceso]@][[archivo_origen]@][[función]@][[núm_línea]@]identificador
+     o bien [[id_proceso]@]número_trama@identificador
+     o bien
+     [[id_proceso]@]nombre_objeto@[archivo_origen@]identificador
+
+
+El nombre cualificado se evalúa de izquierda a derecha, y 
+se puede evitar la ambigüedad colocando tantos símbolos @ como 
+sea necesario.  "número_de_trama" y "función" deben hacer referencia 
+a funciones que estén activas actualmente.  "nombre_de_objeto" hace 
+referencia a cualquier objeto (archivo ejecutable 
+o biblioteca compartida) que constituya el proceso.
+
+Cuando el lenguaje actual es C, el depurador soporta 
+la evaluación de todas las expresiones válidas en 
+ANSI C, excepto aquéllas que supongan expansión de 
+macros, o declaraciones de tipo de estructura, 
+unión o enumeración.  Un ejemplo de declaración 
+de tipo en una expresión es:
+        ((struct { int i; char c; } *)p)->c = 'a';
+
+Cuando el lenguaje actual es C++, el depurador acepta un subconjuntode
+expresiones en C++.  Véase C++ para obtener información más detallada.
+
+Las expresiones que comienzan con un guión (-) o que contienen 
+secuencias de caracteres con significados especiales para el depurador,
+deben ir entre paréntesis (), corchetes [] o llaves {}.  Las secuencias 
+de caracteres especiales son: >, >>, |, ||, &&, #, coma, punto y coma,
+salto de línea.
+
+VÉASE TAMBIÉN
+%db_lang, %lang, C++, if, print, accesibilidad, set, stop, expr_parada,
+vars_de_usuario, while
+++
+
+++ accesibilidad
+NOMBRE
+accesibilidad:  la visibilidad de un identificador de programa.
+
+
+SCRIPCIÓN
+Los comandos del depurador que aceptan ubicaciones o expresiones,
+pueden hacer referencia a los identificadores de los programas
+controlados: funciones, parámetros, variables, etiquetas, tipos,
+etiquetas de estructura y unión, así como literales de enumeración
+y nombres de miembros.  Las ubicaciones también pueden hacer referencia
+a los números de las líneas de código fuente.  Que un nombre sea visible
+para el depurador o no en cualquier momento dado depende del estado del
+programa en dicho momento (contexto) y de la cantidad de información de
+depuración que ese programa proporciona al depurador.
+
+Los números de las líneas de código fuente, los nombres de
+variables locales con respecto a una función determinada,
+los nombres de parámetros, de tipos, los nombres de etiquetas
+de estructura y unión, los nombres de miembros, y los literales
+de enumeración, sólo están disponibles si el archivo en el que
+se hace referencia a ellos se ha compilado con la opción -g del
+compilador.  Los nombres de las funciones y variables globales,
+y estáticas para archivos, están disponibles si el archivo que
+las define se ha compilado con la opción -g o si la tabla de 
+símbolos del programa no se ha eliminado.
+
+Los números de las líneas de código fuente y las funciones y
+variables estáticas para archivos son visibles sólo cuando el
+contexto actual se encuentra dentro de ese archivo, es decir,
+cuando el programa se detiene en algún punto del código 
+generado a partir de ese archivo.  Los parámetros de función
+sólo son visibles cuando el contexto actual se encuentra
+dentro de la función en cuestión.  Las variables locales sólo
+son visibles cuando el contexto actual se encuentra dentro
+del bloque que las define.
+
+Aunque los identificadores no sean visibles en el 
+contexto actual, es posible acceder a ellos en 
+ubicaciones o expresiones usando nombres cualificados.  
+Véase "expr" y "ubicación" para obtener la 
+sintaxis completa.
+
+Los símbolos definidos en las bibliotecas compartidas 
+no son visibles hasta que el enlazador dinámico las 
+carga.  Normalmente, cuando un programa arranca por primera vez, 
+sólo están visibles los símbolos definidos por el programa propiamente 
+dicho y los definidos en libc.so.  Después de aplicar el comando step 
+hasta to_start o más allá, estarán disponibles otras bibliotecas.  Los 
+símbolos que proceden de bibliotecas compartidas 
+cargadas por llamadas a dlopen(3X) sólo están disponibles 
+después de la llamada dlopen.
+
+VÉASE TAMBIÉN
+%frame, %func, %line, expr, ubicación
+++
+
+++ whatis
+NOMBRE
+whatis:  muestra el tipo de una expresión.
+
+SINOPSIS
+whatis [-p lista_procesos] expr
+
+DESCRIPCIÓN
+whatis muestra el tipo de la expresión en el contexto 
+actual (%frame).  Si se indica una lista de 
+procesos, el tipo de expresión se evaluará dentro 
+del contexto de cada uno de los procesosde la lista.  expr puede ser cualquier 
+expresión en el lenguaje actual.
+
+Si una variable es una estructura o tipo de clase, 
+"whatis variable" mostrará el nombre de la estructura 
+o clase.  "whatis estructura_etiqueta_nombre" o 
+"whatis nombre_de_tipo" mostrará toda la información 
+conocida acerca del tipo de que se trate, incluidos los 
+miembros de la estructura y las constantes de enumeración.
+
+En el caso de que exista un puntero que haga 
+referencia a un objeto de clase base con funciones 
+virtuales, y si el depurador puede determinar que el 
+tipo del objeto al que se hace referencia con el 
+puntero es una clase derivada de la clase base, 
+whatis mostrará la clase base y la clase derivada.
+
+EJEMPLOS
+whatis i
+whatis main
+whatis (i + 1) * 2.0
+whatis struct foobar
+
+VÉASE TAMBIÉN
+%db_lang, C++, expr
+++
+
+++ C++
+NOMBRE
+C++:  comportamiento específico de C++.
+
+DESCRIPCIÓN
+El depurador reconocerá cuándo un archivo 
+de objetos se ha compilado con el C++ 
+Compilation System 2.0 o el traductor C+, cfront 
+(versiones 2.1 ó 3.0), y definirá el lenguaje actual 
+(%db_lang) como C++.  Los nombres 
+aparecerán como en el código fuente en C++, no como 
+aparezcan en el archivo de objetos.
+
+Cuando el lenguaje actual es C++, el depurador acepta 
+un subconjunto de expresiones en C++, que 
+incluyen las siguientes:
+
+     o  Todas las expresiones aceptadas cuando el lenguaje es C, 
+     o  Las llamadas a las funciones de los miembros, incluidas las funciones 
+        de miembro virtual y funciones de miembros estáticos,
+     o  Las llamadas a funciones sobrecargadas, 
+     o  Las expresiones que usen nombres de tipo como typedefs, 
+     o  Las expresiones que usen funciones de operador sobrecargadas, y
+     o  Las expresiones que accedan a miembros de clase con un 
+        puntero "this" implícito, cuando el proceso se detenga
+        en una función de miembro de clase.
+
+Los comandos print y set tienen una opción de detalle (-v) que
+imprime información adicional, incluidos los prototipos de función
+de todas las funciones a las que llama el depurador mientras evalúa
+la expresión.  Esto es de gran utilidad para comprender lo que
+ocurre en las expresiones que usan funciones u operadores
+sobrecargados.  La opción -v de print también mostrará los miembros
+de estructura y de clase generados por el compilador, tales como
+punteros que indiquen tablas de funciones virtuales.
+
+En el caso de que exista un puntero que haga 
+referencia a un objeto de clase base con funciones 
+virtuales, y si el depurador puede determinar que el 
+tipo del objeto al que se hace referencia con el 
+puntero es una clase derivada de la clase base, 
+el comando whatis mostrará la clase base y la clase 
+derivada.  El comando print también mostrará el 
+objeto en términos del tipo derivado.
+
+Cuando se imprime en pantalla el contenido de una 
+estructura y clase, el comando print mostrará los 
+miembros estáticos de la clase, con la notación de 
+que son estáticos.  Obsérvese que con symbols -v 
+no aparecen los miembros que son estáticos.  
+Obsérvese también que los miembros de clase generados 
+por el compilador se aparecen sólo con print -v.
+
+Se pueden definir puntos de interrupción (eventos de parada) en:
+
+     o  Funciones de miembros de clase, incluidos los constructores, destructores
+        y funciones de conversión,
+     o  Funciones de operador sobrecargadas y 
+     o  Funciones sobrecargadas, que usen el prototipo completo o
+     o  Funciones sobrecargadas, sin la información de prototipo.
+        En ese caso, el depurador mostrará una lista de las funciones,
+        y le pedirá que opte por una o todas las opciones.
+
+También se puede crear un evento de parada en una 
+combinación específica de objeto y función de 
+miembro, usando la sintaxis "stop puntero->función" 
+o "stop objeto.función".  El depurador detendrá el 
+proceso o hilo al entrar en la función sólo 
+si el puntero "this" coincide con el objeto 
+especificado.  Si la función es una función virtual, 
+el depurador definirá el punto de interrupción en la 
+función dominante apropiada.
+
+EJEMPLOS
+print *this
+print -v ptr->overloaded_f(1, 2)
+whatis ptr_to_base
+stop C::f(int)
+stop C::C
+stop C::~C
+stop C::operator int()
+stop C::operator+
+stop ptr->f(char *)
+
+VÉASE TAMBIÉN
+%db_lang, expr, print, set, stop, whatis
+++

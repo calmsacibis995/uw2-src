@@ -1,0 +1,49 @@
+%% Miscellaneous Parameters
+%C Miscellaneous Parameters
+These tunable parameters are not part of any other category.
+% MAXLINK
+Specifies size of MAXLINK.
+% PUTBUFSZ
+Specifies the size of a circular buffer,
+putbuf,
+that is used to contain a copy of the last
+PUTBUFSZ
+characters written to the console
+by the operating system.
+The contents of
+putbuf
+can be viewed using the
+crash(1M)
+command
+panic.
+% SANITYCLK
+Enable sanity clock on machines that support this feature.
+%% Direct Memory Access (DMA) Parameters
+%C Direct Memory Access (DMA) Parameters
+These tunable parameters are associated with Direct Memory Access processing.
+% PHYSTOKVMEM
+The PHYSTOKVMEM tunable enables mapping mainstore memory (up to 256M)
+for driver compatibility, for old drivers that used phystokv on data buffers.
+With this tunable off, the first 1M of memory (including device memory)
+is still mapped, to allow for drivers that used phystokv for
+device memory or BIOS data.
+
+Typically, the user need not change this tunable,
+since it is automatically set for 
+SRV4.2, UnixWare 1.0, and UnixWare 1.1
+HBA (Host Bus Adapter) drivers that may need it set.
+You may need to set it manually if you configure a non-HBA driver that 
+uses phystokv.
+
+When PHYSTOKVMEM is set to 1, it:
+
+Allows drivers using the phystokv macro to access up to 256 MB
+of main memory.
+
+Disables the use of memory above the threshold given by MAXDMAPAGE
+for kernel data and bss.
+Normally, the kernel will try to locate itself above MAXDMAPAGE
+(in an attempt to preserve the lower memory for more important uses).
+
+Forces HBA drivers to be loaded into memory
+below the threshold given by MAXDMAPAGE.

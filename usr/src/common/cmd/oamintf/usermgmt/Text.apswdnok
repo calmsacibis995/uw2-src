@@ -1,0 +1,28 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/usermgmt/Text.apswdnok	1.1.8.3"
+#ident  "$Header: Text.apswdnok 2.0 91/07/12 $"
+################################################################################
+#	Module Name: Text.apswdnok
+################################################################################
+Title="Errors Defining User Password Information"
+
+`readfile $INTFBASE/conf.msg | message -t`
+
+close=`/usr/bin/rm /tmp/pswdchk`
+
+rows=5
+columns=55
+
+text="	
+An error occurred attempting to define password:
+
+   `readfile /tmp/pswdchk`"
+
+altslks
+
+name=CONT
+button=11
+action=CLOSE
+
+name=CANCEL
+button=14
+action=CLEANUP

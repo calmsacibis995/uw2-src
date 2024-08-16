@@ -1,0 +1,55 @@
+.pageno
+Pagina %d di %d
+.ul
+Installazione sistema operativo UNIX
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Rimozione pacchetto
+.ur
+Rimozione pacchetto
+.ll
+.lr
+F1=Guida
+.top
+`[ "$ALL_NEW" ] &&  echo "AVVISO: Sono installate versioni più recenti di tutti i pacchetti."`
+`[ "$ALL_NEW" ] ||  echo "AVVISO: Sono installate versioni più recenti di alcuni pacchetti."`
+
+`[ "$ALL_NEW" ] &&  echo "Nel computer sono già installate versioni più recenti di tutti i pacchetti\nselezionati nel set '${SETINST}'. Si stanno installando versioni vecchie di\nquesti pacchetti. Premere il tasto <F1> (o <?>) per vedere una lista dei\npacchetti le cui versioni più aggiornate sono già installate."`
+`[ "$ALL_NEW" ] ||  echo "Nel computer sono già installate versioni più recenti di alcuni pacchetti\nselezionati nel set '${SETINST}'. Si stanno installando versioni vecchie di\nquesti pacchetti. Premere il tasto <F1> (o <?>) per vedere una lista dei\npacchetti le cui versioni più aggiornate sono già installate."`
+
+Si deve rimuovere la versione più recente di questi pacchetti prima di
+poter installare una versione più vecchia. Prima di rimuovere i
+pacchetti più recenti, salvare i propri file di configurazione.
+
+I pacchetti non verranno installati ora.
+`[ "$ALL_NEW" ] &&  echo "L'installazione di questo set verrà terminata ora."`
+Per ulteriori informazioni vedere la documentazione.
+.form
+ENTER
+.selection
+Premere <Invio> per continuare.
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+`[ "$ALL_NEW" ] || echo "Versioni più recenti di alcuni pacchetti del set '${SETINST}' sono già"`
+`[ "$ALL_NEW" ] && echo "Versioni più recenti di tutti i pacchetti del set '${SETINST}' sono già"`
+installate sul computer. Questi pacchetti sono:
+
+`cat $PKG_RM`
+
+Questi pacchetti non possono essere sovrapposti e devono essere rimossi
+prima di poter installare le versioni più vecchie.
+
+È importante che i pacchetti più recenti vengano rimossi prima che
+vengano installati i pacchetti più vecchi. Prima di rimuovere i
+pacchetti più recenti, salvare i propri file di configurazione.
+
+Per ulteriori informazioni vedere la documentazione.
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.working
+Attendere...
+.end

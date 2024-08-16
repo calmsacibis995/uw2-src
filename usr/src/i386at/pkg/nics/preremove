@@ -1,0 +1,91 @@
+#ident	"@(#)pkg.nics:preremove	1.9"
+
+exec 2>/tmp/remove.err
+DEBUG=on
+
+[ -n "$DEBUG" ] && set -x
+
+if [ "$RANDOM" = "$RANDOM" ]
+then
+        exec /usr/bin/xksh $0 $*
+fi
+
+FAILURE=1	# fatal error
+
+REBUILD=0
+
+CONFDIR=/etc/conf
+CONFBIN=${CONFDIR}/bin
+
+NOTOOLS="ERROR: The Installable Driver feature has been removed. \
+The ${NAME} cannot be removed."
+
+if [ ! -x ${CONFBIN}/idbuild -o ! -x ${CONFBIN}/idinstall ]
+then
+	message ${NOTOOLS}
+	exit $FAILURE
+fi
+#put the comment back in /etc/strcf when this package is removed
+
+TMP=/tmp/$$.nics1.err
+LOCALE=${LOCALE:-C}
+MENUDIR=/etc/inst/locale/$LOCALE/menus/nics/config
+NETINFO=/usr/sbin/netinfo
+
+cd $MENUDIR
+for i in *
+do
+	( . ./$i ; echo $DRIVER_NAME )
+done > $TMP
+
+sort -u -o $TMP $TMP
+
+DRIVER_LIST=`cat $TMP`
+
+SUPP_MODS="lsl msm ethtsm toktsm odisr nflxsr"
+
+for DRIVER_NAME in $DRIVER_LIST $SUPP_MODS
+do
+	[ -f /etc/conf/mdevice.d/$DRIVER_NAME ] && {
+		# De-configure the network device
+		/etc/confnet.d/configure -r -d ${DRIVER_NAME}_0 > /dev/null
+		/etc/confnet.d/configure -r -d ${DRIVER_NAME}_1 > /dev/null
+		/etc/confnet.d/configure -r -d ${DRIVER_NAME}_2 > /dev/null
+		/etc/confnet.d/configure -r -d ${DRIVER_NAME}_3 > /dev/null
+
+		# we only support up to 4 devices so remove any that
+		# might exist from the netdrivers file
+		for i in 0 1 2 3
+		do
+			${NETINFO} -r -d ${DRIVER_NAME}_$i
+		done
+
+		# Must run resmgr -r BEFORE idinstall -d
+		# resmgr -r -m $DRIVER_NAME
+
+		# Remove the driver
+		${CONFBIN}/idinstall -d $DRIVER_NAME
+
+		# Unload the driver
+		modadmin -U $DRIVER_NAME
+
+		# Set the rebuild flag
+		REBUILD=1
+	}
+
+done > /dev/null 2>&1
+
+(( REBUILD )) && {
+	${CONFBIN}/idbuild
+	if [ "$?" -ne "0" ]
+	then
+		exit ${FAILURE}
+	else
+		exit 10
+	fi
+}
+
+rm -f $TMP
+rm -rf /tmp/remove.err
+
+exit 0

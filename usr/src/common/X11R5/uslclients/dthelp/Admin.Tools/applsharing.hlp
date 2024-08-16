@@ -1,0 +1,122 @@
+#ident\t"@(#)dthelp:Admin.Tools/applsharing.hlp	1.13"
+^*version^1
+^*title^Application Sharing
+^:App_Sharing
+^*width^70
+^+DesktopMgr/help.defs
+^?Sharing applications
+^0^Application Sharing
+^$10
+Application Sharing
+
+Use Application Sharing to \d(advertise) to other UnixWare systems that
+you have applications available for their use.
+
+You can do the following with Application Sharing:
+
+\to\t\k(Configure your system for application sharing^^Configuring Your System for Application Sharing)
+\to\t\k(Delete applications from the Shared Applications List^^Deleting a Shared Application)
+\to\t\k(Customize the shared applications startup shell script^^Customizing a Shared Applications Startup Shell Script)
+\to\t\k(Change application types^^Changing Application Types)
+
+^1^Configuring Your System for Application Sharing
+^$20
+Configuring Your System for Application Sharing
+
+Before remote users can access shared applications, you must enable
+\d(peer-to-peer communication). In addition, the remote system owner
+must enable peer-to-peer communication on the remote system (see
+\k(NetWare Setup^NetWare_Setup/NetWare_Setup.hlp^NetWare Setup)).
+
+In addition, you must have \k(Share Applications permission^dtadmin/user.hlp^Understanding Permissions).
+
+To configure Application Sharing, do the following:
+
+1.\tOpen the window that contains the application you want to \d(advertise)
+  \tto other users.
+
+  \tNote: If you are already in the Admin_Tools folder, go to Step 3.
+
+2.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+3.\tDouble-click on App_Sharing. The "App_Sharing" window appears.
+
+4.\t\d(Drag-and-drop^drag-and-drop) the application file or folder from Step 1 onto the
+  \t"Application Sharing - Shared Applications" window.
+
+5.\tClick on Cancel to close the window. The executable in the
+  \tapplication file or folder is now available to other users.
+
+Note: This procedure is sufficient for configuring shared applications for
+simple programs, such as xclock. However, most applications will require you
+to make changes to the startup shell script. See
+\k(Customizing a Shared Applications Startup Shell Script).
+
+^1^Deleting a Shared Application
+^$30
+Deleting a Shared Application
+
+To delete (unadvertise) an application from the Application Sharing List,
+do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on App_Sharing. The "App_Sharing" window appears.
+
+3.\tClick on the application you want to delete.
+
+4.\tClick on Delete. The system removes the application from the Application
+  \tSharing List.
+
+^1^Customizing a Shared Applications Startup Shell Script
+^$40
+Customizing a Shared Applications Startup Shell Script
+
+To customize a shared applications startup shell script, do the following:
+
+Note: If you are already in the Admin_Tools folder, go to Step 2.
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on App_Sharing. The "App_Sharing" window appears.
+
+3.\tClick on the application you want to edit.
+
+4.\tClick on Edit. A "Text Editor" window containing the application script
+  \topens.
+
+5.\tMake the desired changes. See \k(The Text Editor^dtedit/edit.hlp^The Text Editor) for information on
+  \tediting text. 
+
+Note: Editing the default script that starts shared applications is an
+advanced feature. Do not use Edit Default unless you are familiar with
+UNIX system shell programming.
+
+^1^Changing Application Types
+^$50
+Changing Application Types
+
+Application Sharing supports the following two types of applications:
+
+\to\tText Application - An application that starts within \k(terminal window^xterm/term.hlp^Terminal).
+
+\to\tX Application - An application that supplies its own terminal window.
+
+To switch between these two application types, do the following:
+
+1.\t\d(Double-click^double-click) on Admin_Tools in the \k("UnixWare Desktop" window^DesktopMgr/desktop.hlp^The UnixWare Desktop Window).
+  \tThe "Folder: Admin_Tools" window appears.
+
+2.\tDouble-click on App_Sharing. The "App_Sharing" window appears.
+
+3.\tClick on the desired application.
+
+4.\tClick on Change Type. If the application was an X Application, it changes
+  \tto a Text Application. If the application was a Text Application, it
+  \tchanges to an X Application.
+

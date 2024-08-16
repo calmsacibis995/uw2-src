@@ -1,0 +1,19 @@
+#ident	"@(#)pkg-nm:request	1.1"
+SCRIPTS=/usr/sbin/pkginst
+AUTOMERGE=Yes
+PKGINSTALL_TYPE=NEWINSTALL
+
+#Call chkpkgrel to determine installation type.
+${SCRIPTS}/chkpkgrel
+PKGVERSION=$?
+
+case $PKGVERSION in 
+    2)    PKGINSTALL_TYPE=OVERLAY ;;
+    4)    PKGINSTALL_TYPE=UPGRADE ;;
+    *)    ;;
+esac
+
+# Save upgrade/overlay variables in response file.
+echo AUTOMERGE=\"${AUTOMERGE}\" >> $1
+echo PKGINSTALL_TYPE=\"${PKGINSTALL_TYPE}\" >> $1
+exit 0

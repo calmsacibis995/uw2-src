@@ -1,0 +1,2435 @@
+# This file contains the help messages used by the Command Line interface.
+# Each help message is bracketed by lines starting with ++.
+# The debugger does not depend on the size (number of lines) of any message,
+# but it does depend on the order of the messages.  New messages MUST be
+# added to the end of the file.
+
+# This version is for the version of debug that supports threads
+
+++ !
+NOME
+! - esegue un comando shell.
+
+SINTESI
+! riga_cmd 
+!!
+
+DESCRIZIONE
+Esegue un comando shell.
+Il resto della riga viene passato alla shell per
+l'interpretazione. In particolare, la ridirezione
+NON viene eseguita dal debugger ma bensì dalla shell.
+La variabile $SHELL, se impostata, contiene il nome di
+percorso completo della shell da utilizzare. Se $SHELL
+non è impostata, viene usato /usr/bin/sh. Il debugger
+attende che il comando finisca, ma non assume il
+controllo dei processi risultanti.
+
+!! specifica che l'ultimo comando shell deve essere rieseguito.
+
+VEDI ANCHE
+create, ridirezione
+++
+
+++ alias
+NOME
+alias - aggiunge, elenca o rimuove alias.
+
+SINTESI
+alias nome token ... 
+alias (nome)
+alias -r nome
+
+DESCRIZIONE
+La prima forma rende "nome" un alias dei "token".
+Tutti i caratteri fino al ritorno carrello o al commento vengono
+considerati come parte della definizione. Gli alias o i comandi del
+debugger già esistenti possono essere ridefiniti in un nome alias. Una
+volta definito, l'uso di un alias equivale a digitare la sequenza dei
+token che sostituisce. Gli alias possono essere definiti in termini di
+altri alias, ma non in modo ricorsivo.
+
+Le definizioni di alias possono contenere gli identificatori speciali
+$1, $2, ... Ognuno di questi identificatori speciali $n in una definizione
+di alias viene sostituito dall'argomento n-simo nella chiamata dell'alias,
+dove gli argomenti sono numerati a iniziare da 1. Ciascun argomento deve
+essere preceduto e seguito da uno spazio vuoto, il carattere di commento
+(#) oppure l'inizio di un blocco ({). Gli identificatori speciali $1, $2, ...
+all'interno di una stringa racchiusa da virgolette non vengono sostituiti.
+
+Se una definizione di alias contiene un identificatore speciale $#,
+alla chiamata dell'alias questo verrà sostituito con il numero di
+argomenti effettivamente usati durante la chiamata attuale dell'alias.
+Se una definizione di alias contiene un identificatore speciale $*, alla
+chiamata dell'alias questo verrà sostituito con una lista di tutti gli
+argomenti passati durante la chiamata attuale dell'alias, separati l'uno
+dall'altro da un singolo spazio.
+
+Senza argomento, alias elenca tutti gli alias attuali.
+Con un singolo nome, mostra l'alias per quel nome.
+
+Con l'opzione -r, alias rimuove tutti gli alias esistenti per il nome.
+
+ESEMPI
+alias
+alias i
+alias i step -i
+alias edit list $1@1
+alias print_list while($1) { print *$1; set $1 = $1->next }
+alias b if ($# > 0) { stop $* } else { stop %list_file@%list_line }
+alias -r i
+++
+
+++ stop
+NOME
+stop - imposta o elenca eventi di arresto.
+
+SINTESI
+stop [-p listaproc] [[-q] [-c cont] espr_stop [comando]]
+stop [-p listaproc]
+
+DESCRIZIONE
+Un evento di arresto (stop) indica una condizione, nello spazio di indirizzo
+di un programma, che farà sì che il debugger arresti l'esecuzione del
+programma. Una "espr_stop" è una o più espressioni collegata agli
+operatori speciali && (and) o || (or). Ciascuna espressione può essere:
+
+1) posizione
+        Una posizione nel testo del programma - sono simili
+        ai punti di interruzione trazionali.
+
+2) (espr)
+        Un'espressione nel linguaggio attuale - questo tipo di espressione
+        d'arresto si avvera quando si avvera l'espressione;
+
+3) *lvalue
+        Una posizione nei dati del programma che può essere modificata -
+        questo tipo di espressione si avvera quando il valore cambia.
+
+Le espr_stop vengono valutate costantemente dal debugger quando il
+processo o sottoprocesso in oggetto è in esecuzione. Quando l'intera
+espressione si avvera, il debugger annuncia il verificarsi dell'evento
+ed esegue l'eventuale "comando" associato.
+
+Per ulteriori dettagli, vedi espr_stop.
+
+L'opzione -q indica che il debugger non annuncerà l'evento.
+
+L'opzione -c indica che l'evento non scatterà per le prime "cont" volte
+che la espr_stop si avvererà. L'evento scatterà ogni volta successiva
+che si avvererà la espr_stop.
+
+La seconda forma del comando stop elenca tutti gli eventi di
+arresto per la lista indicata di sottoprocessi e processi.
+
+Diversamente da molti altri comandi, se non è indicata l'opzione -p per
+il comando stop, la sua azione si applica a tutti i sottoprocessi o
+processi a concatenamento singolo derivati dal programma attuale
+(%program).
+
+ESEMPI
+stop miofile.c@230
+stop *bar
+stop (x == 5)
+stop foo && (a > 7)
+stop (a == 4) || (b == 7)
+
+VEDI ANCHE
+%program, %verbose, assoccmd, delete, disable, enable, events,
+espr, location, listaproc, scopo, espr_stop
+++
+
+
+++ break
+NOME
+break - esce da un ciclo while.
+
+SINTESI
+break
+
+DESCRIZIONE
+Il comando break fa sì che il debugger esca dal ciclo while più
+interno.
+
+ESEMPI
+while($i < 10) { if (x[$i] == $miavar) break; set $i = $i + 1 }
+
+VEDI ANCHE
+continue, while
+++
+
+
+++ continue
+NOME
+continue - continua l'iterazione successiva del ciclo while.
+
+SINTESI
+continue
+
+DESCRIZIONE
+Il comando continue fa sì che il debugger inizi l'esecuzione
+dell'iterazione successiva del ciclo while più interno. L'esecuzione
+inizia con la rivalutazione dell'espressione del ciclo.
+
+ESEMPI
+while (i < 20) { step; if (i % 2) continue; p i, x[i] }
+
+VEDI ANCHE
+break, while
+++
+
+
+++ cancel
+NOME
+cancel - annulla i segnali in sospeso.
+
+SINTESI
+cancel [-p listaproc] [segnale ...]
+
+DESCRIZIONE
+cancel elimina un segnale o una lista di segnali dal set di
+segnali in sospeso per la lista di sottoprocessi e processi
+specificata (per default, %thread o %proc). Questi segnali
+non verranno ricevuti dai sottoprocessi o processi specificati
+quando riprenderanno l'esecuzione. Se non vengono indicati
+segnali, tutti i segnali in sospeso per i sottoprocessi o
+processi indicati verranno annullati.
+
+ESEMPI
+cancel
+cancel segv
+cancel -p all sigfpe sigemt
+
+VEDI ANCHE
+kill, listaproc, signal, signames
+++
+
+
+++ create
+NOME
+create - crea e controlla uno o più nuovi processi.
+
+SINTESI
+create [-dr] [-f all|none|procs] [-l loc_iniz] [riga_cmd]
+
+DESCRIZIONE
+create accetta una riga di comando di tipo shell e crea uno o più
+processi. La riga di comando può includere la ridirezione di input
+e/o output e può includere un pipe della shell. Tutti i processi
+risultanti vengono arrestati nella posizione specificata da "loc_iniz".
+Se la posizione iniziale non viene specificata o se non viene trovata
+nello spazio di indirizzo del processo, il processo viene arrestato
+nella funzione "main". Se non esiste alcuna funzione "main", il
+processo viene arrestato nell'indirizzo specificato nell'intestazione
+del file in oggetto. Per creare ed eseguire un processo, digitare
+"create ..." e poi "run". 
+
+Se non viene indicata alcuna "riga_cmd", viene riutilizzata la riga_cmd
+precedente. Tutti i processi creati dalle richieste precedenti di quella
+riga_cmd vengono annullati.
+
+A ciascun processo creato viene assegnato un identificatore di
+processo del debugger. Si può fare riferimento al processo con questo
+identificatore, oppure con l'ID di processo di sistema nei comandi che
+prevedono l'opzione -p. Il primo processo creato in una pipeline
+diventa il processo attuale (%proc). Se quel processo usa le interfacce
+di sottoprocessi, il sottoprocesso (singolo) nel processo nuovo diventa
+il sottoprocesso attuale (%thread). A tutti i processi creati da un
+singolo eseguibile (tramite fork(2)) si può fare riferimento anche con
+il nome di quell'eseguibile (nome programma).
+
+Se si indica -r, gli input e gli output del processo vengono ridiretti
+a uno pseudoterminale. Tutti gli output vengono etichettati con il nome
+di quello pseudoterminale. Se è necessario dare input a quel processo,
+bisogna usare il comando "input". L'opzione -d non specifica alcuna
+ridirezione. Se non si indica nessuna opzione, viene usato il modo
+indicato da %redir (per default, nessuna ridirezione).
+
+Se si indica -f con argomento "none", il debugger non seguirà i processi
+inferiori di alcun processo creato che si dirami. Se si indica -f con
+argomenti "all" o "procs", tutti i processi inferiori verranno controllati
+dal debugger (questi processi possono essere rilasciati dal controllo del
+debugger usando "release"). Se -f non è indicato, il comportamento del
+debugger è controllato da %follow) (il default è segui tutti gli inferiori).
+
+Tutti i sottoprocessi creati da un processo soggetto verranno
+seguiti dal debugger (ma potranno essere rilasciati dal suo
+controllo usando "release"). Per ulteriori informazioni sul
+controllo del comportamento del debugger rispetto a sottoprocessi
+creati ex novo, vedere la descrizione di %thread_change.
+
+ESEMPI
+create
+create -f none mioprog 1 2 3
+create mioprog 1 2 3 | miofiltro1 | miofiltro2
+
+VEDI ANCHE
+!, %follow, %program, %redir, grab, input, listaproc, processo,
+programma, rename, release, %thread, %thread_change
+++
+
+
+++ delete
+NOME
+delete - cancella eventi.
+
+SINTESI
+delete num_evento ...
+delete -a [-p listaproc] [tipo_evento]
+
+DESCRIZIONE
+La prima forma cancella gli eventi corrispondenti ai numeri di
+evento indicati.
+
+La seconda forma cancella tutti gli eventi del tipo_evento
+specificato (se non e specificato nulla, tutti i tipi) nella
+lista di sottoprocessi e processi specificata (se non e
+specificato nulla, il sottoprocesso o processo attuale).
+"tipo_evento" può essere "onstop", "signal", "stop" o "syscall".
+
+
+ESEMPI
+delete 1 3 5
+delete -a -p p1
+delete -a stop
+delete -a syscall
+
+VEDI ANCHE
+change, disable, enable, events, onstop, listaproc,
+signal, stop, syscall
+++
+
+
+++ dis
+NOME
+dis - disassembla le istruzioni macchina.
+
+SINTESI
+dis [-p listaproc] [-c cont_istr] [posizione]
+
+DESCRIZIONE
+Disassembla "cont_istr" istruzioni in ciascun sottoprocesso o
+processo specificato (di default, %thread o %proc). Se non
+viene indicato alcun cont_istr, il conteggio di default arriva
+a %num_lines. All'inizio %num_lines è 10 e può essere cambiata.
+
+Se viene indicata una "posizione",
+il disassemblaggio inizia in quella posizione di ciascun sottoprocesso
+o processo specificato. Se non viene indicata alcuna posizione, il
+primo comando dis dopo lo scatto di un evento o dopo il ripristino
+di %frame inizierà a %loc. I successivi comandi dis continueranno
+dall'indirizzo immediatamente successivo all'ultima istruzione
+visualizzata dal dis precedente.
+
+ESEMPI
+dis
+dis -c 20 main
+dis file.c@10
+
+VEDI ANCHE
+%frame, %loc, %num_lines, dump, location, print, listaproc
+++
+
+
+++ disable
+NOME
+disable - disabilita gli eventi.
+
+SINTESI
+disable num_evento ...
+disable -a [-p listaproc] [tipo_evento]
+
+DESCRIZIONE
+La prima forma disabilita gli eventi corrispondenti ai numeri
+di evento indicati.
+
+La seconda forma disabilita tutti gli eventi del tipo_evento
+specificato (se non è specificato nulla, tutti i tipi) nella
+lista specificata di sottoprocessi e processi (se non è specificato
+nulla, il sottoprocesso o processo attuale). "tipo_evento" può
+essere "onstop", "signal", "stop" o "syscall".
+
+Gli eventi disabilitati non hanno effetto sui sottoprocessi o
+processi a cui si applicano, tuttavia non vengono cancellati e
+possono essere riabilitati con "enable".
+
+ESEMPI
+disable 3 5
+disable -a -p p1.1,p2.3
+disable -a onstop
+disable -a signal
+
+VEDI ANCHE
+change, delete, enable, events, onstop, listaproc, signal,
+stop, syscall
+++
+
+++ dump
+NOME
+dump - visualizza il contenuto della memoria.
+
+SINTESI
+dump [-p listaproc] [-c cont_byte] posizione
+
+DESCRIZIONE
+dump visualizza il contenuto della memoria per ciascun sottoprocesso
+o processo specificato (per default, %thread o %proc).
+Visualizza "cont_byte" byte, 16 byte per riga, in esadecimale e
+ASCII, a partire dall'indirizzo dato da "posizione".
+
+Se non viene indicato cont_byte, visualizza %num_bytes byte.
+All'inizio %num_bytes è 256 e può essere cambiata.
+
+ESEMPI
+dump -c 16 mioptr
+dump %esp
+dump 0x80001248
+
+VEDI ANCHE
+%num_bytes, dis, location, print, listaproc
+++
+
+
+++ enable
+NOME
+enable - abilita gli eventi.
+
+SINTESI
+enable num_evento ...
+enable -a [-p listaproc] [tipo_evento]
+
+DESCRIZIONE
+La prima forma abilita gli eventi corrispondenti ai numeri di
+evento indicati.
+
+La seconda forma abilita tutti gli eventi del tipo specificato
+(se non è specificato nulla, tutti i tipi) nella lista specificata
+di sottoprocessi e processi (se non e specificato nulla, il
+sottoprocesso o processo attuale). "tipo_evento" può essere
+"onstop", "signal", "stop" o "syscall".
+
+Possono essere abilitati solo gli eventi disabilitati. Una volta
+abilitato, un evento influisce di nuovo sul sottoprocesso o processo
+in cui è definito.
+
+ESEMPI
+enable 3 5
+enable -a -p p1,p2.3
+enable -a stop
+enable -a signal
+
+VEDI ANCHE
+change, delete, disable, events, onstop, listaproc, signal,
+stop, syscall
+++
+
+
+++ events
+NOME
+events - elenca gli eventi.
+
+SINTESI
+events [-p listaproc] [num_evento ...]
+
+DESCRIZIONE
+Senza argomento, events elenca tutti gli eventi di arresto, azioni di
+signal, azioni di syscall e azioni di onstop per il sottoprocesso o
+processo attuale. Con l'opzione -p, elenca gli eventi associati ai
+sottoprocessi e processi indicati.
+
+Se vengono indicati uno o più numeri di evento, events fornisce una
+lista completa degli eventi specificati. La lista completa comprende
+tutti i sottoprocessi e processi per cui è impostato l'evento e, se
+esiste, il blocco completo di comandi associati.
+
+ESEMPI
+events
+events -p p1,p2.3
+events 3
+
+VEDI ANCHE
+change, delete, disable, enable, onstop, listaproc, signal,
+stop, syscall
+++
+
+
+++ grab
+NOME
+grab - assume il controllo del processo reale o dell'immagine di memoria.
+
+SINTESI
+grab [-f all|none|procs] [-l file_caricam] specificatore_processo ...
+grab -c filenucleo fileoggetto
+
+DESCRIZIONE
+La prima forma accetta uno o più specificatore_processo; debug tenta
+di assumere il controllo di ciascun processo specificato (il controllo
+è concesso solo se si è in possesso dei permessi giusti). Ciascun
+processo può essere specificato come nome di percorso /proc o come
+ID di processo.
+
+L'opzione -I specifica un file oggetto alternativo da usare per
+caricare simboli per il processo. Se viene usata l'opzione -l, è
+possibile specificare un solo processo.
+
+Se si indica -f con argomento "none", il debugger non seguirà i processi
+inferiori di alcun processo creato che si dirami. Se si indica -f con
+argomenti "all" o "procs", tutti i processi inferiori verranno controllati
+dal debugger (questi processi possono essere rilasciati dal controllo del
+debugger usando "release"). Se -f non è indicato, il comportamento del
+debugger è controllato da %follow) (il default è segui tutti gli inferiori).
+
+Tutti i sottoprocessi creati da un processo soggetto verranno
+seguiti dal debugger (ma potranno essere rilasciati dal suo
+controllo usando "release"). Per ulteriori informazioni sul
+controllo del comportamento del debugger rispetto a sottoprocessi
+creati ex novo, vedere la descrizione di %thread_change.
+
+La seconda forma apre un file nucleo e il suo rispettivo file
+oggetto per esaminarlo.
+Le immagini di memoria controllate possono essere esaminate usando
+tutti i comandi disponibili per esaminare i processi reali, ma non
+possono essere modificate o eseguite.
+
+Ai processi controllati, come a quelli creati, viene assegnato un
+identificatore di processo del debugger e vi si può fare riferimento
+mediante questo identificatore, mediante la rispettiva ID di processo
+del sistema oppure usando il nome del programma da cui derivano. Il
+primo processo controllato viene reso il processo attuale (%proc).
+Se questo processo usa interfacce di sottoprocessi, il debugger
+sceglierà un sottoprocesso da quel processo e lo renderà il
+sottoprocesso attuale (%thread).
+
+ESEMPI
+grab 123
+grab -f procs /proc/123 3455
+grab -l mioggetto /proc/3455
+grab -c core.save mioggetto
+
+VEDI ANCHE
+%follow, %proc, %program, create, listaproc, processo, release,
+rename, %thread, %thread_change
+++
+
+
+++ help
+NOME
+help - chiede una guida.
+
+SINTESI
+help [argomento]
+
+DESCRIZIONE
+"argomento" può essere qualsiasi alias, nome di comando o argomento
+di guida. Se non si specifica nessun argomento, viene visualizzata
+la lista di comandi e argomenti disponibili.
+
+ESEMPI
+help
+help stop
+help b
+help location
+++
+
+
+++ if
+NOME
+if - salto condizionato.
+
+SINTESI
+if (espr) cmd
+if (espr) cmd else cmd
+
+DESCRIZIONE
+L'espressione "espr" viene valutata nel linguaggio attuale (%db_lang
+o %lang) nel contesto dell'attuale sottoprocesso o processo a concatenamento
+singolo. Se risulta vera viene eseguita la parte "then"; altrimenti, se
+esiste, viene eseguita la parte "else". "cmd" può essere un comando
+semplice oppure un blocco.
+
+ESEMPI
+stop file.c@miafunz { if (x < 10) run; else print x }
+
+VEDI ANCHE
+%db_lang, %lang, blocco, espr, scopo, while
+++
+
+
+++ input
+NOME
+input - invia input a un processo.
+
+SINTESI
+input [-p nome_proc|-r pseudo-tty] [-n] stringa
+
+DESCRIZIONE
+Se è stato creato un processo usando "create -r", i suoi input ed
+output, unitamente agli I/O di tutti gli altri processi derivati dallo
+stesso programma, sono stati ridiretti a uno pseudo terminale. Per
+inviare input a un tale processo, deve essere usato il comando input.
+
+"pseudo-tty" è il nome dello pseudo terminale a cui deve essere
+diretto l'input. Il debugger etichetta tutti gli output di processo
+ridiretti con il nome dello pseudo terminale. In alternativa, è
+possibile dare il nome di un processo o di un programma.
+Se non viene indicato nessun processo o pseudo-tty, si assume lo
+pseudo-tty associato al programma attuale.
+
+La "stringa" di input viene inviata allo pseudo terminale specificato
+oppure allo pseudo terminale associato al processo o programma
+specificato. Alla stringa viene aggiunto un carattere di nuova riga,
+a meno che sia indicata l'opzione -n.
+
+ESEMPI
+input -r pts1 "questa è una stringa"
+input -p mioprog "questa è un'altra"
+
+VEDI ANCHE
+%redir, create
+++
+
+
+++ jump
+NOME
+jump - cambia il contatore delle istruzioni del sottoprocesso o processo.
+
+SINTESI
+jump [-p listaproc] posizione
+
+DESCRIZIONE
+Per poter riuscire ad applicare questo comando è necessario dare
+prima il comando "halt" al sottoprocesso o sottoprocesso.
+jump imposta il contatore delle istruzioni per la lista di
+sottoprocessi e processi (per default, %thread o %proc)
+all'indirizzo specificato da "posizione". Quando il
+sottoprocesso o processo riprenderà l'esecuzione,
+inizierà da questo indirizzo.
+
+La posizione può essere un qualsiasi indirizzo nel testo del
+sottoprocesso o processo specificato, ma si deve fare molta
+attenzione. jump non tenta di regolare lo stack del sottoprocesso
+o processo se l'indirizzo è fuori dalla funzione attuale. Bisogna
+fare attenzione anche quando si salta a istruzioni che possono
+produrre notevoli effetti collaterali.
+
+SINTESI
+jump 10
+jump -p p2.1 main+8
+
+VEDI ANCHE
+location, listaproc
+++
+
+
+++ kill
+NOME
+kill - invia un segnale a un sottoprocesso o processo.
+
+SINTESI
+kill [-p listaproc] [segnale]
+
+DESCRIZIONE
+Il "segnale" specificato viene inviato all'attuale
+sottoprocesso o processo a concatenamento singolo
+oppure alla lista di sottoprocessi e processi indicata
+nell'opzione -p. Diversamente da molti altri comandi del
+debugger, se nella "listaproc" viene indicato un
+identificatore di processo, il segnale viene inviato al
+processo inteso come insieme e non ad ogni suo sottoprocesso.
+
+I segnali possono essere indicati per numero o per nome, con o
+senza il prefisso iniziale "SIG". maiuscolo o minuscolo è
+indifferente. Se non viene indicato nessun segnale, kill usa SIGKILL.
+
+ESEMPI
+kill -p p1.2,p2.3
+kill sigfpe
+kill -p p3 8
+
+VEDI ANCHE
+cancel, listaproc, signal, signames
+++
+
+
+++ list
+NOME
+list - visualizza le righe sorgente.
+
+SINTESI
+list [-p listaproc] [-c cont] [id sottoproc@][nome_file@]nome_funz
+list [-p listaproc] [-c cont] [id sottoproc@][nome_file@]num_riga
+list [-p listaproc] [-c cont] /espreg/
+list [-p listaproc] [-c cont] ?espreg?
+list [-p listaproc] [-c cont]
+
+DESCRIZIONE
+list visualizza le righe sorgente per i sottoprocessi e processi
+specificati oppure, se non è specificata alcuna listaproc, per il
+sottoprocesso o processo attuale.
+
+Le prime quattro forme specificano i punti di partenza della
+visualizzazione. Le prime due permettono di specificare il
+sottoprocesso o processo, il file, la funzione e il numero di
+riga. "id sottoproc" può riferirsi a un sottoprocesso o a un
+processo a concatenamento singolo. Se viene specificato un
+sottoprocesso o processo, quest'ultimo ha la priorità su
+qualsiasi lista di processi indicata nell'opzione -p.
+
+La terza forma trova la riga successiva corrispondente all'espressione
+regolare di tipo ed(1). La quarta forma cerca all'indietro a partire
+dalla riga attuale. La parentesi chiusa o il punto di domanda si
+possono omettere, a meno che sulla stessa riga segua un altro comando.
+L'ultima forma continua la visualizzazione dal file e dalla riga
+lasciati dall'ultima lista oppure da %file@%line dopo lo scatto di
+un evento o il ripristino di %frame.
+
+Se viene indicato un conteggio, viene visualizzata quella
+quantità di righe, altrimenti vengono visualizzate %num_lines
+righe. All'inizio %num_lines è 10 e può essere cambiata.
+
+Dopo la visualizzazione di un blocco di righe, %list_file viene
+impostata sul nome del file visualizzato e %list_line viene impostata
+sul numero dell'ultima riga sorgente visualizzata.
+
+ESEMPI
+list -c 20
+list miofile@1
+list miafunz
+list /x/
+list ?foobar
+list /
+
+VEDI ANCHE
+%file, %frame, %line, %list_file, %list_line, location,
+print, listaproc, espreg
+++
+
+++ map
+NOME
+map - visualizza la mappa di indirizzi virtuali.
+
+SINTESI
+map [-p listaproc]
+
+DESCRIZIONE
+Visualizza la mappa di indirizzi virtuali per uno o più sottoprocessi
+o processi. Senza argomento, visualizza la mappa per il processo
+attuale (%proc). Notare che poiché tutti i sottoprocessi all'interno
+di un processo condividono lo stesso spazio di indirizzi, la mappa
+sarà identica per tutti.
+
+VEDI ANCHE
+create, grab, listaproc
+++
+
+
+++ symbols
+NOME
+symbols - visualizza nomi, valori e tipi di simboli.
+
+SINTESI
+symbols [-p listaproc] [-o oggetto] [-n nomefile [-dfgltuv] [sequenza]
+
+DESCRIZIONE
+Visualizza una lista di nomi di variabili visibile dal frame attuale
+(%frame) nei sottoprocessi o processi specificati (per default,
+%thread o %proc). Senza opzioni (o con l'opzione -I) visualizza i nomi
+locali definiti nella funzione attuale (%func). L'opzione -f visualizza
+solo i nomi visibili locali rispetto al file attuale (%file). Se con
+l'opzione -n viene indicato un "nomefile", vengono visualizzati i
+simboli di quel file. L'opzione -g visualizza solo i nomi globali
+visibili definiti nell'oggetto attuale (file eseguibile o libreria
+condivisa). Se usata con l'opzione -o, l'opzione -g visualizza i nomi
+globali definiti in un oggetto specificato. L'opzione -d visualizza
+le variabili incorporate nel debugger. L'opzione -u visualizza le
+variabili dell'utente mantenute dal debugger.
+
+Se viene indicata una sequenza di tipo sh(1), questo fa sì che la
+visualizzazione si limiti solo ai nomi che coincidono con la sequenza.
+
+L'opzione -t, oltre ai nomi, visualizza i tipi di simboli.
+L'opzione -v visualizza i valori dei simboli. Notare che se il
+linguaggio attuale è C++, symbols -v non visualizza i membri statici
+della classe, che possono essere visualizzati stampando il simbolo
+con il comando "print".
+
+ESEMPI
+symbols -ftv
+symbols -g -o libc.so.1 exec*
+
+VEDI ANCHE
+%file, %frame, %func, sequenza, print, listaproc
+++
+
+
+++ print
+NOME
+print - stampa il valore di un'espressione.
+
+SINTESI
+print [-p listaproc] [-f formato] [-v] espr, ...
+
+DESCRIZIONE
+Visualizza i risultati della valutazione di una lista di espressioni
+separate da virgole. Queste espressioni vengono valutate nel contesto
+dei sottoprocessi e processi indicati (per default, %thread o %proc).
+L'opzione -f richiede un formato (vedi). Le espressioni possono
+contenere variabili di programma, variabili proprie del debugger
+(ad esempio, %line) e variabili definite dall'utente ($miavar, $HOME).
+La valutazione di una chiamata di funzione provoca nel debugger la
+creazione di uno stack per quella funzione e la sua esecuzione.
+Durante l'esecuzione della funzione, gli eventi del debugger vengono
+disabilitati. Le espressioni vengono valutate nel linguaggio attuale
+(%lang o %db_lang). Dopo ciascuna espressione viene stampato uno
+spazio e alla fine viene aggiunto un carattere di nuova riga, a meno
+che sia specificato un formato.
+
+L'opzione -v fornisce informazioni più prolisse. Le informazioni
+aggiuntive includono prototipi di funzione per tutte le funzioni
+chiamate dal debugger durante la valutazione dell'espressione.
+Questa possibilità e utile in C++, per vedere in che modo vengono
+risolte le funzioni sovraccaricate. L'opzione -v visualizza anche
+la struttura generata dal compilatore ed i membri di classe, quali
+puntatori o tabelle di funzioni virtuali.
+
+Il comando "set" può essere usato anche per valutare espressioni di
+linguaggio. Tuttavia, "set" non stampa i risultati di un'espressione.
+Viene usato soprattutto per valutare gli effetti collaterali di
+un'espressione, ad esempio l'assegnazione.
+
+ESEMPI
+print %line, %file, %func
+print "a[i] == ", a[i]
+print *ptr->next
+print -f "0x%x\n" main
+print -v miafunz(1, 2, 3)
+
+VEDI ANCHE
+%db_lang, %lang, C++, espr, formato, listaproc, scopo, set
+++
+
+++ ps
+NOME
+ps - stato del processo.
+
+SINTESI
+ps [-p listaproc]
+
+DESCRIZIONE
+Elenca lo stato dei sottoprocessi e processi controllati.
+Se non viene indicata un'opzione -p, elenca lo stato di tutti i
+sottoprocessi e processi controllati.
+Il sottoprocesso attuale (%thread), se esiste, oppure il processo
+attuale (%proc), viene marcato con un asterisco (*).
+
+VEDI ANCHE
+listaproc
+++
+
+++ pwd
+NOME
+pwd - stampa la directory di lavoro attuale.
+
+SINTESI
+pwd
+
+DESCRIZIONE
+pwd stampa la directory di lavoro attuale del debugger.
+
+VEDI ANCHE
+cd
+++
+
+++ quit
+NOME
+quit - esce dal debugger.
+
+SINTESI
+quit
+
+DESCRIZIONE
+Esce dal debugger.
+Tutti i processi controllati vengono eliminati (se erano stati creati)
+oppure rilasciati ed eseguiti (se erano sotto controllo).
+
+VEDI ANCHE
+release
+++
+
+++ release
+NOME
+release - rilascia uno o più sottoprocessi o processi controllati.
+
+SYNOPSIS
+release [-s] [-p listaproc]
+
+DESCRIZIONE
+I sottoprocessi o processi indicati (per default, %thread o %proc)
+non vengono più controllati o monitorati dal debugger. Per default
+ciascun sottoprocesso o processo viene rilasciato e può essere
+eseguito. Con l'opzione -s ogni processo viene rilasciato nello
+stato arrestato. Per i sottoprocessi, l'opzione -s viene ignorata.
+Un sottoprocesso o processo può essere rilasciato anche se non era
+stato messo sotto controllo dal debugger; ciò significa che è possibile
+rilasciare anche i processi creati.
+
+ESEMPI
+release -p p1
+release -s
+
+VEDI ANCHE
+listaproc, quit
+++
+
+++ run
+NOME
+run - mette in esecuzione un sottoprocesso o processo.
+
+SINTESI
+run [-p listaproc] [-bfr] [-u posizione]
+
+DESCRIZIONE
+Mette in esecuzione i sottoprocessi e processi specificati
+in listaproc (per default, %thread o %proc).
+L'opzione -f specifica che il debugger eseguirà il sottoprocesso
+o processo in forma prioritaria, vale a dire che attenderà che i
+sottoprocessi o processi si arrestino prima di restituire il
+controllo all'utente.
+L'opzione -b specifica l'esecuzione sullo sfondo (senza attesa).
+Il controllo torna immediatamente all'utente ed il sottoprocesso o
+processo viene avviato.
+Se non si specifica né -f né -b, il default è determinato dal valore
+della variabile del debugger %wait.
+
+L'opzione -r fa sì che il sottoprocesso o processo sia eseguito
+fino al ritorno della funzione attuale.
+L'opzione -u specifica una "posizione" fino a cui eseguire.
+
+Notare che i sottoprocessi che non sono attualmente in esecuzione
+su un processo light-weight del kernel non possono essere messi in
+esecuzione (questi sottoprocessi appaiono nello stato "Off LWP"
+nel comando ps).
+
+ESEMPI
+run -p all -b
+run -r
+run -u 108
+
+VEDI ANCHE
+%wait, location, listaproc, ps, step, sottoprocesso
+++
+
+++ script
+NOME
+script - esegue uno script di comandi del debugger.
+
+SINTESI
+script [-q] nomef
+
+DESCRIZIONE
+Legge ed esegue comandi del debugger da un file.
+I comandi vengono visualizzati sullo schermo prima dell'esecuzione,
+a meno che sia indicata l'opzione -q.
+Gli script possono annidarsi.
+++
+
+++ set
+NOME
+set - modifica una variabile del debugger o del programma.
+
+SINTESI
+set [-p listaproc] [-v] var_debug_o_utente [=] espr [,espr...]
+set [-p listaproc] [-v] espressione_linguaggio
+
+DESCRIZIONE
+Il comando set ha due forme. La prima viene usata per assegnare un
+nuovo valore a una variabile incorporata nel debugger oppure a una
+variabile dell'utente mantenuta dal debugger (es. %lang o $foo). I
+valori di espr permessi dipendono dalla variabile. Alcune, come %lang,
+accettano una serie di nomi appositamente definiti. Altre possono
+accettare una qualsiasi espressione del debugger o del linguaggio
+che possa essere convertita in un valore di stringa. Nel caso di una
+lista di stringhe (separate da virgole) e di variabili dell'utente,
+i valori di stringa di queste espressioni sono concatenati. Per avere
+i valori specifici permessi, vedere la "guida" per ciascuna variabile
+del debugger.
+
+Nella seconda forma, set può essere usato per valutare una qualsiasi
+espressione del linguaggio, nonostante il suo uso tipico sia quello di
+valutare un'espressione di assegnazione. Se si specifica più di un
+sottoprocesso o processo, il comando viene valutato volta per volta
+nel contesto di ciascun sottoprocesso o processo.
+
+L'opzione -v elenca i prototipi di funzione di tutte le funzioni
+chiamate dal debugger durante la valutazione dell'espressione. Questa
+possibilità è utile in C++, per vedere in che modo vengono risolte le
+funzioni sovraccaricate.
+
+ESEMPI
+set %global_path = %global_path, ":src/new/miadir"
+set -p all %path = "miadir"
+set %frame 2
+set %eax = 0x3421
+set x = 3
+set -v miafunz(a, b)
+
+VEDI ANCHE
+%db_lang, %lang, C++, espr, listaproc, scopo, varutente
+++
+
+
+++ signal
+NOME
+signal - imposta o elenca azioni di segnale per un sottoprocesso o processo
+
+SINTESI
+signal [-p listaproc] [-iq] [segnale ... [comando]]
+
+DESCRIZIONE
+Quando viene affisso un segnale a un sottoprocesso o processo,
+il debugger, per default, intercetta il segnale ed annuncia il
+suo verificarsi. Poi il segnale può essere annullato usando il
+comando "cancel" oppure il processo può continuare e ricevere il
+segnale. L'opzione -i con uno o più nomi o numeri di segnale
+(vedere "kill") specifica che il debugger ignorerà questi segnali
+(non li intercetterà per la lista di sottoprocessi o processi
+indicata da listaproc). È possibile indicare il nome del segnale
+con o senza il prefisso iniziale "SIG". Maiuscolo o minuscolo è
+indifferente. Se si specifica di nuovo il segnale senza l'opzione -i,
+si ristabilisce l'azione di default per quel segnale.
+
+Se viene dato un comando con un set di segnali, il debugger stabilisce
+un evento per quel set. Questo evento può essere cancellato, disabilitato
+o abilitato, come gli eventi "stop", "onstop" e "syscall". E possibile
+assegnare eventi multipli allo stesso segnale. La cancellazione di tutti
+gli eventi per un determinato segnale non rimuove l'azione di default
+del debugger per quel segnale. L'opzione -q indica che l'evento del
+segnale non verrà annunciato.
+
+Senza argomento, elenca le azioni di segnale per la lista
+di processi indicata da listaproc.
+
+Diversamente da molti altri comandi, se non è indicata l'opzione -p
+per il comando signal, la sua azione si applica a tutti i sottoprocessi
+e processi derivati dal programma attuale (%program).
+
+ESEMPI
+signal -i fpe emt
+signal SIGFPE
+signal 8 { if (x == 0) cancel 8; run }
+
+VEDI ANCHE
+assoccmd, cancel, delete, disable, enable, kill, listaproc, signames
+++
+
+++ step
+NOME
+step - esegue un processo a passi singoli.
+
+SINTESI
+step [-p listaproc] [-ibfoq] [-c cont]
+
+DESCRIZIONE
+La lista di sottoprocessi e processi (per default, %thread o %proc)
+verra' attraversata "cont" volte (per default, 1). Un conteggio
+esplicito di 0 indica l'esecuzione ripetuta di step fino all'interruzione
+o all'arresto da parte di un evento.
+
+Con l'opzione -i, esegue lo step di istruzioni,
+altrimenti esegue lo step di statement.
+Con l'opzione -o, salta il passo singolo entro le funzioni (tratta una
+subroutine come una singola istruzione); altrimenti esegue il passo
+singolo anche nelle funzioni.
+
+L'opzione -f specifica che il debugger attenderà fino all'arresto del
+sottoprocesso o processo prima di restituire il controllo all'utente,
+cioè che eseguirà il sottoprocesso o processo in via prioritaria.
+L'opzione -b specifica l'esecuzione sullo sfondo (senza attesa).
+Il sottoprocesso o processo viene avviato, ma il controllo torna
+immediatamente all'utente.
+Se non si specifica né -f né -b il default è determinato dal valore
+della variabile del debugger %wait.
+
+L'opzione -q specifica l'attraversamento "silenzioso", cioè che il
+debugger non annuncia l'ID di processo del processo attraversato né
+stampa la riga sorgente successiva.
+
+Notare che i sottoprocessi che non sono attualmente in esecuzione
+su un processo light-weight del kernel non possono essere messi in
+esecuzione (questi sottoprocessi appaiono nello stato "Off LWP"
+nel comando ps).
+
+ESEMPI
+step -io
+step -b
+step -p all -c 10
+
+VEDI ANCHE
+%verbose, %wait, processo, listaproc, ps, run, sottoprocesso
+++
+
+
+++ halt
+NOME
+halt - arresta un sottoproc. o processo attualmente in esecuzione sullo sfondo.
+
+SINTESI
+halt [-p listaproc]
+
+DESCRIZIONE
+Il debugger comanda a ciascun sottoprocesso o processo a concatenamento
+singolo indicato (per default, %thread o %proc) di sospendere
+immediatamente l'esecuzione. La richiesta può non avere un effetto
+immediato, a causa delle variazioni di latenza e di programmazione
+del sistema.
+
+"halt" è inutile sui sottoprocessi o processi in esecuzione prioritaria,
+dato che il debugger non restituisce il controllo all'utente fino
+all'arresto di questi sottoprocessi e processi. Per arrestare un
+sottoprocesso o processo in esecuzione prioritaria, digitare il
+tasto per l'interruzione (normalmente <Canc>).
+
+VEDI ANCHE
+%wait, listaproc, run, step
+++
+
+++ syscall
+NOME
+syscall - imposta il tracciamento delle chiamate di sistema.
+
+SINTESI
+syscall [-p listaproc] [[-eqx] [-c cont] chiamata ... [comando]]
+
+DESCRIZIONE
+Specifica le azioni da intraprendere quando un sottoprocesso o
+processo entra o esce da una chiamata di sistema. Senza argomento,
+elenca le azioni attuali delle chiamate di sistema per i sottoprocessi
+o processi indicati.
+
+Se vengono indicati uno o più nomi o numeri di chiamate di sistema,
+il debugger sospende il sottoprocesso o processo all'entrata (per
+default, -e) e/o all'uscita (-x) da quelle chiamate di sistema.
+Viene annunciato l'evento della chiamata di sistema e vengono
+eseguiti gli eventuali "comandi" associati.
+
+L'opzione -q specifica un comportamento silenzioso, cioè che l'evento
+non verrà annunciato.
+L'opzione -c specifica che l'evento scatterà "cont" volte prima che il
+debugger sospenda il sottoprocesso o processo, che successivamente
+verrà sospeso ad ogni verificarsi dell'evento.
+
+Per la lista dei nomi validi di chiamate di sistema, usare
+"help sysnames". Maiuscolo o minuscolo è indifferente.
+
+Diversamente da molti altri comandi, se non è indicata l'opzione -p
+per il comando syscall, la sua azione si applica a tutti i sottoprocessi
+e processi derivati dal programma attuale (%program).
+
+ESEMPI
+syscall -c 10 write { if (fd == 5) run }
+syscall -qx read
+
+VEDI ANCHE
+%program, assoccmd, delete, disable, enable, events, listaproc
+++
+
+
+++ regs
+NOME
+regs - visualizza il contenuto dei registri del processore.
+
+SINTESI
+regs [-p listaproc]
+
+DESCRIZIONE
+Visualizza in esadecimale il contenuto dei registri del
+processore per i sottoprocessi e processi specificati (per
+default, %thread o %proc).
+
+VEDI ANCHE
+dis, dump, listaproc
+++
+
+
+++ stack
+NOME
+stack - visualizza il tracciamento all'indietro delle chiamate di funzioni.
+
+SINTESI
+stack [-p listaproc] [-f frame] [-c cont] [-a indirizzo ] [ -s stack ]
+
+DESCRIZIONE
+Visualizza le funzioni attive per la lista di sottoprocessi e
+processi (per default, %thread o %proc).
+Le funzioni vengono mostrate con i loro nomi, i nomi e i valori degli
+argomenti e con il numero di riga o indirizzo attivo all'interno della
+funzione. Se le informazioni simboliche sono insufficienti, è possibile
+che i nomi delle funzioni, i nomi degli argomenti ed i numeri di riga
+non siano disponibili.
+
+"cont" è il numero di frame da mostrare. Se non viene indicato, mostra
+l'intero stack. L'opzione -f specifica il numero di frame da cui inizia
+la visualizzazione. I frame sono numerati da 0 a partire dal fondo dello
+stack (frame iniziale).
+
+Le opzioni -a e -s consentono di specificare un indirizzo di partenza
+(contatore di istruzioni) e/o un valore iniziale per il puntatore di
+stack. Questa possibilità è utile quando si cerca di ottenere un
+tracciamento dello stack per un processo che è saltato a un indirizzo
+non valido o il cui puntatore di stack è stato alterato. Entrambe le
+opzioni accettano un indirizzo in esadecimale.
+
+EXAMPLES
+stack -p p2
+stack -f 2 -c 3
+stack -a 0x80494958 -s 0xbfff8004
+
+VEDI ANCHE
+listaproc
+++
+
+++ while
+NOME
+while - ciclo condizionale.
+
+SINTESI
+while (espr) cmd
+
+DESCRIZIONE
+L'espressione "espr" viene valutata nel linguaggio attuale
+(%lang o %db_lang) nel contesto dell'attuale sottoprocesso o processo a
+concatenamento singolo. Se risulta vera, viene eseguito "cmd". Poi la
+sequenza viene ripetuta. "cmd" può essere un comando singolo o un blocco.
+
+ESEMPI
+while ($foo < 10) { print $foo, a[$foo]; set $foo = $foo + 1 }
+
+VEDI ANCHE
+%db_lang, %lang, blocco, break, continue, espr, if, scopo
+++
+
+
+++ cd
+NOME
+cd - cambia la directory di lavoro attuale.
+
+SYNOPSIS
+cd [nome_percorso]
+
+DESCRIZIONE
+cd cambia la directory di lavoro attuale del debugger a una directory
+indicata da "nome_percorso". Se non viene indicato un nome di percorso,
+cd usa la directory specificata dalla variabile di ambiente $HOME.
+
+VEDI ANCHE
+pwd
+++
+
+++ change
+NOME
+change - modifica un evento esistente.
+
+SINTESI
+change num_evento [-p listaproc] [-evqx] [-c cont]
+        [espr_stop|chiamata...|segnale...] [{comandi}]
+
+DESCRIZIONE
+num_evento deve venire per primo ed è il numero di un evento valido
+esistente. Le altre opzioni consentono di modificare i diversi attributi
+di quell'evento:
+1) la lista di sottoprocessi o processi a cui si applica (-p),
+2) la prolissità (-q rende un evento silenzioso, -v prolisso),
+3) per le chiamate di sistema, se l'evento si verifica all'entrata,
+   all'uscita o entrambi (-ex),
+4) per gli eventi di arresto e delle chiamate di sistema, il numero
+   di volte che l'evento si verifica prima di essere annunciato (-c),
+5) i comandi associati (devono essere racchiusi tra parentesi graffe {}),
+6) e l'espressione, la lista di chiamate di sistema o la lista di segnali
+   associati ad un evento.
+
+ESEMPI
+change 3 -q
+change 5 -p p2 -c 10
+change 7 { print "x == ", x }
+change 9 -x write
+
+VEDI ANCHE
+assoccmd, delete, disable, enable, events, onstop,
+listaproc, signal, stop, syscall
+++
+
+++ export
+NOME
+export - aggiunge una coppia nome-valore all'ambiente.
+
+SINTESI
+export $nomeutente
+
+DESCRIZIONE
+Esporta all'ambiente una variabile definita dall'utente e mantenuta dal
+debugger. nomeutente (ed il suo valore attuale) diventa parte dell'ambiente
+che viene ricevuto dai processi creati dal debugger. Se il valore di
+$nomeutente cambia, deve essere riesportato perché il nuovo valore
+diventi parte dell'ambiente. Notare che "nomeutente" viene esportato
+senza il prefisso "$".
+
+VEDI ANCHE
+varutente
+++
+
+++ fc
+NOME
+fc - trova, modifica e riesegue comandi
+
+SINTESI
+fc [-e nome_ed] [-nlr] [primo [ultimo]]
+fc -e - [vecchio=nuovo] [comando]
+
+DESCRIZIONE
+"fc" fornisce la modifica e il richiamo di comandi tipo ksh(1).
+Nella prima forma, dagli ultimi comandi HISTSIZE immessi viene
+selezionato un intervallo di comandi da "primo" a "ultimo". Gli
+argomenti primo e ultimo possono essere specificati come numeri o
+come stringhe. Una stringa viene usata per individuare il comando
+più recente a partire dalla stringa indicata. Un numero negativo
+viene usato come offset rispetto all'attuale numero di comando.
+
+Se viene indicata l'opzione -l, i comandi sono elencati sull'output
+standard. Altrimenti il programma editor "nome_ed" viene richiamato
+in un file temporaneo contenente i comandi. Se non viene indicato
+nome_ed, come editor viene usato il valore della variabile ambientale
+FCEDIT (default /usr/bin/ed). Alla fine delle modifiche, i comandi
+modificati vengono eseguiti.
+
+Se non viene specificato l'argomento primo, il default è il comando
+precedente per la modifica e -16 per la lista. L'opzione -r inverte
+l'ordine dei comandi; l'opzione -n sopprime i numeri dei comandi
+nella lista.
+
+Nella seconda forma, il "comando" viene rieseguito dopo l'esecuzione
+della sostituzione "vecchio=nuovo". Se il comando non viene fornito,
+il default è il comando precedente.
+
+VEDI ANCHE
+%mode
+++
+
+++ logoff
+NOME
+logoff - arresta la registrazione della sessione.
+
+SINTESI
+logoff
+
+DESCRIZIONE
+Disattiva la registrazione della sessione.
+
+VEDI ANCHE
+logon
+++
+
+
+++ logon
+NOME
+logon - avvia la registrazione della sessione.
+
+SINTESI
+logon [file_log]
+
+DESCRIZIONE
+Avvia la registrazione della sessione. Tutti gli output del debugger
+vengono inviati a "file_log". Ciascuna riga di output è preceduta da
+un segno # (commento). Anche i comandi del debugger vengono inviati
+al file_log, ma non sono preceduti da #. Se non è specificato alcun
+file_log, viene utilizzato l'ultimo file_log usato nell'attuale
+sessione di debug. I nuovi comandi e output vengono aggiunti a questo
+file. I file di log creati dal debugger possono essere usati come
+script di comandi del debugger.
+
+VEDI ANCHE
+logoff, script
+++
+
+
+++ onstop
+NOME
+onstop - imposta l'azione da intraprendere quando il sottoproc. o proc. si arresta.
+
+SINTESI
+onstop [-p listaproc] [comando]
+
+DESCRIZIONE
+Senza l'argomento "comando", elenca le attuali azioni di onstop per
+la lista di sottoprocessi e processi specificata in "listaproc".
+
+"comando" può essere un comando singolo o un blocco di comandi.
+Se viene indicato un blocco di comandi, ogni volta che il sottoprocesso
+o processo specificato si arresta, vengono eseguiti i comandi (nel
+contesto di quel sottoprocesso o processo). L'arresto include passi
+singoli e l'arresto per altri eventi del debugger (signal, syscall,
+stop).
+
+Diversamente da molti altri comandi, se non è indicata l'opzione -p
+per il comando onstop, la sua azione si applica a tutti i sottoprocessi
+e processi derivati dal programma attuale (%program).
+
+ESEMPI
+onstop -p p2
+onstop { print i, x[i] }
+
+VEDI ANCHE
+%program, delete, disable, enable, events, signal, stop, syscall
+++
+
+++ rename
+NOME
+rename - cambia il nome di un programma.
+
+SINTESI
+rename nome_prog nome
+
+DESCRIZIONE
+Se un processo è messo sotto controllo o creato, il nome dell'eseguibile
+da cui esso deriva può essere usato per fare riferimento a tutti i
+sottoprocessi o processi derivati da quell'eseguibile, e può essere
+usato in qualsiasi listaproc. rename specifica un nuovo nome da usare
+per quel programma.
+
+VEDI ANCHE
+create, grab, listaproc
+++
+
+++ %file
+NOME
+%file - l'attuale file sorgente.
+
+DESCRIZIONE
+%file viene impostata con il nome del file sorgente associato al frame
+attuale, se è noto, tutte le volte che un sottoprocesso o processo a
+concatenamento singolo si arresta o che %frame cambia. Ciascun
+sottoprocesso o processo a concatenamento singolo ha la propria
+%file. Il primo comando "list" dopo l'impostazione di %frame
+visualizzerà il sorgente da %file, se non è specificato alcun nome
+di file. Non è possibile modificare esplicitamente %file.
+
+VEDI ANCHE
+%frame, %line, %list_file, %list_line, list
+++
+
+++ %follow
+NOME
+%follow - il debugger deve seguire i processi inferiori?
+
+DESCRIZIONE
+Il debugger controlla i processi per l'utente, creati dal debugger come
+risultato di un comando "create" oppure messi sotto controllo durante
+l'esecuzione come risultato del comando "grab". Se %follow viene
+impostato su "all" o "procs", il debugger mette sotto controllo anche
+i processi inferiori di tutti i processi controllati che si diramano.
+Se %follow è impostata su "none" non verrà controllato alcun processo
+inferiore. Sul modo globale impostato da %follow possono avere la
+priorità singoli comandi "create" o "grab". Tutti i processi
+controllati possono essere rilasciati dal controllo usando il comando
+"release".
+
+Il default di %follow è "all".
+
+Tutti i sottoprocessi creati da un processo soggetto verranno
+seguiti dal debugger (ma potranno essere rilasciati dal suo
+controllo usando "release"). Per ulteriori informazioni sul
+controllo del comportamento del debugger rispetto a sottoprocessi
+creati ex novo, vedere la descrizione di %thread_change.
+
+VEDI ANCHE
+create, grab, processo, release, set, %thread_change
+++
+
+++ %frame
+NOME
+%frame - l'attuale numero di frame nello stack di chiamata.
+
+SINTESI
+Lo scopo di default per i listati sorgente, per la ricerca dei simboli,
+il disassemblaggio e la valutazione delle espressioni. %frame viene
+impostato sul numero del frame più alto (a partire da 0 per il frame
+iniziale) tutte le volte che un sottoprocesso o processo a
+concatenamento singolo si arresta. Ciascuno di questi ha la propria
+%frame. È possibile impostare esplicitamente %frame tramite il comando
+"set". L'impostazione di %frame reimposta anche le relative variabili
+%db_lang, %file, %func, %line, %list_file, %list_line e %loc per
+mantenere una visione coerente del contesto attuale.
+
+VEDI ANCHE
+%db_lang, %file, %func, %line, %loc
+++
+
+
+++ %func
+NOME
+%func - la funzione attuale.
+
+DESCRIZIONE
+%func viene impostata sul nome della funzione corrispondente al frame
+attuale (%frame) tutte le volte che un sottoprocesso o processo a
+concatenamento singolo si arresta o che %frame cambia. Ciascun
+sottoprocesso o processo a concatenamento singolo ha la propria %func.
+E possibile impostare esplicitamente %func tramite il comando "set", ma
+solo per una funzione con un frame attivo nello stack; %frame (e le
+relative variabili %db_lang, %file, %func, %line,
+%list_file, %list_line e %loc) viene aggiornata per riflettere il
+nuovo contesto.
+
+VEDI ANCHE
+%frame
+++
+
+
+++ %lang
+NOME
+%lang - il linguaggio attuale.
+
+DESCRIZIONE
+E il linguaggio attuale. Se è impostata, ha la priorità sul valore
+di %db_lang. Le stringhe valide da assegnare a %lang sono:
+        C       ANSI C
+        C++     C++ Release 2 o 3
+Se %lang non è impostata o se è impostata sulla stringa nulla
+("") il debugger usa come linguaggio attuale %db_lang.
+I comandi che usano %lang per la valutazione delle espressioni
+includono if, print, set, stop, whatis, while
+
+VEDI ANCHE
+%db_lang, C++, espr
+++
+
+++ %loc
+NOME
+%loc - la posizione attuale.  
+
+DESCRIZIONE
+Il punto di esecuzione attuale, %loc, viene impostato con il contenuto
+del "contatore di istruzioni" del frame attuale, ogni volta che un
+sottoprocesso o processo a concatenamento singolo si arresta o quando
+%frame cambia.
+Ciascun sottoprocesso o processo a concatenamento singolo ha la propria
+%loc. Non è possibile modificare esplicitamente %loc. Se non viene
+indicata esplicitamente una posizione, il primo comando "dis" dopo
+l'impostazione di %frame disassemblerà le istruzioni a partire da %loc.
+
+VEDI ANCHE
+%frame, dis
+++
+
+++ %list_file
+NOME
+%list_file - il nome dell'ultimo file elencato.
+
+DESCRIZIONE
+%list_file tiene traccia dell'ultimo file visualizzato dal comando list.
+%list_file cambia ogni qualvolta viene eseguito il comando list; viene
+inoltre reimpostata con il nome del file che contiene la posizione
+attuale (%loc) nel frame attuale (%frame), ogni qualvolta un
+sottoprocesso o processo a concatenamento singolo si arresta o
+quando %frame cambia. Ciascun processo o sottoprocesso a
+concatenamento singolo ha la propria %list_file.
+
+VEDI ANCHE
+%file, %frame, %line, %list_line, list
+++
+
+++ %list_line
+NOME
+%list_line - il numero dell'ultima riga elencata.
+
+DESCRIZIONE
+%list_line tiene traccia dell'ultima riga visualizzata dal comando list.
+%list_line cambia ogni qualvolta viene eseguito il comando list; viene
+inoltre reimpostata con il numero di riga che contiene la posizione
+attuale (%loc) nel frame attuale (%frame), ogni qualvolta un
+sottoprocesso o processo a concatenamento singolo si arresta o quando
+%frame cambia. Ciascun processo o sottoprocesso a concatenamento
+singolo ha la propria %list_line.
+
+VEDI ANCHE
+%file, %frame, %line, %list_file, list
+++
+
+++ %line
+NOME
+%line - il numero di riga attuale.
+
+DESCRIZIONE
+%line è impostata con il numero di riga che contiene la posizione
+attuale (%loc) nel frame attuale (%frame) ogni qualvolta un
+sottoprocesso o processo a concatenamento singolo si arresta o quando
+%frame cambia. Ciascun sottoprocesso o processo a concatenamento
+singolo ha la propria %line. Il primo comando "list" dopo
+l'impostazione di %frame visualizzerà il sorgente a partire dalla riga
+%line, se non è specificata una posizione. È possibile impostare
+esplicitamente una variabile %line non impostata.
+
+VEDI ANCHE
+%frame, %file, %list_file, %list_line, list
+++
+
+++ %mode
+NOME
+%mode - l'attuale modo di modifica delle righe.
+
+DESCRIZIONE
+Debug supporta la storia e la modifica dei comandi tipo ksh(1). %mode
+è il modo usato per modificare le righe di comando. All'avviamento
+%mode è impostata al valore della variabile ambientale VISUAL oppure,
+se questa non esiste, al valore della variabile ambientale EDITOR.
+E possibile reimpostarla in qualsiasi momento usando il comando "set".
+I valori validi sono "vi" ed" emacs". Impostando %mode su qualsiasi
+altro valore, si disattiva la modifica dei comandi.
+
+VEDI ANCHE
+fc
+++
+
+++ %path
+NOME
+%path - il percorso di ricerca locale dei file sorgente.
+
+DESCRIZIONE
+Ogni programma ha la propria %path. Il valore di %path deve essere un
+elenco di nomi di directory separati da due punti. Quando il debugger
+tenta di visualizzare le righe sorgente di un file, cerca nelle
+directory elencate in %path un file con il nome indicato. Dopo aver
+cercato il programma indicato nella lista di percorso locale, il
+debugger cerca nella sua lista di percorso globale (%global_path).
+
+VEDI ANCHE
+%global_path
+++
+
+++ %proc
+NOME
+%proc - il processo attuale.
+
+DESCRIZIONE
+Questa variabile contiene il nome del processo attuale. Può essere
+impostata esplicitamente con il comando "set" oppure implicitamente
+con i comandi "create", "grab" o "release". L'impostazione di %proc
+comporta l'impostazione implicita anche di %program, %thread e %frame.
+
+VEDI ANCHE
+%frame, %program, %thread, listaproc
+++
+
+++ %program
+NOME
+%program - il programma attuale.
+
+DESCRIZIONE
+Questa variabile si riferisce al nome del programma che contiene il
+processo attuale (%proc). È possibile impostarla esplicitamente tramite
+il comando "set" oppure implicitamente tramite i comandi "create",
+"grab" o "release". I programmi vengono nominati dal file eseguibile
+da cui derivano e possono essere rinominati con il comando "rename".
+L'impostazione di %program comporta l'impostazione implicita di %proc,
+%thread e %frame.
+
+VEDI ANCHE
+%frame, %proc, %thread, listaproc
+++
+
+++ %prompt
+NOME
+%prompt - la stringa del prompt del debugger.
+
+DESCRIZIONE
+Stampando il valore di %prompt, il debugger chiede all'utente di
+effettuare un'immissione. Il valore di default è "debug> ". La variabile
+%prompt può essere cambiata con il comando "set".
+++
+
+++ %thisevent
+NOME
+%thisevent - il numero dell'evento attualmente trattato.
+
+DESCRIZIONE
+All'interno di un comando associato, %thisevent avrà il valore del
+numero dell'evento con cui i comandi sono associati. Non è possibile
+modificare esplicitamente il valore di %thisevent.
+
+VEDI ANCHE
+%lastevent, assoccmd
+++
+
+
+++ %lastevent
+NOME
+%lastevent - il numero dell'ultimo evento creato.
+
+DESCRIZIONE
+Dopo un comando che assegna un numero di evento (stop, signal, syscall
+e onstop), %lastevent avrà il valore del numero dell'evento appena
+assegnato. Non è possibile modificare esplicitamente il valore di
+%lastevent.
+
+VEDI ANCHE
+%thisevent
+++
+
+
+++ assoccmd
+NOME
+assoccmd - un comando o blocco di comandi del debugger.
+
+DESCRIZIONE
+Numerosi comandi accettano l'associazione ad un comando o blocco di
+comandi opzionale, che deve apparire per ultimo nella lista di
+argomenti e può includere comandi con i loro rispettivi comandi
+associati; ciò significa che i comandi possono essere annidati.
+I comandi verranno eseguiti ogni qualvolta si verifichi il relativo
+evento (stop, signal, ecc.). All'interno di un comando associato,
+%thisevent contiene il numero dell'evento attualmente trattato.
+Mentre i comandi vengono eseguiti, il sottoprocesso o processo che
+ha incontrato l'evento viene temporaneamente reso attuale.
+
+VEDI ANCHE
+%thisevent, blocco, onstop, signal, stop, syscall
+++
+
+++ blocco
+NOME
+blocco - una lista di comandi.
+
+DESCRIZIONE
+Un comando o una lista di comandi separati da punti e virgola, racchiusi
+tra parentesi graffe. I blocchi possono essere usati come assoccmd (vedi
+oppure possono apparire indipendentemente da altri comandi. I blocchi
+possono essere usati per raggruppare comandi, in modo da ridirigere il
+loro output con un'unica operazione (vedi).
+
+ESEMPI
+{ if (i) print *ptr; else print *mptr } > miofile
+
+VEDI ANCHE
+assoccmd, ridirezione
+++
+
+++ formato
+NOME
+formato - è la forma dell'output per il comando "print".
+
+DESCRIZIONE
+Il formato è una stringa di caratteri simile a quelle accettate dalla
+routine printf del linguaggio C.
+Ciascuna specifica di formato può avere la forma seguente:
+        %[indicatori][larghezza][.[precisione]][carattere_conversione]
+         carattere_formato
+Tutti i campi hanno lo stesso significato di quello che
+hanno nella routine printf.
+La larghezza e la precisione sono limitate a 1024.
+I parametri di posizione e il carattere di formato 'n' di printf
+non vengono accettati.
+Ciascuna specifica di formato corrisponde ad una delle espressioni
+indicate nel comando print, nell'ordine in cui appaiono.
+I caratteri che non fanno parte delle specifiche di formato,
+vengono stampati così come vengono indicati.
+I caratteri di formato hanno il seguente significato (le voci marcate
+con un asterisco (*) possono non essere disponibili su tutti i sistemi):
+        a*,A*   virgola mobile in esadecimale con esponente decimale
+                (come potenza di due)
+        b*,B*   intero binario senza segno
+        C*      carattere a 2 byte
+        c       carattere senza segno
+        d,i     intero decimale con segno
+        e,E     virgola mobile tipo [-]d.ddde+/-dd
+        f       virgola mobile tipo [-]ddd.dddd
+        g,G     virgola mobile in nessuno dei suddetti tipi
+        o       intero ottale senza segno
+        p       void * (puntatore generico; indirizzo esadecimale)
+        S*      stringa di caratteri a 2 byte
+        s       stringa
+        u       intero decimale senza segno
+        x,X     intero esadecimale senza segno
+        z       stile di default del debugger per l'espressione
+        %       %
+
+VEDI ANCHE
+print
+++
+
+++ posizione
+NOME
+posizione - un indirizzo in un sottoprocesso o processo.
+
+DESCRIZIONE
+La sintassi per uno specificatore di posizione è:
+        indirizzo[+-costante]
+        [id sottoproc@][nomefile@]riga
+        [id sottoproc@][nomefile@]funzione[+-costante]
+dove "indirizzo" è un indirizzo di programma in ottale o esadecimale,
+e "costante" è un intero decimale. "id sottoproc" può riferirsi a un
+sottoprocesso o a un processo a concatenamento singolo.
+
+ESEMPI
+17              un numero di riga nel file attuale (%file)
+foo.c@17        un numero di riga in un altro file
+0x80801234      un indirizzo
+main            un nome o etichetta di funzione
+main+3          tre byte dopo l'etichetta
+p1.2@main       un nome di funzione in un sottoprocesso specifico
+%loc            la posizione attuale
+%line           l'attuale numero di file e di riga
+%r0             un registro
+%r0+80          un registro più un offset
+%pc-4           un registro meno un offset
+$miavar         una variabile definita dall'utente
+
+VEDI ANCHE
+%file, %line, %loc, scopo, varutente
+++
+
+++ listaproc
+NOME
+listaproc - lista di nomi di processi.
+
+DESCRIZIONE
+Una lista di "nomiproc" separati da virgole.
+La maggior parte dei comandi accetta una "listaproc" usando
+l'opzione -p. Una listaproc non deve contenere spazi vuoti.
+
+Un nomeproc può essere composto da:
+1) la parola chiave "all", che denota tutti i sottoprocessi
+        e processi controllati,
+2) un nome di programma generato dall'utente o dal debugger,
+        che denota tutti i sottoprocessi e processi derivati da
+        quel programma,
+3) una ID di processo generato dal debugger nella forma pn (es. p1, p2),
+        che denota il processo stesso, se è a concatenamento singolo,
+        oppure tutti i sottoprocessi del processo,
+4) una ID di sottoprocesso generato dal debugger nella forma pn.n
+        (es. p2.3, p3.1),
+5) la variabile del debugger %program, che denota tutti i sottoprocessi
+        e processi derivati dal programma attuale,
+6) la variabile del debugger %proc, che denota il processo attuale, se
+        è a concatenamento singolo, oppure tutti i sottoprocessi derivati
+        dal processo attuale,
+7) la variabile del debugger %thread, che denota il sottoprocesso
+        attuale,
+8) un intero decimale corrispondente all'ID di processo di sistema di
+        un processo controllato e di tutti i sottoprocessi da esso
+        derivanti,
+9) una qualsiasi variabile definita dall'utente (es. $foo) che abbia
+        un valore intero, interpretata come ID di processo di sistema,
+10) una qualsiasi variabile definita dall'utente che abbia un valore
+        di stringa interpretabile come una delle forme descritte sopra
+        o come una lista di esse.
+
+VEDI ANCHE
+%proc, %program, %thread, listaproc, rename, varutente
+++
+
+++ ridirezione
+NOME
+ridirezione - cambiamento di destinazione dell'output del debugger.
+
+DESCRIZIONE
+Qualsiasi comando o blocco può avere come suffisso '>' ed un nome di
+file, oppure '|' ed una riga di comando della shell del sistema UNIX(r).
+L'effetto è la ridirezione dell'output del comando nel file oppure il
+piping nel comando della shell. È anche possibile usare ">> nomefile",
+che aggiunge l'output al file invece di sostituirne il contenuto
+attuale, se esiste.
+
+ESEMPI
+stack > save.stack
+symbols -gtv | grep int | pg
+
+VEDI ANCHE
+blocco
+++
+
+++ sequenza
+NOME
+sequenza - un'espressione regolare di tipo sh(1).
+
+DESCRIZIONE
+Una sequenza usata per filtrare l'output del comando "symbols".
+        *       Corrisponde a qualsiasi stringa, compresa la stringa null
+        ?       Corrisponde a qualsiasi carattere singolo
+        [...]   Corrisponde ad uno qualsiasi dei caratteri racchiusi,
+                        sono ammessi gli intervalli e ! come primo
+                        carattere indica negazione
+
+VEDI ANCHE
+symbols
+++
+
+++ espreg
+NOME
+espreg - un'espressione regolare di tipo ed(1).
+
+DESCRIZIONE
+Un'espressione regolare usata per cercare una sequenza in un file
+sorgente con il comando "list".
+        .       Corrisponde a qualsiasi carattere eccetto il carattere
+                     di nuova riga
+        [...]   Corrisponde ad uno qualsiasi dei caratteri racchiusi,
+                     sono ammessi gli intervalli e ^ indica negazione
+        *       Indica zero o più della ER precedente
+        ^       Corrisponde alla stringa nulla all'inizio di una riga
+        $       Corrisponde alla stringa nulla alla fine di una riga
+        \{m\}   Indica esattamente m presenze della ER precedente
+        \{m,\}  Indica almeno m presenze della ER precedente
+        \{m,n\} Indica da m ad n presenze, estremi compresi
+        \(...\) Corrisponde alle corrispondenze della stessa cosa di ...
+        \cifra  Corrisponde all'n-esima ER tra parentesi nella stessa
+                     espressione
+        \<      Corrisponde alla stringa nulla all'inizio di una parola
+        \>      Corrisponde alla stringa nulla alla fine di una parola
+
+VEDI ANCHE
+list
+++
+
+++ varutente
+NOME
+varutente - variabili definite dall'utente e mantenute dal debugger.
+
+DESCRIZIONE
+I nomi che iniziano con un simbolo di dollaro ($) sono riservati
+all'utente del debugger. All'avviamento il debugger importa l'ambiente
+della shell come set iniziale di variabili definite dall'utente. E'
+possibile creare una nuova variabile con il comando "set". Le variabili
+definite dall'utente sono del tipo "stringa"; quando è necessario
+vengono convertite in valori numerici tramite strtol(3).
+
+VEDI ANCHE
+export, set
+++
+
+++ %db_lang
+NOME
+%db_lang - la nozione interna del debugger del linguaggio attuale.
+
+DESCRIZIONE
+%db_lang è il linguaggio dell'attuale sottoprocesso o processo e viene
+usata dal debugger per valutare le espressioni del linguaggio. Viene
+impostata dal debugger sulla base delle informazioni contenute nel file
+oggetto e non può essere reimpostata direttamente dall'utente. Se il
+debugger non riesce a determinare il linguaggio dell'attuale
+sottoprocesso o processo, %db_lang viene impostata per default su C.
+L'impostazione esplicita di %lang ha la priorità sul linguaggio
+dell'attuale sottoprocesso o processo. I comandi che usano %db_lang per
+la valutazione delle espressioni comprendono if, print, set, stop,
+whatis e while
+
+VEDI ANCHE
+%lang, C++, espr
+++
+
+++ %global_path
+NOME
+%global_path - il percorso di ricerca globale del debugger.
+
+DESCRIZIONE
+Il valore di %global_path deve essere una lista di nomi di directory
+separate da due punti. Quando il debugger tenterà di visualizzare le
+righe sorgente da un file, cercherà un file con il relativo nome nelle
+directory elencate nel percorso %path per quel dato programma. Dopo la
+ricerca nel percorso locale, il debugger cercherà nella lista di
+percorso globale (%global_path). %global_path può essere impostata
+anche dalla riga di comando del debugger con l'opzione -s.
+
+VEDI ANCHE
+%path
+++
+
+++ %num_bytes
+NOME
+%num_bytes - numero di byte di default per il dump.
+
+DESCRIZIONE
+Se per il comando "dump" non si indica un'opzione -c, il dump si
+esegue su %num_bytes byte.
+Il valore iniziale di %num_bytes è 256 e può essere cambiato usando
+il comando "set".
+
+VEDI ANCHE
+dump
+++
+
+++ %num_lines
+NOME
+%num_lines -- il numero di righe da visualizzare.
+
+DESCRIZIONE
+Se per i comandi "dis" o "list" non è stata indicata l'opzione -c,
+ciascuno visualizza %num_lines righe.
+Il valore iniziale di %num_lines è 10 e può essere cambiato usando il
+comando "set".
+
+VEDI ANCHE
+dis, list
+++
+
+++ %result
+NOME
+%result - stato di esecuzione dei comandi del debugger.
+
+DESCRIZIONE
+Dopo l'esecuzione di ciascun comando del debugger, lo stato risultante
+viene depositato in %result. 0 indica che l'esecuzione è andata a buon
+fine. Un numero diverso da zero indica che l'esecuzione non è riuscita.
+++
+
+++ %verbose
+NOME
+%verbose - il livello di prolissità degli eventi del debugger.
+
+DESCRIZIONE
+Quando un sottoprocesso o processo controllato dal debugger si arresta,
+normalmente il debugger stampa un messaggio indicante il motivo
+dell'arresto, l'ID del sottoprocesso o processo e la riga sorgente
+successiva, se è disponibile, oppure la riga successiva del testo
+disassemblato. %verbose può essere usata per controllare quest'output.
+I valori validi sono:
+        quiet   non viene generato alcun output quando un processo o
+                sottoprocesso si arresta
+        source  viene visualizzata solo la riga sorgente successiva o
+                la riga di disassemblaggio
+        events  se un evento ha causato l'arresto, quest'evento viene
+                visualizzato (non include gli arresti richiesti (halt
+                o passi singoli)
+        reason  il motivo dell'arresto, compresi gli eventi e gli
+                arresti richiesti
+        all     massimo livello di prolissità (attualmente uguale a reason)
+
+Il modo di default è "all".
+Il modo quiet può anche essere specificato come opzione -q per certi
+comandi del debugger. Queste singole opzioni -q hanno la priorità sul
+modo %verbose.
+
+VEDI ANCHE
+change, signal, step, stop, syscall, %thread_change
+++
+
+++ %wait
+NOME
+%wait - esecuzione dei comandi sincrona o asincrona.
+
+DESCRIZIONE
+Quando il debugger mette in moto un sottoprocesso o processo a
+concatenamento singolo, di solito aspetta che questo si arresti prima
+di restituire il controllo all'utente.
+Impostando %wait su "background", 0 o "no", si fa sì che il debugger
+passi al modo asincrono. In modo asincrono i comandi che mettono in
+moto un sottoprocesso o processo tornano immediatamente sotto il
+controllo dell'utente, senza aspettare che si arresti. Impostando %wait
+su "foreground", 1 o "yes'", si ripristina il modo di default. La
+variabile globale %wait può essere ignorata usando le opzioni -f e -b
+per i comandi run e step.
+
+VEDI ANCHE
+run, step
+++
+
+++ espr_stop
+NOME
+espr_stop - espressioni di eventi dello spazio di indirizzo di un processo.
+
+DESCRIZIONE
+espr_stop sono espressioni speciali accettate dal comando stop.
+Un'espr_stop consiste in uno o più eventi_stop accompagnati dagli
+operatori speciali && (and) o || (or). Questi operatori sono associativi
+a sinistra, ma il debugger non garantisce l'ordine in cui i loro
+operandi vengono valutati. Un evento_stop può essere:
+        posizione
+        ( espr )
+        *lvalue
+
+Ciascun tipo di evento d'arresto esercita un'azione che fa notare
+l'evento al debugger. Quando quest'azione si verifica, tutta l'espressione
+di arresto viene valutata. Se risulta vera, l'evento scatta nel modo
+normale (il debugger informa l'utente sull'evento ed esegue tutti i
+comandi associati).
+
+Una "posizione" è un indirizzo nel testo del processo in cui il debugger
+può impostare un punto di interruzione. Quando un sottoprocesso o
+processo raggiunge la posizione specificata, il debugger nota l'evento.
+Per gli eventi_stop di posizione che si riferiscono a nomi di funzioni,
+l'espressione è vera fintantoché la funzione è attiva. Per gli
+eventi_stop di posizione che si applicano ad un particolare indirizzo o
+numero di riga, l'espressione è vera solo quando il sottoprocesso o
+processo si trova su quell'indirizzo o riga. Per la sintassi completa
+della posizione, digitare "help location". Se il linguaggio attuale è
+C++, gli eventi_stop di posizione possono usare anche funzioni
+specifiche di C++. Per ulteriori dettagli, digitare "help C++".
+
+"espr" può essere una qualsiasi espressione valida nel linguaggio
+attuale (%lang o %db_lang). Il debugger nota l'evento_stop quando uno
+qualsiasi degli identificatori coinvolti nell'espressione cambia valore.
+L'intera espressione viene poi valutata nel contesto del linguaggio
+attuale.
+
+"lvalue" può essere una qualsiasi espressione nel linguaggio attuale che
+sarebbe valida sul lato sinistro di un'istruzione di assegnazione in quel
+linguaggio. Il debugger nota questo evento quando i contenuti della
+posizione cambiano. Il cambiamento stesso rende vero questo tipo di
+evento_stop.
+
+E' possibile creare espr_stop più potenti combinando eventi_stop con
+l'uso dell'operatore speciale && (and). Ad esempio, per arrestare una
+funzione a solo quando anche la funzione b è attiva, digitare
+"stop a && b". Per arrestarla quando il valore di un'espressione x
+diventa vero nella funzione y, digitare "stop y && (x)".
+
+ESEMPI
+stop miofile.c@230
+stop *bar
+stop (x == 5)
+stop foo && (a > 7)
+stop (a == 4) || (b == 7)
+
+VEDI ANCHE
+%db_lang, %lang, C++, espr, location, scopo, stop
+++
+
+++ %redir
+NOME
+%redir - ridirigere gli I/O del processo?
+
+DESCRIZIONE
+%redir gestisce il comportamento del comando create.
+Per default create non ridirige gli I/O dei processi che crea, a meno
+che si indichi l'opzione -r.
+Se %redir viene impostata a 1 o "yes'", create ridirigerà gli I/O dei
+processi, a meno che si indichi l'opzione -n.
+Il comportamento di default può essere ripristinato impostando %redir
+su 0 o "no".
+
+VEDI ANCHE
+create, grab, input
+++
+
+
+++ espr
+NOME
+espr - espressione del debugger
+
+DESCRIZIONE
+Le espressioni del debugger seguono la sintassi e la semantica del
+linguaggio attuale (%lang o %db_lang). Il debugger accetta espressioni
+contenenti una combinazione qualsiasi di variabili di programma o
+funzioni, nomi qualificati, variabili incorporate nel debugger e
+variabili del debugger definite dall'utente. Un nome qualificato
+specifica un identificatore di programma che non può essere visibile
+nel contesto attuale. La sintassi è:
+       [[id_sottoproc]@][[file_sorgente]@][[funzione]@][[numero_riga]@]
+             identificatore
+oppure [[id_sottoproc]@]numero_frame@identificatore
+oppure [[id_sottoproc]@]nome_oggetto@[file_sorgente@]identificatore
+
+Il nome qualificato viene valutato da sinistra a destra e si può
+eliminare l'ambiguità fornendo il numero di @ necessario. 
+"numero_frame" e "funzione" si possono riferire a funzioni
+attualmente attive. "id_sottoproc" può riferirsi ad un
+sottoprocesso o ad un processo a concatenamento singolo.
+"nome_oggetto" si riferisce ad un oggetto qualsiasi (file
+eseguibile o libreria condivisa) che costituisce il processo.
+
+Se il linguaggio attuale è C, il debugger supporta la valutazione
+di tutte le espressioni ANSI C valide, eccetto quelle che implicano
+l'espansione delle macro, oppure dichiarazioni di tipo struttura,
+unione o enumerazione. Un esempio di dichiarazione di tipo in
+un'espressione è:
+        ((struct { int i; char c; } *)p)->c = 'a';
+
+Se il linguaggio attuale è C++, il debugger accetta un sottoinsieme
+di espressioni C++. Per ulteriori dettagli, vedi C++.
+
+Le espressioni che iniziano con un trattino (-) o che contengono
+sequenze di caratteri con un significato speciale per il debugger,
+devono essere racchiuse tra parentesi tonde, quadre o graffe. Le
+sequenze di caratteri speciali sono: >, >>, |, ||, &&, #, virgola,
+punto e virgola, nuova riga.
+
+VEDI ANCHE
+%db_lang, %lang, C++, if, print, scopo, set, stop, espr_stop,
+varutente, while
+++
+
+++ scopo
+NOME
+scopo - la visibilità di un identificatore di programma
+
+DESCRIZIONE
+I comandi del debugger che accettano locazioni o espressioni
+possono fare riferimento a identificatori in programmi controllati:
+funzioni, parametri, variabili, etichette, tipi, riferimenti di
+struttura e di unione, nomi di membri e letterali di enumerazione.
+Le locazioni possono fare riferimento anche a numeri di riga sorgente.
+La visibilità al debugger in un determinato momento dipende dallo
+stato del programma in quel momento (contesto) e dalla quantità di
+informazioni di messa a punto fornite al debugger da quel programma.
+
+I numeri di riga sorgente, i nomi di variabili locali per una
+determinata funzione, i nomi dei parametri, i nomi di tipo, i
+riferimenti di struttura e di unione, i nomi di membri e i letterali
+di enumerazione sono disponibili solo se il file in cui vi si fa
+riferimento è stato compilato con l'opzione -g per il compilatore.
+I nomi delle funzioni e variabili globali e statiche di file sono
+disponibili se il file che li definisce è stato compilato con -g
+oppure se la tabella dei simboli del programma non è stata privata
+delle informazioni simboliche.
+
+I numeri di riga sorgente, le funzioni e variabili statiche di file
+sono visibili solo se il contesto attuale si trova entro quel file,
+cioè se il programma viene arrestato in qualche punto all'interno
+del codice generato da quel file. I parametri di funzione sono visibili
+solo se il contesto attuale si trova entro quella funzione. Le
+variabili locali sono visibili solo se il contesto attuale si trova
+entro il blocco che le definisce.
+
+Spesso è comunque possibile accedere, in locazioni o espressioni,
+agli identificatori non visibili nel contesto attuale, usando nomi
+qualificati. Per la sintassi completa, vedi "espr" e "posizione".
+
+I simboli definiti in librerie condivise non sono visibili fino a
+quando queste librerie vengono caricate dal collegatore dinamico.
+I simboli provenienti dalle librerie condivise caricati da chiamate
+per dlopen(3X) sono disponibili solo dopo la chiamata di dlopen.
+
+VEDI ANCHE
+%frame, %func, %line, espr, location
+++
+
+++ whatis
+NOME
+whatis - visualizza il tipo di un'espressione.
+
+SINTESI
+whatis [-p listaproc] espr
+
+DESCRIZIONE
+whatis visualizza il tipo di espressione nel contesto attuale (%frame).
+Se viene indicata una listaproc, il tipo di espressione viene valutato
+nel contesto di ciascun sottoprocesso o processo presente nella lista.
+Espr può essere una qualsiasi espressione nel linguaggio attuale.
+
+Se una variabile è di tipo struttura o classe, "whatis variabile"
+visualizzerà il nome della struttura o della classe.
+"whatis nome_rif_struttura" o "whatis nome_tipo" visualizzerà tutte le
+informazioni note su quel tipo, inclusi i membri di struttura o le
+costanti di enumerazione.
+
+Se è indicato un puntatore ad un oggetto di classe base con funzioni
+virtuali, e se il debugger può determinare che il tipo di oggetto
+puntato è una classe derivata dalla classe base, whatis visualizzerà
+sia la classe base che la classe derivata.
+
+ESEMPI
+whatis i
+whatis main
+whatis (i + 1) * 2.0
+whatis struct foobar
+
+VEDI ANCHE
+%db_lang, C++, espr
+++
+
+++ programma
+NOME
+programma - un oggetto eseguibile.
+
+DESCRIZIONE
+Un programma è un oggetto eseguibile in uno qualsiasi dei formati
+di file oggetto comprensibili al debugger, insieme a tutte le
+librerie condivise che quell'oggetto eseguibile può caricare al
+momento dell'esecuzione. L'immagine eseguibile di un programma è
+un processo. Dato che un processo può diramarsi, è possibile che
+alla fine molti processi derivino da un singolo programma.
+Ciascuno di questi processi può essere composto da sottoprocessi
+di controllo multipli. Facendo riferimento ad un programma tramite
+il suo nome oppure al programma attuale (%program) in una lista di
+processi del debugger, si coinvolgono tutti i processi e
+sottoprocessi derivati dall'attuale chiamata di quel programma.
+
+VEDI ANCHE
+%proc, %program, %thread, processo, listaproc, sottoprocesso
+++
+
+++ processo
+NOME
+processo - l'immagine eseguibile di un programma.
+
+DESCRIZIONE
+Un processo è l'immagine eseguibile di un programma ed è composto
+da uno o più sottoprocessi di controllo. Ciascun sottoprocesso
+all'interno di un processo condivide lo stesso spazio di indirizzi
+del processo, gli stessi identificatori di processo e di processo
+superiore, i privilegi, la directory radice e quelle di lavoro, i
+descrittori di file, i blocchi di file e di record, i limiti delle
+risorse ed il contesto di gestione dei segnali (eccetto la maschera
+e lo stack dei segnali). Facendo riferimento ad un processo tramite
+il suo identificatore del debugger o del sistema oppure usando la
+variabile %proc in una lista di processi del debugger, si coinvolgono
+tutti i sottoprocessi di controllo all'interno di quel processo. Se
+un processo non è a concatenamento multiplo, viene trattato come
+oggetto singolo.
+
+VEDI ANCHE
+%follow, %proc, %program, %thread, listaproc, programma, sottoprocesso
+++
+
+++ sottoprocesso
+NOME
+sottoprocesso - un singolo sottoprocesso di controllo.
+
+DESCRIZIONE
+Un sottoprocesso è un singolo contesto di esecuzione all'interno di
+un processo. Ciascun sottoprocesso ha set di registri, maschera di
+segnali e stack di segnali propri. Nel contesto del debugger, un
+"sottoprocesso" si riferisce alle entità a livello di utente
+implementate dalle interfacce contenute in <thread.h>. Questi
+sottoprocessi sono diversi dai processi light-weight del kernel
+(LWP=Light-Weight Process) e sono costruiti su di essi. 
+
+In qualsiasi momento un sottoprocesso può essere in esecuzione
+su di un LWP oppure può essere inattivo. Un sottoprocesso
+inattivo non può essere avviato dal debugger, ma il suo stato
+può essere esaminato e modificato.
+
+VEDI ANCHE
+%proc, %program, %thread, processo, listaproc, programma,
+ps, run, step
+++
+
+++ %thread
+NOME
+%thread - il sottoprocesso attuale.
+
+DESCRIZIONE
+Questa variabile contiene il nome del sottoprocesso attuale.
+Può essere impostata esplicitamente tramite il comando "set"
+oppure implicitamente con "create", "grab" o "release".
+L'impostazione di %thread imposta implicitamente anche %proc,
+%program e %frame. Se il processo attuale (%proc) è a concatenamento
+singolo, %thread conterrà una stringa vuota.
+
+VEDI ANCHE
+%frame, %proc, %program, processo, listaproc, programma, sottoprocesso
+++
+
+++ %thread_change
+NOME
+%thread_change - controlla il comportamento ai cambiamenti di stato.
+
+DESCRIZIONE
+Durante la sua vita, un sottoprocesso può subire diversi tipi di
+cambiamento di stato: può essere creato ed eliminato; può essere
+sospeso o riattivato; un sottoprocesso multiplexato può cedere il
+suo LWP o può essere prelevato da un LWP. %thread_change controlla
+il comportamento del debugger quando si verifica uno qualsiasi di
+questi cambiamenti di stato. I valori validi sono:
+        ignore   Il debugger non stampa messaggi per annunciare il
+                 cambiamento e non arresta il sottoprocesso in
+                 questione. Un sottoprocesso creato ex novo o
+                 riattivato, oppure un sottoprocesso prelevato da un
+                 LWP, se possibile, viene messo in esecuzione.
+        announce Il debugger stampa un messaggio per annunciare il
+                 cambiamento di stato ma non arresta il sottoprocesso
+                 in questione. Un sottoprocesso creato ex novo o
+                 riattivato, oppure un sottoprocesso prelevato da un
+                 LWP, se possibile, viene messo in esecuzione.
+        stop     Il debugger stampa un messaggio per annunciare il
+                 cambiamento di stato e, se possibile, arresta il
+                 sottoprocesso in questione. Un sottoprocesso
+                 riattivato o prelevato da un LWP viene arrestato
+                 (oppure messo nello stato LWP Off). Per la creazione
+                 di sottoprocessi, il sottoprocesso che ha creato il
+                 nuovo sottoprocesso viene arrestato ed il nuovo
+                 sottoprocesso si arresta quando raggiunge la funzione
+                 specificata nella chiamata thr_create(3T).
+
+Il valore di default per %thread_change è "stop".
+
+VEDI ANCHE
+processo, programma, sottoprocesso
+++
+
+++ C++
+NOME
+C++ - comportamento specifico C++
+
+DESCRIZIONE
+Il debugger riconosce se un file oggetto è stato compilato con il
+C++ Compilation System 2.0 oppure con il traduttore C++, cfront
+(Release 2.1 o 3.0), e imposta il linguaggio attuale (%db_lang)
+su C++. I nomi appaiono come nel sorgente C++ e non come appaiono
+nel file oggetto.
+
+Se il linguaggio attuale è C++, debug accetta un sottoinsieme
+di espressioni C++, comprese le seguenti:
+
+     o  Tutte le espressioni accettate quando il linguaggio attuale
+        è il C,
+     o  Chiamate a funzioni membro, comprese le funzioni membro virtuali
+        e le funzioni membro statiche,
+     o  Chiamate a funzioni sovraccaricate,
+     o  Espressioni che usano nomi di tipo come typedef,
+     o  Espressioni che usano funzioni operatore sovraccaricate e
+     o  Espressioni che accedono a membri di classe con un puntatore
+        "this" implicito, quando il processo o sottoprocesso viene
+        arrestato in una funzione membro di classe.
+
+I comandi print e set hanno l'opzione verbose (-v) che stampa
+informazioni aggiuntive, compresi i prototipi di tutte le funzioni
+chiamate dal debugger durante la valutazione delle espressioni
+ Questa possibilità è utile per capire cosa sta succedendo in
+espressioni che usano funzioni sovraccaricate od operatori.
+L'opzione -v per print visualizza anche la struttura generata dal
+compilatore ed i membri di classe, come i puntatori a tabelle di
+funzioni virtuali.
+
+Se viene indicato un puntatore ad una classe di oggetti base con
+funzioni virtuali, e se il debugger determina che il tipo di oggetto
+a cui si punta è di una classe derivata dalla classe base, il comando
+whatis visualizza sia la classe base che la classe derivata. Il
+comando print visualizza l'oggetto anche nei termini del tipo derivato.
+
+Quando si stampa il contenuto di una struttura o classe, il comando
+print visualizza i membri di classe statici con la notazione che sono
+statici. Notare che symbols -v non visualizza i membri statici. Notare
+anche che i membri di classe generati dal compilatore vengono
+visualizzati solo con print -v.
+
+I punti di interruzione (eventi di arresto) possono essere impostati su:
+
+     o  Funzioni membro di classe, compresi costruttori, distruttori
+        e funzioni di conversione.
+     o  Funzioni ad operatore sovraccaricato, e 
+     o  Funzioni sovraccaricate, usando il prototipo completo oppure
+     o  Funzioni sovraccaricate, senza le informazioni del prototipo.
+        In questo caso il debugger visualizza una lista di funzioni e
+        chiede di scegliere una o tutte le opzioni.
+
+Un evento di arresto può anche essere creato su di una combinazione
+specifica di oggetto e funzione membro, usando la sintassi "stop 
+puntatore->funzione" oppure "stop oggetto.funzione". All'entrata nella
+funzione, debug arresterà il processo o sottoprocesso solo se il
+puntatore "this" corrisponde all'oggetto specificato. Se la funzione
+è virtuale, debug imposterà il punto di interruzione nella funzione
+prioritaria adeguata.
+
+ESEMPI
+print *this
+print -v ptr->funz_sovracc(1, 2)
+whatis ptr_a_base
+stop C::f(int)
+stop C::C
+stop C::~C
+stop C::operatore int()
+stop C::operatore+
+stop ptr->f(car *)
+
+VEDI ANCHE
+%db_lang, espr, print, set, stop, whatis
+++

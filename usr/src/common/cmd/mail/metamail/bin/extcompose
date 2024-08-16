@@ -1,0 +1,134 @@
+#ident	"@(#)mail:common/cmd/mail/metamail/bin/extcompose	1.1.2.1"
+# @(#)extcompose	1.3
+echo_n()
+{
+    echo "$@\c"
+}
+
+:
+# This file Copyright (c) 1992 Z-Code Software Corp.
+# Permission to use, copy, modify, and distribute this material
+# for any purpose and without fee is hereby granted, provided
+# that the above copyright notice and this permission notice
+# appear in all copies, and that the name of Z-Code Software not
+# be used in advertising or publicity pertaining to this
+# material without the specific, prior written permission
+# of an authorized representative of Z-Code.  Z-CODE SOFTWARE
+# MAKES NO REPRESENTATIONS ABOUT THE ACCURACY OR SUITABILITY
+# OF THIS MATERIAL FOR ANY PURPOSE.  IT IS PROVIDED "AS IS",
+# WITHOUT ANY EXPRESS OR IMPLIED WARRANTIES.
+
+if [ $# -lt 1 ]
+then
+    echo "Usage:  $0 output-file-name" 1>&2
+    exit 1
+fi
+OUTFNAME=$1
+
+choosing=yes
+while [ $choosing = yes ]
+do
+    echo ""
+    echo "Where is the external data that you want this mail message to reference?"
+    echo "    1 -- In a local file"
+    echo "    2 -- In an AFS file"
+    echo "    3 -- In an anonymous FTP directory on the Internet"
+    echo "    4 -- In an Internet FTP directory that requires a valid login"
+    echo "    5 -- Under the control of a mail server that will send the data on request"
+    echo ""
+    echo_n "Please enter a number from 1 to 5: \c"
+    read ans
+    case "$ans" in
+        1) accesstype=local-file ;;
+	2) accesstype=afs ;;
+	3) accesstype=anon-ftp ;;
+	4) accesstype=ftp ;;
+	5) accesstype=mail-server ;;
+	* ) echo "That is NOT one of your choices." 1>&2; continue ;;
+    esac
+
+    case "$accesstype" in
+        ftp | anon-ftp )
+	    echo_n "Enter the full Internet domain name of the FTP site: "
+	    read site
+	    echo_n "Enter the name of the directory containing the file (RETURN for top-level): "
+	    read directory
+	    echo_n "Enter the name of the file itself: "
+	    read name
+	    echo_n "Enter the transfer mode (type 'image' for binary data, RETURN otherwise): "
+	    read mode
+	    if [ -n "$mode" ]
+	    then mode=ascii
+	    fi
+	    echo "Content-type: message/external-body; access-type=$accesstype; name="\"$name\"\; > $OUTFNAME
+	    echo_n "    site="\"$site\" >> $OUTFNAME
+	    if [ -n "$directory" ]
+	    then echo_n "; directory="\"$directory\">> $OUTFNAME
+	    fi
+	    echo_n "; mode="\"$mode\">> $OUTFNAME
+	    echo "">> $OUTFNAME
+	    choosing=no
+	    ;;
+
+	local-file | afs )
+	    name=
+	    while [ -z "$name" ]
+	    do
+	        echo_n "Enter the full path name for the file: "
+		read name
+		if [ ! -f "$name" ]
+		then
+		    echo "The file $name does not seem to exist."
+		    name=
+		fi
+	    done
+	    echo "Content-type: message/external-body; access-type=$accesstype; name="\"$name\"> $OUTFNAME
+	    choosing=no
+	    ;;
+	
+	mail-server )
+	    echo_n "Enter the full email address for the mailserver: "
+	    read server
+	    echo "Content-type: message/external-body; access-type=$accesstype; server="\"$server\"> $OUTFNAME
+	    choosing=no
+	    ;;
+	
+	* )
+	    echo accesstype $accesstype not yet implemented
+	    ;;
+    esac
+done
+
+echo_n "Please enter the MIME content-type for the externally referenced data: "
+read ctype
+
+choosing=yes
+while [ $choosing = yes ]
+do
+    echo "Is this data already encoded for email transport?"
+    echo "  1 -- No, it is not encoded"
+    echo "  2 -- Yes, it is encoded in base64"
+    echo "  3 -- Yes, it is encoded in quoted-printable"
+    echo "  4 -- Yes, it is encoded using uuencode"
+    read encode
+    case "$encode" in
+	1 ) cenc="" choosing=no ;;
+	2 ) cenc="base64" choosing=no ;;
+	3 ) cenc="quoted-printable" choosing=no ;;
+	4 ) cenc="x-uue" choosing=no ;;
+	* ) echo "That is not one of your choices." ;;
+    esac
+done
+
+echo "" >> $OUTFNAME
+echo "Content-type: " $ctype >> $OUTFNAME
+if [ -n "$cenc" ]
+then echo "Content-transfer-encoding: " $cenc >> $OUTFNAME
+fi
+echo "" >> $OUTFNAME
+if [ "$accesstype" = "mail-server" ]
+then
+    echo "Please enter all the data to be sent to the mailserver in the message body, "
+    echo "ending with ^D or your usual end-of-data character:"
+    cat >> $OUTFNAME
+fi

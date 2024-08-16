@@ -1,0 +1,304 @@
+#ident\t"@(#)dthelp:Admin.Tools/NetWare_Setup.hlp       1.28"
+^*version^1
+^*title^Configuration NetWare
+^:Conf_NetWare
+^*width^70
+^+DesktopMgr/help.defs
+^?Configuration de NetWare
+^0^Configuration NetWare
+^$10
+Configuration NetWare
+
+Utilisez Configuration NetWare pour configurer ou reconfigurer les
+cartes \d(Internetwork Package Exchange^IPX)IPX et Local
+Area Network (LAN) de façon à ce que vous puissiez utiliser NetWare.
+
+Si vous avez installé une carte réseau sur votre système lors de
+l'installation d'UnixWare, le logiciel a automatiquement détecté la
+carte et l'adresse et configuré la carte IPX (Internetwork Package
+Exchange).
+
+Si vous n'avez pas installé de carte réseau sur votre système lors de
+l'installation d'UnixWare, ou si vous décidez d'ajouter des cartes
+supplémentaires, vous aurez besoin d'utiliser Configuration NetWare
+pour configurer ou reconfigurer les cartes IPX et réseau.
+
+Remarque : vous devez disposer d'une autorisation vous permettant
+d'utiliser \k(Accès à Configuration NetWare^dtadmin/user.hlp^Présentation des autorisations) pour utiliser Configuration
+NetWare. De plus, vous devez posséder une excellente maîtrise de
+l'administration de NetWare et de la gestion de réseaux avant
+d'effectuer des modifications avec Configuration NetWare.
+
+Pour configurer votre système de façon à ce qu'il puisse utiliser
+NetWare, suivez la procédure ci-dessous :
+
+Remarque : Si vous êtes déjà dans le dossier Outils_Admin, passez à
+l'étape 2. Si vous êtes déjà dans le dossier Gestion de réseau, passez
+à l'étape 3.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Gestion de réseau. La fenêtre "Dossier :
+  \tGestion de réseau" s'affiche.
+
+3.\tCliquez deux fois sur Configuration_NetWare. La fenêtre
+  \t"Configuration NetWare" apparaît avec les options suivantes :
+
+  \to\tNom de serveur : - Affiche le nom de votre système.
+
+  \to\tClient NetWare UNIX : - Cliquez sur Activé si vous
+  \t \tvoulez activer les services Client Netware UNIX (NUC ou NetWare
+  \t \tUNIX Client). Cliquez sur Désactivé si vous voulez désactiver
+  \t \tces services.
+
+  \to\tActiver Détection automatique IPX : - Cette option est activée
+  \t \tlors de l'installation initiale d'UnixWare et permet de détecter
+  \t \tles cartes réseau que vous avez installées sur votre système.
+  \t \tElle contrôle également la configuration de votre réseau lors de
+  \t \tchaque démarrage du système.
+
+  \to\tAdresse LAN interne IPX : - Entrez l'adresse (limitée à 8
+  \t \tcaractères) de votre carte réseau interne. Cette adresse est
+  \t \tprécédée des caractères "0x". Exemple : 0x01010348.
+
+  \to\tNombre maximum de sauts IPX : - Entrez le nombre maximum de
+  \t \tsystèmes ou de sauts par l'intermédiaire desquels vous souhaitez
+  \t \ttransférer des données.
+
+\t \tCette option vous permet de limiter le volume des données
+\t \téchangées via votre réseau. Par exemple, si vous entrez cinq comme
+\t \tnombre maximum de tronçons, le système refuse tous les
+\t \t\d(paquets^paquet) qui dépassent cinq tronçons. Si vous
+\t \tn'êtes pas un administrateur réseau, nous vous suggérons de
+\t \tconserver la valeur par défaut, c'est-à-dire 16 tronçons.
+
+  \to\tConfiguration d'un réseau local logique : - Cliquez sur cette
+  \t \tboîte si vous souhaitez afficher et définir les options
+  \t \tassociées à la configuration d'un réseau local. Voir
+  \t \t\k(Configuration de votre réseau LAN logique).
+
+  \to\tSPX : - Cliquez sur cette case si vous
+  \t \tvoulez afficher et définir les options associées à
+  \t \t\d(SPX^SPX) (SPXII). Voir
+  \t \t\k(Configuration de SPXII).
+
+  \to\tCommunication d'égal à égal : - Cliquez sur Activé si vous
+  \t \tvoulez \d(mettre à disposition) vos applications à d'autres
+  \t \tutilisateurs. Voir \k(Communication d'égal à égal).
+
+  \t \tPar défaut, cette option est paramétrée sur Désactiver.
+
+  \to\tGestion de réseau  : - Cliquez sur cette case si vous voulez
+  \t \tafficher et définir les options relatives à la gestion de
+  \t \tréseau NPS (NetWare Protocol Stack) et à l'heure d'interruption
+  \t \tde la gestion de réseau. Voir \k(Gestion de votre réseau).
+
+  \to\tDaemon de diagnostic : - Cliquez sur cette boîte si vous
+  \t \tsouhaitez exécuter le programme daemon associé au diagnostic.
+  \t \tPar défaut, cette option est paramétrée sur Désactiver.
+
+  \to\tAuthentification automatique NUC à distance : - Par défaut,
+  \t \tcette option est activée, et permet, le cas échéant, d'afficher
+  \t \tle \k(panneau d'authentification^Auto_Authenticator/xauto.hlp^Fenêtre Auto_Authentificateur). Si elle est désactivée, les
+  \t \tutilisateurs doivent recourir à la commande nwlogin pour accéder
+  \t \taux serveurs NetWare.
+
+ \t \tPour de plus amples informations relatives à l'authentification,
+ \t \tvoir \k(Accès à NetWare^NetWare_Access/NetWare_Access.hlp^Accès à NetWare).
+
+  \to\tActiver ouverture de session unique NetWare : - Cliquez sur
+  \t \tActivé pour permettre aux utilisateurs d'ouvrir une session sur
+  \t \tdes systèmes à distance sans fournir d'ID ni de mot
+  \t \tde passe (à condition que le même ID et le même mot de passe
+  \t \tsoient utilisés pour l'accès aux deux systèmes).
+
+4.\tCliquez sur Sauvegarder la configuration actuelle pour sauvegarder
+  \tles modifications.
+
+  \tRemarque : vous pouvez également cliquer sur Restaurer la
+  \tconfiguration précédente pour revenir à la configuration
+  \tprécédente, ou sur Restaurer la configuration par défaut pour
+  \trevenir aux paramètres définis lorsque vous avez installé
+  \tUnixWare.
+
+  \tSi vous décidez de ne pas faire de modification, ne cliquez pas
+  \tsur Sauvegarder la configuration actuelle. Cliquez sur Quitter.
+
+
+^1^Configuration de votre réseau LAN logique
+^$20
+Configuration de votre réseau LAN logique
+
+Lorsque vous sélectionnez l'option Configuration des réseaux locaux
+logiques dans la fenêtre "Configuration NetWare", la fenêtre
+"Configuration des LAN logiques". Cette fenêtre affiche le statut des
+réseaux locaux logiques numérotés de un à huit. Une case apparaît à
+côté de chaque réseau. Si un réseau local est actuellement inactif
+mais disponible pour l'utilisation, cette case est cochée "X".
+
+Pour configurer un LAN logique, suivez la procédure ci-dessous :
+
+1.\tPassez au champ adresse réseau local interne IPX et tapez
+  \tl'adresse du LAN désiré.
+
+2.\tCliquez sur les options réseaux locaux (case rectangulaire située
+  \tà côté du champ Configuration des LAN logiques). Une fenêtre à
+  \taffichage instantanée apparaît avec une liste des réseaux locaux
+  \tlogiques.
+
+3. Cliquez sur le LAN désiré. Une fenêtre à affichage instantané
+   associé au LAN sélectionné apparaît avec les champs suivants :
+
+  \to\tPériphérique réseau local IPX : - Cliquez sur la case
+  \t \trectangulaire pour faire apparaître une liste des périphériques
+  \t \tdisponibles, puis cliquez sur le périphérique désiré (par
+  \t \texemple, /dev/wd_0).
+
+  \to\tType de trame réseau local IPX : - Cliquez sur la case
+  \t \trectangulaire pour faire apparaître une liste des types de
+  \t \ttrames disponibles, puis cliquez sur le type désiré (par
+  \t \texemple, Ethernet II).
+
+  \to\tAdresse réseau local externe IPX : - Entrez l'adresse assignée
+  \t \tpar votre administrateur réseau.  \t
+
+  \to\tVitesse réseau local (kilo-octets/seconde) : - Entrez la vitesse
+  \t \tde transfert désirée en kilo-octets. Par défaut, ce champ est
+  \t \tparamétré sur 10 000.
+
+4.\tCliquez sur OK pour appliquer les paramètres.
+
+5.\tRépétez les étapes 2 à 4 pour tout autre réseau local logique que
+  \tvous souhaitez configurer.
+
+6.\tCliquez sur Fermer pour refermer la fenêtre et sauvegarder les
+  \tmodifications apportées.
+
+^2^Fenêtre Configuration du LAN logique associé à <LAN>
+^$30
+Fenêtre Configuration du LAN logique associé à <LAN>
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tParamétrez les options suivantes :
+
+  \to\tPériphérique réseau local IPX : - Cliquez sur la case
+  \t \trectangulaire pour faire apparaître une liste des périphériques
+  \t \tdisponibles, puis cliquez sur le périphérique désiré (par
+  \t \texemple, /dev/wd_0).
+
+  \to\tType de trame réseau local IPX : - Cliquez sur la case
+  \t \trectangulaire pour faire apparaître une liste des types de
+  \t \ttrames disponibles, puis cliquez sur le type désiré (par
+  \t \texemple, Ethernet II).
+
+  \to\tAdresse réseau local externe IPX : - Entrez une adresse unique
+  \t \tpour ce réseau local, en utilisant un maximum de dix caractères
+  \t \t(par exemple, 0x89413000).
+
+  \to\tVitesse réseau local (kilo-octets/seconde) : - Entrez la vitesse
+  \t \tde transfert désirée en kilo-octets. Par défaut, ce champ est
+  \t \tparamétré sur 10 000.
+
+2.\tCliquez sur OK pour appliquer les paramètres et faire disparaître
+  \tla fenêtre.
+
+Voir également :
+\k(Configuration de votre réseau LAN logique)
+
+^1^Configuration de SPXII
+^$40
+Configuration de SPXII
+
+Lorsque vous choisissez d'activer l'option
+\d(SPX^SPX) dans la fenêtre
+"Configuration NetWare", la fenêtre "SPX"
+ s'affiche.
+
+Pour configurer le nombre maximum de connexions et de
+\d(sockets SPXII^socket) et pour activer le terminal virtuel
+NetWare (NVT) en vue d'une utilisation à distance, suivez la procédure
+ci-dessous :
+
+1.\tParamétrez les options suivantes :
+
+  \to\tOuverture à distance d'une session sur le réseau SPX (NVT) : -
+  \t \tCliquez sur Activer si vous souhaitez autoriser l'ouverture à
+  \t \tdistance d'une session NVT, ou sur Désactiver si vous ne
+  \t \tsouhaitez pas l'autoriser.
+
+  \to\tNombre maximum de connexions SPX : - Entrez le nombre maximum de
+  \t \t\t \tconnexions que vous souhaitez autoriser pour SPXII.
+
+  \to\tNombre maximum de sockets SPX : - Entrez le nombre maximum de
+  \t \tsockets que SPXII peut utiliser simultanément pour recueillir
+  \t \tles demandes de connexion provenant de leurs extrémités.
+
+2.\tCliquez sur OK pour appliquer les paramètres et faire disparaître
+  \tla fenêtre.
+
+  \tRemarque : vous pouvez également cliquer sur Annuler pour faire
+  \tdisparaître la fenêtre sans effectuer de modification.
+
+^1^Communication d'égal à égal
+^$50
+Communication d'égal à égal
+
+Lorsque vous choisissez d'activer l'option Communication
+d'égal à égal dans la fenêtre "Configuration NetWare", la fenêtre
+"Protocole de mise à disposition du service" s'affiche.
+
+Pour indiquer le nombre de services à \d(mettre à disposition), suivez la
+procédure ci-dessous :
+
+1.\tEntrez dans le champ correspondant le nombre maximum de
+  \tserveurs devant être reconnus par le protocole de mise à
+  \tdisposition du service.
+
+  \tPar défaut, ce champ est paramétré sur 3 000.
+
+2.\tCliquez sur OK pour appliquer les paramètres et faire disparaître
+  \tla fenêtre.
+
+  \tRemarque : vous pouvez également cliquer sur Annuler pour faire
+  \tdisparaître la fenêtre sans effectuer de modification.
+
+^1^Gestion de votre réseau
+^$60
+Gestion de votre réseau
+
+Lorsque vous sélectionnez Activer pour l'option Gestion de réseau dans
+la fenêtre "Configuration NetWare", la fenêtre "Gestion de réseau"
+apparaît. Gestion de réseau propose aux administrateurs de réseau
+expérimentés différentes méthodes de contrôle de leurs réseaux.
+
+Par défaut, les options de cette fenêtre sont inactives.
+
+Remarque : vous devez disposer d'un certain type de console de gestion
+de réseau (par exemple, Netview ou Open View) pour utiliser ces outils
+de gestion de réseau.
+
+Pour activer les services de gestion de réseau, suivez la procédure
+ci-dessous :
+
+1.\tParamétrez les options suivantes :
+
+  \to\tGestion de réseau NWUMPS : - Cliquez sur Activer pour activer le
+  \t \tcontrôle de NetWare pour UNIX Management Protocol Stack.
+
+  \to\t Temps d'interruption pour la gestion de réseau : - Entrez une
+  \t \t valeur pour le temps d'interruption.
+
+  \t \tRemarque : le temps d'interruption correspond à la fréquence à
+  \t \tlaquelle le système déclenche un événement réseau et envoie des
+  \t \tinformations d'alerte à la console de gestion de réseau.
+
+  \t \tPar défaut, ce champ est paramétré sur 5 secondes.
+
+2.\tCliquez sur OK pour appliquer les paramètres et faire disparaître
+  \tla fenêtre.
+
+  \tRemarque : vous pouvez également cliquer sur Annuler pour faire
+  \tdisparaître la fenêtre sans effectuer de modification.

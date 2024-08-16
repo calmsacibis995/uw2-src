@@ -1,0 +1,56 @@
+.pageno
+Page %d de %d
+.ul
+Installation du système UNIX
+.hhelp_ban
+Instructions
+.helpbanner
+Aide : supprimer paquet
+.ur
+Supprimer paquet
+.ll
+.lr
+F1=Aide
+.top
+`[ "$ALL_NEW" ] &&  echo "AVERTISSEMENT : les dernières versions de tous les paquets sont installées."`
+`[ "$ALL_NEW" ] ||  echo "AVERTISSEMENT : les dernières versions de certains paquets sont installées."`
+
+`[ "$ALL_NEW" ] &&  echo "Des versions récentes de tous les paquets sélectionnés dans le set\n'${SETINST}' sont installées sur votre ordinateur. Vous installez à présent des\nversions plus anciennes de ces mêmes paquets. Appuyez sur la touche 'F1'\n(ou '?') pour obtenir une liste des paquets dont les versions mises\nà jour sont déjà installées."`
+`[ "$ALL_NEW" ] ||  echo "Des versions mises à jour de certains paquets sélectionnés dans le set\n '${SETINST}' sont installées sur votre ordinateur. Vous installez actuellement\ndes versions anciennes de ces paquets. Appuyez sur la touche 'F1'\n(ou sur '?') pour obtenir une liste des paquets dont les versions\nmises à jour sont déjà installées."`
+
+Vous devez supprimer la dernière version de ces paquets avant d'installer
+une version antérieure. Sauvegardez vos fichiers de configuration avant
+de supprimer la dernière version de ce(s) paquet(s).
+
+Les paquets ne vont pas être installés à ce stade.
+`[ "$ALL_NEW" ] &&  echo "L'installation de ce set va bientôt être terminée."`
+Pour de plus amples informations, voir la documentation.
+.form
+ENTER
+.selection
+Appuyez sur "ENTREE" pour continuer.
+.help
+Pour obtenir des instructions détaillées, vous pouvez à tout moment
+appuyer sur la touche F1 (ou sur "?").
+
+`[ "$ALL_NEW" ] || echo "Les dernières versions de certains paquets du set '${SETINST}' sont déjà"`
+`[ "$ALL_NEW" ] && echo "Les dernières versions de tous les paquets du set '${SETINST}' sont déjà"`
+installées sur votre ordinateur. Ces paquets comprennent :
+
+`cat $PKG_RM`
+
+Ces paquets ne peuvent être écrasés et doivent être supprimés pour
+que vous puissiez installer la version précédente.
+
+Vous devez d'abord supprimer les dernières versions, avant d'installer
+les versions antérieures des paquets. Sauvegardez vos fichiers de
+configuration avant de supprimer les dernières versions des paquets.
+
+Pour de plus amples informations, voir la documentation.
+.helpinst
+ECHAP=Quitter l'aide F1=Instructions 1=Page suiv. 2=Page préc.
+.hhelpinst
+ECHAP=Quitter les instructions 1=Page suiv. 2=Page préc.
+.working
+Opération en cours...
+.end

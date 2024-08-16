@@ -1,0 +1,248 @@
+#ident	"@(#)ihvkit:pdi/hba.guidelines/tech.guidelines	1.2"
+
+The following is a collection of helpful hints for developers interested in
+developing HBA device drivers.  This comprehensive list has been generated
+based on input from Novell's PDI team and parts of the list should be
+applicable for all device drivers in general.
+
+
+Helpful hints for HBA Driver Writers:
+------------------------------------
+
+ 1) PDI_VERSION is a #define made available to HBA drivers through sdi.h
+	that should be used to conditionally compile code for extending 
+	driver capability in ongoing releases.  The preferred usage is:
+
+		#if PDI_VERSION >= PDI_SVR42MP
+
+	which means SVR4.2MP or later (where PDI_SVR42MP is defined to be 3).
+
+	The value of PDI_VERSION is:
+		1	SVR4.2/UnixWare 1.1 Driver
+		2	SVR4.2 DTMT (Maintainence Release) Driver
+		3	SVR4.2MP Driver
+
+	A PDI_VERSION 1 driver conforms to the HBA interface 
+	defined in the SVR4.2 Portable Driver Interface
+	(PDI) Guide.  A PDI_VERSION 3 driver conforms to 
+	the SVR4.2MP PDI Guide, which has the following 
+	extensions to the HBA interface:
+
+	- sleep flag argument extension to certain HBA interface 
+	  routines. (More on this below.)
+	- breakup control block extension added to hbagetinfo.
+	- DMAable memory allocated with kmem_alloc_physcontig().
+
+	NOTE: Since SVR4.2 DTMT was not an official release, the
+	      differences associated with this version is not included.
+
+  2) Memory allocation
+	
+	HBA drivers may need to allocate physically contiguous DMAable
+	memory.  Past versions of the DDI/DKI were not explicit
+	about how drivers were to get DMAable memory.  The lack
+	of documentation and the lack of a DDI/DKI interface for
+	allocating physically contiguous DMAable memory led driver
+	writers to the conclusion that kmem_alloc was the correct
+	interface.
+
+	SVR4.0, SVR4.2, and UnixWare 1.1 kmem_alloc'ed memory is
+	in fact DMAable, but only guaranteed to be physically
+	contiguous on allocations of 1 page or less.  This worked
+	not by design but because of the way KMA was implemented.
+
+	SVR4.2MP kmem_alloc'ed memory is not guaranteed to be either
+	DMAable or physically contiguous.  This is by design.  A
+	new DDI routine, kmem_alloc_physcontig, is provided for
+	drivers that need DMAable memory.
+	
+	Drivers that currently use kmem_alloc() to allocate DMA memory
+	must convert to use kmem_alloc_physcontig() for SVR4.2MP.
+	HBA drivers that are binary compatible with SVR4.2MP, and
+	use kmem_alloc() for DMA memory will still work with the
+	PHYSTOKVMEM tunable set to 1 (See above description.)
+
+	Unixware-1.1 drivers that require physically contiguous memory 
+	spanning multiple pages can use getcpages(npages,mode) to obtain
+	a virtual address that points to the beginning of the entire
+	memory range (DMAable and physically contiguous).  The mode can be 
+	one of sleep/nosleep.  Similary, freepage(pfn) shoule be used to 
+	release pages, with the virtual address to page frame number 
+	translation obtained by calling hat_getkpfnum(vaddr). Use of
+	getcpages() should be strictly limited to UnixWare-1.1 as this is
+	not a supported interface in UnixWare-2.0.   However, Unixware-2.0 
+	binary compatibility is provided for all UnixWare-1.1 drivers 
+	that use getcpages().
+
+
+  3) Sleep flag
+	The SDI and HBA interfaces were extended in SVR4.2MP to
+	use a flag argument for those routines that may need to
+	sleep.  Since certain HBA routines need to be called at
+	interrupt level, a sleep flag was necessary to indicate
+	whether a sleep could be done.  
+	The HBA routines that have the additional flag argument
+	include: getblk(), icmd(), send(), and xlat().
+	The SDI routines that have the additional flag argument
+	include: sdi_get(), sdi_getblk(), sdi_icmd(), sdi_send,
+	and sdi_translate().
+  
+  4) Breakup 
+	The SVR4.2MP DDI/DKI has a new improved breakup interface,
+	buf_breakup().  A PDI_VERSION 3 driver provides the target 
+	driver with the breakup parameters through the SVR4.2MP
+	extension defined for the HBA getinfo routine.
+	Pass-thru has also to be made dual level to use buf_breakup()
+	with the driver's tailor-made breakup parameters.
+
+  5) Source Compatibility with hba.h
+	The version differences summarized above affect all SVR4.2 and
+	UnixWare 1.1 driver source moving to SVR4.2MP.  It is recommended 
+	that a single shared source of the driver be used for all
+	releases, with appropriate #if PDI_VERSION directives applied.
+	In order to make these changes as transparent as possible, 
+	a header file, hba.h, is provided with the IHV Kit. This file contains 
+	#defines and MACRO definitions appropriate to the given version.
+
+	The following MACROS hide the sleepflag differences:
+		HBACLOSE, HBAFREEBLK, HBAGETBLK, HBAGETINFO, HBAICMD,
+		HBAIOCTL, HBAOPEN, HBASEND, HBAXLAT
+
+	The following MACROS hide the hbaxlat function declaration:
+		HBAXLAT_DECL, HBAXLAT_RETURN
+
+	There are various other defines/MACROS that help hide the
+	difference between a multithreaded driver and non-multithreaded
+	driver.
+
+	The breakup code differences should be ifdef:
+
+		#if (PDI_VERSION >= PDI_SVR42MP)
+			... new breakup code ...
+		#else /* !(PDI_VERSION >= PDI_SVR42MP) */
+			... old breakup code ...
+		#endif /* !(PDI_VERSION >= PDI_SVR42MP) */
+
+  6) How to Use hba.h
+	To use hba.h, define HBA_PREFIX in your driver.h file:
+	For example:
+
+		#define HBA_PREFIX dpt
+
+	and order the include files in the driver as follows:
+
+		#include	all other includes
+		#include	your_driver.h
+		#include	<sys/hba.h>
+		#include	<sys/ddi.h>
+		#include	<sys/ddi_386at.h>  (optional)
+
+  7) Binary Compatibiliity
+	SVR4.2/UnixWare 1.1 HBA drivers that are DDI/DKI compliant,
+	are binary compatible with SVR4.2MP, and can be installed
+	in SVR4.2MP from an IHV (Independent Hardware Vendor) floppy.
+	Binary compatibility support in the SVR4.2MP kernel is enabled
+	by a kernel tunable, PHYSTOKVMEM, set to 1.
+	If the HBA driver is installed when the SVR4.2MP system is
+	installed, the PHYSTOKVMEM tunable is turned on automatically.
+	However, if the driver is pkgadd'ed after installation, 
+	the tuneable must be turned on manually by using the following
+	command before the idbuild of the new kernel:
+
+		idtune PHYSTOKVMEM 1
+
+
+DO's for HBA Driver Writers
+---------------------------
+
+- DO put gtol/ltog array declarations in space.c
+  The gtol/ltog arrays are mappings from global controller number
+  to local controller number, and vice versa.  They must be sized
+  to the maximum number of HBAs in the system.  To keep this
+  flexible for ongoing releases, it is essential that these
+  arrays be declared in the driver space.c file, and allocated
+  to the size of SDI_MAX_HBAS.
+  
+- DO use b_proc to get the process's proc pointer, and not 
+  drv_getparm(UPROC,..).
+
+- DO write the HBAintr routine to first check that the interrupt
+  for the driver was expected.  This is to allow for the possibility
+  that the IRQ can be software shared (interrupt type 3 in the 
+  System file).
+
+
+DON'Ts for HBA Driver Writers
+-----------------------------
+
+- DON'T call spl's from the driver init routine.  
+  The driver init routine has a limited set of kernel interface
+  routines that may be used (See DDI/DKI init(D2)), so drivers should do
+  the minimum initialization at this time.  Typically only the
+  initializations required while interrupts are disabled are done
+  in the init routine.  All other initialization should be done in
+  the driver start routine, where it is legal to call spl's.
+
+- DON'T use b_dev in the buf_t structure.  
+  Drivers should use b_edev.  The old b_dev field is still populated, 
+  but is limited in major/minor numbers, and is not
+  guaranteed to be supported in future releases.
+
+- DON'T use b_resid to hold a value that was intended to be 
+  passed through the physiock() routine to the driver strategy().
+  HBA drivers may use b_private when using pass-thru.  However,
+  in SVR4.2/UnixWare b_private is not safe to use for block 
+  or raw I/O, since some file systems also use it.  In SVR4.2MP,
+  two private fields are safe for driver usage: b_priv and b_priv2.
+
+- DON'T use the #define, NBPP, for pagesize.
+  Drivers should use ptob(1) to get pagesize.
+
+- DON'T call printf within DEBUG code.
+  Information printed within driver DEBUG code should use 
+  cmn_err(CE_CONT..).
+
+- DON'T make explicit checks on cr_uid.
+  Drivers should use the DDI routine, drv_priv(), to check privilege.
+
+- DON'T make explicit reads of ublock.
+  Drivers should use the DDI routine, drv_getparm().  Any parameters
+  that are not provided by the drv_getparm() function are not valid
+  parameters for drivers to use.
+
+- DON'T pre-allocate kernel structures, such as buf_t.
+  Drivers must use the proper kernel allocation routine to allocate
+  kernel structures.  For example, getrbuf() is used when a buf 
+  structure is needed.  Such structures should never be embedded 
+  within a driver structure or allocated in BSS memory.
+
+- DON'T do direct DMA programming.
+  Drivers must make use of the DDI interface for DMA programming.
+
+- DON'T use BSS memory for DMAable memory.
+
+- DON'T use non-DDI routines
+  The following non-DDI routines should not be used, and are not
+  guaranteed to be available in future releases.  The DDI routines
+  that should be used in their place are given.
+
+     non-DDI	 	  DDI
+  --------------       ---------
+  xphystokv		physmap
+  iooutb		outb
+  iowait		biowait
+  spinwait		drv_usecwait
+  tenmicrosec		drv_usecwait
+  pio_breakup		buf_breakup
+  uiophysio		physiock
+  kvtophys		vtop
+
+- DON'T save the wrong buf_t pointer for pass-thru operations.
+  The buf_t pointer passed to physiock() in pass-thru is not
+  guaranteed to be the same buf_t pointer passed to the driver
+  strategy routine.  Drivers should save the buf_t pointer after
+  the strategy routine is called, and not before physiock is
+  called.
+
+- DON'T include any target driver .h files.
+

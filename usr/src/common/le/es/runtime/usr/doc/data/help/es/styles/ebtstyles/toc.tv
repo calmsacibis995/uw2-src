@@ -1,0 +1,150 @@
+<!-- Stylesheet for the table of contents window, IMI documents.
+
+  Copyright 1992 Electronic Book Technologies.  All rights reserved.
+-->
+
+<!ENTITY	std.font	CDATA	"courier"	>
+
+<sheet >
+
+
+
+<?INSTED COMMENT: GROUP chaptitle>
+
+<group name="chaptitle">
+	<!-- Title of a chapter -->
+	<font-size>	14	</>
+	<left-indent>	+=6	</>
+	<line-spacing>	20	</>
+	<space-before>	4	</>
+	<break-before>	Line	</>
+</group>
+
+<style name="APPENDIX,TITLE" group="chaptitle">
+	<text-before>Appendix format(cnum(parent()),LETTER): </>
+</style>
+
+<style name="CHAPTER,TITLE" group="chaptitle">
+	<left-indent>	if(gt(cnum(parent()),1),+=10,+=6)	</>
+	<first-indent>	if(gt(cnum(parent()),1),-6,0)	</>
+	<text-before>if(gt(cnum(parent()),1),   join(sub(cnum(parent()),1),'. '),)</>
+</style>
+
+
+
+<?INSTED COMMENT: UNGROUPED STYLES FOLLOW>
+
+<style name="#SDATA">
+	<font-family>	attr(font)	</>
+	<font-weight>	attr(weight)	</>
+	<character-set>	attr(charset)	</>
+	<text-before>char(attr(code))</>
+</style>
+
+<style name="#TAGS">
+	<font-weight>	Bold	</>
+	<foreground>	purple	</>
+</style>
+
+<!-- Style"#toc-annot" is reserved, and defines the appearance of the
+     bookmarks, word frequencies, location markers, etc. in left margin.
+-->
+<style name="#TOC-ANNOT">
+	<font-family>	annotation	</>
+	<foreground>	#ff3c82	</>
+	<line-spacing>	16	</>
+</style>
+
+<style name="APPENDIX">
+	<title-tag>	TITLE	</>
+</style>
+
+<style name="B">
+	<font-weight>	Bold	</>
+</style>
+
+<style name="BI">
+	<font-weight>	Bold	</>
+	<font-slant>	Italics	</>
+</style>
+
+<style name="BLOCK">
+	<title-tag>	LABEL	</>
+</style>
+
+<style name="BLOCK,LABEL">
+	<font-size>	14	</>
+	<left-indent>	+=22	</>
+	<line-spacing>	18	</>
+	<space-before>	 8	</>
+	<break-before>	True	</>
+</style>
+
+<style name="CHAPTER">
+	<title-tag>	TITLE	</>
+</style>
+
+<style name="DOS">
+	<select>	if(eq(index(env(PATH),'/'),0),ME.SHOW,ME.HIDE)	</>
+</style>
+
+<style name="EMPH">
+	<font-weight>	Bold	</>
+</style>
+
+<style name="I">
+	<font-slant>	Italics	</>
+</style>
+
+<style name="IMIDOC">
+	<font-family>	&std.font	</>
+	<font-weight>	Bold	</>
+	<font-slant>	Roman	</>
+	<font-size>	12	</>
+	<left-indent>	5	</>
+	<right-indent>	3	</>
+	<line-spacing>	21	</>
+	<title-tag>	FRONT,TITLEPG,TITLE	</>
+</style>
+
+<style name="MAP">
+	<title-tag>	TITLE	</>
+</style>
+
+<style name="MAP,TITLE">
+	<font-size>	14	</>
+	<left-indent>	+=17	</>
+	<line-spacing>	18	</>
+	<space-before>	3	</>
+	<break-before>	True	</>
+</style>
+
+<style name="RM">
+	<font-weight>	Medium	</>
+	<font-slant>	Roman	</>
+</style>
+
+<style name="SYMBOL">
+	<font-family>	symbol	</>
+	<font-weight>	medium	</>
+</style>
+
+<style name="TITLEPG,TITLE">
+	<font-size>	18	</>
+	<left-indent>	5	</>
+	<line-spacing>	24	</>
+	<space-before>	10	</>
+	<break-before>	True	</>
+</style>
+
+<style name="UL">
+	<score>	Over	</>
+</style>
+
+<style name="UNIX">
+	<select>	if(gt(index(env(PATH),'/'),0),ME.SHOW,ME.HIDE)	</>
+</style>
+
+
+
+</sheet>

@@ -1,0 +1,84 @@
+#ident\t"@(#)dthelp:Applications/debug.defs     1.3"
+^=aktueller Kontext
+Der aktuelle Kontext eines Fenstersatzes legt fest, was in den
+einzelnen Fenstern angezeigt wird. Der aktuelle Kontext wird durch den
+aktuellen Rahmen des aktuellen Kontexts oder Ablaufstrangs bestimmt.
+^=
+
+^=aktueller Rahmen
+Der aktuelle Rahmen bestimmt in Verbindung mit dem aktuellen Prozeß
+oder Ablaufstrang den aktuellen Kontext. Der aktuelle Rahmen wird
+durch eine Hand mit ausgestrecktem Zeigefinger zu seiner Linken im
+Arbeitsausschnitt "Stapel" des Fensters "Kontext" angezeigt.
+^=
+
+^=aktueller Prozeß oder Ablaufstrang
+Der aktuelle Ablaufstrang oder Prozeß bestimmt in Verbindung mit dem
+aktuellen Rahmen den aktuellen Kontext. Der aktuelle Prozeß oder
+Ablaufstrang wird durch eine Hand mit ausgestrecktem Zeigefinger zu
+seiner Linken im Arbeitsausschnitt " Prozeß" des Fensters "Kontext"
+angezeigt.
+^=
+
+^=aktuelles Programm
+Das aktuelle Programm ist das Programm, das den aktuellen Prozeß oder
+Ablaufstrang enthält. Das aktuelle Programm kann auch andere Prozesse
+und Ablaufstränge enthalten, die von derselben ausführbaren Datei
+abgeleitet wurden.
+^=
+
+^=Onstop-Ereignis
+Ein Ereignis bei Stopp legt eine Aktion fest, die vom
+Testhilfeprogramm auszuführen ist, sobald ein Ablaufstrang oder Prozeß
+aus irgendeinem Grund angehalten wird. Die Aktion kann aus einem oder
+mehreren der Befehle bestehen, die über die Befehlszeilenschnittstelle
+des Testhilfeprogramms verfügbar sind.
+^=
+
+^=Sekundäres Ursprungsfenster
+Sekundäre Ursprungscodefenster werden durch einen Stern ('*') im Kopfteil
+des Fensters gekennzeichnet und werden nicht aktualisiert, wenn der
+aktuelle Prozeß oder Ablaufstrang stoppt. Sie werden mit der Option
+"Neuer Ursprungscode" erzeugt und enthalten einen Arbeitsausschnitt
+"Status" sowie einen Arbeitsausschnitt "Ursprungscode".
+^=
+
+^=Signalereignis
+Ein Signalereignis hält den Ablaufstrang oder Prozeß und führt die
+zugehörigen Befehle aus, wenn das Signal an den Prozeß gesendet wurde.
+Für ein und dasselbe Signal können mehrere Ereignisse erzeugt werden.
+^=
+
+^=Stopereignis
+Ein Stoppereignis hält den Ablaufstrang oder Prozeß an und führt die
+ggf. vorhandenen Befehle aus, sobald die im Adressenraum des Programms
+festgelegte Bedingung wahr wird.
+^=
+
+^=syscall-Ereignis
+Ein Systemaufrufereignis hält den Ablaufstrang oder Prozeß an und
+führt die zugehörigen Befehle aus, sobald der Ablaufstrang oder Prozeß
+in die angegebenen Systemaufrufe einspringt oder sie verläßt. Für ein
+und denselben Systemaufruf können mehrere Ereignisse erzeugt werden.
+^=
+
+^=Fenster-Set
+Ein Fenstersatz besteht aus je einem im grafischen Testhilfeprogramm
+konfigurierten Fenster. Jedes Fenster enthält einen oder mehrere
+Arbeitsausschnitte. Die Fenster eines Satzes beziehen sich alle auf
+denselben aktuellen Prozeß oder Ablaufstrang.
+^=
+
+^=Schaltflächenleiste
+Jedes Fenster kann eine optionale Schaltflächenleiste enthalten. Die
+Schaltflächenleiste kann entweder oben oder unten im Fenster
+erscheinen. Sie enthält eine Reihe von Schaltflächen, die in den auch
+in den Abrollmenüs des betreffenden Fensters enthalten sind.
+^=
+
+^=LWP
+Ein Leichtprozeß (LWP) ist das zugrundeliegende Kernobjekt, auf dem
+die Ablaufstränge implementiert sind. Das Testhilfeprogramm weiß,
+welcher Ablaufstrang auf welchem LWP ausgeführt wird, und steuert den
+Ablaufstrang durch Steuerung des zugehörigen LWP.
+^=

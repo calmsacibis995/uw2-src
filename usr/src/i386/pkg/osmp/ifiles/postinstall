@@ -1,0 +1,101 @@
+#ident	"@(#)pkg.osmp:ifiles/postinstall	1.29"
+
+/tmp/${PKG}.post.sh
+rc=$?
+
+## for graphical admin
+
+#
+# attach the desktop manager class definitions
+#
+if [ ! -z "`echo ${CLASSES} | grep DTMadmin`" ]
+then
+        if [ -d /usr/X/lib/classdb ]
+        then
+                grep "INCLUDE osmp\.cdb;" /usr/X/lib/classdb/dtadmin >/dev/null 2>&1
+                if [ $? -ne 0 ]
+                then
+                        echo "INCLUDE osmp.cdb;" >> /usr/X/lib/classdb/dtadmin
+                fi
+        fi
+fi
+
+# add entry to Help_Desk
+HDFILE=/usr/X/desktop/Help_Desk
+if [ -f $HDFILE ]
+then
+
+grep "^osmp" $HDFILE >/dev/null 2>&1
+if [ $? != 0 ]
+then
+
+ed $HDFILE >/dev/null <<!
+$
+a
+osmp0,0{_DFLT_ICONLABEL="Processor_Setup";_ICONLABEL="Processor_Setup";_DESCRIP="Processor Setup";_ICONFILE="proc.stp32";_HELPFILE="dtadmin/multiproc.help"}
+.
+w
+q
+!
+
+fi
+fi
+
+# Add Processor_Setup links to Applications folder for all desktop users.
+
+GT=/usr/bin/gettxt
+
+if [ "$INSTALL_ICONS" != "FALSE" -a ! -z "`echo ${CLASSES} | grep DTMadmin`" ]
+then
+	DAYONEDIR=/usr/X/desktop/LoginMgr/DayOne
+	USERDIR=/usr/X/desktop/LoginMgr/Users
+	LOGDIRCMD=/usr/X/adm/upgrade/dtlogindir
+	if [ ! -d $DAYONEDIR -o ! -d $USERDIR -o ! -x $LOGDIRCMD ]
+	then	
+		# desktop corrupted or installing on pre 2.0 system?
+		pfmt -s nostd -g ${PKGMSG}:1 "desktop icon installation failed\n"
+	else
+		for login in `ls $USERDIR`
+		do
+			if [ -f $DAYONEDIR/$login ]
+			then
+				hdir=`$LOGDIRCMD $login`
+				if [ $? -ne 0 ]
+				then
+					# desktop user with no home dir or
+					# the user has been removed.
+					continue
+				fi
+				locale=`cat $DAYONEDIR/$login`
+				admdir=`LC_ALL=$locale $GT dayone:2 "Admin_Tools"`
+				if [ -d $hdir/$admdir ]
+				then
+					osmp=`LC_ALL=$locale $GT dayone:61 "Processor_Setup"`
+					if [ -s $hdir/$admdir/$osmp -o -f $hdir/$admdir/$osmp -o -h $hdir/$admdir/$osmp ]
+					then
+						# remove old link
+						rm -f $hdir/$admdir/$osmp
+					fi
+					ln -s /usr/X/bin/ProcSetup $hdir/$admdir/$osmp
+					installf $PKGINST $hdir/$admdir/$osmp=/usr/X/bin/ProcSetup s
+				fi
+
+
+			fi
+		done
+	fi
+
+fi
+
+if [ ! -f /tmp/${PKG}.req.sh ]
+then
+	# we're installing after the initial system install/reboot
+	rm -f /tmp/${PKG}.post.sh
+fi
+
+if [ "$rc" != 0 ]
+then
+	exit $rc
+else
+	exit 10
+fi

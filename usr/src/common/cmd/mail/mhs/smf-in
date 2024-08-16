@@ -1,0 +1,211 @@
+#!/usr/gnu/bin/perl --
+# -*-Perl-*-
+# MHSGate -- gateway MHS and Unix mail
+# (C) Copyright 1992-1994 Novell, Inc.   All Rights Reserved.
+# Jack Thomasson, Senior Consultant, Novell Consulting Services
+# Modified for UnixWare by Scott Harrison, Software Engineer Consultant, Novell
+# convert SMF message to ARPAmail format and pass to /bin/rmail for delivery
+#ident	"@(#)mail:common/cmd/mail/mhs/smf-in	1.9"
+
+open(STDERR, ">>/var/spool/smf/LOG");
+push(@INC, "/usr/lib/mail/surrcmd");
+
+# used by sub diemsg in mhsConfig
+@DIEMSG = ("configuration information",
+	   "netdir.tab: could not open",
+	   "empty message header",
+	   "/bin/rmail: could not exec",
+	   "attachment: could not open",
+	   );
+
+require "mhsConfig";
+require "splitAddr";
+
+%precedence = ('U', "special-delivery",
+	       'N', "first-class",
+	       'O', "junk");
+@keep = ("Subject",
+	 "O-\\S+",
+	 "X-\\S+");
+$keep = join('|', @keep);
+
+@topLevel = ("arpa", "com", "edu", "gov", "mil", "net", "org", "..");
+$topLevel = join('|', @topLevel);
+sub SMF2Inet {
+  $_ = $_[$[];
+  local($user, $host, $cmt, $format, $extended, $extaddr);
+  # user@host (comment) {extended} [route]
+  s/^\s*(.*\S)?\s*$/$1/;		# strip leading and trailing whitespace
+  return "@" if ($_ eq "");
+  s/\s*\[.*\]$//;
+  ($extended, $format, $extaddr) = ($1, $2, $3) if (s/\s*({\s*(\w+:)?\s*(.*)})$//);
+  $cmt = $1 if (s/(\s*\(.*\))$//);
+  return "$extaddr$cmt" if ($format =~ /SMTP:/i);
+  s/(.*\S)\s*@\s*(.*)//;
+  ($user, $host) = ($1, $2);
+  return "Postmaster%$host@$INETGW.$domain$cmt" if ($user =~ /-MaiSer-/i);
+  if ($user =~ /^"(.*)"$/) {
+    ($user = $1) =~ s/\\"/"/g;
+  }
+  $user =~ s/\s+/_/g;
+  $host =~ s/\s*\.\s*/\./g;
+  $host =~ s/\s+/_/g;
+  local(@part) = split(/\./, $host);
+  return "$user@$host$cmt" if ($part[$#part] =~ /^($topLevel)$/io);
+  if ($extended) {
+    return "$extaddr$cmt" if ($part[$[] =~ /^($mhsGWS)$/io);
+    $extended =~ s/\s+/_/g;
+    $extended =~ s/([()<>@,;:\\\".\[\]\0-\037\0177-\0377])/sprintf("#%03d#", unpack("c", $1))/eg;
+    $user .= $extended;
+  }
+  if ($host =~ /^$mhsWG$/io || $part[$[] =~ /^($mhsGWS)$/io) {
+    return "$user$cmt";
+  }
+  return "$user%$host@$INETGW.$domain$cmt";
+}
+
+$filename = $ARGV[$[];
+$hopCount = 1;
+
+# read header stuff into @SMF
+open(INPUT, "nwreadfile $CNFG{MAILSERV} $filename |");
+$tmp = <INPUT>;				# throw away first line
+while (<INPUT>) {
+  s/\r$//;
+  if (/^$/) {
+    last;
+  }
+  elsif (s/^\s+//) {
+    # join continuation line to previous line
+    $SMF[$#SMF] =~ s/\s*$/ $_/;		# append with my choice of whitespace
+  }
+  else {
+    s/^\d+//;				# remove leading numerics
+    push(@SMF, $_);
+  }
+}
+&diemsg(2) if ($#SMF < $[);
+
+# reformat header into @ARPA
+push(@ARPA, "Received: by $INETGW.$domain via $filename id MHS-id; " . `date '+%a, %d %b %y %H:%M:%S %Z'`);
+foreach (@SMF) {
+  study;
+  if (/^Sender: (.+)/i) {
+    $sender = &SMF2Inet($1);
+    $sender =~ s/\s.*//;
+    $sender = "@" if ($sender =~ /^Postmaster/i);
+    push(@ARPA, "Return-Path: <$sender>\n");
+    next;
+  }
+  elsif (s/^(Send-to: )//i) {
+    chop;
+    @recips = &splitSMF($_);
+    foreach (@recips) {
+      $_ = &SMF2Inet($_);
+      s/\s.*//;
+    }
+    next;
+  }
+  elsif (/^MHS-id: (\w+)/i) {
+    $ARPA[$[] =~ s/MHS-id/$1/;
+    next;
+  }
+  elsif (/^MCB-options: (\w+)/i) {
+    local(@options) = split(//, $1);
+    push(@ARPA, "Return-Receipt-To: $sender\n") if ($options[$[ + 1] eq "Y");
+    push(@ARPA, "Precedence: $precedence{$options[$[ + 3]}\n");
+    next;
+  }
+  elsif (/^MCB-type: (\d+)/i) {
+    $sender = "@" if ($1 == 1);
+    next;
+  }
+  elsif (/^Hop-count: (\d+)/i) {
+    $hopCount = $1 + 1;
+    next;
+  }
+  elsif (/^(Date: )(\d?\d)-(\w\w\w)-(\d\d) (.+)/i) {
+    local($tmp, $day, $mon, $year, $time) = ($1, $2, $3, $4, $5);
+    $year += 1900 if ($year >= 0 && $year <= 99);
+    push(@ARPA, "$tmp$day $mon $year $time\n");
+    next;
+  }
+  elsif (/^(Message-id: )(.+)/i) {
+    push(@ARPA, "$1<$2@$INETGW.$domain>\n");
+    next;
+  }
+  elsif (s/^((From|To|Copies-to|Total-to|Total-copies-to|Reply-To): )//i) {
+    local($tmp) = ($1);
+    chop;
+    local(@addr) = &splitSMF($_);
+    foreach (@addr) {
+      $_ = &SMF2Inet($_);
+    }
+    $tmp = "CC: " if ($tmp =~ /^Copies-To/i);
+    push(@ARPA, $tmp . join(",\n\t", @addr) . "\n");
+    next;
+  }
+  elsif (s/^(Attachment: )//i) {
+    chop;
+    tr/A-Z/a-z/;
+    @attachment = split(/,/);
+    next;
+  }
+  elsif (s/^(Attachment-name: )//i) {
+    chop;
+    @attachmentName = split(/,/);
+    next;
+  }
+  elsif (/^Error-report: (\d+)(.*)/i) {
+    next if ($1 == 0 && $2 eq "");
+  }
+  elsif (s/^(X-)?(Received:)/$2/i) {
+    push(@ARPA, $_);
+    next;
+  }
+  if (/^($keep):/io) {			# not elsif!
+    push(@ARPA, $_) if (length($_) < 512);
+    next;
+  }
+  push(@ARPA, "X-$_") if (length($_) < 512);
+}
+
+# hand off to mailer
+@recips = ("Postmaster") unless $#recips >= $[;
+open(MAILER, "|-") ||
+  exec "/bin/rmail " . join(' ', @recips) || &diemsg(3);
+print MAILER @ARPA, "\n";		# header
+while (<INPUT>) {				# rest of text
+  s/([^\r\n]*)[\r\n]*/$1\n/;
+  print MAILER;
+}
+
+# attachments
+@attachmentName = @attachment unless ($#attachmentName == $#attachment);
+foreach (@attachment) {
+  s/[ \"]//g;
+  $tmp = "$MV/mhs/mail/gates/$mhsGW/oparcel/$_";
+  $file = `file \'$tmp\'`;
+  if ($file =~ /text|ascii|shell|script/i) {
+    # ascii file
+    $cmd = "<$tmp";
+  }
+  elsif ($file =~ /compressed|zoo archive|zip archive/i) {
+    # binary, do not compress
+    $cmd = "uuencode \'$attachmentName[$[]\' <\'$tmp\' |";
+  }
+  else {
+    # binary, compress
+    $attachmentName[$[] .= ".Z";
+    $cmd = "compress <\'$tmp\' | uuencode \'$attachmentName[$[]\' |";
+  }
+  open(ATTACH, $cmd) || &diemsg(4);
+  while (<ATTACH>) {
+    print MAILER;
+  }
+  close(ATTACH);
+  unlink($tmp);
+  shift(@attachmentName);
+}
+close(MAILER);
+exit $?;

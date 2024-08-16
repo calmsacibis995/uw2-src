@@ -1,0 +1,75 @@
+#!/usr/gnu/bin/perl --		# -*-Perl-*-
+#ident	"@(#)mail:common/cmd/mail/config/configFiles	1.2"
+# (C) Copyright 1993 Univel All Rights Reserved
+# Written for UnixWare by Scott Harrison, Software Engineer Consultant, Univel
+
+# "secure" in perl terms
+$ENV{"PATH"} = "/usr/lib/mail/surrcmd:/usr/bin:/bin";
+$ENV{"IFS"} = " \t\n";
+
+@DIEMSG = ( "Cannot open configuration information file, stopped ",
+		"");
+
+#
+# Initialize file names
+#
+$FILE = $ARGV[0] ;
+$PROTOTYPEFILE = $ARGV[1] ;
+
+#
+# Initialize constants.
+#
+$MAILFLAGSFILE = "/etc/mail/mailflgs" ;
+$operator{"&&"} = 1;
+$operator{"||"} = 1;
+$operator{"\("} = 1;
+$operator{"\)"} = 1;
+$operator{"!"} = 1;
+$operator{""} = 1;
+
+#
+# Read in the mail flags file.
+#
+open(MAILFLAGS, "<$MAILFLAGSFILE");
+while(<MAILFLAGS>) {
+    chop;
+    if(/^#/) { next;}
+    if(/^\s*$/) { next;}
+    $flaglist{$_} = 1;
+    }
+close(MAILFLAGS);
+
+#
+#Open the mailsurr prototype file.
+#
+open(PROTOTYPE, "<$PROTOTYPEFILE") || die @DIEMSG[1] ;
+
+#
+#Open the mailsurr file.
+#
+open(OUTPUT, ">$FILE") || die @DIEMSG[2] ;
+
+#
+#	Process the prototype file.
+#
+while(<PROTOTYPE>) {
+    if (/^<([^>]*)>\t(.*)/i) {
+	$FLAGS = $1;
+	$COMMAND = $2;
+#	@FLAGS = split(/([&|\(\)!]+)/, $FLAGS);
+	@FLAGS = split(/([&|]+|[()!])/, $FLAGS);
+	foreach $token (@FLAGS) {
+	    if($operator{$token}) { next;}
+	    $token = $flaglist{$token} ;
+	    if(!$token) { $token = 0;}
+	    }
+
+	if(eval(join('', @FLAGS))) { print OUTPUT "$COMMAND\n" ; }
+	}
+    else {
+	print OUTPUT $_ ;
+	}
+    }
+
+close(PROTOTYPE);
+close(OUTPUT);

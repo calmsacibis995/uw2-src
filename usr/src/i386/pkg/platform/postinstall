@@ -1,0 +1,219 @@
+#ident	"@(#)pkg.platform:i386/pkg/platform/postinstall	1.12"
+
+cleanup_exit() {
+        # $1 is the exit code
+        # clean up any tmp files created by upnover tools and then exit.
+
+        [ "$PKGINST" ] || PKGINST=inet
+
+        [ "$UPDEBUG" = YES ] && goany "cleanup_exit $1 $PKGINST"
+        $SCRIPTS/up_cleanup "$PKGINST"
+        exit    $1
+}
+
+upsconfigure() {
+   # configure the UPS port
+   UPSCFG=/usr/bin/compaq/ups/ups.cfg
+   
+   unset U_PORT
+   case $UPSPORT in
+	COM1)	SP=0	;;
+	COM2)	SP=1	;;
+	COM3)	SP=2	;;
+	COM4)	SP=3	;;
+	*)	unset SP ;;
+   esac
+   
+   # SERIAL_PORT="/dev/tty00"
+   U_PORT=\"\"
+   [ "$SP" ] && U_PORT=\"\\/dev\\/tty0$SP\"
+
+   # ed preserves permissions/owner/group
+   ed  $UPSCFG  <<  EOEDIT 1>/dev/null 2>&1
+   /^SERIAL_PORT=
+   s/=.*$/=$U_PORT/
+   /^OS_SHUTDOWN_TIME=
+   s/=.*$/=$OS_SHUTDOWN_TIME/
+   w
+   q
+EOEDIT
+}
+
+cled_configure() {
+   # configure cled in /etc/scsi/tc.index which is $1
+   TC_INDEX=$1
+   
+   # stick the following three lines in the beginning of $TC_INDEX
+   # ed preserves permissions/owner/group
+   ed  $TC_INDEX  <<  EOEDIT 1>/dev/null 2>&1
+   1
+   i
+TCLEN	16
+TCINQ	COMPAQ  PROLIANT
+MKDEV	/etc/scsi/mkdev.d/cled1
+.
+   w
+   q
+EOEDIT
+rm -rf /tmp/.$$.tmp /tmp/$$.tci
+}           
+
+do_install(){
+	ERR=/tmp/${1}.err
+	IDCOMPS="Driver.o Driver_atup.o Driver_mp.o Master System Space.c Stubs.c Mtune Node"
+
+	${CONFBIN}/idinstall -P ${PKGINST} -a ${1} > ${ERR} 2>&1
+	RET=$?
+
+	if [ "$RET" != 0 ]
+	then
+		${CONFBIN}/idinstall -P ${PKGINST} -u ${1} > ${ERR} 2>&1
+		RET=$?
+	fi
+
+	if [ ${RET} != 0 ]
+	then
+		message -d `pfmt -s nostd -g ${PKGMSG}:1 "The installation cannot be completed due to an error in the driver installation during the installation of the %s module of the %s.  The file %s contains the errors." ${1} '${NAME}' ${ERR}" 2>&1`
+		exit ${FAILURE}
+	fi
+
+	rm -rf ${IDCOMPS}
+	rm -rf ${ERR}
+}
+
+# main() for postinstall
+
+FAILURE=1	# fatal error
+
+CONFDIR=/etc/conf
+CONFBIN=${CONFDIR}/bin
+
+ERR=/tmp/err.out
+
+MODULES=""
+MOD_FILE=/tmp/MOD_FILE
+>$MOD_FILE
+
+
+SCRIPTS=/usr/sbin/pkginst
+. ${SCRIPTS}/updebug
+[ "$UPDEBUG" = YES ] && set -x
+
+PKGMSG=${PKGINST}.pkg
+LOCALE=${LC_ALL:-${LC_MESSAGES:-${LANG:-"C"}}}
+
+if [ ! -f /usr/lib/locale/${LOCALE}/LC_MESSAGES/${PKGMSG} ]
+then
+   if [ -f ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} -a \
+	-d /usr/lib/locale/${LOCALE}/LC_MESSAGES ]
+   then
+	cp ${REQDIR}/inst/locale/${LOCALE}/${PKGMSG} \
+	   /usr/lib/locale/${LOCALE}/LC_MESSAGES
+   fi
+fi
+
+for i in $CLASSES
+do
+    case $i in
+    "compaq")
+	MODULES="crom cpqw cled $MODULES"
+	;;
+    "tricord")
+	MODULES="ims $MODULES"
+	;;
+    "ast")
+	MODULES="astm $MODULES"
+	;;
+    *)
+	;;
+    esac
+done
+
+### Install drivers
+###  Any modules installed in /tmp should be added to
+###  the removef loop below.
+
+for MODULE in $MODULES
+do
+    cd /tmp/${MODULE}
+    do_install ${MODULE}
+    cd /tmp
+done
+
+# rebuild for changes to take effect
+
+/etc/conf/bin/idbuild
+
+[ "$UPDEBUG" = YES ] && goany
+
+[ "$PLATFORM" = compaq  ] && {
+   [ "$PKGINSTALL_TYPE" = "NEWINSTALL" -o "$AUTOMERGE" != Yes ] && {
+
+   	# configure  ups UPSPORT and OS_SHUTDOWN_TIME 
+   	UPSCFG=/usr/bin/compaq/ups/ups.cfg
+   	[ -f $UPSCFG ] && upsconfigure
+   
+	# update /etc/scsi/tc.index to include cled info if it does not
+	# already exist in this file.
+	
+	TC_INDEX=/etc/scsi/tc.index 
+	[ -f $TC_INDEX ] && {
+		CLED1="MKDEV	/etc/scsi/mkdev.d/cled1"
+		grep  "^$CLED1$"  $TC_INDEX 1>/dev/null 2>&1 || \
+		cled_configure $TC_INDEX
+	}
+    }
+}
+
+############# Begin UPGRADE AND OVERLAY #######################
+
+[ "$PKGINSTALL_TYPE" != "NEWINSTALL" -a "$PLATFORM" = compaq ] && {
+
+#	AUTOMERGE will be set when the system is being UPGRADED or
+# 	or OVERLAYED....If the package is being added via pkgadd
+#	then the AUTOMERGE will be set to "Yes".
+
+#	If AUTOMERGE=Yes, ${SCRIPTS}/pkgmrgconf will 
+#	merge the config files listed in $UPGRADE_STORE/${PKGINST}.sav.
+#	If merge failed, it informs user which files the merge failed.
+
+#	If AUTOMERGE=No, ${SCRIPTS}/pkgmrgconf will 
+#	inform user where there old config files live and that
+#	the system will use new versions of the config. files
+
+	${SCRIPTS}/pkgmrgconf "${PKGINST}" "$AUTOMERGE" "$NAME" \
+					>/dev/null 2>&1
+}
+
+[ "$UPDEBUG" = YES ] && goany
+
+
+# cleanup patch files from /var/sadm/install/contents and rm them
+
+${SCRIPTS}/up_cleanup "${PKGINST}"
+
+############# End   UPGRADE AND OVERLAY #######################
+
+### Remove temporary modules installed in /tmp
+
+for MODULE in $MODULES
+do
+	rmdir /tmp/$MODULE >/dev/null 2>&1
+	echo "/tmp/${MODULE}/Driver_atup.o\n\
+/tmp/${MODULE}/Driver_mp.o\n\
+/tmp/${MODULE}/Driver.o\n\
+/tmp/${MODULE}/Space.c\n\
+/tmp/${MODULE}/Master\n\
+/tmp/${MODULE}/System\n\
+/tmp/${MODULE}/Node\n\
+/tmp/${MODULE}" >> $MOD_FILE
+done
+
+removef ${PKGINST} - < $MOD_FILE 1>/dev/null 2>&1
+removef -f ${PKGINST} >/dev/null 2>&1
+installf -f ${PKGINST} >/dev/null 2>&1
+
+rm -f $MOD_FILE >/dev/null 2>&1
+
+errflag=`expr ${errflag:=0} + 10`
+exit ${errflag}

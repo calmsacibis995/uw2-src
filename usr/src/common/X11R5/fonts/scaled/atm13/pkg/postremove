@@ -1,0 +1,48 @@
+#ident	"@(#)atm13:pkg/postremove	1.2"
+#	Copyright (c) 1990, 1991 UNIX System Laboratories, Inc.
+#	Copyright (c) 1988 AT&T
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+#	UNIX System Laboratories, Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+#
+#       USL Adobe Base 13 Type 1 Fonts
+#
+
+cd /usr/X/lib/fonts/type1
+/bin/ls -p >/tmp/ls.$$
+/bin/grep -v fonts.scale /tmp/ls.$$ | /bin/grep -v fonts.dir  | /bin/grep -v afm/ > /tmp/grep.$$
+
+if [ -s /tmp/grep.$$ ] 
+then
+
+# This code generates XLFD names for Type 1 fonts in the
+# ATM Basic Fonts Package (atm13)
+
+    if [ -r /usr/X/defaults/Xwinfont ]; then
+       derivedOption=`grep derived-instance /usr/X/defaults/Xwinfont |
+		     sed -n 1p`
+       if [ `echo $derivedOption | wc -l` -eq 1 ]; then
+          derivedValues=`echo $derivedOption | cut -f2 -d=`
+          fi
+       fi
+
+    if [ "$derivedValues" ]; then
+       : # it has been set from value in file
+    else
+       derivedValues=10,12,14
+       fi
+
+    # After fonts are installed:
+    cd /usr/X/lib/fonts
+    DERIVED_INSTANCE_PS=$derivedValues \
+       LD_LIBRARY_PATH=/usr/X/lib /usr/X/bin/mkfontscale type1 mitType1 &&
+       /usr/X/bin/mkfontdir   type1 mitType1
+else
+    rm -f /usr/X/lib/fonts/type1/fonts.dir /usr/X/lib/fonts/type1/fonts.scale
+fi
+rm /tmp/grep.$$ /tmp/ls.$$

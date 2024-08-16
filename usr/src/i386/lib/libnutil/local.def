@@ -1,0 +1,21 @@
+#ident	"@(#)libnwutil:i386/lib/libnutil/local.def	1.5"
+#ident	"$Id: local.def,v 1.6 1994/09/15 22:59:44 mark Exp $"
+
+LOCALDEF = \
+	-DSHARED_LIBS \
+	-DLO_HI_MACH_TYPE \
+	-DPERMISSIVE_ALIGNMENT \
+	-D_REENTRANT
+
+.y.o:
+	$(YACC) -d $<
+	$(MCC) $(CFLAGS) $(INCLIST) $(DEFLIST) -c y.tab.c
+	-rm -f y.tab.c
+	mv y.tab.o $@
+
+.l.o:
+	$(LEX) $(LEXFLAGS) $<
+	$(MCC) $(CFLAGS) $(INCLIST) $(DEFLIST) -c lex.yy.c
+	-rm -f lex.yy.c
+	mv lex.yy.o $@
+

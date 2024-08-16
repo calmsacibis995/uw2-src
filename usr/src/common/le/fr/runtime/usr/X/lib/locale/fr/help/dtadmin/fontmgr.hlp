@@ -1,0 +1,744 @@
+#ident\t"@(#)dthelp:Preferences/fontmgr.hlp     1.20"
+^*version^1
+^*title^Utilisation des polices dans UnixWare
+^:Polices
+^*width^70
+^+DesktopMgr/help.defs
+^?Utilisation des polices dans UnixWare
+^0^Polices
+^$10
+Polices
+
+Utilisez Polices pour visualiser toutes les polices de votre système,
+installez les polices de \d(Type 1^Polices Adobe Type 1) à partir des
+disquettes DOS/Windows, effacez les polices dont vous n'avez pas
+besoin et modifiez le police par défaut utilisée sur le Bureau.
+
+Une fois les polices de Type 1 installées, vous pouvez les utiliser
+dans toute application du Bureau UnixWare faisant appel au système de
+polices X Windows, et votre application peut télécharger ces polices
+sur des imprimantes Postscript.
+
+L'option Polices vous permet d'exécuter les opérations suivantes :
+
+\to\t\k(Visualiser les polices installées^^Visualisation des polices installées) 
+\to\t\k(Installer les polices de Type 1 à partir d'une disquette^^Installation de polices de Type 1)
+\to\t\k(Effacer des polices^^Suppression de polices)
+\to\t\k(Modifier les polices utilisées pour le texte des fenêtres "Bureau" et "Terminal"^^Changement des polices)
+\to\t\k(Restaurer les polices par défaut utilisées dans les fenêtres "Bureau" et "Terminal"^^Restauration des polices par défaut)
+
+Pour obtenir des informations d'arrière-plan sur les polices,
+reportez-vous à :
+
+\k(Familles de polices, caractères et polices)
+\k(Polices bitmap et vectorielles)
+\k(Exemples de résolutions de polices)
+
+
+^1^Familles de polices, caractères et polices
+^$20
+Familles de polices, caractères et polices
+
+Une famille de polices décrit la conception de base d'un groupe de
+polices sans détailler de style particulier (par exemple, Helvetica).
+
+Un caractère appartient à une famille de caractères qui est associéé à
+un style particulier, tel qu'Helvetica Gras.
+
+Une police est un caractère associé à une taille en points
+particulière, par exemple, Helvetica Gras 11 points. Toutefois, le
+vocable "police" fait généralement référence à l'un de ces termes.
+
+^2^Polices bitmap et vectorielles
+^$30
+Polices bitmap et vectorielles
+
+Le système enregistre les polices sur le disque en les classant dans
+les catégories suivantes :
+
+\to\t\d(Polices en mode point^police bitmap)
+\to\t\d(Polices vectorielles^police vectorielle) (également appelées polices évolutives)
+
+Le système enregistre une police en mode point comme un groupe de
+points formant un caractère. Chaque police en mode point est créée
+pour une taille en points et une résolution spécifiques. Dans
+UnixWare, la plupart des polices en mode point ont été créées pour 75
+et 100 ppp (points par pouce), qui corespondent aux résolutions les
+plus courantes.
+
+Si vous affichez une police en mode point sur un écran dont la
+résolution est différente de la résolution pour laquelle elle a été
+créée, elle risque d'apparaître plus petite ou plus grande et peut
+dans certains cas sembler déformée.
+
+Vous pouvez augmenter la taille des polices en mode point mais sachez
+que les points apparaîtront alors anormalement gros et que les lettres
+seront mal dessinées.
+
+Le système enregistre les polices vectorielles sous forme
+d'instructions. Lorsqu'une taille en points particulière est requise,
+le système crée de façon dynamique une police vectorielle
+correspondant à cette taille et à la résolution de votre écran. Pour
+cela, il utilise un \d(programme de présentation des polices vectorielles).
+Dans UnixWare, ce "générateur de polices" est \d(Gestionnaire Adobe Type). Il
+peut traiter toutes les polices de Type 1, y compris celles que vous
+pouvez installer vous-même à partir de disquettes DOS/Windows [voir
+\k(Installation de polices de Type 1)).
+
+Voici quelques remarques importantes concernant les polices vectorielles :
+
+\to\tDans la mesure où le système doit interpréter des instructions,
+\t \tles polices vectorielles peuvent mettre plus de temps à s'afficher
+\t \tque les polices en mode point. Toutefois, une fois qu'elles ont
+\t \tété générées, le système les stocke en mémoire de façon à ce
+\t \tqu'elles s'affichent plus rapidement la fois suivante.
+
+\to\tDans la mesure où la taille de chaque police n'a pas besoin d'être
+\t \tstockée séparément sur le disque, les polices vectorielles
+\t \trequièrent moins d'espace disque que les polices en mode point.
+
+\to\tCertaines applications anciennes ne prennent pas en charge les
+\t \tpolices vectorielles.
+
+Voir également :
+\k(Exemples de résolutions de polices)
+
+^2^Exemples de résolutions de polices
+^$35
+Exemples de résolutions de polices
+
+La fenêtre à affichage instantané "Afficher résolution" démontre
+comment \d(des polices en mode point^police bitmap) développées pour
+différentes résolutions semblent avoir des tailles différentes. Pour
+examiner quelques exemples, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Préférences,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Préférences dans la
+  \t\k(fenêtre du "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Préférences"
+  \tapparaît.
+
+2.\tCliquez deux fois sur Polices. La fenêtre correspondante s'affiche.
+
+3.\tCliquez sur Action=>Afficher résolution. La fenêtre correspondante
+  \tapparaît.
+
+  \tNotez que les deux premières lignes présentent des informations
+  \tspécifiques à votre affichage (résolution en points par pouce et
+  \tdimensions). Le système calcule le nombre de points par pouce en
+  \tutilisant les dimensions du moniteur (par exemple, 640x480) et la
+  \ttaille du moniteur, que vous avez définies au cours de
+  \tl'installation initiale d'UnixWare ou à l'aide de
+  \t\k(Configuration de l'affichage^dtadmin/video.hlp^Configuration de l'affichage).
+
+  \tSi la taille de votre moniteur n'est pas entrée correctement et ne
+  \tcorrespond pas à sa taille réelle, la valeur de la résolution en
+  \tpoints par pouce risque d'être erronée et d'empêcher l'utilisation
+  \tde certaines polices.
+
+
+^1^Visualisation des polices installées
+^$40
+Visualisation des polices installées
+
+Le Bureau UnixWare comprend de nombreuses
+\d(polices bitmap^police bitmap) et 13
+\d(polices vectorielles^police vectorielle) Adobe de type 1.
+
+Vous pouvez également installer à partir de la disquette autant de
+polices de type 1 que vous le souhaitez. Une grande variété de polices
+de type 1 est disponible auprès des distributeurs ou par
+correspondance. ( En outre, d'autres polices bitmap sont disponibles
+dans le paquet Graphics Supplemental Fonts, qui n'est pas installé par
+défaut dans Personal Edition).
+
+Pour visualiser les polices installées sur votre système, procédez
+comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Préférences,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Préférences dans la
+  \t\k(fenêtre du "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Préférences"
+  \tapparaît.
+
+2.\tCliquez deux fois sur Polices. La fenêtre correspondante s'affiche.
+
+3.\tVisualisez une police comme suit :
+
+  \to\tFaites défiler les différentes \d(familles^famille de polices) et
+  \t \tcliquez sur celle que vous souhaitez afficher. Les styles
+  \t \tdisponibles pour cette famille apparaissent dans la liste
+  \t \tStyles.
+
+  \to\tFaites défiler les \d(Styles^caractère) disponibles pour
+  \t \tla famille et cliquez sur celui que vous souhaitez afficher.
+
+  \to\tSélectionnez la \d{corps (de caractère)} que vous souhaitez afficher
+  \t \tà partir de la zone de contrôle Taille en points.
+
+  \t \tSi la police que vous avez sélectionnée est en mode point, une
+  \t \tliste déroulante affichant les tailles disponibles apparaît.
+  \t \tCliquez sur la taille désirée.
+
+  \t \tRemarque : la même taille en points peut apparaître plusieurs
+  \t \tfois dans la liste, notamment si la largeur moyenne de deux
+  \t \tpolices diffère, ou si deux polices correspondent à des jeux de
+  \t \tcaractères différents. Pour visualiser les différences entre les
+  \t \tpolices, cliquez sur Visualiser=>Jeu de caractères. En outre,
+  \t \tdes doublons peuvent figurer dans la liste car une police créée
+  \t \tpour 14 points à 75 points par pouce peut avoir exactement la
+  \t \tmême apparence qu'une police créée pour 10 points à 100 points
+  \t \tpar pouce.
+
+  \t \tSi la police sélectionnée est de type vectoriel, un champ
+  \t \tnumérique apparaît. Entrez la taille en points que vous
+  \t \tsouhaitez afficher (de 6 à 100 points) ou cliquez sur les
+  \t \tflèches vers le haut et vers le bas pour modifier cette valeur.
+
+  \t \tAprès chaque sélection, le système affiche la police
+  \t \tsélectionnée dans le panneau de la fenêtre. Notez que
+  \t \tl'affichage des polices vectorielles peut prendre quelques
+  \t \tinstants la première fois.
+
+4.\tModifiez le texte affiché dans le panneau de la fenêtre comme suit :
+
+  \to\tPour taper tous les caractères que vous souhaitez visualiser
+  \t \tdans la police sélectionnée, cliquez sur Visualiser=>Phrase.
+  \t \tVous pouvez alors saisir votre texte dans le panneau de la
+  \t \tfenêtre, où la phrase "Entrez votre texte ici" apparaît.
+
+  \to\tPour afficher le jeu complet de caractères imprimables dans la
+  \t \tpolice sélectionnée, cliquez sur Visualiser=>Jeu de caractères.
+  \t \tS'il diffère du jeu de caractères standard ISO8859-1, le nom de
+  \t \tce jeu de caractères apparaît dans le bas de la fenêtre lorsque
+  \t \tl'option Visualiser=>Nom de police abrégé est activée.
+
+5.\tChangez le nom de la police affiché en bas de la fenêtre comme suit :
+
+  \to\tPour afficher le nom abrégé identifiant la police, cliquez sur
+  \t \tVisualiser=>Nom de police abrégé.
+
+  \t \tVoici les informations relatives aux polices vectorielles qui
+  \t \tapparaissent en bas de l'écran :
+
+  \t \t-\tLe nom sous lequel la police est identifiée par les
+  \t \t \timprimantes PostScript ; ce nom diffère du nom utilisé par
+  \t \t \tUnixWare (le nom PostScrip inclut généralement la famille et le
+  \t \t \tstyle).
+
+  \t \t-\tLa taille en points de la police affichée sur votre écran.
+
+  \t \t-\tS'il s'agit d'une police à espacement non proportionnel
+  \t \t \t(chasse fixe).
+
+  \t \t-\tLe jeu de caractères contenu dans la police (s'il ne s'agit
+  \t \t \tpas d'ISO8859-1).
+
+  \t \tVoici les informations relatives aux polices en mode point qui
+  \t \tapparaissent en bas de l'écran :
+
+  \t \t-\tLe nom de la famille.
+
+   \t\t-\tLes autres attributs de la famille (le cas échéant).
+
+   \t\t-\tLa graisse de la police.
+
+   \t\t-\tL'inclinaison de la police, s'il ne s'agit pas de la police
+   \t\t \tRoman.
+
+   \t\t-\tLa taille en points de la police affichée sur votre écran.
+
+  \t \t-\tLa résolution pour laquelle cette police a été conçue,
+  \t \t \tgénéralement 75 ou 100 ppp (points par pouce).
+
+  \t \t-\tS'il s'agit d'une police à espacement non proportionnel
+  \t \t \t(chasse fixe) ou d'une police à espacement proportionnel.
+
+  \t \t-\tLa chasse moyenne de l'ensemble des caractères de la police.
+
+  \t \t-\tLe jeu de caractères contenu dans la police (s'il ne s'agit
+  \t \t \tpas d'ISO8859-1).
+
+  \to\tPour afficher le nom X Windows complet \d(XLFD)
+  \t \tidentifiant la police, cliquez sur Visualiser=>Nom XLFD. Pour
+  \t \tles polices en mode point, ce nom indique la résolution
+  \t \t(généralement "-75-75-" ou "-100-100-") pour laquelle la police
+  \t \ta été initialement conçue.
+
+Remarque : en cas de problèmes liés à vos polices (par exemple, si un
+message tel que "Impossible d'afficher la police..." s'affiche en bas
+de l'écran), vous devez contrôler l'intégrité de vos bibliothèques de
+polices. Pour de plus amples informations, voir \k(Vérification de l'intégrité des polices).
+
+
+^1^Installation de polices de Type 1
+^$50
+Installation de polices de Type 1
+
+De nombreuses applications courantes de traitement de texte ou de
+traitement graphique utilisent des
+\d(polices de Type 1^Polices Adobe Type 1). Bien que la plupart des
+applications utilisant ces polices soient fournies avec un jeu
+standard de polices, vous pouvez installer d'autres polices de Type 1
+à partir des disquettes DOS. Vous pouvez vous procurer une grande
+variété de polices de Type 1 chez les distributeurs ou par
+correspondance.
+
+Pour installer d'autres polices de type 1 à partir de la disquette,
+procédez comme suit :
+
+1.\tOuvrez une session en tant qu'utilisateur doté
+  \t\k(d'autorisations d'ajout et de suppression de polices^dtadmin/user.hlp^Présentation des autorisations).
+
+2.\t\d(Cliquez deux fois^cliquer deux fois) sur Préférences dans la
+  \t\k(fenêtre du "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : préférences"
+  \ts'affiche.
+
+3.\tCliquez deux fois sur Polices. La fenêtre correspondante apparaît.
+
+4.\tInsérez la disquette DOS de Type 1 dans l'unité de disque.
+
+  \tRemarque : vous pouvez utiliser des disquettes 3,5" ou 5,25",
+  \tselon le type d'unité(s) de disque dont est doté votre système
+  \t(pour de plus amples informations sur les disques, les unités de
+  \tdisques, etc., reportez-vous à \k(Disques-etc^dtadmin/disk.hlp^Présentation du dossier Disques-etc)).
+
+5.\tCliquez sur Actions=>Installer. La fenêtre "Installer polices de
+  \tType 1 à partir de la disquette" s'affiche.
+
+6.\tEffectuez l'une des opérations suivantes :
+
+  \to\tCliquez sur chaque police souhaitée, puis sur Installer.
+
+   \t\tRemarque : si vous ne sélectionnez pas de police en vue de
+   \t\tl'installation avant de cliquer sur Installer, un message
+   \t\td'erreur s'affiche et vous devez renouveler l'opération.
+
+  \to\tCliquez sur Installer tout pour installer l'ensemble des polices
+  \t \tfigurant sur la disquette.
+
+Remarque : vous pouvez également installer des polices à l'aide de
+\d(faire glisser). Par exemple, si votre disquette de polices figure
+dans l'unité A, cliquez sur l'icône du disque A (dans le
+\k(Dossier Disques-etc^dtadmin/disk.hlp^Présentation du dossier Disques-etc)), faites glisser l'icône Disque A sur l'icône (ou
+la fenêtre) Polices, puis relâchez le bouton de la souris. La fenêtre
+"Installer polices de Type 1 à partir de la disquette" apparaît.
+
+^2^Avis - Insérez une disquette DOS
+^$60
+Avis - Insérez une disquette DOS
+
+Ce message d'erreur apparaît si le système ne détecte pas de disquette
+dans l'unité. Insérez la disquette DOS contenant les polices de Type 1
+dans l'unité appropriée. Vous pouvez utiliser des disquettes 3,5" ou
+5,25". Le cas échéant, le système recherche la disquette dans les deux
+unités.
+
+^2^Avis - Disquette non DOS
+^$70
+Avis - Disquette non DOS
+
+Ce message d'erreur apparaît si la disquette insérée n'est pas au
+formatDOS (il peut par exemple s'agir d'une disquette UnixWare).
+Remplacez cette disquette par la disquette DOS contenant les polices
+de Type 1, puis cliquez sur Continuer.
+
+Si vous ne trouvez pas de disquette DOS et que vous souhaitez quitter
+le processus d'installation, cliquez sur Annuler.
+
+
+^2^Avis - Pas de polices de Type 1 identifiables
+^$80
+Avis - Pas de polices de Type 1 identifiables
+
+Ce message d'erreur apparaît si le système ne détecte pas de police de
+Type 1 sur la disquette insérée. Vérifiez que vous avez installé une
+disquette DOS de Type 1.
+
+Parfois les fournisseurs de polices livrent des logiciels fonctionnant
+sous DOS avec leurs polices et ces disquettes ne contiennent pas de
+police. Insérez seulement les disquettes intitulées "Polices" et
+n'utilisez pas d'autres disquettes, telles que "Disque fonderie" ou
+"Disque programme".
+
+Une fois la disquette appropriée insérée dans l'unité, cliquez sur
+Continuer.
+
+Si vous ne trouvez pas la disquette DOS et que vous souhaitez quitter
+le processus d'installation, cliquez sur Annuler.
+
+^2^Avis - Les polices installées ne comprennent pas les fichiers AFM
+^$85
+Avis - Les polices installées ne comprennent pas les fichiers AFM
+
+Ce message d'avertissement apparaît si aucun fichier AFM (Adobe Font
+Metrics) de la disquette ne correspond à certaines polices de Type 1
+que vous venez d'installer. Même si ces polices ont été installées et
+fonctionnent, certaines applications nécessitant la métrologie
+détaillée (qui est disponible dans les fichiers AFM) risquent de ne
+pas fonctionner correctement.
+
+^2^Avis - Insérez d'autres polices
+^$87
+Avis - Insérez d'autres polices
+
+Ce message d'avertissement apparaît si les polices sélectionnées
+figurent sur une autre disquette d'un jeu de polices multidisquette.
+
+Insérez la disquette suivante du jeu multidisquette, puis cliquez sur
+Continuer.
+
+Si vous ne trouvez pas la disquette DOS et que vous souhaitez quitter
+le processus d'installation, cliquez sur Annuler.
+
+^1^Suppression de polices
+^$90
+Suppression de polices
+
+Les polices peuvent utiliser un volume important d'espace disque sur
+votre système. Cela est particulièrement vrai pour les polices en mode
+point. Si l'espace disque est insuffisant, vous pouvez supprimer les
+polices que vous n'utilisez pas fréquemment.
+
+Pour effacer des polices en mode point ou vectorielles de votre
+système, procédez comme suit :
+
+1.\tOuvrez une session en tant qu'utilisateur doté
+  \t\k(d'autorisations d'ajout et de suppression de polices^dtadmin/user.hlp^Présentation des autorisations).
+
+2.\t\d(Cliquez deux fois^cliquer deux fois) sur Préférences dans la
+  \t\k(fenêtre du "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : préférences"
+  \ts'affiche.
+
+3.\tCliquez deux fois sur Polices. La fenêtre correspondante apparaît.
+
+4.\tCliquez sur  Actions=>Effacer.
+
+5.\tCliquez sur \d(En mode point^police bitmap) ou sur
+  \t\d(Vectorielle^police vectorielle).  Remarque : si vous effacez une
+  \tpolice en mode point, vous n'effacez qu'une seule police : une
+  \ttaille, un style, une famille. En revanche, si vous effacez une
+  \tpolice vectorielle, vous effacez une famille entière de caractères
+  \t(toutes les tailles en points associées à une combinaison de
+  \tfamilles et de styles).
+
+6.\tCliquez sur la police que vous souhaitez effacer. Le système
+  \taffiche les polices en surbrillance à mesure que vous les
+  \tsélectionnez.
+
+7.\tCliquez sur Effacer. La
+  \t\k(fenêtre "Avis - Confirmer effacement des polices"^^Avis - Confirmez la suppression des polices) apparaît.
+
+  \tRemarque : si vous ne sélectionnez pas de police en vue de leur
+  \tsuppression avant de cliquer sur Effacer, un message d'erreur
+  \ts'affiche ; vous pouvez alors renouveler l'opération.
+
+8.\tCliquez sur Continuer pour supprimer la police ou sur Annuler pour
+  \tinterrompre l'opération sans supprimer les polices.
+
+^2^Avis - Confirmez la suppression des polices
+^$92
+Avis - Confirmez la suppression des polices
+
+Ce message vous demande de confirmer la suppression des polices.
+Cliquez sur Continuer si vous souhaitez réellement les suppprimer.
+
+Cliquez sur Annuler pour interrompre l'opération sans supprimer les
+polices.
+
+^2^Avis - Aucune police ne peut être supprimée
+^$94
+Aucune police n'a pu être effacée
+
+Ce message d'erreur apparaît si aucune police (en mode point ou
+vectorielle, selon la police que vous souhaitez supprimer) ne peut
+être effacée. Cela se produit lorsque vous n'avez pas installé de
+police sur votre système, ou si vous les avez toutes effacées
+précédemment.
+
+Remarque : certaines polices en mode point sont nécessaires au
+fonctionnement de votre Bureau et ne peuvent être effacées.
+
+^1^Changement des polices
+^$95
+Changement des polices
+
+Vous pouvez modifier la police par défaut utilisée pour le texte des
+fenêtres de votre Bureau. Vous pouvez également modifier la police
+utilisée pour le texte des fenêtres "Terminal".
+
+Reportez-vous à :
+
+\to\t\k(Changement de la police de votre Bureau)
+\to\t\k(Changement de la police de votre terminal)
+
+^2^Changement de la police de votre Bureau
+^$96
+Changement de la police de votre Bureau
+
+Le Bureau utilise une police par défaut pour le texte des fenêtres
+(titre de la fenêtre, texte des menus, libellés des icônes, etc.). Il
+s'agit d'Helvetica Demi-gras, dont la taille est généralement de 12
+points. Toutefois, vous pouvez modifier la police par défaut utilisée
+sur votre Bureau, à condition que sa taille ne dépasse pas 20 points.
+
+Lorsque vous ouvrez l'application Polices pour la première fois, la
+police apparaissant dans les listes déroulantes Famille, Style et
+Taille en points, ainsi que dans le panneau réservé au texte d'essai
+correspond à la police de votre Bureau.
+
+Remarque : si vous remplacez la police par défaut par une police plus
+grande (par exemple, 14-20 points), il se peut que certains programmes
+du Bureau apparaissent quelque peu déformés tant que vous n'ouvrez pas
+de nouvelle session.
+
+Vous souhaitez peut-être aussi modifier la police de votre fenêtre
+"Terminal" afin de faciliter la lecture des informations affichées.
+Voir \k(Changement de la police de votre terminal).
+
+Si vous souhaitez revenir aux polices par défaut, reportez-vous à la
+procédure \k(Restauration des polices par défaut).
+
+Remarque : chaque fois que vous modifiez une police (c'est-à-dire
+chaque fois que vous sélectionnez Appliquer aux fenêtres, Modifier la
+police du terminal, ou Restaurer les valeurs par défaut), le système
+vérifie que vous pouvez modifier les polices dans votre préférence
+locale. Si tel n'est pas le cas, une fenêtre contenant un message
+d'erreur apparaît instantanément.
+
+Si la préférence locale vous permet de modifier les polices, le
+système vérifie alors que la police contient le jeu de caractères
+approprié. Si tel n'est pas le cas, une autre fenêtre contenant un
+message d'erreur apparaît instantanément.
+
+Remarque : toutes les préférences locales ne vous permettent pas de
+modifer les polices. Cette possibilité n'est offerte que par les
+préférences locales Europe de l'Ouest et Anglais.
+
+Pour changer la police par défaut utilisée dans le nom de la fenêtre
+"Bureau", procédez comme suit :
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Préférences dans la
+  \t\k(fenêtre du "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Préférences"
+  \tapparaît.
+
+2.\tCliquez deux fois sur Polices. La fenêtre correspondante s'affiche.
+
+3.\tSélectionnez les polices désirées (voir \k(Visualisation des polices installées)).
+
+4.\tCliquez sur Police=>Appliquer aux fenêtres. La police de tous les
+  \tintitulés, titres et autres textes du Bureau est remplacée de
+  \tfaçon dynamique par la nouvelle police. Ces modifications
+  \tcontinuent à s'appliquer lors de l'ouverture de session suivante.
+
+Remarque : si vous remplacez la police par défaut par une police
+d'assez grande taille (par exemple, 14-20 points), certains programmes
+du Bureau peuvent apparaître quelque peu déformés. Par exemple, le
+titre de la fenêtre, les boutons qu'elle contient et le texte du bas
+de l'écran risquent de ne plus être tout à fait alignés. Les intitulés
+des icônes du Bureau peuvent être tronqués en bas et à droite et
+risquent de se chevaucher. La plupart de ces problèmes disparaissent
+lorsque vous relancez l'application ou le Bureau. Vous pouvez remédier
+au chevauchement des intitulés d'icônes de fichiers en utilisant
+\k(Préférences du Bureau^DesktopMgr/dskpref.hlp^Changement des caractéristiques de base du Bureau) afin de modifier la taille de la grille des
+dossiers de fichiers.
+
+Vous souhaitez peut-être aussi modifier la police de votre fenêtre
+"Terminal" afin de faciliter la lecture des informations affichées. La
+police par défaut utilisée dans la fenêtre "Bureau" est
+Lucidatypewriter Demi-gras et sa taille est généralement de 12 points.
+Voir \k(Changement de la police de votre terminal).
+
+Si vous souhaitez revenir aux polices par défaut, reportez-vous à la
+procédure \k(Restauration des polices par défaut).
+
+Remarque : chaque fois que vous modifiez une police (c'est-à-dire
+chaque fois que vous sélectionnez Appliquer aux fenêtres, Modifier la
+police du terminal, ou Restaurer les valeurs par défaut), le système
+vérifie que vous pouvez modifier les polices dans votre préférence
+locale. Si tel n'est pas le cas, une fenêtre contenant un message
+d'erreur apparaît instantanément.
+
+Si la préférence locale vous permet de modifier les polices, le
+système vérifie alors que la police contient le jeu de caractères
+approprié. Si tel n'est pas le cas, une autre fenêtre contenant un
+message d'erreur apparaît instantanément.
+
+
+^2^Changement de la police de votre terminal
+^$102
+Changement de la police de votre terminal
+
+Vous pouvez remplacer la police du terminal de votre Bureau par une
+police à espacement non proportionnel (largeur fixe) (comme la police
+Courier) disponible sur votre système. Cette police est utilisée dans
+les fenêtres "Terminal" et dans toute application du Bureau qui
+nécessite une police à espacement non proportionnel permettant
+l'alignement des résultats.
+
+Pour vérifier qu'une police est à espacement non proportionnel,
+consultez le nom abrégé figurant en bas de la fenêtre (à l'aide de
+l'option Visualiser=>Nom de police abrégé). Reportez-vous à
+\k(Visualisation des polices installées).
+
+Pour modifier la police utilisée dans votre fenêtre "Terminal",
+procédez comme suit :
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Préférences dans la
+  \t\k(fenêtre du "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Préférences"
+  \tapparaît.
+
+2.\tCliquez deux fois sur Polices. La fenêtre correspondante s'affiche.
+
+3.\tCliquez sur la police à espacement non proportionnel souhaitée.
+
+4.\tCliquez sur Police=>Modifier la police du terminal. Toutes les
+  \tfenêtres "Terminal" que vous ouvrez utilisent la nouvelle police
+  \tpar défaut.
+
+  \tRemarque : l'application Terminal n'est peut-être pas la seule
+  \tapplication de votre système qui utilise une police à espacement
+  \tnon proportionnel.  Par exemple, Courrier et Débogage font
+  \tégalement appel à des polices à espacement non proportionnel.
+  \tLorsque vous sélectionnez Modifier la police du terminal, les
+  \tautres fenêtres d'applications de votre système utilisant des
+  \tpolices à espacement non proportionnel adopteront la police que
+  \tvous avez demandée.
+
+Si vous souhaitez revenir aux polices par défaut, reportez-vous à la
+procédure \k(Restauration des polices par défaut).
+
+Remarque : chaque fois que vous modifiez une police (c'est-à-dire
+chaque fois que vous sélectionnez Appliquer aux fenêtres, Modifier la
+police du terminal, ou Restaurer les valeurs par défaut), le système
+vérifie que vous pouvez modifier les polices dans votre préférence
+locale. Si tel n'est pas le cas, une fenêtre contenant un message
+d'erreur apparaît instantanément.
+
+Si la préférence locale vous permet de modifier les polices, le
+système vérifie alors que la police contient le jeu de caractères
+approprié. Si tel n'est pas le cas, une autre fenêtre contenant un
+message d'erreur apparaît instantanément.
+
+
+^2^Restauration des polices par défaut
+^$103
+Restauration des polices par défaut
+
+Pour restaurer les polices par défaut dans vos fenêtres (y compris
+dans les fenêtres "Terminal"), procédez comme suit :
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Préférences dans la
+  \t\k(fenêtre du "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : Préférences"
+  \tapparaît.
+
+2.\tCliquez deux fois sur Polices. La fenêtre correspondante s'affiche.
+
+3.\tCliquez sur Police=>Restaurer les paramètres par défaut. Le
+  \tsystème restaure les polices par défaut dans toutes les fenêtres
+  \t(c'est-à-dire les polices utilisées par votre système lors de
+  \tl'installation initiale).
+
+  \tToutefois, les polices figurant dans les fenêtres "Terminal"
+  \tactuellement ouvertes dans votre Bureau ne sont pas modifiées.
+  \tSeules les nouvelles fenêtres "Terminal" que vous ouvrirez
+  \tutiliseront la police par défaut.
+
+Remarque : chaque fois que vous modifiez une police (c'est-à-dire
+chaque fois que vous sélectionnez Appliquer aux fenêtres, Modifier la
+police du terminal, ou Restaurer les valeurs par défaut), le système
+vérifie que vous pouvez modifier les polices dans votre préférence
+locale. Si tel n'est pas le cas, une fenêtre contenant un message
+d'erreur apparaît instantanément.
+
+^2^Avis - La police du terminal doit être à espacement non proportionnel
+^$104
+Avis - La police du terminal doit être à espacement non proportionnel
+
+Ce message d'erreur apparaît si vous tentez de définir une police à
+espacement proportionnel pour votre terminal. La police du terminal
+doit être à espacement non proportionnel (c'est-à-dire que tous les
+caractères doivent avoir la même chasse).
+
+Pour déterminer si une police est à espacement non proportionnel, il
+suffit de regarder le nom abrégé figurant en bas de la fenêtre (en
+utilisant l'option Visualiser=>Nom de police abrégé). Reportez-vous à
+\k(Visualisation des polices installées).
+
+Les polices à espacement non proportionnel livrées avec UnixWare
+incluent Courier, Fixed et LucidaTypewriter.
+
+^2^Avis - Préférence locale non supportée
+^$106
+Avis - Préférence locale non supportée
+
+Ce message d'erreur s'affiche si vous essayez de changer la police de
+la fenêtre "Bureau" ou de la fenêtre "Terminal" alors que votre
+préférence locale ne prend pas en charge cette opération.
+
+Vous pouvez modifier votre police uniquement dans les préférences
+locales Europe de l'Ouest et Anglais.
+
+^2^Avis - Corps de caractère trog grand pour être utilisé dans le Bureau
+^$107
+Avis - Corps de caractère trog grand pour être utilisé dans le Bureau
+
+Ce message d'erreur apparaît si vous tentez de définir, pour la
+fenêtre Bureau ou Terminal, une police dont la taille
+\d{corps (de caractère)} est supérieure à 20 points. Ce type de police
+déforme l'affichage du Bureau et rend ce dernier inutilisable.
+Utilisez une taille comprise entre 10 et 14 points pour cette
+fonction. Si vous sélectionnez une taille inférieure pour la même
+police et que vous renouvelez l'opération, la modification est prise
+en compte.
+
+^2^Avis - Jeu de caractères non concordant
+^$108
+Avis - Jeu de caractères non concordant
+
+Ce message d'erreur apparaît si vous essayez de définir une police
+contenant un jeu de caractères qui ne correspond pas à celui de votre
+préférence locale. Par exemple, certaines polices contiennent
+uniquement le jeu de caractères ASCII (appelé officiellement
+ISO646.1991-IRV), mais les préférences locales Europe de l'Ouest
+nécessitent le jeu de caractères ISO8859-1 qui contient des caractères
+ASCII, ainsi que les lettres accentuées requises en Europe de l'Ouest.
+
+Pour déterminer le jeu de caractères contenu dans une police, il
+suffit de regarder le nom abrégé figurant en bas de la fenêtre (en
+utilisant l'option Visualiser=>Nom de police abrégé). Voir
+\k(Visualisation des polices installées).
+
+^1^Vérification de l'intégrité des polices
+^$110
+Vérification de l'intégrité des polices
+
+Lorsque vous ajoutez ou effacez des polices, le système met
+automatiquement à jour les bibliothèques de polices. Toutefois, en cas
+de problèmes liés à vos polices, vous pouvez forcer le système à
+vérifier les bibliothèques de polices.
+
+Pour forcer votre système à contrôler les bibliothèques de polices,
+procédez comme suit :
+
+1.\tOuvrez une session en tant qu'utilisateur doté
+  \t\k(d'autorisations d'ajout et de suppression de polices^dtadmin/user.hlp^Présentation des autorisations).
+
+2.\t\d(Cliquez deux fois^cliquer deux fois) sur Préférences dans la
+  \t\k(fenêtre du "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare).  La fenêtre "Dossier : préférences"
+  \ts'affiche.
+
+3.\tCliquez deux fois sur Polices. La fenêtre correspondante apparaît.
+
+4.\tCliquez sur Action=>Contrôle d'intégrité. Un message s'affiche
+  \tinstantanément, vous demandant si vous souhaitez lancer le
+  \tprocessus (l'opération dure plusieurs minutes).
+
+  \tUn autre message apparaît pour vous avertir que le contrôle est
+  \tterminé.
+
+Cette vérification des bibliothèques de polices peut se révéler
+inefficace. Si votre problème de polices persiste, prenez contact avec
+votre administrateur système.

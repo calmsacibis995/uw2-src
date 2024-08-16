@@ -1,0 +1,42 @@
+#ident	"@(#)ypcmd:net_files/aliases	1.6"
+#ident  "$Header: $"
+
+passwd passwd.byname
+group group.byname
+networks networks.byaddr
+hosts hosts.byname
+hosts hosts.byaddr
+protocols protocols.bynumber
+services services.byname
+#
+# **************ATTENTION*****ATTENTION*****ATTENTION ********************
+#
+# The mail.alaises database can no longer be read directly by NIS.
+# The database mail.aliases is now aliased to mail.byname.
+# The database mail.byname is created by /var/yp/Makefile when
+# the "make aliases" command is executed.
+#
+# **************ATTENTION*****ATTENTION*****ATTENTION ********************
+#
+mail.aliases mail.byname
+aliases mail.byname
+ethers ethers.byname
+auto.home auto.home
+auto.master auto.master
+bootparams bootparams
+ethers.byaddr ethers.byaddr
+group.bygid group.bygid
+hosts.byname hosts.byname
+mail.byaddr mail.byaddr
+netgroup netgroup
+netgroup.byhost netgroup.byhost
+netgroup.byuser netgroup.byuser
+netid.byname netid.byname
+netmasks.byaddr netmasks.byaddr
+networks.byname networks.byname
+passwd.byuid passwd.byuid
+protocols.byname protocols.byname
+publickey.byname publickey.byname
+rpc.bynumber rpc.bynumber
+TIMEZONE.byname TIMEZONE.byname
+ypservers ypservers

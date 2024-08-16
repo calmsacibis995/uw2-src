@@ -1,0 +1,26 @@
+.if t \{ .ds gt \z\(*t\h"\w'1'u"\&
+.ds gu \z\(*u\h"\w'1'u"\&\}
+.if n \{ .ds gt T
+.ds gu U \}
+.fp 1 R
+.fp 2 I
+.fp 3 B
+.fp 4 CW
+.de Bf
+.ta 9n 17n 25n 33n 41n 49n 57n
+.nf
+.ft 4
+..
+.de Be
+.DT
+.fi
+.ft 1
+..
+.deDT
+.ift .ta 0.45i 0.9i 1.35i 1.8i 2.25i 2.7i 3.15i 3.6i 4.05i 4.5i 4.95i 5.4i 5.85i
+.ifn .ta 5n 10n 15n 20n 25n 30n 35n 40n 45n 50n 55n 60n 65n
+..
+.ift .nr )M 0.45i
+.ift .nr)S 10
+.ift .nr)V 12
+.ift .dsS \s\n()S

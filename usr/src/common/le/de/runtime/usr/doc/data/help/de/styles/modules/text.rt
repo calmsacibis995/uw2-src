@@ -1,0 +1,169 @@
+<!-- /lfs/doc/DMG/Projects/sgml/sccs/styles/modules/s.text.rt 1.13 94/09/21 -->
+<style name="BOOK" group="bodytype">
+   <break-before>	line </>
+   <left-indent>	&textlt; </>
+   <right-indent>	&textrt; </>
+   <character-set>	iso8859-1 </>
+</style>
+
+<style name="BOOK,TITLE">
+   <font-family>	&ttlfam; </>
+   <font-size>		&tbsize; </>
+   <line-spacing>	&tbspac; </>
+   <font-weight>	bold </>
+   <foreground>		&bigtclr; </>
+   <break-before>	line </>
+   <space-before>	&lead4; </>
+   <break-after>	line </>
+   <justification>	center </>
+   <text-after>&copyrt;</>
+</style>
+
+<style name="BOOK,TITLE,#text-after" group="bodytype">
+   <break-before>	line </>
+   <space-before>	&lead3; </>
+   <foreground>		#000000 </>
+   <justification>	left </>
+   <left-indent>	&in3; </>
+</style>
+
+<style name="BOOKINFO">
+   <break-before>	line </>
+   <space-before>	&lead3; </>
+   <space-after>	&lead1; </>
+   <left-indent>	&ctin; </>
+   <right-indent>	&in1; </>
+   <text-before>&dicap;</>
+   <icon-position>	inline </>
+   <icon-type>		copyrt </>
+   <hide>		children </>
+   <script>		ebt-reveal stylesheet="foot.w" title="&dicap;" </>
+</style>
+
+<style name="BOOKINFO,#text-before">
+   <justification>	center </>
+   <vertical-offset>	&lead1; </>
+</style>
+
+<style name="FOOTNOTE">
+   <hide>	all </>
+   <select>	FOOTNOTE,fn_if(isnull(attr(ID)),inline,elsewhere); </>
+</style>
+
+<style name="fn_inline">
+   <break-before>	line </>
+   <text-before>&fnsym;</>
+   <hide>		all </>
+   <script>		ebt-reveal stylesheet="foot.w" title="&fncap;" </>
+</style>
+
+<style name="fn_inline,#text-before">
+   <font-size>		&fnsize; </>
+   <font-family>	&fnfam; </>
+   <Vertical-offset>	&fnoff; </>
+   <foreground>		&fnclr; </>
+   <font-weight>	bold </>
+</style>
+
+<style name="fn_elsewhere">
+   <hide>		all </>
+</style>
+
+<style name="TABLE" group="container">
+   <select>   TABLE,if(isempty(content(typechild(TITLE))),in-tbl,icon-tbl) </>
+</style>
+
+<style name="INFORMALTABLE" group="container">
+   <select>	INFORMALTABLE,in-tbl </>
+</style>
+
+<style name="FOOTNOTEREF">
+   <text-before>&fnsym;</>
+   <script>     ebt-link window=selected view=foot.w
+		root="idmatch(ID, attr(LINKEND))"
+                title="&fncap;" showtoc=false </>
+</style>
+
+<style name="FOOTNOTEREF,#text-before">
+   <font-size>		&fnsize; </>
+   <font-family>	&fnfam; </>
+   <vertical-offset>	&fnoff; </>
+   <foreground>		&fnclr; </>
+   <font-weight>	bold </>
+</style>
+
+<style name="icon-tbl">
+   <break-before>	line </>
+   <space-before>	&lead1; </>
+   <space-after>	&lead1; </>
+   <left-indent>	+=&in2; </>
+   <icon-position>	inline </>
+   <icon-type>		table </>
+   <foreground>		&tblclr; </>
+   <text-before>&tbltitl;</>
+   <script>		ebt-reveal stylesheet="table.w" hscroll="true" root="1"
+			title="&tbltitl;" </>
+   <hide>		children </>
+</style>
+
+<style name="in-tbl">
+   <break-before>	line </>
+   <space-before>	&lead3; </>
+   <space-after>	&lead4; </>
+</style>
+
+<style name="ROW">
+   <break-before>	line </>
+   <hrule>		surround </>
+   <vrule>		children </>
+</style>
+
+<style name="ENTRY">
+   <column>		true </>
+   <width>	mult(mult(tableinfo(cals, width, 12), 0.001), var(hsize)) </>
+   <left-indent> +=mult(mult(tableinfo(cals,left-indent,12),0.001),var(hsize)) </>
+   <justification>	tableinfo(cals, justification) </>
+</style>
+
+<style name="ENTRY,PARA">
+   <break-before>	if(eq(cnum(),1),none,line) </>
+   <space-before>	if(eq(cnum(),1),0,2) </>
+   <left-indent>	+=&in1; </>
+</style>
+
+<style name="THEAD,ROW,ENTRY,PARA">
+   <break-before>	if(eq(cnum(),1),none,line) </>
+   <space-after>	&lead2; </>
+   <font-weight>	bold </>
+   <left-indent>	+=&in1; </>
+</style>
+
+<group name="cverbatim">
+   <font-family>        &codfam; </>
+   <font-size>		&rombump; </>
+   <break-before>       line </>
+   <break-after>        line </>
+   <space-before>       &lead1; </>
+   <space-after>        &lead1; </>
+   <left-indent>        +=&in2; </>
+   <right-indent>       -600 </>
+   <justification>      verbatim </>
+</group>
+
+<style name="LITERALLAYOUT" group="cverbatim"> </style>
+<style name="PROGRAMLISTING" group="cverbatim"> </style>
+<style name="SCREEN" group="cverbatim"> </style>
+
+<style name="#ANNOT">
+	<icon-position>	left </>
+</style>
+
+<!-- This style is added to accomodate ODM books only.  NO OTHER BOOKS USE -->
+<style name="FIGURE,INFORMALTABLE">
+   <break-before>	line </>
+   <space-before>	&lead3; </>
+   <space-after>	&lead4; </>
+   <left-indent>	+=&in2; </>
+   <foreground>		&figclr; </>
+</style>
+<!-- End ODM addition -->

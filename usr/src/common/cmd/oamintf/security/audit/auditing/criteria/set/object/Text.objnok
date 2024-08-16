@@ -1,0 +1,25 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/criteria/set/object/Text.objnok	1.1.3.2"
+#ident  "$Header: Text.objnok 2.0 91/07/12 $"
+#	Module Name: Text.objnok
+
+title="Error Setting Audit Criteria"
+
+framemsg=`readfile $INTFBASE/conf.msg`
+lifetime=shortterm
+
+rows=4
+columns=66
+
+text="
+An error occured while trying to set the auditing criteria.
+
+`readfile $OBJAUDERR`"
+
+altslks
+name=CONT
+button=11
+action=CLOSE
+
+name=CANCEL
+button=14
+action=CLEANUP

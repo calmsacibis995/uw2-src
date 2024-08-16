@@ -1,0 +1,299 @@
+#ident\t"@(#)dthelp:Admin.Tools/NetWare_Setup.hlp       1.28"
+^*version^1
+^*title^NetWare Setup
+^:NetWare_Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?NetWare einrichten
+^0^NetWare Setup
+^$10
+NetWare Setup
+
+Verwenden Sie NetWare_Setup  um die Karten
+\d(Internetwork Package Exchange^IPX) IPX und Local Area
+Network (LAN) für die Verwendung von NetWare zu konfigurieren.
+
+Wenn Sie bei der Installation von UnixWare eine LAN-Karte auf Ihrem
+System installiert haben, hat die Softwarte Karte und Adresse
+automatisch festgestellt und IPX (Internetwork Package Exchange)
+konfiguriert.
+
+Wenn Sie bei der Installation von UnixWare keine LAN-Karte installiert
+haben oder wenn Sie weitere Karten hinzufügen möchten, müssen Sie IPX-
+und LAN-Karten mit NetWare_Setup konfigurieren bzw. neu
+konfigurieren.
+
+Hinweis: Sie müssen über die
+\k(Berechtigung zum Zugriff auf NetWare_Setup^dtadmin/user.hlp^Mit Berechtigungen umgehen können) verfügen, um NetWare_Setup
+verwenden zu dürfen. Bevor Sie irgendwelche Änderungen mit
+NetWare_Setup vornehmen, sollten Sie umfassende Kenntnisse über die
+Verwaltung von NetWare und Netzwerken haben.
+
+Um Ihr System für die Verwendung von Netware einzurichten, gehen Sie
+wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie gleich zu Schritt 2. Wenn Sie sich bereits im Netzwerkordner
+befinden, gehen Sie zu Schritt 3.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop). Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tKlicken Sie zweimal auf Netzwerk. Das Fenster "Ordner: Netzwerk"
+  \terscheint.
+
+3.\tDoppelklicken Sie auf NetWare_Setup. Das Fenster
+  \t"NetWare_Setup" wird mit folgenden Optionen angezeigt:
+
+  \to\tServername: - Zeigt den Namen Ihres Systems an.
+
+  \to\tNetWare UNIX Client: - Klicken Sie auf Ein, wenn Sie
+  \t \tdie NetWare UNIX Client (NUC) Dienste aktivieren wollen. Klicken
+  \t \tSie auf Aus, wenn Sie die NetWare UNIX Client (NUC) Dienste
+  \t \tdeaktivieren wollen.
+
+  \to\tIPX-Selbstregistrierung aktivieren: - Diese Option ist
+  \t \teingeschaltet, wenn Sie UnixWare zum ersten mal installieren, um
+  \t \tdie in Ihrem System installierten Netzwerkkarten zu finden. Sie
+  \t \tüberprüft auch Ihre Netzwerkkonfiguration bei jedem neuen Start
+  \t \tdes Systems.
+
+  \to\tIPX Interne LAN-Adresse: - Geben Sie die Adresse (bis zu 8
+  \t \tZeichen) Ihrer internen Netzwerkkarte ein. Dieser Adresse geht
+  \t \tdas Präfix "0x" voraus, z.B. 0x01010348.
+
+  \to\tIPX Maximale Sprünge: - Geben Sie maximale Anzahl Systeme oder   \t
+  \t \tKnoten an, über die Daten übertragen werden sollen.
+
+  \t \tMit dieser Option können Sie den Datenverkehr auf Ihrem Netzwerk
+  \t \tbegrenzen. Beispiel: Wenn Sie als maximale Anzahl Sprünge 5
+  \t \tangeben, wirft das System alle
+  \t \t\d(Datenpakete^Paket) weg, die fünf Sprünge
+  \t \t\tüberschreiten. Wenn Sie kein Netzwerkverwalter sind, gehen wir
+  \t \tdavon aus, daß Sie die Standardeinstellung von 16 Sprüngen
+  \t \tnicht verändern.
+
+  \to\tKonfiguration des logischen LAN: - Klicken Sie dieses Feld an,
+  \t \twenn Sie die Optionen für die LAN-Konfiguration anzeigen und
+  \t \teinstellen möchten (siehe \k(Ihr logisches LAN konfigurieren)).
+
+  \to\tSPX (Sequentieller Paketaustausch): - Klicken Sie auf dieses Feld, 
+  \t \twenn Sie das \d{SPX (Sequentieller Paketaustausch)^SPX} (SPXII) anzeigen
+  \t \tund die Optionen dafür einstellen wollen. Siehe \k(SPXII konfigurieren).
+
+  \to\tPeer-to-Peer-Kommunikation: - Klicken Sie auf Ein, wenn
+  \t \tSie Ihre Anwendungen für andere Benutzer \d(bekanntmachen)
+  \t \tmachen wollen. Siehe \k(Peer-to-Peer-Kommunikation).
+
+  \t \tDie Standardeinstellung für diese Option ist Aus.
+
+  \to\tNetzwerk-Management: - Klicken Sie auf dieses Feld, wenn Sie
+  \t \tNetWare Protokollstapel (NPS) Netzwerk-Management und
+  \t \tNetWork Management Trap Time anzeigen und die Optionen dafür
+  \t \teinstellen wollen. Siehe \k(Ihr Netzwerk verwalten).
+
+  \to\tDiagnosedämon: - Klicken Sie dieses Feld an, wenn Sie den
+  \t \tDiagnosedämon ausführen möchten. Die Standardeinstellung für
+  \t \tdiese Option ist Aus.
+
+  \to\tFerne automatische NUC-Beglaubigung: - Standarmäßig ist diese
+  \t \tOption auf Ein eingestellt, und sie zeigt das
+  \t \t\k(Beglaubigungsfenster^Auto_Authenticator/xauto.hlp^Fenster Autom. Beglaubigung) an, wann immer nötig. Wenn es auf Aus
+  \t \teingestellt ist, müssen Sie nwlogin verwenden, um sich bei
+  \t \tNetWare Servern anzumelden.
+
+  \t \tWeitere Informationen zu Beglaubigung finden Sie unter
+  \t \t\k(NetWare Zugriff^NetWare_Access/NetWare_Access.hlp^NetWare Zugriff).
+
+  \to\tNetWare Einzelanmeldung aktivieren: - Klicken Sie auf Ein,
+  \t \tum es Benutzern zu ermöglichen, sich bei fernen Systemen
+  \t \tanzumelden, ohne eine Anmelde-ID und ein Paßwort angeben zu
+  \t \tmüssen (vorausgesetzt, Anmelde-ID und Paßwort sind für beide
+  \t \tSysteme die gleichen).
+
+4.\tKlicken Sie Aktuelle Einstellungen speichern an, um die Änderungen
+  \tzu speichern.
+
+  \tHinweis: Wenn Sie zu den vorherigen Einstellungen zurückkehren
+  \tmöchten, klicken Sie Vorherige Einstellungen wiederherstellen
+  \tan, wenn Sie die Werte erhalten möchten, die bei der Installation
+  \tvon UnixWare eingestellt waren, klicken Sie Standard
+  \twiederherstellen an.
+
+  \tWenn Sie sich dazu entschließen, keine Änderungen vorzunehmen,
+  \tsollten Sie nicht Aktuelle Einstellungen speichern, sondern
+  \tBeenden anklicken.
+
+
+^1^Ihr logisches LAN konfigurieren
+^$20
+Ihr logisches LAN konfigurieren
+
+Wenn Sie im Fenster "NetWare_Setup" die Option Konfiguration des
+logischen LAN auswählen, erscheint das Fenster "Konfiguration des
+logischen LAN". In diesem Fenster wird der Status von logischen
+lokalen Netzwerken (numeriert von 1 bis 8) angezeigt.  Wenn ein
+lokales Netzwerk im Moment nicht aktiv aber für die Verwendung
+verfügbar ist, wird das Feld mit einem "X" markiert.
+
+Um ein logisches LAN zu konfigurieren, gehen Sie wie folgt vor:
+
+1.\tGehen Sie zum Feld IPX Interne LAN-Adresse, und geben Sie
+  \tdie Adresse des gewünschten LAN ein.
+
+2.\tKlicken Sie die LAN-Optionen an (das rechteckige Feld neben dem
+  \tFeld Konfiguration des logischen LAN). Ein Aufklappfenster
+  \terscheint mit einer Liste von logischen LANs.
+
+3.\tKlicken Sie das gewünschte lokale Netzwerk an. Für das ausgewählte
+  \tlokale Netzwerk erscheint ein Aufklappfenster mit folgenden
+  \tFeldern:
+
+  \to\tIPX LAN-Gerät: - Klicken Sie das rechteckige Kästchen an, um die
+  \t \tListe der verfügbaren Geräte aufzurufen, und klicken Sie dann
+  \t \tdas gewünschte Gerät an (z. B. /dev/wd_0).
+
+  \to\tIPX LAN-Frametyp: - Klicken Sie das rechteckige Kästchen an,
+  \t \tum die Liste mit den verfügbaren Frametypen aufzurufen, und
+  \t \tklicken Sie dann den gewünschten Typ an (z. B. Ethernet II).
+
+  \to\tIPX Externe LAN-Adresse: - Geben Sie die Adresse ein, die Ihnen
+  \t \tvon Ihrem Netzwerkverwalter zugewiesen wurde.
+
+  \to\tLAN-Geschwindigkeit (KB/s): - Geben Sie die gewünschte
+  \t \tÜbertragungsgeschwindigkeit in Kilobyte ein. Die
+  \t \tStandardeinstellung für dieses Feld ist 10000.
+
+4.\tKlicken Sie Ok an, um diese Einstellungen anzuwenden.
+
+5.\tWiederholen Sie die Schritte 2 bis 4 für jedes logische LAN, das
+  \tSie konfigurieren möchten.
+
+6.\t Klicken Sie auf Schließen, um das Fenster zu beenden und Ihre
+  \t Änderungen zu speichern.
+
+^2^Fenster Logische LAN-Konfiguration für <LAN>
+^$30
+Fenster Logische LAN-Konfiguration für <LAN>
+
+In diesem Fenster gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tIPX LAN-Gerät: - Klicken Sie das rechteckige Kästchen an, um die
+  \t \tListe der verfügbaren Geräte aufzurufen, und klicken Sie dann
+  \t \tdas gewünschte Gerät an (z. B. /dev/wd_0).
+
+  \to\tIPX LAN-Frametyp: - Klicken Sie das rechteckige Kästchen an,
+  \t \tum die Liste mit den verfügbaren Frametypen aufzurufen, und
+  \t \tklicken Sie dann den gewünschten Typ an (z. B. Ethernet II).
+
+  \to\tIPX Externe LAN-Adresse: - Geben Sie für dieses LAN
+  \t \teine eindeutige Adresse mit bis zu zehn Zeichen an (z. B.
+  \t \t0x89413000).
+
+  \to\tLAN-Geschwindigkeit (KB/s): - Geben Sie die gewünschte
+  \t \tÜbertragungsgeschwindigkeit in Kilobyte ein. Die
+  \t \tStandardeinstellung für dieses Feld ist 10000.
+
+2.\tKlicken Sie Ok an, um die Einstellungen anzuwenden und das Fenster
+  \tzu verlassen.
+
+Siehe auch:\k(Ihr logisches LAN konfigurieren)
+
+^1^SPXII konfigurieren
+^$40
+SPXII konfigurieren
+
+Wenn Sie für die Option
+\d{SPX (Sequentieller Paketaustausch)^SPX} im Fenster
+"NetWare Setup" "Ein" auswählen, erscheint das Fenster "In Reihenfolge
+stehendes Paket eXchange".
+
+Um die maximale Anzahl SPXII-Verbindungen und
+\d(Sockets^Socket) zu konfigurieren und um das NVT (NetWare
+Virtual Terminal) für ferne Verwendung einzuschalten, gehen Sie wie
+folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tSPX Ferne Netzwerkanmeldung (NVT): - Klicken Sie Ein an,
+  \t \twenn Sie eine ferne NVT-Anmeldung gestatten möchten, klicken
+  \t \tSie Aus an, wenn Sie keine ferne NVT-Anmeldung gestatten
+  \t \tmöchten.
+
+  \to\tMaximale SPX-Verbindungen: - Geben Sie die maximale Anzahl
+  \t \tVerbindungen ein, die Sie für SPXII gestatten möchten.
+
+  \to\tMaximale SPX-Sockets: - Geben Sie die maximale Anzahl Sockets
+  \t \tein, die SPXII gleichzeitig verwenden kann, um eingehende
+  \t \tVerbindungsanforderungen von ihren Endpunkten zu überwachen.
+
+2.\tKlicken Sie Ok an, um die Einstellungen anzuwenden und das Fenster
+  \tzu verlassen.
+
+  \tHinweis: Wenn Sie das Fenster verlassen möchten, ohne Änderungen
+  \tvorzunehmen, klicken Sie Abbrechen an.
+
+^1^Peer-to-Peer-Kommunikation
+^$50
+Peer-to-Peer-Kommunikation
+
+Wenn Sie für die Option "Peer-to-Peer-Kommunikation" im Fenster
+"NetWare Setup" "Ein" auswählen, erscheint das Fenster
+"Bekanntmachungsprotokoll des Dienstes".
+
+Um die Anzahl der Dienste für das \d(bekanntmachen) festzulegen,
+gehen Sie wie folgt vor:
+
+1.\tGeben Sie die maximale Anzahl von Servern im Textfeld ein, die das
+  \tBekanntmachungsprotokoll für Dienste
+  \tanerkennen soll.
+
+  \tDie Standardeinstellung für dieses Feld ist 3000.
+
+2.\tKlicken Sie Ok an, um die Einstellungen anzuwenden und das Fenster
+  \tzu verlassen.
+
+  \tHinweis: Wenn Sie das Fenster verlassen möchten, ohne Änderungen
+  \tvorzunehmen, klicken Sie Abbrechen an.
+
+^1^Ihr Netzwerk verwalten
+^$60
+Ihr Netzwerk verwalten
+
+Wenn Sie im Fenster "NetWare_Setup" für die Option
+"Netzwerk-Management" die Einstellung Ein gewählt haben, erscheint
+das Fenster "Netzwerk-Managemant". Das Netzwerk-Managemant stellt
+erfahrenen Netzwerkverwaltern verschiedene Arten der
+Netzwerküberwachung zur Verfügung.
+
+Standardmäßig sind die Optionen in diesem Fenster nicht aktiv.
+
+Hinweis: Für die Verwendung dieser Werkzeuge zur Netzwerkverwaltung
+benötigen Sie eine Netzwerk-Managementkonsole (z. B. Netview oder Open
+View).
+
+Um Netzwerk-Managementdienste einzuschalten, gehen Sie wie folgt vor:
+
+1.\tLegen Sie folgende Optionen fest:
+
+  \to\tNWUMPS-Netzwerk-Management: - Klicken Sie Ein an, um die
+  \t \tÜberwachung von NetWare for UNIX Management Protocol Stack zu
+  \t \taktivieren.
+
+  \to\tNetzwerk-Management Abfangzeit: - Geben Sie einen Wert für die
+  \t \tAbfangzeit ein.
+
+  \t \tHinweis: Die Abfangzeit gibt an, wie oft das System
+  \t \tNetzwerkereignisse und Warnsignale an die
+  \t \tNetzwerk-Managementkonsole sendet.
+
+  \t \tDer Standardwert für dieses Feld ist 5 Sekunden.
+
+2.\tKlicken Sie Ok an, um die Einstellungen anzuwenden und das Fenster
+  \tzu verlassen.
+
+  \tHinweis: Wenn Sie das Fenster verlassen möchten, ohne Änderungen
+  \tvorzunehmen, klicken Sie Abbrechen an.

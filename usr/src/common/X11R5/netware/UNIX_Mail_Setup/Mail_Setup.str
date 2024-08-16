@@ -1,0 +1,54 @@
+UNIX Mail Setup
+Mail Setup
+Add a \'Date:\' Line?
+No
+Yes
+If a message which originated on the local machine does not have an RFC822 \'Date:\' header line, and this variable is set to Yes, an RFC822 \'Date:\' header line will be added.
+Add a \'From:\' Line?
+If a message which originated on the local machine does not have an RFC822 \'From:\' header line and this variable is set to Yes, an RFC822 \'From:\' header line will be added.
+Add a \'Received:\' Line?
+If a message is received which has no \'Received:\' header line and this variable is set to Yes, a \'Received:\' header line will be added.
+
+
+Cluster Name:
+To identify a closely coupled set of systems by one name to all other systems, set this field to the cluster name.  This string is used in place of the local system nodename returned by uname(2) to process mail messages.
+Mailsurr Mailcnfg Var's:
+A comma-separated list of mail configuration variables to be passed through to mailsurr commands as environment variables.
+Debug Level:
+This variable takes the same values as the \-x command\-line option of mail.  This provides a way of setting a system-wide debug/tracing level.  When debugging, this is typically set to 2, which provides minimal diagnostics useful for debugging mail and rmail failures.  The value of the \-x mail command-line option will override any value entered here.
+Delete Empty Mail Files?
+When this variable is set to Default, mail and rmail will delete empty mail files if the file permissions are 0660, and will retain them otherwise.  If you select Yes, empty mail files will always be deleted regardless of file permissions.  If you select No, empty mail files will never be deleted.
+Domain Name:
+This string is used to override the system domain name with a domain name to be used for mail only.  This domain name will be used as the system domain name for mail purposes.
+Failsafe Forwarding System:
+In the event that the /var/mail directory is accessed via NFS, and it is not accessible when mail is delivered, the mail will be forwarded to the failsafe forwarding system.  This variable should be set to the name of the system from which the /var/mail directory is mounted.  If you are not mounting the /var/mail directory via NFS, leave this blank.
+Compile Mailsurr File?
+Normally, mail will create a compiled version of the routing configuration file to reduce the initialization time for future invocations of mail whenever the configuration file changes.  If you select No, mail will ignore the compiled file.
+\'Remote From:\' String:
+This string may be set if you want to use a slightly different string in the ...remote from... information on the UNIX postmark header line than either the cluster name or system name.
+Smarter Host:
+This string may be set to the name of a mail system that has better alias and routing information available than the local system.  Any mail that the local system cannot route will then be sent to the smarter host.
+Mailsurr Env Var's:
+A comma-separated list of environment variables to be passed through to mailsurr commands.  This is normally left blank.
+
+
+
+
+Route All Msgs to Smarter Host?
+If Yes is selected, all non-local messages will be routed through the smarter host.
+Log Messages?
+If Yes is selected, a log entry for each mail message that passes through the local system will be placed in either /var/mail/:log/<day-of-week> or /var/mail/:errors/<day-of-week>.
+Add a \'Message-ID:\' Line?
+If a message which originated on the local machine does not have an RFC822 \'Message-ID:\' header line and Yes is selected, a \'Message-ID:\' header line will be added.
+Convert to 7-Bit Headers?
+If Yes is selected, mail will convert any 8-bit headers into 7-bit format.  Since 8-bit characters are only allowed in the comment portions of \'To:\', \'Cc:\' and \'Bcc:\' header lines, any such header lines found with 8-bit characters in non-comment sections will be changed into \'Illegal-To:\', \'Illegal-Cc:\', and \'Illegal-Bcc:\' header lines.
+Convert to 7-Bit MIME?
+If Yes is selected, when a non-MIME (Multi-Purpose Internet Message Extensions) mail message is converted to the MIME format, an 8-bit message body will be converted to 7-bit format using the quoted-printable or base64 transfer encodings.
+Convert non-MIME to MIME?
+If Yes is selected, any message received which is not in MIME format will be converted to MIME format.
+Add a \'To:\' Line?
+If Yes is selected, any message which is sent by a user on the local machine without an RFC822 \'To:\' header line will have one added.
+Accept Mail Addressed to the Domain?
+If Yes is selected, messages addressed to the local domain with no system name will be regarded as being addressed to the local system.
+Route local messages through MHS?
+If Yes is selected, mail addresses to a user supposedly on this system that does not exist will be routed through the MHS gateway provided that it has been configured.  If the MHS gateway has not been configured, the mail will be routed to the smarter host if that has been configured, else the mail will be bounced.

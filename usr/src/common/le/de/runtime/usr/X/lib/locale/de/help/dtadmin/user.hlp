@@ -1,0 +1,625 @@
+#ident\t"@(#)dthelp:Admin.Tools/user.hlp        1.25"
+^*version^1
+^*title^Benutzer-Setup
+^:Benutzer-Setup
+^*width^70
+^+DesktopMgr/help.defs
+^?Hilfe für das Symbol Benutzer-Setup
+^0^Benutzer-Setup
+^$10
+Benutzer-Setup
+
+Verwenden Sie "Benutzer-Setup", um \k(Konten^^Kontotypen) für die Benutzeranmeldung
+auf Ihrem System hinzuzufügen, Benutzerkonten von Ihrem System zu
+entfernen und \k(Berechtigungen^^Mit Berechtigungen umgehen können) für die Konten von Benutzern und
+\k(Gruppen^^Benutzergruppen) zu zuweisen und zu ändern.
+
+Benutzer-Setup bietet Ihnen folgende Möglichkeiten:
+
+\to\t\k(Benutzer und Gruppen anzeigen^^Benutzer und Gruppen anzeigen)
+\to\t\k(Neue Benutzer für Ihr System hinzufügen^^Neuen Benutzer hinzufügen)
+\to\t\k(Neue Gruppen für Ihr System hinzufügen^^Neue Gruppe hinzufügen)
+\to\t\k(Benutzer löschen^^Benutzer löschen)
+\to\t\k(Gruppen löschen^^Gruppe löschen)
+\to\t\k(Setup-Berechtigungen zuweisen^^Setup-Berechtigungen zuweisen)
+\to\t\k(Benutzereigenschaften ändern^^Benutzereigenschaften ändern)
+
+Hinweis: Bevor Sie neue Benutzer auf Ihrem System hinzufügen, können
+Sie zusätzliche Informationen unter \k(Mehrere Benutzer verwalten) nachlesen.
+
+Siehe auch:
+\s(Benutzerkonten erstellen und verwalten^dhelp as sysag "Creating and Managing User Accounts" || helpLinkErr)
+
+^1^Benutzer und Gruppen anzeigen
+^$20
+Benutzer und Gruppen anzeigen
+
+Um Benutzer und Gruppen anzuzeigen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop).  Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf Benutzer-Setup. Standardmäßig erscheint das
+  \tFenster "Benutzer-Setup: Benutzerkonten", vorausgesetzt Sie haben
+  \tdie Anzeige nicht vorher geändert. Dieses Fenster zeigt alle
+  \tBenutzeranmeldekonten auf Ihrem System an.
+
+3.\tWechseln der Anzeige: Klicken Sie Anzeigen=>Reserviert an, um
+  \treservierte Anmeldekonten zu sehen, oder klicken Sie
+  \tAnzeigen=>Gruppen an, um Benutzergruppen anzuzeigen. (Um zur
+  \tAnzeige der Benutzerkonten zurückzukehren, reicht es aus,
+  \tAnzeigen=>Benutzer anzuklicken).
+
+
+^1^Neuen Benutzer hinzufügen
+^$30
+Neuen Benutzer hinzufügen
+
+Hinweis: Sie müssen \k(Systemeigentümerberechtigungen^^Mit Berechtigungen umgehen können) haben, damit Sie
+Benutzer hinzufügen können.
+
+Um Ihrem System einen neuen Benutzer hinzuzufügen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop).  Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf Benutzer-Setup. Das Fenster "Benutzer-Setup"
+  \terscheint. (Entsprechend der zuletzt ausgewählten Anzeige zeigt
+  \tdas Fenster Benutzerkonten, Gruppen oder reservierte Konten an.)
+
+3.\tKlicken Sie Konto=>Neu an. Der Fenster "Benutzer-Setup: Neues
+  \tBenutzerkonto hinzufügen" erscheint mit folgenden Feldern:
+
+  \to\tAnmelde-ID: - Geben Sie den Namen ein, unter dem sich der
+  \t \tBenutzer beim System anmelden wird. Der Name darf höchstens 14
+  \t \tZeichen umfassen. Sie können den entsprechenden Benutzer fragen,
+  \t \tob er eine bestimmte Anmelde-ID haben möchte.
+
+  \to\tTyp: - Klicken Sie entweder Desktop oder Nicht Desktop an.
+  \t \tDesktop bewirkt, daß die graphische Benutzerschnittstelle (GUI)
+  \t \tgestartet wird, wenn sich der Benutzer anmeldet. Wenn Sie Nicht
+  \t \tDesktop anklicken, erhält der Benutzer die traditionelle
+  \t \tEingabeaufforderung der UNIX System-Shell.
+
+  \to\tBenutzerinfo. via NIS verwalten - Dieses Feld erscheint nur,
+  \t \twenn Ihr System für \k(NIS^dtadmin/inet.hlp^Auf NIS zugreifen) (NIS = Network Information Service)
+  \t \tkonfiguriert ist.
+
+  \t \tKlicken Sie dieses Feld an, wenn der Benutzer ein NIS-Benutzer
+  \t \tist. Die Einstellungen in Benutzer-Setup werden gelöscht und
+  \t \tfolgende Felder werden abgedunkelt: Stammordner, Shell,
+  \t \tBenutzer-ID, Gruppe und Kommentare.
+
+  \t \tDas System entnimmt die Einträge für diese Felder automatisch
+  \t \tder NIS-Datenbank.
+
+  \to\tKommentar: - Sie können den Namen des Anmeldekontos mit einem
+  \t \tKommentar versehen. Beispiel: Der Anmelde-ID hps könnten Sie den
+  \t \tKommentar "Hans Peter Schmitt, Systementwickler" hinzufügen.
+
+  \to\tWeitere Optionen anzeigen: - Klicken Sie dieses Feld an, um
+  \t \tfolgende zusätzliche Felder anzuzeigen:
+
+  \t \t-\tStammordner: - Geben Sie den Namen des Stammverzeichnisses an.
+  \t \t \tWenn Sie dieses Feld nicht ändern, weist das System
+  \t \t \tautomatisch das Verzeichnis /home/Benutzer zu, dabei steht
+  \t \t \tBenutzer für die Anmelde-ID des Benutzers.
+
+  \t \t-\tX-Terminal Name: - Diese Option ist nicht verfügbar
+  \t \t \t(abgedunkelt), wenn Sie einen Benutzer einrichten, der keinen
+  \t \t \tDesktop verwendet.
+
+  \t \t \tWenn sich der Benutzer von einer anderen Workstation oder
+  \t \t \teinem X-Terminal anmeldet, das über ein Netzwerk verbunden
+  \t \t \tist, geben Sie den Namen des X-Terminals in dieses Feld ein.
+
+  \t \t \tHinweis: Wenn Sie den Namen des X-Terminals nicht in dieses
+  \t \t \tFeld eintragen, wird der Benutzer jedes Mal, wenn er sich beim
+  \t \t \tDesktop anmeldet, zur Eingabe des Namens aufgefordert.
+
+  \t \t-\tShell: - Geben Sie den Typ des Befehlszeilen-Interpreters
+  \t \t \tder UNIX System-Shell an, z. B.  sh (shell) oder
+  \t \t \tksh (kshell). Wenn Sie die Shell nicht kennen, brauchen Sie
+  \t \t \tdiesen Eintrag nicht zu ändern.
+
+  \t \t-\tBenutzer-ID: - Geben Sie eine Benutzeridentifizierungsnummer
+  \t \t \t(UID) ein. Sie können eine beliebige ganze Zahl über 99
+  \t \t \tverwenden (UID 0 - 99 sind reservierten Konten zugewiesen).
+  \t \t \tWenn Sie keine UID zuweisen, setzt das System standardmäßig
+  \t \t \tdie (eindeutige) Zahl ein, die nach der höchsten aktuell
+  \t \t \tzugewiesenen Zahl verfügbar ist. Beispiel: Wenn Sie UIDs von
+  \t \t \t100 bis 105 zugewiesen haben, verwendet das System
+  \t \t \tstandardmäßig 106 für die nächste UID.
+
+  \t \t \tFalls Sie vorhaben, Benutzern mehrere Rechner zuzuweisen,
+  \t \t \tso sollten Sie ihnen auf jedem System dieselbe UID-Nummer
+  \t \t \tgeben. Dies ist für bestimmte Netzwerkpakete von Vorteil.
+
+  \t \t \tHinweis: Aus Sicherheitsgründen läßt das System nicht zu, daß
+  \t \t \tSie eine UID auswählen, die bereits in Benutzung war und erst
+  \t \t \tkürzlich gelöscht wurde. Die UID muß erst durch eine
+  \t \t \tsogenannte "Alterungsperiode" gehen, bevor sie wiederverwendet
+  \t \t \twerden kann. Um diesen Alterungsprozeß zu übersteuern,
+  \t \t \tsiehe \k(Benutzeridentifizierungsnummern erneut verwenden).
+
+  \t \to\tGroupen: - Wählen Sie die Gruppe, der sie den Benutzer
+  \t \t \tzuweisen möchten. Es kann sinnvoll sein, Benutzern, die
+  \t \t \tzusammenarbeiten, Gruppenberechtigungen zuzuweisen (siehe
+  \t \t \t\k(Benutzergruppen)).
+
+  \t \t-\tLändereinstellungen: - Wählen Sie die erforderlichen
+  \t \t \tLändereinstellungen (z. B. Amerikanisches Englisch,
+  \t \t \tFranzösisch, Deutsch usw.).
+
+  \t \t \tHinweis: Anders als die Option Ländereinstellungen im
+\t \t \tOrdner \k(Präferenzen^DesktopMgr/locpref.hlp^Ländereinstellung ändern), die Änderungen sofort umsetzt, werden
+\t \t \tÄnderungen der Option Ländereinstellungen in Benutzer-Setup erst
+\t \t \twirksam, wenn sich der Benutzer anmeldet. Beispiel: Wenn Sie die
+\t \t \tLändereinstellungen eines Benutzers ändern, während dieser auf
+\t \t \tdem System arbeitet, wird der Benutzer die Änderungen erst
+\t \t \twahrnehmen, wenn er sich beim System abmeldet und wieder
+\t \t \tanmeldet.
+
+  \t \t \tWeiterhin können Sie über das Benutzer-Setup keine Änderungen
+  \t \t \tn Ihrer eigenen Ländereinstellung vornehmen, wenn Sie der
+  \t \t \tSystemeigentümer sind. Machen Sie diese Änderungen
+  \t \t \tstattdessen in den\k(Präferenzen^DesktopMgr/locpref.hlp^Ländereinstellung ändern).
+
+4.\tKlicken Sie Hinzufügen an. In einem Aufklappfenster werden Sie
+  \taufgefordert, die Operation zu bestätigen.
+
+5.\tKlicken Sie Ja an. Das System fügt im Fenster "Benutzer-Setup" ein
+  \tSymbol für das neue Konto hinzu.
+
+Siehe auch:
+\s(Benutzerkonten erstellen und verwalten^dhelp as sysag "Creating and Managing User Accounts" "" || helpLinkErr)
+
+^2^Mehrere Benutzer verwalten
+^$40
+Mehrere Benutzer verwalten
+
+Nachstehend einige wichtige Informationen über die Verwaltung mehrerer
+Benutzer auf Ihrem System:
+
+\to\tJeder Benutzer hat eigene \k(Berechtigungen^^Setup-Berechtigungen zuweisen) für den Zugriff auf die
+\t \tvon ihm erstellten Dateien. Er kann seine Dateien schützen oder
+\t \tzur gemeinsamen Benutzung zur Verfügung stellen.
+
+\to\tDer Eigentümer hat die Berechtigung, alle grundlegenden
+\t \tSetup-Funktionen auszuführen, die auf dem Desktop verfügbar sind.
+
+\to\tDer Eigentümer kann Benutzern Systemeigentümerberechtigungen
+\t \tübertragen oder die Berechtigung zuteilen, bestimmte
+\t \tSetup-Verfahren durchzuführen.
+
+Siehe auch:
+\s(Zugriff auf System und Daten kontrollieren^dhelp as sysag "Creating and Managing User Accounts" "Controlling Access to the System and Data" || helpLinkErr)
+
+^2^Kontotypen
+^$50
+Kontotypen
+
+Der Begriff "Konto" bezieht sich auf eine Benutzeranmeldung.
+Anmeldekonten auf einem System lassen sich wie folgt klassifizieren:
+
+\to\tReservierte Konten (auch Systemkonten genannt) - Für spezielle
+\t \tTasks der Systemverwaltung. Beispiel: \d(root) ist ein
+\t \treserviertes Anmeldekonto, das für die Kontrolle des ganzen
+\t \tSystems verwendet wird. Bei manchen Konten kann man sich
+\t \treservierten Konten kann man sich nicht direkt anmelden. Die
+\t \tAnmeldung nuucp z. B. wird automatisch verwendet, wenn ferne
+\t \tDateien über ein Netzwerk übertragen werden.
+
+\to\tBenutzeranmeldekonten - Für die "regulären" Benutzer auf Ihrem
+\t \tSystem.
+
+^2^Benutzeridentifizierungsnummern erneut verwenden
+^$55
+Benutzeridentifizierungsnummern erneut verwenden
+
+Um eine Benutzeridentifizierungsnummer (UID) erneut zu verwenden,
+die sich noch im "Alterungsprozess" befindet (d.h. die UID war noch
+vor kurzem in Benutzung, und das System hält sie aus
+Sicherheitsgründen), müssen Sie als Root-Benutzer von der Befehlszeile
+aus folgendes durchführen:
+
+1.\tTyp:
+
+  \tcd /etc/security/ia
+
+2.\tBearbeiten Sie die ageduid-Datei, indem Sie den UID-Eintrag
+  \tentfernen.
+
+  \tHinweis: Dies ist eine Nur-Lesen-Datei. Wenn Sie diese Datei mit
+  \tHilfe von "vi" bearbeiten, reicht es nicht, ":wq" zum Schreiben
+  \tund Beenden zu verwenden. Zuerst müssen Sie die Datei mit einem
+  \tAusrufezeichen schreiben (:w!) und dann .q eingeben, um zu
+  \tbeenden. Weitere Informationen über die Verwendung von vi finden
+  \tSie unter vi(1M) in der Command Reference.
+
+^1^Neue Gruppe hinzufügen
+^$60
+Neue Gruppe hinzufügen
+
+Hinweis: Sie müssen \k(Systemeigentümerberechtigungen^^Mit Berechtigungen umgehen können) haben, um Gruppen
+hinzuzufügen zu können
+
+Um Ihrem System eine neue Gruppe hinzuzufügen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop).  Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf Benutzer-Setup. Das Fenster "Benutzer-Setup"
+  \terscheint. (Entsprechend der zuletzt ausgewählten Anzeige zeigt
+  \tdas Fenster Benutzerkonten, Gruppen oder reservierte Konten an.)
+
+3.\tKlicken Sie Gruppe=>Neu an. Das Fenster "Benutzer-Setup: Neue
+  \tGruppe hinzufügen" erscheint mit folgenden Feldern:
+
+  \to\tGruppenname: - Geben Sie den Namen der neuen Gruppe ein.
+
+  \to\tGruppeninfo. via NIS verwalten - Erscheint nur, wenn IhrSystem
+  \t \tfür \k(NIS^dtadmin/inet.hlp^Auf NIS zugreifen) (NIS = Network Information Service) konfiguriert ist.
+
+  \t \tKlicken Sie dieses Feld an, wenn die Gruppe eine NIS-Gruppe ist.
+  \t \tDie Einstellungen in Benutzer-Setup werden gelöscht, und das
+  \t \tFeld für die Gruppen-ID wird abgedunkelt.
+
+  \t \tDas System entnimmt den Wert für die Gruppen-ID automatisch der
+  \t \tNIS-Datenbank.
+
+  \to\tGruppen-ID-Nummer: - Geben Sie die Gruppen-ID-Nummer ein. Wenn
+  \t \tSie keine Nummer zuweisen, setzt das System standardmäßig die
+  \t \tnächste verfügbare Gruppennummer ein.
+
+4.\tKlicken Sie Hinzufügen an. Ein Bestätigungsfenster erscheint.
+
+5.\tKlicken Sie Ja an, um die Gruppe hinzufügen (oder Nein, wenn Sie
+  \tdie Gruppe doch nicht hinzufügen möchten).
+
+^2^Benutzergruppen
+^$70
+Benutzergruppen
+
+Sie können mehrere Benutzer einer Gruppe zuweisen. Dies gestattet
+Ihnen, \k(Zugriffsberechtigungen^^Mit Berechtigungen umgehen können) einzurichten, so daß bestimmte Dateien,
+Ordner und Anwendungen nur für eine bestimmte Gruppe von Benutzern
+verfügbar sind.
+
+Beispiel: Drei Personen arbeiten zusammen an einem Projekt. Sie können
+diese Personen einer Gruppe mit dem Namen "Projekt 1" zuweisen. Wenn
+diese Personen projektbezogene Dateien erstellen, können sie
+Gruppenberechtigungen festlegen, damit die Dateien nur für Mitglieder
+der Gruppe "Projekt1" verfügbar sind.
+
+Wie Sie eine neue Gruppe auf dem System hinzufügen, erfahren Sie unter
+\k(Neue Gruppe hinzufügen).
+
+Siehe auch:
+\s(Benutzerkonten erstellen und verwalten^dhelp as sysag "Creating and Managing User Accounts" "" || helpLinkErr)
+\s(Set-UID und Set-GID^dhelp as sysag "File Protection" "Set-UID and Set-GID" || helpLinkErr)
+
+^1^Benutzer löschen
+^$80
+Benutzer löschen
+
+Hinweis: Sie müssen \k(Systemeigentümerberechtigungen^^Mit Berechtigungen umgehen können) haben, um Benutzer
+löschen zu können.
+
+Um einen Benutzer auf Ihrem System zu löschen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop).  Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf Benutzer-Setup. Das Fenster "Benutzer-Setup"
+  \terscheint. (Entsprechend der zuletzt ausgewählten Anzeige zeigt
+  \tdas Fenster Benutzerkonten, Gruppen oder reservierte Konten an.)
+
+3.\tKlicken Sie Anzeigen=>Benutzer an.
+
+4.\tKlicken Sie das Symbol des Benutzers an, den Sie löschen möchten
+  \t(wenn die Benutzerkonten nicht angezeigt werden, wählen Sie
+  \tAnzeigen=>Benutzer aus).
+
+5.\tKlicken Sie Konto=>Löschen an. Ein Bestätigungsfenster erscheint.
+
+6.\tKlicken Sie Dateien des Benutzers entfernen an, um alle Dateien
+  \tim Stammverzeichnis des Benutzer zu löschen, oder klicken Sie
+  \tDateien des Benutzers sichern an, um eine Sicherungskopie vom
+  \tStammverzeichnis des Benutzers zu erstellen, bevor Sie das Konto
+  \tlöschen. Wenn Sie Dateien des Benutzers sichern wählen, fordert
+  \tdas System Sie auf, einen Datenträger (z. B. Diskette oder
+  \tMagnetband) in ein Laufwerk einzulegen.
+
+7.\tKlicken Sie Ja an, um das Konto des Benutzers zu löschen, klicken
+  \tSie Nein an, wenn Sie sich anders entschieden haben oder wenn
+  \tIhnen ein Fehler unterlaufen ist. Das System entfernt das Symbol
+  \tfür das Anmeldekonto des Benutzers aus dem Fenster
+  \t"Benutzer-Setup".
+
+Siehe auch:
+\k(Benutzeridentifizierungsnummern erneut verwenden)
+
+^1^Gruppe löschen
+^$85
+Gruppe löschen
+
+Hinweis: Sie müssen \k(Systemeigentümerberechtigungen^^Mit Berechtigungen umgehen können) haben, um Gruppen
+löschen zu können.
+
+Um eine Gruppe auf Ihrem System zu löschen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop).  Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf Benutzer-Setup. Das Fenster "Benutzer-Setup"
+  \terscheint. (Entsprechend der zuletzt ausgewählten Anzeige zeigt
+  \tdas Fenster Benutzerkonten, Gruppen oder reservierte Konten an.)
+
+3.\tKlicken Sie Anzeigen=>Gruppen an.
+
+4.\tKlicken Sie das Symbol der Gruppe an, die Sie löschen möchten 
+\t(wenn die Gruppenkonten nicht angezeigt werden, wählen Sie  
+\tAnzeigen=>Gruppen aus).
+
+5.\tKlicken Sie Gruppe=>Löschen an. Ein Bestätigungsfenster erscheint.
+
+6.\tKlicken Sie Ja an, um die Gruppe löschen, klicken Sie Nein
+  \tan, wenn Sie sich anders entschieden haben oder wenn Ihnen ein
+  \tFehler unterlaufen ist. Das System entfernt das Symbol der Gruppe
+  \taus dem Fenster "Benutzer-Setup".
+
+^1^Setup-Berechtigungen zuweisen
+^$90
+Setup-Berechtigungen zuweisen
+
+Hinweis: Sie müssen \k(Systemeigentümerberechtigungen^^Mit Berechtigungen umgehen können) haben, um
+Setup-Berechtigungen zuweisen zu können.
+
+Bevor Sie das folgende Verfahren für die Zuweisung von
+Setup-Berechtigungen durchgehen, möchten Sie möglicherweise
+\k(Mit Berechtigungen umgehen können) anzeigen.
+
+Um einem einzelnen Benutzeranmeldekonto Setup-Berechtigungen
+zuzuweisen, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop).  Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf Benutzer-Setup. Das Fenster "Benutzer-Setup"
+  \terscheint. (Entsprechend der zuletzt ausgewählten Anzeige zeigt
+  \tdas Fenster Benutzerkonten, Gruppen oder reservierte Konten an.)
+
+3.\tKlicken Sie Anzeigen=>Benutzer an.
+
+4.\tKlicken Sie das Symbol des Benutzers an, dem Sie
+  \tSetup-Berechtigungen zuweisen möchten.
+
+5.\tKlicken Sie Aktionen=>Berechtigungen an. Das Fenster
+  \t"Benutzer-Setup: Benutzerberechtigungen" erscheint.
+
+6.\tEigentümerberechtigungen weisen Sie wie folgt zu:
+
+  \to\tAusgewählter Benutzer ist Systemeigentümer - Klicken Sie dieses
+  \t \tFeld an, wenn Sie alle Systemeigentümerberechtigungen zuweisen
+  \t \tmöchten.
+
+  \to\tAusgewählter Benutzer darf - Klicken Sie die gewünschten Felder
+  \t \tunter dieser Überschrift an, wenn Sie die Berechtigungen des
+  \t \tBenutzers auf bestimmte Funktionen des System-Setup beschränken
+  \t \tmöchten.
+
+7.\tKlicken Sie OK an, um dem Benutzer die Kontoberechtigungen zuzuweisen.
+
+Siehe auch:
+\s(Das Eigentümerattribut^dhelp as sysag "File Protection" "The Owner Attribute" || helpLinkErr)
+\s(Das Gruppenattribut^dhelp as sysag "File Protection" "The Group Attribute" || helpLinkErr)
+
+^2^Mit Berechtigungen umgehen können
+^$100
+Mit Berechtigungen umgehen können
+
+Wenn Sie den Desktop auf Ihrem Computer installieren, fordert Sie das
+System auf, ein Benutzerkonto hinzuzufügen, das als "Systemeigentümer"
+ausgewiesen ist. Der Eigentümer hat das Privileg, administrative Tasks
+auszuführen, die Sie nicht für jeden Benutzer verfügbar machen
+möchten. Beispiel: Wenn Sie der Eigentümer sind, möchten Sie
+möglicherweise nicht, daß jeder Systembenutzer andere Benutzer
+hinzufügen oder die Konfiguration Ihrer Drucker oder Netzwerke ändern
+kann.
+
+Als Eigentümer können Sie beliebigen anderen Benutzern
+Eigentümerberechtigungen zuweisen (siehe \k(Setup-Berechtigungen zuweisen)). Sie
+können entweder alle Eigentümerberechtigungen oder Berechtigungen für
+bestimmte Tasks zuweisen.
+
+Volle Eigentümerberechtigungen gestatten Ihnen, alle nachstehend
+beschriebenen Tasks auszuführen, Benutzer hinzuzufügen und zu löschen
+sowie Task-Berechtigungen zuzuweisen. Spezifische
+Eigentümerberechtigungen sind:
+
+\to\tSystem herunterfahren - Gestattet Ihnen, das Betriebssystem mit
+\t \tder Funktion \k(Herunterfahren^DesktopMgr/shutdown.hlp^Ihr System herunterfahren) abzuschalten.
+
+\t \tDiese Operation wird eingeschränkt, da Sie möglicherweise nicht
+\t \tmöchten, daß jeder Benutzer das System eigenmächtig herunterfahren
+\t \tkann. Es steht Ihnen frei, diese Berechtigung keinem anderen
+\t \tBenutzer zuweisen.
+
+\to\tZugriff auf Disketten, Bänder usw. - Gestattet Ihnen,
+\t \tInformationen auf allen Disketten, Bändern oder anderen Symbolen
+\t \tim Ordner \k(Disketten usw.^dtadmin/disk.hlp^Überblick über den Ordner Disketten-etc.) zu lesen und zu schreiben. Standardmäßig
+\t \thaben alle Benutzer die Berechtigung, auf Disketten und Bänder
+\t \tzuzugreifen.
+
+\to\tZugriff auf ferne Systeme - Gestattet Ihnen, sich fern anzumelden
+\t \tund Dateien auf und von fernen System zu übertragen. Diese
+\t \tFunktionen sind ausgehend von allen Symbolen verfügbar, die mit
+\t \t\k(Anwähl-Setup^dtadmin/DialMgr.hlp^Anwähl-Setup) oder \k(Internet-Setup^dtadmin/inet.hlp^Internet-Setup)
+\t \tfür ferne Systeme installiert wurden. Standardmäßig haben
+\t \talle Benutzer diese Berechtigung.
+
+\to\tAnwähl-Setup ändern - Gestattet ihnen, ausgehend vom Ordner
+\t \t\k(Anwähl-Setup^dtadmin/DialMgr.hlp^Anwähl-Setup) Konfigurationen für Modems oder
+\t \tDirektverbindungen auf Ihrem Computer hinzuzufügen oder zu ändern.
+
+\t \tMit dieser Funktion definieren Sie außerdem die Systeme,
+\t \tdie Sie über diese Verbindungen erreichen können. Da diese
+\t \tKonfigurationen selten geändert werden, sollte die Berechtigung
+\t \tsie zu ändern eingeschränkt werden.
+
+\to\tInternet-Setup ändern - Gestattet Ihnen, mit
+\t \t\k(Internet-Setup^dtadmin/inet.hlp^Internet-Setup) Systeme in der Liste der über eine
+\t \tEthernet-Verbindung erreichbaren Systeme hinzuzufügen.
+
+\t \tDa falsch zugewiesene Systemnamen und Adressen Probleme auf
+\t \teinem Netzwerk hervorrufen können, sollte dieses Privileg
+\t \teingeschränkt werden.
+
+\to\tDrucker verwalten - Gestattet Ihnen, Druckerkonfigurationen mit
+\t \tHilfe von \k(Drucker-Setup^dtadmin/Printer_Setup.hlp^Drucker-Setup) zu ändern.
+
+\t \tZu Druckerinformationen gehören der Druckertyp und der Anschluß
+\t \tdes Druckers an Ihr System. Da Sie das Drucker-Setup nach der
+\t \tInstallation und Konfiguration eines Druckers in der Regel nicht
+\t \tmehr ändern müssen, benötigen andere Benutzer die Berechtigung
+\t \tzum Verwalten von Druckern nicht.
+
+\to\tSchriftarten hinzufügen/entfernen - Gestattet Ihnen, mit
+\t \t\k(Schriftart-Setup^dtadmin/fontmgr.hlp^Schriftarten) Schriftarten hinzuzufügen und zu
+\t \tändern.  Da eine Anwendung fehlschlägt, wenn eine benötigte
+\t \tSchriftart nicht vorhanden oder falsch installiert ist, sollten
+\t \tSie dieses Privileg einschränken.
+
+\to\tAnwendungen hinzufügen/entfernen - Gestattet Ihnen, mit dem
+\t \tOrdner \k(Anwendungs-Installierer^dtadmin/App_Installer.hlp^Anwend-Installierer) Anwendungspakete auf dem System zu
+\t \tinstallieren oder vom System zu entfernen. Sie sollten dieses
+\t \tPrivileg einschränken, um die Kontrolle über die auf Ihrem System
+\t \tinstallierten Anwendungen zu behalten.
+
+\to\tLokale Ordner/Dateien bekanntmachen - Gestattet Ihnen, lokale
+\t \t\d(Share-Objekte^Share-Objekt) mit Hilfe von
+\t \t\k(Datei-Sharing^dtadmin/FileShar.hlp^Datei-Sharing) bekanntzumachen.
+
+\t \tDa diese Funktion den Zugriff auf Ihren Computer von fernen
+\t \tSystemen öffnet, sollten Sie dieses Privileg einschränken.
+
+\to\tVerbindung zu fernen Ordnern/Dateien herstellen - Gestattet
+\t \tIhnen,Verbindung zu fernen
+\t \t\d(gemeinsam benutzten Objekten^Share-Objekt) mit Hilfe von
+\t \t\k(Datei-Sharing^dtadmin/FileShar.hlp^Datei-Sharing) herzustellen.
+
+ \t \tDieses Privileg gestattet den Benutzern ferner Systeme den Zugriff
+ \t \tauf Dateien. Wenn Sie den Informationsfluß zu Ihrem Computer
+ \t \tkontrollieren möchten, sollten Sie dieses Privileg einschränken.
+
+\to\tUnixWare Post verwalten - Gestattet Ihnen, Änderungen am
+\t \t\k(UnixWare Post-Setup^Mail_Setup/Mail_Setup.hlp^Post-Setup) vorzunehmen.
+
+\to\tMHS-Gateway verwalten - Gestattet Ihnen, Änderungen an
+\t \t\k{MHS (Message Handling Service)^MHS_Setup/MHS_Setup.hlp^MHS-Setup}
+\t \tvorzunehmen.
+
+\to\tZugriff auf NetWare Setup - Gestattet Ihnen,
+\t \t\k(NetWare^NetWare_Setup/NetWare_Setup.hlp^NetWare Setup) einzurichten.
+
+\to\tAnwendungen gemeinsam benutzen - Gestattet Ihnen, mit Hilfe von
+\t \t\k(Anwendungs-Sharing^App_Sharing/applsharing.hlp^Anwendungs-Sharing) Anwendungen auf Ihrem System bekanntzumachen
+\t \toder mit fernen Systemen gemeinsam zu benutzen.
+
+\to\tZugriff auf Installations-Server - Gestattet Ihnen, mit Hilfe des
+\t \t\k(Installations-Servers^Install_Server/Install_Server.hlp^Installations-Server) UnixWare-Produkte oder -Pakete auf einem
+\t \tNetWare Netzwerk zu installieren.
+
+\to\tProzessoren starten und stoppen - Gestattet Ihnen, mit Hilfe von
+\t \t\k(Prozessor-Setup^dtadmin/multiproc.hlp^Prozessor-Setup) Setup-Funktionen für den Multiprozessorbetrieb
+\t \tdurchzuführen (z. B. Prozessoren offline oder online schalten).
+
+Hinweis: Die root-Anmeldung ist die traditionelle Anmeldung beim
+UNIX-System für alle Tasks der Systemverwaltung. Weitere Informationen
+finden Sie unter \k(Root Anmeldung).
+
+Siehe auch:
+\s(Das Eigentümerattribut^dhelp as sysag "File Protection" "The Owner Attribute" || helpLinkErr)
+\s(Das Gruppenattribut^dhelp as sysag "File Protection" "The Group Attribute" || helpLinkErr)
+\s(Set-UID und Set-GID^dhelp as sysag "File Protection" "Set-UID and Set-GID" || helpLinkErr)
+
+^2^Root Anmeldung
+^$110
+Root Anmeldung
+
+Die root-Anmeldung ist die traditionelle Anmeldung beim UNIX-System
+für alle Tasks der Systemverwaltung. Die meisten grundlegenden
+Verfahren, die früher nur für Benutzer verfügbar waren, die sich als
+root angemeldet haben, können jetzt vorm Systemeigentümer ausgeführt
+werden (siehe \k(Mit Berechtigungen umgehen können)).
+
+Wenn Sie es vorziehen, können Sie sich beim System auch von einem
+\k(Terminalfenster^xterm/term.hlp^Terminal) aus anmelden und administrative Tasks mit den Befehlen
+und Dateien des UNIX Systems durchführen. Nähere Einzelheiten über die
+Arbeit mit der Befehlszeile des UNIX Systems finden Sie in der
+\s(Command Reference^dhelp refman uarm "" ""|| helpLinkErr).
+
+
+^1^Benutzereigenschaften ändern
+^$120
+Benutzereigenschaften ändern
+
+Sie müssen \k(Systemeigentümerberechtigungen^^Mit Berechtigungen umgehen können) haben, um
+Benutzereigenschaften ändern zu können.
+
+Sie können die Eigenschaften, die Sie beim Hinzufügen eines neuen
+Benutzers definiert haben, auch zu einem späteren Zeitpunkt ändern.
+
+Um Benutzereigenschaften zu ändern, gehen Sie wie folgt vor:
+
+Hinweis: Wenn Sie sich bereits im Ordner Verwaltungs_Tools befinden, gehen
+Sie zu Schritt 2.
+
+1.\t\d(Klicken Sie zweimal^doppelklicken) auf Verwaltungs_Tools im
+  \t\k("UnixWare Desktop"-Fenster^DesktopMgr/desktop.hlp^Das Fenster UnixWare Desktop).  Das Fenster "Ordner:Verwaltungs_Tools"
+  \terscheint.
+
+2.\tDoppelklicken Sie auf Benutzer-Setup. Das Fenster "Benutzer-Setup"
+  \terscheint. (Entsprechend der zuletzt ausgewählten Anzeige zeigt
+  \tdas Fenster Benutzerkonten, Gruppen oder reservierte Konten an.)
+
+3.\tKlicken Sie Anzeigen=>Benutzer an.
+
+4.\tKlicken Sie das Symbol des Benutzers an, dessen Eigenschaften Sie
+  \tändern möchten.
+
+5.\tKlicken Sie Konto=>Eigenschaften an. Das Fenster "Benutzer-Setup:
+  \tEigenschaften des Benutzerkontos" erscheint.
+
+6.\tNehmen Sie die gewünschten Änderungen vor. Unter
+  \t\k(Neuen Benutzer hinzufügen)) finden Sie eine Beschreibung der einzelnen
+  \tEigenschaften.
+
+7.\tKlicken Sie OK an. Das System weist dem Benutzer die neuen
+  \tEigenschaften zu.
+

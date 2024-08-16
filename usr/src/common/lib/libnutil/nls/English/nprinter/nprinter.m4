@@ -1,0 +1,102 @@
+#ident	"@(#)libnwutil:common/lib/libnutil/nls/English/nprinter/nprinter.m4	1.1"
+LCOM
+LCOM This work is an unpublished work and contains confidential,
+LCOM proprietary and trade secret information of Novell, Inc. Access
+LCOM to this work is restricted to (I) Novell employees who have a
+LCOM need to know to perform tasks within the scope of their
+LCOM assignments and (II) entities other than Novell who have
+LCOM entered into appropriate agreements.
+LCOM 
+LCOM No part of this work may be used, practiced, performed,
+LCOM copied, distributed, revised, modified, translated, abridged,
+LCOM condensed, expanded, collected, compiled, linked, recast,
+LCOM transformed or adapted without the prior written consent
+LCOM of Novell.  Any use or exploitation of this work without
+LCOM authorization could subject the perpetrator to criminal and
+LCOM civil liability.
+LCOM 
+COM(`')
+COM(`Messages used by nprinter')
+COM(`')
+SET(MSG_NPRINT_SET,3)
+define(`Module_Name', `NPRINTER')
+define(`Module_Version', `4.02')
+COM(`')
+COM(`Normal Messages')
+COM(`')
+INFORM_STR(`RPMSG_STARTING', 1, `Starting')
+INFORM_STR(`RPMSG_QUITING', 2, `Going down')
+INFORM_STR(`RPMSG_QUIT', 3, `Down')
+INFORM_STR(`RPMSG_TERMINATED', 4, `Terminated')
+INFORM_STR(`RPMSG_STRING', 5,`%s')
+
+COM(`')
+COM(`Verbose messages')
+COM(`')
+INFORM_STR(`RPMSG_PRINTER_STARTING', 10, `Printer is starting. Host printer is name: %s.')
+INFORM_STR(`RPMSG_PRINTER_READY', 11, `Printer is ready for print jobs.')
+INFORM_STR(`RPMSG_PRINTER_STOPPING', 12, `Printer is stopping. Host printer name is %s.')
+INFORM_STR(`RPMSG_PRINTER_RESTARTING', 13, `Printer is restarting. Host printer name is %s.')
+INFORM_STR(`RPMSG_NEW_HOST_PRT_NAME', 14, `New host printer name is %s.')
+COM(`')
+COM(`Warning messages')
+COM(`')
+INFORM_STR_TAG(`RPMSG_NO_ADVERTISE', 20, `PSERVER is not advertising.')
+INFORM_STR_TAG(`RPMSG_NO_SPX_CL_CONNECT', 21, `A client connection to the print server cannot be established.')
+INFORM_STR_TAG(`RPMSG_NO_SPX_RP_CONNECT', 22, `A remote connection to the print server cannot be established.')
+INFORM_STR_TAG(`RPMSG_NO_PS_RPRINTER', 23, `No such NPRINTER slot at the print server.')
+INFORM_STR_TAG(`RPMSG_RPRINTER_IN_USE', 24, `NPRINTER slot is already in use at the print server.')
+INFORM_STR_TAG(`RPMSG_PSERVER_DOWN', 25, `The connection has been terminated by the print server.')
+COM(`')
+COM(`Error messages')
+COM(`')
+INFORM_STR_TAG(`RPMSG_TOO_MANY_PRINTERS', 30, `Too many printers.')
+INFORM_STR_TAG(`RPMSG_NO_IPX_OPEN', 31, `The IPX transport cannot be opened.')
+INFORM_STR_TAG(`RPMSG_NO_SPX_OPEN', 32, `The SPX transport cannot be opened.')
+INFORM_STR_TAG(`RPMSG_BAD_PATH', 33, `File %s cannot be found.')
+INFORM_STR_TAG(`RPMSG_BAD_OPEN', 34, `File %s cannot be opened.')
+INFORM_STR_TAG(`RPMSG_INVALID_SWITCH', 35, `Invalid switch: %s (ignored)')
+INFORM_STR_TAG(`RPMSG_BAD_CTF_LINE_SH', 36, `Remote printer control file line is incomplete:\n%s')
+INFORM_STR_TAG(`RPMSG_BAD_CTF_LINE_PT', 37, `Remote printer control file line does not begin with valid NPRINTER type:\n%s')
+INFORM_STR_TAG(`RPMSG_BAD_CFF_LINE_SH', 38, `Remote printer configuration file line is incomplete:\n%s')
+INFORM_STR_TAG(`RPMSG_BAD_CFF_LINE_NM', 39, `Remote printer configuration file line is not a valid configuration setting:\n%s')
+INFORM_STR_TAG(`RPMSG_BAD_PCF_LINE_SH', 40, `PRTConfig file line is incomplete:\n%s')
+INFORM_STR_TAG(`RPMSG_BAD_PCF_LINE_PT', 41, `PRTConfig file line does not begin with valid host printer type:\n%s')
+INFORM_STR_TAG(`RPMSG_BAD_PRT_NAME', 42, `The host printer name %s cannot be located in PRTControl file.')
+INFORM_STR_TAG(`RPMSG_WRITING_DATA', 43, `The print job data cannot be written.')
+INFORM_STR_TAG(`RPMSG_BAD_PRT_ID', 44, `The internal printer identifier %ld is invalid.')
+INFORM_STR_TAG(`RPMSG_JOB_NOACTIVE', 45, `Invalid request when no active print job')
+INFORM_STR_TAG(`RPMSG_NO_QUEUES', 46, `No host queues are accepting jobs.')
+INFORM_STR_TAG(`RPMSG_BAD_DEST', 47, `The destination name %s in PRTConfig is invalid.')
+COM(`')
+COM(`Debug messages')
+COM(`')
+INFORM_STR(`RPMSG_PSERVER_ADDR', 60, `The print server address is %s')
+INFORM_STR(`RPMSG_PSRP_SOCKET', 61, `PSERVER/NPRINTER socket: %04lX')
+INFORM_STR(`RPMSG_PSERVER_WAIT_ERROR', 62, `An internal error has occurred while waiting for PSERVER input.')
+INFORM_STR(`RPMSG_STATUS_NOT_SENT', 63, `NPRINTER could not report status to PSERVER.')
+INFORM_STR(`RPMSG_COMMAND_NO_RECEIVE', 64, `Could not receive command from PSERVER.')
+INFORM_STR(`RPMSG_BAD_RP_COMMAND', 65, `Bad NPRINTER command sent from PSERVER: %ld.')
+INFORM_STR(`RPMSG_INVALID_ENTRY_STATUS', 66, `Invalid NPRINTER Entry status: %ld.')
+INFORM_STR(`RPMSG_CHANGE_ENTRY_STATUS', 67, `Invalid NPRINTER Entry status change: %ld.')
+INFORM_STR(`RPMSG_PJ_NEW', 68, `New print job (tab expansion: %ld).')
+INFORM_STR(`RPMSG_PJ_EOJ', 69, `Print job ended (job size: %ld).')
+INFORM_STR(`RPMSG_PJ_TIMEOUT', 70, `Print job ended by timeout (job size: %ld).')
+INFORM_STR(`RPMSG_PJ_END_BY_NEW', 71, `Print job ended by new job (job size: %ld).')
+INFORM_STR(`RPMSG_PJ_ABORT', 72, `Print job aborted')
+INFORM_STR(`RPMSG_PJ_PAUSED', 73, `Print job paused')
+INFORM_STR(`RPMSG_PJ_UNPAUSED', 74, `Print job unpaused')
+INFORM_STR(`RPMSG_PJ_SIDEBAND', 75, `Sideband print job')
+INFORM_STR(`RPMSG_NEW_PRINTER_STATUS', 76, `New printer status: %ld')
+
+COM(`')
+COM(` Errors on nwcm access')
+COM(`')
+INFORM_STR_TAG(`NPRINTER_CANT_FIND_FILE', 100, `The NPRINTER configuration file %s cannot be located.\n')
+INFORM_STR_TAG(`NPRINTER_CANT_MAKE_CONFIG_DIR', 101, `The NPRINTER configuration directory %s cannot be created.\n')
+COM(`')
+COM(`For stopnp.c')
+COM(`')
+INFORM_STR_TAG(`NPSTOP_FILE_OPEN_ERR', 200, `The NPRINTER process identification file %s cannot be opened.\n')
+INFORM_STR_TAG(`NPSTOP_FILE_READ_ERR', 201, `The NPRINTER process identification file %s cannot be read.\n')
+INFORM_STR_TAG(`NPSTOP_KILL_ERR', 202, `NPRINTER cannot be stopped.\n')

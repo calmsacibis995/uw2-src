@@ -1,0 +1,50 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)dtfirst:Imakefile	1.3"
+#include	<Motif.tmpl>
+#include	<Motif.rules>
+
+SRCS = dtfisrttime.c
+
+OBJS = dtfirsttime.o
+
+HEADERS = dtfirst_msgs.h
+
+    DTLIBSRC = $(LIBSRC)/Dt
+       DTLIB = $(DTLIBSRC)/libDt.so
+  MDTILIBSRC = $(USLCLIENTSRC)/libMDtI
+     MDTILIB = $(MDTILIBSRC)/libMDtI.so
+       XMLIB = $(LIBSRC)/Xm/libXm.so
+    XTLIBSRC = $(LIBSRC)/Xt
+     XLIBSRC = $(LIBSRC)/X
+       XTLIB = $(XTLIBSRC)/libXt.so
+        XLIB = $(XLIBSRC)/libX11.so
+  DTADMINSRC = $(USLCLIENTSRC)/dtadmin
+  DTAMLIBSRC = $(DTADMINSRC)/dtamlib
+     DTAMLIB = $(DTAMLIBSRC)/libdtam.a
+
+EXTRA_DEFINES= -DNOVELL
+
+    INCLUDES = -I$(LIBSRC) -I$(MDTILIBSRC) -I$(DTAMLIBSRC)
+LOCAL_LIBRARIES = $(MDTILIB) $(XMLIB) $(DTLIB) $(XTLIB) $(XLIB) $(DTAMLIB) 
+
+     DEPLIBS = $(MDTILIB) $(XMLIB) $(DTLIB) $(XTLIB) $(XLIB) $(DTAMLIB) 
+
+SYS_LIBRARIES = -lgen
+
+CC = LD_RUN_PATH=/usr/lib/X11 $(PFX)cc
+
+ComplexProgramTarget(dtfirsttime)
+
+InstallMultiple(dtfirst,$(DESKTOPDIR)/PackageMgr)
+InstallDesktopClient($(BINDIR)/dtfirsttime,$(DESKTOPDIR)/Preferences/Startup_Items/Welcome)
+
+InstallMsgCatalog(dtfirst2)
+
+DependTarget()

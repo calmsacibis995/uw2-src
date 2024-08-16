@@ -1,0 +1,81 @@
+#!/bin/sh
+#ident	"@(#)langsup:common/ls/:mklocale	1.3"
+# 
+
+echo "Compiling locales"
+echo ""
+TARGETLIB=$PKGDIR/usr/lib/locale
+
+if [ ! -d $TARGETLIB ]
+then
+	mkdir -p $TARGETLIB
+fi
+
+if [ ! -d $PKGDIR/var/opt/ls ] 
+then
+	mkdir -p $PKGDIR/var/opt/ls
+fi
+
+cd locale
+
+cp locale_names $PKGDIR/usr/lib/locale
+cp loc.list $PKGDIR/var/opt/ls
+cp loc.map $PKGDIR/var/opt/ls
+# Add post_adduser so default locale is set correctly.
+[ ! -d $PKGDIR/usr/X/adm ] && mkdir -p $PKGDIR/usr/X/adm
+cp $HOMEDIR/X/adm/post_adduser $PKGDIR/usr/X/adm
+
+# add locale.alias for ximp
+if [ ! -d $PKGDIR/usr/X/lib/locale ]
+then
+	mkdir -p $PKGDIR/usr/X/lib/locale
+fi
+cp locale.alias $PKGDIR/usr/X/lib/locale
+
+LOCLIST=`/bin/ls`
+cd work
+
+for i in $LOCLIST
+do
+	if [ ! -d "../$i" ] || [ "$i" = "work" ]
+	then
+		continue;
+	fi
+	[ -d $PKGDIR/usr/lib/locale/$i ] || mkdir -p $PKGDIR/usr/lib/locale/$i
+
+	echo Building locale $i
+	${TOOLS}/usr/ccs/bin/${CPU}make -f locale.mk install LOCALE=$i
+
+	# install ol_locale_def if it exists
+	XLOC=$PKGDIR/usr/X/lib/locale/$i
+
+	if [ -r $HOMEDIR/locale/$i/ol_locale_def ]
+	then
+		[ -d $XLOC ] || mkdir -p $XLOC
+		cp $HOMEDIR/locale/$i/ol_locale_def $XLOC
+		[ ! -d $XLOC/app-defaults ] && mkdir -p $XLOC/app-defaults
+		cp $PKGDIR/usr/X/lib/app-defaults/Nondesktop $XLOC/app-defaults
+		cat $XLOC/ol_locale_def | sed -e"s/\".*//" | sed -e"s/^	      //" >> $XLOC/app-defaults/Nondesktop
+		cp $PKGDIR/usr/X/lib/app-defaults/Dtlogin $XLOC/app-defaults
+		cat $XLOC/ol_locale_def | sed -e"s/\".*//" | sed -e"s/^	      //" >> $XLOC/app-defaults/Dtlogin
+	fi
+	# install Codeset file if it exists
+	if [ -r $HOMEDIR/locale/$i/Codeset ]
+	then
+		[ -d $XLOC ] || mkdir -p $XLOC
+		cp $HOMEDIR/locale/$i/Codeset $XLOC
+	fi
+
+	# install Dtcalc app-defaults file if it exists
+	if [ -r $HOMEDIR/locale/$i/app-defaults/DtCalc ]
+	then
+		[ ! -d $XLOC/app-defaults ] && mkdir -p $XLOC/app-defaults
+		cp $HOMEDIR/locale/$i/app-defaults/DtCalc $XLOC/app-defaults
+	fi
+done
+
+cd $HOMEDIR
+
+echo "Installation complete"
+echo ""
+exit 0

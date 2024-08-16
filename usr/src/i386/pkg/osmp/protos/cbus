@@ -1,0 +1,16 @@
+#ident	"@(#)pkg.osmp:protos/cbus	1.16"
+
+!CONFDIR=etc/conf
+!PACKDIR=$CONFDIR/pack.d
+
+f none /tmp/cbus/mip=/etc/initprog/coro_mip 0444 root sys
+
+!default 775 root sys 1 NULL NULL
+d none /tmp/cbus
+
+!default 0500 root root 1 NULL NULL
+v none /tmp/cbus/Driver_mp.o=/mp/$PACKDIR/cbus/Driver.o
+v none /tmp/cbus/Space.c=/mp/$PACKDIR/cbus/space.c
+v none /tmp/cbus/Master=/mp/$CONFDIR/mdevice.d/cbus
+v none /tmp/cbus/System=/mp/$CONFDIR/sdevice.d/cbus
+v none /tmp/cbus/Drvmap=/mp/$CONFDIR/drvmap.d/cbus

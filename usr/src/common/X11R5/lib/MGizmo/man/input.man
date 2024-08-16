@@ -1,0 +1,86 @@
+'\"ident        "@(#)MGizmo:man/input.man	1.2"
+.TH InputGizmo 3L
+.SH NAME
+\f(CBInputGizmo\f1 \- an abstract data type (ADT) that specifies an area
+consisting of an input field.
+The \f(CBInputGizmo\fP
+consists of a data structure and two functions that operate on this Gizmo.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/InputGizmo.h>
+
+void   SetInputGizmoText(Gizmo \fIg\fP, char *\fItext\fP);
+char * GetInputGizmoText(Gizmo \fIg\fP);
+.ft
+.fi
+.SH "DESCRIPTION"
+An \f(CBInputGizmo\fP is created by populating an \f(CBInputGizmo\fP data
+structure and placing it's address in a \f(CBGizmoRec\fP structure.
+Ultimately, a \f(CBGizmoRec\fP structure is placed in one of the container
+Gizmos and the display is created by making a call to
+\f(CBCreateGizmo\fP(3L).
+Following is the definition of the \f(CBInputGizmo\fP data type:
+.PP
+.nf
+.ft CB
+typedef struct _InputGizmo {
+        HelpInfo *      help;
+        char *          name;
+        char *          text;           /* XmNvalue */
+        int             width;          /* XmNmaxLength */
+        void            (*callback)();  /* XmNactivateCallback */
+        XtPointer       client_data;
+} InputGizmo;
+.fi
+.PP
+\f(CBSetInputGizmoText\fP is used to change the input field value.
+.PP
+The function \f(CBGetInputGizmoText\fP is used to retrieve the current value
+of the text field widget.  The returned string should be freed by the caller.
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBInputGizmo\fP:
+.IP \fBGetGizmoWidget\fP 25
+Returns the text field widget id.
+.IP \fBGetGizmoGizmo\fP 25
+Returns the handle to the \f(CBInputGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 25
+Returns the current value of the Gizmo.
+.IP \fBGetGizmoPreviousValue\fP 25
+Returns the previous value of the Gizmo.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied to the text field widget.
+.SH "USAGE"
+.nf
+.ft CB
+InputGizmo      input1 = {
+        NULL,
+        "input1",
+        "John Doe",
+        28,
+        verifyNameCB,
+        NULL
+};
+
+GizmoRec        record1[] = {
+        {InputGizmoClass, &input1}
+};
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", NULL, record1, 1
+};
+
+main()
+{
+        Gizmo   handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP

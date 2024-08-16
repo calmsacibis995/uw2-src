@@ -1,0 +1,65 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)instlsrvr:Imakefile	1.11"
+#ident  "$Header: /SRCS/esmp/usr/src/nw/X11R5/netware/Install_Server/Imakefile,v 1.11 1994/05/12 15:26:17 plc Exp $"
+
+/**/#	Copyright (c) 1990, 1991, 1992 UNIX System Laboratories, Inc.
+/**/#	Copyright (c) 1988, 1989, 1990 AT&T
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF
+/**/#	UNIX System Laboratories, Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ifdef Release5
+#include <sv4Lib.tmpl>
+#endif
+
+#define PassCDebugFlags 'CDEBUGFLAGS=$(CDEBUGFLAGS)'
+
+HELPDIR     =  $(USRLIBDIR)/locale/C/help
+XLIBDIR     =  $(ROOT)/$(MACH)/usr/X/lib
+
+          SRCS = misc.c action.c main.c ps.c
+          OBJS = misc.o action.o main.o ps.o
+          HDRS = main.h action.h
+
+         PROGS  = Install_Server 
+
+   DTCLIENTSLIB = $(USLCLIENTSRC)/libDtI
+       DTLIBSRC = $(LIBSRC)/Dt
+      DTILIBSRC = $(DTCLIENTSLIB)
+         DTILIB = $(DTILIBSRC)/libDtI.so
+          DTLIB = $(DTLIBSRC)/libDt.so
+        DTAMLIB = $(USLCLIENTSRC)/dtadmin/dtamlib/libdtam.a
+
+       INCLUDES = -I$(LIBSRC) -I$(DTILIBSRC) -I$(USLCLIENTSRC)
+LOCAL_LIBRARIES = $(DTILIB) $(DTLIB) $(DTAMLIB) XolClientLibs 
+        DEPLIBS = $(DTILIB) $(DTLIB) $(DTAMLIB) XolClientDepLibs
+
+  	SYS_LIBRARIES = -lgen  -liaf ../libdlist/libdlist.a -L../../../cmd/cmd-nw/lib  -lnwutil -lthread
+
+all:: $(PROGS)
+
+ComplexProgramTarget(Install_Server)
+
+InstallProgramWithFlags($(PROGS), $(BINDIR), -o root -g sys -m 4755)
+InstallDesktopClient($(BINDIR)/$(PROGS),$(DESKTOPDIR)/System_Setup/Install_Server)
+InstallNonExecFile( instsvr.icon, $(XLIBDIR)/pixmaps )
+/**/#InstallNonExecFile(instsvr.cdb, $(XLIBDIR)/classdb)
+
+InstallMsgCatalog(instsvr)
+
+clobber:: clean
+	$(RM) $(PROGS)
+
+CleanTarget()
+DependTarget()
+LintTarget()

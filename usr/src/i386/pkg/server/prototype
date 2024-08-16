@@ -1,0 +1,33 @@
+#ident	"@(#)pkg.inetinst:prototype	1.15"
+
+i pkginfo
+i copyright
+i depend
+i preremove
+i postinstall
+
+!default 775 root sys 1 NULL NULL
+d none /var/spool/dist 0755 root sys
+d none /var/sadm/dist/menus 0755 root sys
+d none /var/sadm/dist 0755 root sys
+v none /var/sadm/dist/log=/dev/null 0666 root sys
+f none /usr/sbin/in.inetinst 0755 root bin
+f none /usr/sbin/installsrv 0755 root bin
+f none /usr/sbin/mknetflop 0755 root bin
+d DTMadmin /usr/X ? ? ? ? ? ?
+d DTMadmin /usr/X/bin ? ? ? ? ? ?
+d DTMadmin /usr/X/adm ? ? ? ? ? ?
+d DTMadmin /usr/X/desktop ? ? ? ? ? ?
+d DTMadmin /usr/X/desktop/Admin_Tools ? ? ? ? ? ?
+d DTMadmin /usr/X/lib ? ? ? ? ? ?
+d DTMadmin /usr/X/lib/pixmaps ? ? ? ? ? ?
+d DTMadmin /usr/X/lib/classdb ? ? ? ? ? ?
+f DTMadmin /usr/X/bin/Install_Server 0755 root bin
+f DTMadmin /usr/X/adm/IS_support 0755 root bin
+f DTMadmin /usr/X/adm/IS_messages 0755 root bin
+f DTMadmin /usr/X/adm/IS_pkgsetup 0755 root bin
+f DTMadmin /usr/X/adm/IS_lib.so 0444 root bin
+s DTMadmin /usr/X/desktop/Admin_Tools/Install_Server=/usr/X/bin/Install_Server 0755 root bin
+f DTMadmin /usr/X/lib/pixmaps/instsvr.icon 0444 root bin
+f DTMadmin /usr/X/lib/bitmaps/instsvr.icon 0444 root bin
+f DTMadmin /usr/X/lib/classdb/instsvr.cdb 0664 bin dtadmin

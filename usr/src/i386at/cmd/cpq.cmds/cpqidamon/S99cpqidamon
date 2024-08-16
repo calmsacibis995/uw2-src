@@ -1,0 +1,158 @@
+: /bin/sh script
+#ident	"@(#)cpq.cmds:cpqidamon/S99cpqidamon	1.4"
+########################################################
+# Copyright 1993, COMPAQ Computer Corporation
+########################################################
+#
+#
+########################################################
+#
+# Change Log :
+#
+########################################################
+cpq_base="/usr/bin/compaq"
+check_dir=$cpq_base/registry/ida
+share_dir=$cpq_base/registry/stsys
+other_dir=$cpq_base/registry/scsi
+
+# is_running
+
+# Detects if a process id is active at a particular moment.
+# Usefull for checking if a startup or shutdown actually succeeded.
+
+is_running()
+   {
+   [ "`/bin/su root -c \"/bin/ps -e 2>/dev/null | sed -n \"/$1/p\"\"`" ] && \
+      return 0 || return 1
+   }
+
+# kill_agent
+
+# Attempts to kill the agent using one of three possible methods:
+
+# 1) Gets the pid via a ps on the current kernel . . . or
+# 2) Gets the pid via a ps on the previous kernel . . . or
+# 3) Gets the pid from a file created by this script . . . or
+# 4) Does nothing
+
+kill_agent()
+{
+    # Find other agent processes (even with long names) pid in col 2
+    pid=`/bin/su root -c "/bin/ps -ef 2>/dev/null |
+	sed -n -e '/ start/d' -e '/ stop/d' \
+	    -e '/[ /]$agent /s/^[ ]*[^ ][^ ]*[ ]*\([^ ]*\).*/\1/p'"`
+    [ "$pid" ] ||
+    {
+	# Found nothing so try again as above using /unix.old kernel
+	pid=`/bin/su root -c "/bin/ps -enf /unix.old 2>/dev/null |
+	    sed -n -e '/ start/d' -e '/ stop/d' \
+		-e '/[ /]$agent /s/^[ ]*[^ ][^ ]*[ ]*\([^ ]*\).*/\1/p'"`
+        [ "$pid" ] ||
+	{
+	    # Still found nothing maybe neither kernel is the right one
+	    # Use saved process id from the last start
+	    [ -f /tmp/.${agent}Pid -a ! "$Sprefix" ] &&
+		pid=`cat /tmp/.${agent}Pid` || :
+	}
+    }
+
+    # If there's something to kill, does it.
+
+    [ "$pid" ] &&
+    {
+        echo "Stopping the $title process\c"
+        kill -15 $pid 2>/dev/null && {
+	    # give agent a chance to clean up before returning
+	    for i in 1 2 3 4 5;do
+	        [ -d $check_dir ] && sleep 3
+		echo " .\c"
+	    done
+	    [ ! -d $check_dir ] && echo " Stopped." || echo " Stop Failed."
+        }  || echo " . . . Already Stopped."
+	# The process is stopped, remove the process id file.
+	rm -f /tmp/.${agent}Pid 2>/dev/null
+        return 0
+    } || :
+    return 1
+}
+
+# main
+
+title="Compaq IDA Monitoring"
+agent=cpqidamon
+cpq_base="/usr/bin/compaq"
+log_dir="${cpq_base}"
+log="${log_dir}/agenterrs.log"
+default_poll=30
+min_poll=5
+
+# Forces at least the start/stop argument.
+
+[ "$1" ] ||
+   {
+   echo "$agent: usage: $0 {start,stop} [-p poll period (seconds)] [-i]"
+   exit 0
+   }
+
+# Poll time in seconds is optional.
+
+[ "$2" ] &&
+   {
+   # Forces the minimum poll time if the one specified is less than
+   # the minimum.
+
+   [ $2 -gt $min_poll ] && poll_time=$2 || poll_time=$min_poll
+   } || poll_time=$default_poll
+
+
+case $1 in
+
+   start)
+ 
+      # This assumes that when someone issues agent start, they mean it.
+      # It kills the agent if it's running and starts a new one.
+      # This is the equivalent of agent stop and agent start, issued
+      # back-to-back.
+
+      kill_agent
+
+	# Ensures the full path for the $log file is present.
+	[ -d $log_dir ] || mkdir $log_dir
+
+	# Clean up private directory if left by skipping shutdown
+	[ -d $check_dir ] && rm -rf $check_dir
+	# Clean up shared directory if other agent has cleaned up
+	[ -d $share_dir -a ! -d $other_dir ] && rm -rf $share_dir
+
+	count=`/etc/scsi/pdiconfig | grep "^ida[ 	]" | wc -l`
+	if [ $count -gt 0 ]
+	then
+		echo -n "Starting the $title process . . . "
+		cd ${cpq_base}/diags/ida
+		./$agent -p $poll_time -i 1>>$log 2>&1 &
+		pid=$!
+		for i in 1 2 3 4 5; do
+			[ ! -d $check_dir ] && sleep 3
+		done
+		sleep 3
+		is_running $pid &&
+		   	{
+		   	echo $pid >/tmp/.${agent}Pid
+		   	echo "startup succeeded."
+		   	} || echo "\07startup failed."
+	else
+		echo -n "$title process not started . . .\n"
+		echo -n "The Compaq IDA Monitoring driver has not been installed.\n"
+	fi
+      ;;
+
+   stop)
+      kill_agent || echo "$title process is not running."
+      rm -f /tmp/.${agent}Pid 2>/dev/null
+      ;;
+
+   *)
+      echo "Usage: $0 [ start | stop ]"
+      exit 1
+      ;;
+esac

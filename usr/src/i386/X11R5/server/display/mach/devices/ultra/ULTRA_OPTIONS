@@ -1,0 +1,13 @@
+# if you have a 32-bit Mach32 card and if you have the 'lfb' kernel driver
+# installed, the driver auto-detects these two and tries to take advantage
+# of linear mapping the video memory. But, in some hardware configurations,
+# there might be some conflicts which cannot be auto-detected - this could
+# cause random drawing problems (bad icons and other pixelization problems).
+# if you experience such problems, first try uncommenting the first line
+# (ie: frame-buffer-physical-address=124) and see if it fixes the problem. 
+# If you still have problems, put the '#' sign back on the first line and 
+# uncomment the second line (ie: use-linear-frame-buffer=no). Don't uncomment 
+# both the lines at the same time.
+#
+#frame-buffer-physical-address=124
+#use-linear-frame-buffer=no

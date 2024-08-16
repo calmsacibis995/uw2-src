@@ -1,0 +1,22 @@
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/auditing/disable/Help	1.1.5.2"
+#ident  "$Header: Help 2.0 91/07/12 $"
+ABSTRACT:Disable Auditing
+	The "disable" task allows you to disable auditing.  The
+	audit buffer will be flushed to the audit log file and an audit 
+	record will be written to indicate that auditing was turned off.  
+	No additional audit records will be generated.
+
+	Auditable events which are currently in progress when auditing
+	is disabled will not have a record logged since they did not
+	complete before auditing was disabled.
+
+	PLEASE NOTE:  If auditing is disabled, there will not be a log
+	of user actions to analyze if and when questionable security
+	related events occur. If only selected events are recorded, data on
+	other related events may not be available when needed.  If auditing
+	is disabled during certain intervals, a sequence of events may
+	not be able to be re-created due to the lack of audit data for
+	such intervals.
+
+Form.disable:disable:Disable Auditing
+	Enter "yes" or "no".

@@ -1,0 +1,346 @@
+#
+#ident	"@(#)dtupgrade:dtsaved_map.dot	1.16"
+#
+# dtsaved_map.dot - upgrade the following based on the $DtSavedMap file.
+#	This file was created by desktop.prep. Each line in this file
+#	contains `true_obj saved_obj', where true_obj and saved_obj are
+#	objects (file or directory) in the system directory and in the
+#	saved directory.
+#
+#	Currently, dtsaved_map.dat contains the following information
+#	(in that order!!!):
+#
+#	dekstop/Help_Desk		remove any known help entry from the
+#					old copy, append the rest to the
+#					new copy (dtknown_helps.dat).
+#	desktop/LoginMgr/PrivTable	remove any known entry from
+#					the old copy, append the rest to the
+#					new copy (dtknown_privs.dat).
+#	desktop/Dialup/Modems		simply use the old copy
+#	desktop/PrintMgr/Printers	add uw2.0 updates to old copy
+#	desktop/PrintMgr/Types		simply use the old copy
+#	desktop/PrintMgr/Filters/dpost	simply use the old copy
+#	desktop/PrintMgr/Filters/postprint	simply use the old copy
+#	desktop/PrintMgr/Filters/wrap	simply use the old copy
+#	lib/xdm/Xservers		simply use the old copy
+#	lib/classdb/
+#	lib/locale/*/classdb/		scan each directory to locate any
+#					unknowns and keep them in
+#					user_system.cdb, user_system_post.cdb,
+#					and user_dtadmin.cdb depending on
+#					where it came from (dtknown_cdbs.dat,
+#					and dtknown_classes.dat)
+#	lib/app-defaults/		run `. dtapp_dfts.dot'
+#
+
+DtUpgradeStatus=0	# set it to `0' initially
+
+# Define variables for ScanThisCdbDir()
+#
+AdotOut=$DtUpgradeBinDir/dtcdb_scan
+KnownClasses=$DtUpgradeBinDir/dtknown_classes.dat
+KnownCdbs=$DtUpgradeBinDir/dtknown_cdbs.dat
+OtherCdbs="readme.cdb"
+ThisTmpDir=/tmp/$$cdb$$
+
+# ScanThisCdbDir - scan a given cdb dir and locate all unknown classes
+#	and unknown includes. These unknowns will be in usr_system.cdb,
+#	usr_system_post.cdb, or usr_system_post.cdb depending on where
+#	they came from. These usr*.cdb files will be moved into $true_dir
+#	after $AdotOut was executed!
+#
+#	All processed cdb_files will be removed from $true_dir if
+#	$flag is `remove'. The caller shall use this flag for
+#	locale/*/classdb.
+#
+#	The left over will be moved back to $true_dir and $saved_dir
+#	will contain the cdb files that are already scaned by $AdotOut!
+#
+# This function takes 3 arguments:
+#	<saved_dir> - saved cdb directory
+#	<true_dir>  - true cdb directory
+#	<this_flag> - either `keep' or `remove'
+#
+# This functions assumes AdotOut, KnownClasses, KnownCdbs, OtherCdbs, and
+#	ThisTmpDir are defined before invoking this function!
+#
+ScanThisCdbDir()
+{
+	saved_dir=$1
+	true_dir=$2
+	this_flag=$3		export this_flag
+
+	EchoThis "ScanThisCdbDir: creating usr*.cdb in $true_dir" HDR
+
+		# Keeping any cdb that is already processed by the $AdotDot
+		# in $ThisTmpDir!
+	MakeThisDir $ThisTmpDir 777 bin bin
+
+	$AdotOut $saved_dir $KnownClasses $KnownCdbs $OtherCdbs \
+							2>$DtUpgradeLog | \
+	while read cdb_file num_unk_classes num_unk_cdbs
+	do
+			# The `if' block below probably is a no-op because
+			# those cdb files were removed by `ls'
+		if [ "$this_flag" = "remove" ]
+		then
+			RemoveThisFile $true_dir/$cdb_file
+		fi
+
+		mv_this="true"
+		if [ -f $true_dir/$cdb_file ]
+		then
+			/usr/bin/diff $true_dir/$cdb_file \
+				      $saved_dir/$cdb_file >/dev/null 2>&1
+			if [ $? -eq 0 ]		# identical copy, so remove
+			then			# it from $saved_dir
+				/usr/bin/rm -f $saved_dir/$cdb_file
+				mv_this="false"
+			fi
+		fi
+
+		if [ "$mv_this" = "true" ]
+		then
+		MoveThisFile $saved_dir/$cdb_file $ThisTmpDir 644 bin bin
+		fi
+	done
+
+		# Move any left over including usr*.cdb back to $true_dir
+	for i in `/usr/bin/ls $saved_dir`
+	do
+		if [ ! -f $true_dir/$i ]
+		then
+			EchoThis "  ScanThisCdbDir: mv back $i" HDR
+
+				# Assume `dtadmin' is already added to group!
+			MoveThisFile $saved_dir/$i $true_dir 644 bin dtadmin
+		else
+			/usr/bin/diff $true_dir/$i $saved_dir/$i >/dev/null 2>&1
+
+			if [ $? -eq 0 ]		# identical copy, so remove
+			then			# it from $saved_dir
+				/usr/bin/rm -f $saved_dir/$i
+			fi
+		fi
+	done
+
+		# Keep any processed cdbs back to $saved_dir for references!
+	/usr/bin/mv -f $ThisTmpDir/* $saved_dir 2>/dev/null
+	/usr/bin/rmdir $ThisTmpDir
+}
+
+#
+# UpdatePrinters: upgrade the user's existing UW1.1 Printers file
+# (which they may have modified) by applying UW2.0 updates
+#
+#
+#
+UpdatePrinters()
+{
+	ObsoletePrinters="AP1357-EPSON AP1357-IBM AP1359-EPSON AP1359-IBM\
+	AP9205-IBM AP9205-LJ AP9205-LJPLT AP9310-LJ AP9312-LJ AP9316-LJ\
+	AP9415-LJ"
+
+	EchoThis "  dtsaved_map: - UpdatePrinters" HDR;
+
+	for printer in $ObsoletePrinters
+	do
+		EchoThis " dtsaved_map: deleting $printer" HDR;
+		$DtAdmDir/dtprinter -d $printer >/dev/null 2>&1
+		if [ $? -ne 0 ]
+		then
+		EchoThis "	dtsaved_map: Failed to delete $printer" ERR;
+		else
+		EchoThis "	dtsaved_map: Deleted $printer" HDR;
+		fi
+	done
+
+$DtAdmDir/dtprinter -a -o $DtUpgradeBinDir/dtprinters.dat >/dev/null 2>&1
+	if [ $? -ne 0 ]
+	then
+		EchoThis "	dtsaved_map: failed to add new printers" ERR;
+	else
+		EchoThis "	dtsaved_map: added new printers" HDR;
+	fi
+}
+
+#
+# UpdateTypes: upgrade the user's existing UW1.1 Types file (which 
+# they may have modified) by applying UW2.0 updates
+#
+#
+UpdateTypes()
+{
+	ObsoleteTypes="longline troff"	
+
+	EchoThis "  dtsaved_map: - UpdateTypes" HDR;
+
+	for ptype in $ObsoleteTypes
+	do
+		EchoThis " dtsaved_map: deleting $ptype" HDR;
+        $DtAdmDir/dttypes -d $ptype >/dev/null 2>&1
+        if [ $? -ne 0 ]
+        then
+        EchoThis "  dtsaved_map: Failed to delete $ptype" ERR;
+        else
+        EchoThis "  dtsaved_map: Deleted $ptype" HDR;
+        fi
+	done
+
+	$DtAdmDir/dttypes -a -o $DtUpgradeBinDir/dttypes.dat >/dev/null 2>&1
+    if [ $? -ne 0 ]
+    then
+        EchoThis "  dtsaved_map: failed to add new types" ERR;
+    else
+        EchoThis "  dtsaved_map: added new types" HDR;
+    fi
+}
+
+if [ "$DtUpgradeStage" != "recovery" ]
+then
+while read true_obj saved_obj
+do
+	key=`/usr/bin/basename $true_obj`
+
+	case $key in
+		Help_Desk)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+
+				EchoThis "  dtsaved_map: HelpDesk" HDR;
+				RemoveLinesFromFile $saved_obj \
+					$DtUpgradeBinDir/dtknown_helps.dat
+				AppendThisFile $true_obj $saved_obj;
+				RemoveThisFile $saved_obj regular;
+			fi
+			continue;;
+		PrivTable)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+				EchoThis "  dtsaved_map: PrivTable" HDR;
+				RemoveLinesFromFile $saved_obj \
+					$DtUpgradeBinDir/dtknown_privs.dat;
+				AppendThisFile $true_obj $saved_obj;
+				RemoveThisFile $saved_obj regular;
+			fi
+
+			# Grand owner(s) with new priv based on PrivTable!
+			UsersDir=$DtLoginMgrDir/Users
+			for dtuser in $DtUsers
+			do
+			/usr/bin/grep "^owner$" $UsersDir/$dtuser >/dev/null;
+
+					# let make-owner do the work
+					# if it's an owner!
+				if [ $? = 0 ]
+				then
+		EchoThis "    dtsaved_map: grand user with new priv" HDR;
+
+						# remove the ownership first
+					$DtAdmDir/make-owner - $dtuser;
+						# grand the ownership
+					$DtAdmDir/make-owner $dtuser;
+				fi
+			done
+			continue;;
+		Modems)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+				EchoThis "  dtsaved_map: Modems" HDR;
+				CopyThisFile $saved_obj $true_obj 644 bin bin;
+				RemoveThisFile $saved_obj;
+			fi
+			continue;;
+		Printers)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+				EchoThis "  dtsaved_map: PrintMgr/Printers" HDR;
+				CopyThisFile $saved_obj $true_obj 644 bin bin;
+				RemoveThisFile $saved_obj;
+				UpdatePrinters;
+			fi
+			continue;;
+		Types)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+				EchoThis "  dtsaved_map: PrintMgr/Types" HDR;
+				CopyThisFile $saved_obj $true_obj 644 bin bin;
+				RemoveThisFile $saved_obj;
+				UpdateTypes;
+			fi
+			continue;;
+		dpost)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+				EchoThis "  dtsaved_map: PrintMgr/Filters/dpost" HDR;
+				CopyThisFile $saved_obj $true_obj 644 bin bin;
+				RemoveThisFile $saved_obj;
+			fi
+			continue;;
+		postprint)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+				EchoThis "  dtsaved_map: PrintMgr/Filters/postprint" HDR;
+				CopyThisFile $saved_obj $true_obj 644 bin bin;
+				RemoveThisFile $saved_obj;
+			fi
+			continue;;
+
+		wrap)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+				EchoThis "  dtsaved_map: PrintMgr/Filters/wrap" HDR;
+				CopyThisFile $saved_obj $true_obj 644 bin bin;
+				RemoveThisFile $saved_obj;
+			fi
+			continue;;
+
+
+		Xservers)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+				EchoThis "  dtsaved_map: Xservers" HDR;
+				CopyThisFile $saved_obj $true_obj 755 bin bin;
+				RemoveThisFile $saved_obj;
+			fi
+			continue;;
+		classdb)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+
+				EchoThis "  dtsaved_map: classdb" HDR;
+				ScanThisCdbDir $saved_obj $true_obj "keep";
+
+		EchoThis "    dtsaved_map: including usr*.cdb" HDR;
+		echo "INCLUDE usr_system.cdb;" >> $true_obj/system;
+		echo "INCLUDE usr_system_post.cdb;" >> $true_obj/system.post;
+		echo "INCLUDE usr_dtadmin.cdb;" >> $true_obj/dtadmin;
+			fi
+			continue;;
+		locale)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+EchoThis "  dtsaved_map: locale/*/classdb" HDR;
+RestDirs=`(cd $saved_obj; /usr/bin/find . -name "classdb" -type d -print)`;
+
+				for i in $RestDirs
+				do
+			ScanThisCdbDir $saved_obj/$i $true_obj/$i "remove";
+				done
+			fi
+			continue;;
+		app-defaults)
+			if [ "$DtUpgradeStage" = "post" ]
+			then
+				EchoThis "  dtsaved_map: app-defaults" HDR;
+				. $DtUpgradeBinDir/dtapp_dfts.dot
+			fi
+			continue;;
+		*)
+			EchoThis "  dtsaved_map: Unknown $key" ERR;
+			break;;
+		esac
+done < $DtSavedMap
+else	
+	EchoThis "dtsaved_map.dot: skip for recovery stage" ERR;
+fi

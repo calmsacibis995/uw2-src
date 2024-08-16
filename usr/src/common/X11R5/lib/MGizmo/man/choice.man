@@ -1,0 +1,127 @@
+'\"ident        "@(#)MGizmo:man/choice.man	1.1"
+.TH ChoiceGizmo 3L
+.SH NAME
+\f(CBChoiceGizmo\fP \- an abstract data type (ADT) that is used for the creation
+of groups of choice buttons.
+There are several kinds of choices that can be created using
+\f(CBChoiceGizmo\fPs.
+The types are: toggle, radio and option boxes.
+The \f(CBChoiceGizmo\fP consists of
+a two data structures and a set of functions that operate on these data
+structures.
+.SH SYNOPSIS
+.nf
+.ft CB
+#include <Gizmo/Gizmo.h>
+#include <Gizmo/ChoiceGizm.h>
+.ft
+.fi
+.SH "DESCRIPTION"
+A \f(CBChoiceGizmo\fP is basically a menu that has associated with it an
+initial, current, and previous value.
+These values can be used to maintain the state of the menu buttons by using
+\f(CBManipulateGizmo\fP.
+To create a \f(CBChoiceGizmo\fP a menu must first be populated with the
+buttons that are to be displayed in the \f(CBChoiceGizmo\fP.
+The pointer to this menu is place in the \f(CBChoiceGizmo\fP data structure.
+A pointer to this \f(CBChoiceGizmo\fP structure is then used in an appropriate
+Gizmo data structure such as a \f(CBPopupGizmo\fP structure.
+The choice boxes are created by calling the function
+\f(CBCreateGizmo\fP(3L) with
+the top-level Gizmo, which contains the choices, as an argument.
+.PP
+The following is the definition of the \f(CBChoiceButtons\fP and \f(CBChoiceGizmo\fP
+data structures:
+.PP
+.ft CB
+.nf
+typedef enum {
+        G_TOGGLE_BOX,
+        G_RADIO_BOX,
+        G_OPTION_BOX
+} ChoiceType;
+
+typedef struct _ChoiceGizmo {
+        HelpInfo *      help;             /* Help information */
+        char *          name;             /* Name of menu Gizmo */
+        MenuGizmo *     menu;             /* Choice buttons */
+        ChoiceType      type;             /* Type of button */
+} ChoiceGizmo;
+.ft
+.fi
+\fItype\fP specifies the type of menu that get created.
+There are three type of choice menus that can be created and they are:
+.IP \fBG_TOGGLE_BOX\fP 20
+Specifies a menu that exhibits nonradio behavior, i.e., any number
+of buttons can be set at one time.
+.IP \fBG_RADIO_BOX\fP 20
+Specifies a menu that can only have one button set at a time.
+.IP \fBG_OPTION_BOX\fP 20
+Specifies an option menu.
+.SH "RETURN VALUES"
+\f(CBQueryGizmo\fP returns the following values if \fIname\fP is equal
+to the name of the \f(CBChoiceGizmo\fP:
+.IP \fBGetGizmoWidget\fP 28
+Returns the widget id for the menu.
+.IP \fBGetGizmoGizmo\fP 28
+Returns the handle to the \f(CBChoiceGizmo\fP.
+.IP \fBGetGizmoCurrentValue\fP 28
+Returns the current value for the menu.
+.IP \fBGetGizmoPreviousValue\fP 28
+Returns the previous value for the menu.
+.SH "ARGUMENT SETTING"
+The arguments supplied in the creation of the Gizmo (those specified
+in the \fBGizmoRec\fP) are applied various widgets depending on the type
+of menu being created:
+.IP \fBG_TOGGLE_BOX\fP 20
+.IP \fBG_RADIO_BOX\fP 20
+The arguments are applied to a row column widget that parents the menu.
+.IP \fBG_OPTION_BOX\fP 20
+The arguments are applied to the option menu.
+.SH "USAGE"
+.PP
+.nf
+.ft CB
+static MenuItems        fruitItems[] = {
+        {True, "Apples",  "A", I_TOGGLE_BUTTON, NULL, NULL, NULL, False},
+        {True, "Oranges", "O", I_TOGGLE_BUTTON, NULL, NULL, NULL, True},
+        {True, "Pairs",   "P", I_TOGGLE_BUTTON, NULL, NULL, NULL, False},
+        {True, "Bananas", "B", I_TOGGLE_BUTTON, NULL, NULL, NULL, False},
+        {0, NULL}
+};
+static MenuGizmo        fruitMenu = {
+        NULL, "fruitMenu", "Fruits", fruitItems, NULL, NULL, XmHORIZONTAL, 1
+};
+
+static ChoiceGizmo      fruitChoice = {
+        NULL, "fruitChoice", &fruitMenu, G_TOGGLE_BOX
+};
+
+GizmoRec        record1[] = {
+        {ChoiceGizmoClass, &fruitChoice}
+};
+
+extern MenuGizmo        menu;
+extern MsgGizmo         footer;
+
+BaseWindowGizmo base = {
+        NULL, "base", "Base Window", &menu, record1,
+        XtNumber(record1), &footer
+};
+
+main ()
+{
+        Gizmo   handle;
+
+        handle = CreateGizmo(toplevel, BaseWindowGizmoClass, &base, NULL, 0);
+}
+.ft
+.fi
+.SH "REFERENCES"
+.ft CB
+Gizmo\f(CW(3L)\fP,
+BaseWindowGizmo\f(CW(3L)\fP,
+PopupGizmo\f(CW(3L)\fP,
+MenuGizmo\f(CW(3L)\fP,
+MsgGizmo\f(CW(3L)\fP
+.ft

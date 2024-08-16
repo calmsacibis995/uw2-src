@@ -1,0 +1,96 @@
+.pageno
+Pagina %d di %d
+.ul
+Installazione sistema operativo UNIX
+.hhelp_ban
+Istruzioni
+.helpbanner
+Guida: Conto del proprietario
+.ur
+Conto del proprietario
+#.ll
+#THIS SPACE LEFT INTENTIONALLY BLANK
+.lr
+F1=Guida
+.top
+< /tmp/err.login
+Creazione di un conto di login del proprietario per l'accesso al
+computer. Per informazioni su ciascun campo leggere lo schermo di Guida.
+
+.form
+#TYPE_REGEXP <min length> <max length>//regexp//field label//
+5 3 25//^[^:]+$//Nome proprietario://USERNAME//
+#field options
+//Digitare nome e cognome del proprietario//
+#
+#
+#TYPE_ALPHA <min length> <max length> //field label//
+1 2 8 //ID di login del proprietario://USERID//
+#field options
+//Digitare la ID di login del proprietario//
+#
+#
+#TYPE_REGEXP <min length> <max length>//regexp//field label//
+3 0 101 60000 //Numero di utente del proprietario://USERNUM//
+#field options
+//Digitare il numero di utente del proprietario (101 o superiore)//
+#
+`[ "${DESKTOP_PRESENT}" = "Yes" ] && echo "2 2//MOTIF::Motif//NONE::Nessuno//Ambiente utente del proprietario://DESKTOP// "`
+#field options
+`[ "${DESKTOP_PRESENT}" = "Yes" ] && echo "//Altre opzioni con freccia destra/sinistra//"`
+#
+#
+.button
+Applica
+Reimposta
+.bottom
+Premere <Tab> per portare il cursore da un campo all'altro. Alla fine,
+portare il cursore su "Applica" e premere <Invio> per continuare.
+.help
+Per istruzioni dettagliate, premere 'F1' (o '?') in qualsiasi momento.
+
+UNIX supporta più utenti. Per accedere al computer sono richiesti una
+ID di login e una parola d'ordine per ogni utente. Un solo utente viene
+considerato "proprietario" del computer. Il conto
+del proprietario è autorizzato a svolgere compiti amministrativi come la
+creazione di nuovi conti di utenti e la gestione della rete. Altri login
+d'utente possono essere autorizzati a eseguire questi compiti tramite il
+sistema di gestione degli utenti del Desktop Manager.
+
+NOME E COGNOME DEL PROPRIETARIO
+
+Immettere il nominativo completo del proprietario. Se è il caso, è
+consigliabile aggiungere anche il numero di stanza o di telefono. In
+questo campo possono essere usati tutti i caratteri stampabili tranne i
+due punti (:).
+
+ID DI LOGIN DEL PROPRIETARIO
+
+Scegliere una ID di login da usare al prompt "login:" quando
+l'installazione del sistema operativo UNIX sarà completa.
+
+Le ID di login devono essere in minuscolo e non devono contenere tab o
+spazi. Le ID di login sono in genere costituite dalle iniziali
+dell'utente, dal nome o dal cognome. Per esempio, l'utente Gianpaolo
+Ricci potrebbe scegliere come ID di login "gpr", "gianni" o anche
+"gricci".
+
+NUMERO UTENTE DEL PROPRIETARIO
+
+Se questo computer condividerà file o cartelle con altri computer in
+rete, conviene che ciascun computer faccia riferimento a un dato utente
+sempre con lo stesso numero. Se il proprietario ha già un numero di
+utente su un altro sistema UNIX, inserendo qui quel numero consentirà di
+realizzare la condivisione. Per conoscere il numero di utente che il
+proprietario ha sull'altro computer, basta eseguire il comando "id" su
+quel computer.
+
+Se il proprietario non ha conti su altri computer, si può accettare
+senz'altro il default.
+.helpinst
+ESC=Fine guida  F1=Istruzioni  1=Avanti  2=Indietro
+.hhelpinst
+ESC=Fine istruzioni  1=Avanti  2=Indietro
+.working
+Attendere...
+.end

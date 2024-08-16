@@ -1,0 +1,47 @@
+syntaxe : \nypinit -c\nypinit -m\nypinit -s serveur_maître\noù : \n\t-c permet de configurer un nouveau client nis\n\t-m permet de créer la base de données associée au serveur maître nis\n\t-s est utilisé pour une base de données associée à une station esclave et\n       serveur_maître doit être un serveur nis existant et disponible.\n
+Veuillez entrer le nom du domaine ou taper q pour quitter : 
+%s est-il correct ? [o/n : o] 
+Lancement de NIS.... 
+Terminé\n
+Vous devez être l'administrateur NIS pour pouvoir exécuter ypinit\n
+Fermeture de NIS.... 
+\nImpossible d'obtenir le nom de l'hôte local. Veuillez vérifier votre chemin\nd'accès.\n
+\nLe nom associé à l'hôte local n'a pas été défini. Veuillez le définir.\n
+\nImpossible d'obtenir le nom de domaine correspondant à l'hôte local. Veuillez\nvérifier votre chemin d'accès.\n
+\nLe nom de domaine correspondant à l'hôte local n'a pas été défini. Veuillez le\ndéfinir.\n
+\nLe nom du domaine de l'hôte local a été défini à '%s'\n
+Ces données sont-elles correctes ? [o/n : o] 
+\nLe répertoire %s n'existe pas. Réinstallez le paquet NIS.\n
+\nAfin d'assurer le bon fonctionnement de NIS, il faut dresser une\nliste des serveurs NIS. Veuillez continuer à ajouter des noms de\nserveurs NIS par ordre de préference, avec un seul nom par ligne.\nUne fois votre liste établie, tapez <control D>.\n
+\thôte suivant à ajouter : %s\n
+'%s' n'est pas la base de données hôtes. Pour le\nbon fonctionnement de NIS, '%s' doit être ajouté à /etc/hosts\n\n
+\thôte suivant à ajouter :  
+La liste actuelle des serveurs NIS se présente comme suit :\n
+Réessayons depuis le début...\n";;
+%s est défini comme client NIS.\n
+L'hôte spécifié doit être un serveur maître nis en service, mais ne peut\ncorrespondre à cette machine.\n
+Pouvons-nous détruire le %s existant et son contenu ? [o/n : n]  
+Impossible de nettoyer l'ancien répertoire %s. Erreur bloquante.\n
+OK, effacez-le manuellement et recommencez. Au revoir\n
+Impossible de créer un nouveau répertoire %s. Erreur bloquante.\n
+Le répertoire de domaine NIS est  %s""/""%s\n
+\nLes bases de données NIS suivantes seront copiées à partir du serveur maître :\n
+\nLes bases de données NIS suivantes vont être créées pour ce domaine :\n
+Ces données sont-elles correctes ? [o/n : o] 
+\nVeuillez éditer le fichier /var/yp/YPMAPS et recommencer.\n
+\nPas de questions supplémentaires.\n%s a été défini comme un serveur esclave NIS.\n
+L'installation de la base de données NIS nécessite la réponse à\ncertaines questions. Ces questions seront posées au début\nde la procédure d'installation.\n\nVoulez-vous que cette procédure s'arrête en cas d'erreur mineure ? [o/n : n] 
+OK, n'oubliez pas de revenir en arrière et de refaire manuellement toute\n opération ayant échoué. Sinon une partie du système\n (peut-être même NIS) ne fonctionnera pas.\n";;
+Pas de questions supplémentaires. Le reste de la procédure devrait\nprendre entre 5 et 10 minutes.\n
+Mise en place de %s/%s/ypservers...\n
+Impossible de créer une base de données nis %s/%s/%s.\n
+Exécution de %s/Makefile\n
+Erreur survenue lors de l'exécution de makefile.\n
+%s a été défini comme serveur maître NIS avec des erreurs. Pensez a\nlocaliser et à résoudre le problème.\n\n
+%s a été défini comme serveur maître NIS sans aucune erreur.\n\n
+Impossible d'ajouter tcpip_nis a /etc/netconfig\n
+Les machines suivantes n'ont pas pu être contactées sur le réseau.
+Bien que NIS puisse s'initialiser correctement, nous vous recommandons\n\t cependant de bien vérifier que chaque machine a une\n\t entrée dans /etc/hosts et qu'elle est accessible sur le réseau.\n\t Relancez ensuite ypinit.\n 
+\tNIS ne sera pas lancé car aucune des machines déclarées\n\t comme serveurs NIS n'est accessible sur le réseau.\n\n\tVérifiez que chaque serveur NIS a bien une entrée dans /etc/hosts\n\t et qu'il est accessible sur le réseau. Relancez ensuite ypinit.\n\n
+ Le serveur principal NIS %s n'a pas pu\n\têtre contacté sur le réseau.
+\tNIS ne sera pas lancé.\n\n\tVérifiez que le serveur %s a bien une entrée dans /etc/hosts\n\t et qu'il est accessible sur le réseau. Relancez ensuite ypinit.\n\n

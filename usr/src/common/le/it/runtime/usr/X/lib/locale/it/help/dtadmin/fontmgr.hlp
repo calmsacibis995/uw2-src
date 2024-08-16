@@ -1,0 +1,689 @@
+#ident\t"@(#)dthelp:Preferences/fontmgr.hlp     1.20"
+^*version^1
+^*title^Utilizzo dei Font in UnixWare
+^:Font
+^*width^70
+^+DesktopMgr/help.defs
+^?Utilizzo dei Font in UnixWare
+^0^Font
+^$10
+Font
+
+Utilizzare Font per mostrare tutti i font del sistema, installare i
+font \d(Type 1^Font Adobe Type 1) da dischetti DOS/Windows, cancellare i
+font non necessari e sostituire il font di default usato dal Desktop.
+
+Una volta installati, i font Type 1 sono utilizzabili da tutte le
+applicazioni Desktop Unixware che impieghino il meccanismo dei font di
+X Windows. Queste applicazioni possono scaricare i font su stampanti
+Postscript.
+
+Con Font è possibile fare quanto segue:
+
+\to\t\k(Mostrare i font installati^^Visualizzazione dei font installati)
+\to\t\k(Installare i font Type 1 da un dischetto^^Installazione di font Type 1)
+\to\t\k(Cancellare i font^^Cancellazione dei font)
+\to\t\k(Sostituire i font utilizzati per il testo nelle finestre "Desktop" e "Terminale"^^Modifica dei font)
+\to\t\k(Ripristinare i font di default delle finestre "Desktop" e "Terminale"^^Ripristino dei font di default)
+
+Per informazioni di base sui font, vedi quanto segue:
+
+\k(Famiglie di caratteri, caratteri e font)
+\k(Font Bitmap e Outline)
+\k(Esempi di risoluzione di font)
+
+
+^1^Famiglie di caratteri, caratteri e font
+^$20
+Famiglie di caratteri, caratteri e font
+
+Una famiglia di caratteri descrive l'aspetto essenziale di un gruppo
+di font senza precisare uno stile particolare (ad esempio, Helvetica).
+
+Un carattere di stampa è membro di una famiglia di tipi aventi uno
+stile particolare, quale Helvetica Grassetto.
+
+Un font è un carattere di stampa avente una dimensione particolare, ad
+esempio, Helvetica Grassetto 11 punti. Tuttavia, il termine "font"
+viene tipicamente usato con tutti questi significati.
+
+^2^Font Bitmap e Outline
+^$30
+Font Bitmap e Outline
+
+I font vengono memorizzati su disco secondo una delle seguenti
+alternative:
+
+\to\t\d(Font bitmap^font bitmap)
+\to\t\d(Font tracciati^font outline) (detti anche font scalabili)
+
+Un font bitmap viene memorizzato come l'insieme dei punti che formano
+ciascun carattere. Ciascun font bitmap è creato con una dimensione e
+risoluzione specifica. In UnixWare, la maggior parte dei font bitmap è
+stata creata con risoluzioni di 75 e 100 dpi (dots per inch: punti per
+pollice), tipiche per i monitor.
+
+Un font bitmap visualizzato con una risoluzione diversa da quella di
+creazione appare più piccolo o più grande e può presentarsi un po'
+distorto.
+
+Sebbene i font bitmap possano essere scalati a una dimensione
+maggiore, i puntini appariranno innaturalmente grandi e i caratteri
+irregolari.
+
+I font tracciati vengono memorizzati come istruzioni. Quando occorre
+una particolare dimensione in punti, il sistema crea automaticamente
+un font bitmap con quella dimensione e con la risoluzione dello
+schermo. Lo fa usando un \d(visualizzatore di font outline).  In UnixWare, questo
+esecutore è \d(Adobe Type Manager), e può elaborare qualunque font Type 1,
+persino quelli installabili con i dischetti DOS/Windows (vedi
+\k(Installazione di font Type 1)).
+
+Seguono alcune note importanti sui font tracciati:
+
+\to\tPer visualizzare i font tracciati il sistema deve interpretare
+\t \tdelle istruzioni, per cui può richiedere più tempo che per i font
+\t \tbitmap. Tuttavia, una volta interpretati, i font vengono tenuti in
+\t \tmemoria in modo da velocizzarne la visualizzazione successiva.
+
+\to\tSiccome non occorre memorizzare individualmente su disco ogni
+\t \tdimensione di font, i font tracciati richiedono meno spazio su
+\t \tdisco dei font bitmap.
+
+\to\tAlcune applicazioni vecchie possono non essere in grado di trarre
+\t \tvantaggio dai font tracciati.
+
+Vedi anche:
+\k(Esempi di risoluzione di font)
+
+^2^Esempi di risoluzione di font
+^$35
+Esempi di risoluzione di font
+
+La finestra a comparsa "Mostra risoluzione" dimostra come i
+\d(font bitmap^font bitmap) possono apparire di dimensioni diverse
+se sviluppati per risoluzioni diverse. Per vedere questi esempi,
+procedere come segue:
+
+Nota: Se ci si trova già nella cartella Preferenze, passare al Punto 2.
+
+1.\t\d(Doppio clic^doppio clic) su Preferenze
+  \t\k(nella finestra "Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tPreferenze".
+
+2.\tFare doppio clic su Font. Appare la finestra "Font".
+
+3.\tFare clic su Azione=>Mostra Risoluzione. Appare la
+  \tfinestra "Mostra Risoluzione".
+
+  \tNotare che le prime due righe mostrano informazioni specifiche per lo
+  \tschermo (risoluzione in punti per pollice e dimensioni). Il sistema
+  \tcalcola i punti-per-pollice in base alle dimensioni dello schermo (per
+  \tesempio, 640x480) e alla misura dello schermo, che vengono impostate
+  \tdurante l'installazione iniziale di UnixWare o utilizzando la
+  \t\k(Configurazione Schermo^dtadmin/video.hlp^Configurazione Schermo).
+
+  \tSe la misura dello schermo immessa non è corretta , non
+  \tcorrispondendo alla misura fisica effettiva dello schermo, i
+  \tvalori della risoluzione in DPI possono risultare errati e
+  \tcompromettere l'utilizzabilità di alcuni font.
+
+
+^1^Visualizzazione dei font installati
+^$40
+Visualizzazione dei font installati
+
+Il Desktop UnixWare comprende numerosi \d(font bitmap^font bitmap) e 13
+\d(font tracciati^font outline) Adobe Type Manager Type 1.
+
+È anche possibile installare da dischetto font Type 1 a piacere.
+I font Type 1 sono facilmente reperibili da fornitori di font al
+dettaglio e per corrispondenza. (Inoltre, sono disponibili font bitmap
+aggiuntivi nel pacchetto Graphics Supplemental Fonts, che per default
+non viene installato con il pacchetto Personal Edition).
+
+Per mostrare i font installati nel sistema, procedere come segue:
+
+Nota: Se ci si trova già nella cartella Preferenze, passare al Punto 2.
+
+1.\t\d(Doppio clic^doppio clic) su Preferenze
+  \t\k(nella finestra "Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tPreferenze".
+
+2.\tFare doppio clic su Font. Appare la finestra "Font".
+
+3.\tMostrare un font come segue:
+
+  \to\tScorrere le diverse \d(famiglie^famiglia di caratteri) e fare
+  \t \tclic su quella che si vuole vedere. Gli stili disponibili per quella
+  \t \tfamiglia compaiono nella lista Stili.
+
+  \to\tScorrere gli \d(Stili^carattere) disponibili per la
+  \t \tfamiglia e fare clic su quello che si vuole vedere.
+
+  \to\tSelezionare il valore di \d(corpo) che si vuole vedere
+  \t \tdal controllo Dimensioni in Punti.
+
+  \t \tSe il tipo di carattere selezionato è un font bitmap,
+  \t \tappare una lista con le misure disponibili, che si può fare
+  \t \tscorrere. Fare clic sulla misura desiderata.
+
+  \t \tNota: Le stesse dimensioni in punti possono comparire più volte
+  \t \tnella lista. Ciò può capitare se differiscono le larghezze medie
+  \t \tdi due font, o se i due font hanno set di caratteri diversi. Per
+  \t \tvedere le differenze fra i font, fare clic su Mostra=>Set di
+  \t \tcaratteri. I valori in punti possono ripetersi anche perché un
+  \t \tfont creato per 14 punti a 75 dpi può rassomigliare in tutto a
+  \t \tuno creato per 10 punti a 100 dpi.
+
+  \t \tSe il tipo di carattere selezionato è un font tracciato,
+  \t \tappare un campo numerico. Immettere la dimensione in punti che
+  \t \tsi vuole vedere (da 6 a 100 punti) o fare clic sulle frecce su e
+  \t \tgiù per cambiarne il valore.
+
+  \t \tDopo ogni selezione, viene mostrato nella sottofinestra il font
+  \t \tselezionato. Notare che i font tracciati possono richiedere
+  \t \talcuni istanti per essere resi la prima volta.
+
+4.\tCambiare il testo visualizzato nella sottofinestra come segue:
+
+  \to\tPer poter digitare i caratteri che si desiderano vedere nel
+  \t \tfont selezionato, fare clic su Mostra=>Frase. Si può quindi
+  \t \tdigitare nella sottofinestra dove appare la frase "Immettere
+  \t \tqui".
+
+  \to\tPer visualizzare il set completo di caratteri stampabili nel
+  \t \tfont selezionato, fare clic su Mostra=>Set di caratteri.  Il
+  \t \tnome di questo set di caratteri, se diverso dal set di caratteri
+  \t \tISO8859-1, compare a pié di finestra quando è attiva l'opzione
+  \t \tMostra=>Nome Corto del Font.
+
+5.\tCambiare il nome del font visualizzato a pié di finestra come segue:
+
+  \to\tPer visualizzare il nome abbreviato che identifica il font,
+  \t \tfare clic su Mostra=>Nome Corto del Font.
+
+  \t\tLe informazioni disponibili sui font tracciati a pié di
+  \t \tfinestra comprendono quanto segue:
+
+  \t \t-\tIl nome del font come noto alle stampanti PostScript,
+  \t \tche differisce dal nome usato da UnixWare (il nome PostScript
+  \t \tsolitamente comprende la famiglia e lo stile).
+
+  \t\t-\tLa dimensione in punti del font sullo schermo.
+
+  \t\t-\tSe si tratta di un font monospaziato (a larghezza fissa).
+
+  \t \t-\tIl set di caratteri contenuto nel font (se diverso
+  \t \t \tdall'ISO8859-1).
+
+  \t\tLe informazioni disponibili sui font bitmap a pié di
+  \t \tfinestra comprendono quanto segue:
+
+  \t \t-\tIl nome della famiglia.
+
+  \t \t-\tAltri eventuali attributi della famiglia.
+
+   \t\t-\tIl peso del tipo di carattere.
+
+   \t\t-\tL'inclinazione del tipo di carattere, se diverso da Roman.
+
+   \t\t-\tLa dimensione in punti del font sullo schermo.
+
+  \t\t-\tLa risoluzione dello schermo per il quale era il font è
+  \t\t \tprogettato, di solito 75 o 100 dpi (dots per inch=punti per
+  \t\t \tpollice).
+
+  \t \t-\tSe si tratta di un font monospaziato (a larghezza fissa) o
+  \t \t \tspaziato a celle.
+
+  \t \t-\tLa larghezza media di tutti i caratteri nel font.
+
+  \t \t-\tIl set di caratteri contenuto nel font (se diverso
+  \t \t \tdall'ISO8859-1).
+
+  \to\tPer visualizzare il nome esteso, interno di X Windows
+  \t \t\d(XLFD), che identifica il font, fare clic su
+  \t \tMostra=>Nome XLFD.  Per i font bitmap, tale nome mostra la
+  \t \trisoluzione originaria (di solito "-75-75-" o "-100-100-")
+  \t \tper la quale era stato creato il font.
+
+Nota: Se si ritiene di avere problemi con i font (ad esempio, si
+ottiene un messaggio tipo "Impossibile visualizzare il font ..." a pié
+di finestra), conviene verificare l'integrità delle proprie librerie
+di font. Per ulteriori informazioni vedi \k(Verifica dell'integrità dei font).
+
+
+^1^Installazione di font Type 1
+^$50
+Installazione di font Type 1
+
+Molte applicazioni diffuse di videoscrittura e di grafica usano
+\d(font Type 1^Font Adobe Type 1) scalabili. Sebbene la maggior parte
+delle applicazioni che usano i font Type 1 contengano un set di font
+standard, è possibile espandere la scelta di font installando font
+Type 1 aggiuntivi da dischetti DOS. I font Type 1 sono facilmente
+reperibili presso fornitori di font sia al dettaglio che per
+corrispondenza.
+
+Per installare font Type 1 aggiuntivi da un dischetto, procedere come
+segue:
+
+1.\tFare login come utente con \k(permessi per Aggiungere/Rimuovere Font^dtadmin/user.hlp^Comprensione dei permessi).
+
+2.\t\d(Fare doppio clic^doppio clic) su Preferenze nella finestra
+  \t\k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare)
+
+3.\tFare doppio clic su Font. Compare la finestra "Font".
+
+4.\tInserire il dischetto DOS Type 1 nell'unità.
+
+  \tNota: È possibile usare sia dischetti da 3,5" che da 5,25", a
+  \tseconda del tipo di unità a disco supportate dal sistema (per
+  \tinformazioni sui dischi, le unità disco, ecc., vedi \k(Disks-etc^dtadmin/disk.hlp^Introduzione alla cartella Dischi-ecc.)).
+
+5.\tFare clic su Azioni=>Installa. Appare la finestra
+  \t "Installazione Font Type 1 da dischetto".
+
+6.\tÈ possibile:
+
+  \to\tFare clic su ciascun font desiderato e infine su Installa.
+
+   \t\tNota: se non è stato selezionato alcun font per l'installazione
+  \t \tprima di fare clic su Installa, viene visualizzato un messaggio
+  \t \tdi errore e si può riprovare.
+
+  \to\tFare clic su Installa Tutto per installare tutti i font presenti
+   \t\tsul dischetto.
+
+Nota: Si può anche installare dei font con il \d(trascinare e rilasciare). Se
+ad esempio il dischetto con i font si trova nell'unità A, premere
+sull'icona del disco A (nella \k(Cartella Disk-etc^dtadmin/disk.hlp^Introduzione alla cartella Dischi-ecc.)), trascinare l'icona
+del Disco A sull'icona (o finestra) dei Font, e rilasciarlo. Appare la
+finestra "Installa i font Type 1 da dischetto".
+
+^2^Avviso: inserire un dischetto DOS
+^$60
+Avviso: inserire un dischetto DOS
+
+Si riceve questo avviso di errore se il sistema non riconosce la
+presenza di un dischetto nell'unità. Inserire il dischetto DOS con i
+font Type 1nell'unità appropriata. È possibile usare sia dischetti da
+3,5" che da 5,25". Se occorre, il sistema controlla entrambe le unità
+per individuare il dischetto.
+
+^2^Avviso: Non è un dischetto DOS
+^$70
+Avviso: Non è un dischetto DOS
+
+Si riceve questo avviso di errore se il dischetto inserito non è stato
+formattato per DOS (ad esempio, potrebbe essere un dischetto
+UnixWare). Sostituire il dischetto con un dischetto DOS che contenga i
+font Type 1 e fare clic su Continua.
+
+Se non si trova un dischetto DOS e si vuole abbandonare
+l'installazione, fare clic su Annulla.
+
+
+^2^Avviso: nessun font Type 1 riconoscibile
+^$80
+Avviso: nessun font Type 1 riconoscibile
+
+Si riceve questo avviso di errore se il sistema non trova alcun font
+Type 1 sul dischetto inserito. Controllare per assicurarsi di aver
+installato un dischetto DOS Type 1.
+
+Talvolta, insieme ai loro font, i fornitori di font spediscono del
+software DOS su dischetti privi di font. Inserire solo i dischetti con
+l'etichetta "Font" tralasciando gli altri dischetti, quali "Foundry
+Disk" o il "Program Disk".
+
+Dopo aver inserito nell'unità il dischetto giusto, fare clic su
+Continua.
+
+Se non si trova il dischetto DOS e si vuole abbandonare
+l'installazione, fare clic su Annulla.
+
+^2^Avviso: font installati mancanti di file AFM
+^$85
+Avviso: font installati mancanti di file AFM
+
+Si riceve questo avviso se per qualche font Type 1 appena installato
+manca dal dischetto il corrispondente file Adobe Font Metrics (AFM).
+Sebbene questi font siano stati installati e funzioneranno lo stesso,
+alcune applicazioni, cui servono le metriche dettagliate disponibili
+nei file AFM, potranno funzionare meno bene del dovuto.
+
+^2^Avviso: inserire font supplementari
+^$87
+Avviso: inserire font supplementari
+
+Si riceve questo avviso se i font selezionati si trovano sul secondo o
+successivo dischetto in un set di font multidischetto.
+
+Inserire il dischetto successivo del set multidischetto, poi fare clic
+su Continua.
+
+Se non si trova il dischetto DOS e si vuole abbandonare
+l'installazione, fare clic su Annulla.
+
+^1^Cancellazione dei font
+^$90
+Cancellazione dei font
+
+I font possono occupare uno spazio significativo sul disco rigido del sistema. Ciò vale particolarmente per i font bitmap. Se si hanno problemi di spazio su disco, può convenire rimuovere i font usati poco frequentemente.
+
+Per cancellare individualmente dal sistema i font sia bitmap che
+tracciati, procedere come segue:
+
+1.\tFare login come utente con \k(permessi per Aggiungere/Rimuovere Font^dtadmin/user.hlp^Comprensione dei permessi).
+
+2.\t\d(Fare doppio clic^doppio clic) su Preferenze nella finestra
+  \t\k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare)
+
+3.\tFare doppio clic su Font. Compare la finestra "Font".
+
+4.\tFare clic su Azioni=>Cancella.
+
+5.\tFare clic su \d(Bitmap^font bitmap) o su
+  \t\d(Tracciato^font outline). Nota: se si cancella un font
+  \tbitmap, si cancella un font singolo: una dimensione, uno stile,
+  \tuna famiglia. Quando, però, si cancella un font tracciato, si
+  \tcancella l'intero tipo (tutte le dimensioni in punti di una
+  \tcombinazione famiglia/stile).
+
+6.\tFare clic sul font da cancellare. Il sistema evidenzia ogni font
+  \t su cui si fa clic.
+
+7.\tFare clic su Cancella. Appare la
+  \t\k(finestra "Avviso - Conferma cancellazione font"^^Avviso: Conferma cancellazione di font).
+
+  \tNota: Se non si è selezionato alcun font per la cancellazione
+  \tprima di fare clic su Cancella, si riceve un avviso di errore 
+  \te si può riprovare.
+
+8.\tFare clic su Continua per rimuovere il font o Annulla per terminare
+  \tl'operazione senza rimuovere i font.
+
+^2^Avviso: Conferma cancellazione di font
+^$92
+Avviso: Conferma cancellazione di font
+
+Si riceve questo avviso in modo da poter riconsiderare la
+cancellazione dei font. Fare clic su Continua se si ha proprio
+l'intenzione di rimuovere i font.
+
+Fare clic su Annulla per terminare l'operazione senza rimuovere i font.
+
+^2^Avviso: non può essere cancellato nessun font
+^$94
+Nessun Font Può Essere Cancellato
+
+Si riceve questo avviso di errore se i font (bitmap o tracciati,
+secondo quali font si vogliano cancellare) non sono disponibili per la
+cancellazione. Ciò capita se i font non sono stati installati sul
+sistema, o se sono già stati cancellati tutti.
+
+Nota: Alcuni font bitmap sono indispensabili per il funzionamento del
+Desktop e non si possono cancellare.
+
+^1^Modifica dei font
+^$95
+Modifica dei font
+
+Si può sostituire il font di default in uso per il testo delle
+finestre Desktop. come pure il font in uso per il testo delle finestre
+"Terminale".
+
+Vedi i seguenti:
+
+\to\t\k(Modifica del font del desktop)
+\to\t\k(Modifica dei font del terminale)
+
+^2^Modifica del font del desktop
+^$96
+Modifica del font del desktop
+
+Il Desktop utilizza un font di default per il testo nelle finestre
+(titolo di finestra, testo dei menu, etchette delle icone,
+ecc.).Questo font è Helvetica Medium, di solito a 12 punti. Si può
+tuttavia sostituire il font di default in uso sul Desktop con un
+altro, a patto che il font non superi 20 punti.
+
+All'apertura dell'applicazione Font, il font visualizzato nelle liste
+scorrevoli di Famiglia, Stile e Dimensioni in Punti, e nella
+sottofinestra del testo campione, è il font del Desktop.
+
+Nota: Se al font di default ne viene sostituito uno piuttosto grande
+(per esempio, 14-20 punti), alcuni programmi del Desktop possono
+apparire leggermente distorti fino al login successivo.
+
+Si può anche voler sostituire il font della finestra "Terminale" per
+rendere più agevole la lettura. Vedi \k(Modifica dei font del terminale).
+
+Per ritornare eventualmente ai font di default, vedi la procedura
+\k(Ripristino dei font di default).
+
+Nota: Ogniqualvolta si cambia un font (vale a dire, si seleziona
+Applica alle finestre, Cambia il font del terminale, o Ripristina i
+default), il sistema controlla che sia possibile cambiare i font
+nell'ambiente locale attuale. In caso contrario, appare una finestra a
+comparsa con un messaggio di errore.
+
+Se l'ambiente locale permette di cambiare i font, il sistema controlla
+che il font contenga il set di caratteri corretto. Se il font non
+contiene il set corretto, appare un'altra finestra a comparsa con un
+messaggio di errore.
+
+Nota: Non tutti gli ambienti locali sono in grado di cambiare i font.
+Questa possibilità è limitata agli ambienti locali che utilizzano
+l'inglese o una lingua dell'Europa occidentale.
+
+Per sostituire il font di default della finestra "Desktop", procedere
+come segue:
+
+1.\t\d(Doppio clic^doppio clic) su Preferenze
+  \t\k(nella finestra "Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tPreferenze".
+
+2.\tFare doppio clic su Font. Appare la finestra "Font".
+
+3.\tSelezionare il font desiderato ((vedi \k(Visualizzazione dei font installati)).
+
+4.\tFare clic su Font=> Applica alle finestre. In tutti i titoli,
+  \tle etichette e altri testi il nuovo font sostituisce dinamicamente
+  \til precedente. Questi cambiamenti si ritrovano al successivo
+  \tlogin.
+
+Nota: Se si sostituisce il font di default con uno piuttosto grande
+(ad esempio 14-20 punti), alcuni programmi del Desktop possono
+apparire leggermente distorti. Ad esempio, le posizioni del testo nel
+titolo della finestra, nei pulsanti delle finestre e nel testo a pié
+di finestra possono trovarsi leggermente disallineate, e le etichette
+sulle icone del Desktop possono risultare troncate in basso e a destra
+e in parte sovrapposte. La maggior parte di questi problemi scompare
+riavviando l'applicazione o il Desktop. Si può rimediare al problema
+della sovrapposizione delle etichette di icone di file usando
+\k(Preferenze Desktop^DesktopMgr/dskpref.hlp^Modifica delle proprietà di base del Desktop) per cambiare le dimensioni
+della griglia nelle cartelle dei file.
+
+Si può anche voler sostituire il font della finestra "Terminale" per
+rendere più agevole la lettura. Il font di default del terminale per
+la finestra "Desktop" è Lucidatypewriter Medium, di solito a 12 punti.
+Vedi \k(Modifica dei font del terminale).
+
+Per ritornare eventualmente ai font di default, vedi la procedura
+\k(Ripristino dei font di default).
+
+Nota: Ogniqualvolta si cambia un font (vale a dire, si seleziona
+Applica alle finestre, Cambia il font del terminale, o Ripristina i
+default), il sistema controlla che sia possibile cambiare i font
+nell'ambiente locale attuale. In caso contrario, appare una finestra a
+comparsa con un messaggio di errore.
+
+Se l'ambiente locale permette di cambiare i font, il sistema controlla
+che il font contenga il set di caratteri corretto. Se il font non
+contiene il set corretto, appare un'altra finestra a comparsa con un
+messaggio di errore.
+
+
+^2^Modifica dei font del terminale
+^$102
+Modifica dei font del terminale
+
+È possibile cambiare il font del terminale dal Desktop, sostituendolo
+con qualsiasi font monospaziato (a larghezza fissa), (come il Courier)
+disponibile nel proprio sistema. Questo font viene usato nelle
+finestre "Terminale" e in qualsiasi applicazione del Desktop che
+richieda un font monospaziato per il corretto allineamento
+dell'output.
+
+Per riconoscere un font monospaziato, guardare il nome abbreviato a
+pié di finestra (usando Mostra=>Opzione nome corto del font). Vedi
+\k(Visualizzazione dei font installati).
+
+Per cambiare il font della finestra "Terminale", procedere come segue:
+
+1.\t\d(Doppio clic^doppio clic) su Preferenze
+  \t\k(nella finestra "Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tPreferenze".
+
+2.\tFare doppio clic su Font. Appare la finestra "Font".
+
+3.\tFare clic sul font monospaziato desiderato.
+
+4.\tFare clic su Font=>Modifica font del terminale. Tutte le finestre
+  \t"Terminale" aperte in seguito useranno il nuovo font di default.
+
+  \tNota: L'applicazione Terminale può non essere l'unica sul sistema
+  \ta usare un font monospaziato. Ad esempio, anche Posta e Debug
+  \tutilizzano font monospaziati. Quando si seleziona Cambia font del
+  \tterminale, anche le altre finestre di applicazione sul sistema
+  \tche usano font monospaziati si troveranno col font specificato.
+
+Per ritornare eventualmente ai font di default, vedi la procedura
+\k(Ripristino dei font di default).
+
+Nota: Ogniqualvolta si cambia un font (vale a dire, si seleziona
+Applica alle finestre, Cambia il font del terminale, o Ripristina i
+default), il sistema controlla che sia possibile cambiare i font
+nell'ambiente locale attuale. In caso contrario, appare una finestra a
+comparsa con un messaggio di errore.
+
+Se l'ambiente locale permette di cambiare i font, il sistema controlla
+che il font contenga il set di caratteri corretto. Se il font non
+contiene il set corretto, appare un'altra finestra a comparsa con un
+messaggio di errore.
+
+
+^2^Ripristino dei font di default
+^$103
+Ripristino dei font di default
+
+Per ripristinare i font di default delle finestre (comprese le
+finestre "Terminale"), procedere come segue:
+
+1.\t\d(Doppio clic^doppio clic) su Preferenze
+  \t\k(nella finestra "Desktop UnixWare" ^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare). Appare la finestra "Cartella:
+  \tPreferenze".
+
+2.\tFare doppio clic su Font. Appare la finestra "Font".
+
+3.\tFare clic su Font=>Ripristina default. I font di tutte le finestre
+  \tverranno ripristinati ai font di default (vale a dire, ai font
+  \tutilizzati dal sistema subito dopo la sua installazione).
+
+  \tTuttavia, i font delle finestre "Terminale" attualmente aperte
+  \tsul Desktop non cambiano. Solo le nuove finestre "Terminale" aperte
+  \tuseranno il font di default.
+
+Nota: Ogniqualvolta si cambia un font (vale a dire, si seleziona
+Applica alle finestre, Cambia il font del terminale, o Ripristina i
+default), il sistema controlla che sia possibile cambiare i font
+nell'ambiente locale attuale. In caso contrario, appare una finestra a
+comparsa con un messaggio di errore.
+
+^2^Avviso: i font del terminale devono essere monospazio
+^$104
+Avviso: i font del terminale devono essere monospazio
+
+Si riceve questo avviso di errore quando si cerca di cambiare il font
+del terminale in uno a spaziatura proporzionale. Il font del terminale
+deve essere monospaziato (vale a dire, un font avente tutti i
+caratteri della stessa larghezza).
+
+Si riesce a capire se un font è monospaziato guardando il nome
+abbreviato a pié di finestra (usando l'opzione Mostra=>Nome corto del
+font). Vedi \k(Visualizzazione dei font installati).
+
+I font monospaziati forniti con UnixWare comprendono Courier, Fixed, e
+LucidaTypewriter.
+
+^2^Avviso: ambiente locale non supportato
+^$106
+Avviso: ambiente locale non supportato
+
+Si riceve questo avviso di errore quando si cerca di cambiare il font
+delle finestre "Desktop" o "Terminale" trovandosi in un ambiente
+locale che non supporta questa possibilità.
+
+È possibile cambiare il font solo in ambienti locali di lingua inglese
+o dell'Europa occidentale.
+
+^2^Avviso: corpo tropppo grande per essere usato nel Desktop
+^$107
+Avviso: corpo tropppo grande per essere usato nel Desktop
+
+Si riceve questo avviso di errore se si cerca di cambiare il font del
+Desktop o terminale in un \d(corpo) superiore a 20 punti.
+Dimensioni in punti superiori a 20 punti distorceranno l'aspetto del
+Desktop, rendendolo inutilizzabile. Per questa funzione usare
+dimensioni comprese fra 10 e 14 punti. Selezionando per lo stesso font
+una dimensione in punti inferiore, e riprovando, avrà luogo la
+modifica.
+
+^2^Avviso: Set di caratteri discordante
+^$108
+Avviso: Set di caratteri discordante
+
+Si riceve questo avviso di errore se si cerca di cambiare il font in
+uno contenente un set di caratteri non corrispondente a quello
+richiesto dall'ambiente locale. Per esempio, alcuni font contengono
+solo il set di caratteri ASCII (noto ufficialmente come
+ISO646.1991-IRV), ma ambienti locali europei occidentali richiedono il
+set di caratteri ISO8859-1, che contiene i caratteri ASCII e le
+lettere accentate necessarie nell'Europa Occidentale.
+
+Si può riconoscere il set di caratteri contenuto in un font guardando
+il nome abbreviato nel pié di finestra (usando l'opzione Mostra=>Nome
+corto del font). Vedi \k(Visualizzazione dei font installati).
+
+^1^Verifica dell'integrità dei font
+^$110
+Verifica dell'integrità dei font
+
+Quando si aggiungono o si cancellano font, vengono automaticamente
+aggiornate le librerie dei font. Tuttavia, se si ritiene di avere un
+problema con i font, si può eventualmente risolverlo costringendo il
+sistema a controllare le librerie dei font.
+
+Per costringere il sistema a controllare le librerie dei font,
+procedere come segue:
+
+1.\tFare login come utente con \k(permessi per Aggiungere/Rimuovere Font^dtadmin/user.hlp^Comprensione dei permessi).
+
+2.\t\d(Fare doppio clic^doppio clic) su Preferenze nella finestra
+  \t\k("Desktop UnixWare"^DesktopMgr/desktop.hlp^La finestra Desktop UnixWare)
+
+3.\tFare doppio clic su Font. Compare la finestra "Font".
+
+4.\tFare clic su Azione=>Controllo integrità. Appare un avviso a
+  \tcomparsa con la domanda se proseguire (il processo richiede
+  \tqualche istante).
+
+  \tAppare anche un avviso a comparsa per avvertire quando il
+  \tcontrollo termina.
+
+Questo controllo delle librerie dei font può non risolvere tutti i
+tipi di problemi con i font. Se si ritiene che vi sia ancora un
+problema con i font, contattare l'amministratore di sistema.

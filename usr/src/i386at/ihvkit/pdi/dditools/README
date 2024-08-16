@@ -1,0 +1,79 @@
+#ident	"@(#)ihvkit:pdi/dditools/README	1.2"
+
+ddicheck checks drivers for ddi/dki/sdi conformance problems using a
+lint library that contains all symbols in the ddi/dki/sdi.  It will 
+not find all problems.  For example, it will not catch arguments that
+have the correct type but incorrect value.  It is best at finding
+symbols that are used but are not part of the ddi interface.  A lint 
+filter is provided to prevent annoying cacaphony.
+
+Here is the usage, which can printed out using ddicheck -?
+
+	ddicheck [-p prefix] [-f makefile] [-t target]
+
+	-p:	driver prefix 
+			
+		default: directory name
+
+	-f:	makefile name 
+			
+		default directory.mk
+
+	-t:	target to create .ln's in current directory 
+
+		default: lintit.  The lintit target may not work
+		if .ln files must be copied from elsewhere.  The
+		.ln that is built for use by this tool is compiled
+		differently than the standard .ln.  ddicheck passes
+		the following arguments to make:
+
+			STATIC=static DDEBUG= DEVDEF=-DDDICHECK
+
+	LINT:	set to pathname of lint.  
+
+		default: lint
+
+	prefix.ddi.ok (where prefix is the driver prefix)
+		If this file exists, it will serve as a lint filter
+		through which output is filtered.  See the file
+		$ROOT/$MACH/usr/lib/ddilint.data as an example of the input.
+	
+HOW TO RUN DDICHECK
+-------------------
+
+1. All source files must include the header <io/ddicheck.h>.
+   The include must come after ddi.h and ddi386at.h are included.
+   If _KERNEL_HEADERS is not defined, include <sys/ddicheck.h>.
+
+2. Make sure you have a target that will leave .ln files in the current
+   directory for all source files.  Usually lintit meets this purpose.
+
+3. cd to the driver directory.
+
+4. Enter the cross environment (if applicable).
+   
+5. Run ddicheck
+
+ERRORS REPORTED BY DDICHECK
+---------------------------
+
+ddicheck works like the second phase of lint.  All objects referenced by
+the driver should be defined by the driver or by the ddi/dki/sdi interfaces.
+Hence ddicheck will print out the warning
+
+	"variable used but not defined"
+
+for objects referenced by the driver that are not part of the interface.
+(Until the tool is fully soaked, it will be necessary to add symbols to
+the tool from time to time.)
+
+Other lint-like messages should be handled as per normal lint warnings.
+Common complaints are "function returns value which is ignored."  In general,
+it is preferable to check the return of any interface function for possible
+errors.  In some cases, a function does not return an error, but rather a
+return value that is not needed.  For example calls to "inb" may be made
+to read the port, but the programmer does not care what value is returned.
+In this case, "inb" should be called casted to void, as in "(void) inb".
+
+In cases where you cannnot quiet ddicheck, add a line to the driver-dependent
+lint filter, prefix.ddi.ok.

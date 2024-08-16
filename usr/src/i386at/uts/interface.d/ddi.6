@@ -1,0 +1,68 @@
+#ident	"@(#)kern-i386at:interface.d/ddi.6	1.4"
+#ident	"$Header: $"
+# ddi.6 -- DDI/DKI version 6 (UnixWare 2.0 + some extensions)
+#			     (no kmem_[z]alloc restrictions)
+$replace 5
+#
+# These no longer need special handling:
+allocb
+copyb
+copymsg
+kmem_alloc
+kmem_instr_alloc
+kmem_instr_zalloc
+kmem_zalloc
+msgpullup
+# Drop the SVR4.2MP smap symbols:
+bufcall_u		$dropped
+esballoc_u		$dropped
+esbbcall_u		$dropped
+itimeout_u		$dropped
+_Compat_kseg		$dropped
+_Compat_unkseg		$dropped
+_Compat_getcpages	$dropped
+_Compat_freepage	$dropped
+_Compat_sptalloc	$dropped
+_Compat_sptfree		$dropped
+_Compat_pio_breakup	$dropped
+_Compat_phystokv	$dropped
+_Compat_spinwait	$dropped
+_Compat_tenmicrosec	$dropped
+_Compat_spl0s		$dropped
+_Compat_spl1s		$dropped
+_Compat_spl2		$dropped
+_Compat_spl2s		$dropped
+_Compat_spl3		$dropped
+_Compat_spl3s		$dropped
+_Compat_spl4s		$dropped
+_Compat_spl5s		$dropped
+_Compat_spl6s		$dropped
+_Compat_spl7s		$dropped
+_Compat_splhis		$dropped
+_Compat_splstrs		$dropped
+_Compat_splttys		$dropped
+_Compat_splx		$dropped
+_Compat_splxs		$dropped
+_Compat_Hz		$dropped
+_Compat_nswap		$dropped
+_Compat_swapdev		$dropped
+_Compat_merge386enable	$dropped
+spl0_h			$dropped
+spl1_h			$dropped
+spl4_h			$dropped
+spl5_h			$dropped
+spl6_h			$dropped
+spl7_h			$dropped
+splhi_h			$dropped
+splstr_h		$dropped
+spltty_h		$dropped
+totalmem		$dropped
+# Drop the early UnixWare 2.0 smap symbols:
+_Compat_kmem_alloc		$dropped
+_Compat_kmem_alloc_physcontig	$dropped
+_Compat_kmem_alloc5		$dropped
+_Compat_kmem_i_alloc_physcont	$dropped
+_Compat_kmem_instr_alloc	$dropped
+_Compat_kmem_instr_zalloc	$dropped
+_Compat_kmem_zalloc		$dropped
+_Compat_kmem_zalloc5		$dropped

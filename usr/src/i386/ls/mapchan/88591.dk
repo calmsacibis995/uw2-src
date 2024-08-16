@@ -1,0 +1,288 @@
+#
+#	@(#) cons.88591 1.0 14/02/90
+#
+#	Copyright (c) 1989 AT&T
+#	  All Rights Reserved  
+#
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF AT&T
+#	The copyright notice above does not evidence any   
+#	actual or intended publication of such source code.
+
+#ident	"@(#)langsup:i386/ls/mapchan/88591.dk	1.1"
+
+# To string ISO 8859-1 characters
+# Derived from: 88591.dk_pc
+# From: ISO 8859-1 
+# To: 386 PC console codeset
+# Notes: mapchan format
+
+input
+
+dead 0x81	# acute accent dead key
+' ' 0xb4	# acute accent
+'A' 0xc1	# A acute
+'E' 0xc9	# E acute
+'I' 0xcd	# I acute
+'O' 0xd3	# O acute
+'U' 0xda	# U acute
+'Y' 0xdd	# Y acute
+'a' 0xe1	# a acute
+'e' 0xe9	# e acute
+'i' 0xed	# i acute
+'o' 0xf3	# o acute
+'u' 0xfa	# u acute
+'y' 0xfd	# y acute
+
+dead 0202	# grave accent dead key
+' ' 0x60	# grave accent
+'A' 0xc0	# A grave
+'E' 0xc8	# E grave
+'I' 0xcc	# I grave
+'O' 0xd2	# O grave
+'U' 0xd9	# U grave
+'a' 0xe0	# a grave
+'e' 0xe8	# e grave
+'i' 0xec	# i grave
+'o' 0xf2	# o grave
+'u' 0xf9	# u grave
+
+dead 0203	# circumflex accent dead key
+' ' '^'		# circumflex accent
+'A' 0xc2	# A circumflex
+'E' 0xca	# E circumflex
+'I' 0xce	# I circumflex
+'O' 0xd4	# O circumflex
+'U' 0xdb	# U circumflex
+'a' 0xe2	# a circumflex
+'e' 0xea	# e circumflex
+'i' 0xee	# i circumflex
+'o' 0xf4	# o circumflex
+'u' 0xfb	# u circumflex
+
+dead 0204	# tilde dead key
+' ' '~'		# tilde
+'A' 0xc3	# A tilde
+'N' 0xd1	# N tilde
+'O' 0xd5	# O tilde
+'a' 0xe3	# a tilde
+'n' 0xf1	# n tilde
+'o' 0xf5	# o tilde
+
+dead 0205	# umlaut dead key
+' ' 0xa8	# umlaut
+'A' 0xc4	# A umlaut
+'E' 0xcb	# E umlaut
+'I' 0xcf	# I umlaut
+'O' 0xd6	# O umlaut
+'U' 0xdc	# U umlaut
+'a' 0xe4	# a umlaut
+'e' 0xeb	# e umlaut
+'i' 0xef	# i umlaut
+'o' 0xf6	# o umlaut
+'u' 0xfc	# u umlaut
+'y' 0xff	# y umlaut
+
+dead 0206	# circle dead key
+' ' 0xb0	# circle
+'A' 0xc5	# A circle
+'a' 0xe5	# a circle
+
+dead 0207	# cedilla dead key
+' ' 0xb8	# cedilla
+'C' 0xc7	# C cedilla
+'c' 0xe7	# c cedilla
+
+compose 0x14   # Compose character (^T)
+' ' ' ' 0240	# NBSP
+'"' ' '  0xa8	# umlaut accent
+'\'' ' ' 0xb4	# acute accent
+'+' '+' '#'	# number sign
+'A' 'A' '@'	# commercial at
+'(' '(' '['	# opening bracket
+'/' '/' '\\'	# backslash
+'/' '<' '\\'	# backslash
+')' ')' ']'	# closing bracket
+'^' ' ' '^'	# circumflex accent
+'>' ' ' '^'	# circumflex accent
+'`' ' ' '`'	# grave accent
+'(' '-' '{'	# opening brace
+'/' '^' '|'	# vertical line
+'L' 'V' '|'	# vertical line
+'l' 'v' '|'	# vertical line
+')' '-' '}'	# closing brace
+'~' ' ' '~'	# tilde
+'-' ' ' '~'	# tilde
+'!' '!' 0241	# inverted !
+'c' '/' 0242	# cent sign
+'C' '/' 0242	# cent sign
+'c' '|' 0242	# cent sign
+'C' '|' 0242	# cent sign
+'l' '-' 0243	# pound sign
+'L' '-' 0243	# pound sign
+'l' '=' 0243	# pound sign
+'L' '=' 0243	# pound sign
+'x' 'o' 0244	# currency sign
+'X' 'O' 0244	# currency sign
+'x' 'O' 0244	# currency sign
+'X' 'o' 0244	# currency sign
+'x' '0' 0244	# currency sign
+'X' '0' 0244	# currency sign
+'y' '-' 0245	# yen sign
+'Y' '-' 0245	# yen sign
+'y' '=' 0245	# yen sign
+'Y' '=' 0245	# yen sign
+'!' '^' 0246	# broken vertical bar
+'|' '|' 0246	# broken vertical bar
+'V' 'B' 0246	# broken vertical bar
+'v' 'b' 0246	# broken vertical bar
+'S' 'o' 0247	# section sign
+'S' 'O' 0247	# section sign
+'s' 'O' 0247	# section sign
+'s' 'o' 0247	# section sign
+'S' '0' 0247	# section sign
+'s' '0' 0247	# section sign
+'S' '!' 0247	# section sign
+'s' '!' 0247	# section sign
+'"' '"' 0250	# diaeresis
+'c' 'O' 0251	# copyright
+'C' 'o' 0251	# copyright
+'C' 'O' 0251	# copyright
+'c' 'o' 0251	# copyright
+'c' '0' 0251	# copyright
+'C' '0' 0251	# copyright
+'a' '_' 0252	# Female Ordinal
+'A' '_' 0252	# Female Ordinal
+'<' '<' 0253	# left angle quotation mark
+'-' ',' 0254	# logical not
+'-' '-' 0255	# SHY 
+'R' 'O' 0256	# registered trademark
+'-' '^' 0257	# macron
+'_' '^' 0257	# macron
+'_' '_' 0257	# macron
+'0' '^' 0260	# Degree sign
+'0' '*' 0260	# Degree sign
+'+' '-' 0261	# Plus minus
+'2' '^' 0262	# Superscript 2
+'2' 'S' 0262	# Superscript 2
+'2' 's' 0262	# Superscript 2
+'3' '^' 0263	# Superscript 3
+'3' 'S' 0263	# Superscript 3
+'3' 's' 0263	# Superscript 3
+'\'' '\'' 0264	# acute accent
+'/' 'u' 0265	# micron sign
+'/' 'U' 0265	# micron sign
+'p' '!' 0266	# paragraph sign
+'P' '!' 0266	# paragraph sign
+'.' '^' 0267	# middle dot
+'.' '.' 0267	# middle dot
+',' ',' 0270	# cedilla
+'1' '^' 0271	# Superscript 1
+'1' 's' 0271	# Superscript 1
+'1' 'S' 0271	# Superscript 1
+'o' '_' 0272	# Masculine Ordinal
+'O' '_' 0272	# Masculine Ordinal
+'>' '>' 0273	# right angle quotation mark
+'1' '4' 0274	# one quarter
+'1' '2' 0275	# one half
+'3' '4' 0276	# three quarters
+'?' '?' 0277	# inverted ?
+'A' '`' 0300	# A grave
+'A' '\'' 0301	# A acute
+'A' '^' 0302	# A circumflex
+'A' '>' 0302	# A circumflex
+'A' '~' 0303	# A tilde
+'A' '-' 0303	# A tilde
+'A' '"' 0304	# A umlaut
+'A' '*' 0305	# A circle
+'A' 'E' 0306	# AE dipthong
+'C' ',' 0307	# C cedilla
+'E' '`' 0310	# E grave
+'E' '\'' 0311	# E acute
+'E' '^' 0312	# E circumflex
+'E' '>' 0312	# E circumflex
+'E' '"' 0313	# E umlaut
+'I' '`' 0314	# I grave
+'I' '\'' 0315	# I acute
+'I' '^' 0316	# I circumflex
+'>' 'I' 0316	# I circumflex
+'I' '"' 0317	# I umlaut
+'-' 'D' 0320	# capital Iclandic eth
+'N' '~' 0321	# N tilde
+'N' '-' 0321	# N tilde
+'O' '`' 0322	# O grave
+'O' '\'' 0323	# O acute
+'O' '^' 0324	# O circumflex
+'O' '>' 0324	# O circumflex
+'O' '~' 0325	# O tilde
+'O' '-' 0325	# O tilde
+'O' '"' 0326	# O umlaut
+'x' 'x' 0327	# muliiply
+'O' '/' 0330	# O slash
+'U' '`' 0331	# U grave
+'U' '\'' 0332	# U acute
+'U' '^' 0333	# U circumflex
+'U' '>' 0333	# U circumflex
+'U' '"' 0334	# U umlaut
+'Y' '\'' 0335	# Y acute
+'T' 'H' 0336	# capital Iclandic eth
+'s' 's' 0337	# sharp s
+'a' '`' 0340	# a grave
+'a' '\'' 0341	# a acute
+'a' '^' 0342	# a circumflex
+'a' '>' 0342	# a circumflex
+'a' '~' 0343	# a tilde
+'a' '-' 0343	# a tilde
+'a' '"' 0344	# a umlaut
+'a' '*' 0345	# a circle
+'a' 'e' 0346	# ae dipthong
+'c' ',' 0347	# c cedilla
+'e' '`' 0350	# e grave
+'e' '\'' 0351	# e acute
+'e' '^' 0352	# e circumflex
+'e' '>' 0352	# e circumflex
+'e' '"' 0353	# e umlaut
+'i' '`' 0354	# i grave
+'i' '\'' 0355	# i acute
+'i' '^' 0356	# i circumflex
+'i' '>' 0356	# i circumflex
+'i' '"' 0357	# i umlaut
+'-' 'd' 0360	# small Iclandic eth
+'n' '~' 0361	# n tilde
+'n' '-' 0361	# n tilde
+'o' '`' 0362	# o grave
+'o' '\'' 0363	# o acute
+'o' '^' 0364	# o circumflex
+'o' '>' 0364	# o circumflex
+'o' '~' 0365	# o tilde
+'o' '-' 0365	# o tilde
+'o' '"' 0366	# o umlaut
+'-' ':' 0367	# divides
+'-' ';' 0367	# divides
+'o' '/' 0370	# o slash
+'u' '`' 0371	# u grave
+'u' '\'' 0372	# u acute
+'u' '^' 0373	# u circumflex
+'u' '>' 0373	# u circumflex
+'u' '"' 0374	# u umlaut
+'y' '\'' 0375	# y acute
+'t' 'h' 0376	# small Iclandic eth
+'y' '"' 0377	# y umlaut
+'\\' ' ' '`'	# backquote/grave accent
+'A' '\\' 0xc0	# A grave
+'E' '\\' 0xc8	# E grave
+'I' '\\' 0xcc	# I grave
+'O' '\\' 0xd2	# O grave
+'U' '\\' 0xd9	# U grave
+'a' '\\' 0xe0	# a grave
+'e' '\\' 0xe8	# e grave
+'i' '\\' 0xec	# i grave
+'o' '\\' 0xf2	# o grave
+'u' '\\' 0xf9	# u grave
+'*' ' ' 0xb0	# degree sign
+'d' '-' 0xf0	# small Icelandic eth
+'D' '-' 0xd0	# small Icelandic eth
+
+output
+
+#  Fix for eight bit escape problem
+155 155 155

@@ -1,0 +1,201 @@
+#ident\t"@(#)dthelp:Admin.Tools/video.hlp       1.17"
+^*version^1
+^*title^Configuración de visualización
+^:Config_Pantalla
+^*width^70
+^+DesktopMgr/help.defs
+^?Configuración de la visualización de vídeo
+^0^Configuración de visualización
+^$10
+Configuración de visualización
+
+Use Configuración de la visualización para hacer lo siguiente:
+
+\to\t\k(Ver las opciones para la visualización de vídeo^^Visualización de opciones para la visualización de vídeo)
+\to\t\k(Configurar la visualización de vídeo^^Configuración de la pantalla de vídeo)
+
+Nota: Deberá tener \k(permiso para cambiar la visualización de vídeo^dtadmin/user.hlp^Comprensión de los permisos)
+para cambiar los parámetros de configuración de la visualización
+de vídeo.
+
+Véase también:
+setvideomode(1M) en la \s(Referencia de comandos^dhelp refman uarm "" "" || helpLinkErr)
+
+^1^Configuración de la pantalla de vídeo
+^$20
+Configuración de la pantalla de vídeo
+
+Para configurar la visualización de vídeo, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Config_visualización.  Aparecerá la ventana
+  \t"Configuración de visualización".
+
+  \tEl sistema tratará de determinar qué tipo de hardware tiene
+  \tinstalado, y, a continuación, mostrará la ventana "Configuración
+  \tde visualización" con los siguientes campos:
+
+  \to\tVisualización: - Véase \k(Visualización de opciones para la visualización de vídeo)
+
+  \to\tProveedor, Juego de chips, Descripción: - Use la casilla de
+  \t \tflecha para recorrer la lista y seleccionar el hardware que
+  \t \tcoincida con el hardware instalado en el sistema.
+
+  \to\tModelo, Resolución, Monitor, Colores: - Use la casilla de flecha
+  \t \tpara recorrer la lista y seleccionar las especificaciones
+  \t \tcorrectas.
+
+  \t \tNota: Si selecciona una resolución que requiera más memoria de
+  \t \tla seleccionada, o si selecciona un modelo antes de seleccionar
+  \t \tel proveedor, aparecerá la
+  \t \t\k(ventana "Configuración de visualización: Advertencia"^^Ventana Configuración de visualización: Advertencia).
+
+  \to\tMemoria de vídeo (Megabytes): Haga clic en el tamaño de memoria
+  \t \tadecuado.  El campo Memoria de vídeo detectado situado bajo esta
+  \t \topción, muestra cuánta memoria ha detectado el sistema.
+
+  \t \tNota: Si escoge un tamaño de memoria mayor o menor que la
+  \t \tcantidad de memoria detectada, o si selecciona la memoria
+  \t \tantes de seleccionar un modelo, aparecerá la
+  \t \t\k(ventana "Configuración de visualización: Advertencia"^^Ventana Configuración de visualización: Advertencia).
+
+  \to\tTamaño del monitor: Use la casilla de flecha para recorrer la
+  \t \tlista y seleccionar el tamaño de monitor correcto.  Esta lista
+  \t \tcontiene opciones para los ocho tamaños de monitor más
+  \t \tconocidos, y la opción Otros.
+
+  \t \tSi selecciona Otros, también deberá definir los campos de
+  \t \tanchura y altura, bien pulg. (pulgadas) o cm (centímetros).
+
+3.\tHaga clic en Prueba, en la parte inferior de la pantalla.  Si los
+  \tvalores son válidos, aparecerá el modelo de prueba.
+
+  \tSi los valores no son coherentes con el hardware, el sistema
+  \tmostrará una ventana con un \k(aviso de advertencia^^Ventana Configuración de visualización: Prueba).
+
+4.\tEspere a que finalice la prueba.
+
+5.\tHaga clic en Guardar, en la parte inferior de la pantalla, si está
+  \tsatisfecho con los valores.  Aparecerá la ventana "Configuración
+  \tde visualización: Guardar".
+
+  \tNota: También puede hacer clic en VGA estándar para volver a los
+  \tvalores por defecto que se suministran con el sistema, en
+  \tRedefinir para volver a los valores anteriores, o en Cancelar para
+  \tcerrar esta ventana sin realizar ningún cambio.
+
+
+^2^Ventana Configuración de visualización: Advertencia
+^$30
+Ventana Configuración de visualización: Advertencia
+
+Esta ventana aparecerá por una de las siguientes razones:
+
+\to\tEl tamaño de memoria seleccionado es superior o inferior a
+\t \tla cantidad de memoria detectada por el sistema.
+
+\t \tVuelva atrás y seleccione el tamaño de memoria correcto.
+
+\to\tSe seleccionó la memoria antes de seleccionar un modelo.
+
+\t \tSeleccione el modelo y, a continuación, la memoria.
+
+\to\tLa resolución de pantalla elegida requiere más memoria de
+\t \tla seleccionada.
+
+\t \tVuelva atrás y seleccione la resolución correcta.
+
+\to\tSe seleccionó un modelo antes de seleccionar un proveedor.
+
+\t \tSeleccione el proveedor, y, a continuacion, un modelo.
+
+Haga clic en OK para cerrar la ventana.
+
+^2^Ventana Configuración de visualización: Prueba
+^$40
+Ventana Configuración de visualización: Prueba
+
+Esta ventana aparece con una advertencia cuando los valores no son
+coherentes con el hardware detectado.
+
+***Obsérvese que se pueden provocar daños en el hardware si se trata
+   de probar una configuración incorrecta.***
+
+Haga clic en Probar si desea realizar la prueba (y está seguro de
+que los valores configurados no provocarán daños en el hardware),
+o en Cancelar para detener la prueba (y conservar los valores
+antiguos).
+
+
+^2^Ventana Configuración de visualización: Guardar
+^$50
+Ventana Configuración de visualización: Guardar
+
+Esta ventana aparece cuando hace clic en Acciones=>Guardar.  Si está
+seguro de que desea guardar los valores definidos para la
+visualización de vídeo, haga clic en Guardar.  Si decide no usarlos,
+haga clic en Cancelar.
+
+^2^Ventana Configuración de visualización: Prueba necesaria
+^$60
+Ventana Configuración de visualización: Prueba necesaria
+
+Esta ventana aparecerá si trata de guardar nuevos valores para la
+visualización de vídeo sin llevar a cabo una prueba.  Haga lo
+siguiente:
+
+\to\tHaga clic en Continuar para mostrar un modelo de prueba.
+
+\to\tEspere hasta que finalice la prueba.
+
+\to\tHaga clic en Acciones=>Guardar para aplicar los nuevos valores.
+
+^2^Ventana Configuración de visualización: Prueba necesaria
+^$70
+Ventana Configuración de visualización: Prueba necesaria
+
+Esta ventana aparecerá si trata de salir de Configuración de la
+visualización sin guardar la nueva configuración.
+
+***Obsérvese que se pueden provocar daños en el hardware si se trata
+   de usar una configuración incorrecta.***
+
+Haga clic en Sí para guardar los valores definidos, y en No si no
+desea guardar estos valores antes de salir, o en Cancelar si no
+desea guardar los cambios pero no desea salir de esta ventana.
+
+
+^1^Visualización de opciones para la visualización de vídeo
+^$80
+Visualización de opciones para la visualización de vídeo
+
+Para ver las entradas correspondientes a las tarjetas de vídeo
+soportadas, haga lo siguiente:
+
+Nota: Si ya está en la carpeta Herramientas_de_Admin, pase al punto 2.
+
+1.\t\d(Haga doble clic^hacer doble clic) en Herramientas_de_Admin en la
+  \t\k(ventana "Escritorio UnixWare"^DesktopMgr/desktop.hlp^La ventana Escritorio UnixWare).  
+  \tAparecerá la ventana "Carpeta: Herramientas_de_Admin".
+
+2.\tHaga doble clic en Config_visualización.  Aparecerá la ventana
+  \t"Configuración de visualización".
+
+3.\tHaga clic en el rectángulo del cuadro situado junto al campo
+  \tVisualización, y haga clic en una de las siguientes opciones:
+
+  \to\tTodas las opciones: El sistema actualizará la lista
+  \t \tproveedor/modelo de modo que contenga entradas de todas las
+  \t \ttarjetas de vídeo soportadas, independientemente del hardware
+  \t \tdetectado.
+
+  \to\tOpciones detectadas: El sistema actualizará la lista, de modo
+  \t \tque contenga únicamente las opciones apropiadas para el hardware
+  \t \tdetectado.  Si falla la detección de hardware, sólo
+  \t \taparecerá la entrada STDVGA.
+

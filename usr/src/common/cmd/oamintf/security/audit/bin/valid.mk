@@ -1,0 +1,34 @@
+#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+#	Copyright (c) 1984, 1985, 1986, 1987, 1988, 1989, 1990 Novell, Inc. All Rights Reserved.
+#	  All Rights Reserved
+
+#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+#	The copyright notice above does not evidence any
+#	actual or intended publication of such source code.
+
+
+#ident	"@(#)oamintf:common/cmd/oamintf/security/audit/bin/valid.mk	1.1.2.2"
+#ident  "$Header: valid.mk 1.2 91/06/26 $"
+#
+# makefile for validation tests for security oa&m forms
+#
+MAKEFILE=valid.mk
+ARGS=all
+CFLAGS=-O 
+LDFLAGS= -lia
+TARGETS=valevet valforloop
+
+all :	$(TARGETS) 
+
+valevt :	valevt.c
+	$(CC) $(CFLAGS) -o $@ $@.c $(LDFLAGS)
+	@echo "--- Created file: $@ ---"
+
+valforloop:	valforloop.sh
+	cp $@.sh $@
+	@echo "--- Created file: $@ ---"
+
+clean :
+	rm -f $(TARGETS)
+
+# EOF

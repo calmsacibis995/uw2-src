@@ -1,0 +1,83 @@
+#ident	"@(#)r5server:NOTES	1.1"
+
+THE FOLLOWING FILES HAVE BEEN UPDATED FROM R6 alpha tape: 10/27/93
+
+miarc.c
+mispans.c
+miwideline.c
+mipolycon.c
+mipolygen.c
+mipolyutil.c
+midash.c
+
+mispans.h
+miwideline.h
+mifillarc.h
+mifpoly.h
+mipoly.h
+mizerarc.h
+
+
+
+X11R4 => X11R5 font changes
+
+FontInfoPtr pfi = pFont->pFI;
+=> no longer needed
+
+firstchar = FONTFIRSTCOL(pFont);
+numcols = FONTLASTCOL(pFont) - firstchar + 1;
+firstRow = j = FONTFIRSTROW(pFont);
+numRows = FONTLASTROW(pFont) - j + 1;
+FONTDEFAULTCH(pFont);
+
+TERMINALFONT(pFont)
+FONTCONSTANTWIDTH(pFont)
+FONTNOOVERLAP(pFont)
+FONTASCENT(pFont);
+FONTDESCENT(pFont);
+FONTMINBOUNDS(pFont,leftSideBearing);
+FONTMINBOUNDS(pFont,rightSideBearing);
+FONTMINBOUNDS(pFont,characterWidth);
+FONTMINBOUNDS(pFont,ascent);
+FONTMINBOUNDS(pFont,descent);
+FONTMAXBOUNDS(pFont,leftSideBearing);
+FONTMAXBOUNDS(pFont,rightSideBearing);
+FONTMAXBOUNDS(pFont,characterWidth);
+FONTMAXBOUNDS(pFont,ascent);
+FONTMAXBOUNDS(pFont,descent);
+
+pci = &pFont->pCI[i];
+=>
+	ch[0] = (firstchar + i) >> 8;
+	ch[1] = (firstchar + i);
+	GetGlyphs(pFont, 1, ch, encoding, &n, &pci);
+
+GLYPHEXISTS(pci)
+GLYPHHEIGHTPIXELS(pci);
+GLYPHWIDTHPIXELS(pci);
+FONTGLYPHBITS(0,pci);
+
+
+Miscellaneous Notes:
+====================
+
+	Files that have our save_under implementation:
+	Save-under's is turned OFF due to a bug; there might be other
+	entry points, we might have to trap and check for save-under logic.
+	Also, is it worth going thru this everytime. Using our implementation
+	we cannot use backing-store feature and many commercial apps are
+	taking advantage of this feature. So look into this after the M loads
+	ie: after Oct'93.
+
+		mibitblt.c
+		mifillarc.c
+		mifillrct.c
+		miglblt.c
+		mipolypnt.c
+		mipolyrect.c
+		mipushpxl.c
+		sifillsp.c
+		siwindow.c
+		sizerdline.c
+		siscrinit.c
+

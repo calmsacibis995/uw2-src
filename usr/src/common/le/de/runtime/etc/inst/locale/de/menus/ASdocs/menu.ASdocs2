@@ -1,0 +1,71 @@
+.ul
+Installation des Application Server Book
+.ur
+CD-ROM-Zugriff auswählen
+.lr
+F1=Hilfe
+.top
+Sie haben die Möglichkeit, auf Bücher von CD-ROM aus zuzugreifen. 
+Wenn Sie eine Installation von CD-ROM vornehmen, können Sie auch auf 
+Bücher auf der CD zugreifen. Sie haben auch die Möglichkeit, manche 
+Bücher auf der Festplatte zu installieren, auf den Rest jedoch von 
+der CD-ROM zuzugreifen. Sie müssen die CD-ROM einlegen, um auf die 
+Bücher zugreifen zu können. Geben Sie F1 für weitere Informationen ein.
+
+Von wo aus möchten Sie auf die Bücher zugreifen?
+
+.button
+Anwenden
+Zurücksetzen
+.bottom
+Drücken Sie 'TAB', um den Cursor zwischen den Feldern zu bewegen. Nach 
+Beendigung der Eingaben bewegen Sie den Cursor auf "Anwenden" und 
+drücken anschließend 'ENTER', um fortzufahren.
+.form
+
+2 2//NO::Nein//YES::Ja//Auf Bücher von CD-ROM aus zugreifen?//CDROM//
+// Links/Rechts-Pfeiltasten für nächste Option (2 Optionen)//
+
+2 2//YES::Ja//NO::Nein//Bücher auf Platte installieren?//DISK//
+// Links/Rechts-Pfeiltasten für nächste Option (2 Optionen)//
+
+.hhelp_ban
+Anweisungen
+.helpbanner
+Hilfe: Installation des Application Server Book
+.help
+Wenn Sie detaillierte Informationen benötigen, können Sie jederzeit 
+die 'F1'- (oder '?') drücken.
+
+ZUGRIFF AUF BÜCHER VON CD-ROM 
+Wenn Sie auf Bücher von CD-ROM zugreifen wollen, wird durch diese 
+Installation die Konfigurationsdatei .ebtrc so aktualisiert, daß der 
+Browser die Bücher auf der CD-ROM finden kann. Um auf die Bücher 
+zuzugreifen, müssen Sie die entsprechende CD-ROM einlegen. Verwenden 
+Sie dazu folgenden Befehl:
+
+        mount -F cdfs -r /dev/cdrom/cCbBtTlL /installr
+
+wobei C, B, T und L variable Ziffern sind:
+        C ist die Nummer der SCSI-Controller-Karte, mit der die CD
+          verbunden ist
+        B ist die Busnummer (gewöhnlich 0, kann aber 0-7 sein)
+        T ist die Ziel-ID (die mit dem Laufwerk assoziierte ID
+          auf dem Bus, der verwendet wird)
+        L ist die logische SCSI-Einheitennummer (gewöhnlich 0)
+
+Schlagen Sie unter dem Verzeichnis /dev/cdrom nach, um die Ziffern
+herauszufinden, die Sie für C, B, T und L verwenden sollten.
+
+Einzelheiten entnehmen Sie dem Systemeigentümerhandbuch.
+
+.pageno
+Seite %d von %d
+.optstring
+Sie haben folgende Optionen:
+.helpinst
+ESC=Hilfe verlassen  F1=Anweisungen  1=Vor  2=Zurück
+.hhelpinst
+ESC=Anweisungen verlassen  1=Vor  2=Zurück
+.end
+

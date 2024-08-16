@@ -1,0 +1,36 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+/**/#ident	"@(#)vtools:gui/Imakefile	1.12"
+
+#include  <Motif.tmpl>
+#include  <Motif.rules>
+
+INCLUDES = -I. -I../ -I$(TOP) -I$(INCLUDESRC) -I$(MINCLUDESRC) AutoIncludes\
+ -I../../../server/ddx/si/ -I$(TOP)/lib -I$(TOP)/uslclients/libMDtI
+DEPLIBS1 = XmClientDepLibs
+VPROBE_LIB = ../vprobe/libvprobe.a
+LOCAL_LIBRARIES = $(AUTOUTILLIB) $(TOP)/uslclients/libMDtI/libMDtI.so\
+ XmClientLibs $(TOP)/lib/DtWidget/libDtWidget.so  $(SYSLIBS) $(VPROBE_LIB)\
+ $(TOP)/lib/Dt/libDt.so
+
+
+SHELL = /bin/sh
+     CDEBUGFLAGS = -O -Xa -W2,-A
+          CFLAGS = $(CDEBUGFLAGS) $(DEFINES) $(INCLUDES)
+
+             ALL = setvideomode vtest vprobe
+
+            SRCS =  gsetvideo.c  
+            OBJS = ../common.o gsetvideo.o ../utils.o ../vtest.o 
+
+CC = LD_RUN_PATH=/usr/lib/X11:/usr/lib/X11/display $(PFX)cc
+
+ComplexProgramTarget(gsetvideo)
+InstallMsgCatalog(gsetvideo)
+InstallAppDefaults(Gsetvideo)

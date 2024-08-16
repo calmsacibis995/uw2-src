@@ -1,0 +1,49 @@
+#ident	"@(#)ypcmd:msgs/ypinit.str	1.3"
+#ident  "$Header: $"
+usage:\nypinit -c\nypinit -m\nypinit -s master_server\nwhere:\n\t-c is used to set up a nis client\n\t-m is used to build a master nis server data base\n\t-s is used for a slave data base and\n       master_server must be an existing reachable nis server.\n
+Please enter the domain name or q to quit: 
+Is %s correct? [y/n: y] 
+Starting NIS.... 
+Done\n
+You have to be the NIS Administrator to run ypinit\n
+Shutting Down NIS.... 
+\nCan not get local host's name.  Please check your path.\n
+\nThe local host's name has not been set.  Please set it.\n
+\nCan not get local host's domain name.  Please check your path.\n
+\nThe local host's domain name has not been set.  Please set it.\n
+\nThe local host's domain name has been set to '%s'\n
+Is this correct? [y/n: y] 
+\nThe directory %s does not exist.  Re-install the NIS package.\n
+\nIn order for NIS to operate sucessfully, we have to construct a\nlist of the NIS servers. Please continue to add the names for\nNIS servers in order of preference, one per line. When you\nare done with the list, type a <control D>.\n
+\tnext host to add:  %s\n
+'%s' is not in the host database. For NIS to\ncome up properly, '%s' needs to be added to /etc/hosts\n\n
+\tnext host to add:  
+The current list of nis servers looks like this:\n
+Let's try the whole thing again...\n";;
+%s has been set up as a nis client.\n
+The host specified should be a running master nis server, not this machine.\n
+Can we destroy the existing %s and its contents? [y/n: n]  
+Can not clean up old directory %s.  Fatal error.\n
+OK, please clean it up by hand and start again.  Bye\n
+Can not make new directory %s.  Fatal error.\n
+The nis domain directory is %s""/""%s\n
+\nThe following NIS databases will be copied from the master server:\n
+\nThe following NIS databases will be created for this domain:\n
+Are these correct? [y/n: y] 
+\nPlease edit the /var/yp/YPMAPS file and start again.\n
+\nThere will be no further questions.\n%s has been set up as a nis slave server.\n
+Installing the NIS database will require that you answer a few \nquestions. Questions will all be asked at the beginning of the\nprocedure.\n\nDo you want this procedure to quit on non-fatal errors? [y/n: n] 
+OK, please remember to go back and redo manually whatever fails.\nIf you do not, some part of the system (perhaps the nis itself)\nwill not work.\n";;
+There will be no further questions. The remainder of the procedure\nshould take 5 to 10 minutes.\n
+Building %s/%s/ypservers...\n
+Could not build nis data base %s/%s/%s.\n
+Running %s/Makefile\n
+Error running Makefile.\n
+%s has been set up as a nis master server with errors.  Please remember\nto figure out what went wrong, and fix it.\n\n
+%s has been set up as a nis master server without any errors.\n\n
+Unable to add tcpip_nis.so to /etc/netconfig\n
+The following machines could not be contacted over the network.
+Although NIS will initiate successfully, it is recommended you \n\t  verify that each machine has an entry in /etc/hosts and is \n\t  reachable over the network and then re-run ypinit.\n\n 
+\tNIS will NOT be started, since none of the machines \n\tentered as NIS servers can be reached over the network.\n \n\tPlease verify that each NIS server has an entry in /etc/hosts \n\tand is reachable over the network and then re-run ypinit.\n\n
+ The NIS master server, %s, could not be \n\tcontacted over the network.
+\tNIS will NOT be started. \n \n\tPlease verify that server, %s, has an entry in /etc/hosts \n\tand is reachable over the network and then re-run ypinit.\n\n

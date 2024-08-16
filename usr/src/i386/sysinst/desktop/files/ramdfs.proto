@@ -1,0 +1,525 @@
+#ident	"@(#)proto:desktop/files/ramdfs.proto	1.1.7.69"
+/dev/null
+3960 800
+d--775 0 3
+.sh_history l--777 0 3 /dev/null
+TIMEZONE	---555 2 2 $ROOT/$MACH/etc/TIMEZONE
+copy2hd	    ---755 2 2 stage/desktop/scripts/copy2hd
+ds_to_disk  ---755 2 2 stage/desktop/scripts/ds_to_disk
+funcrc	    ---755 2 2 stage/desktop/scripts/funcrc
+globals.sh  ---755 2 2 stage/desktop/scripts/globals.sh
+hd.list	    ---444 2 2 desktop/files/hd.list
+inst	    ---755 2 2 stage/desktop/scripts/inst
+pkginst     ---755 2 2 stage/desktop/scripts/pkginst
+step1rc	    ---555 2 2 stage/desktop/scripts/step1rc
+step2rc	    ---555 2 2 stage/desktop/scripts/step2rc
+smartmsg1	---444 2 2 stage/smartmsg1
+cd-rom	d--775 0 3
+	$
+install	d--775 0 3
+	$
+flpy2	d--775 0 3
+	$
+sysmnt	d--775 0 3
+	$
+stand	d--755 0 3
+	boot	---644 0 0 locale/$LANG/boot.hd
+	$
+tmp	d--775 0 3
+	$
+mnt	d--775 0 3
+	$
+sbin	d--755 0 3
+	big_file  ---555 0 3 bin/big_file
+	autopush  ---555 0 3 $ROOT/$MACH/sbin/autopush.dy
+	dcu     ---555 0 2 $ROOT/$MACH/sbin/dcu
+	getcylsize ---555 0 3 bin/getcylsize
+	init      ---555 0 2 bin/bootstrap
+	memsize   ---555 0 3 $ROOT/$MACH/sbin/memsize.dy
+	modadmin  ---555 0 3 $ROOT/$MACH/sbin/modadmin.dy
+	putdev    ---555 0 3 bin/putdev
+	setclk    ---555 0 3 $ROOT/$MACH/sbin/setclk.dy
+	sh        ---555 0 3 $ROOT/$MACH/usr/bin/winxksh
+	tapeop    ---555 0 3 bin/tapeop
+	wsinit    ---555 0 2 $ROOT/$MACH/sbin/wsinit.dy
+	$
+usr	d--775 0 3
+	bin	d--755 0 3
+# The flop2 comment means that this file goes on the second boot floppy if the
+# boot floppy is 5.25-inch.  (A 3.5-inch boot floppy contains files both with
+# and without the #flop2 comment.) If you want to add a file to the second boot
+# floppy, you must add the flop2 comment.  You must also add some code to the
+# prep_flop2 function in sysinst/cmd/cut.flop.sh
+#flop2		ls          ---555 0 3 $ROOT/$MACH/usr/bin/ls
+		cpio        ---555 0 3 $ROOT/$MACH/usr/bin/cpio.boot
+		stty        ---555 0 3 $ROOT/$MACH/usr/bin/stty
+#flop2		uncompress  ---555 0 3 $ROOT/$MACH/usr/bin/uncompress
+		kb_remap    ---555 0 3 bin/kb_remap
+		sflop	    ---555 0 3 bin/sflop
+		ksh         l--777 0 3 /sbin/sh
+		xksh        l--777 0 3 /sbin/sh
+		winxksh     l--777 0 3 /sbin/sh
+	$
+	sadm	d--755 0 3
+		install	d--755 0 3
+			bin	d--755 0 3
+				libdecomp.so ---555 2 2 $ROOT/$MACH/usr/sadm/install/bin/libdecomp.so
+			$
+		$
+	$
+	sbin	d--755 0 3
+		check_devs  ---555 0 3 bin/check_devs
+		adpt_type   ---555 0 3 $ROOT/$MACH/usr/sbin/adpt_type
+		swap        ---555 0 3 $ROOT/$MACH/sbin/swap.dy
+#flop2		fdisk       ---555 0 3 $ROOT/$MACH/usr/sbin/fdisk.boot
+		partsize    l--777 0 3 /usr/sbin/fdisk
+#flop2		prtvtoc	    ---555 0 3 $ROOT/$MACH/usr/sbin/prtvtoc
+	$
+	share	d--775 0 2
+		lib	d--775 0 2
+		   terminfo	d--775 0 2
+		          A	   d--775 0 2
+				   ANSI   ---644 0 3 $ROOT/$MACH/usr/share/lib/terminfo/a/ansi
+				   AT386-ie   ---644 0 3 $ROOT/$MACH/usr/share/lib/terminfo/A/AT386-ie
+				   AT386-M-ie   ---644 0 3 $ROOT/$MACH/usr/share/lib/terminfo/A/AT386-M-ie
+				   AT386-mb   ---644 0 3 $ROOT/$MACH/usr/share/lib/terminfo/A/AT386-mb
+				   AT386-M-mb   ---644 0 3 $ROOT/$MACH/usr/share/lib/terminfo/A/AT386-M-mb
+			  $
+		   $
+		$
+	$
+	lib	d--775 0 2
+		libc.so.1  ---555 2 2 $ROOT/$MACH/usr/lib/libc.so.1
+		libdl.so.1 l--777 0 3 /usr/lib/libc.so.1
+		iconv	d--755 2 2
+			iconv_data	---644 2 2 stage/iconv_data
+			$
+		locale	d--755 2 2
+			de	d--755 2 2
+				LC_CTYPE	---644 2 2 $ROOT/$MACH/usr/lib/locale/de/LC_CTYPE
+				$
+			es	d--755 2 2
+				LC_CTYPE	---644 2 2 $ROOT/$MACH/usr/lib/locale/es/LC_CTYPE
+				$
+			fr	d--755 2 2
+				LC_CTYPE	---644 2 2 $ROOT/$MACH/usr/lib/locale/fr/LC_CTYPE
+				$
+			it	d--755 2 2
+				LC_CTYPE	---644 2 2 $ROOT/$MACH/usr/lib/locale/it/LC_CTYPE
+                                $
+                        ja      d--755 2 2
+                                LC_CTYPE        ---644 2 2 $ROOT/$MACH/usr/lib/locale/ja/LC_CTYPE
+
+				$
+			$
+		$
+	$
+etc	d--755 0 3
+	loadmods	---444 0 3 stage/loadmods
+	disk.ele	---644 0 3 stage/disk.ele
+	scsi	d--755 2 2
+		format.d d--755 2 2
+			sd00.0 ---555 2 2 $ROOT/$MACH/etc/scsi/format.d/sd00.0
+			sd01.1 ---555 2 2 $ROOT/$MACH/etc/scsi/format.d/sd01.1
+		$
+		tc.index	---555 2 2 $ROOT/$MACH/etc/scsi/tc.index
+#flop2		bmkdev   	---555 0 3 $ROOT/$MACH/etc/scsi/bmkdev
+	$
+	dcu.d	d--755 0 3
+		winxksh     l--777 0 3 /sbin/sh
+		dculib      d--755 0 2
+#flop2			dculib.so      ---555 0 2 $ROOT/$MACH/etc/dcu.d/dculib/dculib.so
+		$
+		scripts      d--755 0 2
+			funcrc     l--777 0 3 /funcrc
+			start     ---555 0 2 stage/dcu.d/scripts/start
+			dcu     ---555 0 2 stage/dcu.d/scripts/dcu
+#flop2			dculib.sh     ---555 0 2 stage/dcu.d/scripts/dculib.sh
+			dcurc     ---555 0 2 stage/dcu.d/scripts/dcurc
+		$
+		menus      d--755 0 2
+#flop2			drivers   ---555 0 2 stage/dcu.d/menus/drivers
+			choose   l--777 0 2 /etc/inst/scripts/choose
+			boards   ---555 0 2 stage/dcu.d/menus/boards
+			dcumain   ---555 0 2 stage/dcu.d/menus/dcumain
+			category   ---555 0 2 stage/dcu.d/menus/category
+		$
+		locale      d--755 0 2
+			$LANG      d--755 0 2
+#flop2				txtstrings   ---555 0 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/txtstrings
+				config   ---555 0 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/config
+				help      d--755 0 2
+					dcu.addboard.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.addboard.hcf
+					dcu.apply.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.apply.hcf
+					dcu.board.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.board.hcf
+					dcu.brdsum.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.brdsum.hcf
+					dcu.bsp.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.bsp.hcf
+					dcu.cancel.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.cancel.hcf
+					dcu.com.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.com.hcf
+					dcu.driver.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.driver.hcf
+					dcu.drivsum.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.drivsum.hcf
+					dcu.main.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.main.hcf
+					dcu.misc.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.misc.hcf
+					dcu.network.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.network.hcf
+					dcu.restart.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.restart.hcf
+					dcu.scsi.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.scsi.hcf
+					dcu.sound.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.sound.hcf
+					dcu.video.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.video.hcf
+					dcu.whatis.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/dcu.whatis.hcf
+					kbhelp.hcf ---555 2 2 $ROOT/$MACH/etc/dcu.d/locale/$LANG/help/kbhelp.hcf
+					helpwin l--777 2 2 /etc/inst/scripts/helpwin
+				$
+			$
+		$
+	$
+	inst	d--755 2 2
+		scripts   d--755 2 2
+#flop2			allinit   ---555 2 2 stage/desktop/menus/allinit
+			askautomrg  ---555 2 2 stage/desktop/menus/askautomrg	
+			asknodename ---555 2 2 stage/desktop/menus/asknodename
+			asknond     ---555 2 2 stage/desktop/menus/asknond
+#flop2			asktime     ---555 2 2 stage/desktop/menus/asktime
+			check_yesno ---555 2 2 stage/desktop/menus/check_yesno
+			choose      ---555 2 2 stage/desktop/menus/choose
+			clean_ramd      ---555 2 2 stage/desktop/menus/clean_ramd
+                        dcuprompt   ---555 2 2 stage/desktop/menus/dcuprompt
+#flop2			desktop.prep     ---555 2 2 stage/desktop/scripts/desktop.prep
+                        diskchk     ---555 2 2 stage/desktop/menus/diskchk
+			fd_fs       ---555 2 2 stage/desktop/menus/fd_fs
+#flop2			fd          ---555 2 2 stage/desktop/menus/fd
+#flop2			fdinit      ---555 2 2 stage/desktop/menus/fdinit	
+			fdisk_chk   ---555 2 2 stage/desktop/menus/fdisk_chk
+#flop2			floppy2     ---555 2 2 stage/desktop/menus/floppy2
+#flop2			fs          ---555 2 2 stage/desktop/menus/fs
+			funcrc      l--777 0 3 /funcrc
+			get_tools   ---755 2 2 stage/desktop/scripts/get_tools
+			get_fsmods  ---755 2 2 stage/desktop/scripts/get_fsmods
+			get_fscks   ---755 2 2 stage/desktop/scripts/get_fscks
+			helpwin     ---555 2 2 stage/desktop/menus/helpwin
+			ii_choice      ---555 2 2 stage/desktop/menus/ii_choice
+#flop2			ii_hw_config   ---555 2 2 stage/desktop/menus/ii_hw_config
+#flop2			ii_hw_select   ---555 2 2 stage/desktop/menus/ii_hw_select
+			ii_net_config  ---555 2 2 stage/desktop/menus/ii_net_config
+			ii_spx_config  ---555 2 2 stage/desktop/menus/ii_spx_config
+			initialize  ---555 2 2 stage/desktop/menus/initialize
+			ls.prep     ---555 2 2 stage/desktop/scripts/ls.prep
+			installf    ---555 2 2 stage/desktop/scripts/installf
+			keyboard    ---555 2 2 stage/desktop/menus/keyboard
+			main        ---555 2 2 stage/desktop/menus/main
+			media_funcs        ---555 2 2 stage/desktop/menus/media_funcs
+			minimum_hw  ---555 2 2 stage/desktop/menus/minimum_hw
+#flop2			netinst	    ---555 2 2 stage/desktop/scripts/netinst
+#flop2			nond_init   ---555 2 2 stage/desktop/menus/nond_init
+			overlaysav.sh   ---555 2 2 stage/desktop/scripts/overlaysav.sh
+#flop2			pkgs        ---555 2 2 stage/desktop/menus/pkgs
+      			platform_choice ---555 2 2 stage/desktop/menus/platform_choice
+			removef     ---555 2 2 stage/desktop/scripts/removef
+			scr_init    ---555 2 2 stage/winxksh/scr_init
+			securevt    ---555 2 2 stage/desktop/menus/securevt
+			size_chk    ---555 2 2 stage/desktop/menus/size_chk
+			smart       ---555 2 2 stage/desktop/menus/smart
+			start       ---555 2 2 stage/desktop/menus/start
+#flop2			useanswers  ---555 2 2 stage/desktop/menus/useanswers
+			winrc       ---555 2 2 stage/winxksh/winrc
+		$
+		locale   d--755 2 2
+			C	d--755 2 2
+				menus	d--755 2 2
+					config      ---555 2 2 locale/$LANG/menus/config
+					txtstrings  ---555 2 2 locale/$LANG/menus/txtstrings
+					help	d--755 2 2
+						locale_hcf.z	---555 2 2 locale/$LANG/menus/help/locale_hcf.z
+#flop2						config.z	---555 2 2 locale/$LANG/menus/help/nics.conf/config.z
+#flop2						nicshlp.z	---555 2 2 locale/$LANG/menus/help/nicshlp.z
+					$
+				$
+			$
+#If you add any keyboards or code sets here, be sure to add them to
+#sysinst/desktop/files/hd.list as well.
+			keyboards	d--755 2 2
+				code_sets	d--755 2 2
+					88591	---644 0 3 desktop/keyboards/code_sets/88591
+				$
+				US	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/US/kbmap
+				$
+				AX	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/AX/kbmap
+				$
+				A01	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/A01/kbmap
+				$
+				BE	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/BE/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/BE/dead_keys
+				$
+				CA	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/CA/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/CA/dead_keys
+				$
+				DK	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/DK/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/DK/dead_keys
+				$
+				DE	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/DE/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/DE/dead_keys
+				$
+				ES	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/ES/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/ES/dead_keys
+				$
+				es	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/es/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/es/dead_keys
+				$
+				FR	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/FR/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/FR/dead_keys
+				$
+				GB	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/GB/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/GB/dead_keys
+				$
+				IS	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/IS/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/IS/dead_keys
+				$
+				IT	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/IT/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/IT/dead_keys
+				$
+				IT2	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/IT2/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/IT2/dead_keys
+				$
+				NL	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/NL/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/NL/dead_keys
+				$
+				NO	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/NO/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/NO/dead_keys
+				$
+				PT	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/PT/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/PT/dead_keys
+				$
+				SE	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/SE/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/SE/dead_keys
+				$
+				de_CH	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/de_CH/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/de_CH/dead_keys
+				$
+				fr_CA	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/fr_CA/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/fr_CA/dead_keys
+				$
+				fr_CH	d--755 2 2
+					kbmap	---644 0 3 desktop/keyboards/fr_CH/kbmap
+					dead_keys	---644 0 3 desktop/keyboards/fr_CH/dead_keys
+				$
+			$
+		$
+	$
+	emulator	---777 0 3 $ROOT/$MACH/etc/emulator
+	group		---644 0 3 $ROOT/$MACH/etc/group
+	passwd		---644 0 3 $ROOT/$MACH/etc/passwd
+	ap	d--755 0 3
+		chan.ap ---444 0 3 $ROOT/$MACH/etc/ap/chan.ap.flop
+		$
+	default	d--755 0 3
+		workstations	---444 0 3 stage/work.1
+		fstyp	---444 0 3 $ROOT/$MACH/etc/default/fstyp
+		vxfs	---444 0 3 $ROOT/$MACH/etc/default/vxfs
+		bfs	---444 0 3 $ROOT/$MACH/etc/default/bfs
+		ufs	---444 0 3 $ROOT/$MACH/etc/default/ufs
+		sfs	---444 0 3 $ROOT/$MACH/etc/default/sfs
+		s5	---444 0 3 $ROOT/$MACH/etc/default/s5
+		$
+	conf	 d--755 0 3
+		drvmap.d	 d--755 0 3
+#mv2cd			adsc	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/adsc
+			asyc	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/asyc
+			atup	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/atup
+#			bmse	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/bmse
+			cpqsc	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/cpqsc
+			cram	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/cram
+			dma	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/dma
+#mv2cd			dpt	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/dpt
+			fd	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/fd
+#mv2cd			ictha	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/ictha
+			kd	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/kd
+			lp	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/lp
+			rtc	---444 0 3 $ROOT/.$MACH/etc/conf/drvmap.d/rtc
+		$
+		mdevice.d	 d--755 0 3
+#mv2cd			adsc	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/adsc
+			asyc	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/asyc
+			asyhp	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/asyhp
+#mv2cd			athd	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/athd
+			atup	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/atup
+			cram	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/cram
+			cpqsc	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/cpqsc
+			dma	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/dma
+#mv2cd			dcd	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/dcd
+#mv2cd			dpt	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/dpt
+			fd	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/fd
+#mv2cd			ictha	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/ictha
+			kd	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/kd
+			lp	---444 0 3 $ROOT/$MACH/etc/conf/mdevice.d/lp
+#mv2cd			mcesdi	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/mcesdi
+#mv2cd			mcst	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/mcst
+			pit	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/pit
+			rtc	---444 0 3 $ROOT/.$MACH/etc/conf/mdevice.d/rtc
+		$
+		sdevice.d	 d--755 0 3
+#mv2cd			adsc	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/adsc
+			asyc	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/asyc
+			asyhp	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/asyhp
+#mv2cd			athd	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/athd
+			atup	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/atup
+			cram	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/cram
+			cpqsc	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/cpqsc
+			dma	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/dma
+#mv2cd			dcd	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/dcd
+#mv2cd			dpt	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/dpt
+			fd	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/fd
+#mv2cd			ictha	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/ictha
+			kd	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/kd
+			lp	---444 0 3 $ROOT/$MACH/etc/conf/sdevice.d/lp
+#mv2cd			mcesdi	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/mcesdi
+#mv2cd			mcst	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/mcst
+			pit	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/pit
+			rtc	---444 0 3 $ROOT/.$MACH/etc/conf/sdevice.d/rtc
+		$
+		mod.d	 d--755 0 3
+		$
+		hbamod.d	 d--755 0 3
+#mv2cd#flop2		adsc	---444 0 3 $ROOT/.$MACH/etc/conf/modnew.d/adsc
+#mv2cd			athd	---444 0 3 $ROOT/.$MACH/etc/conf/modnew.d/athd
+#flop2			cpqsc	---444 0 3 $ROOT/.$MACH/etc/conf/modnew.d/cpqsc
+#mv2cd			dcd	---444 0 3 $ROOT/.$MACH/etc/conf/modnew.d/dcd
+#mv2cd#flop2		dpt	---444 0 3 $ROOT/.$MACH/etc/conf/modnew.d/dpt
+#mv2cd#flop2		ictha	---444 0 3 $ROOT/.$MACH/etc/conf/modnew.d/ictha
+#mv2cd			mcesdi	---444 0 3 $ROOT/.$MACH/etc/conf/modnew.d/mcesdi
+#mv2cd			mcst	---444 0 3 $ROOT/.$MACH/etc/conf/modnew.d/mcst
+		$
+	$
+	fs	 d--755 0 3
+		vxfs	 d--755 0 3
+			mkfs        l--777 0 3 /diskset/mkfs.vxfs
+			labelit     l--777 0 3 /diskset/labelit.vxfs
+		$
+		ufs	 d--755 0 3
+			mkfs        l--777 0 3 /diskset/mkfs.ufs
+			labelit     l--777 0 3 /diskset/labelit.ufs
+		$
+		bfs	 d--755 0 3
+			mkfs        l--777 0 3 /diskset/mkfs.bfs
+		$
+		s5	 d--755 0 3
+			mkfs        l--777 0 3 /diskset/mkfs.s5
+			labelit     l--777 0 3 /diskset/labelit.s5
+		$
+		sfs	 d--755 0 3
+			mkfs        l--777 0 3 /diskset/mkfs.sfs
+			labelit     l--777 0 3 /diskset/labelit.sfs
+		$
+	$
+$
+dev	d--775 0 3
+	console	c--622 0 3 5 0
+	vt00	c--622 0 3 5 0
+	cram	c--666 0 3 18 0
+	resmgr	c--644 0 3 4 0
+	dsk	d--775 0 0
+		f0	b--666 0 3 1 180
+		f0t	b--666 0 3 1 176
+		f03e	b--666 0 3 1 132
+		f03et	b--666 0 3 1 128
+		f03m	b--666 0 3 1 148
+		f03mt	b--666 0 3 1 144
+		f03n	b--666 0 3 1 164
+		f03nt	b--666 0 3 1 160
+		f1	b--666 0 3 1 181
+		f1t	b--666 0 3 1 177
+		f03ht   b--666 0 3 1 112
+		f1q15dt b--666 0 3 1 1
+		f1q15d  b--666 0 3 1 5
+		f13e	b--666 0 3 1 117
+		f13et	b--666 0 3 1 113
+		f13ht	b--666 0 3 1 113
+		f0q15d  b--666 0 3 1 4
+		f0q15dt b--666 0 3 1 0
+		$
+	kd	d--775 0 0
+		kd00	c--400 3 3 30 0
+		kd01	c--400 3 3 30 1
+		kd02	c--400 3 3 30 2
+		kd03	c--400 3 3 30 3
+		kd04	c--400 3 3 30 4
+		kd05	c--400 3 3 30 5
+		kd06	c--400 3 3 30 6
+		kd07	c--400 3 3 30 7
+		kd08	c--400 3 3 30 8
+		kd09	c--400 3 3 30 9
+		kd10	c--400 3 3 30 10
+		kd11	c--400 3 3 30 11
+		kd12	c--400 3 3 30 12
+		kd13	c--400 3 3 30 13
+		kd14	c--400 3 3 30 14
+		kdvm00	c--400 3 3 20 0
+		kdvm01	c--400 3 3 20 1
+		kdvm02	c--400 3 3 20 2
+		kdvm03	c--400 3 3 20 3
+		kdvm04	c--400 3 3 20 4
+		kdvm05	c--400 3 3 20 5
+		kdvm06	c--400 3 3 20 6
+		kdvm07	c--400 3 3 20 7
+		kdvm08	c--400 3 3 20 8
+		kdvm09	c--400 3 3 20 9
+		kdvm10	c--400 3 3 20 10
+		kdvm11	c--400 3 3 20 11
+		kdvm12	c--400 3 3 20 12
+		kdvm13	c--400 3 3 20 13
+		kdvm14	c--400 3 3 20 14
+		$
+	mem	c--440 3 3 2 0
+	kmem	c--440 3 3 2 1
+	null	c--666 0 3 39 0
+	rdsk	d--775 0 0
+		f0	c--666 0 3 1 180
+		f0t	c--666 0 3 1 176
+		f03e	c--666 0 3 1 132
+		f03et	c--666 0 3 1 128
+		f03ht   c--666 0 3 1 112
+		f0q15d  c--666 0 3 1 4
+		f0q15dt c--666 0 3 1 0
+		f1	c--666 0 3 1 180
+		f1t	c--666 0 3 1 177
+		f13ht	c--666 0 3 1 113
+		f1q15d  c--666 0 3 1 5
+		f1q15dt c--666 0 3 1 1
+		$
+	sad	d--755 0 3
+		user	c--666 0 3 25 0
+		admin	c--600 0 3 25 1
+		$
+	syscon	c--622 2 2 5 0
+	sysmsg	c--222 2 2 19 0
+	systty	c--622 2 2 5 0
+	term	d--775 0 3
+		$
+	tty	c--666 2 2 16 0
+	tty00	c--666 2 2 3 0
+	tty01	c--666 2 2 3 2
+	vidadm	c--666 2 2 29 1
+	video	c--666 2 2 29 0
+	vtmon	c--666 3 3 30 15
+	zero	c--666 0 3 39 1
+	$
+$
+

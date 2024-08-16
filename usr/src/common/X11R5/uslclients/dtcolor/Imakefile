@@ -1,0 +1,67 @@
+/**/#	Copyright (c) 1990, 1991, 1992, 1993, 1994 Novell, Inc. All Rights Reserved.
+/**/#	Copyright (c) 1993 Novell, Inc. All Rights Reserved.
+/**/#	  All Rights Reserved
+
+/**/#	THIS IS UNPUBLISHED PROPRIETARY SOURCE CODE OF Novell Inc.
+/**/#	The copyright notice above does not evidence any
+/**/#	actual or intended publication of such source code.
+
+#ident	"@(#)dtcolor:Imakefile	1.2"
+
+#if Release5
+#include <sv4Lib.tmpl>
+#endif
+#include        <Motif.tmpl>
+#include        <Motif.rules>
+
+EXTRA_LOAD_FLAGS = -z nodefs
+
+DTLIBSRC = $(LIBSRC)/Dt
+  DTLIB = $(DTLIBSRC)/libDt.so
+MDTILIBSRC = $(USLCLIENTSRC)/libMDtI
+MDTILIB = $(MDTILIBSRC)/libMDtI.so
+STAR = *
+
+SRCS1 = \
+	 DialogBox.c \
+	 DtStrDefs.c \
+	 NewCvt.c \
+	 Shadow.c \
+	 TitleBox.c \
+	 main.c \
+	 common.c \
+	 coloredit.c \
+	 colorfile.c \
+	 colormain.c \
+	 colorpalette.c
+OBJS1 = $(SRCS1:.c=.o)
+DEPLIBS1 = $(DTLIB) $(MDTILIB) XmClientDepLibs
+
+SRCS2 =  \
+	colorserver.c \
+        SrvPalette.c \
+	common.c	\
+        SrvFile_io.c 
+OBJS2 = $(SRCS2:.c=.o)
+DEPLIBS2 = XmClientDepLibs
+
+PROGRAMS = colorserver colorprop
+
+
+LOCAL_LIBRARIES1 = $(DTLIB) $(MDTILIB) XmClientLibs
+SYS_LIBRARIES1 = -lgen -lw -lm 
+LOCAL_LIBRARIES2 = XmClientLibs
+SYS_LIBRARIES2 = -lgen 
+INCLUDES = -I./ -I$(LIBSRC) -I$(DTLIBSRC) -I$(MDTILIBSRC)
+
+
+ComplexProgramTarget_1(colorprop,$(LOCAL_LIBRARIES1),$(SYS_LIBRARIES1))
+ComplexProgramTarget_2(colorserver,$(LOCAL_LIBRARIES2),$(SYS_LIBRARIES2))
+
+InstallProgram(colorprop,$(BINDIR))
+InstallProgram(colorserver,$(BINDIR))
+
+InstallMsgCatalog(cprop)
+InstallMsgCatalog(dtcolor)
+InstallMultiple(palettes/$(STAR),$(USRLIBDIR)/palettes)
+DependTarget()

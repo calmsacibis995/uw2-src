@@ -1,0 +1,451 @@
+#ident\t"@(#)dthelp:Admin.Tools/backup.hlp      1.26"
+^*version^1
+^*title^Sauvegarde-Restauration
+^:Sauvegarde-Restauration
+^*width^70
+^+DesktopMgr/help.defs
+^?Sauvegarde et restauration de vos fichiers
+^0^Sauvegarde-Restauration
+^$10
+Sauvegarde-Restauration
+
+Utilisez Sauvegarder-Restaurer pour exécuter les opérations suivantes :
+
+\to\t\k(Sauvegarder les données^^Sauvegarde des fichiers) de l'unité de
+\t \tdisque dur de votre système sur un média amovible (tel qu'une
+\t \tdisquette un disque ou une cartouche de bande) ou dans un autre
+\t \tfichier.
+\to\t\k(Restaurer les données^^Restauration de fichiers) sur l'unité de disque dur de votre système.
+\to\t\k(Conserver un script de sauvegarde^^Sauvegarde d'un script de sauvegarde).
+
+Voir également :
+\k(Présentation du dossier Disques-etc^dtadmin/disk.hlp^Présentation du dossier Disques-etc)
+\s(Le service de sauvegarde^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(Le service de restauration^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^1^Sauvegarde des fichiers
+^$20
+Sauvegarde des fichiers
+
+Avant d'effectuer votre sauvegarde, vérifiez que vous avez étiqueté et
+daté la disquette ou la bande de façon à pouvoir vous reporter à ces
+informations ultérieurement.
+
+Pour sauvegarder des fichiers de votre système, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Sauvegarder-Restaurer.
+
+ \tRemarque : vous pouvez accéder directement au \k(dossier Disques-etc^dtadmin/disk.hlp^Présentation du dossier Disques-etc) et
+ \tappuyer sur le bouton droit de la souris sans le relâcher lorsque
+ \tvous vous trouvez sur l'icône représentant votre support (par
+ \texemple, bande, CD-ROM ou disque). Cliquez ensuite sur Sauvegarder.
+
+\tLa fenêtre "Sauvegarde" apparaît. Elle propose les options suivantes :
+
+   \to\tSauvegarder sur : - Cliquez sur la flèche pour obtenir la liste
+   \t \tdes autres options, telles qu'une disquette (par exemple, Disque
+   \t \tA), un fichier de votre disque dur (Fichier), etc. Cliquez sur
+   \t \tl'option appropriée.
+
+  \t  \tSi vous sélectionnez Fichier, un champ Cible apparaît. Tapez
+  \t  \tle \d(chemin d'accès) complet sous lequel vous souhaitez
+  \t \tsauvegarder vos fichiers et dossiers (utilisez cette option si
+  \t \tvous souhaitez effectuer votre sauvegarde dans un fichier ou un
+  \t \tdossier de votre disque dur ou sur un disque d'un système
+  \t \tdistant auquel vous avez accès).
+
+  \t \tRemarque : si vous utilisez une disquette ou une cartouche de
+  \t \tbande pour effectuer la sauvegarde, insérez cette disquette ou
+  \t \tcette bande dans l'unité appropriée. Si vous utilisez une
+  \t \tdisquette, assurez-vous qu'elle est formatée correctement. Pour
+  \t \tde plus amples informations sur le formatage, reportez-vous à
+  \t \t\k(Formatage de disquettes^dtadmin/floppy.hlp^Formatage de disquettes).
+
+  \to\tClasse de sauvegarde : - Cette option n'est disponible que pour
+  \t \tles utilisateurs dotés d'autorisations propriétaire du système
+  \t \t(voir \k(Compréhension des autorisations^dtadmin/user.hlp^Présentation des autorisations)).
+
+\t \tCliquez sur l'une des options suivantes :
+
+  \t \t-\tSystème intégral - Permet de sauvegarder le système de
+  \t \t \tfichiers dans son intégralité. Notez que l'utilitaire de
+  \t \t \tsauvegarde utilise le fichier /etc/ignore pour déterminer
+  \t \t \tquels répertoires ignorer (c'est-à-dire ne pas sauvegarder)
+  \t \t \tpendant une sauvegarde système intégrale. Avant de lancer une
+  \t \t \tsauvegarde intégrale, vérifiez le fichier /etc/ignore. S'il
+  \t \t \tcontient un répertoire que vous souhaitez sauvegarder,
+  \t \t \tsupprimez ces entrées du fichier.
+
+   \t \t \tRemarque : la sélection de l'option Sauvegarde intégrale du
+  \t \t \tsystème ne remplace pas la création d'une bande ou d'une
+  \t \t \tdisquette de reprise d'urgence. Vous ne pouvez pas
+  \t \t \trestaurer l'intégralité du contenu de votre système à partir
+  \t \t \td'une Sauvegarde intégrale du système. Pour plus
+  \t \t \td'informations concernant la création de bandes et de
+  \t \t \tdisquettes de reprise d'urgence, reportez-vous à "Restauration
+  \t \t \tde votre système" dans le Guide du propriétaire système.
+
+  \t \t-\tFichiers personnels - Permet de sauvegarder les fichiers et
+  \t \t \tles dossiers dans votre propre
+  \t \t \t\d(dossier d'origine^répertoire privé).
+
+  \t \t-\tFichiers d'autres utilisateurs - Permet de sauvegarder des
+  \t \t \tfichiers appartenant à d'autres utilisateurs. Cliquez sur
+  \t \t \t\k(Liste des utilisateurs^^Fenêtre Sauvegarde : liste des utilisateurs) puis sur les ID des utilisateurs de
+  \t \t \tvotre choix.
+
+  \t \t \tRemarque : en sauvegardant les fichiers d'un autre
+  \t \t \tutilisateur, vous sauvegardez uniquement leur dossier
+  \t \t \td'origine et l'intégralité de son contenu, et non tous les
+  \t \t \tfichiers figurant sur le système de l'utilisateur.
+
+\to\tType : -  Cliquez sur l'une des options suivantes :
+
+  \t \t-\tIntégral - Permet de sauvegarder tous les fichiers de la
+  \t \t \tclasse de sauvegarde sélectionnée.
+
+  \t \t-\tIncrementiel - Permet de sauvegarder uniquement les fichiers
+  \t \t \tqui ont tété modifiés depuis la dernière sauvegarde intégrale.
+
+  \t \t \tAvertissement : si vous êtes le \k(propriétaire système^dtadmin/user.hlp^Présentation des autorisations) et que
+  \t \t \tvous sauvegardez des fichiers appartenant à d'autres
+  \t \t \tutilisateurs de votre système, sachez que le système considère
+  \t \t \tla dernière sauvegarde comme celle qui a été exécutée en
+  \t \t \tdernier sur le système et non comme la dernière sauvegarde
+  \t \t \td'un utilisateur particulier. Ainsi, supposons qu'en tant que
+  \t \t \tpropriétaire système, vous lanciez une sauvegarde des
+  \t \t \tdernières modifications pour l'utilisateur A à 10:00, qui se
+  \t \t \ttermine à 10:30. Imaginons que vous entrepreniez ensuite une
+  \t \t \tsauvegarde des dernières modifications pour l'utilisateur B.
+  \t \t \tLe système va sauvegarder uniquement les fichiers que
+  \t \t \tl'utilisateur B a modifié entre 10:00 et 10:30 (heure de la
+  \t \t \tdernière sauvegarde). Il ne sauvegardera aucun autre fichier
+  \t \t \tmodifié par l'utilisateur B depuis la dernière sauvegarde de
+  \t \t \tses fichiers.
+
+  \t \t \tRemarque : si vous transférez un fichier dans un nouvel
+  \t \t \templacement après la dernière sauvegarde intégrale, le système
+  \t \t \tn'ira pas le chercher à cet endroit lors de la prochaine
+  \t \t \tsauvegarde incrémentielle. En effet, la date de modification
+  \t \t \td'un fichier déplacé n'étant pas changée, le système ne le
+  \t \t \tconsidère pas comme un fichier modifié.
+
+  \t \t-\tFichiers sélectionnés - Permet de sauvegarder uniquement les
+  \t \t \tfichiers et les dossiers que vous \d(faire glisser) dans la
+  \t \t \tfenêtre "Sauvegarde".
+
+  \t \t \tVous pouvez également cliquer sur \k(Editer=>Exclure^^Exclusion) pour
+  \t \t \tsupprimer les fichiers et les dossiers de la liste de
+  \t \t \tsauvegarde.
+
+  \to\tCréer un fichier-journal des sauvegardes : - Cliquez sur cette
+  \t \tcase si vous souhaitez que le système crée un fichier qui
+  \t \trépertorie tous les fichiers et dossiers que vous sauvegardez.
+
+  \to\tSauvegarder les fichiers locaux uniquement : - cliquez dans
+  \t \tcette case si vous souhaitez ignorer tous les fichiers résidant
+  \t \tphysiquement sur un système à distance.
+
+3.\tCliquez sur Sauvegarder à ce stade si vous souhaitez lancer la
+  \tsauvegarde immédiatement.
+
+   \tSi vous souhaitez programmer la sauvegarde pour une date
+   \tultérieure, cliquez sur Sauvegarder ultérieurement et indiquez les
+   \tinformations souhaitées dans la
+   \t\k(fenêtre "Programmation de tâches : ajout d'une tâche"^^Fenêtre Programmeur de tâches : ajouter tâche).
+
+   \tLa fenêtre "Sauvegarde : avis de confirmation" apparaît. Cliquez
+   \tsur Continuer pour poursuivre la sauvegarde ou sur Annuler si vous
+  \tdécidez de ne pas la poursuivre.
+
+  \tRemarque : si la bande ou la disquette figurant dans l'unité
+  \tcontient des fichiers, la fenêtre "Sauvegarder : écraser données
+  \t?" apparaît. Cliquez sur Ecraser si vous ne souhaitez pas
+  \tconserver les fichiers figurant sur la disquette ou remplacez la
+  \tdisquette actuelle par une autre disquette avant de cliquer sur
+  \tEcraser.
+
+  \tLa \k(fenêtre "Sauvegarde en cours"^^Fenêtre Sauvegarde en cours) apparaît. A mesure que le système
+  \tcopie les fichiers sur les disquettes, leur nom s'affiche au bas
+  \tde la fenêtre "Sauvegarde".
+
+  \tLorsque l'opération est terminée, le message "Sauvegarde terminée"
+  \tapparaît au bas de la fenêtre "Sauvegarde".
+
+  \tRemarque : vous souhaiterez peut-être sauvegarder les mêmes
+  \tfichiers à l'aide des mêmes options à un autre moment. Voir
+  \t\k(Sauvegarde d'un script de sauvegarde).
+
+4.\tRetirez la bande ou la disquette de l'unité.
+
+Voir également :
+\s(Le service de sauvegarde^dhelp as sysag "The Backup Service" "" || helpLinkErr)
+\s(Préparation de disquettes de reprise sur incident^dhelp "pe.fr" ownerhb "Reprise sur incident de votre système" "Préparation de disquettes de reprise sur incident" || helpLinkErr)
+\s{Préparation de bandes de reprise sur incident^dhelp "pe.fr" ownerhb "Reprise sur incident de votre système" "Préparation de bandes de reprise sur incident" || helpLinkErr}
+
+^2^Fenêtre Sauvegarde : liste des utilisateurs
+^$30
+Fenêtre Sauvegarde : liste des utilisateurs
+
+Cette fenêtre apparaît instantanément lorsque vous cliquez sur
+Fichiers des autres utilisateurs. Pour ajouter un utilisateur dans la
+liste de sauvegarde, procédez comme suit :
+
+1.\tCliquez sur l'ID de l'utilisateur souhaité.
+
+2.\tCliquez sur OK pour ajouter l'utilisateur dans la liste et
+  \trefermer la fenêtre, ou sur Appliquer pour ajouter l'utilisateur
+  \tdans la liste de sauvegarde sans refermer la fenêtre à affichage
+  \tinstantané (ou cliquez sur Annuler si vous décidez de ne pas
+  \tajouter l'utilisateur dans la liste de sauvegarde].
+
+  \tL'icône du dossier d'origine correspondant à l'utilisateur
+  \tapparaît dans la fenêtre "Sauvegarde".
+
+Remarque : lorsque vous sélectionnez un utilisateur dans la liste, le
+système sauvegarde uniquement les fichiers du \d(répertoire privé) de
+cet utilisateur. Cela signifie que si l'utilisateur possède des
+fichiers dans un répertoire ne figurant pas dans son répertoire privé,
+le système ne sauvegardera pas automatiquement ces fichiers.
+
+^2^Exclusion
+^$50
+Exclusion
+
+Pour supprimer des fichiers et des dossiers de la liste de sauvegarde,
+procédez comme suit :
+
+1.\tCliquez sur les fichiers et les dossiers de votre fenêtre
+  \t"Sauvegarde" que vous ne souhaitez pas sauvegarder.
+
+2.\tCliquez sur Editer=>Exclure. Le système supprime les fichiers et
+  \tles dossiers de votre liste de sauvegarde.
+
+^2^Fenêtre Sauvegarde : avis de confirmation
+^$70
+Fenêtre Sauvegarde : avis de confirmation
+
+Cette fenêtre apparaît lorsque vous lancez votre sauvegarde. Cliquez
+sur Continuer pour poursuivre la sauvegarde, ou sur Annuler si vous
+souhaitez l'interrompre.
+
+^2^Fenêtre Sauvegarde : écraser données ?
+^$80
+Fenêtre Sauvegarde : écraser données ?
+
+Cette fenêtre apparaît lorsque vous faites une sauvegarde sur une
+bande ou sur une disquette contenant déjà des fichiers.
+
+Effectuez l'une des opérations suivantes :
+
+\to\tCliquez sur Ecraser si vous ne souhaitez pas conserver les
+\t \tfichiers figurant sur la disquette.
+
+\to\tRetirez la disquette si vous ne souhaitez pas détruire les
+\t \tfichiers. Insérez ensuite une nouvelle disquette et cliquez sur
+\t \tEcraser. Vérifiez que vous pouvez écraser les informations
+\t \tcontenue sur la nouvelle disquette insérée. Le système ne vous
+\t \tprésentera plus le message d'avertissement.
+
+\to\tCliquez sur Quitter pour interrompre la procédure de sauvegarde.
+\t \tRelancez ensuite la sauvegarde en utilisant une autre bande ou
+\t \tdisquette.
+
+^2^Fenêtre Sauvegarde en cours
+^$90
+Fenêtre Sauvegarde en cours
+
+Cette fenêtre apparaît lorsque le système crée l'index correspondant à
+vos archives de sauvegarde. Cliquez sur Annuler si vous décidez
+d'interrompre la sauvegarde.
+
+^2^Fenêtre Programmeur de tâches : ajouter tâche
+^$100
+Fenêtre Programmeur de tâches : ajouter tâche
+
+Cette fenêtre apparaît lorsque vous sélectionnez Sauvegarder
+ultérieurement. Notez que le système a déjà complété le champ Tâche.
+Définissez les options de cette fenêtre comme suit :
+
+\to\tHeure - Entrez l'heure à laquelle vous souhaitez lancer la
+\t \tsauvegarde (en heures et minutes, selon le format 24 heures).
+\t \tPar exemple, si vous souhaitez que le programme s'exécute à
+\t \t6:00 de l'après-midi, entrez 18:00.
+
+\to\tToutes les - Cliquez sur Heure ou Minute pour écraser l'horaire
+\t \tindiqué et programmer l'exécution du programme toutes les heures
+\t \tou toutes les minutes.
+
+\to\tQuand - Déterminez le jour de la semaine ou la date à laquelle le
+\t \tprogramme doit être exécuté comme suit :
+
+\t \t- Si vous cliquez sur Jour de la semaine, passez à la case
+\t \t \tsuivante (également intitulée Jour de la semaine) et cliquez sur
+\t \t \tla case fléchée pour afficher un menu déroulant des jours. Cliquez
+\t \t \tsur le jour souhaité. Par exemple, Tous les jours, Dimanche,
+\t \t \tLundi, etc.
+
+\t \t-\tSi vous cliquez sur Date, les cases Mois et Date apparaissent.
+\t \t \tCliquez sur les cases fléchées des zones Mois et Jour pour
+\t \t \tafficher le menu déroulant correspondant. Cliquez sur le mois et
+\t \t \tle jour désiré. Par exemple, Chaque premier lundi du mois.
+
+Une fois l'opération terminée, cliquez sur Ajouter tâche(1).
+
+^1^Restauration de fichiers
+^$120
+Restauration de fichiers
+
+Pour restaurer les fichiers, procédez comme suit :
+
+1.\tInsérez la cartouche de bande ou la disquette qui contient les
+  \tfichiers que vous souhaitez restaurer dans l'unité appropriée.
+
+2.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). La fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+3.\tCliquez deux fois sur Sauvegarder-Restaurer. La fenêtre
+  \t"Restauration" apparaît; elle comporte les champs suivants :
+
+  \tRemarque : vous pouvez également accéder directement au
+  \t\k(dossier Disques-etc^dtadmin/disk.hlp^Présentation du dossier Disques-etc) et cliquer deux fois sur l'icône du
+  \tpériphérique approprié pour faire apparaître la fenêtre
+  \t"Restauration".
+
+  \to\tRestaurer à partir de : - Cliquez sur le média à partir duquel
+  \t \tvous effectuez la restauration. Par exemple, Fichier, Bande,
+  \t \tDisque_A ou Disque_B.
+
+  \t \tRemarque : si vous sélectionnez Fichier, la case Fichier cible
+  \t \tapparaît. Entrez le nom \d(chemin d'accès) complet du fichier à
+  \t \tpartir duquel vous effectuez la restauration.
+
+   \to\tEcraser les fichiers s'ils existent : - Cliquez sur cette case
+   \t \tsi vous souhaitez que la restauration remplace tous les fichiers
+   \t \tdu même nom.
+
+  \to\tAfficher fichiers : - Cliquez sur cette case si vous souhaitez
+  \t \tvisualiser une liste des fichiers et des dossiers figurant sur
+  \t \tla bande, sur la disquette, ou dans le fichier à partir desquels
+  \t \tvous restaurez. Sélectionnez les fichiers que vous souhaitez
+  \t \trestaurer.
+
+5.\tCliquez sur Restaurer. La \k(fenêtre "Restauration en cours"^^Fenêtre Restauration en cours)
+  \tapparaît. A mesure que le système restaure vos fichiers, leur nom
+  \ts'afficheau bas de la fenêtre Restauration.
+
+  \tUne fois l'opération terminée, le message "Restauration terminée"
+  \tapparaît au bas de la fenêtre correspondante.
+
+Voir également :
+\s(Le service de restauration^dhelp as sysag "The Restore Service" "" || helpLinkErr)
+
+^2^Fenêtre Restauration en cours
+^$130
+Fenêtre Restauration en cours
+
+Cette fenêtre vous informe que le système restaure vos fichiers. Si
+vous décidez d'interrompre la restauration, cliquez sur Annuler.
+
+^1^Sauvegarde d'un script de sauvegarde
+^$140
+Sauvegarde d'un script de sauvegarde
+
+Vous pouvez enregistrer les fichiers de sauvegarde et les options de
+sauvegarde sélectionnées dans un script de sauvegarde. Quand vous
+serez prêt à réexécuter la même sauvegarde ultérieurement, il vous
+suffira d'appeler ce script pour l'exécuter.
+
+Pour sauvegarder le script de sauvegarde, exécutez les opérations
+suivantes dans la fenêtre "Sauvegarde" :
+
+1.\tCliquez sur Fichier=>Sauvegarder sous. La fenêtre "Sauvegarde :
+  \tenregistrer script" apparaît.
+
+2.\tEntrez le nom du fichier dans lequel vous souhaitez sauvegarder la
+  \tliste des fichiers. Par exemple, si vous enregistrez la liste
+  \tcorrespondant à une sauvegarde quotidienne, vous pouvez appeler le
+  \tfichier "jour".
+
+3.\tCliquez sur Sauvegarder. Le système enregistre le script de
+  \tsauvegarde, y compris les options de sauvegarde, dans le fichier
+  \tspécifié (dont le nom doit comporter le suffixe .bkup). Par
+  \texemple, si vous avez appelé le fichier "jour", le système
+  \tenregistre le script de sauvegarde sous jour.bkup.
+
+4.\tUtilisez ce script la prochaine fois que vous souhaitez
+  \tsauvegarder le même groupe de fichiers. Voir
+  \t\k(Utilisation d'un script de sauvegarde).
+
+^2^Fenêtre Sauvegarde : sauvegarder script
+^$150
+Fenêtre Sauvegarde : sauvegarder script
+
+Pour obtenir des informations sur la définition des options de cette
+fenêtre, voir \k(Sauvegarde d'un script de sauvegarde).
+
+Voir également : \k(Utilisation d'un script de sauvegarde)
+
+^1^Utilisation d'un script de sauvegarde
+^$160
+Utilisation d'un script de sauvegarde
+
+Pour exécuter une sauvegarde à partir d'un script de sauvegarde
+enregistré, procédez comme suit :
+
+Remarque : si vous vous trouvez déjà dans le dossier Outils_Admin,
+passez à l'étape 2.
+
+1.\t\d(Cliquez deux fois^cliquer deux fois) sur Outils_ Admin dans la
+  \t\k(fenêtre "Bureau UnixWare"^DesktopMgr/desktop.hlp^Fenêtre du Bureau UnixWare). \tLa fenêtre "Dossier : Outils_Admin"
+  \ts'affiche.
+
+2.\tCliquez deux fois sur Sauvegarder-Restaurer. La fenêtre
+  \t"Sauvegarde" apparaît.
+
+3.\tCliquez sur Fichier=Ouvrir. La fenêtre "Sauvegarde : ouvrir
+  \tscript" apparaît.
+
+4.\tUtilisez les flèches pour vous déplacer dans le dossier et trouver
+  \tle fichier qui contient le script de sauvegarde désiré.
+
+5.\tCliquez sur le nom du fichier. Le nom apparaît dans la case de
+  \ttexte Fichier.
+
+6.\tCliquez sur Ouvrir. Les noms de fichiers et les options
+  \tsélectionnés dans le script de sauvegarde apparaissent dans la
+  \tfenêtre "Sauvegarde".
+
+7.\tCliquez sur Sauvegarder. Le système sauvegarde les fichiers
+  \tindiqués dans le script de sauvegarde.
+
+   \tRemarque : vous pouvez également cliquer sur Sauvegarder
+   \tultérieurement si vous souhaitez programmer la sauvegarde pour une
+  \tautre date ou heure.
+
+^2^Fenêtre Sauvegarde : ouvrir le script
+^$170
+Fenêtre Sauvegarde : ouvrir le script
+
+Dans cette fenêtre, procédez comme suit :
+
+1.\tUtilisez les flèches pour vous déplacer dans le dossier et trouver
+  \tle fichier contenant le script de sauvegarde désiré.
+
+2.\tCliquez sur le nom du fichier. Le nom apparaît dans la case de
+  \ttexte Fichier.
+
+3.\tCliquez sur Ouvrir. Les noms de fichiers et les options
+  \tsélectionnés dans le script de sauvegarde apparaissent dans la
+  \tfenêtre "Sauvegarde".
+
+4.\tCliquez sur Sauvegarder. Le système sauvegarde les fichiers
+  \tindiqués dans le script de sauvegarde.
